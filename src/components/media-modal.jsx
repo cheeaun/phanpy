@@ -67,8 +67,8 @@ function MediaModal({
   const [showControls, setShowControls] = useState(true);
 
   useEffect(() => {
-    let handleSwipe = () => {
-      onClose();
+    let handleSwipe = (e) => {
+      onClose(e, currentIndex, mediaAttachments, carouselRef);
     };
     if (carouselRef.current) {
       carouselRef.current.addEventListener('swiped-down', handleSwipe);
@@ -78,18 +78,21 @@ function MediaModal({
         carouselRef.current.removeEventListener('swiped-down', handleSwipe);
       }
     };
-  }, []);
+  }, [currentIndex, mediaAttachments]);
 
   useHotkeys(
     'esc',
-    onClose,
+    (e) => {
+      onClose(e, currentIndex, mediaAttachments, carouselRef);
+    },
     {
       ignoreEventWhen: (e) => {
         const hasModal = !!document.querySelector('#modal-container > *');
-        return hasModal;
+        return hasModal || e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
       },
+      useKey: true,
     },
-    [onClose],
+    [onClose, currentIndex, mediaAttachments],
   );
 
   useEffect(() => {
@@ -239,7 +242,7 @@ function MediaModal({
             e.target.classList.contains('media') ||
             e.target.classList.contains('media-zoom')
           ) {
-            onClose();
+            onClose(e, currentIndex, mediaAttachments, carouselRef);
           }
         }}
         style={
@@ -317,7 +320,9 @@ function MediaModal({
           <button
             type="button"
             class="carousel-button"
-            onClick={() => onClose()}
+            onClick={(e) =>
+              onClose(e, currentIndex, mediaAttachments, carouselRef)
+            }
           >
             <Icon icon="x" alt={t`Close`} />
           </button>
@@ -417,27 +422,29 @@ function MediaModal({
                 </>
               )}
           </Menu2>{' '}
-          <Link
-            to={`${instance ? `/${instance}` : ''}/s/${statusID}${
-              window.matchMedia('(min-width: calc(40em + 350px))').matches
-                ? `?media=${currentIndex + 1}`
-                : ''
-            }`}
-            class="button carousel-button media-post-link"
-            // onClick={() => {
-            //   // if small screen (not media query min-width 40em + 350px), run onClose
-            //   if (
-            //     !window.matchMedia('(min-width: calc(40em + 350px))').matches
-            //   ) {
-            //     onClose();
-            //   }
-            // }}
-          >
-            <span class="button-label">
-              <Trans>View post</Trans>{' '}
-            </span>
-            &raquo;
-          </Link>
+          {!!statusID && (
+            <Link
+              to={`${instance ? `/${instance}` : ''}/s/${statusID}${
+                window.matchMedia('(min-width: calc(40em + 350px))').matches
+                  ? `?media=${currentIndex + 1}`
+                  : ''
+              }`}
+              class="button carousel-button media-post-link"
+              // onClick={() => {
+              //   // if small screen (not media query min-width 40em + 350px), run onClose
+              //   if (
+              //     !window.matchMedia('(min-width: calc(40em + 350px))').matches
+              //   ) {
+              //     onClose();
+              //   }
+              // }}
+            >
+              <span class="button-label">
+                <Trans>View post</Trans>{' '}
+              </span>
+              &raquo;
+            </Link>
+          )}
         </span>
       </div>
       {mediaAttachments?.length > 1 && (

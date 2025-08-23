@@ -14,6 +14,7 @@ import Loader from '../components/loader';
 import Notification from '../components/notification';
 import { api } from '../utils/api';
 import db from '../utils/db';
+import FilterContext from '../utils/filter-context';
 import { massageNotifications2 } from '../utils/group-notifications';
 import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
@@ -139,13 +140,15 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
     });
   }
 
-  function loadNotifications() {
+  function loadNotifications({ skipFollowRequests = false } = {}) {
     setUIState('loading');
     (async () => {
       try {
         await fetchNotifications();
-        const followRequests = await fetchFollowRequests();
-        setHasFollowRequests(!!followRequests?.length);
+        if (!skipFollowRequests) {
+          const followRequests = await fetchFollowRequests();
+          setHasFollowRequests(!!followRequests?.length);
+        }
         setUIState('default');
       } catch (e) {
         setUIState('error');
@@ -153,11 +156,21 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
     })();
   }
 
-  useEffect(() => {
-    if (state === 'open') loadNotifications();
-  }, [state]);
-
   const menuRef = useRef();
+  const headerHeight = 52;
+  useEffect(() => {
+    if (state !== 'open') return;
+    if (snapStates.notificationsShowNew) {
+      const menuElement = menuRef.current;
+      if (menuElement?.scrollTop <= headerHeight) {
+        loadNotifications({
+          skipFollowRequests: true,
+        });
+      }
+    } else {
+      loadNotifications();
+    }
+  }, [state, snapStates.notificationsShowNew]);
 
   return (
     <ControlledMenu
@@ -185,39 +198,41 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
           <Trans>Notifications</Trans>
         </h2>
       </header>
-      <main>
-        {snapStates.notifications.length ? (
-          <>
-            {snapStates.notifications
-              .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
-              .map((notification) => (
-                <Notification
-                  key={notification._ids || notification.id}
-                  instance={instance}
-                  notification={notification}
-                  disableContextMenu
-                />
-              ))}
-          </>
-        ) : uiState === 'loading' ? (
-          <div class="ui-state">
-            <Loader abrupt />
-          </div>
-        ) : (
-          uiState === 'error' && (
+      <FilterContext.Provider value="notifications">
+        <main>
+          {snapStates.notifications.length ? (
+            <>
+              {snapStates.notifications
+                .slice(0, NOTIFICATIONS_DISPLAY_LIMIT)
+                .map((notification) => (
+                  <Notification
+                    key={notification._ids || notification.id}
+                    instance={instance}
+                    notification={notification}
+                    disableContextMenu
+                  />
+                ))}
+            </>
+          ) : uiState === 'loading' ? (
             <div class="ui-state">
-              <p>
-                <Trans>Unable to fetch notifications.</Trans>
-              </p>
-              <p>
-                <button type="button" onClick={loadNotifications}>
-                  <Trans>Try again</Trans>
-                </button>
-              </p>
+              <Loader abrupt />
             </div>
-          )
-        )}
-      </main>
+          ) : (
+            uiState === 'error' && (
+              <div class="ui-state">
+                <p>
+                  <Trans>Unable to fetch notifications.</Trans>
+                </p>
+                <p>
+                  <button type="button" onClick={loadNotifications}>
+                    <Trans>Try again</Trans>
+                  </button>
+                </p>
+              </div>
+            )
+          )}
+        </main>
+      </FilterContext.Provider>
       <footer>
         <Link to="/mentions" class="button plain">
           <Icon icon="at" />{' '}

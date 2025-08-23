@@ -2,7 +2,7 @@ import { i18n } from '@lingui/core';
 import { t } from '@lingui/core/macro';
 import { useEffect, useMemo, useReducer } from 'preact/hooks';
 
-import localeMatch from '../utils/locale-match';
+import DateTimeFormat from '../utils/date-time-format';
 import mem from '../utils/mem';
 
 function isValidDate(value) {
@@ -14,20 +14,6 @@ function isValidDate(value) {
   }
 }
 
-const resolvedLocale = mem(
-  () => new Intl.DateTimeFormat().resolvedOptions().locale,
-);
-const DTF = mem((locale, opts = {}) => {
-  const regionlessLocale = locale.replace(/-[a-z]+$/i, '');
-  const lang = localeMatch([regionlessLocale], [resolvedLocale()], locale);
-  try {
-    return new Intl.DateTimeFormat(lang, opts);
-  } catch (e) {}
-  try {
-    return new Intl.DateTimeFormat(locale, opts);
-  } catch (e) {}
-  return new Intl.DateTimeFormat(undefined, opts);
-});
 const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
 
 const minute = 60;
@@ -40,13 +26,17 @@ const rtfFromNow = (date) => {
   const seconds = (date.getTime() - Date.now()) / 1000;
   const absSeconds = Math.abs(seconds);
   if (absSeconds < minute) {
-    return rtf.format(seconds, 'second');
+    return rtf.format(Math.floor(seconds), 'second');
   } else if (absSeconds < hour) {
     return rtf.format(Math.floor(seconds / minute), 'minute');
   } else if (absSeconds < day) {
     return rtf.format(Math.floor(seconds / hour), 'hour');
-  } else {
+  } else if (absSeconds < 30 * day) {
     return rtf.format(Math.floor(seconds / day), 'day');
+  } else if (absSeconds < 365 * day) {
+    return rtf.format(Math.floor(seconds / day / 30), 'month');
+  } else {
+    return rtf.format(Math.floor(seconds / day / 365), 'year');
   }
 };
 
@@ -76,7 +66,8 @@ export default function RelativeTime({ datetime, format }) {
   const [renderCount, rerender] = useReducer((x) => x + 1, 0);
   const date = useMemo(() => new Date(datetime), [datetime]);
   const [dateStr, dt, title] = useMemo(() => {
-    if (!isValidDate(date)) return ['' + datetime, '', ''];
+    if (!isValidDate(date))
+      return ['' + (typeof datetime === 'string' ? datetime : ''), '', ''];
     let str;
     if (format === 'micro') {
       // If date <= 1 day ago or day is within this year
@@ -87,13 +78,13 @@ export default function RelativeTime({ datetime, format }) {
       } else {
         const sameYear = now.getFullYear() === date.getFullYear();
         if (sameYear) {
-          str = DTF(i18n.locale, {
+          str = DateTimeFormat(i18n.locale, {
             year: undefined,
             month: 'short',
             day: 'numeric',
           }).format(date);
         } else {
-          str = DTF(i18n.locale, {
+          str = DateTimeFormat(i18n.locale, {
             dateStyle: 'short',
           }).format(date);
         }

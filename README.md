@@ -49,15 +49,21 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 ## Subtle UI implementations
 
-### User name display
+<details>
+<summary>
+<b>User name display</b>
+</summary>
 
 ![User name display](readme-assets/user-name-display.jpg)
 
 - On the timeline, the user name is displayed as `[NAME] @[username]`.
 - For the `@[username]`, always exclude the instance domain name.
 - If the `[NAME]` *looks the same* as the `@[username]`, then the `@[username]` is excluded as well.
-
-### Boosts Carousel
+</details>
+<details>
+<summary>
+<b>Boosts Carousel</b>
+</summary>
 
 ![Boosts Carousel](readme-assets/boosts-carousel.jpg)
 
@@ -65,7 +71,12 @@ Everything is designed and engineered following my taste and vision. This is a p
 - If number of boosts are more than 3 quarters of total posts, boosts carousel UI will be slotted at the end of total posts fetched (per "page").
 - Else, boosts carousel UI will be slotted in between the posts.
 
-### Thread number badge (e.g. Thread 1/X)
+</details>
+
+<details>
+<summary>
+<b>Thread number badge (e.g. Thread 1/X)</b>
+</summary>
 
 ![Thread number badge](readme-assets/thread-number-badge.jpg)
 
@@ -73,8 +84,12 @@ Everything is designed and engineered following my taste and vision. This is a p
 - If root post is found, badge will show the index number of the post in the thread.
 - Limit up to 3 API requests as the root post may be very old or the thread is super long.
 - If index number couldn't be found, badge will fallback to showing `Thread` without the number.
+</details>
 
-### Hashtag stuffing collapsing
+<details>
+<summary>
+<b>Hashtag stuffing collapsing</b>
+</summary>
 
 ![Hashtag stuffing collapsing](readme-assets/hashtag-stuffing-collapsing.jpg)
 
@@ -85,8 +100,12 @@ Everything is designed and engineered following my taste and vision. This is a p
 - Collapsed hashtags will be appended with `...` at the end.
 - They are also slightly faded out to reduce visual noise.
 - Opening the post view will reveal the hashtags uncollapsed.
+</details>
 
-### Filtered posts
+<details>
+<summary>
+<b>Filtered posts</b>
+</summary>
 
 - "Hide completely"-filtered posts will be hidden, with no UI to reveal it.
 - "Hide with a warning"-filtered posts will be partially hidden, showing the filter name and author name.
@@ -94,18 +113,20 @@ Everything is designed and engineered following my taste and vision. This is a p
   - Clicking it will open the Post page.
   - Long-pressing or right-clicking it will "peek" the post with a bottom sheet UI.
   - On boosts carousel, they are sorted to the end of the carousel.
+</details>
 
 ## Development
 
 Prerequisites: Node.js 20+
 
 - `npm install` - Install dependencies
-- `npm run dev` - Start development server and `messages:extract` (`clean` + ``watch`) in parallel
+- `npm run dev` - Start development server and `messages:extract` (`clean` + `watch`) in parallel
 - `npm run build` - Build for production
 - `npm run preview` - Preview the production build
 - `npm run fetch-instances` - Fetch instances list from [joinmastodon.org/servers](https://joinmastodon.org/servers), save it to `src/data/instances.json`
 - `npm run sourcemap` - Run `source-map-explorer` on the production build
 - `npm run messages:extract` - Extract messages from source files and update the locale message catalogs
+- `npm run git:po-filter` - Configure `git` to use `po-filter` for diffing `.po` files
 
 ## Tech stack
 
@@ -171,6 +192,8 @@ Users can change the language in the settings, which sets the `localStorage` key
 
 [![Crowdin](https://badges.crowdin.net/phanpy/localized.svg)](https://crowdin.com/project/phanpy)
 
+[![Languages chart](https://badges.awesome-crowdin.com/translation-14836566-703337.png)](https://crowdin.com/project/phanpy)
+
 Translations are managed on [Crowdin](https://crowdin.com/project/phanpy). You can help by volunteering translations.
 
 Read the [intro documentation](https://support.crowdin.com/for-volunteer-translators/) to get started.
@@ -185,11 +208,17 @@ Two ways (choose one):
 
 Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the latest `phanpy-dist.zip` or `phanpy-dist.tar.gz`. It's pre-built so don't need to run any install/build commands. Extract it. Serve the folder of extracted files.
 
+> [!IMPORTANT]
+> Text translations connect to an **external service** (`translang.phanpy.social`).
+
 ### Custom-build way
 
 Requires [Node.js](https://nodejs.org/).
 
 Download or `git clone` this repository. Use `production` branch for *stable* releases, `main` for *latest*. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
+
+> [!IMPORTANT]
+> Text translations connect to an **external service** (`translang.phanpy.social`). This can be configured with environment variables if you want to [self-host your own instance](#translang-api-hosting).
 
 Customization can be done by passing environment variables to the build command. Examples:
 
@@ -238,11 +267,15 @@ Available variables:
   - This is applied with the `<meta>` tag on the client-side.
   - The policy can also be set with `Referrer-Policy` header configured on the server-side (not this variable).
   - Note that since Phanpy uses hash-based URLs, the referrer does not include the hash part.
-- `PHANPY_LINGVA_INSTANCES` (optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
+- `PHANPY_LINGVA_INSTANCES` (**DEPRECATED**, optional, space-separated list, default: `lingva.phanpy.social [...hard-coded list of fallback instances]`):
   - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
   - May specify a self-hosted Lingva instance, powered by either [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api)
   - List of fallback instances hard-coded in `/.env`
   - [↗️ List of lingva-translate instances](https://github.com/thedaviddelta/lingva-translate?tab=readme-ov-file#instances)
+- `PHANPY_TRANSLANG_INSTANCES` (optional, space-separated list, default: `translang.phanpy.social`):
+  - Specify a space-separated list of instances. First will be used as default before falling back to the subsequent instances. If there's only 1 instance, means no fallback.
+  - May specify a self-hosted Translating instance, powered by [translang-api](https://github.com/cheeaun/translang-api).
+  - List of instances hard-coded in `/.env`
 - `PHANPY_IMG_ALT_API_URL` (optional, no defaults):
   - API endpoint for self-hosted instance of [img-alt-api](https://github.com/cheeaun/img-alt-api).
   - If provided, a setting will appear for users to enable the image description generator in the composer. Disabled by default.
@@ -250,6 +283,8 @@ Available variables:
   - API key for [GIPHY](https://developers.giphy.com/). See [API docs](https://developers.giphy.com/docs/api/).
   - If provided, a setting will appear for users to enable the GIF picker in the composer. Disabled by default.
   - This is not self-hosted.
+- `PHANPY_DISALLOW_ROBOTS` (optional, default: not set):
+  - Set to any value (`true`, `1`, etc) to override the robots.txt file and disallow all web crawlers from indexing the site
 
 ### Static site hosting
 
@@ -257,14 +292,19 @@ Try online search for "how to self-host static sites" as there are many ways to 
 
 #### Lingva-translate or lingva-api hosting
 
-See documentation for [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api).
+⚠️ **DEPRECATED**. See documentation for [lingva-translate](https://github.com/thedaviddelta/lingva-translate) or [lingva-api](https://github.com/cheeaun/lingva-api).
+
+#### Translang API hosting
+
+See documentation for [translang-api](https://github.com/cheeaun/translang-api).
 
 ## Community deployments
 
 These are self-hosted by other wonderful folks.
 
 - [ferengi.one](https://m.ferengi.one/) by [@david@weaknotes.com](https://weaknotes.com/@david)
-- [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@mookiesplace.com](https://mookiesplace.com/@mookie)
+- [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@suigow.xyz](https://suigow.xyz/@mookie)
+- [phanpy.app](https://phanpy.app) by [@bumble@ibe.social](https://ibe.social/@bumble)
 - [phanpy.bauxite.tech](https://phanpy.bauxite.tech) by [@b4ux1t3@hachyderm.io](https://hachyderm.io/@b4ux1t3)
 - [phanpy.blaede.family](https://phanpy.blaede.family/) by [@cassidy@blaede.family](https://mastodon.blaede.family/@cassidy)
 - [phanpy.crmbl.uk](https://phanpy.crmbl.uk) by [@snail@crmbl.uk](https://mstdn.crmbl.uk/@snail)
@@ -277,7 +317,6 @@ These are self-hosted by other wonderful folks.
 - [phanpy.social.tchncs.de](https://phanpy.social.tchncs.de) by [@milan@social.tchncs.de](https://social.tchncs.de/@milan)
 - [phanpy.tilde.zone](https://phanpy.tilde.zone) by [@ben@tilde.zone](https://tilde.zone/@ben)
 - [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)
-- [social.qrk.one](https://social.qrk.one) by [@kev@fosstodon.org](https://fosstodon.org/@kev)
 - [phanpy.linuxusers.in](https://phanpy.linuxusers.in) by [@dharmik@linuxusers.in](https://linuxusers.in/dharmik)
 
 > Note: Add yours by creating a pull request.
@@ -303,8 +342,10 @@ Costs involved in running and developing this web app:
 ### Translation volunteers
 
 <!-- i18n volunteers start -->
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16945821/medium/3da66a1dde4951ad34c33ca23241b864_default.png" alt="" width="16" height="16" /> A.Mason (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12571163/medium/9f3ea938f4243f5ffe2a43f814ddc9e8_default.png" alt="" width="16" height="16" /> alidsds11 (Arabic)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16180744/medium/5b04ae975b23895635130d7a176515cb_default.png" alt="" width="16" height="16" /> alternative (Korean)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16848873/medium/d8773fdb621f4c9c1b08d2c641fa519a.jpeg" alt="" width="16" height="16" /> AmaseCocoa (Japanese)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13170041/medium/603136896af17fc005fd592ce3f48717_default.png" alt="" width="16" height="16" /> BoFFire (Arabic, French, Kabyle)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12898464/medium/d3758a76b894bade4bf271c9b32ea69b.png" alt="" width="16" height="16" /> Brawaru (Russian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15460040/medium/1cfcfe5f5511b783b5d9f2b968bad819.png" alt="" width="16" height="16" /> cbasje (Dutch)
@@ -328,13 +369,15 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16646485/medium/5d76c44212a4048a815ab437fb170856_default.png" alt="" width="16" height="16" /> kaliuwu (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532403/medium/4cefb19623bcc44d7cdb9e25aebf5250.jpeg" alt="" width="16" height="16" /> karlafej (Czech)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15791971/medium/1790a2101ceb13f61816b8fe6fbe6d90.jpeg" alt="" width="16" height="16" /> katullo11 (Italian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14677260/medium/e53420d200961f48602324e18c091bdc.png" alt="" width="16" height="16" /> Kytta (German)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14677260/medium/e9f17e62ab69ed6212a16c94d779e7f3.png" alt="" width="16" height="16" /> Kytta (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16529521/medium/ae6add93a901b0fefa2d9b1077920d73.png" alt="" width="16" height="16" /> llun (Thai)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16291756/medium/c008af10bc117fa9c9dcb70f2b291ee6.jpg" alt="" width="16" height="16" /> lucasofchirst (Occitan, Portuguese, Portuguese, Brazilian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16291756/medium/a662122faa4f9a71b259b0e561f923b4.png" alt="" width="16" height="16" /> lucsdev24 (Occitan, Portuguese, Portuguese, Brazilian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16640089/medium/4b7d8d275d7a7bff564adde51e09b473_default.png" alt="" width="16" height="16" /> LukeHong (Chinese Traditional)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12822971/medium/4ecbe6d1248536084902925beb0b63e4.png" alt="" width="16" height="16" /> Mannivu (Italian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13990351/medium/86942d51f67a5f5366c5d6385ea59b77_default.png" alt="" width="16" height="16" /> manuelviens (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16537713/medium/825f0bf1a14fc545a76891a52839d86e_default.png" alt="" width="16" height="16" /> marcin.kozinski (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16812323/medium/72bffbdf4a331845f23400eafa0b3d48.jpeg" alt="" width="16" height="16" /> martinmodrak (Czech)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13044/medium/bfa55b9a0569a9e382fd694c91d3db1b_default.png" alt="" width="16" height="16" /> misk (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13521465/medium/76cb9aa6b753ce900a70478bff7fcea0.png" alt="" width="16" height="16" /> mkljczkk (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12882812/medium/77744d8db46e9a3e09030e1a02b7a572.jpeg" alt="" width="16" height="16" /> mojosoeun (Korean)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13613969/medium/c7834ddc0ada84a79671697a944bb274.png" alt="" width="16" height="16" /> moreal (Korean)
@@ -351,22 +394,29 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13422319/medium/66632a98d73d48e36753d94ebcec9d4f.png" alt="" width="16" height="16" /> rwmpelstilzchen (Esperanto, Hebrew)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16538605/medium/bcdb6e3286b7d6237923f3a9383eed29.png" alt="" width="16" height="16" /> SadmL (Russian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539171/medium/0ce95ef6b3b0566136191fbedc1563d0.png" alt="" width="16" height="16" /> SadmL_AI (Russian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16121928/medium/b1dd34dc3e93b64b93b94aedca0c5b7d.jpg" alt="" width="16" height="16" /> Schishka71 (Russian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17206524/medium/1b0a8f9eafe7326be6968c6aed14c872.png" alt="" width="16" height="16" /> seizeheures (Esperanto)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12381015/medium/35e3557fd61d85f9a5b84545d9e3feb4.png" alt="" width="16" height="16" /> shuuji3 (Japanese)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14565190/medium/79100599131b7776e9803e4b696915a3_default.png" alt="" width="16" height="16" /> Sky_NiniKo (French)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17237304/medium/7954dfd36547e9d1f13266a52e9aa1b5_default.png" alt="" width="16" height="16" /> StasZin4 (Ukrainian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13143526/medium/30871da23d51d7e41bb02f3c92d7f104.png" alt="" width="16" height="16" /> Steffo99 (Italian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532441/medium/1a47e8d80c95636e02d2260f6e233ca5.png" alt="" width="16" height="16" /> Su5hicz (Czech)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12579488/medium/699394d1acfe986a31532007534c7656.jpg" alt="" width="16" height="16" /> svetlemodry (Czech)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16530049/medium/683f3581620c6b4a5c753b416ed695a7.jpeg" alt="" width="16" height="16" /> tferrermo (Spanish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15752199/medium/7e9efd828c4691368d063b19d19eb894.png" alt="" width="16" height="16" /> tkbremnes (Norwegian Bokmal)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16527851/medium/649e5a9a8a8cc61ced670d89e9cca082.png" alt="" width="16" height="16" /> tux93 (German)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16236470/medium/315b1ebbd38e0f7e41d44bee752afa33.jpg" alt="" width="16" height="16" /> Usia (Ukrainian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16791511/medium/321c72613cd27efc3005e7c3bf383578.jpeg" alt="" width="16" height="16" /> uzaylul (Turkish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14427566/medium/ab733b5044c21867fc5a9d1b22cd2c03.png" alt="" width="16" height="16" /> Vac31. (Lithuanian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16026914/medium/e3ca187f354a298ef0c9d02a0ed17be7.jpg" alt="" width="16" height="16" /> valtlai (Finnish)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16026914/medium/4f2a96210b76cbc330584cfdd01fabc4_default.png" alt="" width="16" height="16" /> valtlai (Finnish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16608515/medium/85506c21dce8df07843ca11908ee3951.jpeg" alt="" width="16" height="16" /> vasiriri (Polish)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16355626/medium/a10a29f0016c6beb94e8219d50e8b8d7.jpeg" alt="" width="16" height="16" /> voitech (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16563757/medium/af4556c13862d1fd593b51084a159b75_default.png" alt="" width="16" height="16" /> voyagercy (Chinese Traditional)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15982109/medium/9c03062bdc1d3c6d384dbfead97c26ba.jpeg" alt="" width="16" height="16" /> xabi_itzultzaile (Basque)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556017/medium/216e0f7a0c35b079920366939a3aaca7_default.png" alt="" width="16" height="16" /> xen4n (Ukrainian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532657/medium/f309f319266e1ff95f3070eab0c9a9d9_default.png" alt="" width="16" height="16" /> xqueralt (Catalan)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15583431/medium/14973556de7721e642701bf74d6fb053.png" alt="" width="16" height="16" /> Yukaii (Chinese Traditional)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14360216/medium/7e48473691456fce95e1be687045377c.jpeg" alt="" width="16" height="16" /> Zet24 (Arabic)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14041603/medium/6ab77a0467b06aeb49927c6d9c409f89.jpg" alt="" width="16" height="16" /> ZiriSut (Kabyle)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16530601/medium/e1b6d5c24953b6405405c1ab33c0fa46.jpeg" alt="" width="16" height="16" /> zkreml (Czech)
 <!-- i18n volunteers end -->
@@ -388,22 +438,26 @@ And here I am. Building a Mastodon web client.
 - Phanpy forks ↓
   - [Agora](https://agorasocial.app/)
 - [Pinafore](https://pinafore.social/) ([retired](https://nolanlawson.com/2023/01/09/retiring-pinafore/)) - forks ↓
-  - [Semaphore](https://semaphore.social/)
+  - [Semaphore](https://semaphore.social/) ([archived](https://github.com/NickColley/semaphore))
   - [Enafore](https://enafore.social/)
-- [Cuckoo+](https://www.cuckoo.social/)
+- [Cuckoo+](https://www.cuckoo.social/) (down)
 - [Sengi](https://nicolasconstant.github.io/sengi/)
 - [Soapbox](https://fe.soapbox.pub/)
 - [Elk](https://elk.zone/) - forks ↓
-  - [elk.fedified.com](https://elk.fedified.com/)
+  - [elk.fedified.com](https://elk.fedified.com/) (gone, redirects to elk.zone)
+  - [crab](https://github.com/maybeanerd/crab)
+  - [Glowrea](https://github.com/s414june/glowrea)
 - [Mastodeck](https://mastodeck.com/)
 - [Trunks](https://trunks.social/)
 - [Tooty](https://github.com/n1k0/tooty)
 - [Litterbox](https://litterbox.koyu.space/)
 - [Statuzer](https://statuzer.com/)
-- [Tusked](https://tusked.app/)
-- [Mastodon Glitch Edition (standalone frontend)](https://iceshrimp.dev/iceshrimp/masto-fe-standalone)
+- [Tusked](https://tusked.app/) ([archived](https://github.com/raikasdev/tusked))
+- [Mastodon Glitch Edition (standalone frontend)](https://iceshrimp.dev/iceshrimp/masto-fe-standalone) - forks ↓
+  - [Masto-FE (🦥 flavour)](https://masto-fe.superseriousbusiness.org)
+- [pl-fe](https://pl.mkljczk.pl)
 - [Mangane](https://github.com/BDX-town/Mangane)
-- [TheDesk](https://github.com/cutls/TheDesk)
+- [TheDesk](https://github.com/cutls/TheDesk) (archived)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 
 ## 💁‍♂️ Notice to all other social media client developers

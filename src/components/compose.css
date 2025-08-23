@@ -94,8 +94,11 @@
   ); */
   border-top: var(--hairline-width) solid var(--outline-color);
   backdrop-filter: blur(8px);
-  text-shadow: 0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
-    0 1px 10px var(--bg-color), 0 1px 10px var(--bg-color),
+  text-shadow:
+    0 1px 10px var(--bg-color),
+    0 1px 10px var(--bg-color),
+    0 1px 10px var(--bg-color),
+    0 1px 10px var(--bg-color),
     0 1px 10px var(--bg-color);
   z-index: 2;
 
@@ -134,7 +137,9 @@
   }
 }
 #compose-container .status-preview ~ form {
-  box-shadow: var(--drop-shadow), 0 -3px 6px -3px var(--drop-shadow-color);
+  box-shadow:
+    var(--drop-shadow),
+    0 -3px 6px -3px var(--drop-shadow-color);
 }
 
 #compose-container textarea {
@@ -412,16 +417,17 @@
   width: 80px;
   height: 80px;
   /* checkerboard background */
-  background-image: linear-gradient(
-      45deg,
-      var(--img-bg-color) 25%,
-      transparent 25%
-    ),
+  background-image:
+    linear-gradient(45deg, var(--img-bg-color) 25%, transparent 25%),
     linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--img-bg-color) 75%),
     linear-gradient(-45deg, transparent 75%, var(--img-bg-color) 75%);
   background-size: 10px 10px;
-  background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+  background-position:
+    0 0,
+    0 5px,
+    5px -5px,
+    -5px 0px;
 }
 #compose-container .media-preview > * {
   width: 80px;
@@ -562,6 +568,25 @@
   color: var(--red-color);
 }
 
+#compose-container {
+  .scheduled-at {
+    background-color: var(--bg-faded-color);
+    border-radius: 8px;
+    margin: 8px 0 0;
+    justify-content: flex-end;
+    text-align: end;
+
+    input[type='datetime-local'] {
+      max-width: 80vw;
+      padding: 4px;
+
+      &:invalid {
+        border-color: var(--red-color);
+      }
+    }
+  }
+}
+
 .compose-menu-add-media {
   position: relative;
 
@@ -660,16 +685,17 @@
   overflow: hidden;
   box-shadow: 0 2px 16px var(--img-bg-color);
   /* checkerboard background */
-  background-image: linear-gradient(
-      45deg,
-      var(--img-bg-color) 25%,
-      transparent 25%
-    ),
+  background-image:
+    linear-gradient(45deg, var(--img-bg-color) 25%, transparent 25%),
     linear-gradient(-45deg, var(--img-bg-color) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--img-bg-color) 75%),
     linear-gradient(-45deg, transparent 75%, var(--img-bg-color) 75%);
   background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  background-position:
+    0 0,
+    0 10px,
+    10px -10px,
+    -10px 0px;
   flex: 0.8;
 }
 #media-sheet .media-preview > * {

@@ -1,7 +1,7 @@
 import './account-info.css';
 
 import { msg, plural } from '@lingui/core/macro';
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
@@ -15,18 +15,25 @@ import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
+import getDomain from '../utils/get-domain';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import i18nDuration from '../utils/i18n-duration';
 import { getLists } from '../utils/lists';
 import niceDateTime from '../utils/nice-date-time';
 import pmem from '../utils/pmem';
+import { fetchRelationships } from '../utils/relationships';
 import shortenNumber from '../utils/shorten-number';
 import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
+import {
+  getAccounts,
+  getCurrentAccountID,
+  saveAccounts,
+  updateAccount,
+} from '../utils/store-utils';
 import supports from '../utils/supports';
 
 import AccountBlock from './account-block';
@@ -37,7 +44,6 @@ import Link from './link';
 import ListAddEdit from './list-add-edit';
 import Loader from './loader';
 import MenuConfirm from './menu-confirm';
-import MenuLink from './menu-link';
 import Menu2 from './menu2';
 import Modal from './modal';
 import SubMenu2 from './submenu2';
@@ -85,6 +91,7 @@ async function fetchPostingStats(accountID, masto) {
     .statuses.list({
       limit: 20,
     })
+    .values()
     .next();
 
   const { value: statuses } = await fetchStatuses;
@@ -128,15 +135,18 @@ const memFetchPostingStats = pmem(fetchPostingStats, {
   maxAge: ACCOUNT_INFO_MAX_AGE,
 });
 
+const ENDORSEMENTS_LIMIT = 80;
+
 function AccountInfo({
   account,
   fetchAccount = () => {},
   standalone,
   instance,
   authenticated,
+  showEndorsements = false,
 }) {
   const { i18n, t } = useLingui();
-  const { masto } = api({
+  const { masto, authenticated: currentAuthenticated } = api({
     instance,
   });
   const { masto: currentMasto, instance: currentInstance } = api();
@@ -220,7 +230,7 @@ function AccountInfo({
       info?.url
     );
     if (isSelf && instance && infoHasEssentials) {
-      const accounts = store.local.getJSON('accounts');
+      const accounts = getAccounts();
       let updated = false;
       accounts.forEach((account) => {
         if (account.info.id === info.id && account.instanceURL === instance) {
@@ -230,16 +240,12 @@ function AccountInfo({
       });
       if (updated) {
         console.log('Updated account info', info);
-        store.local.setJSON('accounts', accounts);
+        saveAccounts(accounts);
       }
     }
   }, [isSelf, info, instance]);
 
-  const accountInstance = useMemo(() => {
-    if (!url) return null;
-    const domain = punycode.toUnicode(URL.parse(url).hostname);
-    return domain;
-  }, [url]);
+  const accountInstance = getDomain(url);
 
   const [headerCornerColors, setHeaderCornerColors] = useState([]);
 
@@ -247,9 +253,12 @@ function AccountInfo({
   const familiarFollowersCache = useRef([]);
   async function fetchFollowers(firstLoad) {
     if (firstLoad || !followersIterator.current) {
-      followersIterator.current = masto.v1.accounts.$select(id).followers.list({
-        limit: LIMIT,
-      });
+      followersIterator.current = masto.v1.accounts
+        .$select(id)
+        .followers.list({
+          limit: LIMIT,
+        })
+        .values();
     }
     const results = await followersIterator.current.next();
     if (isSelf) return results;
@@ -294,9 +303,12 @@ function AccountInfo({
   const followingIterator = useRef();
   async function fetchFollowing(firstLoad) {
     if (firstLoad || !followingIterator.current) {
-      followingIterator.current = masto.v1.accounts.$select(id).following.list({
-        limit: LIMIT,
-      });
+      followingIterator.current = masto.v1.accounts
+        .$select(id)
+        .following.list({
+          limit: LIMIT,
+        })
+        .values();
     }
     const results = await followingIterator.current.next();
     return results;
@@ -362,573 +374,702 @@ function AccountInfo({
     [id, instance],
   );
 
+  const isStringURL = isString && account && /^https?:\/\//.test(account);
+
+  const [showEditProfile, setShowEditProfile] = useState(false);
+
+  const [renderEndorsements, setRenderEndorsements] = useState(false);
+
   return (
-    <div
-      tabIndex="-1"
-      class={`account-container ${uiState === 'loading' ? 'skeleton' : ''}`}
-      style={{
-        '--header-color-1': headerCornerColors[0],
-        '--header-color-2': headerCornerColors[1],
-        '--header-color-3': headerCornerColors[2],
-        '--header-color-4': headerCornerColors[3],
-      }}
-    >
-      {uiState === 'error' && (
-        <div class="ui-state">
-          <p>
-            <Trans>Unable to load account.</Trans>
-          </p>
-          {isString ? (
+    <>
+      <div
+        tabIndex="-1"
+        class={`account-container ${uiState === 'loading' ? 'skeleton' : ''}`}
+        style={{
+          '--header-color-1': headerCornerColors[0],
+          '--header-color-2': headerCornerColors[1],
+          '--header-color-3': headerCornerColors[2],
+          '--header-color-4': headerCornerColors[3],
+        }}
+      >
+        {uiState === 'error' && (
+          <div class="ui-state">
             <p>
-              <code class="insignificant">{account}</code>
+              <Trans>Unable to load account.</Trans>
             </p>
-          ) : (
-            <p>
-              <a href={url} target="_blank" rel="noopener">
-                <Trans>Go to account page</Trans> <Icon icon="external" />
-              </a>
-            </p>
-          )}
-        </div>
-      )}
-      {uiState === 'loading' ? (
-        <>
-          <header>
-            <AccountBlock avatarSize="xxxl" skeleton />
-          </header>
-          <main>
-            <div class="note">
-              <p>███████ ████ ████</p>
-              <p>████ ████████ ██████ █████████ ████ ██</p>
-            </div>
-            <div class="account-metadata-box">
-              <div class="profile-metadata">
-                <div class="profile-field">
-                  <b class="more-insignificant">███</b>
-                  <p>██████</p>
-                </div>
-                <div class="profile-field">
-                  <b class="more-insignificant">████</b>
-                  <p>███████████</p>
-                </div>
-              </div>
-              <div class="stats">
-                <div>
-                  <span>██</span> <Trans>Followers</Trans>
-                </div>
-                <div>
-                  <span>██</span> <Trans id="following.stats">Following</Trans>
-                </div>
-                <div>
-                  <span>██</span> <Trans>Posts</Trans>
-                </div>
-              </div>
-            </div>
-            <div class="actions">
-              <span />
-              <span class="buttons">
-                <button type="button" class="plain" disabled>
-                  <Icon icon="more" size="l" alt={t`More`} />
-                </button>
-              </span>
-            </div>
-          </main>
-        </>
-      ) : (
-        info && (
-          <>
-            {!!moved && (
-              <div class="account-moved">
-                <p>
-                  <Trans>
-                    <b>{displayName}</b> has indicated that their new account is
-                    now:
-                  </Trans>
-                </p>
-                <AccountBlock
-                  account={moved}
-                  instance={instance}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    states.showAccount = moved;
-                  }}
-                />
-              </div>
+            {isString ? (
+              <p>
+                {isStringURL ? (
+                  <a href={account} target="_blank" rel="noopener">
+                    {account}
+                  </a>
+                ) : (
+                  <code class="insignificant">{account}</code>
+                )}
+              </p>
+            ) : (
+              <p>
+                <a href={url} target="_blank" rel="noopener">
+                  <Trans>Go to account page</Trans> <Icon icon="external" />
+                </a>
+              </p>
             )}
-            {!!header && !/missing\.png$/.test(header) && (
-              <img
-                src={header}
-                alt=""
-                class={`header-banner ${
-                  headerIsAvatar ? 'header-is-avatar' : ''
-                }`}
-                onError={(e) => {
-                  if (e.target.crossOrigin) {
-                    if (e.target.src !== headerStatic) {
+          </div>
+        )}
+        {uiState === 'loading' ? (
+          <>
+            <header>
+              <AccountBlock avatarSize="xxxl" skeleton />
+            </header>
+            <main>
+              <div class="note">
+                <p>███████ ████ ████</p>
+                <p>████ ████████ ██████ █████████ ████ ██</p>
+              </div>
+              <div class="account-metadata-box">
+                <div class="profile-metadata">
+                  <div class="profile-field">
+                    <b class="more-insignificant">███</b>
+                    <p>██████</p>
+                  </div>
+                  <div class="profile-field">
+                    <b class="more-insignificant">████</b>
+                    <p>███████████</p>
+                  </div>
+                </div>
+                <div class="stats">
+                  <div>
+                    <span>██</span> <Trans>Followers</Trans>
+                  </div>
+                  <div>
+                    <span>██</span>{' '}
+                    <Trans id="following.stats">Following</Trans>
+                  </div>
+                  <div>
+                    <span>██</span> <Trans>Posts</Trans>
+                  </div>
+                </div>
+              </div>
+              <div class="actions">
+                <span />
+                <span class="buttons">
+                  <button type="button" class="plain" disabled>
+                    <Icon icon="more" size="l" alt={t`More`} />
+                  </button>
+                </span>
+              </div>
+            </main>
+          </>
+        ) : (
+          info && (
+            <>
+              {!!moved && (
+                <div class="account-moved">
+                  <p>
+                    <Trans>
+                      <b>{displayName}</b> has indicated that their new account
+                      is now:
+                    </Trans>
+                  </p>
+                  <AccountBlock
+                    account={moved}
+                    instance={instance}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      states.showAccount = moved;
+                    }}
+                  />
+                </div>
+              )}
+              {!!header && !/missing\.png$/.test(header) && (
+                <img
+                  src={header}
+                  alt=""
+                  class={`header-banner ${
+                    headerIsAvatar ? 'header-is-avatar' : ''
+                  }`}
+                  onError={(e) => {
+                    if (e.target.crossOrigin) {
+                      if (e.target.src !== headerStatic) {
+                        e.target.src = headerStatic;
+                      } else {
+                        e.target.removeAttribute('crossorigin');
+                        e.target.src = header;
+                      }
+                    } else if (e.target.src !== headerStatic) {
                       e.target.src = headerStatic;
                     } else {
-                      e.target.removeAttribute('crossorigin');
-                      e.target.src = header;
+                      e.target.remove();
                     }
-                  } else if (e.target.src !== headerStatic) {
-                    e.target.src = headerStatic;
-                  } else {
-                    e.target.remove();
-                  }
-                }}
-                crossOrigin="anonymous"
-                onLoad={(e) => {
-                  e.target.classList.add('loaded');
-                  try {
-                    // Get color from four corners of image
-                    const canvas = window.OffscreenCanvas
-                      ? new OffscreenCanvas(1, 1)
-                      : document.createElement('canvas');
-                    const ctx = canvas.getContext('2d', {
-                      willReadFrequently: true,
-                    });
-                    canvas.width = e.target.width;
-                    canvas.height = e.target.height;
-                    ctx.imageSmoothingEnabled = false;
-                    ctx.drawImage(e.target, 0, 0);
-                    // const colors = [
-                    //   ctx.getImageData(0, 0, 1, 1).data,
-                    //   ctx.getImageData(e.target.width - 1, 0, 1, 1).data,
-                    //   ctx.getImageData(0, e.target.height - 1, 1, 1).data,
-                    //   ctx.getImageData(
-                    //     e.target.width - 1,
-                    //     e.target.height - 1,
-                    //     1,
-                    //     1,
-                    //   ).data,
-                    // ];
-                    // Get 10x10 pixels from corners, get average color from each
-                    const pixelDimension = 10;
-                    const colors = [
-                      ctx.getImageData(0, 0, pixelDimension, pixelDimension)
-                        .data,
-                      ctx.getImageData(
-                        e.target.width - pixelDimension,
-                        0,
-                        pixelDimension,
-                        pixelDimension,
-                      ).data,
-                      ctx.getImageData(
-                        0,
-                        e.target.height - pixelDimension,
-                        pixelDimension,
-                        pixelDimension,
-                      ).data,
-                      ctx.getImageData(
-                        e.target.width - pixelDimension,
-                        e.target.height - pixelDimension,
-                        pixelDimension,
-                        pixelDimension,
-                      ).data,
-                    ].map((data) => {
-                      let r = 0;
-                      let g = 0;
-                      let b = 0;
-                      let a = 0;
-                      for (let i = 0; i < data.length; i += 4) {
-                        r += data[i];
-                        g += data[i + 1];
-                        b += data[i + 2];
-                        a += data[i + 3];
-                      }
-                      const dataLength = data.length / 4;
-                      return [
-                        r / dataLength,
-                        g / dataLength,
-                        b / dataLength,
-                        a / dataLength,
-                      ];
-                    });
-                    const rgbColors = colors.map((color) => {
-                      const [r, g, b, a] = lightenRGB(color);
-                      return `rgba(${r}, ${g}, ${b}, ${a})`;
-                    });
-                    setHeaderCornerColors(rgbColors);
-                    console.log({ colors, rgbColors });
-                  } catch (e) {
-                    // Silently fail
-                  }
-                }}
-              />
-            )}
-            <header>
-              {standalone ? (
-                <Menu2
-                  shift={
-                    window.matchMedia('(min-width: calc(40em))').matches
-                      ? 114
-                      : 64
-                  }
-                  menuButton={
-                    <div>
-                      <AccountBlock
-                        account={info}
-                        instance={instance}
-                        avatarSize="xxxl"
-                        onClick={() => {}}
-                      />
-                    </div>
-                  }
-                >
-                  <div class="szh-menu__header">
-                    <AccountHandleInfo acct={acct} instance={instance} />
-                  </div>
-                  <MenuItem
-                    onClick={() => {
-                      const handleWithInstance = acct.includes('@')
-                        ? `@${acct}`
-                        : `@${acct}@${instance}`;
-                      try {
-                        navigator.clipboard.writeText(handleWithInstance);
-                        showToast(t`Handle copied`);
-                      } catch (e) {
-                        console.error(e);
-                        showToast(t`Unable to copy handle`);
-                      }
-                    }}
-                  >
-                    <Icon icon="link" />
-                    <span>
-                      <Trans>Copy handle</Trans>
-                    </span>
-                  </MenuItem>
-                  <MenuItem href={url} target="_blank">
-                    <Icon icon="external" />
-                    <span>
-                      <Trans>Go to original profile page</Trans>
-                    </span>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuLink href={info.avatar} target="_blank">
-                    <Icon icon="user" />
-                    <span>
-                      <Trans>View profile image</Trans>
-                    </span>
-                  </MenuLink>
-                  <MenuLink href={info.header} target="_blank">
-                    <Icon icon="media" />
-                    <span>
-                      <Trans>View profile header</Trans>
-                    </span>
-                  </MenuLink>
-                </Menu2>
-              ) : (
-                <AccountBlock
-                  account={info}
-                  instance={instance}
-                  avatarSize="xxxl"
-                  internal
+                  }}
+                  crossOrigin="anonymous"
+                  onLoad={(e) => {
+                    e.target.classList.add('loaded');
+                    try {
+                      // Get color from four corners of image
+                      const canvas = window.OffscreenCanvas
+                        ? new OffscreenCanvas(1, 1)
+                        : document.createElement('canvas');
+                      const ctx = canvas.getContext('2d', {
+                        willReadFrequently: true,
+                      });
+                      canvas.width = e.target.width;
+                      canvas.height = e.target.height;
+                      ctx.imageSmoothingEnabled = false;
+                      ctx.drawImage(e.target, 0, 0);
+                      // const colors = [
+                      //   ctx.getImageData(0, 0, 1, 1).data,
+                      //   ctx.getImageData(e.target.width - 1, 0, 1, 1).data,
+                      //   ctx.getImageData(0, e.target.height - 1, 1, 1).data,
+                      //   ctx.getImageData(
+                      //     e.target.width - 1,
+                      //     e.target.height - 1,
+                      //     1,
+                      //     1,
+                      //   ).data,
+                      // ];
+                      // Get 10x10 pixels from corners, get average color from each
+                      const pixelDimension = 10;
+                      const colors = [
+                        ctx.getImageData(0, 0, pixelDimension, pixelDimension)
+                          .data,
+                        ctx.getImageData(
+                          e.target.width - pixelDimension,
+                          0,
+                          pixelDimension,
+                          pixelDimension,
+                        ).data,
+                        ctx.getImageData(
+                          0,
+                          e.target.height - pixelDimension,
+                          pixelDimension,
+                          pixelDimension,
+                        ).data,
+                        ctx.getImageData(
+                          e.target.width - pixelDimension,
+                          e.target.height - pixelDimension,
+                          pixelDimension,
+                          pixelDimension,
+                        ).data,
+                      ].map((data) => {
+                        let r = 0;
+                        let g = 0;
+                        let b = 0;
+                        let a = 0;
+                        for (let i = 0; i < data.length; i += 4) {
+                          r += data[i];
+                          g += data[i + 1];
+                          b += data[i + 2];
+                          a += data[i + 3];
+                        }
+                        const dataLength = data.length / 4;
+                        return [
+                          r / dataLength,
+                          g / dataLength,
+                          b / dataLength,
+                          a / dataLength,
+                        ];
+                      });
+                      const rgbColors = colors.map((color) => {
+                        const [r, g, b, a] = lightenRGB(color);
+                        return `rgba(${r}, ${g}, ${b}, ${a})`;
+                      });
+                      setHeaderCornerColors(rgbColors);
+                      console.log({ colors, rgbColors });
+                    } catch (e) {
+                      // Silently fail
+                    }
+                  }}
                 />
               )}
-            </header>
-            <div class="faux-header-bg" aria-hidden="true" />
-            <main>
-              {!!memorial && (
-                <span class="tag">
-                  <Trans>In Memoriam</Trans>
-                </span>
-              )}
-              {!!bot && (
-                <span class="tag">
-                  <Icon icon="bot" /> <Trans>Automated</Trans>
-                </span>
-              )}
-              {!!group && (
-                <span class="tag">
-                  <Icon icon="group" /> <Trans>Group</Trans>
-                </span>
-              )}
-              {roles?.map((role) => (
-                <span class="tag">
-                  {role.name}
-                  {!!accountInstance && (
-                    <>
-                      {' '}
-                      <span class="more-insignificant">{accountInstance}</span>
-                    </>
-                  )}
-                </span>
-              ))}
-              <div
-                class="note"
-                dir="auto"
-                onClick={handleContentLinks({
-                  instance: currentInstance,
-                })}
-                dangerouslySetInnerHTML={{
-                  __html: enhanceContent(note, { emojis }),
-                }}
-              />
-              <div class="account-metadata-box">
-                {fields?.length > 0 && (
-                  <div class="profile-metadata">
-                    {fields.map(({ name, value, verifiedAt }, i) => (
-                      <div
-                        class={`profile-field ${
-                          verifiedAt ? 'profile-verified' : ''
-                        }`}
-                        key={name + i}
-                        dir="auto"
-                      >
-                        <b>
-                          <EmojiText text={name} emojis={emojis} />{' '}
-                          {!!verifiedAt && (
-                            <Icon
-                              icon="check-circle"
-                              size="s"
-                              alt={t`Verified`}
-                            />
-                          )}
-                        </b>
-                        <p
-                          dangerouslySetInnerHTML={{
-                            __html: enhanceContent(value, { emojis }),
-                          }}
+              <header>
+                {standalone ? (
+                  <Menu2
+                    shift={
+                      window.matchMedia('(min-width: calc(40em))').matches
+                        ? 114
+                        : 64
+                    }
+                    menuButton={
+                      <div>
+                        <AccountBlock
+                          account={info}
+                          instance={instance}
+                          avatarSize="xxxl"
+                          onClick={() => {}}
                         />
                       </div>
-                    ))}
-                  </div>
-                )}
-                <div class="stats">
-                  <LinkOrDiv
-                    tabIndex={0}
-                    to={accountLink}
-                    onClick={() => {
-                      // states.showAccount = false;
-                      setTimeout(() => {
-                        states.showGenericAccounts = {
-                          id: 'followers',
-                          heading: t`Followers`,
-                          fetchAccounts: fetchFollowers,
-                          instance,
-                          excludeRelationshipAttrs: isSelf
-                            ? ['followedBy']
-                            : [],
-                          blankCopy: hideCollections
-                            ? t`This user has chosen to not make this information available.`
-                            : undefined,
-                        };
-                      }, 0);
-                    }}
+                    }
                   >
-                    {!!familiarFollowers.length && (
-                      <span class="shazam-container-horizontal">
-                        <span class="shazam-container-inner stats-avatars-bunch">
-                          {familiarFollowers.map((follower) => (
-                            <Avatar
-                              url={follower.avatarStatic}
-                              size="s"
-                              alt={`${follower.displayName} @${follower.acct}`}
-                              squircle={follower?.bot}
-                            />
-                          ))}
-                        </span>
+                    <div class="szh-menu__header">
+                      <AccountHandleInfo acct={acct} instance={instance} />
+                    </div>
+                    <MenuItem
+                      onClick={() => {
+                        const handleWithInstance = acct.includes('@')
+                          ? `@${acct}`
+                          : `@${acct}@${instance}`;
+                        try {
+                          navigator.clipboard.writeText(handleWithInstance);
+                          showToast(t`Handle copied`);
+                        } catch (e) {
+                          console.error(e);
+                          showToast(t`Unable to copy handle`);
+                        }
+                      }}
+                    >
+                      <Icon icon="link" />
+                      <span>
+                        <Trans>Copy handle</Trans>
                       </span>
-                    )}
-                    <span title={followersCount}>
-                      {shortenNumber(followersCount)}
-                    </span>{' '}
-                    <Trans>Followers</Trans>
-                  </LinkOrDiv>
-                  <LinkOrDiv
-                    class="insignificant"
-                    tabIndex={0}
-                    to={accountLink}
-                    onClick={() => {
-                      // states.showAccount = false;
-                      setTimeout(() => {
-                        states.showGenericAccounts = {
-                          heading: t({
-                            id: 'following.stats',
-                            message: 'Following',
-                          }),
-                          fetchAccounts: fetchFollowing,
-                          instance,
-                          excludeRelationshipAttrs: isSelf ? ['following'] : [],
-                          blankCopy: hideCollections
-                            ? t`This user has chosen to not make this information available.`
-                            : undefined,
+                    </MenuItem>
+                    <MenuItem href={url} target="_blank">
+                      <Icon icon="external" />
+                      <span>
+                        <Trans>Go to original profile page</Trans>
+                      </span>
+                    </MenuItem>
+                    <MenuDivider />
+                    <MenuItem
+                      onClick={() => {
+                        states.showMediaModal = {
+                          mediaAttachments: [
+                            {
+                              type: 'image',
+                              url: avatarStatic,
+                            },
+                          ],
                         };
-                      }, 0);
-                    }}
-                  >
-                    <span title={followingCount}>
-                      {shortenNumber(followingCount)}
-                    </span>{' '}
-                    <Trans id="following.stats">Following</Trans>
-                    <br />
-                  </LinkOrDiv>
-                  <LinkOrDiv
-                    class="insignificant"
-                    to={accountLink}
-                    // onClick={
-                    //   standalone
-                    //     ? undefined
-                    //     : () => {
-                    //         hideAllModals();
-                    //       }
-                    // }
-                  >
-                    <span title={statusesCount}>
-                      {shortenNumber(statusesCount)}
-                    </span>{' '}
-                    <Trans>Posts</Trans>
-                  </LinkOrDiv>
-                  {!!createdAt && (
-                    <div class="insignificant">
-                      <Trans>
-                        Joined{' '}
-                        <time datetime={createdAt}>
-                          {niceDateTime(createdAt, {
-                            hideTime: true,
-                          })}
-                        </time>
-                      </Trans>
-                    </div>
-                  )}
-                </div>
-              </div>
-              {!!postingStats && (
-                <LinkOrDiv
-                  to={accountLink}
-                  class="account-metadata-box"
-                  // onClick={() => {
-                  //   states.showAccount = false;
-                  // }}
-                >
-                  <div class="shazam-container">
-                    <div class="shazam-container-inner">
-                      {hasPostingStats ? (
-                        <div
-                          class="posting-stats"
-                          title={t`${(
-                            postingStats.originals / postingStats.total
-                          ).toLocaleString(i18n.locale || undefined, {
-                            style: 'percent',
-                          })} original posts, ${(
-                            postingStats.replies / postingStats.total
-                          ).toLocaleString(i18n.locale || undefined, {
-                            style: 'percent',
-                          })} replies, ${(
-                            postingStats.boosts / postingStats.total
-                          ).toLocaleString(i18n.locale || undefined, {
-                            style: 'percent',
-                          })} boosts`}
-                        >
-                          <div>
-                            {postingStats.daysSinceLastPost < 365
-                              ? plural(postingStats.total, {
-                                  one: plural(postingStats.daysSinceLastPost, {
-                                    one: `Last 1 post in the past 1 day`,
-                                    other: `Last 1 post in the past ${postingStats.daysSinceLastPost} days`,
-                                  }),
-                                  other: plural(
-                                    postingStats.daysSinceLastPost,
-                                    {
-                                      one: `Last ${postingStats.total} posts in the past 1 day`,
-                                      other: `Last ${postingStats.total} posts in the past ${postingStats.daysSinceLastPost} days`,
-                                    },
-                                  ),
-                                })
-                              : plural(postingStats.total, {
-                                  one: 'Last 1 post in the past year(s)',
-                                  other: `Last ${postingStats.total} posts in the past year(s)`,
-                                })}
-                          </div>
-                          <div
-                            class="posting-stats-bar"
-                            style={{
-                              // [originals | replies | boosts]
-                              '--originals-percentage': `${
-                                (postingStats.originals / postingStats.total) *
-                                100
-                              }%`,
-                              '--replies-percentage': `${
-                                ((postingStats.originals +
-                                  postingStats.replies) /
-                                  postingStats.total) *
-                                100
-                              }%`,
-                            }}
-                          />
-                          <div class="posting-stats-legends">
-                            <span class="ib">
-                              <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
-                              <Trans>Original</Trans>
-                            </span>{' '}
-                            <span class="ib">
-                              <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
-                              <Trans>Replies</Trans>
-                            </span>{' '}
-                            <span class="ib">
-                              <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
-                              <Trans>Boosts</Trans>
-                            </span>
-                          </div>
-                        </div>
-                      ) : (
-                        <div class="posting-stats">
-                          <Trans>Post stats unavailable.</Trans>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </LinkOrDiv>
-              )}
-              {!moved && (
-                <div class="account-metadata-box">
-                  <div
-                    class="shazam-container no-animation"
-                    hidden={!!postingStats}
-                  >
-                    <div class="shazam-container-inner">
-                      <button
-                        type="button"
-                        class="posting-stats-button"
-                        disabled={postingStatsUIState === 'loading'}
+                      }}
+                    >
+                      <Icon icon="user" />
+                      <span>
+                        <Trans>View profile image</Trans>
+                      </span>
+                    </MenuItem>
+                    {!!headerStatic && !headerIsAvatar && (
+                      <MenuItem
                         onClick={() => {
-                          renderPostingStats();
+                          states.showMediaModal = {
+                            mediaAttachments: [
+                              {
+                                type: 'image',
+                                url: headerStatic,
+                              },
+                            ],
+                          };
                         }}
                       >
+                        <Icon icon="media" />
+                        <span>
+                          <Trans>View profile header</Trans>
+                        </span>
+                      </MenuItem>
+                    )}
+                    {currentAuthenticated &&
+                      isSelf &&
+                      supports('@mastodon/profile-edit') && (
+                        <>
+                          <MenuDivider />
+                          <MenuItem
+                            onClick={() => {
+                              setShowEditProfile(true);
+                            }}
+                          >
+                            <Icon icon="pencil" />
+                            <span>
+                              <Trans>Edit profile</Trans>
+                            </span>
+                          </MenuItem>
+                        </>
+                      )}
+                  </Menu2>
+                ) : (
+                  <AccountBlock
+                    account={info}
+                    instance={instance}
+                    avatarSize="xxxl"
+                    internal
+                  />
+                )}
+              </header>
+              <div class="faux-header-bg" aria-hidden="true" />
+              <main>
+                {!!memorial && (
+                  <span class="tag">
+                    <Trans>In Memoriam</Trans>
+                  </span>
+                )}
+                {!!bot && (
+                  <span class="tag">
+                    <Icon icon="bot" /> <Trans>Automated</Trans>
+                  </span>
+                )}
+                {!!group && (
+                  <span class="tag">
+                    <Icon icon="group" /> <Trans>Group</Trans>
+                  </span>
+                )}
+                {roles?.map((role) => (
+                  <span class="tag">
+                    {role.name}
+                    {!!accountInstance && (
+                      <>
+                        {' '}
+                        <span class="more-insignificant">
+                          {accountInstance}
+                        </span>
+                      </>
+                    )}
+                  </span>
+                ))}
+                <div
+                  class="note"
+                  dir="auto"
+                  onClick={handleContentLinks({
+                    instance: currentInstance,
+                  })}
+                  dangerouslySetInnerHTML={{
+                    __html: enhanceContent(note, { emojis }),
+                  }}
+                />
+                <div class="account-metadata-box">
+                  {fields?.length > 0 && (
+                    <div class="profile-metadata">
+                      {fields.map(({ name, value, verifiedAt }, i) => (
                         <div
-                          class={`posting-stats-bar posting-stats-icon ${
-                            postingStatsUIState === 'loading' ? 'loading' : ''
+                          class={`profile-field ${
+                            verifiedAt ? 'profile-verified' : ''
                           }`}
-                          style={{
-                            '--originals-percentage': '33%',
-                            '--replies-percentage': '66%',
+                          key={name + i}
+                          dir="auto"
+                        >
+                          <b>
+                            <EmojiText text={name} emojis={emojis} />{' '}
+                            {!!verifiedAt && (
+                              <Icon
+                                icon="check-circle"
+                                size="s"
+                                alt={t`Verified`}
+                              />
+                            )}
+                          </b>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html: enhanceContent(value, { emojis }),
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div class="stats">
+                    <LinkOrDiv
+                      tabIndex={0}
+                      to={accountLink}
+                      onClick={() => {
+                        // states.showAccount = false;
+                        setTimeout(() => {
+                          states.showGenericAccounts = {
+                            id: 'followers',
+                            heading: t`Followers`,
+                            fetchAccounts: fetchFollowers,
+                            instance,
+                            excludeRelationshipAttrs: isSelf
+                              ? ['followedBy']
+                              : [],
+                            blankCopy: hideCollections
+                              ? t`This user has chosen to not make this information available.`
+                              : undefined,
+                          };
+                        }, 0);
+                      }}
+                    >
+                      {!!familiarFollowers.length && (
+                        <span class="shazam-container-horizontal">
+                          <span class="shazam-container-inner stats-avatars-bunch">
+                            {familiarFollowers.map((follower) => (
+                              <Avatar
+                                url={follower.avatarStatic}
+                                size="s"
+                                alt={`${follower.displayName} @${follower.acct}`}
+                                squircle={follower?.bot}
+                              />
+                            ))}
+                          </span>
+                        </span>
+                      )}
+                      <Plural
+                        value={followersCount}
+                        one={
+                          <Trans>
+                            <span title={followersCount}>
+                              {shortenNumber(followersCount)}
+                            </span>{' '}
+                            Follower
+                          </Trans>
+                        }
+                        other={
+                          <Trans>
+                            <span title={followersCount}>
+                              {shortenNumber(followersCount)}
+                            </span>{' '}
+                            Followers
+                          </Trans>
+                        }
+                      />
+                    </LinkOrDiv>
+                    <LinkOrDiv
+                      class="insignificant"
+                      tabIndex={0}
+                      to={accountLink}
+                      onClick={() => {
+                        // states.showAccount = false;
+                        setTimeout(() => {
+                          states.showGenericAccounts = {
+                            heading: t({
+                              id: 'following.stats',
+                              message: 'Following',
+                            }),
+                            fetchAccounts: fetchFollowing,
+                            instance,
+                            excludeRelationshipAttrs: isSelf
+                              ? ['following']
+                              : [],
+                            blankCopy: hideCollections
+                              ? t`This user has chosen to not make this information available.`
+                              : undefined,
+                          };
+                        }, 0);
+                      }}
+                    >
+                      <Plural
+                        value={followingCount}
+                        other={
+                          <Trans>
+                            <span title={followingCount}>
+                              {shortenNumber(followingCount)}
+                            </span>{' '}
+                            Following
+                          </Trans>
+                        }
+                      />
+                      <br />
+                    </LinkOrDiv>
+                    <LinkOrDiv
+                      class="insignificant"
+                      to={accountLink}
+                      // onClick={
+                      //   standalone
+                      //     ? undefined
+                      //     : () => {
+                      //         hideAllModals();
+                      //       }
+                      // }
+                    >
+                      <Plural
+                        value={statusesCount}
+                        one={
+                          <Trans>
+                            <span title={statusesCount}>
+                              {shortenNumber(statusesCount)}
+                            </span>{' '}
+                            Post
+                          </Trans>
+                        }
+                        other={
+                          <Trans>
+                            <span title={statusesCount}>
+                              {shortenNumber(statusesCount)}
+                            </span>{' '}
+                            Posts
+                          </Trans>
+                        }
+                      />
+                    </LinkOrDiv>
+                    {!!createdAt && (
+                      <div class="insignificant">
+                        <Trans>
+                          Joined{' '}
+                          <time datetime={createdAt}>
+                            {niceDateTime(createdAt, {
+                              hideTime: true,
+                            })}
+                          </time>
+                        </Trans>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {!!postingStats && (
+                  <LinkOrDiv
+                    to={accountLink}
+                    class="account-metadata-box"
+                    // onClick={() => {
+                    //   states.showAccount = false;
+                    // }}
+                  >
+                    <div class="shazam-container">
+                      <div class="shazam-container-inner">
+                        {hasPostingStats ? (
+                          <div
+                            class="posting-stats"
+                            title={t`${(
+                              postingStats.originals / postingStats.total
+                            ).toLocaleString(i18n.locale || undefined, {
+                              style: 'percent',
+                            })} original posts, ${(
+                              postingStats.replies / postingStats.total
+                            ).toLocaleString(i18n.locale || undefined, {
+                              style: 'percent',
+                            })} replies, ${(
+                              postingStats.boosts / postingStats.total
+                            ).toLocaleString(i18n.locale || undefined, {
+                              style: 'percent',
+                            })} boosts`}
+                          >
+                            <div>
+                              {postingStats.daysSinceLastPost < 365
+                                ? plural(postingStats.total, {
+                                    one: plural(
+                                      postingStats.daysSinceLastPost,
+                                      {
+                                        one: `Last 1 post in the past 1 day`,
+                                        other: `Last 1 post in the past ${postingStats.daysSinceLastPost} days`,
+                                      },
+                                    ),
+                                    other: plural(
+                                      postingStats.daysSinceLastPost,
+                                      {
+                                        one: `Last ${postingStats.total} posts in the past 1 day`,
+                                        other: `Last ${postingStats.total} posts in the past ${postingStats.daysSinceLastPost} days`,
+                                      },
+                                    ),
+                                  })
+                                : plural(postingStats.total, {
+                                    one: 'Last 1 post in the past year(s)',
+                                    other: `Last ${postingStats.total} posts in the past year(s)`,
+                                  })}
+                            </div>
+                            <div
+                              class="posting-stats-bar"
+                              style={{
+                                // [originals | replies | boosts]
+                                '--originals-percentage': `${
+                                  (postingStats.originals /
+                                    postingStats.total) *
+                                  100
+                                }%`,
+                                '--replies-percentage': `${
+                                  ((postingStats.originals +
+                                    postingStats.replies) /
+                                    postingStats.total) *
+                                  100
+                                }%`,
+                              }}
+                            />
+                            <div class="posting-stats-legends">
+                              <span class="ib">
+                                <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
+                                <Trans>Original</Trans>
+                              </span>{' '}
+                              <span class="ib">
+                                <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
+                                <Trans>Replies</Trans>
+                              </span>{' '}
+                              <span class="ib">
+                                <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
+                                <Trans>Boosts</Trans>
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div class="posting-stats">
+                            <Trans>Post stats unavailable.</Trans>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </LinkOrDiv>
+                )}
+                {!moved && (
+                  <div class="account-metadata-box">
+                    <div
+                      class="shazam-container no-animation"
+                      hidden={!!postingStats}
+                    >
+                      <div class="shazam-container-inner">
+                        <button
+                          type="button"
+                          class="posting-stats-button"
+                          disabled={postingStatsUIState === 'loading'}
+                          onClick={() => {
+                            renderPostingStats();
                           }}
-                        />
-                        <Trans>View post stats</Trans>{' '}
-                        {/* <Loader
+                        >
+                          <div
+                            class={`posting-stats-bar posting-stats-icon ${
+                              postingStatsUIState === 'loading' ? 'loading' : ''
+                            }`}
+                            style={{
+                              '--originals-percentage': '33%',
+                              '--replies-percentage': '66%',
+                            }}
+                          />
+                          <Trans>View post stats</Trans>{' '}
+                          {/* <Loader
                         abrupt
                         hidden={postingStatsUIState !== 'loading'}
                       /> */}
-                      </button>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </main>
-            <footer>
-              <RelatedActions
+                )}
+              </main>
+              <footer>
+                <RelatedActions
+                  info={info}
+                  instance={instance}
+                  standalone={standalone}
+                  authenticated={authenticated}
+                  onRelationshipChange={onRelationshipChange}
+                  onProfileUpdate={onProfileUpdate}
+                  setShowEditProfile={setShowEditProfile}
+                  showEndorsements={showEndorsements}
+                  renderEndorsements={renderEndorsements}
+                  setRenderEndorsements={setRenderEndorsements}
+                />
+              </footer>
+              <Endorsements
+                accountID={id}
                 info={info}
-                instance={instance}
-                standalone={standalone}
-                authenticated={authenticated}
-                onRelationshipChange={onRelationshipChange}
-                onProfileUpdate={onProfileUpdate}
+                open={renderEndorsements}
+                onlyOpenIfHasEndorsements={
+                  renderEndorsements === 'onlyOpenIfHasEndorsements'
+                }
               />
-            </footer>
-          </>
-        )
+            </>
+          )
+        )}
+      </div>
+      {!!showEditProfile && (
+        <Modal
+          onClose={() => {
+            setShowEditProfile(false);
+          }}
+        >
+          <EditProfileSheet
+            onClose={({ state, account } = {}) => {
+              setShowEditProfile(false);
+              if (state === 'success' && account) {
+                onProfileUpdate(account);
+              }
+            }}
+          />
+        </Modal>
       )}
-    </div>
+    </>
   );
 }
 
@@ -941,6 +1082,10 @@ function RelatedActions({
   authenticated,
   onRelationshipChange = () => {},
   onProfileUpdate = () => {},
+  setShowEditProfile = () => {},
+  showEndorsements = false,
+  renderEndorsements = false,
+  setRenderEndorsements = () => {},
 }) {
   if (!info) return null;
   const { _, t } = useLingui();
@@ -978,6 +1123,8 @@ function RelatedActions({
 
   const acctWithInstance = acct.includes('@') ? acct : `${acct}@${instance}`;
 
+  const supportsEndorsements = supports('@mastodon/endorsements');
+
   useEffect(() => {
     if (info) {
       const currentAccount = getCurrentAccountID();
@@ -989,7 +1136,7 @@ function RelatedActions({
           // Grab this account from my logged-in instance
           const acctHasInstance = info.acct.includes('@');
           try {
-            const results = await currentMasto.v2.search.fetch({
+            const results = await currentMasto.v2.search.list({
               q: acctHasInstance ? info.acct : `${info.username}@${instance}`,
               type: 'accounts',
               limit: 1,
@@ -1054,7 +1201,6 @@ function RelatedActions({
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
   const [showPrivateNoteModal, setShowPrivateNoteModal] = useState(false);
-  const [showEditProfile, setShowEditProfile] = useState(false);
   const [lists, setLists] = useState([]);
 
   return (
@@ -1139,7 +1285,7 @@ function RelatedActions({
               }
             }}
           >
-            {currentAuthenticated && !isSelf && (
+            {currentAuthenticated && !isSelf ? (
               <>
                 <MenuItem
                   onClick={() => {
@@ -1243,6 +1389,65 @@ function RelatedActions({
                     </MenuItem>
                   </>
                 )}
+                {supportsEndorsements && following && (
+                  <MenuItem
+                    onClick={() => {
+                      setRelationshipUIState('loading');
+                      (async () => {
+                        try {
+                          if (endorsed) {
+                            const newRelationship =
+                              await currentMasto.v1.accounts
+                                .$select(currentInfo?.id || id)
+                                .unpin();
+                            setRelationship(newRelationship);
+                            setRelationshipUIState('default');
+                            showToast(
+                              t`@${username} is no longer featured on your profile.`,
+                            );
+                          } else {
+                            const newRelationship =
+                              await currentMasto.v1.accounts
+                                .$select(currentInfo?.id || id)
+                                .pin();
+                            setRelationship(newRelationship);
+                            setRelationshipUIState('default');
+                            showToast(
+                              t`@${username} is now featured on your profile.`,
+                            );
+                          }
+                        } catch (e) {
+                          console.error(e);
+                          setRelationshipUIState('error');
+                          if (endorsed) {
+                            showToast(
+                              t`Unable to unfeature @${username} on your profile.`,
+                            );
+                          } else {
+                            showToast(
+                              t`Unable to feature @${username} on your profile.`,
+                            );
+                          }
+                        }
+                      })();
+                    }}
+                  >
+                    <Icon icon="endorsement" />
+                    {endorsed
+                      ? t`Don't feature on profile`
+                      : t`Feature on profile`}
+                  </MenuItem>
+                )}
+                {showEndorsements &&
+                  supportsEndorsements &&
+                  !renderEndorsements && (
+                    <MenuItem onClick={() => setRenderEndorsements(true)}>
+                      <Icon icon="endorsement" />
+                      <span>
+                        <Trans>Show featured profiles</Trans>
+                      </span>
+                    </MenuItem>
+                  )}
                 {/* Add/remove from lists is only possible if following the account */}
                 {following && (
                   <MenuItem
@@ -1271,6 +1476,17 @@ function RelatedActions({
                 )}
                 <MenuDivider />
               </>
+            ) : (
+              supportsEndorsements &&
+              !renderEndorsements && (
+                <>
+                  <MenuItem onClick={() => setRenderEndorsements(true)}>
+                    <Icon icon="endorsement" />
+                    Show featured profiles
+                  </MenuItem>
+                  <MenuDivider />
+                </>
+              )
             )}
             <MenuItem
               onClick={() => {
@@ -1654,7 +1870,14 @@ function RelatedActions({
                         .follow();
                     }
 
-                    if (newRelationship) setRelationship(newRelationship);
+                    if (newRelationship) {
+                      setRelationship(newRelationship);
+
+                      // Show endorsements if start following
+                      if (newRelationship.following) {
+                        setRenderEndorsements('onlyOpenIfHasEndorsements');
+                      }
+                    }
                     setRelationshipUIState('default');
                   } catch (e) {
                     alert(e);
@@ -1744,22 +1967,6 @@ function RelatedActions({
           />
         </Modal>
       )}
-      {!!showEditProfile && (
-        <Modal
-          onClose={() => {
-            setShowEditProfile(false);
-          }}
-        >
-          <EditProfileSheet
-            onClose={({ state, account } = {}) => {
-              setShowEditProfile(false);
-              if (state === 'success' && account) {
-                onProfileUpdate(account);
-              }
-            }}
-          />
-        </Modal>
-      )}
     </>
   );
 }
@@ -1783,6 +1990,7 @@ function lightenRGB([r, g, b]) {
 function niceAccountURL(url) {
   if (!url) return;
   const urlObj = URL.parse(url);
+  if (!urlObj) return;
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '').replace(/^\//, '');
   return (
@@ -2069,11 +2277,21 @@ function PrivateNoteSheet({
   );
 }
 
+const SUPPORTED_IMAGE_FORMATS = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+];
+const SUPPORTED_IMAGE_FORMATS_STR = SUPPORTED_IMAGE_FORMATS.join(',');
+
 function EditProfileSheet({ onClose = () => {} }) {
   const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('loading');
   const [account, setAccount] = useState(null);
+  const [headerPreview, setHeaderPreview] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -2089,9 +2307,18 @@ function EditProfileSheet({ onClose = () => {} }) {
   }, []);
 
   console.log('EditProfileSheet', account);
-  const { displayName, source } = account || {};
+  const { displayName, source, avatar, header } = account || {};
   const { note, fields } = source || {};
   const fieldsAttributesRef = useRef(null);
+
+  const avatarMediaAttachments = [
+    ...(avatar ? [{ type: 'image', url: avatar }] : []),
+    ...(avatarPreview ? [{ type: 'image', url: avatarPreview }] : []),
+  ];
+  const headerMediaAttachments = [
+    ...(header ? [{ type: 'image', url: header }] : []),
+    ...(headerPreview ? [{ type: 'image', url: headerPreview }] : []),
+  ];
 
   return (
     <div class="sheet" id="edit-profile-container">
@@ -2115,6 +2342,8 @@ function EditProfileSheet({ onClose = () => {} }) {
             onSubmit={(e) => {
               e.preventDefault();
               const formData = new FormData(e.target);
+              const header = formData.get('header');
+              const avatar = formData.get('avatar');
               const displayName = formData.get('display_name');
               const note = formData.get('note');
               const fieldsAttributesFields =
@@ -2142,6 +2371,8 @@ function EditProfileSheet({ onClose = () => {} }) {
               (async () => {
                 try {
                   const newAccount = await masto.v1.accounts.updateCredentials({
+                    header,
+                    avatar,
                     displayName,
                     note,
                     fieldsAttributes,
@@ -2158,6 +2389,110 @@ function EditProfileSheet({ onClose = () => {} }) {
               })();
             }}
           >
+            <div class="edit-profile-media-container">
+              <label>
+                <Trans>Header picture</Trans>{' '}
+                <input
+                  type="file"
+                  name="header"
+                  accept={SUPPORTED_IMAGE_FORMATS_STR}
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const blob = URL.createObjectURL(file);
+                      setHeaderPreview(blob);
+                    }
+                  }}
+                />
+              </label>
+              <div class="edit-profile-media-field">
+                {header ? (
+                  <div
+                    class="edit-media"
+                    tabIndex="0"
+                    onClick={() => {
+                      states.showMediaModal = {
+                        mediaAttachments: headerMediaAttachments,
+                        mediaIndex: 0,
+                      };
+                    }}
+                  >
+                    <img src={header} alt="" />
+                  </div>
+                ) : (
+                  <div class="edit-media"></div>
+                )}
+                {headerPreview && (
+                  <>
+                    <Icon icon="arrow-right" />
+                    <div
+                      class="edit-media"
+                      tabIndex="0"
+                      onClick={() => {
+                        states.showMediaModal = {
+                          mediaAttachments: headerMediaAttachments,
+                          mediaIndex: 1,
+                        };
+                      }}
+                    >
+                      <img src={headerPreview} alt="" />
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+            <div class="edit-profile-media-container">
+              <label>
+                <Trans>Profile picture</Trans>{' '}
+                <input
+                  type="file"
+                  name="avatar"
+                  accept={SUPPORTED_IMAGE_FORMATS_STR}
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const blob = URL.createObjectURL(file);
+                      setAvatarPreview(blob);
+                    }
+                  }}
+                />
+              </label>
+              <div class="edit-profile-media-field">
+                {avatar ? (
+                  <div
+                    class="edit-media"
+                    tabIndex="0"
+                    onClick={() => {
+                      states.showMediaModal = {
+                        mediaAttachments: avatarMediaAttachments,
+                        mediaIndex: 0,
+                      };
+                    }}
+                  >
+                    <img src={avatar} alt="" />
+                  </div>
+                ) : (
+                  <div class="edit-media"></div>
+                )}
+                {avatarPreview && (
+                  <>
+                    <Icon icon="arrow-right" />
+                    <div
+                      class="edit-media"
+                      tabIndex="0"
+                      onClick={() => {
+                        states.showMediaModal = {
+                          mediaAttachments: avatarMediaAttachments,
+                          mediaIndex: 1,
+                        };
+                      }}
+                    >
+                      <img src={avatarPreview} alt="" />
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
             <p>
               <label>
                 <Trans>Name</Trans>{' '}
@@ -2288,6 +2623,100 @@ function AccountHandleInfo({ acct, instance }) {
           <span class="handle-legend-icon server" />{' '}
           <Trans>server domain name</Trans>
         </span>
+      </div>
+    </div>
+  );
+}
+
+function Endorsements({
+  accountID: id,
+  info,
+  open = false,
+  onlyOpenIfHasEndorsements = false,
+}) {
+  const { masto } = api();
+  const endorsementsContainer = useRef();
+  const [endorsementsUIState, setEndorsementsUIState] = useState('default');
+  const [endorsements, setEndorsements] = useState([]);
+  const [relationshipsMap, setRelationshipsMap] = useState({});
+  useEffect(() => {
+    if (!supports('@mastodon/endorsements')) return;
+    if (!open) return;
+    (async () => {
+      setEndorsementsUIState('loading');
+      try {
+        const accounts = await masto.v1.accounts.$select(id).endorsements.list({
+          limit: ENDORSEMENTS_LIMIT,
+        });
+        console.log({ endorsements: accounts });
+        if (!accounts.length) {
+          setEndorsementsUIState('default');
+          return;
+        }
+        setEndorsements(accounts);
+        setEndorsementsUIState('default');
+        setTimeout(() => {
+          endorsementsContainer.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }, 300);
+
+        const relationships = await fetchRelationships(
+          accounts,
+          relationshipsMap,
+        );
+        if (relationships) {
+          setRelationshipsMap(relationships);
+        }
+      } catch (e) {
+        console.error(e);
+        setEndorsementsUIState('error');
+      }
+    })();
+  }, [open, id]);
+
+  const reallyOpen = onlyOpenIfHasEndorsements
+    ? open && endorsements.length > 0
+    : open;
+
+  if (!reallyOpen) return null;
+
+  return (
+    <div class="shazam-container">
+      <div class="shazam-container-inner">
+        <div class="endorsements-container" ref={endorsementsContainer}>
+          <h3>
+            <Trans>Profiles featured by @{info.username}</Trans>
+          </h3>
+          {endorsementsUIState === 'loading' ? (
+            <p class="ui-state">
+              <Loader abrupt />
+            </p>
+          ) : endorsements.length > 0 ? (
+            <ul
+              class={`endorsements ${
+                endorsements.length > 10 ? 'expanded' : ''
+              }`}
+            >
+              {endorsements.map((account) => (
+                <li>
+                  <AccountBlock
+                    key={account.id}
+                    account={account}
+                    showStats
+                    avatarSize="xxl"
+                    relationship={relationshipsMap[account.id]}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="ui-state insignificant">
+              <Trans>No featured profiles.</Trans>
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

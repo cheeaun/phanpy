@@ -13,11 +13,12 @@ import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
 import i18nDuration from '../utils/i18n-duration';
+import { getAPIVersions } from '../utils/store-utils';
 import useInterval from '../utils/useInterval';
 import useTitle from '../utils/useTitle';
 
 const FILTER_CONTEXT = ['home', 'public', 'notifications', 'thread', 'account'];
-const FILTER_CONTEXT_UNIMPLEMENTED = ['notifications', 'thread', 'account'];
+const FILTER_CONTEXT_UNIMPLEMENTED = ['thread', 'account'];
 const FILTER_CONTEXT_LABELS = {
   home: msg`Home and lists`,
   notifications: msg`Notifications`,
@@ -525,12 +526,27 @@ function FiltersAddEdit({ filter, onClose }) {
               <p>
                 <Trans>Filtered post will be…</Trans>
                 <br />
+                {getAPIVersions()?.mastodon >= 5 && (
+                  <label class="ib">
+                    <input
+                      type="radio"
+                      name="filter_action"
+                      value="blur"
+                      defaultChecked={filterAction === 'blur'}
+                      disabled={uiState === 'loading'}
+                    />{' '}
+                    <Trans>obscured (media only)</Trans>
+                  </label>
+                )}{' '}
                 <label class="ib">
                   <input
                     type="radio"
                     name="filter_action"
                     value="warn"
-                    defaultChecked={filterAction === 'warn' || !editMode}
+                    defaultChecked={
+                      (filterAction !== 'hide' && filterAction !== 'blur') ||
+                      !editMode
+                    }
                     disabled={uiState === 'loading'}
                   />{' '}
                   <Trans>minimized</Trans>

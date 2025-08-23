@@ -2,7 +2,7 @@ import './app.css';
 
 import { useLingui } from '@lingui/react';
 import debounce from 'just-debounce-it';
-import { memo } from 'preact/compat';
+import { lazy, memo, Suspense } from 'preact/compat';
 import {
   useEffect,
   useLayoutEffect,
@@ -43,6 +43,7 @@ import Login from './pages/login';
 import Mentions from './pages/mentions';
 import Notifications from './pages/notifications';
 import Public from './pages/public';
+import ScheduledPosts from './pages/scheduled-posts';
 import Search from './pages/search';
 import StatusRoute from './pages/status-route';
 import Trending from './pages/trending';
@@ -62,11 +63,19 @@ import states, { initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import {
   getAccount,
+  getCredentialApplication,
   getCurrentAccount,
+  getVapidKey,
   setCurrentAccountID,
 } from './utils/store-utils';
 
 import './utils/toast-alert';
+
+// Lazy load Sandbox component only in development
+const Sandbox =
+  import.meta.env.DEV || import.meta.env.PHANPY_DEV
+    ? lazy(() => import('./pages/sandbox'))
+    : () => null;
 
 window.__STATES__ = states;
 window.__STATES_STATS__ = () => {
@@ -336,6 +345,29 @@ window.__BENCHMARK = {
   },
 };
 
+if (import.meta.env.DEV) {
+  // If press shift down, set --time-scale to 10 in root
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Shift') {
+      document.documentElement.classList.add('slow-mo');
+    }
+  });
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'Shift') {
+      document.documentElement.classList.remove('slow-mo');
+    }
+  });
+}
+
+{
+  // Temporary Experiments
+  // May be removed in the future
+  document.body.classList.toggle(
+    'exp-tab-bar-v2',
+    store.local.get('experiments-tabBarV2') ?? false,
+  );
+}
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
@@ -360,9 +392,12 @@ function App() {
         window.location.pathname || '/',
       );
 
-      const clientID = store.sessionCookie.get('clientID');
-      const clientSecret = store.sessionCookie.get('clientSecret');
-      const vapidKey = store.sessionCookie.get('vapidKey');
+      const {
+        client_id: clientID,
+        client_secret: clientSecret,
+        vapid_key,
+      } = getCredentialApplication(instanceURL) || {};
+      const vapidKey = getVapidKey(instanceURL) || vapid_key;
       const verifier = store.sessionCookie.get('codeVerifier');
 
       (async () => {
@@ -496,7 +531,7 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/^\/(login|welcome)/i.test(pathname);
+    return !/^\/(login|welcome|_sandbox)/i.test(pathname);
   }, [location]);
 
   return (
@@ -504,6 +539,16 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
       <Route path="/" element={<Root isLoggedIn={isLoggedIn} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
+      {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
+        <Route
+          path="/_sandbox"
+          element={
+            <Suspense fallback={<Loader id="loader-sandbox" />}>
+              <Sandbox />
+            </Suspense>
+          }
+        />
+      )}
     </Routes>
   );
 });
@@ -548,6 +593,7 @@ function SecondaryRoutes({ isLoggedIn }) {
             <Route path=":id" element={<List />} />
           </Route>
           <Route path="/fh" element={<FollowedHashtags />} />
+          <Route path="/sp" element={<ScheduledPosts />} />
           <Route path="/ft" element={<Filters />} />
           <Route path="/catchup" element={<Catchup />} />
           <Route path="/annual_report/:year" element={<AnnualReport />} />

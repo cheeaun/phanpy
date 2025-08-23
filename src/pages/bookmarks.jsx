@@ -14,7 +14,9 @@ function Bookmarks() {
   const bookmarksIterator = useRef();
   async function fetchBookmarks(firstLoad) {
     if (firstLoad || !bookmarksIterator.current) {
-      bookmarksIterator.current = masto.v1.bookmarks.list({ limit: LIMIT });
+      bookmarksIterator.current = masto.v1.bookmarks
+        .list({ limit: LIMIT })
+        .values();
     }
     return await bookmarksIterator.current.next();
   }

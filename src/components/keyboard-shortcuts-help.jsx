@@ -19,15 +19,16 @@ export default memo(function KeyboardShortcutsHelp() {
   }
 
   useHotkeys(
-    '?, shift+?, shift+slash',
-    (e) => {
+    '?',
+    () => {
       console.log('help');
       states.showKeyboardShortcutsHelp = true;
     },
     {
+      useKey: true,
       ignoreEventWhen: (e) => {
         const isCatchUpPage = /\/catchup/i.test(location.hash);
-        return isCatchUpPage;
+        return isCatchUpPage || e.metaKey || e.ctrlKey || e.altKey;
         // const hasModal = !!document.querySelector('#modal-container > *');
         // return hasModal;
       },

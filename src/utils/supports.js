@@ -20,6 +20,7 @@ const platformFeatures = {
   '@mastodon/post-edit': notContainPixelfed,
   '@mastodon/profile-edit': notContainPixelfed,
   '@mastodon/profile-private-note': notContainPixelfed,
+  '@mastodon/pinned-posts': notContainPixelfed,
   '@pixelfed/trending': containPixelfed,
   '@pixelfed/home-include-reblogs': containPixelfed,
   '@pixelfed/global-feed': containPixelfed,

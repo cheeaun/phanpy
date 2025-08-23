@@ -19,6 +19,10 @@
       font-size: 1em;
     }
   }
+
+  & ~ #compose-button {
+    display: none;
+  }
 }
 
 #filters-add-edit-modal {

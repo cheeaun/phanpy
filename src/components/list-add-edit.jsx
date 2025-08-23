@@ -6,6 +6,7 @@ import { addListStore, deleteListStore, updateListStore } from '../utils/lists';
 import supports from '../utils/supports';
 
 import Icon from './icon';
+import ListExclusiveBadge from './list-exclusive-badge';
 import MenuConfirm from './menu-confirm';
 
 function ListAddEdit({ list, onClose }) {
@@ -141,6 +142,7 @@ function ListAddEdit({ list, onClose }) {
                   name="exclusive"
                   disabled={uiState === 'loading'}
                 />{' '}
+                <ListExclusiveBadge insignificant />{' '}
                 <Trans>Hide posts on this list from Home/Following</Trans>
               </label>
             </div>

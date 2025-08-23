@@ -27,7 +27,7 @@ export default function Poll({
     ownVotes,
     voted,
     votersCount,
-    votesCount,
+    votesCount = 0,
     emojis,
   } = poll;
   const expiresAtDate = !!expiresAt && new Date(expiresAt); // Update poll at point of expiry
@@ -52,7 +52,7 @@ export default function Poll({
   //   };
   // }, [expired, expiresAtDate]);
 
-  const pollVotesCount = multiple ? votersCount : votesCount;
+  const pollVotesCount = multiple ? votersCount || votesCount : votesCount;
   let roundPrecision = 0;
 
   if (pollVotesCount <= 1000) {

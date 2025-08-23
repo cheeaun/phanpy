@@ -23,6 +23,7 @@ import Avatar from '../components/avatar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
+import { getSafeViewTransitionName } from '../components/media';
 import MediaModal from '../components/media-modal';
 import Menu2 from '../components/menu2';
 import NameText from '../components/name-text';
@@ -39,7 +40,6 @@ import states, {
 } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { getCurrentAccount } from '../utils/store-utils';
-import useScroll from '../utils/useScroll';
 import useTitle from '../utils/useTitle';
 
 import getInstanceStatusURL from './../utils/get-instance-status-url';
@@ -71,6 +71,8 @@ const STATUSES_SELECTOR =
   '.status-link:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *), .status-focus:not(details:not([open]) > summary ~ *, details:not([open]) > summary ~ * *)';
 
 const STATUS_URL_REGEX = /\/s\//i;
+
+import { ThreadCountContext } from '../utils/thread-count-context';
 
 function StatusPage(params) {
   const { t } = useLingui();
@@ -129,11 +131,16 @@ function StatusPage(params) {
     ? snapStates.statuses[statusKey(mediaStatusID, instance)]?.mediaAttachments
     : heroStatus?.mediaAttachments;
 
-  const handleMediaClose = useCallback(() => {
-    if (
-      !window.matchMedia('(min-width: calc(40em + 350px))').matches &&
-      snapStates.prevLocation
-    ) {
+  const postViewState = () =>
+    window.matchMedia('(min-width: calc(40em + 350px))').matches
+      ? 'large'
+      : 'small';
+  const mediaClose = useCallback(() => {
+    console.log('xxx', {
+      postViewState: postViewState(),
+      showMediaOnly,
+    });
+    if (postViewState() === 'small' && snapStates.prevLocation) {
       history.back();
     } else {
       if (showMediaOnly) {
@@ -145,6 +152,60 @@ function StatusPage(params) {
       }
     }
   }, [showMediaOnly, closeLink, snapStates.prevLocation]);
+  const handleMediaClose = useCallback(
+    (e, currentIndex, mediaAttachments, carouselRef) => {
+      if (postViewState() === 'large' && !showMediaOnly) {
+        mediaClose();
+        return;
+      }
+      if (showMedia && document.startViewTransition) {
+        const media = mediaAttachments[currentIndex];
+        const { id, blurhash, url } = media;
+        const mediaVTN = getSafeViewTransitionName(id || blurhash || url);
+        const els = document.querySelectorAll(
+          `.status .media [data-view-transition-name="${mediaVTN}"]`,
+        );
+        const foundEls = [...els]?.filter?.((el) => {
+          const elBounds = el.getBoundingClientRect();
+          return (
+            elBounds.top < window.innerHeight &&
+            elBounds.bottom > 0 &&
+            elBounds.left < window.innerWidth &&
+            elBounds.right > 0
+          );
+        });
+        // If more than one, get the one in status page
+        const el =
+          foundEls.length === 1
+            ? foundEls[0]
+            : foundEls.find((el) => !!el.closest('.status-deck'));
+
+        console.log('xxx', { media, id, els, el });
+        if (el) {
+          const transition = document.startViewTransition(() => {
+            el.style.viewTransitionName = mediaVTN;
+            if (carouselRef?.current) {
+              carouselRef.current
+                .querySelectorAll('.media img, .media video')
+                ?.forEach((el) => {
+                  el.style.viewTransitionName = '';
+                });
+            }
+            mediaClose();
+          });
+          transition.ready.finally(() => {
+            el.style.viewTransitionName = '';
+            el.dataset.viewTransitioned = mediaVTN;
+          });
+        } else {
+          mediaClose();
+        }
+      } else {
+        mediaClose();
+      }
+    },
+    [showMedia, showMediaOnly],
+  );
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -268,6 +329,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
   const scrollOffsets = useRef();
   const lastInitContextTS = useRef();
+  const [threadsCount, setThreadsCount] = useState(0);
   const initContext = ({ reloadHero } = {}) => {
     console.debug('initContext', id);
     setUIState('loading');
@@ -351,7 +413,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         const nestedDescendants = [];
         descendants.forEach((status) => {
           saveStatus(status, instance, {
-            skipThreading: true,
+            // skipThreading: true,
           });
 
           if (
@@ -426,6 +488,16 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           }));
         }
 
+        const mappedNestedDescendants = nestedDescendants.map((s) => ({
+          id: s.id,
+          account: s.account,
+          accountID: s.account.id,
+          descendant: true,
+          thread: s.account.id === heroStatus.account.id,
+          weight: calcStatusWeight(s),
+          level: 1,
+          replies: expandReplies(s.__replies, 1),
+        }));
         const allStatuses = [
           ...ancestors.map((s) => ({
             id: s.id,
@@ -441,17 +513,19 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             accountID: heroStatus.account.id,
             weight: calcStatusWeight(heroStatus),
           },
-          ...nestedDescendants.map((s) => ({
-            id: s.id,
-            account: s.account,
-            accountID: s.account.id,
-            descendant: true,
-            thread: s.account.id === heroStatus.account.id,
-            weight: calcStatusWeight(s),
-            level: 1,
-            replies: expandReplies(s.__replies, 1),
-          })),
+          ...mappedNestedDescendants,
         ];
+
+        const descendantsThread =
+          ancestors.length && !ancestorsIsThread
+            ? []
+            : mappedNestedDescendants.filter((s) => s.thread);
+        const threadsCount =
+          (ancestorsIsThread ? ancestors.length : 0) + descendantsThread.length;
+        if (threadsCount) {
+          // Include hero as part of thread count
+          setThreadsCount(threadsCount + 1);
+        }
 
         setUIState('default');
         scrollOffsets.current = {
@@ -607,7 +681,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     if (!heroStatus) return;
     const { url } = heroStatus;
     if (!url) return;
-    return URL.parse(url).hostname;
+    return URL.parse(url)?.hostname;
   }, [heroStatus]);
   const postSameInstance = useMemo(() => {
     if (!postInstance) return;
@@ -642,93 +716,122 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       enabled: !showMedia,
       ignoreEventWhen: (e) => {
         const hasModal = !!document.querySelector('#modal-container > *');
-        return hasModal;
+        return hasModal || e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
       },
+      useKey: true,
     },
   );
   // For backspace, will always close both media and status page
-  useHotkeys('backspace', () => {
-    location.hash = closeLink;
-  });
+  useHotkeys(
+    'backspace',
+    () => {
+      location.hash = closeLink;
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
-  useHotkeys('j', () => {
-    const activeStatus = document.activeElement.closest(
-      '.status-link, .status-focus',
-    );
-    const activeStatusRect = activeStatus?.getBoundingClientRect();
-    const allStatusLinks = Array.from(
-      scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
-    );
-    console.log({ allStatusLinks });
-    if (
-      activeStatus &&
-      activeStatusRect.top < scrollableRef.current.clientHeight &&
-      activeStatusRect.bottom > 0
-    ) {
-      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
-      let nextStatus = allStatusLinks[activeStatusIndex + 1];
-      if (nextStatus) {
-        nextStatus.focus();
-        nextStatus.scrollIntoView(scrollIntoViewOptions);
+  useHotkeys(
+    'j',
+    () => {
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
+      );
+      const activeStatusRect = activeStatus?.getBoundingClientRect();
+      const allStatusLinks = Array.from(
+        scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
+      );
+      console.log({ allStatusLinks });
+      if (
+        activeStatus &&
+        activeStatusRect.top < scrollableRef.current.clientHeight &&
+        activeStatusRect.bottom > 0
+      ) {
+        const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+        let nextStatus = allStatusLinks[activeStatusIndex + 1];
+        if (nextStatus) {
+          nextStatus.focus();
+          nextStatus.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        // If active status is not in viewport, get the topmost status-link in viewport
+        const topmostStatusLink = allStatusLinks.find((statusLink) => {
+          const statusLinkRect = statusLink.getBoundingClientRect();
+          return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+        });
+        if (topmostStatusLink) {
+          topmostStatusLink.focus();
+          topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      // If active status is not in viewport, get the topmost status-link in viewport
-      const topmostStatusLink = allStatusLinks.find((statusLink) => {
-        const statusLinkRect = statusLink.getBoundingClientRect();
-        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
-      });
-      if (topmostStatusLink) {
-        topmostStatusLink.focus();
-        topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
-  useHotkeys('k', () => {
-    const activeStatus = document.activeElement.closest(
-      '.status-link, .status-focus',
-    );
-    const activeStatusRect = activeStatus?.getBoundingClientRect();
-    const allStatusLinks = Array.from(
-      scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
-    );
-    if (
-      activeStatus &&
-      activeStatusRect.top < scrollableRef.current.clientHeight &&
-      activeStatusRect.bottom > 0
-    ) {
-      const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
-      let prevStatus = allStatusLinks[activeStatusIndex - 1];
-      if (prevStatus) {
-        prevStatus.focus();
-        prevStatus.scrollIntoView(scrollIntoViewOptions);
+  useHotkeys(
+    'k',
+    () => {
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
+      );
+      const activeStatusRect = activeStatus?.getBoundingClientRect();
+      const allStatusLinks = Array.from(
+        scrollableRef.current.querySelectorAll(STATUSES_SELECTOR),
+      );
+      if (
+        activeStatus &&
+        activeStatusRect.top < scrollableRef.current.clientHeight &&
+        activeStatusRect.bottom > 0
+      ) {
+        const activeStatusIndex = allStatusLinks.indexOf(activeStatus);
+        let prevStatus = allStatusLinks[activeStatusIndex - 1];
+        if (prevStatus) {
+          prevStatus.focus();
+          prevStatus.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        // If active status is not in viewport, get the topmost status-link in viewport
+        const topmostStatusLink = allStatusLinks.find((statusLink) => {
+          const statusLinkRect = statusLink.getBoundingClientRect();
+          return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
+        });
+        if (topmostStatusLink) {
+          topmostStatusLink.focus();
+          topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      // If active status is not in viewport, get the topmost status-link in viewport
-      const topmostStatusLink = allStatusLinks.find((statusLink) => {
-        const statusLinkRect = statusLink.getBoundingClientRect();
-        return statusLinkRect.top >= 44 && statusLinkRect.left >= 0; // 44 is the magic number for header height, not real
-      });
-      if (topmostStatusLink) {
-        topmostStatusLink.focus();
-        topmostStatusLink.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
   // NOTE: I'm not sure if 'x' is the best shortcut for this, might change it later
   // IDEA: x is for expand
-  useHotkeys('x', () => {
-    const activeStatus = document.activeElement.closest(
-      '.status-link, .status-focus',
-    );
-    if (activeStatus) {
-      const details = activeStatus.nextElementSibling;
-      if (details && details.tagName.toLowerCase() === 'details') {
-        details.open = !details.open;
+  useHotkeys(
+    'x',
+    () => {
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
+      );
+      if (activeStatus) {
+        const details = activeStatus.nextElementSibling;
+        if (details && details.tagName.toLowerCase() === 'details') {
+          details.open = !details.open;
+        }
       }
-    }
-  });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
   const [reachTopPost, setReachTopPost] = useState(false);
   // const { nearReachStart } = useScroll({
@@ -853,7 +956,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                         setUIState('loading');
                         (async () => {
                           try {
-                            const results = await currentMasto.v2.search.fetch({
+                            const results = await currentMasto.v2.search.list({
                               q: heroStatus.url,
                               type: 'statuses',
                               resolve: true,
@@ -1049,324 +1152,331 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   }, [id]);
 
   return (
-    <div
-      tabIndex="-1"
-      ref={scrollableRef}
-      class={`status-deck deck contained ${
-        statuses.length > 1 ? 'padded-bottom' : ''
-      } ${
-        initialPageState.current === 'status' && !firstLoad.current
-          ? 'slide-in'
-          : ''
-      } ${viewMode ? `deck-view-${viewMode}` : ''}`}
-      onAnimationEnd={(e) => {
-        // Fix the bounce effect when switching viewMode
-        // `slide-in` animation kicks in when switching viewMode
-        if (initialPageState.current === 'status') {
-          // e.target.classList.remove('slide-in');
-          initialPageState.current = null;
-        }
-      }}
-    >
-      <header
-        class={`${uiState === 'loading' ? 'loading' : ''}`}
-        onDblClick={(e) => {
-          // reload statuses
-          states.reloadStatusPage++;
+    <ThreadCountContext.Provider value={threadsCount}>
+      <div
+        tabIndex="-1"
+        ref={scrollableRef}
+        class={`status-deck deck contained ${
+          statuses.length > 1 ? 'padded-bottom' : ''
+        } ${
+          initialPageState.current === 'status' && !firstLoad.current
+            ? 'slide-in'
+            : ''
+        } ${viewMode ? `deck-view-${viewMode}` : ''}`}
+        onAnimationEnd={(e) => {
+          // Fix the bounce effect when switching viewMode
+          // `slide-in` animation kicks in when switching viewMode
+          if (initialPageState.current === 'status') {
+            // e.target.classList.remove('slide-in');
+            initialPageState.current = null;
+          }
         }}
       >
-        {/* <div>
+        <header
+          class={`${uiState === 'loading' ? 'loading' : ''}`}
+          onDblClick={(e) => {
+            // reload statuses
+            states.reloadStatusPage++;
+          }}
+        >
+          {/* <div>
             <Link class="button plain deck-close" href={closeLink}>
               <Icon icon="chevron-left" size="xl" />
             </Link>
           </div> */}
-        <div class="header-grid header-grid-2">
-          <h1>
-            {prevLocationIsStatusPage && (
-              <button
-                type="button"
-                class="plain deck-back"
-                onClick={() => {
-                  history.back();
-                }}
-              >
-                <Icon icon="chevron-left" size="xl" alt={t`Back`} />
-              </button>
-            )}
-            {!heroInView && heroStatus && uiState !== 'loading' ? (
-              <>
-                <span class="hero-heading">
-                  <NameText
-                    account={heroStatus.account}
-                    instance={instance}
-                    showAvatar
-                    short
-                  />{' '}
-                  <span class="insignificant">
-                    &bull;{' '}
-                    <RelativeTime
-                      datetime={heroStatus.createdAt}
-                      format="micro"
-                    />
-                  </span>
-                </span>{' '}
+          <div class="header-grid header-grid-2">
+            <h1>
+              {prevLocationIsStatusPage && (
                 <button
                   type="button"
-                  class="ancestors-indicator light small"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    heroStatusRef.current.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'start',
-                    });
+                  class="plain deck-back"
+                  onClick={() => {
+                    history.back();
                   }}
-                  title={t`Go to main post`}
                 >
-                  <Icon
-                    icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
-                  />
+                  <Icon icon="chevron-left" size="xl" alt={t`Back`} />
                 </button>
-              </>
-            ) : (
-              <>
-                <Trans id="post.title">Post</Trans>{' '}
-                <button
-                  type="button"
-                  class="ancestors-indicator light small"
-                  onClick={(e) => {
-                    // Scroll to top
-                    e.preventDefault();
-                    e.stopPropagation();
-                    scrollableRef.current.scrollTo({
-                      top: 0,
-                      behavior: 'smooth',
-                    });
-                  }}
-                  hidden={!ancestors.length || reachTopPost}
-                  title={t`${ancestors.length} posts above ‒ Go to top`}
-                >
-                  <Icon icon="arrow-up" />
-                  {ancestors
-                    .filter(
-                      (a, i, arr) =>
-                        arr.findIndex((b) => b.accountID === a.accountID) === i,
-                    )
-                    .slice(0, 3)
-                    .map((ancestor) => (
-                      <Avatar
-                        key={ancestor.account.id}
-                        url={ancestor.account.avatar}
-                        alt={ancestor.account.displayName}
+              )}
+              {!heroInView && heroStatus && uiState !== 'loading' ? (
+                <>
+                  <span class="hero-heading">
+                    <NameText
+                      account={heroStatus.account}
+                      instance={instance}
+                      showAvatar
+                      short
+                    />{' '}
+                    <span class="insignificant">
+                      &bull;{' '}
+                      <RelativeTime
+                        datetime={heroStatus.createdAt}
+                        format="micro"
                       />
-                    ))}
-                  {/* <Icon icon="comment" />{' '} */}
-                  {ancestors.length > 3 && (
-                    <>
-                      {' '}
-                      <span class="insignificant">
-                        {shortenNumber(ancestors.length)}
-                      </span>
-                    </>
-                  )}
-                </button>
-              </>
-            )}
-          </h1>
-          <div class="header-side">
-            <button
-              type="button"
-              class="plain4 button-switch-view"
-              style={{
-                display: viewMode === 'full' ? '' : 'none',
-              }}
-              onClick={() => {
-                setViewMode(null);
-                searchParams.delete('media');
-                searchParams.delete('media-only');
-                searchParams.delete('view');
-                setSearchParams(searchParams);
-              }}
-              title={t`Switch to Side Peek view`}
-            >
-              <Icon icon="layout4" size="l" />
-            </button>
-            {showRefresh && (
+                    </span>
+                  </span>{' '}
+                  <button
+                    type="button"
+                    class="ancestors-indicator light small"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      heroStatusRef.current.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                      });
+                    }}
+                    title={t`Go to main post`}
+                  >
+                    <Icon
+                      icon={heroPointer === 'down' ? 'arrow-down' : 'arrow-up'}
+                    />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Trans id="post.title">Post</Trans>{' '}
+                  <button
+                    type="button"
+                    class="ancestors-indicator light small"
+                    onClick={(e) => {
+                      // Scroll to top
+                      e.preventDefault();
+                      e.stopPropagation();
+                      scrollableRef.current.scrollTo({
+                        top: 0,
+                        behavior: 'smooth',
+                      });
+                    }}
+                    hidden={!ancestors.length || reachTopPost}
+                    title={t`${ancestors.length} posts above ‒ Go to top`}
+                  >
+                    <Icon icon="arrow-up" />
+                    {ancestors
+                      .filter(
+                        (a, i, arr) =>
+                          arr.findIndex((b) => b.accountID === a.accountID) ===
+                          i,
+                      )
+                      .slice(0, 3)
+                      .map((ancestor) => (
+                        <Avatar
+                          key={ancestor.account.id}
+                          url={
+                            ancestor.account.avatarStatic ||
+                            ancestor.account.avatar
+                          }
+                          alt={ancestor.account.displayName}
+                          squircle={ancestor.account?.bot}
+                        />
+                      ))}
+                    {/* <Icon icon="comment" />{' '} */}
+                    {ancestors.length > 3 && (
+                      <>
+                        {' '}
+                        <span class="insignificant">
+                          {shortenNumber(ancestors.length)}
+                        </span>
+                      </>
+                    )}
+                  </button>
+                </>
+              )}
+            </h1>
+            <div class="header-side">
               <button
                 type="button"
-                class="plain button-refresh"
-                onClick={() => {
-                  states.reloadStatusPage++;
-                  setShowRefresh(false);
+                class="plain4 button-switch-view"
+                style={{
+                  display: viewMode === 'full' ? '' : 'none',
                 }}
-              >
-                <Icon icon="refresh" size="l" alt={t`Refresh`} />
-              </button>
-            )}
-            <Menu2
-              align="end"
-              portal={{
-                // Need this, else the menu click will cause scroll jump
-                target: scrollableRef.current,
-              }}
-              menuButton={
-                <button type="button" class="button plain4">
-                  <Icon icon="more" alt={t`More`} size="xl" />
-                </button>
-              }
-            >
-              <MenuItem
-                disabled={uiState === 'loading'}
                 onClick={() => {
-                  states.reloadStatusPage++;
-                }}
-              >
-                <Icon icon="refresh" />
-                <span>
-                  <Trans>Refresh</Trans>
-                </span>
-              </MenuItem>
-              <MenuItem
-                className="menu-switch-view"
-                onClick={() => {
-                  setViewMode(viewMode === 'full' ? null : 'full');
+                  setViewMode(null);
                   searchParams.delete('media');
                   searchParams.delete('media-only');
-                  if (viewMode === 'full') {
-                    searchParams.delete('view');
-                  } else {
-                    searchParams.set('view', 'full');
-                  }
+                  searchParams.delete('view');
                   setSearchParams(searchParams);
                 }}
+                title={t`Switch to Side Peek view`}
               >
-                <Icon
-                  icon={
-                    {
-                      '': 'layout5',
-                      full: 'layout4',
-                    }[viewMode || '']
-                  }
-                />
-                <span>
-                  {viewMode === 'full'
-                    ? t`Switch to Side Peek view`
-                    : t`Switch to Full view`}
-                </span>
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  // Click all buttons with class .spoiler but not .spoiling
-                  const buttons = Array.from(
-                    scrollableRef.current.querySelectorAll(
-                      '.spoiler-button:not(.spoiling), .spoiler-media-button:not(.spoiling)',
-                    ),
-                  );
-                  buttons.forEach((button) => {
-                    button.click();
-                  });
+                <Icon icon="layout4" size="l" />
+              </button>
+              {showRefresh && (
+                <button
+                  type="button"
+                  class="plain button-refresh"
+                  onClick={() => {
+                    states.reloadStatusPage++;
+                    setShowRefresh(false);
+                  }}
+                >
+                  <Icon icon="refresh" size="l" alt={t`Refresh`} />
+                </button>
+              )}
+              <Menu2
+                align="end"
+                portal={{
+                  // Need this, else the menu click will cause scroll jump
+                  target: scrollableRef.current,
                 }}
+                menuButton={
+                  <button type="button" class="button plain4">
+                    <Icon icon="more" alt={t`More`} size="xl" />
+                  </button>
+                }
               >
-                <Icon icon="eye-open" />{' '}
-                <span>
-                  <Trans>Show all sensitive content</Trans>
-                </span>
-              </MenuItem>
-              <MenuDivider />
-              <MenuHeader className="plain">
-                <Trans>Experimental</Trans>
-              </MenuHeader>
-              <MenuItem
-                disabled={!postInstance || postSameInstance}
-                onClick={() => {
-                  const statusURL = getInstanceStatusURL(heroStatus.url);
-                  if (statusURL) {
-                    location.hash = statusURL;
-                  } else {
-                    alert(t`Unable to switch`);
-                  }
-                }}
-              >
-                <Icon icon="transfer" />
-                <small class="menu-double-lines">
-                  {postInstance
-                    ? t`Switch to post's instance (${punycode.toUnicode(
-                        postInstance,
-                      )})`
-                    : t`Switch to post's instance`}
-                </small>
-              </MenuItem>
-            </Menu2>
-            <Link class="button plain deck-close" to={closeLink}>
-              <Icon icon="x" size="xl" alt={t`Close`} />
-            </Link>
-          </div>
-        </div>
-      </header>
-      {!!statuses.length && heroStatus ? (
-        <ul
-          class={`timeline flat contextual grow ${
-            uiState === 'loading' ? 'loading' : ''
-          }`}
-        >
-          {statusesList}
-          {showMore > 0 && (
-            <li class="descendant descendant-more">
-              <button
-                type="button"
-                class="plain block show-more"
-                disabled={uiState === 'loading'}
-                onClick={() => setLimit((l) => l + LIMIT)}
-                style={{ marginBlockEnd: '6em' }}
-                data-state-post-ids={moreStatusesKeys.join(' ')}
-              >
-                <div class="ib avatars-bunch">
-                  {/* show avatars for first 5 statuses */}
-                  {statuses.slice(limit, limit + 5).map((status) => (
-                    <Avatar
-                      key={status.id}
-                      url={status.account.avatarStatic}
-                      // title={`${status.avatar.displayName} (@${status.avatar.acct})`}
-                    />
-                  ))}
-                </div>{' '}
-                <div class="ib">
-                  <Trans>Show more…</Trans>{' '}
-                  <span class="tag">
-                    {showMore > LIMIT ? `${LIMIT}+` : showMore}
+                <MenuItem
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
+                    states.reloadStatusPage++;
+                  }}
+                >
+                  <Icon icon="refresh" />
+                  <span>
+                    <Trans>Refresh</Trans>
                   </span>
-                </div>
-              </button>
-            </li>
-          )}
-        </ul>
-      ) : (
-        <>
-          {uiState === 'loading' && (
-            <ul class="timeline flat contextual grow loading">
-              <li>
-                <Status skeleton size="l" />
+                </MenuItem>
+                <MenuItem
+                  className="menu-switch-view"
+                  onClick={() => {
+                    setViewMode(viewMode === 'full' ? null : 'full');
+                    searchParams.delete('media');
+                    searchParams.delete('media-only');
+                    if (viewMode === 'full') {
+                      searchParams.delete('view');
+                    } else {
+                      searchParams.set('view', 'full');
+                    }
+                    setSearchParams(searchParams);
+                  }}
+                >
+                  <Icon
+                    icon={
+                      {
+                        '': 'layout5',
+                        full: 'layout4',
+                      }[viewMode || '']
+                    }
+                  />
+                  <span>
+                    {viewMode === 'full'
+                      ? t`Switch to Side Peek view`
+                      : t`Switch to Full view`}
+                  </span>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    // Click all buttons with class .spoiler but not .spoiling
+                    const buttons = Array.from(
+                      scrollableRef.current.querySelectorAll(
+                        '.spoiler-button:not(.spoiling), .spoiler-media-button:not(.spoiling)',
+                      ),
+                    );
+                    buttons.forEach((button) => {
+                      button.click();
+                    });
+                  }}
+                >
+                  <Icon icon="eye-open" />{' '}
+                  <span>
+                    <Trans>Show all sensitive content</Trans>
+                  </span>
+                </MenuItem>
+                <MenuDivider />
+                <MenuHeader className="plain">
+                  <Trans>Experimental</Trans>
+                </MenuHeader>
+                <MenuItem
+                  disabled={!postInstance || postSameInstance}
+                  onClick={() => {
+                    const statusURL = getInstanceStatusURL(heroStatus.url);
+                    if (statusURL) {
+                      location.hash = statusURL;
+                    } else {
+                      alert(t`Unable to switch`);
+                    }
+                  }}
+                >
+                  <Icon icon="transfer" />
+                  <small class="menu-double-lines">
+                    {postInstance
+                      ? t`Switch to post's instance (${punycode.toUnicode(
+                          postInstance,
+                        )})`
+                      : t`Switch to post's instance`}
+                  </small>
+                </MenuItem>
+              </Menu2>
+              <Link class="button plain deck-close" to={closeLink}>
+                <Icon icon="x" size="xl" alt={t`Close`} />
+              </Link>
+            </div>
+          </div>
+        </header>
+        {!!statuses.length && heroStatus ? (
+          <ul
+            class={`timeline flat contextual grow ${
+              uiState === 'loading' ? 'loading' : ''
+            }`}
+          >
+            {statusesList}
+            {showMore > 0 && (
+              <li class="descendant descendant-more">
+                <button
+                  type="button"
+                  class="plain block show-more"
+                  disabled={uiState === 'loading'}
+                  onClick={() => setLimit((l) => l + LIMIT)}
+                  style={{ marginBlockEnd: '6em' }}
+                  data-state-post-ids={moreStatusesKeys.join(' ')}
+                >
+                  <div class="ib avatars-bunch">
+                    {/* show avatars for first 5 statuses */}
+                    {statuses.slice(limit, limit + 5).map((status) => (
+                      <Avatar
+                        key={status.id}
+                        url={status.account.avatarStatic}
+                        // title={`${status.avatar.displayName} (@${status.avatar.acct})`}
+                      />
+                    ))}
+                  </div>{' '}
+                  <div class="ib">
+                    <Trans>Show more…</Trans>{' '}
+                    <span class="tag">
+                      {showMore > LIMIT ? `${LIMIT}+` : showMore}
+                    </span>
+                  </div>
+                </button>
               </li>
-            </ul>
-          )}
-          {uiState === 'error' && (
-            <p class="ui-state">
-              <Trans>Unable to load post</Trans>
-              <br />
-              <br />
-              <button
-                type="button"
-                onClick={() => {
-                  states.reloadStatusPage++;
-                }}
-              >
-                <Trans>Try again</Trans>
-              </button>
-            </p>
-          )}
-        </>
-      )}
-    </div>
+            )}
+          </ul>
+        ) : (
+          <>
+            {uiState === 'loading' && (
+              <ul class="timeline flat contextual grow loading">
+                <li>
+                  <Status skeleton size="l" />
+                </li>
+              </ul>
+            )}
+            {uiState === 'error' && (
+              <p class="ui-state">
+                <Trans>Unable to load post</Trans>
+                <br />
+                <br />
+                <button
+                  type="button"
+                  onClick={() => {
+                    states.reloadStatusPage++;
+                  }}
+                >
+                  <Trans>Try again</Trans>
+                </button>
+              </p>
+            )}
+          </>
+        )}
+      </div>
+    </ThreadCountContext.Provider>
   );
 }
 

@@ -6,6 +6,7 @@ import { Fragment } from 'preact';
 import { useMemo, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
+import localeMatch from '../utils/locale-match';
 import showToast from '../utils/show-toast';
 import { getCurrentInstance } from '../utils/store-utils';
 
@@ -17,7 +18,7 @@ import Status from './status';
 // NOTE: `dislike` hidden for now, it's actually not used for reporting
 // Mastodon shows another screen for unfollowing, muting or blocking instead of reporting
 
-const CATEGORIES = [, /*'dislike'*/ 'spam', 'legal', 'violation', 'other'];
+const CATEGORIES = [/*'dislike' ,*/ 'spam', 'legal', 'violation', 'other'];
 // `violation` will be set if there are `rule_ids[]`
 
 const CATEGORIES_INFO = {
@@ -45,16 +46,58 @@ const CATEGORIES_INFO = {
   },
 };
 
+function findMatchingLanguage(rule, currentLang) {
+  if (!rule.translations || !currentLang) return null;
+  const availableLanguages = Object.keys(rule.translations);
+  if (!availableLanguages?.length) return null;
+
+  let matchedLang = localeMatch([currentLang], availableLanguages, null);
+  if (!matchedLang) {
+    // localeMatch fails if there are keys like zhCn, zhTw
+    // Convert them something like zh-CN first, try again
+    // Detect uppercase, then split by dash
+    const normalizedLanguages = availableLanguages.map((lang) => {
+      const parts = lang.split(/(?=[A-Z])/);
+      return parts
+        .map((part, i) => (i === 0 ? part : part.toLowerCase()))
+        .join('-');
+    });
+    matchedLang = localeMatch([currentLang], normalizedLanguages, null);
+  }
+
+  // If matchedLang has dash, convert back to original format
+  // E.g. zh-cn to zhCn
+  if (matchedLang && matchedLang.includes('-')) {
+    const [lang, region] = matchedLang.split('-');
+    matchedLang = lang + region.charAt(0).toUpperCase() + region.slice(1);
+  }
+
+  return matchedLang;
+}
+
+function translateRules(rules, currentLang) {
+  if (!rules?.length) return [];
+  if (!currentLang) return rules;
+  return rules.map((rule) => {
+    const matchedLang = findMatchingLanguage(rule, currentLang);
+    return {
+      ...rule,
+      _translatedText: rule.translations?.[matchedLang]?.text || null,
+    };
+  });
+}
+
 function ReportModal({ account, post, onClose }) {
-  const { _, t } = useLingui();
+  const { _, t, i18n } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [username, domain] = account.acct.split('@');
 
-  const [rules, currentDomain] = useMemo(() => {
+  const [translatedRules, currentDomain] = useMemo(() => {
     const { rules, domain } = getCurrentInstance();
-    return [rules || [], domain];
-  });
+    const rawRules = rules || [];
+    return [translateRules(rawRules, i18n.locale), domain];
+  }, [i18n.locale]);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showRules, setShowRules] = useState(false);
@@ -165,7 +208,7 @@ function ReportModal({ account, post, onClose }) {
           </p>
           <section class="report-categories">
             {CATEGORIES.map((category) =>
-              category === 'violation' && !rules?.length ? null : (
+              category === 'violation' && !translatedRules?.length ? null : (
                 <Fragment key={category}>
                   <label class="report-category">
                     <input
@@ -186,14 +229,14 @@ function ReportModal({ account, post, onClose }) {
                       </small>
                     </span>
                   </label>
-                  {category === 'violation' && !!rules?.length && (
+                  {category === 'violation' && !!translatedRules?.length && (
                     <div
                       class="shazam-container no-animation"
                       hidden={!showRules}
                     >
                       <div class="shazam-container-inner">
                         <div class="report-rules" ref={rulesRef}>
-                          {rules.map((rule, i) => (
+                          {translatedRules.map((rule, i) => (
                             <label class="report-rule" key={rule.id}>
                               <input
                                 type="checkbox"
@@ -216,7 +259,7 @@ function ReportModal({ account, post, onClose }) {
                                   }
                                 }}
                               />
-                              <span>{rule.text}</span>
+                              <span>{rule._translatedText || rule.text}</span>
                             </label>
                           ))}
                         </div>

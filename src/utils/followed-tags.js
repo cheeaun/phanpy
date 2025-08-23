@@ -6,9 +6,11 @@ const MAX_FETCH = 10;
 
 export async function fetchFollowedTags() {
   const { masto } = api();
-  const iterator = masto.v1.followedTags.list({
-    limit: LIMIT,
-  });
+  const iterator = masto.v1.followedTags
+    .list({
+      limit: LIMIT,
+    })
+    .values();
   const tags = [];
   let fetchCount = 0;
   do {

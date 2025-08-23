@@ -1,4 +1,6 @@
 import './status.css';
+import 'temml/dist/Temml-Local.css';
+
 import '@justinribeiro/lite-youtube';
 
 import { msg, plural } from '@lingui/core/macro';
@@ -22,6 +24,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useReducer,
   useRef,
   useState,
 } from 'preact/hooks';
@@ -40,11 +43,13 @@ import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import Poll from '../components/poll';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
+import { langDetector } from '../utils/browser-translator';
 import emojifyText from '../utils/emojify-text';
 import enhanceContent from '../utils/enhance-content';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
+import getDomain from '../utils/get-domain';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
@@ -52,6 +57,7 @@ import htmlContentLength from '../utils/html-content-length';
 import isRTL from '../utils/is-rtl';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
@@ -75,6 +81,7 @@ import Link from './link';
 import Media, { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
+import ThreadBadge from './thread-badge';
 import TranslationBlock from './translation-block';
 
 const SHOW_COMMENT_COUNT_LIMIT = 280;
@@ -101,7 +108,7 @@ const isIOS =
   window.ontouchstart !== undefined &&
   /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-const rtf = new Intl.RelativeTimeFormat();
+const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
 
 const REACTIONS_LIMIT = 80;
 
@@ -116,11 +123,32 @@ function getPollText(poll) {
     )
     .join('\n')}`;
 }
-function getPostText(status) {
-  const { spoilerText, content, poll } = status;
+function getPostText(status, opts) {
+  const { maskCustomEmojis, maskURLs } = opts || {};
+  const { spoilerText, poll, emojis } = status;
+  let { content } = status;
+  if (maskCustomEmojis && emojis?.length) {
+    const emojisRegex = new RegExp(
+      `:(${emojis.map((e) => e.shortcode).join('|')}):`,
+      'g',
+    );
+    content = content.replace(emojisRegex, '⬚');
+  }
   return (
     (spoilerText ? `${spoilerText}\n\n` : '') +
-    getHTMLText(content) +
+    getHTMLText(content, {
+      preProcess:
+        maskURLs &&
+        ((dom) => {
+          // Remove links that contains text that starts with https?://
+          for (const a of dom.querySelectorAll('a')) {
+            const text = a.innerText.trim();
+            if (/^https?:\/\//i.test(text)) {
+              a.replaceWith('«🔗»');
+            }
+          }
+        }),
+    }) +
     getPollText(poll)
   );
 }
@@ -136,8 +164,16 @@ function forgivingQSA(selectors = [], dom = document) {
   return [];
 }
 
-function isTranslateble(content) {
+function isTranslateble(content, emojis) {
   if (!content) return false;
+  // Remove custom emojis
+  if (emojis?.length) {
+    const emojisRegex = new RegExp(
+      `:(${emojis.map((e) => e.shortcode).join('|')}):`,
+      'g',
+    );
+    content = content.replace(emojisRegex, '');
+  }
   content = content.trim();
   if (!content) return false;
   const text = getHTMLText(content, {
@@ -154,7 +190,15 @@ function isTranslateble(content) {
   return !!text;
 }
 
-function getHTMLTextForDetectLang(content) {
+function getHTMLTextForDetectLang(content, emojis) {
+  if (emojis?.length) {
+    const emojisRegex = new RegExp(
+      `:(${emojis.map((e) => e.shortcode).join('|')}):`,
+      'g',
+    );
+    content = content.replace(emojisRegex, '');
+  }
+
   return getHTMLText(content, {
     preProcess: (dom) => {
       // Remove anything that can skew the language detection
@@ -182,6 +226,161 @@ function getHTMLTextForDetectLang(content) {
 }
 
 const HTTP_REGEX = /^http/i;
+
+// Follow https://mathstodon.xyz/about
+// > You can use LaTeX in toots here! Use \( and \) for inline, and \[ and \] for display mode.
+const DELIMITERS_PATTERNS = [
+  // '\\$\\$[\\s\\S]*?\\$\\$', // $$...$$
+  '\\\\\\[[\\s\\S]*?\\\\\\]', // \[...\]
+  '\\\\\\([\\s\\S]*?\\\\\\)', // \(...\)
+  // '\\\\begin\\{(?:equation\\*?|align\\*?|alignat\\*?|gather\\*?|CD)\\}[\\s\\S]*?\\\\end\\{(?:equation\\*?|align\\*?|alignat\\*?|gather\\*?|CD)\\}', // AMS environments
+  // '\\\\(?:ref|eqref)\\{[^}]*\\}', // \ref{...}, \eqref{...}
+];
+const DELIMITERS_REGEX = new RegExp(DELIMITERS_PATTERNS.join('|'), 'g');
+
+function cleanDOMForTemml(dom) {
+  // Define start and end delimiter patterns
+  const START_DELIMITERS = ['\\\\\\[', '\\\\\\(']; // \[ and \(
+  const startRegex = new RegExp(`(${START_DELIMITERS.join('|')})`);
+
+  // Walk through all text nodes
+  const walker = document.createTreeWalker(dom, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  let node;
+  while ((node = walker.nextNode())) {
+    textNodes.push(node);
+  }
+
+  for (const textNode of textNodes) {
+    const text = textNode.textContent;
+    const startMatch = text.match(startRegex);
+
+    if (!startMatch) continue; // No start delimiter in this text node
+
+    // Find the matching end delimiter
+    const startDelimiter = startMatch[0];
+    const endDelimiter = startDelimiter === '\\[' ? '\\]' : '\\)';
+
+    // Collect nodes from start delimiter until end delimiter
+    const nodesToCombine = [textNode];
+    let currentNode = textNode;
+    let foundEnd = false;
+    let combinedText = text;
+
+    // Check if end delimiter is in the same text node
+    if (text.includes(endDelimiter)) {
+      foundEnd = true;
+    } else {
+      // Look through sibling nodes
+      while (currentNode.nextSibling && !foundEnd) {
+        const nextSibling = currentNode.nextSibling;
+
+        if (nextSibling.nodeType === Node.TEXT_NODE) {
+          nodesToCombine.push(nextSibling);
+          combinedText += nextSibling.textContent;
+          if (nextSibling.textContent.includes(endDelimiter)) {
+            foundEnd = true;
+          }
+        } else if (
+          nextSibling.nodeType === Node.ELEMENT_NODE &&
+          nextSibling.tagName === 'BR'
+        ) {
+          nodesToCombine.push(nextSibling);
+          combinedText += '\n';
+        } else {
+          // Found a non-BR element, stop and don't process
+          break;
+        }
+
+        currentNode = nextSibling;
+      }
+    }
+
+    // Only process if we found the end delimiter and have nodes to combine
+    if (foundEnd && nodesToCombine.length > 1) {
+      // Replace the first text node with combined text
+      textNode.textContent = combinedText;
+
+      // Remove the other nodes
+      for (let i = 1; i < nodesToCombine.length; i++) {
+        nodesToCombine[i].remove();
+      }
+    }
+  }
+}
+
+const MathBlock = ({ content, contentRef, onRevert }) => {
+  DELIMITERS_REGEX.lastIndex = 0; // Reset index to prevent g trap
+  const hasLatexContent = DELIMITERS_REGEX.test(content);
+
+  if (!hasLatexContent) return null;
+
+  const { t } = useLingui();
+  const [mathRendered, setMathRendered] = useState(false);
+  const toggleMathRendering = useCallback(
+    async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (mathRendered) {
+        // Revert to original content by refreshing PostContent
+        setMathRendered(false);
+        onRevert();
+      } else {
+        // Render math
+        try {
+          // This needs global because the codebase inside temml is calling a function from global.temml 🤦‍♂️
+          const temml =
+            window.temml || (window.temml = (await import('temml'))?.default);
+
+          cleanDOMForTemml(contentRef.current);
+          const originalContentRefHTML = contentRef.current.innerHTML;
+          temml.renderMathInElement(contentRef.current, {
+            fences: '(', // This should sync with DELIMITERS_REGEX
+            annotate: true,
+            throwOnError: true,
+            errorCallback: (err) => {
+              console.warn('Failed to render LaTeX:', err);
+            },
+          });
+
+          const hasMath = contentRef.current.querySelector('math.tml-display');
+          const htmlChanged =
+            contentRef.current.innerHTML !== originalContentRefHTML;
+          if (hasMath && htmlChanged) {
+            setMathRendered(true);
+          } else {
+            showToast(t`Unable to format math`);
+            setMathRendered(false);
+            onRevert(); // Revert because DOM modified by cleanDOMForTemml
+          }
+        } catch (e) {
+          console.error('Failed to LaTeX:', e);
+        }
+      }
+    },
+    [mathRendered],
+  );
+
+  return (
+    <div class="math-block">
+      <Icon icon="formula" size="s" /> <span>{t`Math expressions found.`}</span>{' '}
+      <button type="button" class="light small" onClick={toggleMathRendering}>
+        {mathRendered
+          ? t({
+              comment:
+                'Action to switch from rendered math back to raw (LaTeX) markup',
+              message: 'Show markup',
+            })
+          : t({
+              comment:
+                'Action to render math expressions from raw (LaTeX) markup',
+              message: 'Format math',
+            })}
+      </button>
+    </div>
+  );
+};
+
 const PostContent =
   /*memo(*/
   ({ post, instance, previewMode }) => {
@@ -201,7 +400,7 @@ const PostContent =
         }
       }
       divRef.current.replaceChildren(dom.cloneNode(true));
-    }, [content, emojis.length]);
+    }, [content, emojis?.length]);
 
     return (
       <div
@@ -245,7 +444,6 @@ const SIZE_CLASS = {
 };
 
 const detectLang = pmem(async (text) => {
-  const { detectAll } = await import('tinyld/light');
   text = text?.trim();
 
   // Ref: https://github.com/komodojp/tinyld/blob/develop/docs/benchmark.md
@@ -253,7 +451,29 @@ const detectLang = pmem(async (text) => {
   if (text?.length > 500) {
     return null;
   }
+
+  if (langDetector) {
+    const langs = await langDetector.detect(text);
+    console.groupCollapsed(
+      '💬 DETECTLANG BROWSER',
+      langs.slice(0, 3).map((l) => l.detectedLanguage),
+    );
+    console.log(text, langs.slice(0, 3));
+    console.groupEnd();
+    const lang = langs[0];
+    if (lang?.detectedLanguage && lang?.confidence > 0.5) {
+      return lang.detectedLanguage;
+    }
+  }
+
+  const { detectAll } = await import('tinyld/light');
   const langs = detectAll(text);
+  console.groupCollapsed(
+    '💬 DETECTLANG TINYLD',
+    langs.slice(0, 3).map((l) => l.lang),
+  );
+  console.log(text, langs.slice(0, 3));
+  console.groupEnd();
   const lang = langs[0];
   if (lang?.lang && lang?.accuracy > 0.5) {
     // If > 50% accurate, use it
@@ -281,9 +501,19 @@ const checkDifferentLanguage = (
     !contentTranslationHideLanguages.find(
       (l) => language === l || localeMatch([language], [l]),
     );
-  DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] = true;
+  if (different)
+    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] = true;
   return different;
 };
+
+const getCurrentAccID = mem(
+  () => {
+    return getCurrentAccountID();
+  },
+  {
+    maxAge: 60 * 1000, // 1 minute
+  },
+);
 
 function Status({
   statusID,
@@ -298,7 +528,7 @@ function Status({
   enableTranslate,
   forceTranslate: _forceTranslate,
   previewMode,
-  // allowFilters,
+  allowFilters,
   onMediaClick,
   quoted,
   onStatusLinkClick = () => {},
@@ -308,7 +538,8 @@ function Status({
   showReplyParent,
   mediaFirst,
 }) {
-  const { _, t } = useLingui();
+  const { _, t, i18n } = useLingui();
+  const rtf = RTF(i18n.locale);
 
   if (skeleton) {
     return (
@@ -358,7 +589,7 @@ function Status({
       emojis: accountEmojis,
       bot,
       group,
-    },
+    } = {},
     id,
     repliesCount,
     reblogged,
@@ -380,7 +611,7 @@ function Status({
     inReplyToAccountId,
     content,
     mentions,
-    mediaAttachments,
+    mediaAttachments = [],
     reblog,
     uri,
     url,
@@ -403,7 +634,9 @@ function Status({
     if (languageAutoDetected) return;
     let timer;
     timer = setTimeout(async () => {
-      let detected = await detectLang(getHTMLTextForDetectLang(content));
+      let detected = await detectLang(
+        getHTMLTextForDetectLang(content, emojis),
+      );
       setLanguageAutoDetected(detected);
     }, 1000);
     return () => clearTimeout(timer);
@@ -414,22 +647,22 @@ function Status({
   const hasMediaAttachments = !!mediaAttachments?.length;
   if (mediaFirst && hasMediaAttachments) size = 's';
 
-  const currentAccount = useMemo(() => {
-    return getCurrentAccountID();
-  }, []);
+  const currentAccount = getCurrentAccID();
   const isSelf = useMemo(() => {
     return currentAccount && currentAccount === accountId;
   }, [accountId, currentAccount]);
 
   const filterContext = useContext(FilterContext);
   const filterInfo =
-    !isSelf && !readOnly && !previewMode && isFiltered(filtered, filterContext);
+    !isSelf &&
+    ((!readOnly && !previewMode) || allowFilters) &&
+    isFiltered(filtered, filterContext);
 
   if (filterInfo?.action === 'hide') {
     return null;
   }
 
-  console.debug('RENDER Status', id, status?.account.displayName, quoted);
+  console.debug('RENDER Status', id, status?.account?.displayName, quoted);
 
   const debugHover = (e) => {
     if (e.shiftKey) {
@@ -439,7 +672,11 @@ function Status({
     }
   };
 
-  if (/*allowFilters && */ size !== 'l' && filterInfo) {
+  if (
+    (allowFilters || size !== 'l') &&
+    filterInfo &&
+    filterInfo.action !== 'blur'
+  ) {
     return (
       <FilteredStatus
         status={status}
@@ -481,16 +718,14 @@ function Status({
     inReplyToAccountId === currentAccount ||
     mentions?.find((mention) => mention.id === currentAccount);
 
-  const readingExpandSpoilers = useMemo(() => {
-    const prefs = store.account.get('preferences') || {};
-    return !!prefs['reading:expand:spoilers'];
-  }, []);
-  const readingExpandMedia = useMemo(() => {
-    // default | show_all | hide_all
-    // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
-    const prefs = store.account.get('preferences') || {};
-    return prefs['reading:expand:media']?.toLowerCase() || 'default';
-  }, []);
+  const prefs = getPreferences();
+  const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
+
+  // default | show_all | hide_all
+  // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
+  const readingExpandMedia =
+    prefs['reading:expand:media']?.toLowerCase() || 'default';
+
   // FOR TESTING:
   // const readingExpandSpoilers = true;
   // const readingExpandMedia = 'show_all';
@@ -498,7 +733,7 @@ function Status({
     previewMode || readingExpandSpoilers || !!snapStates.spoilers[id];
   const showSpoilerMedia =
     previewMode ||
-    readingExpandMedia === 'show_all' ||
+    (readingExpandMedia === 'show_all' && filterInfo?.action !== 'blur') ||
     !!snapStates.spoilersMedia[id];
 
   if (reblog) {
@@ -604,8 +839,8 @@ function Status({
       spoilerText ||
       sensitive ||
       poll ||
-      card ||
-      mediaAttachments?.length
+      card /*||
+      mediaAttachments?.length*/
     ) {
       return false;
     }
@@ -634,20 +869,25 @@ function Status({
   const mediaContainerRef = useTruncated();
 
   const statusRef = useRef(null);
+  const [reloadPostContentCount, reloadPostContent] = useReducer(
+    (c) => c + 1,
+    0,
+  );
 
   const unauthInteractionErrorMessage = t`Sorry, your current logged-in instance can't interact with this post from another instance.`;
 
   const textWeight = useCallback(
     () =>
       Math.max(
-        Math.round((spoilerText.length + htmlContentLength(content)) / 140) ||
-          1,
+        Math.round(
+          ((spoilerText?.length || 0) + htmlContentLength(content)) / 140,
+        ) || 1,
         1,
       ),
     [spoilerText, content],
   );
 
-  const createdDateText = niceDateTime(createdAtDate);
+  const createdDateText = createdAt && niceDateTime(createdAtDate);
   const editedDateText = editedAt && niceDateTime(editedAtDate);
 
   // Can boost if:
@@ -845,16 +1085,17 @@ function Status({
   const contentTranslationHideLanguages =
     snapStates.settings.contentTranslationHideLanguages || [];
   const [differentLanguage, setDifferentLanguage] = useState(
-    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
-      ? checkDifferentLanguage(language, contentTranslationHideLanguages)
-      : false,
+    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages],
   );
   useEffect(() => {
+    if (!language || differentLanguage) {
+      return;
+    }
     if (
-      !language ||
-      differentLanguage ||
+      !differentLanguage &&
       DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
     ) {
+      setDifferentLanguage(true);
       return;
     }
     let timeout = setTimeout(() => {
@@ -865,7 +1106,7 @@ function Status({
       if (different) setDifferentLanguage(different);
     }, 1);
     return () => clearTimeout(timeout);
-  }, [language, differentLanguage, contentTranslationHideLanguages]);
+  }, [language, differentLanguage]);
 
   const reblogIterator = useRef();
   const favouriteIterator = useRef();
@@ -875,12 +1116,14 @@ function Status({
         .$select(statusID)
         .rebloggedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
       favouriteIterator.current = masto.v1.statuses
         .$select(statusID)
         .favouritedBy.list({
           limit: REACTIONS_LIMIT,
-        });
+        })
+        .values();
     }
     const [{ value: reblogResults }, { value: favouriteResults }] =
       await Promise.allSettled([
@@ -1046,70 +1289,72 @@ function Status({
           </MenuItem>
         </>
       )}
-      {!mediaFirst && (
-        <>
-          {(enableTranslate || !language || differentLanguage) && (
-            <MenuDivider />
-          )}
+      {(isSizeLarge ||
+        (!mediaFirst &&
+          (enableTranslate || !language || differentLanguage))) && (
+        <MenuDivider />
+      )}
+      {!mediaFirst && (enableTranslate || !language || differentLanguage) && (
+        <div class={supportsTTS ? 'menu-horizontal' : ''}>
           {enableTranslate ? (
-            <div class={supportsTTS ? 'menu-horizontal' : ''}>
-              <MenuItem
-                disabled={forceTranslate}
-                onClick={() => {
-                  setForceTranslate(true);
-                }}
-              >
-                <Icon icon="translate" />
-                <span>
-                  <Trans>Translate</Trans>
-                </span>
-              </MenuItem>
-              {supportsTTS && (
-                <MenuItem
-                  onClick={() => {
-                    const postText = getPostText(status);
-                    if (postText) {
-                      speak(postText, language);
-                    }
-                  }}
-                >
-                  <Icon icon="speak" />
-                  <span>
-                    <Trans>Speak</Trans>
-                  </span>
-                </MenuItem>
-              )}
-            </div>
+            <MenuItem
+              disabled={forceTranslate}
+              onClick={() => setForceTranslate(true)}
+            >
+              <Icon icon="translate" />
+              <span>
+                <Trans>Translate</Trans>
+              </span>
+            </MenuItem>
           ) : (
-            (!language || differentLanguage) && (
-              <div class={supportsTTS ? 'menu-horizontal' : ''}>
-                <MenuLink
-                  to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
-                >
-                  <Icon icon="translate" />
-                  <span>
-                    <Trans>Translate</Trans>
-                  </span>
-                </MenuLink>
-                {supportsTTS && (
-                  <MenuItem
-                    onClick={() => {
-                      const postText = getPostText(status);
-                      if (postText) {
-                        speak(postText, language);
-                      }
-                    }}
-                  >
-                    <Icon icon="speak" />
-                    <span>
-                      <Trans>Speak</Trans>
-                    </span>
-                  </MenuItem>
-                )}
-              </div>
-            )
+            <MenuLink
+              to={`${instance ? `/${instance}` : ''}/s/${id}?translate=1`}
+            >
+              <Icon icon="translate" />
+              <span>
+                <Trans>Translate</Trans>
+              </span>
+            </MenuLink>
           )}
-        </>
+          {supportsTTS && (
+            <MenuItem
+              onClick={() => {
+                try {
+                  const postText = getPostText(status);
+                  if (postText) {
+                    speak(postText, language);
+                  }
+                } catch (error) {
+                  console.error('Failed to speak text:', error);
+                }
+              }}
+            >
+              <Icon icon="speak" />
+              <span>
+                <Trans>Speak</Trans>
+              </span>
+            </MenuItem>
+          )}
+        </div>
+      )}
+      {isSizeLarge && (
+        <MenuItem
+          onClick={() => {
+            try {
+              const postText = getPostText(status);
+              navigator.clipboard.writeText(postText);
+              showToast(t`Post text copied`);
+            } catch (e) {
+              console.error(e);
+              showToast(t`Unable to copy post text`);
+            }
+          }}
+        >
+          <Icon icon="clipboard" />
+          <span>
+            <Trans>Copy post text</Trans>
+          </span>
+        </MenuItem>
       )}
       {((!isSizeLarge && sameInstance) ||
         enableTranslate ||
@@ -1421,16 +1666,25 @@ function Status({
   const hotkeysEnabled = !readOnly && !previewMode && !quoted;
   const rRef = useHotkeys('r, shift+r', replyStatus, {
     enabled: hotkeysEnabled,
+    useKey: true,
+    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
   });
   const fRef = useHotkeys('f, l', favouriteStatusNotify, {
     enabled: hotkeysEnabled,
+    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    useKey: true,
   });
   const dRef = useHotkeys('d', bookmarkStatusNotify, {
     enabled: hotkeysEnabled,
+    useKey: true,
+    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
   });
   const bRef = useHotkeys(
     'shift+b',
-    () => {
+    (e) => {
+      // Need shiftKey check due to useKey: true
+      if (!e.shiftKey) return;
+
       (async () => {
         try {
           const done = await confirmBoostStatus();
@@ -1446,30 +1700,39 @@ function Status({
     },
     {
       enabled: hotkeysEnabled && canBoost,
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
     },
   );
-  const xRef = useHotkeys('x', (e) => {
-    const activeStatus = document.activeElement.closest(
-      '.status-link, .status-focus',
-    );
-    if (activeStatus) {
-      const spoilerButton = activeStatus.querySelector(
-        '.spoiler-button:not(.spoiling)',
+  const xRef = useHotkeys(
+    'x',
+    (e) => {
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
       );
-      if (spoilerButton) {
-        e.stopPropagation();
-        spoilerButton.click();
-      } else {
-        const spoilerMediaButton = activeStatus.querySelector(
-          '.spoiler-media-button:not(.spoiling)',
+      if (activeStatus) {
+        const spoilerButton = activeStatus.querySelector(
+          '.spoiler-button:not(.spoiling)',
         );
-        if (spoilerMediaButton) {
+        if (spoilerButton) {
           e.stopPropagation();
-          spoilerMediaButton.click();
+          spoilerButton.click();
+        } else {
+          const spoilerMediaButton = activeStatus.querySelector(
+            '.spoiler-media-button:not(.spoiling)',
+          );
+          if (spoilerMediaButton) {
+            e.stopPropagation();
+            spoilerMediaButton.click();
+          }
         }
       }
-    }
-  });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
   const displayedMediaAttachments = mediaAttachments.slice(
     0,
@@ -1618,11 +1881,11 @@ function Status({
             node?.closest?.(
               '.timeline-item, .timeline-item-alt, .status-link, .status-focus',
             ) || node;
-          rRef(nodeRef);
-          fRef(nodeRef);
-          dRef(nodeRef);
-          bRef(nodeRef);
-          xRef(nodeRef);
+          rRef.current = nodeRef;
+          fRef.current = nodeRef;
+          dRef.current = nodeRef;
+          bRef.current = nodeRef;
+          xRef.current = nodeRef;
         }}
         tabindex="-1"
         class={`status ${
@@ -1793,146 +2056,154 @@ function Status({
           </a>
         )}
         <div class="container">
-          <div class="meta">
-            <span class="meta-name">
-              <NameText
-                account={status.account}
-                instance={instance}
-                showAvatar={size === 's'}
-                showAcct={isSizeLarge}
-              />
-            </span>
-            {/* {inReplyToAccount && !withinContext && size !== 's' && (
-              <>
-                {' '}
-                <span class="ib">
-                  <Icon icon="arrow-right" class="arrow" />{' '}
-                  <NameText account={inReplyToAccount} instance={instance} short />
-                </span>
-              </>
-            )} */}
-            {/* </span> */}{' '}
-            {size !== 'l' &&
-              (_deleted ? (
-                <span class="status-deleted-tag">
-                  <Trans>Deleted</Trans>
-                </span>
-              ) : url && !previewMode && !readOnly && !quoted ? (
-                <Link
-                  to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
-                  onClick={(e) => {
-                    if (
-                      e.metaKey ||
-                      e.ctrlKey ||
-                      e.shiftKey ||
-                      e.altKey ||
-                      e.which === 2
-                    ) {
-                      return;
-                    }
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onStatusLinkClick?.(e, status);
-                    setContextMenuProps({
-                      anchorRef: {
-                        current: e.currentTarget,
-                      },
-                      align: 'end',
-                      direction: 'bottom',
-                      gap: 4,
-                    });
-                    setIsContextMenuOpen(true);
-                  }}
-                  class={`time ${
-                    isContextMenuOpen && contextMenuProps?.anchorRef
-                      ? 'is-open'
-                      : ''
-                  }`}
-                >
-                  {showCommentHint && !showCommentCount ? (
-                    <Icon
-                      icon="comment2"
-                      size="s"
-                      // alt={`${repliesCount} ${
-                      //   repliesCount === 1 ? 'reply' : 'replies'
-                      // }`}
-                      alt={plural(repliesCount, {
-                        one: '# reply',
-                        other: '# replies',
-                      })}
-                    />
-                  ) : (
-                    visibility !== 'public' &&
-                    visibility !== 'direct' && (
+          {!!(status.account || createdAt) && (
+            <div class="meta">
+              <span class="meta-name">
+                <NameText
+                  account={status.account}
+                  instance={instance}
+                  showAvatar={size === 's'}
+                  showAcct={isSizeLarge}
+                />
+              </span>
+              {withinContext && isThread && (
+                <ThreadBadge
+                  showIcon={isSizeLarge}
+                  index={snapStates.statusThreadNumber[sKey]}
+                />
+              )}
+              {/* {inReplyToAccount && !withinContext && size !== 's' && (
+                <>
+                  {' '}
+                  <span class="ib">
+                    <Icon icon="arrow-right" class="arrow" />{' '}
+                    <NameText account={inReplyToAccount} instance={instance} short />
+                  </span>
+                </>
+              )} */}
+              {/* </span> */}{' '}
+              {size !== 'l' &&
+                (_deleted ? (
+                  <span class="status-deleted-tag">
+                    <Trans>Deleted</Trans>
+                  </span>
+                ) : url && !previewMode && !readOnly && !quoted ? (
+                  <Link
+                    to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+                    onClick={(e) => {
+                      if (
+                        e.metaKey ||
+                        e.ctrlKey ||
+                        e.shiftKey ||
+                        e.altKey ||
+                        e.which === 2
+                      ) {
+                        return;
+                      }
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onStatusLinkClick?.(e, status);
+                      setContextMenuProps({
+                        anchorRef: {
+                          current: e.currentTarget,
+                        },
+                        align: 'end',
+                        direction: 'bottom',
+                        gap: 4,
+                      });
+                      setIsContextMenuOpen(true);
+                    }}
+                    class={`time ${
+                      isContextMenuOpen && contextMenuProps?.anchorRef
+                        ? 'is-open'
+                        : ''
+                    }`}
+                  >
+                    {showCommentHint && !showCommentCount ? (
                       <Icon
-                        icon={visibilityIconsMap[visibility]}
-                        alt={_(visibilityText[visibility])}
+                        icon="comment2"
                         size="s"
+                        // alt={`${repliesCount} ${
+                        //   repliesCount === 1 ? 'reply' : 'replies'
+                        // }`}
+                        alt={plural(repliesCount, {
+                          one: '# reply',
+                          other: '# replies',
+                        })}
                       />
-                    )
-                  )}{' '}
-                  <RelativeTime datetime={createdAtDate} format="micro" />
-                  {!previewMode && !readOnly && (
-                    <Icon icon="more2" class="more" alt={t`More`} />
-                  )}
-                </Link>
-              ) : (
-                // <Menu
-                //   instanceRef={menuInstanceRef}
-                //   portal={{
-                //     target: document.body,
-                //   }}
-                //   containerProps={{
-                //     style: {
-                //       // Higher than the backdrop
-                //       zIndex: 1001,
-                //     },
-                //     onClick: (e) => {
-                //       if (e.target === e.currentTarget)
-                //         menuInstanceRef.current?.closeMenu?.();
-                //     },
-                //   }}
-                //   align="end"
-                //   gap={4}
-                //   overflow="auto"
-                //   viewScroll="close"
-                //   boundingBoxPadding="8 8 8 8"
-                //   unmountOnClose
-                //   menuButton={({ open }) => (
-                //     <Link
-                //       to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
-                //       onClick={(e) => {
-                //         e.preventDefault();
-                //         e.stopPropagation();
-                //         onStatusLinkClick?.(e, status);
-                //       }}
-                //       class={`time ${open ? 'is-open' : ''}`}
-                //     >
-                //       <Icon
-                //         icon={visibilityIconsMap[visibility]}
-                //         alt={visibilityText[visibility]}
-                //         size="s"
-                //       />{' '}
-                //       <RelativeTime datetime={createdAtDate} format="micro" />
-                //     </Link>
-                //   )}
-                // >
-                //   {StatusMenuItems}
-                // </Menu>
-                <span class="time">
-                  {visibility !== 'public' && visibility !== 'direct' && (
-                    <>
-                      <Icon
-                        icon={visibilityIconsMap[visibility]}
-                        alt={_(visibilityText[visibility])}
-                        size="s"
-                      />{' '}
-                    </>
-                  )}
-                  <RelativeTime datetime={createdAtDate} format="micro" />
-                </span>
-              ))}
-          </div>
+                    ) : (
+                      visibility !== 'public' &&
+                      visibility !== 'direct' && (
+                        <Icon
+                          icon={visibilityIconsMap[visibility]}
+                          alt={_(visibilityText[visibility])}
+                          size="s"
+                        />
+                      )
+                    )}{' '}
+                    <RelativeTime datetime={createdAtDate} format="micro" />
+                    {!previewMode && !readOnly && (
+                      <Icon icon="more2" class="more" alt={t`More`} />
+                    )}
+                  </Link>
+                ) : (
+                  // <Menu
+                  //   instanceRef={menuInstanceRef}
+                  //   portal={{
+                  //     target: document.body,
+                  //   }}
+                  //   containerProps={{
+                  //     style: {
+                  //       // Higher than the backdrop
+                  //       zIndex: 1001,
+                  //     },
+                  //     onClick: (e) => {
+                  //       if (e.target === e.currentTarget)
+                  //         menuInstanceRef.current?.closeMenu?.();
+                  //     },
+                  //   }}
+                  //   align="end"
+                  //   gap={4}
+                  //   overflow="auto"
+                  //   viewScroll="close"
+                  //   boundingBoxPadding="8 8 8 8"
+                  //   unmountOnClose
+                  //   menuButton={({ open }) => (
+                  //     <Link
+                  //       to={instance ? `/${instance}/s/${id}` : `/s/${id}`}
+                  //       onClick={(e) => {
+                  //         e.preventDefault();
+                  //         e.stopPropagation();
+                  //         onStatusLinkClick?.(e, status);
+                  //       }}
+                  //       class={`time ${open ? 'is-open' : ''}`}
+                  //     >
+                  //       <Icon
+                  //         icon={visibilityIconsMap[visibility]}
+                  //         alt={visibilityText[visibility]}
+                  //         size="s"
+                  //       />{' '}
+                  //       <RelativeTime datetime={createdAtDate} format="micro" />
+                  //     </Link>
+                  //   )}
+                  // >
+                  //   {StatusMenuItems}
+                  // </Menu>
+                  <span class="time">
+                    {visibility !== 'public' && visibility !== 'direct' && (
+                      <>
+                        <Icon
+                          icon={visibilityIconsMap[visibility]}
+                          alt={_(visibilityText[visibility])}
+                          size="s"
+                        />{' '}
+                      </>
+                    )}
+                    <RelativeTime datetime={createdAtDate} format="micro" />
+                  </span>
+                ))}
+            </div>
+          )}
           {visibility === 'direct' && (
             <>
               <div class="status-direct-badge">
@@ -1950,15 +2221,11 @@ function Status({
           {!withinContext && (
             <>
               {isThread ? (
-                <div class="status-thread-badge">
-                  <Icon icon="thread" size="s" />
-                  <Trans>
-                    Thread
-                    {snapStates.statusThreadNumber[sKey]
-                      ? ` ${snapStates.statusThreadNumber[sKey]}/X`
-                      : ''}
-                  </Trans>
-                </div>
+                <ThreadBadge
+                  showIcon
+                  showText
+                  index={snapStates.statusThreadNumber[sKey]}
+                />
               ) : (
                 !!inReplyToId &&
                 !!inReplyToAccount &&
@@ -1980,7 +2247,9 @@ function Status({
           )}
           <div
             class={`content-container ${
-              spoilerText || sensitive ? 'has-spoiler' : ''
+              spoilerText || sensitive || filterInfo?.action === 'blur'
+                ? 'has-spoiler'
+                : ''
             } ${showSpoiler ? 'show-spoiler' : ''} ${
               showSpoilerMedia ? 'show-media' : ''
             }`}
@@ -2103,12 +2372,20 @@ function Status({
                     inert={!!spoilerText && !showSpoiler ? true : undefined}
                   >
                     <PostContent
+                      key={reloadPostContentCount}
                       post={status}
                       instance={instance}
                       previewMode={previewMode}
                     />
                     <QuoteStatuses id={id} instance={instance} level={quoted} />
                   </div>
+                )}
+                {!!content && (
+                  <MathBlock
+                    content={content}
+                    contentRef={contentRef}
+                    onRevert={reloadPostContent}
+                  />
                 )}
                 {!!poll && (
                   <Poll
@@ -2141,7 +2418,7 @@ function Status({
                   />
                 )}
                 {(((enableTranslate || inlineTranslate) &&
-                  isTranslateble(content) &&
+                  isTranslateble(content, emojis) &&
                   differentLanguage) ||
                   forceTranslate) && (
                   <TranslationBlock
@@ -2149,13 +2426,17 @@ function Status({
                     mini={!isSizeLarge && !withinContext}
                     sourceLanguage={language}
                     autoDetected={languageAutoDetected}
-                    text={getPostText(status)}
+                    text={getPostText(status, {
+                      maskCustomEmojis: true,
+                      maskURLs: true,
+                    })}
                   />
                 )}
                 {!previewMode &&
-                  sensitive &&
+                  (sensitive || filterInfo?.action === 'blur') &&
                   !!mediaAttachments.length &&
-                  readingExpandMedia !== 'show_all' && (
+                  (readingExpandMedia !== 'show_all' ||
+                    filterInfo?.action === 'blur') && (
                     <button
                       class={`plain spoiler-media-button ${
                         showSpoilerMedia ? 'spoiling' : ''
@@ -2175,7 +2456,15 @@ function Status({
                       <Icon
                         icon={showSpoilerMedia ? 'eye-open' : 'eye-close'}
                       />{' '}
-                      {showSpoilerMedia ? t`Show less` : t`Show media`}
+                      <span>
+                        {filterInfo?.action === 'blur' && (
+                          <small>
+                            <Trans>Filtered: {filterInfo?.titlesStr}</Trans>
+                            <br />
+                          </small>
+                        )}
+                        {showSpoilerMedia ? t`Show less` : t`Show media`}
+                      </span>
                     </button>
                   )}
                 {!!mediaAttachments.length &&
@@ -2188,7 +2477,7 @@ function Status({
                             media={media}
                             autoAnimate
                             showCaption
-                            allowLongerCaption={!content}
+                            allowLongerCaption={!content || isSizeLarge}
                             lang={language}
                             to={`/${instance}/s/${id}?${
                               withinContext ? 'media' : 'media-only'
@@ -2301,13 +2590,15 @@ function Status({
                           </>
                         )
                       }
-                      <time
-                        class="created"
-                        datetime={createdAtDate.toISOString()}
-                        title={createdAtDate.toLocaleString()}
-                      >
-                        {createdDateText}
-                      </time>
+                      {!!createdAt && (
+                        <time
+                          class="created"
+                          datetime={createdAtDate.toISOString()}
+                          title={createdAtDate.toLocaleString()}
+                        >
+                          {createdDateText}
+                        </time>
+                      )}
                     </a>
                     {editedAt && (
                       <>
@@ -2492,7 +2783,7 @@ function Status({
                     </div>
                   }
                 >
-                  {StatusMenuItems}
+                  {StatusMenuItems}{' '}
                 </Menu2>
               </div>
             </>
@@ -2663,20 +2954,19 @@ function MediaFirstContainer(props) {
   );
 }
 
-function getDomain(url) {
-  return punycode.toUnicode(
-    URL.parse(url)
-      .hostname.replace(/^www\./, '')
-      .replace(/\/$/, ''),
-  );
-}
-
 // "Post": Quote post + card link preview combo
 // Assume all links from these domains are "posts"
 // Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
 // This is just "Progressive Enhancement"
 function isCardPost(domain) {
-  return ['x.com', 'twitter.com', 'threads.net', 'bsky.app'].includes(domain);
+  return [
+    'x.com',
+    'twitter.com',
+    'threads.net',
+    'bsky.app',
+    'bsky.brid.gy',
+    'fed.brid.gy',
+  ].includes(domain);
 }
 
 function Byline({ authors, hidden, children }) {
@@ -3191,7 +3481,7 @@ function generateHTMLCode(post, instance, level = 0) {
         — ${emojifyText(
           displayName,
           accountEmojis,
-        )} (@${acct}) <a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>
+        )} (@${acct}) ${!!createdAt ? `<a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>` : ''}
       </footer>
     </blockquote>
   `;
@@ -3488,6 +3778,7 @@ const StatusButton = forwardRef((props, ref) => {
 function nicePostURL(url) {
   if (!url) return;
   const urlObj = URL.parse(url);
+  if (!urlObj) return;
   const { host, pathname } = urlObj;
   const path = pathname.replace(/\/$/, '');
   // split only first slash
@@ -3518,6 +3809,7 @@ function StatusCompact({ sKey }) {
   if (!status) return null;
 
   const {
+    account: { id: accountId },
     sensitive,
     spoilerText,
     account: { avatar, avatarStatic, bot } = {},
@@ -3532,8 +3824,15 @@ function StatusCompact({ sKey }) {
   const srKey = statusKey(id, instance);
   const statusPeekText = statusPeek(status);
 
+  const currentAccount = getCurrentAccID();
+  const isSelf = currentAccount && currentAccount === accountId;
+
   const filterContext = useContext(FilterContext);
-  const filterInfo = isFiltered(filtered, filterContext);
+  let filterInfo = !isSelf && isFiltered(filtered, filterContext);
+
+  // This is fine. Images are converted to emojis so they are
+  // in a way, already "obscured"
+  if (filterInfo?.action === 'blur') filterInfo = null;
 
   if (filterInfo?.action === 'hide') return null;
 
@@ -3541,7 +3840,7 @@ function StatusCompact({ sKey }) {
 
   return (
     <article
-      class={`status compact-reply ${
+      class={`status compact-reply shazam ${
         visibility === 'direct' ? 'visibility-direct' : ''
       }`}
       tabindex="-1"
@@ -3620,7 +3919,7 @@ function FilteredStatus({
 
   return (
     <div
-      class={
+      class={`${
         quoted
           ? ''
           : isReblog
@@ -3630,7 +3929,7 @@ function FilteredStatus({
             : isFollowedTags
               ? 'status-followed-tags'
               : ''
-      }
+      } visibility-${visibility}`}
       {...containerProps}
       // title={statusPeekText}
       onContextMenu={(e) => {
@@ -3755,6 +4054,22 @@ function FilteredStatus({
   );
 }
 
+const handledUnfulfilledStates = [
+  'deleted',
+  'unauthorized',
+  'pending',
+  'rejected',
+  'revoked',
+];
+const unfulfilledText = {
+  filterHidden: msg`Post hidden by your filters`,
+  pending: msg`Post pending`,
+  deleted: msg`Post unavailable`,
+  unauthorized: msg`Post unavailable`,
+  rejected: msg`Post unavailable`,
+  revoked: msg`Post unavailable`,
+};
+
 const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   if (!id || !instance) return;
   const { _ } = useLingui();
@@ -3768,13 +4083,50 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   if (!uniqueQuotes?.length) return;
   if (level > 2) return;
 
+  const filterContext = useContext(FilterContext);
+  const currentAccount = getCurrentAccID();
+
   return uniqueQuotes.map((q) => {
+    let unfulfilledState;
+
+    const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
+    if (quoteStatus) {
+      const isSelf =
+        currentAccount && currentAccount === quoteStatus.account?.id;
+      const filterInfo =
+        !isSelf && isFiltered(quoteStatus.filtered, filterContext);
+
+      if (filterInfo?.action === 'hide') {
+        unfulfilledState = 'filterHidden';
+      }
+    }
+
+    if (!unfulfilledState) {
+      unfulfilledState = handledUnfulfilledStates.find(
+        (state) => q.state === state,
+      );
+    }
+
+    if (unfulfilledState) {
+      return (
+        <div
+          class={`status-card-unfulfilled ${
+            unfulfilledState === 'filterHidden' ? 'status-card-ghost' : ''
+          }`}
+        >
+          <Icon icon="quote" />
+          <i>{_(unfulfilledText[unfulfilledState])}</i>
+        </div>
+      );
+    }
+
+    const Parent = q.native ? Fragment : LazyShazam;
     return (
-      <LazyShazam id={q.instance + q.id}>
+      <Parent id={q.instance + q.id} key={q.instance + q.id}>
         <Link
           key={q.instance + q.id}
           to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
-          class="status-card-link"
+          class={`status-card-link ${q.native ? 'quote-post-native' : ''}`}
           data-read-more={_(readMoreText)}
         >
           <Status
@@ -3785,7 +4137,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
             enableCommentHint
           />
         </Link>
-      </LazyShazam>
+      </Parent>
     );
   });
 });

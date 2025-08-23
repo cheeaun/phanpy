@@ -32,10 +32,12 @@ export default memo(function BackgroundService({ isLoggedIn }) {
 
   const checkLatestNotification = async (masto, instance, skipCheckMarkers) => {
     if (states.notificationsLast) {
-      const notificationsIterator = masto.v1.notifications.list({
-        limit: 1,
-        sinceId: states.notificationsLast.id,
-      });
+      const notificationsIterator = masto.v1.notifications
+        .list({
+          limit: 1,
+          sinceId: states.notificationsLast.id,
+        })
+        .values();
       const { value: notifications } = await notificationsIterator.next();
       if (notifications?.length) {
         if (skipCheckMarkers) {
@@ -144,13 +146,23 @@ export default memo(function BackgroundService({ isLoggedIn }) {
   });
 
   // Global keyboard shortcuts "service"
-  useHotkeys('shift+alt+k', () => {
-    const currentCloakMode = states.settings.cloakMode;
-    states.settings.cloakMode = !currentCloakMode;
-    showToast({
-      text: currentCloakMode ? t`Cloak mode disabled` : t`Cloak mode enabled`,
-    });
-  });
+  useHotkeys(
+    'shift+alt+k',
+    (e) => {
+      // Need modifers check due to useKey: true
+      if (!e.shiftKey || !e.altKey) return;
+
+      const currentCloakMode = states.settings.cloakMode;
+      states.settings.cloakMode = !currentCloakMode;
+      showToast({
+        text: currentCloakMode ? t`Cloak mode disabled` : t`Cloak mode enabled`,
+      });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey,
+    },
+  );
 
   return null;
 });

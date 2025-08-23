@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-23 11:15\n"
+"PO-Revision-Date: 2025-08-23 16:34\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -48,12 +48,12 @@ msgid "Mutual"
 msgstr "Reciproka"
 
 #: src/components/account-block.jsx:204
-#: src/components/account-info.jsx:1907
+#: src/components/account-info.jsx:1912
 msgid "Requested"
 msgstr "Petita"
 
 #: src/components/account-block.jsx:208
-#: src/components/account-info.jsx:1898
+#: src/components/account-info.jsx:1903
 msgid "Following"
 msgstr "Sekvante"
 
@@ -162,7 +162,7 @@ msgstr "Vidi fonbildon"
 
 #: src/components/account-info.jsx:681
 #: src/components/account-info.jsx:1806
-#: src/components/account-info.jsx:2332
+#: src/components/account-info.jsx:2337
 msgid "Edit profile"
 msgstr "Redakti la profilon"
 
@@ -314,11 +314,11 @@ msgstr "Ŝalti diskonigojn"
 
 #: src/components/account-info.jsx:1406
 msgid "@{username} is no longer featured on your profile."
-msgstr ""
+msgstr "@{username} jam ne estas elstarigita en via profilo."
 
 #: src/components/account-info.jsx:1416
 msgid "@{username} is now featured on your profile."
-msgstr ""
+msgstr "@{username} nun estas elstarigita en via profilo."
 
 #: src/components/account-info.jsx:1424
 msgid "Unable to unfeature @{username} on your profile."
@@ -343,7 +343,7 @@ msgstr "Montri elstarajn profilojn"
 
 #: src/components/account-info.jsx:1462
 #: src/components/account-info.jsx:1472
-#: src/components/account-info.jsx:2078
+#: src/components/account-info.jsx:2083
 msgid "Add/Remove from Lists"
 msgstr "Aldoni/Forigi el Listoj"
 
@@ -449,24 +449,24 @@ msgstr "Ĉu nuligi peton por sekvado?"
 msgid "Unfollow @{0}?"
 msgstr "Ĉu ĉesi sekvi @{0}?"
 
-#: src/components/account-info.jsx:1901
+#: src/components/account-info.jsx:1906
 msgid "Unfollow…"
 msgstr "Ĉesi sekvi…"
 
-#: src/components/account-info.jsx:1910
+#: src/components/account-info.jsx:1915
 msgid "Withdraw…"
 msgstr "Nuligi…"
 
-#: src/components/account-info.jsx:1917
-#: src/components/account-info.jsx:1921
+#: src/components/account-info.jsx:1922
+#: src/components/account-info.jsx:1926
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "Sekvi"
 
-#: src/components/account-info.jsx:2018
-#: src/components/account-info.jsx:2073
-#: src/components/account-info.jsx:2207
-#: src/components/account-info.jsx:2327
+#: src/components/account-info.jsx:2023
+#: src/components/account-info.jsx:2078
+#: src/components/account-info.jsx:2212
+#: src/components/account-info.jsx:2332
 #: src/components/account-sheet.jsx:38
 #: src/components/compose.jsx:892
 #: src/components/compose.jsx:2775
@@ -499,85 +499,85 @@ msgstr "Sekvi"
 msgid "Close"
 msgstr "Fermi"
 
-#: src/components/account-info.jsx:2023
+#: src/components/account-info.jsx:2028
 msgid "Translated Bio"
 msgstr "Tradukita biografio"
 
-#: src/components/account-info.jsx:2118
+#: src/components/account-info.jsx:2123
 msgid "Unable to remove from list."
 msgstr "Ne eblas forigi el listo."
 
-#: src/components/account-info.jsx:2119
+#: src/components/account-info.jsx:2124
 msgid "Unable to add to list."
 msgstr "Ne eblas aldoni al listo."
 
-#: src/components/account-info.jsx:2138
+#: src/components/account-info.jsx:2143
 #: src/pages/lists.jsx:131
 msgid "Unable to load lists."
 msgstr "Ne eblas ŝargi listojn."
 
-#: src/components/account-info.jsx:2142
+#: src/components/account-info.jsx:2147
 msgid "No lists."
 msgstr "Ne estas listoj."
 
-#: src/components/account-info.jsx:2153
+#: src/components/account-info.jsx:2158
 #: src/components/list-add-edit.jsx:41
 #: src/pages/lists.jsx:62
 msgid "New list"
 msgstr "Nova listo"
 
 #. placeholder {0}: account?.username || account?.acct
-#: src/components/account-info.jsx:2212
+#: src/components/account-info.jsx:2217
 msgid "Private note about <0>@{0}</0>"
 msgstr "Personaj notoj pri <0>@{0}</0>"
 
-#: src/components/account-info.jsx:2242
+#: src/components/account-info.jsx:2247
 msgid "Unable to update private note."
 msgstr "Ne eblas ĝisdatigi la privatan noton."
 
-#: src/components/account-info.jsx:2265
-#: src/components/account-info.jsx:2563
+#: src/components/account-info.jsx:2270
+#: src/components/account-info.jsx:2568
 msgid "Cancel"
 msgstr "Nuligi"
 
-#: src/components/account-info.jsx:2270
+#: src/components/account-info.jsx:2275
 msgid "Save & close"
 msgstr "Konservi kaj fermi"
 
-#: src/components/account-info.jsx:2387
+#: src/components/account-info.jsx:2392
 msgid "Unable to update profile."
 msgstr "Ne eblas ĝisdatigi la profilon."
 
-#: src/components/account-info.jsx:2394
+#: src/components/account-info.jsx:2399
 msgid "Header picture"
 msgstr "Kapa bildo"
 
-#: src/components/account-info.jsx:2446
+#: src/components/account-info.jsx:2451
 msgid "Profile picture"
 msgstr "Profilbildo"
 
-#: src/components/account-info.jsx:2498
+#: src/components/account-info.jsx:2503
 #: src/components/list-add-edit.jsx:106
 msgid "Name"
 msgstr "Nomo"
 
-#: src/components/account-info.jsx:2511
+#: src/components/account-info.jsx:2516
 msgid "Bio"
 msgstr "Sinprezento"
 
-#: src/components/account-info.jsx:2524
+#: src/components/account-info.jsx:2529
 msgid "Extra fields"
 msgstr "Profilaj metadatumoj"
 
-#: src/components/account-info.jsx:2530
+#: src/components/account-info.jsx:2535
 msgid "Label"
 msgstr "Etikedo"
 
-#: src/components/account-info.jsx:2533
+#: src/components/account-info.jsx:2538
 msgid "Content"
 msgstr "Enhavo"
 
-#: src/components/account-info.jsx:2566
+#: src/components/account-info.jsx:2571
 #: src/components/list-add-edit.jsx:152
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/filters.jsx:570
@@ -585,20 +585,20 @@ msgstr "Enhavo"
 msgid "Save"
 msgstr "Konservi"
 
-#: src/components/account-info.jsx:2620
+#: src/components/account-info.jsx:2625
 msgid "username"
 msgstr "uzantnomo"
 
-#: src/components/account-info.jsx:2624
+#: src/components/account-info.jsx:2629
 msgid "server domain name"
 msgstr "servila domajna nomo"
 
 #. placeholder {0}: info.username
-#: src/components/account-info.jsx:2690
+#: src/components/account-info.jsx:2695
 msgid "Profiles featured by @{0}"
 msgstr ""
 
-#: src/components/account-info.jsx:2716
+#: src/components/account-info.jsx:2721
 msgid "No featured profiles."
 msgstr "Ne estas elstaraj profiloj."
 
@@ -1773,16 +1773,16 @@ msgstr "Finante"
 
 #: src/components/recent-searches.jsx:27
 msgid "Cleared recent searches"
-msgstr ""
+msgstr "Forigitaj lastatempaj serĉoj"
 
 #: src/components/recent-searches.jsx:49
 #: src/components/search-form.jsx:328
 msgid "Recent searches"
-msgstr ""
+msgstr "Lastatempaj serĉoj"
 
 #: src/components/recent-searches.jsx:59
 msgid "Clear all"
-msgstr ""
+msgstr "Forigi ĉion"
 
 #: src/components/recent-searches.jsx:94
 #: src/pages/account-statuses.jsx:334
@@ -2575,14 +2575,14 @@ msgstr ""
 
 #: src/components/status.jsx:4058
 msgid "Post pending"
-msgstr ""
+msgstr "Pritraktata afiŝo"
 
 #: src/components/status.jsx:4059
 #: src/components/status.jsx:4060
 #: src/components/status.jsx:4061
 #: src/components/status.jsx:4062
 msgid "Post unavailable"
-msgstr ""
+msgstr "Afiŝo ne disponebla"
 
 #: src/components/thread-badge.jsx:22
 #: src/components/thread-badge.jsx:37
@@ -2593,7 +2593,7 @@ msgstr "Fadeno"
 
 #: src/components/thread-badge.jsx:28
 msgid "Thread {index}/{total}"
-msgstr ""
+msgstr "Fadeno {index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
@@ -3961,11 +3961,11 @@ msgstr "Ne eblas ŝargi respondojn."
 
 #: src/pages/status.jsx:1146
 msgid "{months, plural, one {# month later} other {# months later}}"
-msgstr ""
+msgstr "{months, plural,one {# monaton poste} other {# monatojn poste}}"
 
 #: src/pages/status.jsx:1152
 msgid "{years, plural, one {# year later} other {# years later}}"
-msgstr ""
+msgstr "{years, plural,one {# jaron poste} other {# jarojn poste}}"
 
 #: src/pages/status.jsx:1275
 msgid "Back"

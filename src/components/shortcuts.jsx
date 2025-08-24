@@ -166,7 +166,7 @@ function Shortcuts() {
                         }
                       }}
                     >
-                      <Icon icon={icon} size="xl" alt={title} />
+                      <Icon icon={icon} size="xl" />
                       <span>
                         <AsyncText>{title}</AsyncText>
                         {subtitle && (

@@ -31,6 +31,7 @@ import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
+import escapeHTML from '../utils/escape-html';
 import getDomain from '../utils/get-domain';
 import i18nDuration from '../utils/i18n-duration';
 import isRTL from '../utils/is-rtl';
@@ -160,14 +161,6 @@ const SCAN_RE = new RegExp(
 );
 
 const segmenter = new Intl.Segmenter();
-function escapeHTML(text) {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
 function highlightText(text, { maxCharacters = Infinity }) {
   // Exceeded characters limit
   const { composerCharacterCount } = states;

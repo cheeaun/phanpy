@@ -31,6 +31,8 @@ import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
+import escapeHTML from '../utils/escape-html';
+import getDomain from '../utils/get-domain';
 import i18nDuration from '../utils/i18n-duration';
 import isRTL from '../utils/is-rtl';
 import localeMatch from '../utils/locale-match';
@@ -159,14 +161,6 @@ const SCAN_RE = new RegExp(
 );
 
 const segmenter = new Intl.Segmenter();
-function escapeHTML(text) {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
 function highlightText(text, { maxCharacters = Infinity }) {
   // Exceeded characters limit
   const { composerCharacterCount } = states;
@@ -327,7 +321,7 @@ function Compose({
           prefs['posting:default:language']?.toLowerCase() ||
           DEFAULT_LANG,
       );
-      setSensitive(sensitive && !!spoilerText);
+      setSensitive(!!spoilerText);
     } else if (editStatus) {
       const { visibility, language, sensitive, poll, mediaAttachments } =
         editStatus;
@@ -1846,17 +1840,27 @@ const supportsCameraCapture = (() => {
   const input = document.createElement('input');
   return 'capture' in input;
 })();
+const isMobileSafari =
+  /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+  /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 function CameraCaptureInput({
   hidden,
   disabled = false,
   supportedMimeTypes,
   setMediaAttachments,
 }) {
+  // If not Mobile Safari, only apply image/*
+  // Chrome Android doesn't show the camera if image and video combined
+  // It also can't switch between photo and video mode like iOS/Safari
+  const filteredSupportedMimeTypes = isMobileSafari
+    ? supportedMimeTypes
+    : supportedMimeTypes?.filter((mimeType) => !/^image\//i.test(mimeType));
+
   return (
     <input
       type="file"
       hidden={hidden}
-      accept={supportedMimeTypes?.join(',')}
+      accept={filteredSupportedMimeTypes?.join(',')}
       capture="environment"
       disabled={disabled}
       onChange={(e) => {
@@ -2086,8 +2090,11 @@ const Textarea = forwardRef((props, ref) => {
                   acct,
                   emojis,
                   history,
+                  roles,
+                  url,
                 } = result;
                 const displayNameWithEmoji = emojifyText(displayName, emojis);
+                const accountInstance = getDomain(url);
                 // const item = menuItem.cloneNode();
                 if (acct) {
                   html += `
@@ -2102,6 +2109,19 @@ const Textarea = forwardRef((props, ref) => {
                         <br><span class="bidi-isolate">@${encodeHTML(
                           acct,
                         )}</span>
+                        ${
+                          roles?.map(
+                            (role) => ` <span class="tag collapsed">
+                            ${role.name}
+                            ${
+                              !!accountInstance &&
+                              `<span class="more-insignificant">
+                                ${accountInstance}
+                              </span>`
+                            }
+                          </span>`,
+                          ) || ''
+                        }
                       </span>
                     </li>
                   `;

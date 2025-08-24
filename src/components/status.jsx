@@ -81,6 +81,7 @@ import Link from './link';
 import Media, { isMediaCaptionLong } from './media';
 import MenuLink from './menu-link';
 import RelativeTime from './relative-time';
+import ThreadBadge from './thread-badge';
 import TranslationBlock from './translation-block';
 
 const SHOW_COMMENT_COUNT_LIMIT = 280;
@@ -1083,9 +1084,7 @@ function Status({
   const contentTranslationHideLanguages =
     snapStates.settings.contentTranslationHideLanguages || [];
   const [differentLanguage, setDifferentLanguage] = useState(
-    () =>
-      DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] ||
-      checkDifferentLanguage(language, contentTranslationHideLanguages),
+    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages],
   );
   useEffect(() => {
     if (!language || differentLanguage) {
@@ -1106,7 +1105,7 @@ function Status({
       if (different) setDifferentLanguage(different);
     }, 1);
     return () => clearTimeout(timeout);
-  }, [language, differentLanguage, contentTranslationHideLanguages]);
+  }, [language, differentLanguage]);
 
   const reblogIterator = useRef();
   const favouriteIterator = useRef();
@@ -2066,6 +2065,12 @@ function Status({
                   showAcct={isSizeLarge}
                 />
               </span>
+              {withinContext && isThread && (
+                <ThreadBadge
+                  showIcon={isSizeLarge}
+                  index={snapStates.statusThreadNumber[sKey]}
+                />
+              )}
               {/* {inReplyToAccount && !withinContext && size !== 's' && (
                 <>
                   {' '}
@@ -2208,15 +2213,11 @@ function Status({
           {!withinContext && (
             <>
               {isThread ? (
-                <div class="status-thread-badge">
-                  <Icon icon="thread" size="s" />
-                  <Trans>
-                    Thread
-                    {snapStates.statusThreadNumber[sKey]
-                      ? ` ${snapStates.statusThreadNumber[sKey]}/X`
-                      : ''}
-                  </Trans>
-                </div>
+                <ThreadBadge
+                  showIcon
+                  showText
+                  index={snapStates.statusThreadNumber[sKey]}
+                />
               ) : (
                 !!inReplyToId &&
                 !!inReplyToAccount &&
@@ -4054,11 +4055,11 @@ const handledUnfulfilledStates = [
 ];
 const unfulfilledText = {
   filterHidden: msg`Post hidden by your filters`,
-  deleted: msg`Post removed by author.`,
-  unauthorized: msg`You’re not authorized to view this post.`,
-  pending: msg`Post pending author approval.`,
-  rejected: msg`Quoting not allowed by the author.`,
-  revoked: msg`Quoting not allowed by the author.`,
+  pending: msg`Post pending`,
+  deleted: msg`Post unavailable`,
+  unauthorized: msg`Post unavailable`,
+  rejected: msg`Post unavailable`,
+  revoked: msg`Post unavailable`,
 };
 
 const QuoteStatuses = memo(({ id, instance, level = 0 }) => {

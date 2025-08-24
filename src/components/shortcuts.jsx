@@ -58,12 +58,14 @@ function Shortcuts() {
       }
       if (typeof title === 'function') {
         title = title(data, i);
-      } else {
+      } else if (title?.id) {
+        // Check if it's MessageDescriptor
         title = _(title);
       }
       if (typeof subtitle === 'function') {
         subtitle = subtitle(data, i);
-      } else {
+      } else if (subtitle?.id) {
+        // Check if it's MessageDescriptor
         subtitle = _(subtitle);
       }
       if (typeof icon === 'function') {

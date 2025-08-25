@@ -187,8 +187,7 @@ export default function ScheduledPosts() {
 function ScheduledPostPreview({ status, scheduledAt, onClick }) {
   // Look at scheduledAt, if it's months away, ICON = 'month'. If it's days away, ICON = 'day', else ICON = 'time'
   const icon = useMemo(() => {
-    const hours =
-      (new Date(scheduledAt).getTime() - Date.now()) / (1000 * 60 * 60);
+    const hours = (Date.parse(scheduledAt) - Date.now()) / (1000 * 60 * 60);
     if (hours < 24) {
       return 'time';
     } else if (hours < 720) {

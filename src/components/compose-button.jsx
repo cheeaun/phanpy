@@ -196,8 +196,7 @@ export default function ComposeButton() {
           {latestPosts.length > 0 &&
             latestPosts.map((post) => {
               const createdDate = new Date(post.createdAt);
-              const isWithinDay =
-                new Date().getTime() - createdDate.getTime() < 86400000;
+              const isWithinDay = Date.now() - createdDate.getTime() < 86400000;
 
               return (
                 <MenuItem key={post.id} onClick={() => handleReplyToPost(post)}>

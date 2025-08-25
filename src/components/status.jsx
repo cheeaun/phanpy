@@ -2571,8 +2571,7 @@ function Status({
                     <a href={url} target="_blank" rel="noopener">
                       {
                         // within a day
-                        new Date().getTime() - createdAtDate.getTime() <
-                          86400000 && (
+                        Date.now() - createdAtDate.getTime() < 86400000 && (
                           <>
                             <RelativeTime
                               datetime={createdAtDate}

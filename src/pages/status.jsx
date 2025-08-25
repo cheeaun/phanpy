@@ -272,7 +272,7 @@ function StatusParent(props) {
 
 // oldest first
 function createdAtSort(a, b) {
-  return new Date(b.created_at) - new Date(a.created_at);
+  return Date.parse(b.created_at) - Date.parse(a.created_at);
 }
 
 const MONTH_IN_MS = 1000 * 60 * 60 * 24 * 30;

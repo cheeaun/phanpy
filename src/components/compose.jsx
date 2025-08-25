@@ -100,7 +100,7 @@ const oneDay = 24 * 60 * 60;
 
 const expiresInFromExpiresAt = (expiresAt) => {
   if (!expiresAt) return oneDay;
-  const delta = (new Date(expiresAt).getTime() - Date.now()) / 1000;
+  const delta = (Date.parse(expiresAt) - Date.now()) / 1000;
   return expirySeconds.find((s) => s >= delta) || oneDay;
 };
 
@@ -747,7 +747,7 @@ function Compose({
     () =>
       !!replyToStatus?.createdAt &&
       Math.floor(
-        (Date.now() - new Date(replyToStatus.createdAt)) /
+        (Date.now() - Date.parse(replyToStatus.createdAt)) /
           (1000 * 60 * 60 * 24 * 30),
       ),
     [replyToStatus],

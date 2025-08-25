@@ -31,9 +31,7 @@ function Drafts({ onClose }) {
           if (ownKeys.length) {
             const drafts = await db.drafts.getMany(ownKeys);
             drafts.sort(
-              (a, b) =>
-                new Date(b.updatedAt).getTime() -
-                new Date(a.updatedAt).getTime(),
+              (a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt),
             );
             setDrafts(drafts);
           } else {

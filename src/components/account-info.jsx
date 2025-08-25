@@ -710,7 +710,7 @@ function AccountInfo({
                     <Icon icon="group" /> <Trans>Group</Trans>
                   </span>
                 )}
-                {roles?.map((role) => (
+                {/* {roles?.map((role) => (
                   <span class="tag">
                     {role.name}
                     {!!accountInstance && (
@@ -722,7 +722,7 @@ function AccountInfo({
                       </>
                     )}
                   </span>
-                ))}
+                ))} */}
                 <div
                   class="note"
                   dir="auto"

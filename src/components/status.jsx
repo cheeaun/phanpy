@@ -488,11 +488,16 @@ const readMoreText = msg`Read more →`;
 // All this work just to make sure this only lazy-run once
 // Because first run is slow due to intl-localematcher
 const DIFFERENT_LANG_CHECK = {};
+const diffLangCheckCacheKey = (l, hls) => `${l}:${hls.join('|')}`;
 const checkDifferentLanguage = (
   language,
   contentTranslationHideLanguages = [],
 ) => {
   if (!language) return false;
+  const cacheKey = diffLangCheckCacheKey(
+    language,
+    contentTranslationHideLanguages,
+  );
   const targetLanguage = getTranslateTargetLanguage(true);
   const different =
     language !== targetLanguage &&
@@ -500,8 +505,9 @@ const checkDifferentLanguage = (
     !contentTranslationHideLanguages.find(
       (l) => language === l || localeMatch([language], [l]),
     );
-  if (different)
-    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages] = true;
+  if (different) {
+    DIFFERENT_LANG_CHECK[cacheKey] = true;
+  }
   return different;
 };
 
@@ -1083,7 +1089,9 @@ function Status({
   const contentTranslationHideLanguages =
     snapStates.settings.contentTranslationHideLanguages || [];
   const [differentLanguage, setDifferentLanguage] = useState(
-    DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages],
+    DIFFERENT_LANG_CHECK[
+      diffLangCheckCacheKey(language, contentTranslationHideLanguages)
+    ],
   );
   useEffect(() => {
     if (!language || differentLanguage) {
@@ -1091,7 +1099,9 @@ function Status({
     }
     if (
       !differentLanguage &&
-      DIFFERENT_LANG_CHECK[language + contentTranslationHideLanguages]
+      DIFFERENT_LANG_CHECK[
+        diffLangCheckCacheKey(language, contentTranslationHideLanguages)
+      ]
     ) {
       setDifferentLanguage(true);
       return;
@@ -1102,7 +1112,7 @@ function Status({
         contentTranslationHideLanguages,
       );
       if (different) setDifferentLanguage(different);
-    }, 1);
+    }, 100);
     return () => clearTimeout(timeout);
   }, [language, differentLanguage]);
 

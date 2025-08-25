@@ -34,7 +34,7 @@ msgstr ""
 
 #: src/components/account-block.jsx:190
 #: src/components/account-info.jsx:710
-#: src/components/status.jsx:754
+#: src/components/status.jsx:519
 msgid "Group"
 msgstr ""
 
@@ -108,11 +108,11 @@ msgstr ""
 #: src/components/compose.jsx:2812
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-modal.jsx:363
-#: src/components/status.jsx:2006
-#: src/components/status.jsx:2023
-#: src/components/status.jsx:2154
-#: src/components/status.jsx:2778
-#: src/components/status.jsx:2781
+#: src/components/status.jsx:1771
+#: src/components/status.jsx:1788
+#: src/components/status.jsx:1919
+#: src/components/status.jsx:2543
+#: src/components/status.jsx:2546
 #: src/pages/account-statuses.jsx:539
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
@@ -217,7 +217,7 @@ msgid "Original"
 msgstr ""
 
 #: src/components/account-info.jsx:978
-#: src/components/status.jsx:2563
+#: src/components/status.jsx:2328
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1448
 #: src/pages/catchup.jsx:2061
@@ -343,30 +343,30 @@ msgid "Add/Remove from Lists"
 msgstr ""
 
 #: src/components/account-info.jsx:1522
-#: src/components/status.jsx:1428
+#: src/components/status.jsx:1193
 msgid "Link copied"
 msgstr ""
 
 #: src/components/account-info.jsx:1525
-#: src/components/status.jsx:1431
+#: src/components/status.jsx:1196
 msgid "Unable to copy link"
 msgstr ""
 
 #: src/components/account-info.jsx:1531
+#: src/components/post-embed-modal.jsx:232
 #: src/components/shortcuts-settings.jsx:1059
-#: src/components/status.jsx:1437
-#: src/components/status.jsx:3556
+#: src/components/status.jsx:1202
 msgid "Copy"
 msgstr ""
 
 #: src/components/account-info.jsx:1546
 #: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1453
+#: src/components/status.jsx:1218
 msgid "Sharing doesn't seem to work."
 msgstr ""
 
 #: src/components/account-info.jsx:1552
-#: src/components/status.jsx:1459
+#: src/components/status.jsx:1224
 msgid "Share…"
 msgstr ""
 
@@ -476,13 +476,13 @@ msgstr ""
 #: src/components/media-alt-modal.jsx:43
 #: src/components/media-modal.jsx:327
 #: src/components/notification-service.jsx:157
+#: src/components/post-embed-modal.jsx:196
 #: src/components/report-modal.jsx:118
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3280
-#: src/components/status.jsx:3520
-#: src/components/status.jsx:4029
+#: src/components/status.jsx:2742
+#: src/components/status.jsx:2954
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1584
 #: src/pages/filters.jsx:225
@@ -604,6 +604,11 @@ msgstr ""
 #: src/components/background-service.jsx:158
 msgid "Cloak mode enabled"
 msgstr ""
+
+#. More from [Author]
+#: src/components/byline.jsx:17
+msgid "More from <0/>"
+msgstr "More from <0/>"
 
 #: src/components/columns.jsx:27
 #: src/components/nav-menu.jsx:181
@@ -732,7 +737,7 @@ msgid "Attachment #{i} failed"
 msgstr "Attachment #{i} failed"
 
 #: src/components/compose.jsx:1215
-#: src/components/status.jsx:2338
+#: src/components/status.jsx:2103
 #: src/components/timeline.jsx:1015
 msgid "Content warning"
 msgstr ""
@@ -742,7 +747,7 @@ msgid "Content warning or sensitive media"
 msgstr "Content warning or sensitive media"
 
 #: src/components/compose.jsx:1267
-#: src/components/status.jsx:101
+#: src/components/status.jsx:87
 #: src/pages/settings.jsx:318
 msgid "Public"
 msgstr ""
@@ -750,25 +755,25 @@ msgstr ""
 #: src/components/compose.jsx:1272
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
-#: src/components/status.jsx:102
+#: src/components/status.jsx:88
 msgid "Local"
 msgstr ""
 
 #: src/components/compose.jsx:1276
-#: src/components/status.jsx:103
+#: src/components/status.jsx:89
 #: src/pages/settings.jsx:321
 msgid "Unlisted"
 msgstr ""
 
 #: src/components/compose.jsx:1279
-#: src/components/status.jsx:104
+#: src/components/status.jsx:90
 #: src/pages/settings.jsx:324
 msgid "Followers only"
 msgstr ""
 
 #: src/components/compose.jsx:1282
-#: src/components/status.jsx:105
-#: src/components/status.jsx:2218
+#: src/components/status.jsx:91
+#: src/components/status.jsx:1983
 msgid "Private mention"
 msgstr ""
 
@@ -805,10 +810,10 @@ msgstr "Schedule"
 
 #: src/components/compose.jsx:1671
 #: src/components/keyboard-shortcuts-help.jsx:155
-#: src/components/status.jsx:1200
-#: src/components/status.jsx:1986
-#: src/components/status.jsx:1987
-#: src/components/status.jsx:2682
+#: src/components/status.jsx:965
+#: src/components/status.jsx:1751
+#: src/components/status.jsx:1752
+#: src/components/status.jsx:2447
 msgid "Reply"
 msgstr ""
 
@@ -1030,7 +1035,7 @@ msgstr ""
 
 #: src/components/drafts.jsx:126
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1603
+#: src/components/status.jsx:1368
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:368
 msgid "Delete…"
@@ -1239,10 +1244,10 @@ msgid "<0>l</0> or <1>f</1>"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:176
-#: src/components/status.jsx:1208
-#: src/components/status.jsx:2709
-#: src/components/status.jsx:2732
-#: src/components/status.jsx:2733
+#: src/components/status.jsx:973
+#: src/components/status.jsx:2474
+#: src/components/status.jsx:2497
+#: src/components/status.jsx:2498
 msgid "Boost"
 msgstr ""
 
@@ -1251,9 +1256,9 @@ msgid "<0>Shift</0> + <1>b</1>"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:184
-#: src/components/status.jsx:1271
-#: src/components/status.jsx:2757
-#: src/components/status.jsx:2758
+#: src/components/status.jsx:1036
+#: src/components/status.jsx:2522
+#: src/components/status.jsx:2523
 msgid "Bookmark"
 msgstr ""
 
@@ -1312,20 +1317,38 @@ msgstr ""
 msgid "Posts on this list are hidden from Home/Following"
 msgstr "Posts on this list are hidden from Home/Following"
 
+#: src/components/math-block.jsx:132
+msgid "Unable to format math"
+msgstr "Unable to format math"
+
+#: src/components/math-block.jsx:146
+msgid "Math expressions found."
+msgstr "Math expressions found."
+
+#. Action to switch from rendered math back to raw (LaTeX) markup
+#: src/components/math-block.jsx:149
+msgid "Show markup"
+msgstr "Show markup"
+
+#. Action to render math expressions from raw (LaTeX) markup
+#: src/components/math-block.jsx:154
+msgid "Format math"
+msgstr "Format math"
+
 #: src/components/media-alt-modal.jsx:48
 #: src/components/media.jsx:51
 msgid "Media description"
 msgstr ""
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1314
-#: src/components/status.jsx:1323
+#: src/components/status.jsx:1079
+#: src/components/status.jsx:1088
 #: src/components/translation-block.jsx:239
 msgid "Translate"
 msgstr ""
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1342
+#: src/components/status.jsx:1107
 msgid "Speak"
 msgstr ""
 
@@ -1362,9 +1385,9 @@ msgid "Filtered: {filterTitleStr}"
 msgstr ""
 
 #: src/components/media-post.jsx:133
-#: src/components/status.jsx:3859
-#: src/components/status.jsx:3955
-#: src/components/status.jsx:4033
+#: src/components/status-compact.jsx:70
+#: src/components/status.jsx:2880
+#: src/components/status.jsx:2958
 #: src/components/timeline.jsx:1004
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1880
@@ -1676,8 +1699,8 @@ msgid "[Unknown notification type: {type}]"
 msgstr ""
 
 #: src/components/notification.jsx:451
-#: src/components/status.jsx:1285
-#: src/components/status.jsx:1295
+#: src/components/status.jsx:1050
+#: src/components/status.jsx:1060
 msgid "Boosted/Liked by…"
 msgstr ""
 
@@ -1703,7 +1726,7 @@ msgid "View #Wrapstodon"
 msgstr "View #Wrapstodon"
 
 #: src/components/notification.jsx:801
-#: src/components/status.jsx:486
+#: src/components/status.jsx:260
 msgid "Read more →"
 msgstr ""
 
@@ -1764,6 +1787,68 @@ msgstr ""
 
 #: src/components/poll.jsx:279
 msgid "Ending"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:201
+#: src/components/status.jsx:1237
+msgid "Embed post"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:206
+msgid "HTML Code"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:223
+msgid "HTML code copied"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:226
+msgid "Unable to copy HTML code"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:238
+msgid "Media attachments:"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:260
+msgid "Account Emojis:"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:291
+#: src/components/post-embed-modal.jsx:336
+msgid "static URL"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:305
+msgid "Emojis:"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:350
+msgid "Notes:"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:354
+msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:360
+msgid "Polls are not interactive, becomes a list with vote counts."
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:365
+msgid "Media attachments can be images, videos, audios or any file types."
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:371
+msgid "Post could be edited or deleted later."
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:377
+msgid "Preview"
+msgstr ""
+
+#: src/components/post-embed-modal.jsx:386
+msgid "Note: This preview is lightly styled."
 msgstr ""
 
 #: src/components/recent-searches.jsx:27
@@ -2030,7 +2115,7 @@ msgid "Move down"
 msgstr ""
 
 #: src/components/shortcuts-settings.jsx:379
-#: src/components/status.jsx:1565
+#: src/components/status.jsx:1330
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr ""
@@ -2229,355 +2314,270 @@ msgstr ""
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr ""
 
-#: src/components/status.jsx:351
-msgid "Unable to format math"
-msgstr "Unable to format math"
-
-#: src/components/status.jsx:365
-msgid "Math expressions found."
-msgstr "Math expressions found."
-
-#. Action to switch from rendered math back to raw (LaTeX) markup
-#: src/components/status.jsx:368
-msgid "Show markup"
-msgstr "Show markup"
-
-#. Action to render math expressions from raw (LaTeX) markup
-#: src/components/status.jsx:373
-msgid "Format math"
-msgstr "Format math"
-
-#: src/components/status.jsx:778
+#: src/components/status.jsx:543
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>boosted</1>"
 
-#: src/components/status.jsx:881
+#: src/components/status.jsx:646
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1035
+#: src/components/status.jsx:800
 msgid "Unliked @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1036
+#: src/components/status.jsx:801
 msgid "Liked @{0}'s post"
 msgstr "Liked @{0}'s post"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1075
+#: src/components/status.jsx:840
 msgid "Unbookmarked @{0}'s post"
 msgstr "Unbookmarked @{0}'s post"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1076
+#: src/components/status.jsx:841
 msgid "Bookmarked @{0}'s post"
 msgstr "Bookmarked @{0}'s post"
 
-#: src/components/status.jsx:1177
+#: src/components/status.jsx:942
 msgid "Some media have no descriptions."
 msgstr ""
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
-#: src/components/status.jsx:1184
+#: src/components/status.jsx:949
 msgid "Old post (<0>{0}</0>)"
 msgstr ""
 
-#: src/components/status.jsx:1208
-#: src/components/status.jsx:1248
-#: src/components/status.jsx:2709
-#: src/components/status.jsx:2732
+#: src/components/status.jsx:973
+#: src/components/status.jsx:1013
+#: src/components/status.jsx:2474
+#: src/components/status.jsx:2497
 msgid "Unboost"
 msgstr ""
 
-#: src/components/status.jsx:1224
-#: src/components/status.jsx:2724
+#: src/components/status.jsx:989
+#: src/components/status.jsx:2489
 msgid "Quote"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1236
-#: src/components/status.jsx:1702
+#: src/components/status.jsx:1001
+#: src/components/status.jsx:1467
 msgid "Unboosted @{0}'s post"
 msgstr "Unboosted @{0}'s post"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1237
-#: src/components/status.jsx:1703
+#: src/components/status.jsx:1002
+#: src/components/status.jsx:1468
 msgid "Boosted @{0}'s post"
 msgstr "Boosted @{0}'s post"
 
-#: src/components/status.jsx:1249
+#: src/components/status.jsx:1014
 msgid "Boost…"
 msgstr ""
 
-#: src/components/status.jsx:1261
-#: src/components/status.jsx:1996
-#: src/components/status.jsx:2745
+#: src/components/status.jsx:1026
+#: src/components/status.jsx:1761
+#: src/components/status.jsx:2510
 msgid "Unlike"
 msgstr ""
 
-#: src/components/status.jsx:1262
-#: src/components/status.jsx:1996
-#: src/components/status.jsx:1997
-#: src/components/status.jsx:2745
-#: src/components/status.jsx:2746
+#: src/components/status.jsx:1027
+#: src/components/status.jsx:1761
+#: src/components/status.jsx:1762
+#: src/components/status.jsx:2510
+#: src/components/status.jsx:2511
 msgid "Like"
 msgstr ""
 
-#: src/components/status.jsx:1271
-#: src/components/status.jsx:2757
+#: src/components/status.jsx:1036
+#: src/components/status.jsx:2522
 msgid "Unbookmark"
 msgstr ""
 
-#: src/components/status.jsx:1354
+#: src/components/status.jsx:1119
 msgid "Post text copied"
 msgstr "Post text copied"
 
-#: src/components/status.jsx:1357
+#: src/components/status.jsx:1122
 msgid "Unable to copy post text"
 msgstr "Unable to copy post text"
 
-#: src/components/status.jsx:1363
+#: src/components/status.jsx:1128
 msgid "Copy post text"
 msgstr "Copy post text"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1381
+#: src/components/status.jsx:1146
 msgid "View post by <0>@{0}</0>"
 msgstr ""
 
-#: src/components/status.jsx:1402
+#: src/components/status.jsx:1167
 msgid "Show Edit History"
 msgstr ""
 
-#: src/components/status.jsx:1405
+#: src/components/status.jsx:1170
 msgid "Edited: {editedDateText}"
 msgstr ""
 
-#: src/components/status.jsx:1472
-#: src/components/status.jsx:3525
-msgid "Embed post"
-msgstr ""
-
-#: src/components/status.jsx:1486
+#: src/components/status.jsx:1251
 msgid "Conversation unmuted"
 msgstr ""
 
-#: src/components/status.jsx:1486
+#: src/components/status.jsx:1251
 msgid "Conversation muted"
 msgstr ""
 
-#: src/components/status.jsx:1492
+#: src/components/status.jsx:1257
 msgid "Unable to unmute conversation"
 msgstr ""
 
-#: src/components/status.jsx:1493
+#: src/components/status.jsx:1258
 msgid "Unable to mute conversation"
 msgstr ""
 
-#: src/components/status.jsx:1502
+#: src/components/status.jsx:1267
 msgid "Unmute conversation"
 msgstr ""
 
-#: src/components/status.jsx:1509
+#: src/components/status.jsx:1274
 msgid "Mute conversation"
 msgstr ""
 
-#: src/components/status.jsx:1525
+#: src/components/status.jsx:1290
 msgid "Post unpinned from profile"
 msgstr ""
 
-#: src/components/status.jsx:1526
+#: src/components/status.jsx:1291
 msgid "Post pinned to profile"
 msgstr ""
 
-#: src/components/status.jsx:1531
+#: src/components/status.jsx:1296
 msgid "Unable to unpin post"
 msgstr ""
 
-#: src/components/status.jsx:1531
+#: src/components/status.jsx:1296
 msgid "Unable to pin post"
 msgstr ""
 
-#: src/components/status.jsx:1540
+#: src/components/status.jsx:1305
 msgid "Unpin from profile"
 msgstr ""
 
-#: src/components/status.jsx:1547
+#: src/components/status.jsx:1312
 msgid "Pin to profile"
 msgstr ""
 
-#: src/components/status.jsx:1576
+#: src/components/status.jsx:1341
 msgid "Delete this post?"
 msgstr ""
 
-#: src/components/status.jsx:1592
+#: src/components/status.jsx:1357
 msgid "Post deleted"
 msgstr ""
 
-#: src/components/status.jsx:1595
+#: src/components/status.jsx:1360
 msgid "Unable to delete post"
 msgstr ""
 
-#: src/components/status.jsx:1623
+#: src/components/status.jsx:1388
 msgid "Report post…"
 msgstr ""
 
-#: src/components/status.jsx:1997
-#: src/components/status.jsx:2033
-#: src/components/status.jsx:2746
+#: src/components/status.jsx:1762
+#: src/components/status.jsx:1798
+#: src/components/status.jsx:2511
 msgid "Liked"
 msgstr ""
 
-#: src/components/status.jsx:2030
-#: src/components/status.jsx:2733
+#: src/components/status.jsx:1795
+#: src/components/status.jsx:2498
 msgid "Boosted"
 msgstr ""
 
-#: src/components/status.jsx:2040
-#: src/components/status.jsx:2758
+#: src/components/status.jsx:1805
+#: src/components/status.jsx:2523
 msgid "Bookmarked"
 msgstr ""
 
-#: src/components/status.jsx:2044
+#: src/components/status.jsx:1809
 msgid "Pinned"
 msgstr ""
 
-#: src/components/status.jsx:2096
-#: src/components/status.jsx:2571
+#: src/components/status.jsx:1861
+#: src/components/status.jsx:2336
 msgid "Deleted"
 msgstr ""
 
-#: src/components/status.jsx:2137
+#: src/components/status.jsx:1902
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr ""
 
-#: src/components/status.jsx:2301
-#: src/components/status.jsx:2363
-#: src/components/status.jsx:2467
+#: src/components/status.jsx:2066
+#: src/components/status.jsx:2128
+#: src/components/status.jsx:2232
 msgid "Show less"
 msgstr ""
 
-#: src/components/status.jsx:2301
-#: src/components/status.jsx:2363
+#: src/components/status.jsx:2066
+#: src/components/status.jsx:2128
 msgid "Show content"
 msgstr ""
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2463
+#: src/components/status.jsx:2228
 #: src/pages/catchup.jsx:1879
 msgid "Filtered: {0}"
 msgstr "Filtered: {0}"
 
-#: src/components/status.jsx:2467
+#: src/components/status.jsx:2232
 msgid "Show media"
 msgstr ""
 
-#: src/components/status.jsx:2606
+#: src/components/status.jsx:2371
 msgid "Edited"
 msgstr ""
 
-#: src/components/status.jsx:2683
+#: src/components/status.jsx:2448
 msgid "Comments"
 msgstr ""
 
-#. More from [Author]
-#: src/components/status.jsx:2983
-msgid "More from <0/>"
-msgstr "More from <0/>"
+#: src/components/status.jsx:2633
+msgid "Post hidden by your filters"
+msgstr "Post hidden by your filters"
 
-#: src/components/status.jsx:3285
+#: src/components/status.jsx:2634
+msgid "Post pending"
+msgstr "Post pending"
+
+#: src/components/status.jsx:2635
+#: src/components/status.jsx:2636
+#: src/components/status.jsx:2637
+#: src/components/status.jsx:2638
+msgid "Post unavailable"
+msgstr "Post unavailable"
+
+#: src/components/status.jsx:2747
 msgid "Edit History"
 msgstr ""
 
-#: src/components/status.jsx:3289
+#: src/components/status.jsx:2751
 msgid "Failed to load history"
 msgstr ""
 
-#: src/components/status.jsx:3294
+#: src/components/status.jsx:2756
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr ""
 
-#: src/components/status.jsx:3530
-msgid "HTML Code"
-msgstr ""
-
-#: src/components/status.jsx:3547
-msgid "HTML code copied"
-msgstr ""
-
-#: src/components/status.jsx:3550
-msgid "Unable to copy HTML code"
-msgstr ""
-
-#: src/components/status.jsx:3562
-msgid "Media attachments:"
-msgstr ""
-
-#: src/components/status.jsx:3584
-msgid "Account Emojis:"
-msgstr ""
-
-#: src/components/status.jsx:3615
-#: src/components/status.jsx:3660
-msgid "static URL"
-msgstr ""
-
-#: src/components/status.jsx:3629
-msgid "Emojis:"
-msgstr ""
-
-#: src/components/status.jsx:3674
-msgid "Notes:"
-msgstr ""
-
-#: src/components/status.jsx:3678
-msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
-msgstr ""
-
-#: src/components/status.jsx:3684
-msgid "Polls are not interactive, becomes a list with vote counts."
-msgstr ""
-
-#: src/components/status.jsx:3689
-msgid "Media attachments can be images, videos, audios or any file types."
-msgstr ""
-
-#: src/components/status.jsx:3695
-msgid "Post could be edited or deleted later."
-msgstr ""
-
-#: src/components/status.jsx:3701
-msgid "Preview"
-msgstr ""
-
-#: src/components/status.jsx:3710
-msgid "Note: This preview is lightly styled."
-msgstr ""
-
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3963
+#: src/components/status.jsx:2888
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> boosted"
-
-#: src/components/status.jsx:4065
-msgid "Post hidden by your filters"
-msgstr "Post hidden by your filters"
-
-#: src/components/status.jsx:4066
-msgid "Post pending"
-msgstr "Post pending"
-
-#: src/components/status.jsx:4067
-#: src/components/status.jsx:4068
-#: src/components/status.jsx:4069
-#: src/components/status.jsx:4070
-msgid "Post unavailable"
-msgstr "Post unavailable"
 
 #: src/components/thread-badge.jsx:22
 #: src/components/thread-badge.jsx:37

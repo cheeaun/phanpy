@@ -1,28 +1,16 @@
 import './status.css';
-import 'temml/dist/Temml-Local.css';
-
-import '@justinribeiro/lite-youtube';
 
 import { msg, plural } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import {
-  ControlledMenu,
-  Menu,
-  MenuDivider,
-  MenuHeader,
-  MenuItem,
-} from '@szhsin/react-menu';
-import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
+import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { shallowEqual } from 'fast-equals';
-import prettify from 'html-prettify';
 import pThrottle from 'p-throttle';
 import { Fragment } from 'preact';
-import { forwardRef, memo } from 'preact/compat';
+import { memo } from 'preact/compat';
 import {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useReducer,
   useRef,
@@ -30,34 +18,17 @@ import {
 } from 'preact/hooks';
 import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
-// import { detectAll } from 'tinyld/light';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
-import CustomEmoji from '../components/custom-emoji';
-import EmojiText from '../components/emoji-text';
-import LazyShazam from '../components/lazy-shazam';
-import Loader from '../components/loader';
-import MenuConfirm from '../components/menu-confirm';
-import Menu2 from '../components/menu2';
-import Modal from '../components/modal';
-import NameText from '../components/name-text';
-import Poll from '../components/poll';
 import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
-import emojifyText from '../utils/emojify-text';
-import enhanceContent from '../utils/enhance-content';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
-import getDomain from '../utils/get-domain';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
-import handleContentLinks from '../utils/handle-content-links';
 import htmlContentLength from '../utils/html-content-length';
-import isRTL from '../utils/is-rtl';
-import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import localeMatch from '../utils/locale-match';
-import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
@@ -69,19 +40,34 @@ import showToast from '../utils/show-toast';
 import { speak, supportsTTS } from '../utils/speech';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
-import store from '../utils/store';
-import { getCurrentAccountID } from '../utils/store-utils';
+import { getCurrentAccID, getCurrentAccountID } from '../utils/store-utils';
 import supports from '../utils/supports';
-import unfurlMastodonLink from '../utils/unfurl-link';
 import useTruncated from '../utils/useTruncated';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 
 import Avatar from './avatar';
+import CustomEmoji from './custom-emoji';
+import EmojiText from './emoji-text';
 import Icon from './icon';
+import LazyShazam from './lazy-shazam';
 import Link from './link';
+import Loader from './loader';
+import MathBlock from './math-block';
 import Media, { isMediaCaptionLong } from './media';
+import MediaFirstContainer from './media-first-container';
+import MenuConfirm from './menu-confirm';
 import MenuLink from './menu-link';
+import Menu2 from './menu2';
+import Modal from './modal';
+import MultipleMediaFigure from './multiple-media-figure';
+import NameText from './name-text';
+import Poll from './poll';
+import PostContent from './post-content';
+import PostEmbedModal from './post-embed-modal';
 import RelativeTime from './relative-time';
+import StatusButton from './status-button';
+import StatusCard from './status-card';
+import StatusCompact from './status-compact';
 import ThreadBadge from './thread-badge';
 import TranslationBlock from './translation-block';
 
@@ -224,218 +210,6 @@ function getHTMLTextForDetectLang(content, emojis) {
   });
 }
 
-const HTTP_REGEX = /^http/i;
-
-// Follow https://mathstodon.xyz/about
-// > You can use LaTeX in toots here! Use \( and \) for inline, and \[ and \] for display mode.
-const DELIMITERS_PATTERNS = [
-  // '\\$\\$[\\s\\S]*?\\$\\$', // $$...$$
-  '\\\\\\[[\\s\\S]*?\\\\\\]', // \[...\]
-  '\\\\\\([\\s\\S]*?\\\\\\)', // \(...\)
-  // '\\\\begin\\{(?:equation\\*?|align\\*?|alignat\\*?|gather\\*?|CD)\\}[\\s\\S]*?\\\\end\\{(?:equation\\*?|align\\*?|alignat\\*?|gather\\*?|CD)\\}', // AMS environments
-  // '\\\\(?:ref|eqref)\\{[^}]*\\}', // \ref{...}, \eqref{...}
-];
-const DELIMITERS_REGEX = new RegExp(DELIMITERS_PATTERNS.join('|'), 'g');
-
-function cleanDOMForTemml(dom) {
-  // Define start and end delimiter patterns
-  const START_DELIMITERS = ['\\\\\\[', '\\\\\\(']; // \[ and \(
-  const startRegex = new RegExp(`(${START_DELIMITERS.join('|')})`);
-
-  // Walk through all text nodes
-  const walker = document.createTreeWalker(dom, NodeFilter.SHOW_TEXT);
-  const textNodes = [];
-  let node;
-  while ((node = walker.nextNode())) {
-    textNodes.push(node);
-  }
-
-  for (const textNode of textNodes) {
-    const text = textNode.textContent;
-    const startMatch = text.match(startRegex);
-
-    if (!startMatch) continue; // No start delimiter in this text node
-
-    // Find the matching end delimiter
-    const startDelimiter = startMatch[0];
-    const endDelimiter = startDelimiter === '\\[' ? '\\]' : '\\)';
-
-    // Collect nodes from start delimiter until end delimiter
-    const nodesToCombine = [textNode];
-    let currentNode = textNode;
-    let foundEnd = false;
-    let combinedText = text;
-
-    // Check if end delimiter is in the same text node
-    if (text.includes(endDelimiter)) {
-      foundEnd = true;
-    } else {
-      // Look through sibling nodes
-      while (currentNode.nextSibling && !foundEnd) {
-        const nextSibling = currentNode.nextSibling;
-
-        if (nextSibling.nodeType === Node.TEXT_NODE) {
-          nodesToCombine.push(nextSibling);
-          combinedText += nextSibling.textContent;
-          if (nextSibling.textContent.includes(endDelimiter)) {
-            foundEnd = true;
-          }
-        } else if (
-          nextSibling.nodeType === Node.ELEMENT_NODE &&
-          nextSibling.tagName === 'BR'
-        ) {
-          nodesToCombine.push(nextSibling);
-          combinedText += '\n';
-        } else {
-          // Found a non-BR element, stop and don't process
-          break;
-        }
-
-        currentNode = nextSibling;
-      }
-    }
-
-    // Only process if we found the end delimiter and have nodes to combine
-    if (foundEnd && nodesToCombine.length > 1) {
-      // Replace the first text node with combined text
-      textNode.textContent = combinedText;
-
-      // Remove the other nodes
-      for (let i = 1; i < nodesToCombine.length; i++) {
-        nodesToCombine[i].remove();
-      }
-    }
-  }
-}
-
-const MathBlock = ({ content, contentRef, onRevert }) => {
-  DELIMITERS_REGEX.lastIndex = 0; // Reset index to prevent g trap
-  const hasLatexContent = DELIMITERS_REGEX.test(content);
-
-  if (!hasLatexContent) return null;
-
-  const { t } = useLingui();
-  const [mathRendered, setMathRendered] = useState(false);
-  const toggleMathRendering = useCallback(
-    async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (mathRendered) {
-        // Revert to original content by refreshing PostContent
-        setMathRendered(false);
-        onRevert();
-      } else {
-        // Render math
-        try {
-          // This needs global because the codebase inside temml is calling a function from global.temml 🤦‍♂️
-          const temml =
-            window.temml || (window.temml = (await import('temml'))?.default);
-
-          cleanDOMForTemml(contentRef.current);
-          const originalContentRefHTML = contentRef.current.innerHTML;
-          temml.renderMathInElement(contentRef.current, {
-            fences: '(', // This should sync with DELIMITERS_REGEX
-            annotate: true,
-            throwOnError: true,
-            errorCallback: (err) => {
-              console.warn('Failed to render LaTeX:', err);
-            },
-          });
-
-          const hasMath = contentRef.current.querySelector('math.tml-display');
-          const htmlChanged =
-            contentRef.current.innerHTML !== originalContentRefHTML;
-          if (hasMath && htmlChanged) {
-            setMathRendered(true);
-          } else {
-            showToast(t`Unable to format math`);
-            setMathRendered(false);
-            onRevert(); // Revert because DOM modified by cleanDOMForTemml
-          }
-        } catch (e) {
-          console.error('Failed to LaTeX:', e);
-        }
-      }
-    },
-    [mathRendered],
-  );
-
-  return (
-    <div class="math-block">
-      <Icon icon="formula" size="s" /> <span>{t`Math expressions found.`}</span>{' '}
-      <button type="button" class="light small" onClick={toggleMathRendering}>
-        {mathRendered
-          ? t({
-              comment:
-                'Action to switch from rendered math back to raw (LaTeX) markup',
-              message: 'Show markup',
-            })
-          : t({
-              comment:
-                'Action to render math expressions from raw (LaTeX) markup',
-              message: 'Format math',
-            })}
-      </button>
-    </div>
-  );
-};
-
-const PostContent =
-  /*memo(*/
-  ({ post, instance, previewMode }) => {
-    const { content, emojis, language, mentions, url } = post;
-
-    const divRef = useRef();
-    useLayoutEffect(() => {
-      if (!divRef.current) return;
-      const dom = enhanceContent(content, {
-        emojis,
-        returnDOM: true,
-      });
-      // Remove target="_blank" from links
-      for (const a of dom.querySelectorAll('a.u-url[target="_blank"]')) {
-        if (!HTTP_REGEX.test(a.innerText.trim())) {
-          a.removeAttribute('target');
-        }
-      }
-      divRef.current.replaceChildren(dom.cloneNode(true));
-    }, [content, emojis?.length]);
-
-    return (
-      <div
-        ref={divRef}
-        lang={language}
-        dir="auto"
-        class="inner-content"
-        onClick={handleContentLinks({
-          mentions,
-          instance,
-          previewMode,
-          statusURL: url,
-        })}
-        // dangerouslySetInnerHTML={{
-        //   __html: enhanceContent(content, {
-        //     emojis,
-        //     postEnhanceDOM: (dom) => {
-        //       // Remove target="_blank" from links
-        //       dom.querySelectorAll('a.u-url[target="_blank"]').forEach((a) => {
-        //         if (!/http/i.test(a.innerText.trim())) {
-        //           a.removeAttribute('target');
-        //         }
-        //       });
-        //     },
-        //   }),
-        // }}
-      />
-    );
-  }; /*,
-  (oldProps, newProps) => {
-    const { post: oldPost } = oldProps;
-    const { post: newPost } = newProps;
-    return oldPost.content === newPost.content;
-  },
-);*/
-
 const SIZE_CLASS = {
   s: 'small',
   m: 'medium',
@@ -510,15 +284,6 @@ const checkDifferentLanguage = (
   }
   return different;
 };
-
-const getCurrentAccID = mem(
-  () => {
-    return getCurrentAccountID();
-  },
-  {
-    maxAge: 60 * 1000, // 1 minute
-  },
-);
 
 function Status({
   statusID,
@@ -2544,7 +2309,7 @@ function Status({
                   !poll &&
                   !mediaAttachments.length &&
                   !snapStates.statusQuotes[sKey] && (
-                    <Card
+                    <StatusCard
                       card={card}
                       selfReferential={
                         card?.url === status.url || card?.url === status.uri
@@ -2819,7 +2584,7 @@ function Status({
               }
             }}
           >
-            <EmbedModal
+            <PostEmbedModal
               post={status}
               instance={instance}
               onClose={() => {
@@ -2833,420 +2598,117 @@ function Status({
   );
 }
 
-function MultipleMediaFigure(props) {
-  const { enabled, children, lang, captionChildren } = props;
-  if (!enabled || !captionChildren) return children;
-  return (
-    <figure class="media-figure-multiple">
-      {children}
-      <figcaption lang={lang} dir="auto">
-        {captionChildren}
-      </figcaption>
-    </figure>
-  );
-}
-
-function MediaFirstContainer(props) {
-  const { mediaAttachments, language, postID, instance } = props;
-  const moreThanOne = mediaAttachments.length > 1;
-
-  const carouselRef = useRef();
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    let handleScroll = () => {
-      const { clientWidth, scrollLeft } = carouselRef.current;
-      const index = Math.round(Math.abs(scrollLeft) / clientWidth);
-      setCurrentIndex(index);
-    };
-    if (carouselRef.current) {
-      carouselRef.current.addEventListener('scroll', handleScroll, {
-        passive: true,
-      });
-    }
-    return () => {
-      if (carouselRef.current) {
-        carouselRef.current.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
-
+function nicePostURL(url) {
+  if (!url) return;
+  const urlObj = URL.parse(url);
+  if (!urlObj) return;
+  const { host, pathname } = urlObj;
+  const path = pathname.replace(/\/$/, '');
+  // split only first slash
+  const [_, username, restPath] = path.match(/\/(@[^\/]+)\/(.*)/) || [];
   return (
     <>
-      <div class="media-first-container">
-        <div class="media-first-carousel" ref={carouselRef}>
-          {mediaAttachments.map((media, i) => (
-            <div class="media-first-item" key={media.id}>
-              <Media
-                media={media}
-                lang={language}
-                to={`/${instance}/s/${postID}?media=${i + 1}`}
-              />
-            </div>
-          ))}
-        </div>
-        {moreThanOne && (
-          <div class="media-carousel-controls">
-            <div class="carousel-indexer">
-              {currentIndex + 1}/{mediaAttachments.length}
-            </div>
-            <label class="media-carousel-button">
-              <button
-                type="button"
-                class="carousel-button"
-                hidden={currentIndex === 0}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  carouselRef.current.focus();
-                  carouselRef.current.scrollTo({
-                    left:
-                      carouselRef.current.clientWidth *
-                      (currentIndex - 1) *
-                      (isRTL() ? -1 : 1),
-                    behavior: 'smooth',
-                  });
-                }}
-              >
-                <Icon icon="arrow-left" />
-              </button>
-            </label>
-            <label class="media-carousel-button">
-              <button
-                type="button"
-                class="carousel-button"
-                hidden={currentIndex === mediaAttachments.length - 1}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  carouselRef.current.focus();
-                  carouselRef.current.scrollTo({
-                    left:
-                      carouselRef.current.clientWidth *
-                      (currentIndex + 1) *
-                      (isRTL() ? -1 : 1),
-                    behavior: 'smooth',
-                  });
-                }}
-              >
-                <Icon icon="arrow-right" />
-              </button>
-            </label>
-          </div>
-        )}
-      </div>
-      {moreThanOne && (
-        <div
-          class="media-carousel-dots"
-          style={{
-            '--dots-count': mediaAttachments.length,
-          }}
-        >
-          {mediaAttachments.map((media, i) => (
-            <span
-              key={media.id}
-              class={`carousel-dot ${i === currentIndex ? 'active' : ''}`}
-            />
-          ))}
-        </div>
+      {punycode.toUnicode(host)}
+      {username ? (
+        <>
+          /{username}
+          <wbr />
+          <span class="more-insignificant">/{restPath}</span>
+        </>
+      ) : (
+        <span class="more-insignificant">{path}</span>
       )}
     </>
   );
 }
 
-// "Post": Quote post + card link preview combo
-// Assume all links from these domains are "posts"
-// Mastodon links are "posts" too but they are converted to real quote posts and there's too many domains to check
-// This is just "Progressive Enhancement"
-function isCardPost(domain) {
-  return [
-    'x.com',
-    'twitter.com',
-    'threads.net',
-    'bsky.app',
-    'bsky.brid.gy',
-    'fed.brid.gy',
-  ].includes(domain);
-}
+const handledUnfulfilledStates = [
+  'deleted',
+  'unauthorized',
+  'pending',
+  'rejected',
+  'revoked',
+];
+const unfulfilledText = {
+  filterHidden: msg`Post hidden by your filters`,
+  pending: msg`Post pending`,
+  deleted: msg`Post unavailable`,
+  unauthorized: msg`Post unavailable`,
+  rejected: msg`Post unavailable`,
+  revoked: msg`Post unavailable`,
+};
 
-function Byline({ authors, hidden, children }) {
-  if (hidden) return children;
-  if (!authors?.[0]?.account?.id) return children;
-  const author = authors[0].account;
-
-  return (
-    <div class="card-byline">
-      {children}
-      <div class="card-byline-author">
-        <Icon icon="link" size="s" />{' '}
-        <small>
-          <Trans comment="More from [Author]">
-            More from <NameText account={author} showAvatar />
-          </Trans>
-        </small>
-      </div>
-    </div>
-  );
-}
-
-function Card({ card, selfReferential, selfAuthor, instance }) {
+const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
+  if (!id || !instance) return;
+  const { _ } = useLingui();
   const snapStates = useSnapshot(states);
-  const {
-    blurhash,
-    title,
-    description,
-    html,
-    providerName,
-    providerUrl,
-    authorName,
-    authorUrl,
-    width,
-    height,
-    image,
-    imageDescription,
-    url,
-    type,
-    embedUrl,
-    language,
-    publishedAt,
-    authors,
-  } = card;
-
-  /* type
-  link = Link OEmbed
-  photo = Photo OEmbed
-  video = Video OEmbed
-  rich = iframe OEmbed. Not currently accepted, so won’t show up in practice.
-  */
-
-  const hasText = title || providerName || authorName;
-  const isLandscape = width / height >= 1.2;
-  const size = isLandscape ? 'large' : '';
-
-  const [cardStatusURL, setCardStatusURL] = useState(null);
-  // const [cardStatusID, setCardStatusID] = useState(null);
-  useEffect(() => {
-    if (hasText && image && !selfReferential && isMastodonLinkMaybe(url)) {
-      unfurlMastodonLink(instance, url).then((result) => {
-        if (!result) return;
-        const { id, url } = result;
-        setCardStatusURL('#' + url);
-
-        // NOTE: This is for quote post
-        // (async () => {
-        //   const { masto } = api({ instance });
-        //   const status = await masto.v1.statuses.$select(id).fetch();
-        //   saveStatus(status, instance);
-        //   setCardStatusID(id);
-        // })();
-      });
-    }
-  }, [hasText, image, selfReferential]);
-
-  // if (cardStatusID) {
-  //   return (
-  //     <Status statusID={cardStatusID} instance={instance} size="s" readOnly />
-  //   );
-  // }
-
-  if (snapStates.unfurledLinks[url]) return null;
-
-  const hasIframeHTML = /<iframe/i.test(html);
-  const handleClick = useCallback(
-    (e) => {
-      if (hasIframeHTML) {
-        e.preventDefault();
-        states.showEmbedModal = {
-          html,
-          url: url || embedUrl,
-          width,
-          height,
-        };
-      }
-    },
-    [hasIframeHTML],
+  const sKey = statusKey(id, instance);
+  const quotes = snapStates.statusQuotes[sKey];
+  const uniqueQuotes = quotes?.filter(
+    (q, i, arr) => arr.findIndex((q2) => q2.url === q.url) === i,
   );
 
-  const [blurhashImage, setBlurhashImage] = useState(null);
-  if (hasText && (image || (type === 'photo' && blurhash))) {
-    const domain = getDomain(url);
-    const rgbAverageColor =
-      image && blurhash ? getBlurHashAverageColor(blurhash) : null;
-    if (!image) {
-      const w = 44;
-      const h = 44;
-      const blurhashPixels = decodeBlurHash(blurhash, w, h);
-      const canvas = window.OffscreenCanvas
-        ? new OffscreenCanvas(1, 1)
-        : document.createElement('canvas');
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.imageSmoothingEnabled = false;
-      const imageData = ctx.createImageData(w, h);
-      imageData.data.set(blurhashPixels);
-      ctx.putImageData(imageData, 0, 0);
-      try {
-        if (window.OffscreenCanvas) {
-          canvas.convertToBlob().then((blob) => {
-            setBlurhashImage(URL.createObjectURL(blob));
-          });
-        } else {
-          setBlurhashImage(canvas.toDataURL());
-        }
-      } catch (e) {
-        // Silently fail
-        console.error(e);
+  if (!uniqueQuotes?.length) return;
+  if (level > 2) return;
+
+  const filterContext = useContext(FilterContext);
+  const currentAccount = getCurrentAccountID();
+
+  return uniqueQuotes.map((q) => {
+    let unfulfilledState;
+
+    const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
+    if (quoteStatus) {
+      const isSelf =
+        currentAccount && currentAccount === quoteStatus.account?.id;
+      const filterInfo =
+        !isSelf && isFiltered(quoteStatus.filtered, filterContext);
+
+      if (filterInfo?.action === 'hide') {
+        unfulfilledState = 'filterHidden';
       }
     }
 
-    const isPost = isCardPost(domain);
-
-    return (
-      <Byline hidden={!!selfAuthor} authors={authors}>
-        <a
-          href={cardStatusURL || url}
-          target={cardStatusURL ? null : '_blank'}
-          rel="nofollow noopener"
-          class={`card link ${isPost ? 'card-post' : ''} ${
-            blurhashImage ? '' : size
-          }`}
-          style={{
-            '--average-color':
-              rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
-          }}
-          onClick={handleClick}
-        >
-          <div class="card-image">
-            <img
-              src={image || blurhashImage}
-              width={width}
-              height={height}
-              loading="lazy"
-              decoding="async"
-              fetchPriority="low"
-              alt={imageDescription || ''}
-              onError={(e) => {
-                try {
-                  e.target.style.display = 'none';
-                } catch (e) {}
-              }}
-              style={{
-                '--anim-duration':
-                  width &&
-                  height &&
-                  `${Math.min(
-                    Math.max(Math.max(width, height) / 100, 5),
-                    120,
-                  )}s`,
-              }}
-            />
-          </div>
-          <div class="meta-container" lang={language}>
-            <p class="meta domain">
-              <span class="domain">{domain}</span>{' '}
-              {!!publishedAt && <>&middot; </>}
-              {!!publishedAt && (
-                <>
-                  <RelativeTime datetime={publishedAt} format="micro" />
-                </>
-              )}
-            </p>
-            <p class="title" dir="auto" title={title}>
-              {title}
-            </p>
-            <p class="meta" dir="auto" title={description}>
-              {description ||
-                (!!publishedAt && (
-                  <RelativeTime datetime={publishedAt} format="micro" />
-                ))}
-            </p>
-          </div>
-        </a>
-      </Byline>
-    );
-  } else if (type === 'photo') {
-    return (
-      <a
-        href={url}
-        target="_blank"
-        rel="nofollow noopener"
-        class="card photo"
-        onClick={handleClick}
-      >
-        <img
-          src={embedUrl}
-          width={width}
-          height={height}
-          alt={title || description}
-          loading="lazy"
-          style={{
-            height: 'auto',
-            aspectRatio: `${width}/${height}`,
-          }}
-        />
-      </a>
-    );
-  } else {
-    if (type === 'video') {
-      if (/youtube/i.test(providerName)) {
-        // Get ID from e.g. https://www.youtube.com/watch?v=[VIDEO_ID]
-        const videoID = url.match(/watch\?v=([^&]+)/)?.[1];
-        if (videoID) {
-          return (
-            <a class="card video" onClick={handleClick}>
-              <lite-youtube videoid={videoID} nocookie autoPause></lite-youtube>
-            </a>
-          );
-        }
-      }
-      // return (
-      //   <div
-      //     class="card video"
-      //     style={{
-      //       aspectRatio: `${width}/${height}`,
-      //     }}
-      //     dangerouslySetInnerHTML={{ __html: html }}
-      //   />
-      // );
-    }
-    if (hasText && !image) {
-      const domain = getDomain(url);
-      const isPost = isCardPost(domain);
-      return (
-        <a
-          href={cardStatusURL || url}
-          target={cardStatusURL ? null : '_blank'}
-          rel="nofollow noopener"
-          class={`card link ${isPost ? 'card-post' : ''} no-image`}
-          lang={language}
-          dir="auto"
-          onClick={handleClick}
-        >
-          <div class="meta-container">
-            <p class="meta domain">
-              <span class="domain">
-                <Icon icon="link" size="s" /> <span>{domain}</span>
-              </span>{' '}
-              {!!publishedAt && <>&middot; </>}
-              {!!publishedAt && (
-                <>
-                  <RelativeTime datetime={publishedAt} format="micro" />
-                </>
-              )}
-            </p>
-            <p class="title" title={title}>
-              {title}
-            </p>
-            <p class="meta" title={description || providerName || authorName}>
-              {description || providerName || authorName}
-            </p>
-          </div>
-        </a>
+    if (!unfulfilledState) {
+      unfulfilledState = handledUnfulfilledStates.find(
+        (state) => q.state === state,
       );
     }
-  }
-}
+
+    if (unfulfilledState) {
+      return (
+        <div
+          class={`status-card-unfulfilled ${
+            unfulfilledState === 'filterHidden' ? 'status-card-ghost' : ''
+          }`}
+        >
+          <Icon icon="quote" />
+          <i>{_(unfulfilledText[unfulfilledState])}</i>
+        </div>
+      );
+    }
+
+    const Parent = q.native ? Fragment : LazyShazam;
+    return (
+      <Parent id={q.instance + q.id} key={q.instance + q.id}>
+        <Link
+          key={q.instance + q.id}
+          to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
+          class={`status-card-link ${q.native ? 'quote-post-native' : ''}`}
+          data-read-more={_(readMoreText)}
+        >
+          <Status
+            statusID={q.id}
+            instance={q.instance}
+            size="s"
+            quoted={level + 1}
+            enableCommentHint
+          />
+        </Link>
+      </Parent>
+    );
+  });
+});
 
 function EditedAtModal({
   statusID,
@@ -3328,543 +2790,6 @@ function EditedAtModal({
         )}
       </main>
     </div>
-  );
-}
-
-function generateHTMLCode(post, instance, level = 0) {
-  const {
-    account: {
-      url: accountURL,
-      displayName,
-      acct,
-      username,
-      emojis: accountEmojis,
-      bot,
-      group,
-    },
-    id,
-    poll,
-    spoilerText,
-    language,
-    editedAt,
-    createdAt,
-    content,
-    mediaAttachments,
-    url,
-    emojis,
-  } = post;
-
-  const sKey = statusKey(id, instance);
-  const quotes = states.statusQuotes[sKey] || [];
-  const uniqueQuotes = quotes.filter(
-    (q, i, arr) => arr.findIndex((q2) => q2.url === q.url) === i,
-  );
-  const quoteStatusesHTML =
-    uniqueQuotes.length && level <= 2
-      ? uniqueQuotes
-          .map((quote) => {
-            const { id, instance } = quote;
-            const sKey = statusKey(id, instance);
-            const s = states.statuses[sKey];
-            if (s) {
-              return generateHTMLCode(s, instance, ++level);
-            }
-          })
-          .join('')
-      : '';
-
-  const createdAtDate = new Date(createdAt);
-  // const editedAtDate = editedAt && new Date(editedAt);
-
-  const contentHTML =
-    emojifyText(content, emojis) +
-    '\n' +
-    quoteStatusesHTML +
-    '\n' +
-    (poll?.options?.length
-      ? `
-        <p>📊:</p>
-        <ul>
-        ${poll.options
-          .map(
-            (option) => `
-              <li>
-                ${option.title}
-                ${option.votesCount >= 0 ? ` (${option.votesCount})` : ''}
-              </li>
-            `,
-          )
-          .join('')}
-        </ul>`
-      : '') +
-    (mediaAttachments.length > 0
-      ? '\n' +
-        mediaAttachments
-          .map((media) => {
-            const {
-              description,
-              meta,
-              previewRemoteUrl,
-              previewUrl,
-              remoteUrl,
-              url,
-              type,
-            } = media;
-            const { original = {}, small } = meta || {};
-            const width = small?.width || original?.width;
-            const height = small?.height || original?.height;
-
-            // Prefer remote over original
-            const sourceMediaURL = remoteUrl || url;
-            const previewMediaURL = previewRemoteUrl || previewUrl;
-            const mediaURL = previewMediaURL || sourceMediaURL;
-
-            const sourceMediaURLObj = sourceMediaURL
-              ? URL.parse(sourceMediaURL)
-              : null;
-            const isVideoMaybe =
-              type === 'unknown' &&
-              sourceMediaURLObj &&
-              /\.(mp4|m4r|m4v|mov|webm)$/i.test(sourceMediaURLObj.pathname);
-            const isAudioMaybe =
-              type === 'unknown' &&
-              sourceMediaURLObj &&
-              /\.(mp3|ogg|wav|m4a|m4p|m4b)$/i.test(sourceMediaURLObj.pathname);
-            const isImage =
-              type === 'image' ||
-              (type === 'unknown' &&
-                previewMediaURL &&
-                !isVideoMaybe &&
-                !isAudioMaybe);
-            const isVideo = type === 'gifv' || type === 'video' || isVideoMaybe;
-            const isAudio = type === 'audio' || isAudioMaybe;
-
-            let mediaHTML = '';
-            if (isImage) {
-              mediaHTML = `<img src="${mediaURL}" width="${width}" height="${height}" alt="${description}" loading="lazy" />`;
-            } else if (isVideo) {
-              mediaHTML = `
-                <video src="${sourceMediaURL}" width="${width}" height="${height}" controls preload="auto" poster="${previewMediaURL}" loading="lazy"></video>
-                ${description ? `<figcaption>${description}</figcaption>` : ''}
-              `;
-            } else if (isAudio) {
-              mediaHTML = `
-                <audio src="${sourceMediaURL}" controls preload="auto"></audio>
-                ${description ? `<figcaption>${description}</figcaption>` : ''}
-              `;
-            } else {
-              mediaHTML = `
-                <a href="${sourceMediaURL}">📄 ${
-                  description || sourceMediaURL
-                }</a>
-              `;
-            }
-
-            return `<figure>${mediaHTML}</figure>`;
-          })
-          .join('\n')
-      : '');
-
-  const htmlCode = `
-    <blockquote lang="${language}" cite="${url}" data-source="fediverse">
-      ${
-        spoilerText
-          ? `
-            <details>
-              <summary>${spoilerText}</summary>
-              ${contentHTML}
-            </details>
-          `
-          : contentHTML
-      }
-      <footer>
-        — ${emojifyText(
-          displayName,
-          accountEmojis,
-        )} (@${acct}) ${!!createdAt ? `<a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>` : ''}
-      </footer>
-    </blockquote>
-  `;
-
-  return prettify(htmlCode);
-}
-
-function EmbedModal({ post, instance, onClose }) {
-  const { t } = useLingui();
-  const {
-    account: {
-      url: accountURL,
-      displayName,
-      username,
-      emojis: accountEmojis,
-      bot,
-      group,
-    },
-    id,
-    poll,
-    spoilerText,
-    language,
-    editedAt,
-    createdAt,
-    content,
-    mediaAttachments,
-    url,
-    emojis,
-  } = post;
-
-  const htmlCode = generateHTMLCode(post, instance);
-  return (
-    <div id="embed-post" class="sheet">
-      {!!onClose && (
-        <button type="button" class="sheet-close" onClick={onClose}>
-          <Icon icon="x" alt={t`Close`} />
-        </button>
-      )}
-      <header>
-        <h2>
-          <Trans>Embed post</Trans>
-        </h2>
-      </header>
-      <main tabIndex="-1">
-        <h3>
-          <Trans>HTML Code</Trans>
-        </h3>
-        <textarea
-          class="embed-code"
-          readonly
-          onClick={(e) => {
-            e.target.select();
-          }}
-          dir="auto"
-        >
-          {htmlCode}
-        </textarea>
-        <button
-          type="button"
-          onClick={() => {
-            try {
-              navigator.clipboard.writeText(htmlCode);
-              showToast(t`HTML code copied`);
-            } catch (e) {
-              console.error(e);
-              showToast(t`Unable to copy HTML code`);
-            }
-          }}
-        >
-          <Icon icon="clipboard" />{' '}
-          <span>
-            <Trans>Copy</Trans>
-          </span>
-        </button>
-        {!!mediaAttachments?.length && (
-          <section>
-            <p>
-              <Trans>Media attachments:</Trans>
-            </p>
-            <ol class="links-list">
-              {mediaAttachments.map((media) => {
-                return (
-                  <li key={media.id}>
-                    <a
-                      href={media.remoteUrl || media.url}
-                      target="_blank"
-                      download
-                    >
-                      {media.remoteUrl || media.url}
-                    </a>
-                  </li>
-                );
-              })}
-            </ol>
-          </section>
-        )}
-        {!!accountEmojis?.length && (
-          <section>
-            <p>
-              <Trans>Account Emojis:</Trans>
-            </p>
-            <ul>
-              {accountEmojis.map((emoji) => {
-                return (
-                  <li key={emoji.shortcode}>
-                    <picture>
-                      <source
-                        srcset={emoji.staticUrl}
-                        media="(prefers-reduced-motion: reduce)"
-                      ></source>
-                      <img
-                        class="shortcode-emoji emoji"
-                        src={emoji.url}
-                        alt={`:${emoji.shortcode}:`}
-                        width="16"
-                        height="16"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>{' '}
-                    <code>:{emoji.shortcode}:</code> (
-                    <a href={emoji.url} target="_blank" download>
-                      URL
-                    </a>
-                    )
-                    {emoji.staticUrl ? (
-                      <>
-                        {' '}
-                        (
-                        <a href={emoji.staticUrl} target="_blank" download>
-                          <Trans>static URL</Trans>
-                        </a>
-                        )
-                      </>
-                    ) : null}
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        )}
-        {!!emojis?.length && (
-          <section>
-            <p>
-              <Trans>Emojis:</Trans>
-            </p>
-            <ul>
-              {emojis.map((emoji) => {
-                return (
-                  <li key={emoji.shortcode}>
-                    <picture>
-                      <source
-                        srcset={emoji.staticUrl}
-                        media="(prefers-reduced-motion: reduce)"
-                      ></source>
-                      <img
-                        class="shortcode-emoji emoji"
-                        src={emoji.url}
-                        alt={`:${emoji.shortcode}:`}
-                        width="16"
-                        height="16"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>{' '}
-                    <code>:{emoji.shortcode}:</code> (
-                    <a href={emoji.url} target="_blank" download>
-                      URL
-                    </a>
-                    )
-                    {emoji.staticUrl ? (
-                      <>
-                        {' '}
-                        (
-                        <a href={emoji.staticUrl} target="_blank" download>
-                          <Trans>static URL</Trans>
-                        </a>
-                        )
-                      </>
-                    ) : null}
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        )}
-        <section>
-          <small>
-            <p>
-              <Trans>Notes:</Trans>
-            </p>
-            <ul>
-              <li>
-                <Trans>
-                  This is static, unstyled and scriptless. You may need to apply
-                  your own styles and edit as needed.
-                </Trans>
-              </li>
-              <li>
-                <Trans>
-                  Polls are not interactive, becomes a list with vote counts.
-                </Trans>
-              </li>
-              <li>
-                <Trans>
-                  Media attachments can be images, videos, audios or any file
-                  types.
-                </Trans>
-              </li>
-              <li>
-                <Trans>Post could be edited or deleted later.</Trans>
-              </li>
-            </ul>
-          </small>
-        </section>
-        <h3>
-          <Trans>Preview</Trans>
-        </h3>
-        <output
-          class="embed-preview"
-          dangerouslySetInnerHTML={{ __html: htmlCode }}
-          dir="auto"
-        />
-        <p>
-          <small>
-            <Trans>Note: This preview is lightly styled.</Trans>
-          </small>
-        </p>
-      </main>
-    </div>
-  );
-}
-
-const StatusButton = forwardRef((props, ref) => {
-  let {
-    checked,
-    count,
-    class: className,
-    title,
-    alt,
-    size,
-    icon,
-    iconSize = 'l',
-    onClick,
-    ...otherProps
-  } = props;
-  if (typeof title === 'string') {
-    title = [title, title];
-  }
-  if (typeof alt === 'string') {
-    alt = [alt, alt];
-  }
-
-  const [buttonTitle, setButtonTitle] = useState(title[0] || '');
-  const [iconAlt, setIconAlt] = useState(alt[0] || '');
-
-  useEffect(() => {
-    if (checked) {
-      setButtonTitle(title[1] || '');
-      setIconAlt(alt[1] || '');
-    } else {
-      setButtonTitle(title[0] || '');
-      setIconAlt(alt[0] || '');
-    }
-  }, [checked, title, alt]);
-
-  return (
-    <button
-      ref={ref}
-      type="button"
-      title={buttonTitle}
-      class={`plain ${size ? 'small' : ''} ${className} ${
-        checked ? 'checked' : ''
-      }`}
-      onClick={(e) => {
-        if (!onClick) return;
-        e.preventDefault();
-        e.stopPropagation();
-        onClick(e);
-      }}
-      {...otherProps}
-    >
-      <Icon icon={icon} size={iconSize} alt={iconAlt} />
-      {!!count && (
-        <>
-          {' '}
-          <small title={count}>{shortenNumber(count)}</small>
-        </>
-      )}
-    </button>
-  );
-});
-
-function nicePostURL(url) {
-  if (!url) return;
-  const urlObj = URL.parse(url);
-  if (!urlObj) return;
-  const { host, pathname } = urlObj;
-  const path = pathname.replace(/\/$/, '');
-  // split only first slash
-  const [_, username, restPath] = path.match(/\/(@[^\/]+)\/(.*)/) || [];
-  return (
-    <>
-      {punycode.toUnicode(host)}
-      {username ? (
-        <>
-          /{username}
-          <wbr />
-          <span class="more-insignificant">/{restPath}</span>
-        </>
-      ) : (
-        <span class="more-insignificant">{path}</span>
-      )}
-    </>
-  );
-}
-
-function StatusCompact({ sKey }) {
-  const snapStates = useSnapshot(states);
-  const statusReply = snapStates.statusReply[sKey];
-  if (!statusReply) return null;
-
-  const { id, instance } = statusReply;
-  const status = getStatus(id, instance);
-  if (!status) return null;
-
-  const {
-    account: { id: accountId },
-    sensitive,
-    spoilerText,
-    account: { avatar, avatarStatic, bot } = {},
-    visibility,
-    content,
-    language,
-    filtered,
-  } = status;
-  if (sensitive || spoilerText) return null;
-  if (!content) return null;
-
-  const srKey = statusKey(id, instance);
-  const statusPeekText = statusPeek(status);
-
-  const currentAccount = getCurrentAccID();
-  const isSelf = currentAccount && currentAccount === accountId;
-
-  const filterContext = useContext(FilterContext);
-  let filterInfo = !isSelf && isFiltered(filtered, filterContext);
-
-  // This is fine. Images are converted to emojis so they are
-  // in a way, already "obscured"
-  if (filterInfo?.action === 'blur') filterInfo = null;
-
-  if (filterInfo?.action === 'hide') return null;
-
-  const filterTitleStr = filterInfo?.titlesStr || '';
-
-  return (
-    <article
-      class={`status compact-reply shazam ${
-        visibility === 'direct' ? 'visibility-direct' : ''
-      }`}
-      tabindex="-1"
-      data-state-post-id={srKey}
-    >
-      <Avatar url={avatarStatic || avatar} squircle={bot} />
-      <div
-        class="content-compact"
-        title={statusPeekText}
-        lang={language}
-        dir="auto"
-      >
-        {filterInfo ? (
-          <b class="status-filtered-badge badge-meta" title={filterTitleStr}>
-            <span>
-              <Trans>Filtered</Trans>
-            </span>
-            <span>{filterTitleStr}</span>
-          </b>
-        ) : (
-          <span>{statusPeekText}</span>
-        )}
-      </div>
-    </article>
   );
 }
 
@@ -4053,94 +2978,6 @@ function FilteredStatus({
     </div>
   );
 }
-
-const handledUnfulfilledStates = [
-  'deleted',
-  'unauthorized',
-  'pending',
-  'rejected',
-  'revoked',
-];
-const unfulfilledText = {
-  filterHidden: msg`Post hidden by your filters`,
-  pending: msg`Post pending`,
-  deleted: msg`Post unavailable`,
-  unauthorized: msg`Post unavailable`,
-  rejected: msg`Post unavailable`,
-  revoked: msg`Post unavailable`,
-};
-
-const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
-  if (!id || !instance) return;
-  const { _ } = useLingui();
-  const snapStates = useSnapshot(states);
-  const sKey = statusKey(id, instance);
-  const quotes = snapStates.statusQuotes[sKey];
-  const uniqueQuotes = quotes?.filter(
-    (q, i, arr) => arr.findIndex((q2) => q2.url === q.url) === i,
-  );
-
-  if (!uniqueQuotes?.length) return;
-  if (level > 2) return;
-
-  const filterContext = useContext(FilterContext);
-  const currentAccount = getCurrentAccID();
-
-  return uniqueQuotes.map((q) => {
-    let unfulfilledState;
-
-    const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
-    if (quoteStatus) {
-      const isSelf =
-        currentAccount && currentAccount === quoteStatus.account?.id;
-      const filterInfo =
-        !isSelf && isFiltered(quoteStatus.filtered, filterContext);
-
-      if (filterInfo?.action === 'hide') {
-        unfulfilledState = 'filterHidden';
-      }
-    }
-
-    if (!unfulfilledState) {
-      unfulfilledState = handledUnfulfilledStates.find(
-        (state) => q.state === state,
-      );
-    }
-
-    if (unfulfilledState) {
-      return (
-        <div
-          class={`status-card-unfulfilled ${
-            unfulfilledState === 'filterHidden' ? 'status-card-ghost' : ''
-          }`}
-        >
-          <Icon icon="quote" />
-          <i>{_(unfulfilledText[unfulfilledState])}</i>
-        </div>
-      );
-    }
-
-    const Parent = q.native ? Fragment : LazyShazam;
-    return (
-      <Parent id={q.instance + q.id} key={q.instance + q.id}>
-        <Link
-          key={q.instance + q.id}
-          to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
-          class={`status-card-link ${q.native ? 'quote-post-native' : ''}`}
-          data-read-more={_(readMoreText)}
-        >
-          <Status
-            statusID={q.id}
-            instance={q.instance}
-            size="s"
-            quoted={level + 1}
-            enableCommentHint
-          />
-        </Link>
-      </Parent>
-    );
-  });
-});
 
 export default memo(Status, (oldProps, newProps) => {
   // Shallow equal all props except 'status'

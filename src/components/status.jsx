@@ -61,6 +61,7 @@ import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
+import RTF from '../utils/relative-time-format';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
 import showCompose from '../utils/show-compose';
@@ -107,8 +108,6 @@ const visibilityText = {
 const isIOS =
   window.ontouchstart !== undefined &&
   /iPad|iPhone|iPod/.test(navigator.userAgent);
-
-const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
 
 const REACTIONS_LIMIT = 80;
 

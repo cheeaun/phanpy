@@ -3,7 +3,7 @@ import { t } from '@lingui/core/macro';
 import { useEffect, useMemo, useReducer } from 'preact/hooks';
 
 import DateTimeFormat from '../utils/date-time-format';
-import mem from '../utils/mem';
+import RTF from '../utils/relative-time-format';
 
 function isValidDate(value) {
   if (value instanceof Date) {
@@ -13,8 +13,6 @@ function isValidDate(value) {
     return !isNaN(date.getTime());
   }
 }
-
-const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
 
 const minute = 60;
 const hour = 60 * minute;

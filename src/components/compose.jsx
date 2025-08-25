@@ -42,6 +42,7 @@ import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
 import prettyBytes from '../utils/pretty-bytes';
 import { fetchRelationships } from '../utils/relationships';
+import RTF from '../utils/relative-time-format';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -196,7 +197,6 @@ function highlightText(text, { maxCharacters = Infinity }) {
 }
 
 // const rtf = new Intl.RelativeTimeFormat();
-const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
 const LF = mem((locale) => new Intl.ListFormat(locale || undefined));
 
 const CUSTOM_EMOJIS_COUNT = 100;

@@ -105,8 +105,8 @@ msgstr ""
 
 #: src/components/account-info.jsx:457
 #: src/components/account-info.jsx:1268
-#: src/components/compose.jsx:2812
 #: src/components/media-alt-modal.jsx:55
+#: src/components/media-attachment.jsx:380
 #: src/components/media-modal.jsx:363
 #: src/components/status.jsx:1771
 #: src/components/status.jsx:1788
@@ -463,18 +463,18 @@ msgstr ""
 #: src/components/account-info.jsx:2212
 #: src/components/account-info.jsx:2332
 #: src/components/account-sheet.jsx:38
-#: src/components/compose.jsx:885
-#: src/components/compose.jsx:2768
-#: src/components/compose.jsx:3248
-#: src/components/compose.jsx:3457
-#: src/components/compose.jsx:3687
+#: src/components/compose.jsx:779
+#: src/components/custom-emojis-modal.jsx:234
 #: src/components/drafts.jsx:57
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
+#: src/components/gif-picker-modal.jsx:71
 #: src/components/keyboard-shortcuts-help.jsx:43
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
+#: src/components/media-attachment.jsx:336
 #: src/components/media-modal.jsx:327
+#: src/components/mention-modal.jsx:162
 #: src/components/notification-service.jsx:157
 #: src/components/post-embed-modal.jsx:196
 #: src/components/report-modal.jsx:118
@@ -639,176 +639,207 @@ msgstr "Scheduled Posts"
 msgid "Add to thread"
 msgstr "Add to thread"
 
-#: src/components/compose.jsx:205
+#. placeholder {0}: i + 1
+#: src/components/compose-poll.jsx:41
+msgid "Choice {0}"
+msgstr "Choice {0}"
+
+#: src/components/compose-poll.jsx:60
+#: src/components/media-attachment.jsx:300
+#: src/components/shortcuts-settings.jsx:726
+#: src/pages/catchup.jsx:1081
+#: src/pages/filters.jsx:413
+msgid "Remove"
+msgstr ""
+
+#: src/components/compose-poll.jsx:88
+msgid "Multiple choices"
+msgstr ""
+
+#: src/components/compose-poll.jsx:91
+msgid "Duration"
+msgstr ""
+
+#: src/components/compose-poll.jsx:122
+msgid "Remove poll"
+msgstr ""
+
+#: src/components/compose-textarea.jsx:197
+#: src/components/compose-textarea.jsx:290
+#: src/components/nav-menu.jsx:244
+msgid "More…"
+msgstr ""
+
+#: src/components/compose.jsx:99
 msgid "Take photo or video"
 msgstr "Take photo or video"
 
-#: src/components/compose.jsx:206
+#: src/components/compose.jsx:100
 msgid "Add media"
 msgstr "Add media"
 
-#: src/components/compose.jsx:207
+#: src/components/compose.jsx:101
 msgid "Add custom emoji"
 msgstr ""
 
-#: src/components/compose.jsx:208
+#: src/components/compose.jsx:102
 msgid "Add GIF"
 msgstr "Add GIF"
 
-#: src/components/compose.jsx:209
+#: src/components/compose.jsx:103
 msgid "Add poll"
 msgstr ""
 
-#: src/components/compose.jsx:210
+#: src/components/compose.jsx:104
 msgid "Schedule post"
 msgstr "Schedule post"
 
-#: src/components/compose.jsx:410
+#: src/components/compose.jsx:304
 msgid "You have unsaved changes. Discard this post?"
 msgstr "You have unsaved changes. Discard this post?"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:648
+#: src/components/compose.jsx:542
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 
-#: src/components/compose.jsx:658
-#: src/components/compose.jsx:676
-#: src/components/compose.jsx:1788
-#: src/components/compose.jsx:1923
+#: src/components/compose.jsx:552
+#: src/components/compose.jsx:570
+#: src/components/compose.jsx:1682
+#: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr ""
 
-#: src/components/compose.jsx:866
+#: src/components/compose.jsx:760
 msgid "Pop out"
 msgstr "Pop out"
 
-#: src/components/compose.jsx:873
+#: src/components/compose.jsx:767
 msgid "Minimize"
 msgstr "Minimize"
 
-#: src/components/compose.jsx:909
+#: src/components/compose.jsx:803
 msgid "Looks like you closed the parent window."
 msgstr "Looks like you closed the parent window."
 
-#: src/components/compose.jsx:916
+#: src/components/compose.jsx:810
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 
-#: src/components/compose.jsx:921
+#: src/components/compose.jsx:815
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 
-#: src/components/compose.jsx:964
+#: src/components/compose.jsx:858
 msgid "Pop in"
 msgstr "Pop in"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:974
+#: src/components/compose.jsx:868
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr ""
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:984
+#: src/components/compose.jsx:878
 msgid "Replying to @{0}’s post"
 msgstr ""
 
-#: src/components/compose.jsx:997
+#: src/components/compose.jsx:891
 msgid "Editing source post"
 msgstr ""
 
-#: src/components/compose.jsx:1050
+#: src/components/compose.jsx:944
 msgid "Poll must have at least 2 options"
 msgstr "Poll must have at least 2 options"
 
-#: src/components/compose.jsx:1054
+#: src/components/compose.jsx:948
 msgid "Some poll choices are empty"
 msgstr "Some poll choices are empty"
 
-#: src/components/compose.jsx:1067
+#: src/components/compose.jsx:961
 msgid "Some media have no descriptions. Continue?"
 msgstr "Some media have no descriptions. Continue?"
 
-#: src/components/compose.jsx:1119
+#: src/components/compose.jsx:1013
 msgid "Attachment #{i} failed"
 msgstr "Attachment #{i} failed"
 
-#: src/components/compose.jsx:1215
+#: src/components/compose.jsx:1109
 #: src/components/status.jsx:2103
 #: src/components/timeline.jsx:1015
 msgid "Content warning"
 msgstr ""
 
-#: src/components/compose.jsx:1231
+#: src/components/compose.jsx:1125
 msgid "Content warning or sensitive media"
 msgstr "Content warning or sensitive media"
 
-#: src/components/compose.jsx:1267
+#: src/components/compose.jsx:1161
 #: src/components/status.jsx:87
 #: src/pages/settings.jsx:318
 msgid "Public"
 msgstr ""
 
-#: src/components/compose.jsx:1272
+#: src/components/compose.jsx:1166
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/components/status.jsx:88
 msgid "Local"
 msgstr ""
 
-#: src/components/compose.jsx:1276
+#: src/components/compose.jsx:1170
 #: src/components/status.jsx:89
 #: src/pages/settings.jsx:321
 msgid "Unlisted"
 msgstr ""
 
-#: src/components/compose.jsx:1279
+#: src/components/compose.jsx:1173
 #: src/components/status.jsx:90
 #: src/pages/settings.jsx:324
 msgid "Followers only"
 msgstr ""
 
-#: src/components/compose.jsx:1282
+#: src/components/compose.jsx:1176
 #: src/components/status.jsx:91
 #: src/components/status.jsx:1983
 msgid "Private mention"
 msgstr ""
 
-#: src/components/compose.jsx:1291
+#: src/components/compose.jsx:1185
 msgid "Post your reply"
 msgstr "Post your reply"
 
-#: src/components/compose.jsx:1293
+#: src/components/compose.jsx:1187
 msgid "Edit your post"
 msgstr "Edit your post"
 
-#: src/components/compose.jsx:1294
+#: src/components/compose.jsx:1188
 msgid "What are you doing?"
 msgstr "What are you doing?"
 
-#: src/components/compose.jsx:1373
+#: src/components/compose.jsx:1267
 msgid "Mark media as sensitive"
 msgstr ""
 
-#: src/components/compose.jsx:1410
+#: src/components/compose.jsx:1304
 msgid "Posting on <0/>"
 msgstr "Posting on <0/>"
 
-#: src/components/compose.jsx:1441
-#: src/components/compose.jsx:3306
+#: src/components/compose.jsx:1335
+#: src/components/mention-modal.jsx:220
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr ""
 
-#: src/components/compose.jsx:1669
+#: src/components/compose.jsx:1563
 msgid "Schedule"
 msgstr "Schedule"
 
-#: src/components/compose.jsx:1671
+#: src/components/compose.jsx:1565
 #: src/components/keyboard-shortcuts-help.jsx:155
 #: src/components/status.jsx:965
 #: src/components/status.jsx:1751
@@ -817,204 +848,48 @@ msgstr "Schedule"
 msgid "Reply"
 msgstr ""
 
-#: src/components/compose.jsx:1673
+#: src/components/compose.jsx:1567
 msgid "Update"
 msgstr "Update"
 
-#: src/components/compose.jsx:1674
+#: src/components/compose.jsx:1568
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Post"
 
-#: src/components/compose.jsx:1800
+#: src/components/compose.jsx:1694
 msgid "Downloading GIF…"
 msgstr "Downloading GIF…"
 
-#: src/components/compose.jsx:1828
+#: src/components/compose.jsx:1722
 msgid "Failed to download GIF"
 msgstr "Failed to download GIF"
 
-#: src/components/compose.jsx:2053
-#: src/components/compose.jsx:2146
-#: src/components/nav-menu.jsx:244
-msgid "More…"
-msgstr ""
-
-#: src/components/compose.jsx:2582
-msgid "Uploaded"
-msgstr ""
-
-#: src/components/compose.jsx:2595
-msgid "Image description"
-msgstr "Image description"
-
-#: src/components/compose.jsx:2596
-msgid "Video description"
-msgstr "Video description"
-
-#: src/components/compose.jsx:2597
-msgid "Audio description"
-msgstr "Audio description"
-
-#. placeholder {0}: prettyBytes( imageSize, )
-#. placeholder {0}: prettyBytes( videoSize, )
-#. placeholder {1}: prettyBytes(imageSizeLimit)
-#. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/compose.jsx:2632
-#: src/components/compose.jsx:2652
-msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-
-#. placeholder {0}: i18n.number( width, )
-#. placeholder {1}: i18n.number(height)
-#. placeholder {2}: i18n.number(newWidth)
-#. placeholder {3}: i18n.number( newHeight, )
-#: src/components/compose.jsx:2644
-#: src/components/compose.jsx:2664
-msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-
-#: src/components/compose.jsx:2672
-msgid "Frame rate too high. Uploading might encounter issues."
-msgstr "Frame rate too high. Uploading might encounter issues."
-
-#: src/components/compose.jsx:2732
-#: src/components/compose.jsx:2982
-#: src/components/shortcuts-settings.jsx:726
-#: src/pages/catchup.jsx:1081
-#: src/pages/filters.jsx:413
-msgid "Remove"
-msgstr ""
-
-#: src/components/compose.jsx:2749
-#: src/compose.jsx:84
-msgid "Error"
-msgstr ""
-
-#: src/components/compose.jsx:2774
-msgid "Edit image description"
-msgstr "Edit image description"
-
-#: src/components/compose.jsx:2775
-msgid "Edit video description"
-msgstr "Edit video description"
-
-#: src/components/compose.jsx:2776
-msgid "Edit audio description"
-msgstr "Edit audio description"
-
-#: src/components/compose.jsx:2821
-#: src/components/compose.jsx:2870
-msgid "Generating description. Please wait…"
-msgstr "Generating description. Please wait…"
-
-#. placeholder {0}: e.message
-#: src/components/compose.jsx:2841
-msgid "Failed to generate description: {0}"
-msgstr "Failed to generate description: {0}"
-
-#: src/components/compose.jsx:2842
-msgid "Failed to generate description"
-msgstr "Failed to generate description"
-
-#: src/components/compose.jsx:2854
-#: src/components/compose.jsx:2860
-#: src/components/compose.jsx:2906
-msgid "Generate description…"
-msgstr ""
-
-#. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/compose.jsx:2893
-msgid "Failed to generate description{0}"
-msgstr "Failed to generate description{0}"
-
-#. placeholder {0}: localeCode2Text(lang)
-#: src/components/compose.jsx:2908
-msgid "({0}) <0>— experimental</0>"
-msgstr ""
-
-#: src/components/compose.jsx:2927
-msgid "Done"
-msgstr ""
-
-#. placeholder {0}: i + 1
-#: src/components/compose.jsx:2963
-msgid "Choice {0}"
-msgstr "Choice {0}"
-
-#: src/components/compose.jsx:3010
-msgid "Multiple choices"
-msgstr ""
-
-#: src/components/compose.jsx:3013
-msgid "Duration"
-msgstr ""
-
-#: src/components/compose.jsx:3044
-msgid "Remove poll"
-msgstr ""
-
-#: src/components/compose.jsx:3265
-msgid "Search accounts"
-msgstr "Search accounts"
-
-#: src/components/compose.jsx:3319
-#: src/components/generic-accounts.jsx:236
-msgid "Error loading accounts"
-msgstr ""
-
-#: src/components/compose.jsx:3463
-msgid "Custom emojis"
-msgstr ""
-
-#: src/components/compose.jsx:3483
-msgid "Search emoji"
-msgstr "Search emoji"
-
-#: src/components/compose.jsx:3514
-msgid "Error loading custom emojis"
-msgstr ""
-
-#: src/components/compose.jsx:3525
-msgid "Recently used"
-msgstr "Recently used"
-
-#: src/components/compose.jsx:3526
-msgid "Others"
-msgstr "Others"
-
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/compose.jsx:3564
+#: src/components/custom-emojis-list.jsx:30
+#: src/components/custom-emojis-modal.jsx:98
 msgid "{0} more…"
 msgstr ""
 
-#: src/components/compose.jsx:3702
-msgid "Search GIFs"
-msgstr "Search GIFs"
-
-#: src/components/compose.jsx:3717
-msgid "Powered by GIPHY"
-msgstr "Powered by GIPHY"
-
-#: src/components/compose.jsx:3725
-msgid "Type to search GIFs"
+#: src/components/custom-emojis-modal.jsx:240
+msgid "Custom emojis"
 msgstr ""
 
-#: src/components/compose.jsx:3823
-#: src/components/media-modal.jsx:469
-#: src/components/timeline.jsx:928
-msgid "Previous"
+#: src/components/custom-emojis-modal.jsx:260
+msgid "Search emoji"
+msgstr "Search emoji"
+
+#: src/components/custom-emojis-modal.jsx:291
+msgid "Error loading custom emojis"
 msgstr ""
 
-#: src/components/compose.jsx:3841
-#: src/components/media-modal.jsx:488
-#: src/components/timeline.jsx:945
-msgid "Next"
-msgstr ""
+#: src/components/custom-emojis-modal.jsx:302
+msgid "Recently used"
+msgstr "Recently used"
 
-#: src/components/compose.jsx:3858
-msgid "Error loading GIFs"
-msgstr ""
+#: src/components/custom-emojis-modal.jsx:303
+msgid "Others"
+msgstr "Others"
 
 #: src/components/drafts.jsx:62
 #: src/pages/settings.jsx:702
@@ -1116,8 +991,41 @@ msgstr ""
 msgid "The end."
 msgstr ""
 
+#: src/components/generic-accounts.jsx:236
+#: src/components/mention-modal.jsx:233
+msgid "Error loading accounts"
+msgstr ""
+
 #: src/components/generic-accounts.jsx:240
 msgid "Nothing to show"
+msgstr ""
+
+#: src/components/gif-picker-modal.jsx:86
+msgid "Search GIFs"
+msgstr "Search GIFs"
+
+#: src/components/gif-picker-modal.jsx:101
+msgid "Powered by GIPHY"
+msgstr "Powered by GIPHY"
+
+#: src/components/gif-picker-modal.jsx:109
+msgid "Type to search GIFs"
+msgstr ""
+
+#: src/components/gif-picker-modal.jsx:207
+#: src/components/media-modal.jsx:469
+#: src/components/timeline.jsx:928
+msgid "Previous"
+msgstr ""
+
+#: src/components/gif-picker-modal.jsx:225
+#: src/components/media-modal.jsx:488
+#: src/components/timeline.jsx:945
+msgid "Next"
+msgstr ""
+
+#: src/components/gif-picker-modal.jsx:242
+msgid "Error loading GIFs"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:47
@@ -1352,6 +1260,95 @@ msgstr ""
 msgid "Speak"
 msgstr ""
 
+#: src/components/media-attachment.jsx:150
+msgid "Uploaded"
+msgstr ""
+
+#: src/components/media-attachment.jsx:163
+msgid "Image description"
+msgstr "Image description"
+
+#: src/components/media-attachment.jsx:164
+msgid "Video description"
+msgstr "Video description"
+
+#: src/components/media-attachment.jsx:165
+msgid "Audio description"
+msgstr "Audio description"
+
+#. placeholder {0}: prettyBytes( imageSize, )
+#. placeholder {0}: prettyBytes( videoSize, )
+#. placeholder {1}: prettyBytes(imageSizeLimit)
+#. placeholder {1}: prettyBytes(videoSizeLimit)
+#: src/components/media-attachment.jsx:200
+#: src/components/media-attachment.jsx:220
+msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
+msgstr "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
+
+#. placeholder {0}: i18n.number( width, )
+#. placeholder {1}: i18n.number(height)
+#. placeholder {2}: i18n.number(newWidth)
+#. placeholder {3}: i18n.number( newHeight, )
+#: src/components/media-attachment.jsx:212
+#: src/components/media-attachment.jsx:232
+msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
+msgstr "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
+
+#: src/components/media-attachment.jsx:240
+msgid "Frame rate too high. Uploading might encounter issues."
+msgstr "Frame rate too high. Uploading might encounter issues."
+
+#: src/components/media-attachment.jsx:317
+#: src/compose.jsx:84
+msgid "Error"
+msgstr ""
+
+#: src/components/media-attachment.jsx:342
+msgid "Edit image description"
+msgstr "Edit image description"
+
+#: src/components/media-attachment.jsx:343
+msgid "Edit video description"
+msgstr "Edit video description"
+
+#: src/components/media-attachment.jsx:344
+msgid "Edit audio description"
+msgstr "Edit audio description"
+
+#: src/components/media-attachment.jsx:389
+#: src/components/media-attachment.jsx:438
+msgid "Generating description. Please wait…"
+msgstr "Generating description. Please wait…"
+
+#. placeholder {0}: e.message
+#: src/components/media-attachment.jsx:409
+msgid "Failed to generate description: {0}"
+msgstr "Failed to generate description: {0}"
+
+#: src/components/media-attachment.jsx:410
+msgid "Failed to generate description"
+msgstr "Failed to generate description"
+
+#: src/components/media-attachment.jsx:422
+#: src/components/media-attachment.jsx:428
+#: src/components/media-attachment.jsx:474
+msgid "Generate description…"
+msgstr ""
+
+#. placeholder {0}: e?.message ? `: ${e.message}` : ''
+#: src/components/media-attachment.jsx:461
+msgid "Failed to generate description{0}"
+msgstr "Failed to generate description{0}"
+
+#. placeholder {0}: localeCode2Text(lang)
+#: src/components/media-attachment.jsx:476
+msgid "({0}) <0>— experimental</0>"
+msgstr ""
+
+#: src/components/media-attachment.jsx:495
+msgid "Done"
+msgstr ""
+
 #: src/components/media-modal.jsx:374
 msgid "Open original media in new window"
 msgstr ""
@@ -1397,6 +1394,10 @@ msgstr ""
 #: src/components/media.jsx:479
 msgid "Open file"
 msgstr "Open file"
+
+#: src/components/mention-modal.jsx:179
+msgid "Search accounts"
+msgstr "Search accounts"
 
 #: src/components/modals.jsx:75
 msgid "Post scheduled"
@@ -1732,7 +1733,7 @@ msgstr ""
 
 #: src/components/poll.jsx:113
 msgid "Voted"
-msgstr ""
+msgstr "Voted"
 
 #: src/components/poll.jsx:119
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
@@ -1742,11 +1743,11 @@ msgstr "{optionVotesCount, plural, one {# vote} other {# votes}}"
 #: src/components/poll.jsx:222
 #: src/components/poll.jsx:226
 msgid "Hide results"
-msgstr ""
+msgstr "Hide results"
 
 #: src/components/poll.jsx:188
 msgid "Vote"
-msgstr ""
+msgstr "Vote"
 
 #: src/components/poll.jsx:208
 #: src/components/poll.jsx:210
@@ -1759,7 +1760,7 @@ msgstr ""
 #: src/components/poll.jsx:222
 #: src/components/poll.jsx:226
 msgid "Show results"
-msgstr ""
+msgstr "Show results"
 
 #. placeholder {0}: shortenNumber(votesCount)
 #. placeholder {1}: shortenNumber(votesCount)
@@ -1771,23 +1772,23 @@ msgstr "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 #. placeholder {1}: shortenNumber(votersCount)
 #: src/components/poll.jsx:248
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
-msgstr ""
+msgstr "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 
 #: src/components/poll.jsx:268
 msgid "Ended <0/>"
-msgstr ""
+msgstr "Ended <0/>"
 
 #: src/components/poll.jsx:272
 msgid "Ended"
-msgstr ""
+msgstr "Ended"
 
 #: src/components/poll.jsx:275
 msgid "Ending <0/>"
-msgstr ""
+msgstr "Ending <0/>"
 
 #: src/components/poll.jsx:279
 msgid "Ending"
-msgstr ""
+msgstr "Ending"
 
 #: src/components/post-embed-modal.jsx:201
 #: src/components/status.jsx:1237

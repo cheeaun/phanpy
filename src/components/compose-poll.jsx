@@ -1,0 +1,129 @@
+import { Trans, useLingui } from '@lingui/react/macro';
+
+import i18nDuration from '../utils/i18n-duration';
+
+import Icon from './icon';
+
+export const expiryOptions = {
+  300: i18nDuration(5, 'minute'),
+  1_800: i18nDuration(30, 'minute'),
+  3_600: i18nDuration(1, 'hour'),
+  21_600: i18nDuration(6, 'hour'),
+  86_400: i18nDuration(1, 'day'),
+  259_200: i18nDuration(3, 'day'),
+  604_800: i18nDuration(1, 'week'),
+};
+
+function ComposePoll({
+  lang,
+  poll,
+  disabled,
+  onInput = () => {},
+  maxOptions,
+  maxExpiration,
+  minExpiration,
+  maxCharactersPerOption,
+}) {
+  const { t } = useLingui();
+  const { options, expiresIn, multiple } = poll;
+
+  return (
+    <div class={`poll ${multiple ? 'multiple' : ''}`}>
+      <div class="poll-choices">
+        {options.map((option, i) => (
+          <div class="poll-choice" key={i}>
+            <input
+              required
+              type="text"
+              value={option}
+              disabled={disabled}
+              maxlength={maxCharactersPerOption}
+              placeholder={t`Choice ${i + 1}`}
+              lang={lang}
+              spellCheck="true"
+              dir="auto"
+              onInput={(e) => {
+                const { value } = e.target;
+                options[i] = value;
+                onInput(poll);
+              }}
+            />
+            <button
+              type="button"
+              class="plain2 poll-button"
+              disabled={disabled || options.length <= 1}
+              onClick={() => {
+                options.splice(i, 1);
+                onInput(poll);
+              }}
+            >
+              <Icon icon="x" size="s" alt={t`Remove`} />
+            </button>
+          </div>
+        ))}
+      </div>
+      <div class="poll-toolbar">
+        <button
+          type="button"
+          class="plain2 poll-button"
+          disabled={disabled || options.length >= maxOptions}
+          onClick={() => {
+            options.push('');
+            onInput(poll);
+          }}
+        >
+          +
+        </button>{' '}
+        <label class="multiple-choices">
+          <input
+            type="checkbox"
+            checked={multiple}
+            disabled={disabled}
+            onChange={(e) => {
+              const { checked } = e.target;
+              poll.multiple = checked;
+              onInput(poll);
+            }}
+          />{' '}
+          <Trans>Multiple choices</Trans>
+        </label>
+        <label class="expires-in">
+          <Trans>Duration</Trans>{' '}
+          <select
+            value={expiresIn}
+            disabled={disabled}
+            onChange={(e) => {
+              const { value } = e.target;
+              poll.expiresIn = value;
+              onInput(poll);
+            }}
+          >
+            {Object.entries(expiryOptions)
+              .filter(([value]) => {
+                return value >= minExpiration && value <= maxExpiration;
+              })
+              .map(([value, label]) => (
+                <option value={value} key={value}>
+                  {label()}
+                </option>
+              ))}
+          </select>
+        </label>
+      </div>
+      <div class="poll-toolbar">
+        <button
+          type="button"
+          class="plain remove-poll-button"
+          disabled={disabled}
+          onClick={() => {
+            onInput(null);
+          }}
+        >
+          <Trans>Remove poll</Trans>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default ComposePoll;

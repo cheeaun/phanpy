@@ -184,6 +184,59 @@ function Compose({
       textareaRef.current?.focus();
     }, 300);
   };
+  const insertTextAtCursor = ({ targetElement, text }) => {
+    if (!targetElement) return;
+
+    const { selectionStart, selectionEnd, value } = targetElement;
+    let textBeforeInsert = value.slice(0, selectionStart);
+
+    // Remove zero-width space from end of text
+    textBeforeInsert = textBeforeInsert.replace(/\u200B$/, '');
+
+    const spaceBeforeInsert = textBeforeInsert
+      ? /[\s\t\n\r]$/.test(textBeforeInsert)
+        ? ''
+        : ' '
+      : '';
+
+    const textAfterInsert = value.slice(selectionEnd);
+    const spaceAfterInsert = /^[\s\t\n\r]/.test(textAfterInsert) ? '' : ' ';
+
+    const newText =
+      textBeforeInsert +
+      spaceBeforeInsert +
+      text +
+      spaceAfterInsert +
+      textAfterInsert;
+
+    targetElement.value = newText;
+    targetElement.selectionStart = targetElement.selectionEnd =
+      selectionEnd + text.length + spaceAfterInsert.length;
+    targetElement.focus();
+    targetElement.dispatchEvent(new Event('input'));
+  };
+
+  const lastFocusedEmojiFieldRef = useRef(null);
+  const composeContainerRef = useRef(null);
+  useEffect(() => {
+    const handleFocus = (e) => {
+      const target = e.target;
+      if (target.hasAttribute('data-allow-custom-emoji')) {
+        lastFocusedEmojiFieldRef.current = target;
+      }
+    };
+
+    const composeContainer = composeContainerRef.current;
+    if (composeContainer) {
+      composeContainer.addEventListener('focusin', handleFocus);
+    }
+
+    return () => {
+      if (composeContainer) {
+        composeContainer.removeEventListener('focusin', handleFocus);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (replyToStatus) {
@@ -693,7 +746,7 @@ function Compose({
   };
 
   return (
-    <div id="compose-container-outer">
+    <div id="compose-container-outer" ref={composeContainerRef}>
       <div id="compose-container" class={standalone ? 'standalone' : ''}>
         <div class="compose-top">
           {currentAccountInfo?.avatarStatic && (
@@ -1180,6 +1233,7 @@ function Compose({
           </div>
           <Textarea
             ref={textareaRef}
+            data-allow-custom-emoji="true"
             placeholder={
               replyToStatus
                 ? t`Post your reply`
@@ -1208,6 +1262,7 @@ function Compose({
             onTrigger={(action) => {
               if (action?.name === 'custom-emojis') {
                 setShowEmoji2Picker({
+                  targetElement: lastFocusedEmojiFieldRef,
                   defaultSearchTerm: action?.defaultSearchTerm || null,
                 });
               } else if (action?.name === 'mention') {
@@ -1372,7 +1427,9 @@ function Compose({
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      setShowEmoji2Picker(true);
+                      setShowEmoji2Picker({
+                        targetElement: lastFocusedEmojiFieldRef,
+                      });
                     }}
                   >
                     <Icon icon="emoji2" />{' '}
@@ -1453,7 +1510,9 @@ function Compose({
                   class="toolbar-button"
                   disabled={uiState === 'loading'}
                   onClick={() => {
-                    setShowEmoji2Picker(true);
+                    setShowEmoji2Picker({
+                      targetElement: lastFocusedEmojiFieldRef,
+                    });
                   }}
                 >
                   <Icon icon="emoji2" alt={_(ADD_LABELS.customEmoji)} />
@@ -1588,36 +1647,12 @@ function Compose({
             defaultSearchTerm={showMentionPicker?.defaultSearchTerm}
             onSelect={(socialAddress) => {
               const textarea = textareaRef.current;
-              if (!textarea) return;
-              const { selectionStart, selectionEnd } = textarea;
-              const text = textarea.value;
-              let textBeforeMention = text.slice(0, selectionStart);
-              // Remove zero-width space from end of text
-              textBeforeMention = textBeforeMention.replace(/\u200B$/, '');
-              const spaceBeforeMention = textBeforeMention
-                ? /[\s\t\n\r]$/.test(textBeforeMention)
-                  ? ''
-                  : ' '
-                : '';
-              const textAfterMention = text.slice(selectionEnd);
-              const spaceAfterMention = /^[\s\t\n\r]/.test(textAfterMention)
-                ? ''
-                : ' ';
-              const newText =
-                textBeforeMention +
-                spaceBeforeMention +
-                '@' +
-                socialAddress +
-                spaceAfterMention +
-                textAfterMention;
-              textarea.value = newText;
-              textarea.selectionStart = textarea.selectionEnd =
-                selectionEnd +
-                1 +
-                socialAddress.length +
-                spaceAfterMention.length;
-              textarea.focus();
-              textarea.dispatchEvent(new Event('input'));
+              if (textarea) {
+                insertTextAtCursor({
+                  targetElement: textarea,
+                  text: '@' + socialAddress,
+                });
+              }
             }}
           />
         </Modal>
@@ -1636,33 +1671,11 @@ function Compose({
             }}
             defaultSearchTerm={showEmoji2Picker?.defaultSearchTerm}
             onSelect={(emojiShortcode) => {
-              const textarea = textareaRef.current;
-              if (!textarea) return;
-              const { selectionStart, selectionEnd } = textarea;
-              const text = textarea.value;
-              let textBeforeEmoji = text.slice(0, selectionStart);
-              // Remove zero-width space from end of text
-              textBeforeEmoji = textBeforeEmoji.replace(/\u200B$/, '');
-              const spaceBeforeEmoji = textBeforeEmoji
-                ? /[\s\t\n\r]$/.test(textBeforeEmoji)
-                  ? ''
-                  : ' '
-                : '';
-              const textAfterEmoji = text.slice(selectionEnd);
-              const spaceAfterEmoji = /^[\s\t\n\r]/.test(textAfterEmoji)
-                ? ''
-                : ' ';
-              const newText =
-                textBeforeEmoji +
-                spaceBeforeEmoji +
-                emojiShortcode +
-                spaceAfterEmoji +
-                textAfterEmoji;
-              textarea.value = newText;
-              textarea.selectionStart = textarea.selectionEnd =
-                selectionEnd + emojiShortcode.length + spaceAfterEmoji.length;
-              textarea.focus();
-              textarea.dispatchEvent(new Event('input'));
+              const targetElement =
+                showEmoji2Picker?.targetElement?.current || textareaRef.current;
+              if (targetElement) {
+                insertTextAtCursor({ targetElement, text: emojiShortcode });
+              }
             }}
           />
         </Modal>

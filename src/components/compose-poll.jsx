@@ -42,6 +42,7 @@ function ComposePoll({
               lang={lang}
               spellCheck="true"
               dir="auto"
+              data-allow-custom-emoji="true"
               onInput={(e) => {
                 const { value } = e.target;
                 options[i] = value;

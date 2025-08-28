@@ -1160,6 +1160,7 @@ function Compose({
               type="text"
               name="spoilerText"
               placeholder={t`Content warning`}
+              data-allow-custom-emoji="true"
               disabled={uiState === 'loading'}
               class="spoiler-text-field"
               lang={language}

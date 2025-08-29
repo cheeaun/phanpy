@@ -54,6 +54,7 @@ import ScheduledAtField, {
   MIN_SCHEDULED_AT,
 } from './ScheduledAtField';
 import Status from './status';
+import TextExpander from './text-expander';
 
 const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
   const [code, common, native] = l;
@@ -156,6 +157,7 @@ function Compose({
 
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
+
   const [visibility, setVisibility] = useState('public');
   const [sensitive, setSensitive] = useState(false);
   const [language, setLanguage] = useState(
@@ -1155,25 +1157,39 @@ function Compose({
           }}
         >
           <div class="toolbar stretch">
-            <input
-              ref={spoilerTextRef}
-              type="text"
-              name="spoilerText"
-              placeholder={t`Content warning`}
-              data-allow-custom-emoji="true"
-              disabled={uiState === 'loading'}
-              class="spoiler-text-field"
-              lang={language}
-              spellCheck="true"
-              dir="auto"
-              style={{
-                opacity: sensitive ? 1 : 0,
-                pointerEvents: sensitive ? 'auto' : 'none',
+            <TextExpander
+              keys=":"
+              class="spoiler-text-field-container"
+              onTrigger={(action) => {
+                if (action?.name === 'custom-emojis') {
+                  setShowEmoji2Picker({
+                    targetElement: spoilerTextRef,
+                    defaultSearchTerm: action?.defaultSearchTerm || null,
+                  });
+                }
               }}
-              onInput={() => {
-                updateCharCount();
-              }}
-            />
+            >
+              <input
+                ref={spoilerTextRef}
+                type="text"
+                name="spoilerText"
+                placeholder={t`Content warning`}
+                data-allow-custom-emoji="true"
+                disabled={uiState === 'loading'}
+                class="spoiler-text-field"
+                lang={language}
+                spellCheck="true"
+                autocomplete="off"
+                dir="auto"
+                style={{
+                  opacity: sensitive ? 1 : 0,
+                  pointerEvents: sensitive ? 'auto' : 'none',
+                }}
+                onInput={() => {
+                  updateCharCount();
+                }}
+              />
+            </TextExpander>
             <label
               class={`toolbar-button ${sensitive ? 'highlight' : ''}`}
               title={t`Content warning or sensitive media`}
@@ -1249,17 +1265,6 @@ function Compose({
               updateCharCount();
             }}
             maxCharacters={maxCharacters}
-            performSearch={(params) => {
-              const { type, q, limit } = params;
-              if (type === 'accounts') {
-                return masto.v1.accounts.search.list({
-                  q,
-                  limit,
-                  resolve: false,
-                });
-              }
-              return masto.v2.search.list(params);
-            }}
             onTrigger={(action) => {
               if (action?.name === 'custom-emojis') {
                 setShowEmoji2Picker({

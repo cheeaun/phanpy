@@ -3,6 +3,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import i18nDuration from '../utils/i18n-duration';
 
 import Icon from './icon';
+import TextExpander from './text-expander';
 
 export const expiryOptions = {
   300: i18nDuration(5, 'minute'),
@@ -32,23 +33,26 @@ function ComposePoll({
       <div class="poll-choices">
         {options.map((option, i) => (
           <div class="poll-choice" key={i}>
-            <input
-              required
-              type="text"
-              value={option}
-              disabled={disabled}
-              maxlength={maxCharactersPerOption}
-              placeholder={t`Choice ${i + 1}`}
-              lang={lang}
-              spellCheck="true"
-              dir="auto"
-              data-allow-custom-emoji="true"
-              onInput={(e) => {
-                const { value } = e.target;
-                options[i] = value;
-                onInput(poll);
-              }}
-            />
+            <TextExpander keys=":" class="poll-field-container">
+              <input
+                required
+                type="text"
+                value={option}
+                disabled={disabled}
+                maxlength={maxCharactersPerOption}
+                placeholder={t`Choice ${i + 1}`}
+                lang={lang}
+                spellCheck="true"
+                autocomplete="off"
+                dir="auto"
+                data-allow-custom-emoji="true"
+                onInput={(e) => {
+                  const { value } = e.target;
+                  options[i] = value;
+                  onInput(poll);
+                }}
+              />
+            </TextExpander>
             <button
               type="button"
               class="plain2 poll-button"

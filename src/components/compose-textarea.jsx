@@ -1,40 +1,13 @@
-import '@github/text-expander-element';
-
-import { useLingui } from '@lingui/react/macro';
 import { forwardRef } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
 
-import { api } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
-import getCustomEmojis from '../utils/custom-emojis';
-import emojifyText from '../utils/emojify-text';
 import escapeHTML from '../utils/escape-html';
-import getDomain from '../utils/get-domain';
-import isRTL from '../utils/is-rtl';
-import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
 import urlRegexObj from '../utils/url-regex';
 
-const menu = document.createElement('ul');
-menu.role = 'listbox';
-menu.className = 'text-expander-menu';
-
-// Set IntersectionObserver on menu, reposition it because text-expander doesn't handle it
-const windowMargin = 16;
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      const { left, width } = entry.boundingClientRect;
-      const { innerWidth } = window;
-      if (left + width > innerWidth) {
-        const insetInlineStart = isRTL() ? 'right' : 'left';
-        menu.style[insetInlineStart] = innerWidth - width - windowMargin + 'px';
-      }
-    }
-  });
-});
-observer.observe(menu);
+import TextExpander from './text-expander';
 
 // https://github.com/mastodon/mastodon/blob/c03bd2a238741a012aa4b98dc4902d6cf948ab63/app/models/account.rb#L69
 const USERNAME_RE = /[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?/i;
@@ -120,287 +93,11 @@ const detectLangs = async (text) => {
   return null;
 };
 
-function encodeHTML(str) {
-  return str.replace(/[&<>"']/g, function (char) {
-    return '&#' + char.charCodeAt(0) + ';';
-  });
-}
-
 const Textarea = forwardRef((props, ref) => {
-  const { t } = useLingui();
-  const { masto, instance } = api();
   const [text, setText] = useState(ref.current?.value || '');
-  const {
-    maxCharacters,
-    performSearch = () => {},
-    onTrigger = () => {},
-    ...textareaProps
-  } = props;
-  // const snapStates = useSnapshot(states);
-  // const charCount = snapStates.composerCharacterCount;
-
-  // const customEmojis = useRef();
-  const searcherRef = useRef();
-  useEffect(() => {
-    getCustomEmojis(instance, masto)
-      .then((r) => {
-        const [emojis, searcher] = r;
-        searcherRef.current = searcher;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }, []);
+  const { maxCharacters, onTrigger = null, ...textareaProps } = props;
 
   const textExpanderRef = useRef();
-  const textExpanderTextRef = useRef('');
-  const hasTextExpanderRef = useRef(false);
-  useEffect(() => {
-    let handleChange,
-      handleValue,
-      handleCommited,
-      handleActivate,
-      handleDeactivate;
-    if (textExpanderRef.current) {
-      handleChange = (e) => {
-        // console.log('text-expander-change', e);
-        const { key, provide, text } = e.detail;
-        textExpanderTextRef.current = text;
-
-        if (text === '') {
-          provide(
-            Promise.resolve({
-              matched: false,
-            }),
-          );
-          return;
-        }
-
-        if (key === ':') {
-          // const emojis = customEmojis.current.filter((emoji) =>
-          //   emoji.shortcode.startsWith(text),
-          // );
-          const results = searcherRef.current?.search(text, {
-            limit: 5,
-          });
-          let html = '';
-          results.forEach(({ item: emoji }) => {
-            const { shortcode, url } = emoji;
-            html += `
-                <li role="option" data-value="${encodeHTML(shortcode)}">
-                <img src="${encodeHTML(
-                  url,
-                )}" width="16" height="16" alt="" loading="lazy" /> 
-                ${encodeHTML(shortcode)}
-              </li>`;
-          });
-          html += `<li role="option" data-value="" data-more="${text}">${t`More…`}</li>`;
-          // console.log({ emojis, html });
-          menu.innerHTML = html;
-          provide(
-            Promise.resolve({
-              matched: results.length > 0,
-              fragment: menu,
-            }),
-          );
-          return;
-        }
-
-        const type = {
-          '@': 'accounts',
-          '#': 'hashtags',
-        }[key];
-        provide(
-          new Promise((resolve) => {
-            const searchResults = performSearch({
-              type,
-              q: text,
-              limit: 5,
-            });
-            searchResults.then((value) => {
-              if (text !== textExpanderTextRef.current) {
-                return;
-              }
-              console.log({ value, type, v: value[type] });
-              const results = value[type] || value;
-              console.log('RESULTS', value, results);
-              let html = '';
-              results.forEach((result) => {
-                const {
-                  name,
-                  avatarStatic,
-                  displayName,
-                  username,
-                  acct,
-                  emojis,
-                  history,
-                  roles,
-                  url,
-                } = result;
-                const displayNameWithEmoji = emojifyText(displayName, emojis);
-                const accountInstance = getDomain(url);
-                // const item = menuItem.cloneNode();
-                if (acct) {
-                  html += `
-                    <li role="option" data-value="${encodeHTML(acct)}">
-                      <span class="avatar">
-                        <img src="${encodeHTML(
-                          avatarStatic,
-                        )}" width="16" height="16" alt="" loading="lazy" />
-                      </span>
-                      <span>
-                        <b>${displayNameWithEmoji || username}</b>
-                        <br><span class="bidi-isolate">@${encodeHTML(
-                          acct,
-                        )}</span>
-                        ${
-                          roles?.map(
-                            (role) => ` <span class="tag collapsed">
-                            ${role.name}
-                            ${
-                              !!accountInstance &&
-                              `<span class="more-insignificant">
-                                ${accountInstance}
-                              </span>`
-                            }
-                          </span>`,
-                          ) || ''
-                        }
-                      </span>
-                    </li>
-                  `;
-                } else {
-                  const total = history?.reduce?.(
-                    (acc, cur) => acc + +cur.uses,
-                    0,
-                  );
-                  html += `
-                    <li role="option" data-value="${encodeHTML(name)}">
-                      <span class="grow">#<b>${encodeHTML(name)}</b></span>
-                      ${
-                        total
-                          ? `<span class="count">${shortenNumber(total)}</span>`
-                          : ''
-                      }
-                    </li>
-                  `;
-                }
-              });
-              if (type === 'accounts') {
-                html += `<li role="option" data-value="" data-more="${text}">${t`More…`}</li>`;
-              }
-              menu.innerHTML = html;
-              console.log('MENU', results, menu);
-              resolve({
-                matched: results.length > 0,
-                fragment: menu,
-              });
-            });
-          }),
-        );
-      };
-
-      textExpanderRef.current.addEventListener(
-        'text-expander-change',
-        handleChange,
-      );
-
-      handleValue = (e) => {
-        const { key, item } = e.detail;
-        const { value, more } = item.dataset;
-        if (key === ':') {
-          e.detail.value = value ? `:${value}:` : '​'; // zero-width space
-          if (more) {
-            // Prevent adding space after the above value
-            e.detail.continue = true;
-
-            setTimeout(() => {
-              onTrigger?.({
-                name: 'custom-emojis',
-                defaultSearchTerm: more,
-              });
-            }, 300);
-          }
-        } else if (key === '@') {
-          e.detail.value = value ? `@${value}` : '​'; // zero-width space
-          if (more) {
-            e.detail.continue = true;
-            setTimeout(() => {
-              onTrigger?.({
-                name: 'mention',
-                defaultSearchTerm: more,
-              });
-            }, 300);
-          }
-        } else {
-          e.detail.value = `${key}${value}`;
-        }
-      };
-
-      textExpanderRef.current.addEventListener(
-        'text-expander-value',
-        handleValue,
-      );
-
-      handleCommited = (e) => {
-        const { input } = e.detail;
-        setText(input.value);
-        // fire input event
-        if (ref.current) {
-          const event = new Event('input', { bubbles: true });
-          ref.current.dispatchEvent(event);
-        }
-      };
-
-      textExpanderRef.current.addEventListener(
-        'text-expander-committed',
-        handleCommited,
-      );
-
-      handleActivate = () => {
-        hasTextExpanderRef.current = true;
-      };
-
-      textExpanderRef.current.addEventListener(
-        'text-expander-activate',
-        handleActivate,
-      );
-
-      handleDeactivate = () => {
-        hasTextExpanderRef.current = false;
-      };
-
-      textExpanderRef.current.addEventListener(
-        'text-expander-deactivate',
-        handleDeactivate,
-      );
-    }
-
-    return () => {
-      if (textExpanderRef.current) {
-        textExpanderRef.current.removeEventListener(
-          'text-expander-change',
-          handleChange,
-        );
-        textExpanderRef.current.removeEventListener(
-          'text-expander-value',
-          handleValue,
-        );
-        textExpanderRef.current.removeEventListener(
-          'text-expander-committed',
-          handleCommited,
-        );
-        textExpanderRef.current.removeEventListener(
-          'text-expander-activate',
-          handleActivate,
-        );
-        textExpanderRef.current.removeEventListener(
-          'text-expander-deactivate',
-          handleDeactivate,
-        );
-      }
-    };
-  }, []);
 
   useEffect(() => {
     // Resize observer for textarea
@@ -466,10 +163,11 @@ const Textarea = forwardRef((props, ref) => {
   }, 2000);
 
   return (
-    <text-expander
+    <TextExpander
       ref={textExpanderRef}
       keys="@ # :"
       class="compose-field-container"
+      onTrigger={onTrigger}
     >
       <textarea
         class="compose-field"
@@ -487,7 +185,7 @@ const Textarea = forwardRef((props, ref) => {
         onKeyDown={(e) => {
           // Get line before cursor position after pressing 'Enter'
           const { key, target } = e;
-          const hasTextExpander = hasTextExpanderRef.current;
+          const hasTextExpander = textExpanderRef.current?.activated();
           if (
             key === 'Enter' &&
             !(e.ctrlKey || e.metaKey || hasTextExpander) &&
@@ -555,7 +253,7 @@ const Textarea = forwardRef((props, ref) => {
         class="compose-highlight"
         aria-hidden="true"
       />
-    </text-expander>
+    </TextExpander>
   );
 });
 

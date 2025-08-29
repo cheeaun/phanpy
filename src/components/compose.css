@@ -175,9 +175,15 @@
 #compose-container .toolbar.stretch {
   justify-content: stretch;
 }
-#compose-container .toolbar .spoiler-text-field {
-  flex: 1;
-  min-width: 0;
+#compose-container .toolbar {
+  .spoiler-text-field-container {
+    flex: 1;
+    min-width: 0;
+
+    .spoiler-text-field {
+      width: 100%;
+    }
+  }
 }
 #compose-container .toolbar-button {
   display: inline-block;
@@ -510,9 +516,13 @@
   justify-content: stretch;
   flex-direction: row-reverse;
 }
-#compose-container .poll-choice input {
+#compose-container .poll-choice .poll-field-container {
   flex-grow: 1;
   min-width: 0;
+
+  input {
+    width: 100%;
+  }
 }
 
 #compose-container .poll-button {

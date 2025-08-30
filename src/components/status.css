@@ -7,34 +7,35 @@
     --post-gradient-angle: -160deg;
     --post-gradient-chip-angle: 20deg;
   }
+  --post-gradient-height: min(160px, 50%);
 }
 
 .status-reblog {
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--reblog-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 .status-group {
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--group-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 .status-followed-tags {
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--hashtag-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 
   .timeline-item-container:not(.timeline-item-container-start) & {
     background: radial-gradient(
       ellipse at 0 1.2em,
       var(--hashtag-faded-color),
-      transparent max(160px, 50%)
+      transparent var(--post-gradient-height)
     );
     background-size: 100% 3em;
     background-repeat: no-repeat;
@@ -44,14 +45,14 @@
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--reply-to-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 :is(.status-reblog, .status-group, .status-followed-tags) .status-reply-to {
   background: linear-gradient(
     var(--post-gradient-chip-angle),
     var(--reply-to-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 .visibility-direct {
@@ -367,10 +368,11 @@
   gap: 8px;
   padding-block: 8px;
 }
-.status.compact-thread .status-thread-badge {
+.status.compact-thread .status-thread-badge-container {
   flex-shrink: 0;
   min-width: 50px;
   justify-content: center;
+  display: flex;
 }
 .status.compact-thread .content-compact {
   overflow: hidden;
@@ -588,6 +590,17 @@
     var(--reply-to-faded-color) 4px
   );
   font-weight: bold;
+  align-self: center;
+  flex-shrink: 0;
+
+  .meta-name + & {
+    margin-inline-start: 4px;
+    margin-block: 0;
+
+    + .time {
+      margin-inline-start: 0 !important;
+    }
+  }
 }
 .status-direct-badge {
   vertical-align: middle;
@@ -2073,7 +2086,7 @@ a.card:is(:hover, :focus):visited {
     var(--bg-color) 50%,
     var(--bg-faded-color)
   );
-  overflow: hidden;
+  /* overflow: hidden; */
   box-shadow: inset 0 0 0 1px var(--bg-color);
   min-width: 50%;
 }
@@ -2239,12 +2252,14 @@ a.card:is(:hover, :focus):visited {
   border: 1.5px solid transparent;
   backdrop-filter: none;
 }
-.status .action > button.plain:not(:disabled):is(:hover, :focus) {
-  color: var(--link-color);
-  background-color: var(--button-plain-bg-hover-color);
-}
-.status .action > button.plain.reblog-button:not(:disabled):is(:hover, :focus) {
-  color: var(--reblog-color);
+@media (hover: hover) {
+  .status .action > button.plain:not(:disabled):hover {
+    color: var(--link-color);
+    background-color: var(--button-plain-bg-hover-color);
+  }
+  .status .action > button.plain.reblog-button:not(:disabled):hover {
+    color: var(--reblog-color);
+  }
 }
 .status .action > button.plain.reblog-button.checked {
   color: var(--reblog-color);
@@ -2268,8 +2283,10 @@ a.card:is(:hover, :focus):visited {
 .status .action > button.plain.reblog-button.checked .icon {
   animation: reblogged 1s ease-in-out;
 }
-.status .action > button.plain.favourite-button:is(:hover, :focus) {
-  color: var(--favourite-color);
+@media (hover: hover) {
+  .status .action > button.plain.favourite-button:hover {
+    color: var(--favourite-color);
+  }
 }
 .status .action > button.plain.favourite-button.checked {
   color: var(--favourite-color);

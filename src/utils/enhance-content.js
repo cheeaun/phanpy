@@ -1,21 +1,9 @@
 import emojifyText from './emojify-text';
+import escapeHTML from './escape-html';
 import mem from './mem';
 
 const fauxDiv = document.createElement('div');
 const whitelistLinkClasses = ['u-url', 'mention', 'hashtag'];
-
-const HTML_CHARS_REGEX = /[&<>]/g;
-function escapeHTML(html) {
-  return html.replace(
-    HTML_CHARS_REGEX,
-    (c) =>
-      ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-      })[c],
-  );
-}
 
 const LINK_REGEX = /<a/i;
 const HTTP_LINK_REGEX = /^https?:\/\//i;

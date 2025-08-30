@@ -1,3 +1,4 @@
+import mem from './mem';
 import store from './store';
 
 export function getAccounts() {
@@ -49,6 +50,16 @@ export function getCurrentAccountID() {
   }
   return null;
 }
+
+// Memoized version of getCurrentAccountID for performance
+export const getCurrentAccID = mem(
+  () => {
+    return getCurrentAccountID();
+  },
+  {
+    maxAge: 60 * 1000, // 1 minute
+  },
+);
 
 export function setCurrentAccountID(id) {
   try {

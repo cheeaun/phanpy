@@ -1,6 +1,8 @@
 import moize from 'moize';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
+import escapeHTML from '../utils/escape-html';
+
 import { ICONS } from './ICONS';
 
 const SIZES = {
@@ -15,12 +17,20 @@ const SIZES = {
 const ICONDATA = {};
 
 // Memoize the dangerouslySetInnerHTML of the SVGs
+const INVALID_ID_CHARS_REGEX = /[^a-zA-Z0-9]/g;
 const SVGICon = moize(
-  function ({ width, height, body, rotate, flip }) {
+  function ({ icon, title, width, height, body, rotate, flip }) {
+    const titleID = title?.replace(INVALID_ID_CHARS_REGEX, '-') || '';
+    const id = `icon-${icon}-${titleID}`;
+    const html = title
+      ? `<title id="${id}">${escapeHTML(title)}</title>${body}`
+      : body;
     return (
       <svg
+        role={title ? 'img' : 'presentation'}
+        aria-labelledby={id}
         viewBox={`0 0 ${width} ${height}`}
-        dangerouslySetInnerHTML={{ __html: body }}
+        dangerouslySetInnerHTML={{ __html: html }}
         style={{
           transform: `${rotate ? `rotate(${rotate})` : ''} ${
             flip ? `scaleX(-1)` : ''
@@ -33,7 +43,9 @@ const SVGICon = moize(
     isShallowEqual: true,
     maxSize: Object.keys(ICONS).length,
     matchesArg: (cacheKeyArg, keyArg) =>
-      cacheKeyArg.icon === keyArg.icon && cacheKeyArg.body === keyArg.body,
+      cacheKeyArg.icon === keyArg.icon &&
+      cacheKeyArg.title === keyArg.title &&
+      cacheKeyArg.body === keyArg.body,
   },
 );
 
@@ -79,7 +91,6 @@ function Icon({
   return (
     <span
       class={`icon ${className} ${rtl ? 'rtl-flip' : ''}`}
-      title={title || alt}
       style={{
         width: `${iconSize}px`,
         height: `${iconSize}px`,
@@ -101,6 +112,7 @@ function Icon({
         // />
         <SVGICon
           icon={icon}
+          title={title || alt}
           width={iconData.width}
           height={iconData.height}
           body={iconData.body}

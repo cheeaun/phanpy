@@ -47,6 +47,11 @@ function TextExpander({ onTrigger = null, ...props }, ref) {
 
   // Expose the activated state to parent components
   useImperativeHandle(ref, () => ({
+    setStyle: (style) => {
+      if (textExpanderRef.current) {
+        Object.assign(textExpanderRef.current.style, style);
+      }
+    },
     activated: () => hasTextExpanderRef.current,
   }));
 

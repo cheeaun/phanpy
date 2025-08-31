@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-30 00:11\n"
+"PO-Revision-Date: 2025-08-31 22:57\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -183,18 +183,18 @@ msgstr "Aquest usuari ha decidit no mostrar aquesta informació."
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info.jsx:767
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> Seguidor} other {<1>{1}</1> Seguidors}}"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:811
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr ""
+msgstr "{followingCount, plural, one {}other {<0>{0}</0> Seguiments}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info.jsx:835
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr ""
+msgstr "{statusesCount, plural, one {<0>{0}</0> Publicació} other {<1>{1}</1> Publicacions}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -1250,7 +1250,7 @@ msgid "Bookmarks"
 msgstr "Marcadors"
 
 #: src/components/nav-menu.jsx:244
-#: src/components/text-expander.jsx:208
+#: src/components/text-expander.jsx:213
 msgid "More…"
 msgstr "Més…"
 
@@ -1646,16 +1646,16 @@ msgstr "Desa i tanca"
 
 #: src/components/recent-searches.jsx:27
 msgid "Cleared recent searches"
-msgstr ""
+msgstr "Cerques recents esborrades"
 
 #: src/components/recent-searches.jsx:49
 #: src/components/search-form.jsx:328
 msgid "Recent searches"
-msgstr ""
+msgstr "Cerques recents"
 
 #: src/components/recent-searches.jsx:59
 msgid "Clear all"
-msgstr ""
+msgstr "Esborra-ho tot"
 
 #: src/components/recent-searches.jsx:94
 #: src/pages/account-statuses.jsx:334
@@ -2540,14 +2540,14 @@ msgstr "Publicació amagada pels filtres"
 
 #: src/components/status.jsx:2634
 msgid "Post pending"
-msgstr ""
+msgstr "Publicació pendent"
 
 #: src/components/status.jsx:2635
 #: src/components/status.jsx:2636
 #: src/components/status.jsx:2637
 #: src/components/status.jsx:2638
 msgid "Post unavailable"
-msgstr ""
+msgstr "Publicació no disponible"
 
 #: src/components/status.jsx:2747
 msgid "Edit History"
@@ -2576,22 +2576,22 @@ msgstr "Fil"
 
 #: src/components/thread-badge.jsx:28
 msgid "Thread {index}/{total}"
-msgstr ""
+msgstr "Fil {index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
 msgid "Thread {index}/X"
-msgstr ""
+msgstr "Fil {index}/X"
 
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
 msgid "{index}/{total}"
-msgstr ""
+msgstr "{index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:46
 msgid "{index}/X"
-msgstr ""
+msgstr "{index}/X"
 
 #: src/components/timeline.jsx:486
 #: src/pages/settings.jsx:1218

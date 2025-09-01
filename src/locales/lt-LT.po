@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-30 00:11\n"
+"PO-Revision-Date: 2025-09-01 01:34\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -48,12 +48,12 @@ msgid "Mutual"
 msgstr "Bendri"
 
 #: src/components/account-block.jsx:204
-#: src/components/related-actions.jsx:807
+#: src/components/related-actions.jsx:882
 msgid "Requested"
 msgstr "Paprašyta"
 
 #: src/components/account-block.jsx:208
-#: src/components/related-actions.jsx:798
+#: src/components/related-actions.jsx:873
 msgid "Following"
 msgstr "Sekama"
 
@@ -166,7 +166,7 @@ msgstr "Peržiūrėti profilio antraštę"
 
 #: src/components/account-info.jsx:646
 #: src/components/edit-profile-sheet.jsx:92
-#: src/components/related-actions.jsx:701
+#: src/components/related-actions.jsx:776
 msgid "Edit profile"
 msgstr "Redaguoti profilį"
 
@@ -1250,7 +1250,7 @@ msgid "Bookmarks"
 msgstr "Žymės"
 
 #: src/components/nav-menu.jsx:244
-#: src/components/text-expander.jsx:208
+#: src/components/text-expander.jsx:213
 msgid "More…"
 msgstr "Daugiau…"
 
@@ -1580,6 +1580,7 @@ msgid "Unable to copy HTML code"
 msgstr "Nepavyksta nukopijuoti HTML kodo."
 
 #: src/components/post-embed-modal.jsx:232
+#: src/components/related-actions.jsx:501
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1202
 msgid "Copy"
@@ -1759,82 +1760,111 @@ msgstr "Rodyti profilyje"
 msgid "Show featured profiles"
 msgstr "Rodyti rodomus profilius"
 
+#: src/components/related-actions.jsx:492
+#: src/components/status.jsx:1193
+msgid "Link copied"
+msgstr "Nukopijuota nuorada"
+
 #: src/components/related-actions.jsx:495
+#: src/components/status.jsx:1196
+msgid "Unable to copy link"
+msgstr "Nepavyksta atidaryti nuorodos."
+
+#: src/components/related-actions.jsx:516
+#: src/components/shortcuts-settings.jsx:1077
+#: src/components/status.jsx:1218
+msgid "Sharing doesn't seem to work."
+msgstr "Atrodo, kad bendrinimas neveikia."
+
+#: src/components/related-actions.jsx:522
+#: src/components/status.jsx:1224
+msgid "Share…"
+msgstr "Bendrinti…"
+
+#: src/components/related-actions.jsx:542
+msgid "Unmuted @{username}"
+msgstr ""
+
+#: src/components/related-actions.jsx:554
+msgid "Unmute <0>@{username}</0>"
+msgstr ""
+
+#: src/components/related-actions.jsx:570
 msgid "Mute <0>@{username}</0>…"
 msgstr "Nutildyti <0>@{username}</0>…"
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:527
+#: src/components/related-actions.jsx:602
 msgid "Muted @{username} for {0}"
 msgstr "Nutildytas @{username} dėl {0}"
 
-#: src/components/related-actions.jsx:539
+#: src/components/related-actions.jsx:614
 msgid "Unable to mute @{username}"
 msgstr "Nepavyksta nutildyti @{username}."
 
-#: src/components/related-actions.jsx:560
+#: src/components/related-actions.jsx:635
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "Pašalinti <0>@{username}</0> iš sekėjų?"
 
-#: src/components/related-actions.jsx:580
+#: src/components/related-actions.jsx:655
 msgid "@{username} removed from followers"
 msgstr "@{username} pašalintas iš sekėjų"
 
-#: src/components/related-actions.jsx:592
+#: src/components/related-actions.jsx:667
 msgid "Remove follower…"
 msgstr "Šalinti sekėją…"
 
-#: src/components/related-actions.jsx:603
+#: src/components/related-actions.jsx:678
 msgid "Block <0>@{username}</0>?"
 msgstr "Bluokuoti <0>@{username}</0>?"
 
-#: src/components/related-actions.jsx:627
+#: src/components/related-actions.jsx:702
 msgid "Unblocked @{username}"
 msgstr "Atblokuotas @{username}"
 
-#: src/components/related-actions.jsx:635
+#: src/components/related-actions.jsx:710
 msgid "Blocked @{username}"
 msgstr "Užblokuotas @{username}"
 
-#: src/components/related-actions.jsx:643
+#: src/components/related-actions.jsx:718
 msgid "Unable to unblock @{username}"
 msgstr "Nepavyksta atblokuoti @{username}."
 
-#: src/components/related-actions.jsx:645
+#: src/components/related-actions.jsx:720
 msgid "Unable to block @{username}"
 msgstr "Nepavyksta užblokuoti @{username}."
 
-#: src/components/related-actions.jsx:655
+#: src/components/related-actions.jsx:730
 msgid "Unblock <0>@{username}</0>"
 msgstr "Atblokuoti <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:664
+#: src/components/related-actions.jsx:739
 msgid "Block <0>@{username}</0>…"
 msgstr "Bluokuoti <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:681
+#: src/components/related-actions.jsx:756
 msgid "Report <0>@{username}</0>…"
 msgstr "Pranešti apie <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:737
+#: src/components/related-actions.jsx:812
 msgid "Withdraw follow request?"
 msgstr "Atšaukti sekimo prašymą?"
 
 #. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:738
+#: src/components/related-actions.jsx:813
 msgid "Unfollow @{0}?"
 msgstr "Nebesekti @{0}?"
 
-#: src/components/related-actions.jsx:801
+#: src/components/related-actions.jsx:876
 msgid "Unfollow…"
 msgstr "Nebesekti…"
 
-#: src/components/related-actions.jsx:810
+#: src/components/related-actions.jsx:885
 msgid "Withdraw…"
 msgstr "Atšaukti…"
 
-#: src/components/related-actions.jsx:817
-#: src/components/related-actions.jsx:821
+#: src/components/related-actions.jsx:892
+#: src/components/related-actions.jsx:896
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "Sekti"
@@ -2251,11 +2281,6 @@ msgstr "Nukopijuoti trumpųjų nuorodų nustatymai"
 msgid "Unable to copy shortcut settings"
 msgstr "Nepavyksta nukopijuoti trumpųjų nuorodų nustatymų."
 
-#: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1218
-msgid "Sharing doesn't seem to work."
-msgstr "Atrodo, kad bendrinimas neveikia."
-
 #: src/components/shortcuts-settings.jsx:1083
 msgid "Share"
 msgstr "Bendrinti"
@@ -2397,18 +2422,6 @@ msgstr "Rodyti redagavimo istoriją"
 #: src/components/status.jsx:1170
 msgid "Edited: {editedDateText}"
 msgstr "Redaguota: {editedDateText}"
-
-#: src/components/status.jsx:1193
-msgid "Link copied"
-msgstr "Nukopijuota nuorada"
-
-#: src/components/status.jsx:1196
-msgid "Unable to copy link"
-msgstr "Nepavyksta atidaryti nuorodos."
-
-#: src/components/status.jsx:1224
-msgid "Share…"
-msgstr "Bendrinti…"
 
 #: src/components/status.jsx:1251
 msgid "Conversation unmuted"

@@ -470,27 +470,102 @@ function RelatedActions({
                 }
               }}
             >
-              <Icon icon="link" />
-              <span>
+              <Icon icon="copy" />
+              <small>
                 <Trans>Copy handle</Trans>
-              </span>
+                <br />
+                <span class="more-insignificant bidi-isolate">
+                  @{currentInfo?.acct || acctWithInstance}
+                </span>
+              </small>
             </MenuItem>
             <MenuItem href={url} target="_blank">
               <Icon icon="external" />
               <small class="menu-double-lines">{niceAccountURL(url)}</small>
             </MenuItem>
-            {currentAuthenticated && !isSelf && (
+            <div class="menu-horizontal">
+              <MenuItem
+                onClick={() => {
+                  // Copy url to clipboard
+                  try {
+                    navigator.clipboard.writeText(url);
+                    showToast(t`Link copied`);
+                  } catch (e) {
+                    console.error(e);
+                    showToast(t`Unable to copy link`);
+                  }
+                }}
+              >
+                <Icon icon="link" />
+                <span>
+                  <Trans>Copy</Trans>
+                </span>
+              </MenuItem>
+              {navigator?.share &&
+                navigator?.canShare?.({
+                  url,
+                }) && (
+                  <MenuItem
+                    onClick={() => {
+                      try {
+                        navigator.share({
+                          url,
+                        });
+                      } catch (e) {
+                        console.error(e);
+                        alert(t`Sharing doesn't seem to work.`);
+                      }
+                    }}
+                  >
+                    <Icon icon="share" />
+                    <span>
+                      <Trans>Share…</Trans>
+                    </span>
+                  </MenuItem>
+                )}
+            </div>
+            {!!relationship && (
               <>
                 <MenuDivider />
-                {!muting && (
+                {muting ? (
+                  <MenuItem
+                    onClick={() => {
+                      setRelationshipUIState('loading');
+                      (async () => {
+                        try {
+                          const newRelationship = await currentMasto.v1.accounts
+                            .$select(currentInfo?.id || id)
+                            .unmute();
+                          console.log('unmuting', newRelationship);
+                          setRelationship(newRelationship);
+                          setRelationshipUIState('default');
+                          showToast(t`Unmuted @${username}`);
+                          states.reloadGenericAccounts.id = 'mute';
+                          states.reloadGenericAccounts.counter++;
+                        } catch (e) {
+                          console.error(e);
+                          setRelationshipUIState('error');
+                        }
+                      })();
+                    }}
+                  >
+                    <Icon icon="unmute" />
+                    <span>
+                      <Trans>
+                        Unmute <span class="bidi-isolate">@{username}</span>
+                      </Trans>
+                    </span>
+                  </MenuItem>
+                ) : (
                   <SubMenu2
+                    menuClassName="menu-blur"
                     openTrigger="clickOnly"
-                    direction="left"
+                    direction="bottom"
                     overflow="auto"
                     shift={16}
-                    menuClassName="menu-blur"
-                    menuButton={
+                    label={
                       <>
+                        <Icon icon="mute" />
                         <span class="menu-grow">
                           <Trans>
                             Mute <span class="bidi-isolate">@{username}</span>…

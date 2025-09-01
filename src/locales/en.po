@@ -43,12 +43,12 @@ msgid "Mutual"
 msgstr ""
 
 #: src/components/account-block.jsx:204
-#: src/components/related-actions.jsx:807
+#: src/components/related-actions.jsx:882
 msgid "Requested"
 msgstr ""
 
 #: src/components/account-block.jsx:208
-#: src/components/related-actions.jsx:798
+#: src/components/related-actions.jsx:873
 msgid "Following"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr "View profile header"
 
 #: src/components/account-info.jsx:646
 #: src/components/edit-profile-sheet.jsx:92
-#: src/components/related-actions.jsx:701
+#: src/components/related-actions.jsx:776
 msgid "Edit profile"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr ""
 
 #: src/components/compose-poll.jsx:93
 msgid "Multiple choices"
-msgstr ""
+msgstr "Multiple choices"
 
 #: src/components/compose-poll.jsx:96
 msgid "Duration"
@@ -1575,6 +1575,7 @@ msgid "Unable to copy HTML code"
 msgstr ""
 
 #: src/components/post-embed-modal.jsx:232
+#: src/components/related-actions.jsx:501
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1202
 msgid "Copy"
@@ -1754,82 +1755,111 @@ msgstr ""
 msgid "Show featured profiles"
 msgstr "Show featured profiles"
 
+#: src/components/related-actions.jsx:492
+#: src/components/status.jsx:1193
+msgid "Link copied"
+msgstr ""
+
 #: src/components/related-actions.jsx:495
+#: src/components/status.jsx:1196
+msgid "Unable to copy link"
+msgstr ""
+
+#: src/components/related-actions.jsx:516
+#: src/components/shortcuts-settings.jsx:1077
+#: src/components/status.jsx:1218
+msgid "Sharing doesn't seem to work."
+msgstr ""
+
+#: src/components/related-actions.jsx:522
+#: src/components/status.jsx:1224
+msgid "Share…"
+msgstr ""
+
+#: src/components/related-actions.jsx:542
+msgid "Unmuted @{username}"
+msgstr "Unmuted @{username}"
+
+#: src/components/related-actions.jsx:554
+msgid "Unmute <0>@{username}</0>"
+msgstr "Unmute <0>@{username}</0>"
+
+#: src/components/related-actions.jsx:570
 msgid "Mute <0>@{username}</0>…"
 msgstr ""
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:527
+#: src/components/related-actions.jsx:602
 msgid "Muted @{username} for {0}"
 msgstr "Muted @{username} for {0}"
 
-#: src/components/related-actions.jsx:539
+#: src/components/related-actions.jsx:614
 msgid "Unable to mute @{username}"
 msgstr "Unable to mute @{username}"
 
-#: src/components/related-actions.jsx:560
+#: src/components/related-actions.jsx:635
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr ""
 
-#: src/components/related-actions.jsx:580
+#: src/components/related-actions.jsx:655
 msgid "@{username} removed from followers"
 msgstr "@{username} removed from followers"
 
-#: src/components/related-actions.jsx:592
+#: src/components/related-actions.jsx:667
 msgid "Remove follower…"
 msgstr ""
 
-#: src/components/related-actions.jsx:603
+#: src/components/related-actions.jsx:678
 msgid "Block <0>@{username}</0>?"
 msgstr ""
 
-#: src/components/related-actions.jsx:627
+#: src/components/related-actions.jsx:702
 msgid "Unblocked @{username}"
 msgstr "Unblocked @{username}"
 
-#: src/components/related-actions.jsx:635
+#: src/components/related-actions.jsx:710
 msgid "Blocked @{username}"
 msgstr "Blocked @{username}"
 
-#: src/components/related-actions.jsx:643
+#: src/components/related-actions.jsx:718
 msgid "Unable to unblock @{username}"
 msgstr "Unable to unblock @{username}"
 
-#: src/components/related-actions.jsx:645
+#: src/components/related-actions.jsx:720
 msgid "Unable to block @{username}"
 msgstr "Unable to block @{username}"
 
-#: src/components/related-actions.jsx:655
+#: src/components/related-actions.jsx:730
 msgid "Unblock <0>@{username}</0>"
 msgstr ""
 
-#: src/components/related-actions.jsx:664
+#: src/components/related-actions.jsx:739
 msgid "Block <0>@{username}</0>…"
 msgstr ""
 
-#: src/components/related-actions.jsx:681
+#: src/components/related-actions.jsx:756
 msgid "Report <0>@{username}</0>…"
 msgstr ""
 
-#: src/components/related-actions.jsx:737
+#: src/components/related-actions.jsx:812
 msgid "Withdraw follow request?"
 msgstr "Withdraw follow request?"
 
 #. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:738
+#: src/components/related-actions.jsx:813
 msgid "Unfollow @{0}?"
 msgstr "Unfollow @{0}?"
 
-#: src/components/related-actions.jsx:801
+#: src/components/related-actions.jsx:876
 msgid "Unfollow…"
 msgstr ""
 
-#: src/components/related-actions.jsx:810
+#: src/components/related-actions.jsx:885
 msgid "Withdraw…"
 msgstr ""
 
-#: src/components/related-actions.jsx:817
-#: src/components/related-actions.jsx:821
+#: src/components/related-actions.jsx:892
+#: src/components/related-actions.jsx:896
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr ""
@@ -2246,11 +2276,6 @@ msgstr ""
 msgid "Unable to copy shortcut settings"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1218
-msgid "Sharing doesn't seem to work."
-msgstr ""
-
 #: src/components/shortcuts-settings.jsx:1083
 msgid "Share"
 msgstr ""
@@ -2391,18 +2416,6 @@ msgstr ""
 
 #: src/components/status.jsx:1170
 msgid "Edited: {editedDateText}"
-msgstr ""
-
-#: src/components/status.jsx:1193
-msgid "Link copied"
-msgstr ""
-
-#: src/components/status.jsx:1196
-msgid "Unable to copy link"
-msgstr ""
-
-#: src/components/status.jsx:1224
-msgid "Share…"
 msgstr ""
 
 #: src/components/status.jsx:1251

@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-30 00:11\n"
+"PO-Revision-Date: 2025-09-01 01:34\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -48,12 +48,12 @@ msgid "Mutual"
 msgstr "互相关注"
 
 #: src/components/account-block.jsx:204
-#: src/components/related-actions.jsx:807
+#: src/components/related-actions.jsx:882
 msgid "Requested"
 msgstr "已请求"
 
 #: src/components/account-block.jsx:208
-#: src/components/related-actions.jsx:798
+#: src/components/related-actions.jsx:873
 msgid "Following"
 msgstr "正在关注"
 
@@ -166,7 +166,7 @@ msgstr "查看横幅图片"
 
 #: src/components/account-info.jsx:646
 #: src/components/edit-profile-sheet.jsx:92
-#: src/components/related-actions.jsx:701
+#: src/components/related-actions.jsx:776
 msgid "Edit profile"
 msgstr "编辑个人资料"
 
@@ -1250,7 +1250,7 @@ msgid "Bookmarks"
 msgstr "收藏夹"
 
 #: src/components/nav-menu.jsx:244
-#: src/components/text-expander.jsx:208
+#: src/components/text-expander.jsx:213
 msgid "More…"
 msgstr "更多…"
 
@@ -1580,6 +1580,7 @@ msgid "Unable to copy HTML code"
 msgstr "无法复制 HTML 代码"
 
 #: src/components/post-embed-modal.jsx:232
+#: src/components/related-actions.jsx:501
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1202
 msgid "Copy"
@@ -1759,82 +1760,111 @@ msgstr "加入个人页精选"
 msgid "Show featured profiles"
 msgstr "展示精选账户列表"
 
+#: src/components/related-actions.jsx:492
+#: src/components/status.jsx:1193
+msgid "Link copied"
+msgstr "已复制链接"
+
 #: src/components/related-actions.jsx:495
+#: src/components/status.jsx:1196
+msgid "Unable to copy link"
+msgstr "无法复制链接"
+
+#: src/components/related-actions.jsx:516
+#: src/components/shortcuts-settings.jsx:1077
+#: src/components/status.jsx:1218
+msgid "Sharing doesn't seem to work."
+msgstr "分享似乎无法正常工作。"
+
+#: src/components/related-actions.jsx:522
+#: src/components/status.jsx:1224
+msgid "Share…"
+msgstr "分享…"
+
+#: src/components/related-actions.jsx:542
+msgid "Unmuted @{username}"
+msgstr ""
+
+#: src/components/related-actions.jsx:554
+msgid "Unmute <0>@{username}</0>"
+msgstr ""
+
+#: src/components/related-actions.jsx:570
 msgid "Mute <0>@{username}</0>…"
 msgstr "静音 <0>@{username}</0>…"
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:527
+#: src/components/related-actions.jsx:602
 msgid "Muted @{username} for {0}"
 msgstr "已静音 @{username} {0}"
 
-#: src/components/related-actions.jsx:539
+#: src/components/related-actions.jsx:614
 msgid "Unable to mute @{username}"
 msgstr "无法静音 @{username}"
 
-#: src/components/related-actions.jsx:560
+#: src/components/related-actions.jsx:635
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "是否将 <0>@{username}</0> 从粉丝中移除？"
 
-#: src/components/related-actions.jsx:580
+#: src/components/related-actions.jsx:655
 msgid "@{username} removed from followers"
 msgstr "@{username} 已被从粉丝中移除"
 
-#: src/components/related-actions.jsx:592
+#: src/components/related-actions.jsx:667
 msgid "Remove follower…"
 msgstr "移除粉丝…"
 
-#: src/components/related-actions.jsx:603
+#: src/components/related-actions.jsx:678
 msgid "Block <0>@{username}</0>?"
 msgstr "是否屏蔽 <0>@{username}</0>？"
 
-#: src/components/related-actions.jsx:627
+#: src/components/related-actions.jsx:702
 msgid "Unblocked @{username}"
 msgstr "已解除屏蔽 @{username}"
 
-#: src/components/related-actions.jsx:635
+#: src/components/related-actions.jsx:710
 msgid "Blocked @{username}"
 msgstr "已屏蔽 @{username}"
 
-#: src/components/related-actions.jsx:643
+#: src/components/related-actions.jsx:718
 msgid "Unable to unblock @{username}"
 msgstr "无法解除屏蔽 @{username}"
 
-#: src/components/related-actions.jsx:645
+#: src/components/related-actions.jsx:720
 msgid "Unable to block @{username}"
 msgstr "无法屏蔽 @{username}"
 
-#: src/components/related-actions.jsx:655
+#: src/components/related-actions.jsx:730
 msgid "Unblock <0>@{username}</0>"
 msgstr "取消屏蔽 <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:664
+#: src/components/related-actions.jsx:739
 msgid "Block <0>@{username}</0>…"
 msgstr "屏蔽 <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:681
+#: src/components/related-actions.jsx:756
 msgid "Report <0>@{username}</0>…"
 msgstr "举报 <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:737
+#: src/components/related-actions.jsx:812
 msgid "Withdraw follow request?"
 msgstr "是否撤回关注请求？"
 
 #. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:738
+#: src/components/related-actions.jsx:813
 msgid "Unfollow @{0}?"
 msgstr "是否取关 @{0} ？"
 
-#: src/components/related-actions.jsx:801
+#: src/components/related-actions.jsx:876
 msgid "Unfollow…"
 msgstr "取关…"
 
-#: src/components/related-actions.jsx:810
+#: src/components/related-actions.jsx:885
 msgid "Withdraw…"
 msgstr "撤回…"
 
-#: src/components/related-actions.jsx:817
-#: src/components/related-actions.jsx:821
+#: src/components/related-actions.jsx:892
+#: src/components/related-actions.jsx:896
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "关注"
@@ -2251,11 +2281,6 @@ msgstr "已复制快捷方式设置"
 msgid "Unable to copy shortcut settings"
 msgstr "无法复制快捷方式设置"
 
-#: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1218
-msgid "Sharing doesn't seem to work."
-msgstr "分享似乎无法正常工作。"
-
 #: src/components/shortcuts-settings.jsx:1083
 msgid "Share"
 msgstr "分享"
@@ -2397,18 +2422,6 @@ msgstr "显示编辑记录"
 #: src/components/status.jsx:1170
 msgid "Edited: {editedDateText}"
 msgstr "编辑于: {editedDateText}"
-
-#: src/components/status.jsx:1193
-msgid "Link copied"
-msgstr "已复制链接"
-
-#: src/components/status.jsx:1196
-msgid "Unable to copy link"
-msgstr "无法复制链接"
-
-#: src/components/status.jsx:1224
-msgid "Share…"
-msgstr "分享…"
 
 #: src/components/status.jsx:1251
 msgid "Conversation unmuted"

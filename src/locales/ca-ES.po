@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-30 00:11\n"
+"PO-Revision-Date: 2025-09-01 01:34\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -48,12 +48,12 @@ msgid "Mutual"
 msgstr "Mutu"
 
 #: src/components/account-block.jsx:204
-#: src/components/related-actions.jsx:807
+#: src/components/related-actions.jsx:882
 msgid "Requested"
 msgstr "Sol·licitat per"
 
 #: src/components/account-block.jsx:208
-#: src/components/related-actions.jsx:798
+#: src/components/related-actions.jsx:873
 msgid "Following"
 msgstr "Seguint-ne"
 
@@ -166,7 +166,7 @@ msgstr "Veure imatge de la capçalera"
 
 #: src/components/account-info.jsx:646
 #: src/components/edit-profile-sheet.jsx:92
-#: src/components/related-actions.jsx:701
+#: src/components/related-actions.jsx:776
 msgid "Edit profile"
 msgstr "Edita el perfil"
 
@@ -183,18 +183,18 @@ msgstr "Aquest usuari ha decidit no mostrar aquesta informació."
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info.jsx:767
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> Seguidor} other {<1>{1}</1> Seguidors}}"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:811
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr ""
+msgstr "{followingCount, plural, one {}other {<0>{0}</0> Seguiments}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info.jsx:835
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr ""
+msgstr "{statusesCount, plural, one {<0>{0}</0> Publicació} other {<1>{1}</1> Publicacions}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -1250,7 +1250,7 @@ msgid "Bookmarks"
 msgstr "Marcadors"
 
 #: src/components/nav-menu.jsx:244
-#: src/components/text-expander.jsx:208
+#: src/components/text-expander.jsx:213
 msgid "More…"
 msgstr "Més…"
 
@@ -1581,6 +1581,7 @@ msgid "Unable to copy HTML code"
 msgstr "No s'ha pogut copiar el codi HTML"
 
 #: src/components/post-embed-modal.jsx:232
+#: src/components/related-actions.jsx:501
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1202
 msgid "Copy"
@@ -1646,16 +1647,16 @@ msgstr "Desa i tanca"
 
 #: src/components/recent-searches.jsx:27
 msgid "Cleared recent searches"
-msgstr ""
+msgstr "Cerques recents esborrades"
 
 #: src/components/recent-searches.jsx:49
 #: src/components/search-form.jsx:328
 msgid "Recent searches"
-msgstr ""
+msgstr "Cerques recents"
 
 #: src/components/recent-searches.jsx:59
 msgid "Clear all"
-msgstr ""
+msgstr "Esborra-ho tot"
 
 #: src/components/recent-searches.jsx:94
 #: src/pages/account-statuses.jsx:334
@@ -1760,82 +1761,111 @@ msgstr "Destaca al perfil"
 msgid "Show featured profiles"
 msgstr "Mostra els perfils destacats"
 
+#: src/components/related-actions.jsx:492
+#: src/components/status.jsx:1193
+msgid "Link copied"
+msgstr "Enllaç copiat"
+
 #: src/components/related-actions.jsx:495
+#: src/components/status.jsx:1196
+msgid "Unable to copy link"
+msgstr "No s'ha pogut copiar l'enllaç"
+
+#: src/components/related-actions.jsx:516
+#: src/components/shortcuts-settings.jsx:1077
+#: src/components/status.jsx:1218
+msgid "Sharing doesn't seem to work."
+msgstr "Sembla que la compartició no funciona."
+
+#: src/components/related-actions.jsx:522
+#: src/components/status.jsx:1224
+msgid "Share…"
+msgstr "Comparteix…"
+
+#: src/components/related-actions.jsx:542
+msgid "Unmuted @{username}"
+msgstr ""
+
+#: src/components/related-actions.jsx:554
+msgid "Unmute <0>@{username}</0>"
+msgstr ""
+
+#: src/components/related-actions.jsx:570
 msgid "Mute <0>@{username}</0>…"
 msgstr "Silencia a <0>@{username}</0>…"
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:527
+#: src/components/related-actions.jsx:602
 msgid "Muted @{username} for {0}"
 msgstr "@{username} silenciat durant {0}"
 
-#: src/components/related-actions.jsx:539
+#: src/components/related-actions.jsx:614
 msgid "Unable to mute @{username}"
 msgstr "No ha estat possible silenciar @{username}"
 
-#: src/components/related-actions.jsx:560
+#: src/components/related-actions.jsx:635
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "Voleu suprimir a <0>@{username}</0> dels seguidors?"
 
-#: src/components/related-actions.jsx:580
+#: src/components/related-actions.jsx:655
 msgid "@{username} removed from followers"
 msgstr "S'ha eliminat @{username} de la llista de seguidors"
 
-#: src/components/related-actions.jsx:592
+#: src/components/related-actions.jsx:667
 msgid "Remove follower…"
 msgstr "Suprimeix seguidor…"
 
-#: src/components/related-actions.jsx:603
+#: src/components/related-actions.jsx:678
 msgid "Block <0>@{username}</0>?"
 msgstr "Voleu blocar a <0>@{username}</0>?"
 
-#: src/components/related-actions.jsx:627
+#: src/components/related-actions.jsx:702
 msgid "Unblocked @{username}"
 msgstr "S'ha desblocat a @{username}"
 
-#: src/components/related-actions.jsx:635
+#: src/components/related-actions.jsx:710
 msgid "Blocked @{username}"
 msgstr "S'ha blocat a @{username}"
 
-#: src/components/related-actions.jsx:643
+#: src/components/related-actions.jsx:718
 msgid "Unable to unblock @{username}"
 msgstr "No ha estat possible desblocar @{username}"
 
-#: src/components/related-actions.jsx:645
+#: src/components/related-actions.jsx:720
 msgid "Unable to block @{username}"
 msgstr "No ha estat possible blocar @{username}"
 
-#: src/components/related-actions.jsx:655
+#: src/components/related-actions.jsx:730
 msgid "Unblock <0>@{username}</0>"
 msgstr "Deixa de blocar a <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:664
+#: src/components/related-actions.jsx:739
 msgid "Block <0>@{username}</0>…"
 msgstr "Bloca a <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:681
+#: src/components/related-actions.jsx:756
 msgid "Report <0>@{username}</0>…"
 msgstr "Denúncia a <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:737
+#: src/components/related-actions.jsx:812
 msgid "Withdraw follow request?"
 msgstr "Voleu retirar la sol·licitud de seguiment?"
 
 #. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:738
+#: src/components/related-actions.jsx:813
 msgid "Unfollow @{0}?"
 msgstr "Voleu deixar de seguir @{0}?"
 
-#: src/components/related-actions.jsx:801
+#: src/components/related-actions.jsx:876
 msgid "Unfollow…"
 msgstr "Deixa de seguir…"
 
-#: src/components/related-actions.jsx:810
+#: src/components/related-actions.jsx:885
 msgid "Withdraw…"
 msgstr "Descarta…"
 
-#: src/components/related-actions.jsx:817
-#: src/components/related-actions.jsx:821
+#: src/components/related-actions.jsx:892
+#: src/components/related-actions.jsx:896
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "Segueix"
@@ -2252,11 +2282,6 @@ msgstr "S'ha copiat la configuració de la drecera"
 msgid "Unable to copy shortcut settings"
 msgstr "No es pot copiar la configuració de la drecera"
 
-#: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1218
-msgid "Sharing doesn't seem to work."
-msgstr "Sembla que la compartició no funciona."
-
 #: src/components/shortcuts-settings.jsx:1083
 msgid "Share"
 msgstr "Comparteix"
@@ -2399,18 +2424,6 @@ msgstr "Mostra l'historial d'edició"
 msgid "Edited: {editedDateText}"
 msgstr "Editat: {editedDateText}"
 
-#: src/components/status.jsx:1193
-msgid "Link copied"
-msgstr "Enllaç copiat"
-
-#: src/components/status.jsx:1196
-msgid "Unable to copy link"
-msgstr "No s'ha pogut copiar l'enllaç"
-
-#: src/components/status.jsx:1224
-msgid "Share…"
-msgstr "Comparteix…"
-
 #: src/components/status.jsx:1251
 msgid "Conversation unmuted"
 msgstr "La conversa ha deixat d'estar silenciada"
@@ -2540,14 +2553,14 @@ msgstr "Publicació amagada pels filtres"
 
 #: src/components/status.jsx:2634
 msgid "Post pending"
-msgstr ""
+msgstr "Publicació pendent"
 
 #: src/components/status.jsx:2635
 #: src/components/status.jsx:2636
 #: src/components/status.jsx:2637
 #: src/components/status.jsx:2638
 msgid "Post unavailable"
-msgstr ""
+msgstr "Publicació no disponible"
 
 #: src/components/status.jsx:2747
 msgid "Edit History"
@@ -2576,22 +2589,22 @@ msgstr "Fil"
 
 #: src/components/thread-badge.jsx:28
 msgid "Thread {index}/{total}"
-msgstr ""
+msgstr "Fil {index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
 msgid "Thread {index}/X"
-msgstr ""
+msgstr "Fil {index}/X"
 
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
 msgid "{index}/{total}"
-msgstr ""
+msgstr "{index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:46
 msgid "{index}/X"
-msgstr ""
+msgstr "{index}/X"
 
 #: src/components/timeline.jsx:486
 #: src/pages/settings.jsx:1218
@@ -3949,11 +3962,11 @@ msgstr "No s'han pogut obtenir les respostes."
 
 #: src/pages/status.jsx:1146
 msgid "{months, plural, one {# month later} other {# months later}}"
-msgstr ""
+msgstr "{months, plural, one {# mes enrere} other {# mesos enrere}}"
 
 #: src/pages/status.jsx:1152
 msgid "{years, plural, one {# year later} other {# years later}}"
-msgstr ""
+msgstr "{years, plural, one {# any enrere} other {# anys enrere}}"
 
 #: src/pages/status.jsx:1275
 msgid "Back"

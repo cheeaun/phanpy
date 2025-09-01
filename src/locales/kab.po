@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-01 01:34\n"
+"PO-Revision-Date: 2025-09-01 11:05\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -194,7 +194,7 @@ msgstr ""
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info.jsx:835
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr ""
+msgstr "{statusesCount, plural, one {<0>{0}</0> n tsuffeɣt} other {<1>{1}</1> n tsuffaɣ}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -352,7 +352,7 @@ msgstr "Suddes"
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
-msgstr ""
+msgstr "Tisuffaɣ yettwasɣawsen"
 
 #: src/components/compose-button.jsx:190
 msgid "Add to thread"
@@ -405,7 +405,7 @@ msgstr "Rnu asisten"
 
 #: src/components/compose.jsx:105
 msgid "Schedule post"
-msgstr ""
+msgstr "Sɣiwes tasuffeɣt"
 
 #: src/components/compose.jsx:359
 msgid "You have unsaved changes. Discard this post?"
@@ -1651,11 +1651,11 @@ msgstr ""
 #: src/components/recent-searches.jsx:49
 #: src/components/search-form.jsx:328
 msgid "Recent searches"
-msgstr ""
+msgstr "Inadiyen n melmi kan"
 
 #: src/components/recent-searches.jsx:59
 msgid "Clear all"
-msgstr ""
+msgstr "Sfeḍ-iten akk"
 
 #: src/components/recent-searches.jsx:94
 #: src/pages/account-statuses.jsx:334
@@ -1783,11 +1783,11 @@ msgstr "Bḍu…"
 
 #: src/components/related-actions.jsx:542
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "Yettwakkes usgugem ɣef @{username}"
 
 #: src/components/related-actions.jsx:554
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "Kkes asgugem ɣef <0>@{username}</0>"
 
 #: src/components/related-actions.jsx:570
 msgid "Mute <0>@{username}</0>…"
@@ -1848,7 +1848,7 @@ msgstr "Cetki ɣef <0>@{username}</0>…"
 
 #: src/components/related-actions.jsx:812
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "Aggwi assuter n uḍfar?"
 
 #. placeholder {0}: info.acct || info.username
 #: src/components/related-actions.jsx:813
@@ -2330,7 +2330,7 @@ msgstr "Yekkes-as uεǧab i tsuffeɣt n @{0}"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:801
 msgid "Liked @{0}'s post"
-msgstr ""
+msgstr "Teεǧeb-as tsuffeɣt n @{0}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:840
@@ -2400,7 +2400,7 @@ msgstr "Kkes-as ticreḍt"
 
 #: src/components/status.jsx:1119
 msgid "Post text copied"
-msgstr ""
+msgstr "Aḍris n tsuffeɣt yettwanɣel"
 
 #: src/components/status.jsx:1122
 msgid "Unable to copy post text"
@@ -2408,7 +2408,7 @@ msgstr ""
 
 #: src/components/status.jsx:1128
 msgid "Copy post text"
-msgstr ""
+msgstr "Nɣel aḍris n tsuffeɣt"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1146
@@ -2588,22 +2588,22 @@ msgstr "Asqerdec"
 
 #: src/components/thread-badge.jsx:28
 msgid "Thread {index}/{total}"
-msgstr ""
+msgstr "Asqerdec {index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
 msgid "Thread {index}/X"
-msgstr ""
+msgstr "Asqerdec {index}/X"
 
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
 msgid "{index}/{total}"
-msgstr ""
+msgstr "{index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:46
 msgid "{index}/X"
-msgstr ""
+msgstr "{index}/X"
 
 #: src/components/timeline.jsx:486
 #: src/pages/settings.jsx:1218
@@ -2811,7 +2811,7 @@ msgstr "Ffeɣ…"
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:251
 msgid "Connected on {0} (<0/>)"
-msgstr ""
+msgstr "D uqqin ɣef {0} (<0/>)"
 
 #: src/pages/accounts.jsx:268
 msgid "Add an existing account"
@@ -3854,7 +3854,7 @@ msgstr "Mudd tawsa"
 
 #: src/pages/settings.jsx:802
 msgid "What's new"
-msgstr ""
+msgstr "D acu i yellan d amaynut"
 
 #: src/pages/settings.jsx:806
 msgid "Privacy Policy"

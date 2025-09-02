@@ -55,14 +55,15 @@ function ComposePoll({
             </TextExpander>
             <button
               type="button"
-              class="plain2 poll-button"
+              class="plain4 poll-button"
               disabled={disabled || options.length <= 1}
               onClick={() => {
                 options.splice(i, 1);
                 onInput(poll);
               }}
+              title={t`Remove`}
             >
-              <Icon icon="x" size="s" alt={t`Remove`} />
+              −
             </button>
           </div>
         ))}
@@ -76,56 +77,58 @@ function ComposePoll({
             options.push('');
             onInput(poll);
           }}
+          title={t`Add`}
         >
           +
         </button>{' '}
-        <label class="multiple-choices">
-          <input
-            type="checkbox"
-            checked={multiple}
+        <div class="poll-config">
+          <label class="multiple-choices">
+            <input
+              type="checkbox"
+              checked={multiple}
+              disabled={disabled}
+              onChange={(e) => {
+                const { checked } = e.target;
+                poll.multiple = checked;
+                onInput(poll);
+              }}
+            />{' '}
+            <Trans>Multiple choice</Trans>
+          </label>
+          <label class="expires-in">
+            <Trans>Duration</Trans>{' '}
+            <select
+              value={expiresIn}
+              disabled={disabled}
+              onChange={(e) => {
+                const { value } = e.target;
+                poll.expiresIn = value;
+                onInput(poll);
+              }}
+            >
+              {Object.entries(expiryOptions)
+                .filter(([value]) => {
+                  return value >= minExpiration && value <= maxExpiration;
+                })
+                .map(([value, label]) => (
+                  <option value={value} key={value}>
+                    {label()}
+                  </option>
+                ))}
+            </select>
+          </label>
+          <div class="spacer" />
+          <button
+            type="button"
+            class="light danger small"
             disabled={disabled}
-            onChange={(e) => {
-              const { checked } = e.target;
-              poll.multiple = checked;
-              onInput(poll);
-            }}
-          />{' '}
-          <Trans>Multiple choices</Trans>
-        </label>
-        <label class="expires-in">
-          <Trans>Duration</Trans>{' '}
-          <select
-            value={expiresIn}
-            disabled={disabled}
-            onChange={(e) => {
-              const { value } = e.target;
-              poll.expiresIn = value;
-              onInput(poll);
+            onClick={() => {
+              onInput(null);
             }}
           >
-            {Object.entries(expiryOptions)
-              .filter(([value]) => {
-                return value >= minExpiration && value <= maxExpiration;
-              })
-              .map(([value, label]) => (
-                <option value={value} key={value}>
-                  {label()}
-                </option>
-              ))}
-          </select>
-        </label>
-      </div>
-      <div class="poll-toolbar">
-        <button
-          type="button"
-          class="plain remove-poll-button"
-          disabled={disabled}
-          onClick={() => {
-            onInput(null);
-          }}
-        >
-          <Trans>Remove poll</Trans>
-        </button>
+            <Trans>Remove poll</Trans>
+          </button>
+        </div>
       </div>
     </div>
   );

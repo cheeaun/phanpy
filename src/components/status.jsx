@@ -44,6 +44,7 @@ import { getCurrentAccID, getCurrentAccountID } from '../utils/store-utils';
 import supports from '../utils/supports';
 import useTruncated from '../utils/useTruncated';
 import visibilityIconsMap from '../utils/visibility-icons-map';
+import visibilityText from '../utils/visibility-text';
 
 import Avatar from './avatar';
 import CustomEmoji from './custom-emoji';
@@ -82,14 +83,6 @@ function fetchAccount(id, masto) {
   return masto.v1.accounts.$select(id).fetch();
 }
 const memFetchAccount = pmem(throttle(fetchAccount));
-
-const visibilityText = {
-  public: msg`Public`,
-  local: msg`Local`,
-  unlisted: msg`Unlisted`,
-  private: msg`Followers only`,
-  direct: msg`Private mention`,
-};
 
 const isIOS =
   window.ontouchstart !== undefined &&

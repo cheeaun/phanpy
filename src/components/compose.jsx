@@ -2,7 +2,7 @@ import './compose.css';
 
 import { msg, plural } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { MenuItem } from '@szhsin/react-menu';
+import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -31,6 +31,7 @@ import urlRegexObj from '../utils/url-regex';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
 import visibilityIconsMap from '../utils/visibility-icons-map';
+import visibilityText from '../utils/visibility-text';
 
 import AccountBlock from './account-block';
 // import Avatar from './avatar';
@@ -102,8 +103,11 @@ const ADD_LABELS = {
   customEmoji: msg`Add custom emoji`,
   gif: msg`Add GIF`,
   poll: msg`Add poll`,
+  sensitive: msg`Add content warning`,
   scheduledPost: msg`Schedule post`,
 };
+
+const DEFAULT_SCHEDULED_AT = Math.max(10 * 60 * 1000, MIN_SCHEDULED_AT); // 10 mins
 
 function Compose({
   onClose,
@@ -160,6 +164,7 @@ function Compose({
 
   const [visibility, setVisibility] = useState('public');
   const [sensitive, setSensitive] = useState(false);
+  const [sensitiveMedia, setSensitiveMedia] = useState(false);
   const [language, setLanguage] = useState(
     store.session.get('currentLanguage') || DEFAULT_LANG,
   );
@@ -218,24 +223,45 @@ function Compose({
     targetElement.dispatchEvent(new Event('input'));
   };
 
+  const lastFocusedFieldRef = useRef(null);
   const lastFocusedEmojiFieldRef = useRef(null);
+  const focusLastFocusedField = () => {
+    setTimeout(() => {
+      if (!lastFocusedFieldRef.current) return;
+      lastFocusedFieldRef.current.focus();
+    }, 0);
+  };
   const composeContainerRef = useRef(null);
   useEffect(() => {
     const handleFocus = (e) => {
+      // Toggle focused if in or out if any fields are focused
+      composeContainerRef.current.classList.toggle(
+        'focused',
+        e.type === 'focusin',
+      );
+
       const target = e.target;
       if (target.hasAttribute('data-allow-custom-emoji')) {
         lastFocusedEmojiFieldRef.current = target;
+      }
+      const isFormElement = ['INPUT', 'BUTTON', 'SELECT', 'TEXTAREA'].includes(
+        target.tagName,
+      );
+      if (isFormElement) {
+        lastFocusedFieldRef.current = target;
       }
     };
 
     const composeContainer = composeContainerRef.current;
     if (composeContainer) {
       composeContainer.addEventListener('focusin', handleFocus);
+      composeContainer.addEventListener('focusout', handleFocus);
     }
 
     return () => {
       if (composeContainer) {
         composeContainer.removeEventListener('focusin', handleFocus);
+        composeContainer.removeEventListener('focusout', handleFocus);
       }
     };
   }, []);
@@ -328,6 +354,7 @@ function Compose({
         visibility,
         language,
         sensitive,
+        sensitiveMedia,
         poll,
         mediaAttachments,
         scheduledAt,
@@ -347,6 +374,7 @@ function Compose({
           prefs['posting:default:language']?.toLowerCase() ||
           DEFAULT_LANG,
       );
+      if (sensitiveMedia !== null) setSensitiveMedia(sensitiveMedia);
       if (sensitive !== null) setSensitive(sensitive);
       if (composablePoll) setPoll(composablePoll);
       if (mediaAttachments) setMediaAttachments(mediaAttachments);
@@ -538,6 +566,7 @@ function Compose({
         visibility,
         language,
         sensitive,
+        sensitiveMedia,
         poll,
         mediaAttachments,
         scheduledAt,
@@ -707,11 +736,19 @@ function Compose({
     states.composerState.minimized = true;
   };
 
-  const gifPickerDisabled =
+  const mediaButtonDisabled =
     uiState === 'loading' ||
     (maxMediaAttachments !== undefined &&
       mediaAttachments.length >= maxMediaAttachments) ||
     !!poll;
+
+  const cwButtonDisabled = uiState === 'loading' || !!sensitive;
+  const onCWButtonClick = () => {
+    setSensitive(true);
+    setTimeout(() => {
+      spoilerTextRef.current?.focus();
+    }, 0);
+  };
 
   // If maxOptions is not defined or defined and is greater than 1, show poll button
   const showPollButton = maxOptions == null || maxOptions > 1;
@@ -723,10 +760,23 @@ function Compose({
       expiresIn: 24 * 60 * 60, // 1 day
       multiple: false,
     });
+    // Focus first choice field
+    setTimeout(() => {
+      composeContainerRef.current
+        ?.querySelector('.poll-choice input[type="text"]')
+        ?.focus();
+    }, 0);
   };
+
+  const highlightLanguageField =
+    language !== prevLanguage.current ||
+    (autoDetectedLanguages?.length &&
+      !autoDetectedLanguages.includes(language));
+  const highlightVisibilityField = visibility !== 'public';
 
   const addSubToolbarRef = useRef();
   const [showAddButton, setShowAddButton] = useState(false);
+  const BUTTON_WIDTH = 42; // roughly one button width
   useResizeObserver({
     ref: addSubToolbarRef,
     box: 'border-box',
@@ -734,7 +784,7 @@ function Compose({
       // If scrollable, it's truncated
       const { scrollWidth } = addSubToolbarRef.current;
       const truncated = scrollWidth > width;
-      const overTruncated = width < 84; // roughly two buttons width
+      const overTruncated = width < BUTTON_WIDTH * 4;
       setShowAddButton(overTruncated || truncated);
       addSubToolbarRef.current.hidden = overTruncated;
     },
@@ -743,13 +793,17 @@ function Compose({
   const showScheduledAt = !editStatus;
   const scheduledAtButtonDisabled = uiState === 'loading' || !!scheduledAt;
   const onScheduledAtClick = () => {
-    const date = new Date(Date.now() + MIN_SCHEDULED_AT);
+    const date = new Date(Date.now() + DEFAULT_SCHEDULED_AT);
     setScheduledAt(date);
   };
 
   return (
     <div id="compose-container-outer" ref={composeContainerRef}>
-      <div id="compose-container" class={standalone ? 'standalone' : ''}>
+      <div
+        id="compose-container"
+        tabIndex={-1}
+        class={standalone ? 'standalone' : ''}
+      >
         <div class="compose-top">
           {currentAccountInfo?.avatarStatic && (
             // <Avatar
@@ -823,7 +877,7 @@ function Compose({
               </button>{' '}
               <button
                 type="button"
-                class="light close-button"
+                class="plain4 close-button"
                 disabled={uiState === 'loading'}
                 onClick={() => {
                   if (confirmClose()) {
@@ -888,6 +942,7 @@ function Compose({
                           visibility,
                           language,
                           sensitive,
+                          sensitiveMedia,
                           poll,
                           mediaAttachments,
                           scheduledAt,
@@ -954,6 +1009,9 @@ function Compose({
             pointerEvents: uiState === 'loading' ? 'none' : 'auto',
             opacity: uiState === 'loading' ? 0.5 : 1,
           }}
+          onClick={() => {
+            lastFocusedFieldRef.current?.focus?.();
+          }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
               formRef.current.dispatchEvent(
@@ -967,11 +1025,19 @@ function Compose({
             const formData = new FormData(e.target);
             const entries = Object.fromEntries(formData.entries());
             console.log('ENTRIES', entries);
-            let { status, visibility, sensitive, spoilerText, scheduledAt } =
-              entries;
+            let {
+              status,
+              visibility,
+              sensitive,
+              sensitiveMedia,
+              spoilerText,
+              scheduledAt,
+            } = entries;
 
             // Pre-cleanup
-            sensitive = sensitive === 'on'; // checkboxes return "on" if checked
+            // checkboxes return "on" if checked
+            sensitive = sensitive === 'on';
+            sensitiveMedia = sensitiveMedia === 'on';
 
             // Convert datetime-local input value to RFC3339 Date string value
             scheduledAt = scheduledAt
@@ -1085,7 +1151,7 @@ function Compose({
                   // spoilerText,
                   spoiler_text: spoilerText,
                   language,
-                  sensitive,
+                  sensitive: sensitive || sensitiveMedia,
                   poll,
                   // mediaIds: mediaAttachments.map((attachment) => attachment.id),
                   media_ids: mediaAttachments.map(
@@ -1156,133 +1222,86 @@ function Compose({
             })();
           }}
         >
-          <div class="toolbar stretch">
-            <TextExpander
-              keys=":"
-              class="spoiler-text-field-container"
+          <div>
+            <div class={`compose-cw-container ${sensitive ? '' : 'collapsed'}`}>
+              <TextExpander
+                keys=":"
+                class="spoiler-text-field-container"
+                onTrigger={(action) => {
+                  if (action?.name === 'custom-emojis') {
+                    setShowEmoji2Picker({
+                      targetElement: spoilerTextRef,
+                      defaultSearchTerm: action?.defaultSearchTerm || null,
+                    });
+                  }
+                }}
+              >
+                <input
+                  ref={spoilerTextRef}
+                  type="text"
+                  name="spoilerText"
+                  placeholder={t`Content warning`}
+                  data-allow-custom-emoji="true"
+                  disabled={uiState === 'loading'}
+                  class="spoiler-text-field"
+                  lang={language}
+                  spellCheck="true"
+                  autocomplete="off"
+                  dir="auto"
+                  onInput={() => {
+                    updateCharCount();
+                  }}
+                />
+              </TextExpander>
+              <button
+                type="button"
+                class="close-button plain4 small"
+                onClick={() => {
+                  setSensitive(false);
+                  textareaRef.current.focus();
+                }}
+              >
+                <Icon icon="x" alt={t`Cancel`} />
+              </button>
+            </div>
+            <Textarea
+              ref={textareaRef}
+              data-allow-custom-emoji="true"
+              placeholder={
+                replyToStatus
+                  ? t`Post your reply`
+                  : editStatus
+                    ? t`Edit your post`
+                    : !!poll
+                      ? t`Ask a question`
+                      : t`What are you doing?`
+              }
+              required={mediaAttachments?.length === 0}
+              disabled={uiState === 'loading'}
+              lang={language}
+              onInput={() => {
+                updateCharCount();
+              }}
+              maxCharacters={maxCharacters}
               onTrigger={(action) => {
                 if (action?.name === 'custom-emojis') {
                   setShowEmoji2Picker({
-                    targetElement: spoilerTextRef,
+                    targetElement: lastFocusedEmojiFieldRef,
                     defaultSearchTerm: action?.defaultSearchTerm || null,
                   });
+                } else if (action?.name === 'mention') {
+                  setShowMentionPicker({
+                    defaultSearchTerm: action?.defaultSearchTerm || null,
+                  });
+                } else if (
+                  action?.name === 'auto-detect-language' &&
+                  action?.languages
+                ) {
+                  setAutoDetectedLanguages(action.languages);
                 }
               }}
-            >
-              <input
-                ref={spoilerTextRef}
-                type="text"
-                name="spoilerText"
-                placeholder={t`Content warning`}
-                data-allow-custom-emoji="true"
-                disabled={uiState === 'loading'}
-                class="spoiler-text-field"
-                lang={language}
-                spellCheck="true"
-                autocomplete="off"
-                dir="auto"
-                style={{
-                  opacity: sensitive ? 1 : 0,
-                  pointerEvents: sensitive ? 'auto' : 'none',
-                }}
-                onInput={() => {
-                  updateCharCount();
-                }}
-              />
-            </TextExpander>
-            <label
-              class={`toolbar-button ${sensitive ? 'highlight' : ''}`}
-              title={t`Content warning or sensitive media`}
-            >
-              <input
-                name="sensitive"
-                type="checkbox"
-                checked={sensitive}
-                disabled={uiState === 'loading'}
-                onChange={(e) => {
-                  const sensitive = e.target.checked;
-                  setSensitive(sensitive);
-                  if (sensitive) {
-                    spoilerTextRef.current?.focus();
-                  } else {
-                    textareaRef.current?.focus();
-                  }
-                }}
-              />
-              <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
-            </label>{' '}
-            <label
-              class={`toolbar-button ${
-                visibility !== 'public' && !sensitive ? 'show-field' : ''
-              } ${visibility !== 'public' ? 'highlight' : ''}`}
-              title={visibility}
-            >
-              <Icon icon={visibilityIconsMap[visibility]} alt={visibility} />
-              <select
-                name="visibility"
-                value={visibility}
-                onChange={(e) => {
-                  setVisibility(e.target.value);
-                }}
-                disabled={uiState === 'loading' || !!editStatus}
-                dir="auto"
-              >
-                <option value="public">
-                  <Trans>Public</Trans>
-                </option>
-                {(supports('@pleroma/local-visibility-post') ||
-                  supports('@akkoma/local-visibility-post')) && (
-                  <option value="local">
-                    <Trans>Local</Trans>
-                  </option>
-                )}
-                <option value="unlisted">
-                  <Trans>Unlisted</Trans>
-                </option>
-                <option value="private">
-                  <Trans>Followers only</Trans>
-                </option>
-                <option value="direct">
-                  <Trans>Private mention</Trans>
-                </option>
-              </select>
-            </label>{' '}
+            />
           </div>
-          <Textarea
-            ref={textareaRef}
-            data-allow-custom-emoji="true"
-            placeholder={
-              replyToStatus
-                ? t`Post your reply`
-                : editStatus
-                  ? t`Edit your post`
-                  : t`What are you doing?`
-            }
-            required={mediaAttachments?.length === 0}
-            disabled={uiState === 'loading'}
-            lang={language}
-            onInput={() => {
-              updateCharCount();
-            }}
-            maxCharacters={maxCharacters}
-            onTrigger={(action) => {
-              if (action?.name === 'custom-emojis') {
-                setShowEmoji2Picker({
-                  targetElement: lastFocusedEmojiFieldRef,
-                  defaultSearchTerm: action?.defaultSearchTerm || null,
-                });
-              } else if (action?.name === 'mention') {
-                setShowMentionPicker({
-                  defaultSearchTerm: action?.defaultSearchTerm || null,
-                });
-              } else if (
-                action?.name === 'auto-detect-language' &&
-                action?.languages
-              ) {
-                setAutoDetectedLanguages(action.languages);
-              }
-            }}
-          />
           {mediaAttachments?.length > 0 && (
             <div class="media-attachments">
               {mediaAttachments.map((attachment, i) => {
@@ -1315,19 +1334,19 @@ function Compose({
               })}
               <label class="media-sensitive">
                 <input
-                  name="sensitive"
+                  name="sensitiveMedia"
                   type="checkbox"
-                  checked={sensitive}
+                  checked={sensitiveMedia}
                   disabled={uiState === 'loading'}
                   onChange={(e) => {
-                    const sensitive = e.target.checked;
-                    setSensitive(sensitive);
+                    const sensitiveMedia = e.target.checked;
+                    setSensitiveMedia(sensitiveMedia);
                   }}
                 />{' '}
                 <span>
                   <Trans>Mark media as sensitive</Trans>
                 </span>{' '}
-                <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />
+                <Icon icon={`eye-${sensitiveMedia ? 'close' : 'open'}`} />
               </label>
             </div>
           )}
@@ -1346,32 +1365,37 @@ function Compose({
                   setPoll(newPoll);
                 } else {
                   setPoll(null);
+                  focusLastFocusedField();
                 }
               }}
             />
           )}
           {scheduledAt && (
             <div class="toolbar scheduled-at">
+              <span>
+                <label>
+                  <Trans>
+                    Posting on{' '}
+                    <ScheduledAtField
+                      scheduledAt={scheduledAt}
+                      setScheduledAt={setScheduledAt}
+                    />
+                  </Trans>
+                </label>{' '}
+                <small class="tag insignificant">
+                  {getLocalTimezoneName()}
+                </small>
+              </span>
               <button
                 type="button"
-                class="plain4 small"
+                class="plain4 close-button small"
                 onClick={() => {
                   setScheduledAt(null);
+                  focusLastFocusedField();
                 }}
               >
-                <Icon icon="x" />
+                <Icon icon="x" alt={t`Cancel`} />
               </button>
-              <label>
-                <Trans>
-                  Posting on{' '}
-                  <ScheduledAtField
-                    scheduledAt={scheduledAt}
-                    setScheduledAt={setScheduledAt}
-                  />
-                </Trans>
-                <br />
-                <small>{getLocalTimezoneName()}</small>
-              </label>
             </div>
           )}
           <div class="toolbar compose-footer">
@@ -1398,39 +1422,53 @@ function Compose({
                   )}
                 >
                   {supportsCameraCapture && (
-                    <MenuItem className="compose-menu-add-media">
+                    <MenuItem
+                      disabled={mediaButtonDisabled}
+                      className="compose-menu-add-media"
+                    >
                       <label class="compose-menu-add-media-field">
                         <CameraCaptureInput
                           hidden
                           supportedMimeTypes={supportedImagesVideosTypes}
-                          disabled={
-                            uiState === 'loading' ||
-                            mediaAttachments.length >= maxMediaAttachments ||
-                            !!poll
-                          }
+                          disabled={mediaButtonDisabled}
                           setMediaAttachments={setMediaAttachments}
                         />
                       </label>
                       <Icon icon="camera" /> <span>{_(ADD_LABELS.camera)}</span>
                     </MenuItem>
                   )}
-                  <MenuItem className="compose-menu-add-media">
+                  <MenuItem
+                    disabled={mediaButtonDisabled}
+                    className="compose-menu-add-media"
+                  >
                     <label class="compose-menu-add-media-field">
                       <FilePickerInput
                         hidden
                         supportedMimeTypes={supportedMimeTypes}
                         maxMediaAttachments={maxMediaAttachments}
                         mediaAttachments={mediaAttachments}
-                        disabled={
-                          uiState === 'loading' ||
-                          mediaAttachments.length >= maxMediaAttachments ||
-                          !!poll
-                        }
+                        disabled={mediaButtonDisabled}
                         setMediaAttachments={setMediaAttachments}
                       />
                     </label>
                     <Icon icon="media" /> <span>{_(ADD_LABELS.media)}</span>
                   </MenuItem>
+                  <MenuItem
+                    disabled={cwButtonDisabled}
+                    onClick={onCWButtonClick}
+                  >
+                    <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />{' '}
+                    <span>{_(ADD_LABELS.sensitive)}</span>
+                  </MenuItem>
+                  {showPollButton && (
+                    <MenuItem
+                      disabled={pollButtonDisabled}
+                      onClick={onPollButtonClick}
+                    >
+                      <Icon icon="poll" /> <span>{_(ADD_LABELS.poll)}</span>
+                    </MenuItem>
+                  )}
+                  <MenuDivider />
                   <MenuItem
                     onClick={() => {
                       setShowEmoji2Picker({
@@ -1443,7 +1481,7 @@ function Compose({
                   </MenuItem>
                   {!!states.settings.composerGIFPicker && (
                     <MenuItem
-                      disabled={gifPickerDisabled}
+                      disabled={mediaButtonDisabled}
                       onClick={() => {
                         setShowGIFPicker(true);
                       }}
@@ -1452,22 +1490,17 @@ function Compose({
                       <span>{_(ADD_LABELS.gif)}</span>
                     </MenuItem>
                   )}
-                  {showPollButton && (
-                    <MenuItem
-                      disabled={pollButtonDisabled}
-                      onClick={onPollButtonClick}
-                    >
-                      <Icon icon="poll" /> <span>{_(ADD_LABELS.poll)}</span>
-                    </MenuItem>
-                  )}
                   {showScheduledAt && (
-                    <MenuItem
-                      disabled={scheduledAtButtonDisabled}
-                      onClick={onScheduledAtClick}
-                    >
-                      <Icon icon="schedule" />{' '}
-                      <span>{_(ADD_LABELS.scheduledPost)}</span>
-                    </MenuItem>
+                    <>
+                      <MenuDivider />
+                      <MenuItem
+                        disabled={scheduledAtButtonDisabled}
+                        onClick={onScheduledAtClick}
+                      >
+                        <Icon icon="schedule" />{' '}
+                        <span>{_(ADD_LABELS.scheduledPost)}</span>
+                      </MenuItem>
+                    </>
                   )}
                 </Menu2>
               )}
@@ -1477,11 +1510,7 @@ function Compose({
                     <CameraCaptureInput
                       supportedMimeTypes={supportedImagesVideosTypes}
                       mediaAttachments={mediaAttachments}
-                      disabled={
-                        uiState === 'loading' ||
-                        mediaAttachments.length >= maxMediaAttachments ||
-                        !!poll
-                      }
+                      disabled={mediaButtonDisabled}
                       setMediaAttachments={setMediaAttachments}
                     />
                     <Icon icon="camera" alt={_(ADD_LABELS.camera)} />
@@ -1492,25 +1521,43 @@ function Compose({
                     supportedMimeTypes={supportedMimeTypes}
                     maxMediaAttachments={maxMediaAttachments}
                     mediaAttachments={mediaAttachments}
-                    disabled={
-                      uiState === 'loading' ||
-                      mediaAttachments.length >= maxMediaAttachments ||
-                      !!poll
-                    }
+                    disabled={mediaButtonDisabled}
                     setMediaAttachments={setMediaAttachments}
                   />
                   <Icon icon="media" alt={_(ADD_LABELS.media)} />
                 </label>
+                <button
+                  type="button"
+                  class="toolbar-button"
+                  disabled={cwButtonDisabled}
+                  onClick={onCWButtonClick}
+                >
+                  <Icon
+                    icon={`eye-${sensitive ? 'close' : 'open'}`}
+                    alt={_(ADD_LABELS.sensitive)}
+                  />
+                </button>
+                {showPollButton && (
+                  <button
+                    type="button"
+                    class="toolbar-button"
+                    disabled={pollButtonDisabled}
+                    onClick={onPollButtonClick}
+                  >
+                    <Icon icon="poll" alt={_(ADD_LABELS.poll)} />
+                  </button>
+                )}
+                <div class="toolbar-divider" />
                 {/* <button
-                type="button"
-                class="toolbar-button"
-                disabled={uiState === 'loading'}
-                onClick={() => {
-                  setShowMentionPicker(true);
-                }}
-              >
-                <Icon icon="at" />
-              </button> */}
+                  type="button"
+                  class="toolbar-button"
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
+                    setShowMentionPicker(true);
+                  }}
+                >
+                  <Icon icon="at" />
+                </button> */}
                 <button
                   type="button"
                   class="toolbar-button"
@@ -1527,7 +1574,7 @@ function Compose({
                   <button
                     type="button"
                     class="toolbar-button gif-picker-button"
-                    disabled={gifPickerDisabled}
+                    disabled={mediaButtonDisabled}
                     onClick={() => {
                       setShowGIFPicker(true);
                     }}
@@ -1538,31 +1585,21 @@ function Compose({
                     />
                   </button>
                 )}
-                {showPollButton && (
+                {showScheduledAt && (
                   <>
+                    <div class="toolbar-divider" />
                     <button
                       type="button"
-                      class="toolbar-button"
-                      disabled={pollButtonDisabled}
-                      onClick={onPollButtonClick}
+                      class={`toolbar-button ${scheduledAt ? 'highlight' : ''}`}
+                      disabled={scheduledAtButtonDisabled}
+                      onClick={onScheduledAtClick}
                     >
-                      <Icon icon="poll" alt={_(ADD_LABELS.poll)} />
+                      <Icon icon="schedule" alt={_(ADD_LABELS.scheduledPost)} />
                     </button>
                   </>
                 )}
-                {showScheduledAt && (
-                  <button
-                    type="button"
-                    class={`toolbar-button ${scheduledAt ? 'highlight' : ''}`}
-                    disabled={scheduledAtButtonDisabled}
-                    onClick={onScheduledAtClick}
-                  >
-                    <Icon icon="schedule" alt={_(ADD_LABELS.scheduledPost)} />
-                  </button>
-                )}
               </span>
             </span>
-            {/* <div class="spacer" /> */}
             {uiState === 'loading' ? (
               <Loader abrupt />
             ) : (
@@ -1573,13 +1610,7 @@ function Compose({
             )}
             <label
               class={`toolbar-button ${
-                language !== prevLanguage.current ||
-                (
-                  autoDetectedLanguages?.length &&
-                    !autoDetectedLanguages.includes(language)
-                )
-                  ? 'highlight'
-                  : ''
+                highlightLanguageField ? 'highlight' : ''
               }`}
             >
               <span class="icon-text">
@@ -1623,6 +1654,47 @@ function Compose({
                 })}
               </select>
             </label>{' '}
+            <label
+              class={`toolbar-button ${highlightVisibilityField ? 'highlight' : ''}`}
+              title={_(visibilityText[visibility])}
+            >
+              {visibility === 'public' || visibility === 'direct' ? (
+                <Icon
+                  icon={visibilityIconsMap[visibility]}
+                  alt={_(visibilityText[visibility])}
+                />
+              ) : (
+                <span class="icon-text">{_(visibilityText[visibility])}</span>
+              )}
+              <select
+                name="visibility"
+                value={visibility}
+                onChange={(e) => {
+                  setVisibility(e.target.value);
+                }}
+                disabled={uiState === 'loading' || !!editStatus}
+                dir="auto"
+              >
+                <option value="public">
+                  <Trans>Public</Trans>
+                </option>
+                {(supports('@pleroma/local-visibility-post') ||
+                  supports('@akkoma/local-visibility-post')) && (
+                  <option value="local">
+                    <Trans>Local</Trans>
+                  </option>
+                )}
+                <option value="unlisted">
+                  <Trans>Quiet public</Trans>
+                </option>
+                <option value="private">
+                  <Trans>Followers</Trans>
+                </option>
+                <option value="direct">
+                  <Trans>Private mention</Trans>
+                </option>
+              </select>
+            </label>{' '}
             <button type="submit" disabled={uiState === 'loading'}>
               {scheduledAt
                 ? t`Schedule`
@@ -1642,6 +1714,7 @@ function Compose({
         <Modal
           onClose={() => {
             setShowMentionPicker(false);
+            focusLastFocusedField();
           }}
         >
           <MentionModal
@@ -1667,6 +1740,7 @@ function Compose({
         <Modal
           onClose={() => {
             setShowEmoji2Picker(false);
+            focusLastFocusedField();
           }}
         >
           <CustomEmojisModal
@@ -1690,6 +1764,7 @@ function Compose({
         <Modal
           onClose={() => {
             setShowGIFPicker(false);
+            focusLastFocusedField();
           }}
         >
           <GIFPickerModal

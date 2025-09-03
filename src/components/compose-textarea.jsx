@@ -108,7 +108,9 @@ const Textarea = forwardRef((props, ref) => {
       if (textExpanderRef.current) {
         const { height } = textarea.getBoundingClientRect();
         // textExpanderRef.current.style.height = height + 'px';
-        textExpanderRef.current.setStyle({ height: height + 'px' });
+        if (height) {
+          textExpanderRef.current.setStyle({ minHeight: height + 'px' });
+        }
       }
     });
     resizeObserver.observe(textarea);

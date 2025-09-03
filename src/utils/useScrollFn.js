@@ -138,12 +138,6 @@ export default function useScrollFn(
     }
   }, [init]);
 
-  return {
-    resetScrollDirection: () => {
-      scrollDirection.current = null;
-    },
-  };
-
   // return {
   //   scrollDirection,
   //   reachStart,

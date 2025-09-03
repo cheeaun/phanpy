@@ -285,7 +285,7 @@ function Timeline({
   const headerRef = useRef();
   // const [hiddenUI, setHiddenUI] = useState(false);
   const [nearReachStart, setNearReachStart] = useState(false);
-  const { resetScrollDirection } = useScrollFn(
+  useScrollFn(
     {
       scrollableRef,
       distanceFromEnd: 2,
@@ -436,7 +436,6 @@ function Timeline({
             e.target.closest('.timeline-item, .timeline-item-alt')
           ) {
             setTimeout(() => {
-              resetScrollDirection();
               headerRef.current.hidden = false;
             }, 250);
           }
@@ -447,11 +446,7 @@ function Timeline({
             ref={headerRef}
             // hidden={hiddenUI}
             onClick={(e) => {
-              // If hidden set not hidden
-              if (headerRef.current.hidden) {
-                resetScrollDirection();
-                headerRef.current.hidden = false;
-              } else if (!e.target.closest('a, button')) {
+              if (!e.target.closest('a, button')) {
                 scrollableRef.current?.scrollTo({
                   top: 0,
                   behavior: 'smooth',

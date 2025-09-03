@@ -1010,7 +1010,11 @@ function Compose({
             opacity: uiState === 'loading' ? 0.5 : 1,
           }}
           onClick={() => {
-            lastFocusedFieldRef.current?.focus?.();
+            setTimeout(() => {
+              if (!document.activeElement) {
+                lastFocusedFieldRef.current?.focus?.();
+              }
+            }, 10);
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {

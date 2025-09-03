@@ -9,6 +9,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
 import useResizeObserver from 'use-resize-observer';
+import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
 import { api, getPreferences } from '../utils/api';
@@ -381,6 +382,14 @@ function Compose({
       if (scheduledAt) setScheduledAt(scheduledAt);
     }
   }, [draftStatus, editStatus, replyToStatus]);
+
+  // focus textarea when state.composerState.minimized turns false
+  const snapStates = useSnapshot(states);
+  useEffect(() => {
+    if (!snapStates.composerState.minimized) {
+      focusTextarea();
+    }
+  }, [snapStates.composerState.minimized]);
 
   const formRef = useRef();
 

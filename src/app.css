@@ -164,7 +164,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 
   [data-shortcuts-view-mode='tab-menu-bar'] & {
     @media (max-width: 40em) {
-      top: 100svh;
+      top: 100vh;
     }
   }
 
@@ -177,8 +177,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     background-color: transparent !important;
     backdrop-filter: none;
     border: 0;
-    padding-block-start: 8px;
-    padding-block-end: max(8px, var(--sai-bottom));
+    padding-block: 8px;
 
     [data-shortcuts-view-mode='tab-menu-bar'] & {
       @media (max-width: 40em) {

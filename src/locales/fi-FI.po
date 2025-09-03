@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-02 12:47\n"
+"PO-Revision-Date: 2025-09-03 04:03\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -96,7 +96,7 @@ msgstr "Siirry tilisivulle"
 
 #: src/components/account-info.jsx:407
 #: src/components/account-info.jsx:740
-#: src/components/compose.jsx:1691
+#: src/components/compose.jsx:1695
 #: src/pages/settings.jsx:324
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -375,7 +375,7 @@ msgid "Remove"
 msgstr "Poista"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1420
+#: src/components/compose.jsx:1424
 #: src/components/mention-modal.jsx:220
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
@@ -384,7 +384,7 @@ msgstr "Lisää"
 
 #: src/components/compose-poll.jsx:96
 msgid "Multiple choice"
-msgstr ""
+msgstr "Monivalinta"
 
 #: src/components/compose-poll.jsx:99
 msgid "Duration"
@@ -416,7 +416,7 @@ msgstr "Lisää äänestys"
 
 #: src/components/compose.jsx:106
 msgid "Add content warning"
-msgstr ""
+msgstr "Lisää sisältövaroitus"
 
 #: src/components/compose.jsx:107
 msgid "Schedule post"
@@ -435,7 +435,7 @@ msgstr "{0, plural, one {Tiedostoa {1} ei tueta.} other {Tiedostoja {2} ei tueta
 
 #: src/components/compose.jsx:636
 #: src/components/compose.jsx:654
-#: src/components/compose.jsx:1776
+#: src/components/compose.jsx:1780
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Voit liittää enintään 1 tiedoston.} other {Voit liittää enintään # tiedostoa.}}"
@@ -479,89 +479,89 @@ msgstr "Vastataan käyttäjän @{0} julkaisuun"
 msgid "Editing source post"
 msgstr "Muokataan lähdejulkaisua"
 
-#: src/components/compose.jsx:1065
+#: src/components/compose.jsx:1069
 msgid "Poll must have at least 2 options"
 msgstr "Äänestyksessä pitää olla vähintään 2 vastausvaihtoehtoa"
 
-#: src/components/compose.jsx:1069
+#: src/components/compose.jsx:1073
 msgid "Some poll choices are empty"
 msgstr "Osa vaihtoehdoista on tyhjiä"
 
-#: src/components/compose.jsx:1082
+#: src/components/compose.jsx:1086
 msgid "Some media have no descriptions. Continue?"
 msgstr "Osalta mediasta puuttuu kuvaus. Jatketaanko?"
 
-#: src/components/compose.jsx:1134
+#: src/components/compose.jsx:1138
 msgid "Attachment #{i} failed"
 msgstr "Liite #{i} epäonnistui"
 
-#: src/components/compose.jsx:1243
+#: src/components/compose.jsx:1247
 #: src/components/status.jsx:2096
 #: src/components/timeline.jsx:1015
 msgid "Content warning"
 msgstr "Sisältövaroitus"
 
-#: src/components/compose.jsx:1264
-#: src/components/compose.jsx:1397
+#: src/components/compose.jsx:1268
+#: src/components/compose.jsx:1401
 #: src/components/edit-profile-sheet.jsx:323
 #: src/components/private-note-sheet.jsx:94
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: src/components/compose.jsx:1272
+#: src/components/compose.jsx:1276
 msgid "Post your reply"
 msgstr "Julkaise vastauksesi"
 
-#: src/components/compose.jsx:1274
+#: src/components/compose.jsx:1278
 msgid "Edit your post"
 msgstr "Muokkaa julkaisuasi"
 
-#: src/components/compose.jsx:1276
+#: src/components/compose.jsx:1280
 msgid "Ask a question"
-msgstr ""
+msgstr "Esitä kysymys"
 
-#: src/components/compose.jsx:1277
+#: src/components/compose.jsx:1281
 msgid "What are you doing?"
 msgstr "Mitä teet?"
 
-#: src/components/compose.jsx:1347
+#: src/components/compose.jsx:1351
 msgid "Mark media as sensitive"
 msgstr "Merkitse media arkaluonteiseksi"
 
-#: src/components/compose.jsx:1377
+#: src/components/compose.jsx:1381
 msgid "Posting on <0/>"
 msgstr "Julkaistaan <0/>"
 
-#: src/components/compose.jsx:1679
+#: src/components/compose.jsx:1683
 #: src/pages/settings.jsx:318
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Julkinen"
 
-#: src/components/compose.jsx:1684
+#: src/components/compose.jsx:1688
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Paikallinen"
 
-#: src/components/compose.jsx:1688
+#: src/components/compose.jsx:1692
 #: src/pages/settings.jsx:321
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
-msgstr ""
+msgstr "Vaivihkaa julkinen"
 
-#: src/components/compose.jsx:1694
+#: src/components/compose.jsx:1698
 #: src/components/status.jsx:1976
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Yksityismaininta"
 
-#: src/components/compose.jsx:1700
+#: src/components/compose.jsx:1704
 msgid "Schedule"
 msgstr "Ajasta"
 
-#: src/components/compose.jsx:1702
+#: src/components/compose.jsx:1706
 #: src/components/keyboard-shortcuts-help.jsx:155
 #: src/components/status.jsx:958
 #: src/components/status.jsx:1744
@@ -570,20 +570,20 @@ msgstr "Ajasta"
 msgid "Reply"
 msgstr "Vastaa"
 
-#: src/components/compose.jsx:1704
+#: src/components/compose.jsx:1708
 msgid "Update"
 msgstr "Päivitä"
 
-#: src/components/compose.jsx:1705
+#: src/components/compose.jsx:1709
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Julkaise"
 
-#: src/components/compose.jsx:1788
+#: src/components/compose.jsx:1792
 msgid "Downloading GIF…"
 msgstr "Ladataan GIF-kuvaa…"
 
-#: src/components/compose.jsx:1816
+#: src/components/compose.jsx:1820
 msgid "Failed to download GIF"
 msgstr "GIF-kuvan lataus epäonnistui"
 

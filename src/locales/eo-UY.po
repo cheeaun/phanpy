@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-02 12:47\n"
+"PO-Revision-Date: 2025-09-02 14:46\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -197,7 +197,7 @@ msgstr ""
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info.jsx:835
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr ""
+msgstr "{statusesCount, plural,one {<0>{0}</0> Afiŝo} other {<1>{1}</1> Afiŝoj}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -384,7 +384,7 @@ msgstr "Aldoni"
 
 #: src/components/compose-poll.jsx:96
 msgid "Multiple choice"
-msgstr ""
+msgstr "Multebla elekto"
 
 #: src/components/compose-poll.jsx:99
 msgid "Duration"
@@ -416,7 +416,7 @@ msgstr "Aldoni balotenketon"
 
 #: src/components/compose.jsx:106
 msgid "Add content warning"
-msgstr ""
+msgstr "Aldoni enhavan averton"
 
 #: src/components/compose.jsx:107
 msgid "Schedule post"
@@ -518,7 +518,7 @@ msgstr "Redakti vian afiŝon"
 
 #: src/components/compose.jsx:1276
 msgid "Ask a question"
-msgstr ""
+msgstr "Faru demandon"
 
 #: src/components/compose.jsx:1277
 msgid "What are you doing?"
@@ -549,7 +549,7 @@ msgstr "Loka"
 #: src/pages/settings.jsx:321
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
-msgstr ""
+msgstr "Diskrete publika"
 
 #: src/components/compose.jsx:1694
 #: src/components/status.jsx:1976
@@ -1753,7 +1753,7 @@ msgstr ""
 
 #: src/components/related-actions.jsx:407
 msgid "Don't feature on profile"
-msgstr ""
+msgstr "Ne montri en profilo"
 
 #: src/components/related-actions.jsx:408
 #: src/pages/hashtag.jsx:333
@@ -1787,11 +1787,11 @@ msgstr "Diskonigi…"
 
 #: src/components/related-actions.jsx:542
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "Nesilentigita @{username}"
 
 #: src/components/related-actions.jsx:554
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "Nesilentigi <0>@{username}</0>"
 
 #: src/components/related-actions.jsx:570
 msgid "Mute <0>@{username}</0>…"
@@ -2597,17 +2597,17 @@ msgstr "Fadeno {index}/{total}"
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
 msgid "Thread {index}/X"
-msgstr ""
+msgstr "Fadeno {index}/X"
 
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
 msgid "{index}/{total}"
-msgstr ""
+msgstr "{index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:46
 msgid "{index}/X"
-msgstr ""
+msgstr "{index}/X"
 
 #: src/components/timeline.jsx:486
 #: src/pages/settings.jsx:1218
@@ -2815,7 +2815,7 @@ msgstr "Elsaluti…"
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:251
 msgid "Connected on {0} (<0/>)"
-msgstr ""
+msgstr "Konektita al {0} (<0/>)"
 
 #: src/pages/accounts.jsx:268
 msgid "Add an existing account"

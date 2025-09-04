@@ -991,6 +991,11 @@
   &:has(~ .quote-post-native) .quote-inline {
     display: none;
   }
+
+  /* Hide br(s) in .quote-inline */
+  .quote-inline br {
+    display: none;
+  }
 }
 .status .content ul {
   list-style-type: disc;
@@ -1892,6 +1897,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   align-items: stretch;
   background-color: var(--bg-color);
   max-width: 480px;
+  min-height: 3lh;
   /* max-height: 160px; */
 }
 .status.large .card.large,
@@ -1899,6 +1905,15 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 16px;
   flex-direction: column;
   max-height: none;
+
+  .title {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  .meta {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
 }
 .card .card-image {
   flex-shrink: 0;
@@ -1969,8 +1984,8 @@ a:focus-visible .card img {
   display: box;
   -webkit-box-orient: vertical;
   box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   text-wrap: balance;
 }
 .card .meta {
@@ -1983,12 +1998,19 @@ a:focus-visible .card img {
   display: box;
   -webkit-box-orient: vertical;
   box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
 }
-.card.no-image :is(.title, .meta) {
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+.content-container[data-content-text-weight='1'] .card,
+.card.no-image {
+  .title {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+  .meta {
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+  }
 }
 .card .meta.domain {
   opacity: 1;

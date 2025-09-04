@@ -167,9 +167,9 @@
 }
 
 #compose-container .compose-field {
-  height: 5em;
-  height: var(--height);
-  min-height: 5em;
+  width: 100%;
+  height: 4em;
+  min-height: 4em;
   max-height: 50vh;
   resize: vertical;
   border-radius: 0;
@@ -1070,7 +1070,7 @@
     rtl-ordering: logical;
     overflow-wrap: break-word;
     white-space: pre-wrap;
-    min-height: 5em;
+    min-height: 4em;
     max-height: 50vh;
     scrollbar-width: none;
 

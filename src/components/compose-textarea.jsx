@@ -239,11 +239,6 @@ const Textarea = forwardRef((props, ref) => {
           throttleHighlightText(text);
           debouncedAutoDetectLanguage();
         }}
-        style={{
-          width: '100%',
-          height: '4em',
-          // '--text-weight': (1 + charCount / 140).toFixed(1) || 1,
-        }}
         onScroll={(e) => {
           if (composeHighlightRef.current) {
             const { scrollTop } = e.target;

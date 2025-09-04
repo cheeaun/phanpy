@@ -1237,6 +1237,12 @@ function Compose({
         >
           <div>
             <div class={`compose-cw-container ${sensitive ? '' : 'collapsed'}`}>
+              <input
+                type="hidden"
+                name="sensitive"
+                value={sensitive ? 'on' : 'off'}
+              />
+              {/* mimic the old checkbox */}
               <TextExpander
                 keys=":"
                 class="spoiler-text-field-container"

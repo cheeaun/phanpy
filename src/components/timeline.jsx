@@ -285,7 +285,7 @@ function Timeline({
   const headerRef = useRef();
   // const [hiddenUI, setHiddenUI] = useState(false);
   const [nearReachStart, setNearReachStart] = useState(false);
-  useScrollFn(
+  const { resetScrollDirection } = useScrollFn(
     {
       scrollableRef,
       distanceFromEnd: 2,
@@ -437,6 +437,7 @@ function Timeline({
           ) {
             setTimeout(() => {
               headerRef.current.hidden = false;
+              resetScrollDirection();
             }, 250);
           }
         }}

@@ -113,8 +113,8 @@ function Catchup() {
   const supportsPixelfed = supports('@pixelfed/home-include-reblogs');
 
   async function fetchHome({ maxCreatedAt }) {
-    const maxCreatedAtDate = maxCreatedAt ? new Date(maxCreatedAt) : null;
-    console.debug('fetchHome', maxCreatedAtDate);
+    const maxCreatedAtTime = maxCreatedAt ? Date.parse(maxCreatedAt) : null;
+    console.debug('fetchHome', maxCreatedAtTime);
     const allResults = [];
     const homeIterable = masto.v1.timelines.home.list({ limit: 40 });
     const homeIterator = homeIterable.values();
@@ -135,8 +135,8 @@ function Catchup() {
           let addedResults = false;
           for (let i = 0; i < value.length; i++) {
             const item = value[i];
-            const createdAtDate = new Date(item.createdAt);
-            if (!maxCreatedAtDate || createdAtDate >= maxCreatedAtDate) {
+            const createdAtTime = Date.parse(item.createdAt);
+            if (!maxCreatedAtTime || createdAtTime >= maxCreatedAtTime) {
               // Filtered
               const selfPost = isSelf(
                 item.reblog?.account?.id || item.account.id,
@@ -2098,12 +2098,12 @@ function binByTime(data, key, numBins) {
   // Create empty bins and loop through data
   const bins = Array.from({ length: numBins }, () => []);
   data.forEach((item) => {
-    const date = new Date(item[key]);
-    if (date.getTime() > Date.now()) {
+    const dateTime = Date.parse(item[key]);
+    if (dateTime > Date.now()) {
       // Future dates go into the last bin
       bins[bins.length - 1].push(item);
     } else {
-      const normalized = (date.getTime() - minDate.getTime()) / range;
+      const normalized = (dateTime - minDate.getTime()) / range;
       const binIndex = Math.floor(normalized * (numBins - 1));
       bins[binIndex].push(item);
     }

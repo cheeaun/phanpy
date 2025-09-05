@@ -22,6 +22,7 @@ const {
   PHANPY_CLIENT_NAME: CLIENT_NAME,
   PHANPY_APP_ERROR_LOGGING: ERROR_LOGGING,
   PHANPY_REFERRER_POLICY: REFERRER_POLICY,
+  PHANPY_DISALLOW_ROBOTS: DISALLOW_ROBOTS,
   PHANPY_DEV,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
 
@@ -119,6 +120,15 @@ export default defineConfig({
           commitHash,
         },
       },
+      ...(DISALLOW_ROBOTS
+        ? [
+            {
+              type: 'raw',
+              output: './robots.txt',
+              data: 'User-agent: *\nDisallow: /',
+            },
+          ]
+        : []),
     ]),
     VitePWA({
       manifest: {

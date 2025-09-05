@@ -126,13 +126,13 @@ export function groupContext(items, instance) {
   contexts.forEach((context) => {
     context.sort((a, b) => {
       if (!a.inReplyToId && !b.inReplyToId) {
-        return new Date(a.createdAt) - new Date(b.createdAt);
+        return Date.parse(a.createdAt) - Date.parse(b.createdAt);
       }
       if (a.inReplyToId === b.id) return 1;
       if (b.inReplyToId === a.id) return -1;
       if (!a.inReplyToId) return -1;
       if (!b.inReplyToId) return 1;
-      return new Date(a.createdAt) - new Date(b.createdAt);
+      return Date.parse(a.createdAt) - Date.parse(b.createdAt);
     });
   });
 
@@ -161,9 +161,7 @@ export function groupContext(items, instance) {
         if (appliedContextIndices.includes(i)) return;
         const contextItems = contexts[i];
         contextItems.sort((a, b) => {
-          const aDate = new Date(a.createdAt);
-          const bDate = new Date(b.createdAt);
-          return aDate - bDate;
+          return Date.parse(a.createdAt) - Date.parse(b.createdAt);
         });
         const firstItemAccountID = contextItems[0].account.id;
         newItems.push({

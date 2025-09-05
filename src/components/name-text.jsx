@@ -4,6 +4,7 @@ import { useLingui } from '@lingui/react';
 import { memo } from 'preact/compat';
 
 import { api } from '../utils/api';
+import getDomain from '../utils/get-domain';
 import mem from '../utils/mem';
 import states from '../utils/states';
 
@@ -47,10 +48,13 @@ function NameText({
     emojis,
     bot,
     username,
+    roles,
   } = account;
   const [_, acct1, acct2] = acct.match(ACCT_REGEX) || [, acct];
 
   if (!instance) instance = api().instance;
+
+  const accountInstance = getDomain(url);
 
   const trimmedUsername = username.toLowerCase().trim();
   const trimmedDisplayName = (displayName || '').toLowerCase().trim();
@@ -108,12 +112,28 @@ function NameText({
       {displayName && !short ? (
         <>
           <b dir="auto">
-            <EmojiText text={displayName} emojis={emojis} />
+            <EmojiText text={displayName} emojis={emojis} staticEmoji />
           </b>
           {!showAcct && !hideUsername && (
             <>
               {' '}
               <i class="bidi-isolate">@{username}</i>
+              {roles?.map((role) => (
+                <>
+                  {' '}
+                  <span class="tag collapsed">
+                    {role.name}
+                    {!!accountInstance && (
+                      <>
+                        {' '}
+                        <span class="more-insignificant">
+                          {accountInstance}
+                        </span>
+                      </>
+                    )}
+                  </span>
+                </>
+              ))}
             </>
           )}
         </>
@@ -130,6 +150,20 @@ function NameText({
             {acct1}
             {!!acct2 && <span class="ib">{acct2}</span>}
           </i>
+          {roles?.map((role) => (
+            <>
+              {' '}
+              <span class="tag collapsed">
+                {role.name}
+                {!!accountInstance && (
+                  <>
+                    {' '}
+                    <span class="more-insignificant">{accountInstance}</span>
+                  </>
+                )}
+              </span>
+            </>
+          ))}
         </>
       )}
     </a>

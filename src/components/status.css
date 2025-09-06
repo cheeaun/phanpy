@@ -992,8 +992,8 @@
     display: none;
   }
 
-  /* Hide br(s) in .quote-inline */
-  .quote-inline br {
+  /* Hide excessive br(s) in .quote-inline */
+  .quote-inline br + br ~ br {
     display: none;
   }
 }

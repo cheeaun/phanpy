@@ -2063,8 +2063,9 @@ a.card:is(:hover, :focus):visited {
   }
 
   .meta {
-    -webkit-line-clamp: 5;
-    line-clamp: 5;
+    white-space: pre-line;
+    -webkit-line-clamp: 10;
+    line-clamp: 10;
     opacity: 1;
     /* font-size: inherit; */
   }

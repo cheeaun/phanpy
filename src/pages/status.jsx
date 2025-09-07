@@ -21,6 +21,7 @@ import { matchPath, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
+import EditHistoryControls from '../components/edit-history-controls';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
@@ -31,6 +32,10 @@ import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import Status from '../components/status';
 import { api } from '../utils/api';
+import {
+  EditHistoryProvider,
+  useEditHistory,
+} from '../utils/edit-history-context';
 import htmlContentLength from '../utils/html-content-length';
 import shortenNumber from '../utils/shorten-number';
 import states, {
@@ -251,11 +256,13 @@ function StatusPage(params) {
         <Link to={closeLink} />
       )}
       {!showMediaOnly && (
-        <StatusThread
-          id={id}
-          instance={params.instance}
-          closeLink={closeLink}
-        />
+        <EditHistoryProvider statusID={id}>
+          <StatusThread
+            id={id}
+            instance={params.instance}
+            closeLink={closeLink}
+          />
+        </EditHistoryProvider>
       )}
     </div>
   );
@@ -272,7 +279,7 @@ function StatusParent(props) {
 
 // oldest first
 function createdAtSort(a, b) {
-  return Date.parse(b.created_at) - Date.parse(a.created_at);
+  return Date.parse(a.createdAt) - Date.parse(b.createdAt);
 }
 
 const MONTH_IN_MS = 1000 * 60 * 60 * 24 * 30;
@@ -329,9 +336,174 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     };
   }, [id, uiState !== 'loading']);
 
+  const { editHistoryMode, initEditHistory, editedAtIndex, editHistoryRef } =
+    useEditHistory();
+
   const scrollOffsets = useRef();
   const lastInitContextTS = useRef();
   const [threadsCount, setThreadsCount] = useState(0);
+  const fullContext = useRef(null);
+  const restructureContext = () => {
+    console.log({ fullContext: fullContext.current });
+    if (!fullContext.current) return;
+    let { ancestors, descendants, heroStatus } = fullContext.current;
+
+    if (editHistoryMode && descendants?.length) {
+      // Filter descendants based on createdAt/editedAt dates
+      // - editHistory items only has createdAt
+      // - descendants items has createdAt and optional editedAt
+      const currentEditedAtStatus = editHistoryRef.current[editedAtIndex];
+      const currentEditedAtStatusCreatedAt = Date.parse(
+        currentEditedAtStatus.createdAt,
+      );
+      const nextEditedAtStatus = editHistoryRef.current[editedAtIndex - 1];
+      const nextEditedAtStatusCreatedAt = nextEditedAtStatus
+        ? Date.parse(nextEditedAtStatus.createdAt)
+        : null;
+      descendants = descendants.filter((s) => {
+        // Show descendants created between current and next editedAt dates
+        const sCreatedAt = Date.parse(s.editedAt || s.createdAt);
+        return (
+          sCreatedAt >= currentEditedAtStatusCreatedAt &&
+          (!nextEditedAtStatusCreatedAt ||
+            sCreatedAt <= nextEditedAtStatusCreatedAt)
+        );
+      });
+    }
+
+    ancestors.sort(createdAtSort);
+    descendants.sort(createdAtSort);
+
+    totalDescendants.current = descendants?.length || 0;
+
+    const missingStatuses = new Set();
+    ancestors.forEach((status) => {
+      saveStatus(status, instance, {
+        skipThreading: true,
+      });
+      if (
+        status.inReplyToId &&
+        !ancestors.find((s) => s.id === status.inReplyToId)
+      ) {
+        missingStatuses.add(status.inReplyToId);
+      }
+    });
+    const ancestorsIsThread = ancestors.every(
+      (s) => s.account.id === heroStatus.account.id,
+    );
+    const nestedDescendants = [];
+    descendants.forEach((status) => {
+      saveStatus(status, instance, {
+        // skipThreading: true,
+      });
+
+      if (
+        status.inReplyToId &&
+        !descendants.find((s) => s.id === status.inReplyToId) &&
+        status.inReplyToId !== heroStatus.id
+      ) {
+        missingStatuses.add(status.inReplyToId);
+      }
+
+      if (status.inReplyToAccountId === status.account.id) {
+        // If replying to self, it's part of the thread, level 1
+        nestedDescendants.push(status);
+      } else if (status.inReplyToId === heroStatus.id) {
+        // If replying to the hero status, it's a reply, level 1
+        nestedDescendants.push(status);
+      } else if (
+        !status.inReplyToAccountId &&
+        nestedDescendants.find(
+          (s) =>
+            s.id === status.inReplyToId &&
+            s.account.id === heroStatus.account.id,
+        ) &&
+        status.account.id === heroStatus.account.id
+      ) {
+        // If replying to hero's own statuses, it's part of the thread, level 1
+        nestedDescendants.push(status);
+      } else {
+        // If replying to someone else, it's a reply to a reply, level 2
+        const parent = descendants.find((s) => s.id === status.inReplyToId);
+        if (parent) {
+          if (!parent.__replies) {
+            parent.__replies = [];
+          }
+          parent.__replies.push(status);
+        } else {
+          // If no parent, something is wrong
+          console.warn('No parent found for', status);
+        }
+      }
+    });
+
+    // sort hero author to top
+    nestedDescendants.sort((a, b) => {
+      const heroAccountID = heroStatus.account.id;
+      if (a.account.id === heroAccountID && b.account.id !== heroAccountID)
+        return -1;
+      if (b.account.id === heroAccountID && a.account.id !== heroAccountID)
+        return 1;
+      return 0;
+    });
+
+    console.log({ ancestors, descendants, nestedDescendants });
+    if (missingStatuses.size) {
+      console.error('Missing statuses', [...missingStatuses]);
+    }
+
+    let descendantLevelsCount = 1;
+    function expandReplies(_replies, level) {
+      const nextLevel = level + 1;
+      if (nextLevel > descendantLevelsCount) {
+        descendantLevelsCount = level;
+      }
+      return _replies?.map((_r) => ({
+        id: _r.id,
+        account: _r.account,
+        repliesCount: _r.repliesCount,
+        content: _r.content,
+        weight: calcStatusWeight(_r),
+        level: nextLevel,
+        replies: expandReplies(_r.__replies, nextLevel),
+      }));
+    }
+
+    const mappedNestedDescendants = nestedDescendants.map((s) => ({
+      id: s.id,
+      account: s.account,
+      accountID: s.account.id,
+      descendant: true,
+      thread: s.account.id === heroStatus.account.id,
+      weight: calcStatusWeight(s),
+      level: 1,
+      replies: expandReplies(s.__replies, 1),
+      createdAt: s.createdAt,
+    }));
+    const allStatuses = [
+      ...ancestors.map((s) => ({
+        id: s.id,
+        ancestor: true,
+        isThread: ancestorsIsThread,
+        accountID: s.account.id,
+        account: s.account,
+        repliesCount: s.repliesCount,
+        weight: calcStatusWeight(s),
+        createdAt: s.createdAt,
+      })),
+      {
+        id,
+        accountID: heroStatus.account.id,
+        weight: calcStatusWeight(heroStatus),
+        createdAt: heroStatus.createdAt,
+      },
+      ...mappedNestedDescendants,
+    ];
+
+    console.log({ allStatuses, descendantLevelsCount });
+    return { allStatuses, ancestorsIsThread, mappedNestedDescendants };
+  };
+
   const initContext = ({ reloadHero } = {}) => {
     console.debug('initContext', id);
     setUIState('loading');
@@ -390,136 +562,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
       try {
         const context = await contextFetch;
-        const { ancestors, descendants } = context;
-
-        ancestors.sort(createdAtSort);
-        descendants.sort(createdAtSort);
-
-        totalDescendants.current = descendants?.length || 0;
-
-        const missingStatuses = new Set();
-        ancestors.forEach((status) => {
-          saveStatus(status, instance, {
-            skipThreading: true,
-          });
-          if (
-            status.inReplyToId &&
-            !ancestors.find((s) => s.id === status.inReplyToId)
-          ) {
-            missingStatuses.add(status.inReplyToId);
-          }
-        });
-        const ancestorsIsThread = ancestors.every(
-          (s) => s.account.id === heroStatus.account.id,
-        );
-        const nestedDescendants = [];
-        descendants.forEach((status) => {
-          saveStatus(status, instance, {
-            // skipThreading: true,
-          });
-
-          if (
-            status.inReplyToId &&
-            !descendants.find((s) => s.id === status.inReplyToId) &&
-            status.inReplyToId !== heroStatus.id
-          ) {
-            missingStatuses.add(status.inReplyToId);
-          }
-
-          if (status.inReplyToAccountId === status.account.id) {
-            // If replying to self, it's part of the thread, level 1
-            nestedDescendants.push(status);
-          } else if (status.inReplyToId === heroStatus.id) {
-            // If replying to the hero status, it's a reply, level 1
-            nestedDescendants.push(status);
-          } else if (
-            !status.inReplyToAccountId &&
-            nestedDescendants.find(
-              (s) =>
-                s.id === status.inReplyToId &&
-                s.account.id === heroStatus.account.id,
-            ) &&
-            status.account.id === heroStatus.account.id
-          ) {
-            // If replying to hero's own statuses, it's part of the thread, level 1
-            nestedDescendants.push(status);
-          } else {
-            // If replying to someone else, it's a reply to a reply, level 2
-            const parent = descendants.find((s) => s.id === status.inReplyToId);
-            if (parent) {
-              if (!parent.__replies) {
-                parent.__replies = [];
-              }
-              parent.__replies.push(status);
-            } else {
-              // If no parent, something is wrong
-              console.warn('No parent found for', status);
-            }
-          }
-        });
-
-        // sort hero author to top
-        nestedDescendants.sort((a, b) => {
-          const heroAccountID = heroStatus.account.id;
-          if (a.account.id === heroAccountID && b.account.id !== heroAccountID)
-            return -1;
-          if (b.account.id === heroAccountID && a.account.id !== heroAccountID)
-            return 1;
-          return 0;
-        });
-
-        console.log({ ancestors, descendants, nestedDescendants });
-        if (missingStatuses.size) {
-          console.error('Missing statuses', [...missingStatuses]);
-        }
-
-        let descendantLevelsCount = 1;
-        function expandReplies(_replies, level) {
-          const nextLevel = level + 1;
-          if (nextLevel > descendantLevelsCount) {
-            descendantLevelsCount = level;
-          }
-          return _replies?.map((_r) => ({
-            id: _r.id,
-            account: _r.account,
-            repliesCount: _r.repliesCount,
-            content: _r.content,
-            weight: calcStatusWeight(_r),
-            level: nextLevel,
-            replies: expandReplies(_r.__replies, nextLevel),
-          }));
-        }
-
-        const mappedNestedDescendants = nestedDescendants.map((s) => ({
-          id: s.id,
-          account: s.account,
-          accountID: s.account.id,
-          descendant: true,
-          thread: s.account.id === heroStatus.account.id,
-          weight: calcStatusWeight(s),
-          level: 1,
-          replies: expandReplies(s.__replies, 1),
-          createdAt: s.createdAt,
-        }));
-        const allStatuses = [
-          ...ancestors.map((s) => ({
-            id: s.id,
-            ancestor: true,
-            isThread: ancestorsIsThread,
-            accountID: s.account.id,
-            account: s.account,
-            repliesCount: s.repliesCount,
-            weight: calcStatusWeight(s),
-            createdAt: s.createdAt,
-          })),
-          {
-            id,
-            accountID: heroStatus.account.id,
-            weight: calcStatusWeight(heroStatus),
-            createdAt: heroStatus.createdAt,
-          },
-          ...mappedNestedDescendants,
-        ];
+        const { ancestors } = context;
+        fullContext.current = { ...context, heroStatus };
+        const { allStatuses, ancestorsIsThread, mappedNestedDescendants } =
+          restructureContext();
 
         const descendantsThread =
           ancestors.length && !ancestorsIsThread
@@ -546,7 +592,6 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           setLimit(heroLimit + 1);
         }
 
-        console.log({ allStatuses, descendantLevelsCount });
         setStatuses(allStatuses);
         cachedStatusesMap[id] = allStatuses;
 
@@ -568,6 +613,15 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   };
 
   useEffect(initContext, [id, masto]);
+
+  useEffect(() => {
+    try {
+      const { allStatuses } = restructureContext();
+      setStatuses(allStatuses);
+    } catch (e) {}
+    // Only run this when editHistoryMode changes
+    // If id changes, initContext will run instead, so don't worry
+  }, [editHistoryMode, editedAtIndex]);
 
   const [showRefresh, setShowRefresh] = useState(false);
   useEffect(() => {
@@ -1215,7 +1269,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     }
 
     return result;
-  }, [statuses, limit, renderStatus]);
+  }, [statuses, limit, renderStatus, editHistoryMode, editedAtIndex]);
 
   // If there's spoiler in hero status, auto-expand it
   useEffect(() => {
@@ -1240,7 +1294,16 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           initialPageState.current === 'status' && !firstLoad.current
             ? 'slide-in'
             : ''
-        } ${viewMode ? `deck-view-${viewMode}` : ''}`}
+        } ${viewMode ? `deck-view-${viewMode}` : ''} ${
+          editHistoryMode ? 'edit-history-mode' : ''
+        }`}
+        style={
+          editHistoryMode
+            ? {
+                '--edit-history-percentage': `${editedAtIndex / (editHistoryRef.current.length - 1)}`,
+              }
+            : undefined
+        }
         onAnimationEnd={(e) => {
           // Fix the bounce effect when switching viewMode
           // `slide-in` animation kicks in when switching viewMode
@@ -1483,6 +1546,18 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                       : t`Switch to post's instance`}
                   </small>
                 </MenuItem>
+                <MenuItem
+                  disabled={
+                    !sameInstance ||
+                    uiState === 'loading' ||
+                    !heroStatus?.editedAt ||
+                    !totalDescendants.current
+                  }
+                  onClick={initEditHistory}
+                >
+                  <Icon icon="edit" />
+                  <span>{t`View Edit History Snapshots`}</span>
+                </MenuItem>
               </Menu2>
               <Link class="button plain deck-close" to={closeLink}>
                 <Icon icon="x" size="xl" alt={t`Close`} />
@@ -1490,6 +1565,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             </div>
           </div>
         </header>
+        <EditHistoryControls />
         {!!statuses.length && heroStatus ? (
           <ul
             class={`timeline flat contextual grow ${

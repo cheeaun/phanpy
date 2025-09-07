@@ -184,4 +184,5 @@ export const ICONS = {
     rtl: true,
   },
   formula: () => import('@iconify-icons/mingcute/formula-line'),
+  edit: () => import('@iconify-icons/mingcute/edit-4-line'),
 };

@@ -23,6 +23,7 @@ import { useSnapshot } from 'valtio';
 
 import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
+import { useEditHistory } from '../utils/edit-history-context';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
@@ -338,6 +339,21 @@ function Status({
   }
   if (!status) {
     return null;
+  }
+
+  // const originalStatus = useRef(status);
+  const { editHistoryRef, editHistoryMode, editedAtIndex } = useEditHistory();
+  if (editHistoryMode && status?.editedAt && editHistoryRef.current.length) {
+    const eStatus = editHistoryRef.current[editedAtIndex];
+    if (eStatus) {
+      status = {
+        ...status,
+        ...eStatus,
+      };
+    }
+  } else {
+    // Revert back to original status
+    // Don't need to do anything, re-render will use the original status above
   }
 
   const {
@@ -2359,7 +2375,7 @@ function Status({
                       )}
                     </a>
                     {editedAt && (
-                      <>
+                      <span class="edited-container">
                         {' '}
                         &bull; <Icon icon="pencil" alt={t`Edited`} />{' '}
                         <time
@@ -2372,7 +2388,7 @@ function Status({
                         >
                           {editedDateText}
                         </time>
-                      </>
+                      </span>
                     )}
                   </>
                 )}

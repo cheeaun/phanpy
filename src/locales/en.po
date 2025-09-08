@@ -265,6 +265,7 @@ msgstr "View post stats"
 #: src/components/media-modal.jsx:327
 #: src/components/mention-modal.jsx:162
 #: src/components/notification-service.jsx:157
+#: src/components/open-link-sheet.jsx:51
 #: src/components/post-embed-modal.jsx:196
 #: src/components/private-note-sheet.jsx:36
 #: src/components/report-modal.jsx:118
@@ -499,6 +500,7 @@ msgstr ""
 #: src/components/compose.jsx:1283
 #: src/components/compose.jsx:1416
 #: src/components/edit-profile-sheet.jsx:323
+#: src/components/open-link-sheet.jsx:64
 #: src/components/private-note-sheet.jsx:94
 msgid "Cancel"
 msgstr ""
@@ -1175,23 +1177,23 @@ msgstr "Open file"
 msgid "Search accounts"
 msgstr "Search accounts"
 
-#: src/components/modals.jsx:75
+#: src/components/modals.jsx:76
 msgid "Post scheduled"
 msgstr "Post scheduled"
 
-#: src/components/modals.jsx:76
+#: src/components/modals.jsx:77
 msgid "Post published. Check it out."
 msgstr ""
 
-#: src/components/modals.jsx:78
+#: src/components/modals.jsx:79
 msgid "Reply scheduled"
 msgstr "Reply scheduled"
 
-#: src/components/modals.jsx:79
+#: src/components/modals.jsx:80
 msgid "Reply posted. Check it out."
 msgstr ""
 
-#: src/components/modals.jsx:80
+#: src/components/modals.jsx:81
 msgid "Post updated. Check it out."
 msgstr ""
 
@@ -1512,6 +1514,40 @@ msgstr "View #Wrapstodon"
 msgid "Read more →"
 msgstr ""
 
+#: src/components/open-link-sheet.jsx:30
+#: src/components/related-actions.jsx:492
+#: src/components/status.jsx:1202
+msgid "Link copied"
+msgstr ""
+
+#: src/components/open-link-sheet.jsx:33
+#: src/components/related-actions.jsx:495
+#: src/components/status.jsx:1205
+msgid "Unable to copy link"
+msgstr ""
+
+#: src/components/open-link-sheet.jsx:56
+msgid "Open link?"
+msgstr "Open link?"
+
+#: src/components/open-link-sheet.jsx:68
+#: src/components/post-embed-modal.jsx:232
+#: src/components/related-actions.jsx:501
+#: src/components/shortcuts-settings.jsx:1059
+#: src/components/status.jsx:1211
+msgid "Copy"
+msgstr ""
+
+#: src/components/open-link-sheet.jsx:72
+#: src/components/related-actions.jsx:522
+#: src/components/status.jsx:1233
+msgid "Share…"
+msgstr ""
+
+#: src/components/open-link-sheet.jsx:82
+msgid "Open"
+msgstr "Open"
+
 #: src/components/poll.jsx:113
 msgid "Voted"
 msgstr "Voted"
@@ -1586,13 +1622,6 @@ msgstr ""
 
 #: src/components/post-embed-modal.jsx:226
 msgid "Unable to copy HTML code"
-msgstr ""
-
-#: src/components/post-embed-modal.jsx:232
-#: src/components/related-actions.jsx:501
-#: src/components/shortcuts-settings.jsx:1059
-#: src/components/status.jsx:1211
-msgid "Copy"
 msgstr ""
 
 #: src/components/post-embed-modal.jsx:238
@@ -1769,25 +1798,10 @@ msgstr ""
 msgid "Show featured profiles"
 msgstr "Show featured profiles"
 
-#: src/components/related-actions.jsx:492
-#: src/components/status.jsx:1202
-msgid "Link copied"
-msgstr ""
-
-#: src/components/related-actions.jsx:495
-#: src/components/status.jsx:1205
-msgid "Unable to copy link"
-msgstr ""
-
 #: src/components/related-actions.jsx:516
 #: src/components/shortcuts-settings.jsx:1077
 #: src/components/status.jsx:1227
 msgid "Sharing doesn't seem to work."
-msgstr ""
-
-#: src/components/related-actions.jsx:522
-#: src/components/status.jsx:1233
-msgid "Share…"
 msgstr ""
 
 #: src/components/related-actions.jsx:542

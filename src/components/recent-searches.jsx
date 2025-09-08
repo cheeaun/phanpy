@@ -43,7 +43,7 @@ export default function RecentSearches({ onItemClick }) {
 
   return (
     <div class="recent-searches">
-      <div class="ui-state insignificant recent-searches-header">
+      <div class="recent-searches-header">
         <Icon icon="history" />{' '}
         <span>
           <Trans>Recent searches</Trans>

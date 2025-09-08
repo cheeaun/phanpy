@@ -5,16 +5,41 @@ const supportsHover = window.matchMedia('(hover: hover)').matches;
 function handleContentLinks(opts) {
   const { mentions = [], instance, previewMode, statusURL } = opts || {};
   return (e) => {
-    let { target } = e;
-    target = target.closest('a');
-    if (!target) return;
-    // Only handle links inside, not itself or anything outside
-    if (!e.currentTarget.contains(target)) return;
-
     // If cmd/ctrl/shift/alt key is pressed or middle-click, let the browser handle it
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.which === 2) {
       return;
     }
+
+    let { target } = e;
+
+    // Experiment opening custom emoji in a modal
+    // TODO: Rename this function because it's not just for links
+    if (target.closest('.shortcode-emoji')) {
+      const { naturalWidth, naturalHeight, width, height } = target;
+      const kindaLargeRatio = 2;
+      const kindaLarge =
+        naturalWidth > width * kindaLargeRatio ||
+        naturalHeight > height * kindaLargeRatio;
+      if (kindaLarge) {
+        e.preventDefault();
+        e.stopPropagation();
+        states.showMediaModal = {
+          mediaAttachments: [
+            {
+              type: 'image',
+              url: target.src,
+              description: target.title || target.alt,
+            },
+          ],
+        };
+        return;
+      }
+    }
+
+    target = target.closest('a');
+    if (!target) return;
+    // Only handle links inside, not itself or anything outside
+    if (!e.currentTarget.contains(target)) return;
 
     const { href } = target;
 

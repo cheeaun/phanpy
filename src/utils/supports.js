@@ -30,11 +30,22 @@ const platformFeatures = {
   '@akkoma/local-visibility-post': containAkkoma,
 };
 
+// Named features for which support is explicitly expressed by the instance
+const advertisedFeatures = {
+  '@akkoma/bubble-timeline': 'bubble_timeline',
+};
+
 const supportsCache = {};
 
 function supports(feature) {
   try {
-    let { version, domain } = getCurrentInstance();
+    let instanceData = getCurrentInstance();
+    let version = instanceData.version;
+    let domain = instanceData.domain;
+
+    // instanceData extension exclusive to Akkoma and Pleroma
+    let pleroma = instanceData?.pleroma;
+
     let softwareName = getCurrentNodeInfo()?.software?.name || 'mastodon';
 
     if (softwareName === 'hometown') {
@@ -47,6 +58,13 @@ function supports(feature) {
 
     if (platformFeatures[feature]) {
       return (supportsCache[key] = platformFeatures[feature].test(version));
+    }
+
+    // use Pleroma / Akkoma's advertised feature list to see if a given feature is supported
+    if (pleroma) {
+      return (supportsCache[key] = pleroma.metadata.features.includes(
+        advertisedFeatures[feature],
+      ));
     }
 
     const range = features[feature];

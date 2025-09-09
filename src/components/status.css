@@ -993,6 +993,7 @@
   }
 
   /* Hide excessive br(s) in .quote-inline */
+  p.quote-inline br,
   .quote-inline br + br ~ br {
     display: none;
   }

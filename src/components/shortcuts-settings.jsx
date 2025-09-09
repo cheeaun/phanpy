@@ -893,7 +893,7 @@ function ImportExport({ shortcuts, onClose }) {
                             shortcut[name] ? (
                               <>
                                 <span class="tag collapsed insignificant">
-                                  {text}:{' '}
+                                  {_(text)}:{' '}
                                   {type === 'checkbox'
                                     ? shortcut[name] === 'on'
                                       ? '✅'

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-08 23:32\n"
+"PO-Revision-Date: 2025-09-09 10:07\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -257,7 +257,7 @@ msgstr "Näytä julkaisutilastot"
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
 #: src/components/compose.jsx:897
-#: src/components/custom-emojis-modal.jsx:234
+#: src/components/custom-emojis-modal.jsx:256
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
 #: src/components/embed-modal.jsx:13
@@ -590,29 +590,37 @@ msgid "Failed to download GIF"
 msgstr "GIF-kuvan lataus epäonnistui"
 
 #. placeholder {0}: i18n.number(emojis.length - max)
-#: src/components/custom-emojis-modal.jsx:98
+#: src/components/custom-emojis-modal.jsx:103
 msgid "{0} more…"
 msgstr "{0} lisää…"
 
-#: src/components/custom-emojis-modal.jsx:240
+#: src/components/custom-emojis-modal.jsx:262
 msgid "Custom emojis"
 msgstr "Mukautetut emojit"
 
-#: src/components/custom-emojis-modal.jsx:260
+#: src/components/custom-emojis-modal.jsx:282
 msgid "Search emoji"
 msgstr "Hae emojeita"
 
-#: src/components/custom-emojis-modal.jsx:291
+#: src/components/custom-emojis-modal.jsx:313
 msgid "Error loading custom emojis"
 msgstr "Virhe ladattaessa mukautettuja emojeita"
 
-#: src/components/custom-emojis-modal.jsx:302
+#: src/components/custom-emojis-modal.jsx:324
 msgid "Recently used"
 msgstr "Viimeaikaiset"
 
-#: src/components/custom-emojis-modal.jsx:303
+#: src/components/custom-emojis-modal.jsx:325
 msgid "Others"
 msgstr "Muut"
+
+#: src/components/custom-emojis-modal.jsx:344
+msgid "Zoom out"
+msgstr ""
+
+#: src/components/custom-emojis-modal.jsx:352
+msgid "Zoom in"
+msgstr ""
 
 #: src/components/drafts.jsx:62
 #: src/pages/settings.jsx:702

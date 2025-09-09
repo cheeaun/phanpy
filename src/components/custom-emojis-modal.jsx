@@ -1,3 +1,5 @@
+import './custom-emojis-modal.css';
+
 import { Trans, useLingui } from '@lingui/react/macro';
 import { memo } from 'preact/compat';
 import {
@@ -15,6 +17,9 @@ import Icon from './icon';
 import Loader from './loader';
 
 const CUSTOM_EMOJIS_COUNT = 100;
+const EMOJI_SIZE_MIN = 1;
+const EMOJI_SIZE_MAX = 2;
+const EMOJI_SIZE_STEP = 0.5;
 
 const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
   const addEdges = (e) => {
@@ -160,6 +165,17 @@ function CustomEmojisModal({
 
   const scrollableRef = useRef();
   const [matches, setMatches] = useState(null);
+  const [emojiSize, setEmojiSize] = useState(EMOJI_SIZE_MIN);
+  const onEmojiSizeDecrease = useCallback(() => {
+    const newSize = Math.max(EMOJI_SIZE_MIN, emojiSize - EMOJI_SIZE_STEP);
+    setEmojiSize(newSize);
+  }, [emojiSize]);
+
+  const onEmojiSizeIncrease = useCallback(() => {
+    const newSize = Math.min(EMOJI_SIZE_MAX, emojiSize + EMOJI_SIZE_STEP);
+    setEmojiSize(newSize);
+  }, [emojiSize]);
+
   const onFind = useCallback(
     (e) => {
       const { value } = e.target;
@@ -228,7 +244,13 @@ function CustomEmojisModal({
   }, []);
 
   return (
-    <div id="custom-emojis-sheet" class="sheet">
+    <div
+      id="custom-emojis-sheet"
+      class="sheet"
+      style={{
+        '--custom-emoji-size': emojiSize,
+      }}
+    >
       {!!onClose && (
         <button type="button" class="sheet-close" onClick={onClose}>
           <Icon icon="x" alt={t`Close`} />
@@ -312,6 +334,24 @@ function CustomEmojisModal({
               )}
           </div>
         )}
+        <div class="size-range">
+          <button
+            type="button"
+            class="plain4"
+            onClick={onEmojiSizeDecrease}
+            disabled={emojiSize <= EMOJI_SIZE_MIN}
+          >
+            <Icon icon="zoom-out" alt={t`Zoom out`} />
+          </button>
+          <button
+            type="button"
+            class="plain4"
+            onClick={onEmojiSizeIncrease}
+            disabled={emojiSize >= EMOJI_SIZE_MAX}
+          >
+            <Icon icon="zoom-in" alt={t`Zoom in`} />
+          </button>
+        </div>
       </main>
     </div>
   );

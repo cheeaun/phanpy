@@ -187,4 +187,5 @@ export const ICONS = {
   edit: () => import('@iconify-icons/mingcute/edit-4-line'),
   'zoom-in': () => import('@iconify-icons/mingcute/zoom-in-line'),
   'zoom-out': () => import('@iconify-icons/mingcute/zoom-out-line'),
+  star2: () => import('@iconify-icons/mingcute/star-2-line'),
 };

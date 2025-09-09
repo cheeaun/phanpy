@@ -10,6 +10,7 @@ const notContainPixelfed = /^(?!.*pixelfed).*$/i;
 const containPleroma = /pleroma/i;
 const containAkkoma = /akkoma/i;
 const containGTS = /gotosocial/i;
+const containChuckya = /chuckya/i;
 const platformFeatures = {
   '@mastodon/lists': notContainPixelfed,
   '@mastodon/filters': notContainPixelfed,
@@ -21,6 +22,7 @@ const platformFeatures = {
   '@mastodon/profile-edit': notContainPixelfed,
   '@mastodon/profile-private-note': notContainPixelfed,
   '@mastodon/pinned-posts': notContainPixelfed,
+  '@mastodon/bubble-timeline': containChuckya,
   '@pixelfed/trending': containPixelfed,
   '@pixelfed/home-include-reblogs': containPixelfed,
   '@pixelfed/global-feed': containPixelfed,

@@ -22,7 +22,7 @@ const platformFeatures = {
   '@mastodon/profile-edit': notContainPixelfed,
   '@mastodon/profile-private-note': notContainPixelfed,
   '@mastodon/pinned-posts': notContainPixelfed,
-  '@mastodon/bubble-timeline': containChuckya,
+  '@chuckya/bubble-timeline': containChuckya,
   '@pixelfed/trending': containPixelfed,
   '@pixelfed/home-include-reblogs': containPixelfed,
   '@pixelfed/global-feed': containPixelfed,

@@ -349,7 +349,7 @@ function NavMenu(props) {
               <Trans>Local</Trans>
             </span>
           </MenuLink>
-          {(supports('@mastodon/bubble-timeline') ||
+          {(supports('@chuckya/bubble-timeline') ||
             supports('@akkoma/bubble-timeline')) && (
             <MenuLink to={`/${instance}/p/b`}>
               <Icon icon="star2" size="l" />{' '}

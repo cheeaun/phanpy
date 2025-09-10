@@ -48,7 +48,7 @@ const TYPE_TEXT = {
   following: msg`Home / Following`,
   notifications: msg`Notifications`,
   list: msg`Lists`,
-  public: msg`Public (Local / Federated)`,
+  public: msg`Local / Bubble / Federated`,
   search: msg`Search`,
   'account-statuses': msg`Account`,
   bookmarks: msg`Bookmarks`,
@@ -67,9 +67,23 @@ const TYPE_PARAMS = {
   ],
   public: [
     {
-      text: msg`Local only`,
-      name: 'local',
-      type: 'checkbox',
+      text: msg`Type`,
+      name: 'variant',
+      type: 'select',
+      values: [
+        {
+          name: msg`Local`,
+          value: 'local',
+        },
+        {
+          name: msg`Bubble`,
+          value: 'bubble',
+        },
+        {
+          name: msg`Federated`,
+          value: 'federated',
+        },
+      ],
     },
     {
       text: msg`Instance`,
@@ -162,10 +176,27 @@ export const SHORTCUTS_META = {
   },
   public: {
     id: 'public',
-    title: ({ local }) => (local ? t`Local` : t`Federated`),
+    title: ({ variant }) =>
+      ({
+        local: t`Local`,
+        bubble: t`Bubble`,
+        federated: t`Federated`,
+      })[variant],
     subtitle: ({ instance }) => instance || api().instance,
-    path: ({ local, instance }) => `/${instance}/p${local ? '/l' : ''}`,
-    icon: ({ local }) => (local ? 'building' : 'earth'),
+    path: ({ variant, instance }) => {
+      const suffix = {
+        local: '/l',
+        bubble: '/b',
+        federated: '',
+      }[variant];
+      return `/${instance}/p${suffix}`;
+    },
+    icon: ({ variant }) =>
+      ({
+        local: 'building',
+        bubble: 'star2',
+        federated: 'earth',
+      })[variant],
   },
   trending: {
     id: 'trending',
@@ -640,7 +671,15 @@ function ShortcutForm({
             </label>
           </p>
           {TYPE_PARAMS[currentType]?.map?.(
-            ({ text, name, type, placeholder, pattern, notRequired }) => {
+            ({
+              text,
+              name,
+              type,
+              placeholder,
+              pattern,
+              notRequired,
+              values,
+            }) => {
               if (currentType === 'list') {
                 return (
                   <p>
@@ -659,6 +698,28 @@ function ShortcutForm({
                         {lists.map((list) => (
                           <option value={list.id}>{list.title}</option>
                         ))}
+                      </select>
+                    </label>
+                  </p>
+                );
+              } else if (type === 'select') {
+                let options = values.map(({ name, value }) => (
+                  <option key={value} value={value}>
+                    {_(name)}
+                  </option>
+                ));
+
+                return (
+                  <p>
+                    <label>
+                      <span>{_(text)}</span>
+                      <select
+                        name={name}
+                        required={!notRequired}
+                        disabled={disabled || uiState === 'loading'}
+                        dir="auto"
+                      >
+                        {options}
                       </select>
                     </label>
                   </p>
@@ -893,7 +954,7 @@ function ImportExport({ shortcuts, onClose }) {
                             shortcut[name] ? (
                               <>
                                 <span class="tag collapsed insignificant">
-                                  {text}:{' '}
+                                  {_(text)}:{' '}
                                   {type === 'checkbox'
                                     ? shortcut[name] === 'on'
                                       ? '✅'

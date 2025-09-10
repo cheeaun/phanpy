@@ -67,7 +67,7 @@ const TYPE_PARAMS = {
   ],
   public: [
     {
-      text: msg`Variant`,
+      text: msg`Type`,
       name: 'variant',
       type: 'select',
       values: [

@@ -73,17 +73,17 @@ const TYPE_PARAMS = {
       values: [
         {
           name: msg`Local`,
-          value: "local",
+          value: 'local',
         },
         {
           name: msg`Bubble`,
-          value: "bubble",
+          value: 'bubble',
         },
         {
           name: msg`Federated`,
-          value: "federated"
-        }
-      ]
+          value: 'federated',
+        },
+      ],
     },
     {
       text: msg`Instance`,
@@ -671,7 +671,15 @@ function ShortcutForm({
             </label>
           </p>
           {TYPE_PARAMS[currentType]?.map?.(
-            ({ text, name, type, placeholder, pattern, notRequired, values }) => {
+            ({
+              text,
+              name,
+              type,
+              placeholder,
+              pattern,
+              notRequired,
+              values,
+            }) => {
               if (currentType === 'list') {
                 return (
                   <p>
@@ -694,21 +702,17 @@ function ShortcutForm({
                     </label>
                   </p>
                 );
-              }
-
-              else if (type === 'select') {
-                let options = values.map(({name, value}) => (
+              } else if (type === 'select') {
+                let options = values.map(({ name, value }) => (
                   <option key={value} value={value}>
                     {_(name)}
                   </option>
-                ))
+                ));
 
                 return (
                   <p>
                     <label>
-                      <span>
-                        {_(text)}
-                      </span>
+                      <span>{_(text)}</span>
                       <select
                         name={name}
                         required={!notRequired}

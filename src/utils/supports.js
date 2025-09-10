@@ -39,12 +39,7 @@ const supportsCache = {};
 
 function supports(feature) {
   try {
-    let instanceData = getCurrentInstance();
-    let version = instanceData.version;
-    let domain = instanceData.domain;
-
-    // instanceData extension exclusive to Akkoma and Pleroma
-    let pleroma = instanceData?.pleroma;
+    let { version, domain, pleroma } = getCurrentInstance();
 
     let softwareName = getCurrentNodeInfo()?.software?.name || 'mastodon';
 

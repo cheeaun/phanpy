@@ -34,7 +34,7 @@ function Public({ variant = 'federated', columnMode, ...props }) {
     local: `/:instance?/p/l`,
     bubble: `/:instance?/p/b`,
     federated: `/:instance?/p`,
-  };
+  }[variant];
   useTitle(title, path);
 
   // const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useRef } from 'preact/hooks';
 
 import Timeline from '../components/timeline';
@@ -8,12 +8,15 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Favourites() {
+  const { t } = useLingui();
   useTitle(t`Likes`, '/favourites');
   const { masto, instance } = api();
   const favouritesIterator = useRef();
   async function fetchFavourites(firstLoad) {
     if (firstLoad || !favouritesIterator.current) {
-      favouritesIterator.current = masto.v1.favourites.list({ limit: LIMIT });
+      favouritesIterator.current = masto.v1.favourites
+        .list({ limit: LIMIT })
+        .values();
     }
     return await favouritesIterator.current.next();
   }

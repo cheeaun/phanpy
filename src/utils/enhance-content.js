@@ -1,21 +1,9 @@
 import emojifyText from './emojify-text';
+import escapeHTML from './escape-html';
 import mem from './mem';
 
 const fauxDiv = document.createElement('div');
 const whitelistLinkClasses = ['u-url', 'mention', 'hashtag'];
-
-const HTML_CHARS_REGEX = /[&<>]/g;
-function escapeHTML(html) {
-  return html.replace(
-    HTML_CHARS_REGEX,
-    (c) =>
-      ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-      })[c],
-  );
-}
 
 const LINK_REGEX = /<a/i;
 const HTTP_LINK_REGEX = /^https?:\/\//i;
@@ -43,6 +31,7 @@ function createDOM(html, isDocumentFragment) {
 }
 
 function _enhanceContent(content, opts = {}) {
+  if (!content) return '';
   const { emojis, returnDOM, postEnhanceDOM = () => {} } = opts;
   let enhancedContent = content;
   // const dom = document.createElement('div');
@@ -218,7 +207,7 @@ function _enhanceContent(content, opts = {}) {
       if (TWITTER_MENTION_REGEX.test(html)) {
         html = html.replaceAll(
           TWITTER_MENTION_CAPTURE_REGEX,
-          '<a href="https://twitter.com/$2" rel="nofollow noopener noreferrer" target="_blank">$1</a>',
+          '<a href="https://twitter.com/$2" rel="nofollow noopener" target="_blank">$1</a>',
         );
       }
       fauxDiv.innerHTML = html;
@@ -294,7 +283,7 @@ function _enhanceContent(content, opts = {}) {
   // Workaround for Safari so that `text-decoration-thickness` works
   // Wrap child text nodes in spans
   for (const node of dom.childNodes) {
-    if (node.nodeType === Node.TEXT_NODE) {
+    if (node.nodeType === Node.TEXT_NODE && node.textContent.trim?.()) {
       const span = document.createElement('span');
       span.textContent = node.textContent;
       dom.replaceChild(span, node);

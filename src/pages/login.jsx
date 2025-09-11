@@ -1,6 +1,6 @@
 import './login.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import Fuse from 'fuse.js';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
@@ -18,6 +18,11 @@ import {
 } from '../utils/auth';
 import { supportsPKCE } from '../utils/oauth-pkce';
 import store from '../utils/store';
+import {
+  getCredentialApplication,
+  hasAccountInInstance,
+  storeCredentialApplication,
+} from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
 const {
@@ -26,7 +31,8 @@ const {
 } = import.meta.env;
 
 function Login() {
-  useTitle('Log in');
+  const { t } = useLingui();
+  useTitle(t`Log in`, '/login');
   const instanceURLRef = useRef();
   const cachedInstanceURL = store.local.get('instanceURL');
   const [uiState, setUIState] = useState('default');
@@ -89,22 +95,29 @@ function Login() {
 
       setUIState('loading');
       try {
-        const { client_id, client_secret, vapid_key } =
-          await registerApplication({
+        let credentialApplication = getCredentialApplication(instanceURL);
+        if (
+          !credentialApplication ||
+          !credentialApplication.client_id ||
+          !credentialApplication.client_secret
+        ) {
+          credentialApplication = await registerApplication({
             instanceURL,
           });
+          storeCredentialApplication(instanceURL, credentialApplication);
+        }
+
+        const { client_id, client_secret } = credentialApplication;
 
         const authPKCE = await supportsPKCE({ instanceURL });
         console.log({ authPKCE });
+        const forceLogin = hasAccountInInstance(instanceURL);
         if (authPKCE) {
           if (client_id && client_secret) {
-            store.sessionCookie.set('clientID', client_id);
-            store.sessionCookie.set('clientSecret', client_secret);
-            store.sessionCookie.set('vapidKey', vapid_key);
-
             const [url, verifier] = await getPKCEAuthorizationURL({
               instanceURL,
               client_id,
+              forceLogin,
             });
             store.sessionCookie.set('codeVerifier', verifier);
             location.href = url;
@@ -113,13 +126,10 @@ function Login() {
           }
         } else {
           if (client_id && client_secret) {
-            store.sessionCookie.set('clientID', client_id);
-            store.sessionCookie.set('clientSecret', client_secret);
-            store.sessionCookie.set('vapidKey', vapid_key);
-
             location.href = await getAuthorizationURL({
               instanceURL,
               client_id,
+              forceLogin,
             });
           } else {
             alert(t`Failed to register application`);

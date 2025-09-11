@@ -8,12 +8,12 @@ const focusDeck = () => {
         focusedColumn.focus();
       } else {
         // Focus first column within viewport
-        const firstVisibleColumn = columns
-          .querySelectorAll('.deck-container')
-          .find((column) => {
-            const columnRect = column.getBoundingClientRect();
-            return columnRect.left >= 0;
-          });
+        const firstVisibleColumn = Array.from(
+          columns.querySelectorAll('.deck-container'),
+        ).find((column) => {
+          const columnRect = column.getBoundingClientRect();
+          return columnRect.left >= 0;
+        });
         if (firstVisibleColumn) {
           firstVisibleColumn.focus();
         } else {

@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
@@ -6,9 +6,11 @@ import { addListStore, deleteListStore, updateListStore } from '../utils/lists';
 import supports from '../utils/supports';
 
 import Icon from './icon';
+import ListExclusiveBadge from './list-exclusive-badge';
 import MenuConfirm from './menu-confirm';
 
 function ListAddEdit({ list, onClose }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const editMode = !!list;
@@ -140,6 +142,7 @@ function ListAddEdit({ list, onClose }) {
                   name="exclusive"
                   disabled={uiState === 'loading'}
                 />{' '}
+                <ListExclusiveBadge insignificant />{' '}
                 <Trans>Hide posts on this list from Home/Following</Trans>
               </label>
             </div>

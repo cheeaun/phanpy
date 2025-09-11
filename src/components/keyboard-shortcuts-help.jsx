@@ -1,6 +1,6 @@
 import './keyboard-shortcuts-help.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { memo } from 'preact/compat';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
@@ -11,6 +11,7 @@ import Icon from './icon';
 import Modal from './modal';
 
 export default memo(function KeyboardShortcutsHelp() {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
 
   function onClose() {
@@ -18,15 +19,18 @@ export default memo(function KeyboardShortcutsHelp() {
   }
 
   useHotkeys(
-    '?, shift+?, shift+slash',
-    (e) => {
+    '?',
+    () => {
       console.log('help');
       states.showKeyboardShortcutsHelp = true;
     },
     {
+      useKey: true,
       ignoreEventWhen: (e) => {
-        const hasModal = !!document.querySelector('#modal-container > *');
-        return hasModal;
+        const isCatchUpPage = /\/catchup/i.test(location.hash);
+        return isCatchUpPage || e.metaKey || e.ctrlKey || e.altKey;
+        // const hasModal = !!document.querySelector('#modal-container > *');
+        // return hasModal;
       },
     },
   );

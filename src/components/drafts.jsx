@@ -1,6 +1,6 @@
 import './drafts.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useMemo, useReducer, useState } from 'react';
 
 import { api } from '../utils/api';
@@ -14,6 +14,7 @@ import Loader from './loader';
 import MenuConfirm from './menu-confirm';
 
 function Drafts({ onClose }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [drafts, setDrafts] = useState([]);
@@ -30,9 +31,7 @@ function Drafts({ onClose }) {
           if (ownKeys.length) {
             const drafts = await db.drafts.getMany(ownKeys);
             drafts.sort(
-              (a, b) =>
-                new Date(b.updatedAt).getTime() -
-                new Date(a.updatedAt).getTime(),
+              (a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt),
             );
             setDrafts(drafts);
           } else {
@@ -215,6 +214,7 @@ function Drafts({ onClose }) {
 }
 
 function MiniDraft({ draft }) {
+  const { t } = useLingui();
   const { draftStatus, replyTo } = draft;
   const { status, spoilerText, poll, mediaAttachments } = draftStatus;
   const hasPoll = poll?.options?.length > 0;

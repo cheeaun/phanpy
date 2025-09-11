@@ -7,34 +7,35 @@
     --post-gradient-angle: -160deg;
     --post-gradient-chip-angle: 20deg;
   }
+  --post-gradient-height: min(160px, 50%);
 }
 
 .status-reblog {
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--reblog-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 .status-group {
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--group-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 .status-followed-tags {
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--hashtag-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 
   .timeline-item-container:not(.timeline-item-container-start) & {
     background: radial-gradient(
       ellipse at 0 1.2em,
       var(--hashtag-faded-color),
-      transparent max(160px, 50%)
+      transparent var(--post-gradient-height)
     );
     background-size: 100% 3em;
     background-repeat: no-repeat;
@@ -44,14 +45,14 @@
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--reply-to-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 :is(.status-reblog, .status-group, .status-followed-tags) .status-reply-to {
   background: linear-gradient(
     var(--post-gradient-chip-angle),
     var(--reply-to-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 .visibility-direct {
@@ -163,7 +164,7 @@
   color: var(--text-color);
 }
 .status-card-link:not(
-    .truncated .status-card-link, /* parent status already truncated */
+    .truncated .status-card-link /* parent status already truncated */,
     .status-card-link .status-card-link /* nested status cards */
   ):has(.truncated) {
   display: block;
@@ -180,8 +181,11 @@
     color: var(--text-color);
     background-color: var(--bg-faded-color);
     border: 1px dashed var(--link-color);
-    box-shadow: 0 0 0 1px var(--bg-color), 0 -5px 10px var(--bg-color),
-      0 -5px 15px var(--bg-color), 0 -5px 20px var(--bg-color);
+    box-shadow:
+      0 0 0 1px var(--bg-color),
+      0 -5px 10px var(--bg-color),
+      0 -5px 15px var(--bg-color),
+      0 -5px 20px var(--bg-color);
     padding: 0.5em 0.75em;
     border-radius: 10em;
     font-size: 90%;
@@ -215,6 +219,10 @@
   box-shadow: inset 0 0 4px var(--outline-color);
   /* box-shadow: inset 0 0 0 2px var(--bg-faded-color); */
   /* filter: drop-shadow(0 2px 4px var(--bg-faded-color)); */
+
+  .quote-post-native > & {
+    border-radius: 8px;
+  }
 }
 .status-card:has(.status-badge:not(:empty)) {
   border-start-end-radius: 8px;
@@ -256,6 +264,29 @@
 .timeline-deck .status-card .content.truncated:after {
   /* Don't show "Read more" in status cards */
   content: none !important;
+}
+
+.status-card-unfulfilled {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  font-size: calc(var(--text-size) * 0.9);
+  margin: 1em 0 0;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid var(--outline-color);
+  background-color: var(--bg-color);
+  box-shadow: inset 0 0 4px var(--outline-color);
+
+  .icon {
+    color: var(--text-insignificant-color);
+  }
+
+  &.status-card-ghost {
+    color: var(--text-insignificant-color);
+    border: var(--hairline-width) dashed var(--text-insignificant-color);
+    box-shadow: none;
+  }
 }
 
 @keyframes skeleton-breathe {
@@ -337,10 +368,11 @@
   gap: 8px;
   padding-block: 8px;
 }
-.status.compact-thread .status-thread-badge {
+.status.compact-thread .status-thread-badge-container {
   flex-shrink: 0;
   min-width: 50px;
   justify-content: center;
+  display: flex;
 }
 .status.compact-thread .content-compact {
   overflow: hidden;
@@ -397,7 +429,10 @@
     inset-inline-start: var(--line-start);
     width: var(--line-width);
     height: calc(
-      100% - var(--top-padding) - var(--avatar-size) + (var(--top-padding) / 2)
+      100% -
+      var(--top-padding) -
+      var(--avatar-size) +
+      (var(--top-padding) / 2)
     );
     background-color: var(--comment-line-color);
     z-index: 0;
@@ -555,6 +590,17 @@
     var(--reply-to-faded-color) 4px
   );
   font-weight: bold;
+  align-self: center;
+  flex-shrink: 0;
+
+  .meta-name + & {
+    margin-inline-start: 4px;
+    margin-block: 0;
+
+    + .time {
+      margin-inline-start: 0 !important;
+    }
+  }
 }
 .status-direct-badge {
   vertical-align: middle;
@@ -650,6 +696,7 @@
   display: flex;
   gap: 4px;
   align-items: center;
+  text-align: start;
 }
 .status .content-container.has-spoiler:not(.show-spoiler) .spoiler-button {
   ~ *:not(
@@ -667,6 +714,10 @@
     pointer-events: none;
     user-select: none;
 
+    ruby {
+      filter: contrast(0);
+      background-color: #000;
+    }
     * {
       text-decoration-color: inherit;
       text-decoration-thickness: 1.5em;
@@ -682,7 +733,8 @@
       .spoiler-media-button
     ),
   ~ .card .meta-container {
-    img {
+    img,
+    video {
       filter: invert(0.5);
       background-color: black;
     }
@@ -851,8 +903,11 @@
   border-radius: 10em;
   font-size: 90%;
   white-space: nowrap;
-  box-shadow: 0 0 0 1px var(--bg-color), 0 -5px 10px var(--bg-color),
-    0 -5px 15px var(--bg-color), 0 -5px 20px var(--bg-color);
+  box-shadow:
+    0 0 0 1px var(--bg-color),
+    0 -5px 10px var(--bg-color),
+    0 -5px 15px var(--bg-color),
+    0 -5px 20px var(--bg-color);
   transition: transform 0.5s ease-in-out;
 }
 .timeline-deck .status .content.truncated:hover:after {
@@ -919,15 +974,29 @@
     border-radius: 9999px;
   }
 }
-.status .content > :is(ul, ol),
-.status .content > div > :is(ul, ol) {
-  margin-block: min(0.75em, 12px);
-  margin-inline: 0;
-  padding-inline-start: 1.5em;
-}
-.status .content > :is(ul, ol) li > :is(ul, ol),
-.status .content > div > :is(ul, ol) li > :is(ul, ol) {
-  padding-inline-start: 1.5em;
+.status .content .inner-content {
+  > :is(ul, ol),
+  > :is(div, blockquote) > :is(ul, ol) {
+    margin-block: min(0.75em, 12px);
+    margin-inline: 0;
+    padding-inline-start: 1.5em;
+  }
+
+  > :is(ul, ol) li > :is(ul, ol),
+  > :is(div, blockquote) > :is(ul, ol) li > :is(ul, ol) {
+    padding-inline-start: 1.5em;
+  }
+
+  /* Hide inline quote (RE: [LINK]) when there's a native quote */
+  &:has(~ .quote-post-native) .quote-inline {
+    display: none;
+  }
+
+  /* Hide excessive br(s) in .quote-inline */
+  p.quote-inline br,
+  .quote-inline br + br ~ br {
+    display: none;
+  }
 }
 .status .content ul {
   list-style-type: disc;
@@ -1213,7 +1282,7 @@
   border-color: var(--outline-hover-color);
 }
 .status .media:active:not(:has(button:active)) {
-  filter: brightness(0.8);
+  /* filter: brightness(0.8); */
   transform: scale(0.99);
 }
 .status .media :is(img, video) {
@@ -1221,6 +1290,7 @@
   height: 100%;
   object-fit: cover;
   vertical-align: middle;
+  dynamic-range-limit: standard; /* Disable HDR */
 }
 :is(.status, .media-post) .media {
   cursor: pointer;
@@ -1367,11 +1437,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
   width: 100%;
   height: 100%;
   min-height: var(--min-dimension);
-  background-image: radial-gradient(
-      circle at center center,
-      transparent,
-      var(--bg-faded-color)
-    ),
+  background-image:
+    radial-gradient(circle at center center, transparent, var(--bg-faded-color)),
     repeating-radial-gradient(
       circle at center center,
       transparent,
@@ -1692,7 +1759,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
 /* Collapse possible hashtag stuffing */
 /* If >= 9 hashtags, collapse */
 /* TODO: lower the threshold one day */
-.status:not(.large, .contextual .status)
+/* NOTE: disabled for now due to inaccuracy */
+/* .status:not(.large, .contextual .status)
   p:not(.hashtag-stuffing):has(.hashtag:nth-of-type(1)):has(
     .hashtag:nth-of-type(2)
   ):has(.hashtag:nth-of-type(3)):has(.hashtag:nth-of-type(4)):has(
@@ -1704,7 +1772,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-}
+} */
 
 .media-figure-multiple {
   margin: 0;
@@ -1807,17 +1875,14 @@ body:has(#modal-container .carousel) .status .media img:hover {
   opacity: 0;
 }
 @media (hover: hover) {
-  .carousel-item button.media-alt {
+  .carousel-item button.media-alt:not([hidden]) {
     opacity: 0;
     transform: translateY(var(--bottom)) scale(0.95);
     transition: all 0.2s ease-in-out;
   }
-  .carousel-item:hover button.media-alt {
+  .carousel-item:hover button.media-alt:not([hidden]) {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-  .carousel-item button.media-alt[hidden] {
-    opacity: 1;
   }
 }
 
@@ -1833,6 +1898,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   align-items: stretch;
   background-color: var(--bg-color);
   max-width: 480px;
+  min-height: 3lh;
   /* max-height: 160px; */
 }
 .status.large .card.large,
@@ -1840,6 +1906,15 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 16px;
   flex-direction: column;
   max-height: none;
+
+  .title {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  .meta {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
 }
 .card .card-image {
   flex-shrink: 0;
@@ -1910,8 +1985,8 @@ a:focus-visible .card img {
   display: box;
   -webkit-box-orient: vertical;
   box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   text-wrap: balance;
 }
 .card .meta {
@@ -1924,12 +1999,19 @@ a:focus-visible .card img {
   display: box;
   -webkit-box-orient: vertical;
   box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
 }
-.card.no-image :is(.title, .meta) {
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+.content-container[data-content-text-weight='1'] .card,
+.card.no-image {
+  .title {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+  .meta {
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+  }
 }
 .card .meta.domain {
   opacity: 1;
@@ -1948,6 +2030,7 @@ a:focus-visible .card img {
 a.card {
   text-decoration: none;
   transition: opacity 0.2s ease-in-out;
+  touch-action: manipulation;
 }
 a.card:is(:hover, :focus) {
   border: 1px solid var(--link-color);
@@ -1981,8 +2064,9 @@ a.card:is(:hover, :focus):visited {
   }
 
   .meta {
-    -webkit-line-clamp: 5;
-    line-clamp: 5;
+    white-space: pre-line;
+    -webkit-line-clamp: 10;
+    line-clamp: 10;
     opacity: 1;
     /* font-size: inherit; */
   }
@@ -2026,7 +2110,7 @@ a.card:is(:hover, :focus):visited {
     var(--bg-color) 50%,
     var(--bg-faded-color)
   );
-  overflow: hidden;
+  /* overflow: hidden; */
   box-shadow: inset 0 0 0 1px var(--bg-color);
   min-width: 50%;
 }
@@ -2192,12 +2276,14 @@ a.card:is(:hover, :focus):visited {
   border: 1.5px solid transparent;
   backdrop-filter: none;
 }
-.status .action > button.plain:not(:disabled):is(:hover, :focus) {
-  color: var(--link-color);
-  background-color: var(--button-plain-bg-hover-color);
-}
-.status .action > button.plain.reblog-button:not(:disabled):is(:hover, :focus) {
-  color: var(--reblog-color);
+@media (hover: hover) {
+  .status .action > button.plain:not(:disabled):hover {
+    color: var(--link-color);
+    background-color: var(--button-plain-bg-hover-color);
+  }
+  .status .action > button.plain.reblog-button:not(:disabled):hover {
+    color: var(--reblog-color);
+  }
 }
 .status .action > button.plain.reblog-button.checked {
   color: var(--reblog-color);
@@ -2221,8 +2307,10 @@ a.card:is(:hover, :focus):visited {
 .status .action > button.plain.reblog-button.checked .icon {
   animation: reblogged 1s ease-in-out;
 }
-.status .action > button.plain.favourite-button:is(:hover, :focus) {
-  color: var(--favourite-color);
+@media (hover: hover) {
+  .status .action > button.plain.favourite-button:hover {
+    color: var(--favourite-color);
+  }
 }
 .status .action > button.plain.favourite-button.checked {
   color: var(--favourite-color);
@@ -2298,7 +2386,8 @@ a.card:is(:hover, :focus):visited {
 
       &,
       & .szh-menu__item {
-        box-shadow: inset 0 -2px 0 var(--checked-color),
+        box-shadow:
+          inset 0 -2px 0 var(--checked-color),
           inset 0 -16px 8px -16px var(--checked-color);
       }
       &:has(.szh-menu__item) {
@@ -2357,7 +2446,9 @@ a.card:is(:hover, :focus):visited {
   pointer-events: none;
   transform: translate3d(0, 6px, 0);
   transform-origin: var(--forward) center;
-  transition: all 0.15s ease-out 0.3s, border-color 0.3s ease-out;
+  transition:
+    all 0.15s ease-out 0.3s,
+    border-color 0.3s ease-out;
 
   .timeline.contextual .replies[data-comments-level='4'] & {
     top: 0;
@@ -2537,6 +2628,7 @@ a.card:is(:hover, :focus):visited {
   vertical-align: text-bottom;
   object-fit: contain;
   /* object-position: left; */
+  dynamic-range-limit: standard; /* Disable HDR */
 }
 
 /* EDIT HISTORY */
@@ -2623,7 +2715,8 @@ a.card:is(:hover, :focus):visited {
     font-size: 0.9em;
     border: 2px dashed var(--link-light-color);
     border-radius: 8px;
-    box-shadow: 0 4px 8px -4px var(--drop-shadow-color),
+    box-shadow:
+      0 4px 8px -4px var(--drop-shadow-color),
       0 8px 32px -8px var(--drop-shadow-color);
     padding: 16px;
 
@@ -2731,8 +2824,11 @@ a.card:is(:hover, :focus):visited {
         color: var(--text-color);
         background-color: var(--bg-faded-color);
         border: 1px dashed var(--link-color);
-        box-shadow: 0 0 0 1px var(--bg-color), 0 -5px 10px var(--bg-color),
-          0 -5px 15px var(--bg-color), 0 -5px 20px var(--bg-color);
+        box-shadow:
+          0 0 0 1px var(--bg-color),
+          0 -5px 10px var(--bg-color),
+          0 -5px 15px var(--bg-color),
+          0 -5px 20px var(--bg-color);
         padding: 0.5em 0.75em;
         border-radius: 10em;
         font-size: 90%;
@@ -2822,5 +2918,116 @@ a.card:is(:hover, :focus):visited {
       opacity: 0.9;
       mix-blend-mode: normal;
     }
+  }
+}
+
+/* VIEW TRANSITIONS */
+@media not (prefers-reduced-motion: reduce) {
+  :root {
+    --media-swoosh-duration: 0.1s;
+  }
+  :root.slow-mo {
+    --media-swoosh-duration: 3s;
+  }
+  ::view-transition-group(.media-swoosh) {
+    animation-duration: var(--media-swoosh-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--timing-function);
+  }
+  ::view-transition-old(.media-swoosh),
+  ::view-transition-new(.media-swoosh) {
+    overflow: clip;
+    animation: none;
+    width: 100%;
+    height: 100%;
+  }
+  ::view-transition-old(.media-swoosh-in) {
+    object-fit: cover;
+  }
+  ::view-transition-new(.media-swoosh-in) {
+    object-fit: contain;
+  }
+  ::view-transition-old(.media-swoosh-out) {
+    object-fit: contain;
+    transform: scale(0.99); /* pressed down */
+  }
+  ::view-transition-new(.media-swoosh-out) {
+    object-fit: cover;
+  }
+  .status .media :is(img, video) {
+    view-transition-class: media-swoosh media-swoosh-in;
+  }
+  .carousel .carousel-item :is(img, video) {
+    view-transition-class: media-swoosh media-swoosh-out;
+  }
+  /* delay render .media bg image */
+  .carousel .carousel-item .media {
+    animation: delayBg calc(var(--media-swoosh-duration) + 0.1s) steps(1)
+      forwards;
+  }
+}
+
+@keyframes delayBg {
+  from {
+    background-image: none;
+  }
+  to {
+    background-image: var(--bg-image);
+  }
+}
+
+.status .media :is(img, video),
+.carousel .carousel-item :is(img, video) {
+  transition-property: width, height;
+  transition-timing-function: var(--timing-function);
+  transition-duration: 0.1s;
+  transition-behavior: allow-discrete;
+}
+
+/* MATH */
+
+.math-block {
+  color: var(--text-insignificant-color);
+  margin: 8px 0;
+  border-top: 1px dashed var(--outline-color);
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 90%;
+}
+.status .inner-content math[display='block'] {
+  background-image:
+    linear-gradient(
+      var(--divider-color) var(--hairline-width),
+      transparent var(--hairline-width)
+    ),
+    linear-gradient(
+      to right,
+      var(--divider-color) var(--hairline-width),
+      transparent var(--hairline-width)
+    );
+  background-size: var(--text-size) var(--text-size);
+  overflow: auto;
+
+  --padding: 8px;
+  background-position: center var(--padding);
+  &:has(> mrow) {
+    /* 0.5ex is for mrow from Temml-Local.css */
+    background-position-y: calc(var(--padding) + 0.5ex);
+  }
+  padding: var(--padding);
+  /* mask the padding with gradients */
+  mask-image:
+    linear-gradient(to top, transparent, black var(--padding)),
+    linear-gradient(to bottom, transparent, black var(--padding)),
+    linear-gradient(to left, transparent, black var(--padding)),
+    linear-gradient(to right, transparent, black var(--padding));
+  mask-composite: intersect;
+
+  animation: appear-smooth 0.3s ease-out;
+  *:nth-child(even):not(:has(*)) {
+    /* sprinkle a bit more gradual magical feel */
+    animation: appear 1s ease-out;
   }
 }

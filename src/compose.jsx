@@ -3,8 +3,8 @@ import './app.css';
 import './polyfills';
 
 import { i18n } from '@lingui/core';
-import { t, Trans } from '@lingui/macro';
 import { I18nProvider } from '@lingui/react';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
@@ -12,7 +12,7 @@ import ComposeSuspense from './components/compose-suspense';
 import Loader from './components/loader';
 import { initActivateLang } from './utils/lang';
 import { initStates } from './utils/states';
-import { getCurrentAccount, setCurrentAccountID } from './utils/store-utils';
+import { getCurrentAccount } from './utils/store-utils';
 import useTitle from './utils/useTitle';
 
 initActivateLang();
@@ -22,6 +22,7 @@ if (window.opener) {
 }
 
 function App() {
+  const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 

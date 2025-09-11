@@ -1,8 +1,7 @@
 import './filters.css';
 
-import { i18n } from '@lingui/core';
-import { msg, Plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg } from '@lingui/core/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
 
 import Icon from '../components/icon';
@@ -14,11 +13,12 @@ import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
 import i18nDuration from '../utils/i18n-duration';
+import { getAPIVersions } from '../utils/store-utils';
 import useInterval from '../utils/useInterval';
 import useTitle from '../utils/useTitle';
 
 const FILTER_CONTEXT = ['home', 'public', 'notifications', 'thread', 'account'];
-const FILTER_CONTEXT_UNIMPLEMENTED = ['notifications', 'thread', 'account'];
+const FILTER_CONTEXT_UNIMPLEMENTED = ['thread', 'account'];
 const FILTER_CONTEXT_LABELS = {
   home: msg`Home and lists`,
   notifications: msg`Notifications`,
@@ -50,6 +50,7 @@ const EXPIRY_DURATIONS_LABELS = {
 };
 
 function Filters() {
+  const { t } = useLingui();
   const { masto } = api();
   useTitle(t`Filters`, `/ft`);
   const [uiState, setUIState] = useState('default');
@@ -197,7 +198,7 @@ function Filters() {
 let _id = 1;
 const incID = () => _id++;
 function FiltersAddEdit({ filter, onClose }) {
-  const { _ } = useLingui();
+  const { _, t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const editMode = !!filter;
@@ -303,7 +304,7 @@ function FiltersAddEdit({ filter, onClose }) {
                     // Other clients don't do this
                     if (hasExpiry) {
                       expiresIn = Math.floor(
-                        (expiresAtDate - new Date()) / 1000,
+                        (expiresAtDate - Date.now()) / 1000,
                       );
                     } else {
                       expiresIn = null;
@@ -525,12 +526,27 @@ function FiltersAddEdit({ filter, onClose }) {
               <p>
                 <Trans>Filtered post will be…</Trans>
                 <br />
+                {getAPIVersions()?.mastodon >= 5 && (
+                  <label class="ib">
+                    <input
+                      type="radio"
+                      name="filter_action"
+                      value="blur"
+                      defaultChecked={filterAction === 'blur'}
+                      disabled={uiState === 'loading'}
+                    />{' '}
+                    <Trans>obscured (media only)</Trans>
+                  </label>
+                )}{' '}
                 <label class="ib">
                   <input
                     type="radio"
                     name="filter_action"
                     value="warn"
-                    defaultChecked={filterAction === 'warn' || !editMode}
+                    defaultChecked={
+                      (filterAction !== 'hide' && filterAction !== 'blur') ||
+                      !editMode
+                    }
                     disabled={uiState === 'loading'}
                   />{' '}
                   <Trans>minimized</Trans>
@@ -596,9 +612,10 @@ function FiltersAddEdit({ filter, onClose }) {
 }
 
 function ExpiryStatus({ expiresAt, showNeverExpires }) {
+  const { t } = useLingui();
   const hasExpiry = !!expiresAt;
   const expiresAtDate = hasExpiry && new Date(expiresAt);
-  const expired = hasExpiry && expiresAtDate <= new Date();
+  const expired = hasExpiry && Date.parse(expiresAt) <= Date.now();
 
   // If less than a minute left, re-render interval every second, else every minute
   const [_, rerender] = useReducer((c) => c + 1, 0);

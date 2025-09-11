@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useRef } from 'preact/hooks';
 
 import Timeline from '../components/timeline';
@@ -8,12 +8,15 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Bookmarks() {
-  useTitle(t`Bookmarks`, '/bookmarks');
+  const { t } = useLingui();
+  useTitle(t`Bookmarks`, '/b');
   const { masto, instance } = api();
   const bookmarksIterator = useRef();
   async function fetchBookmarks(firstLoad) {
     if (firstLoad || !bookmarksIterator.current) {
-      bookmarksIterator.current = masto.v1.bookmarks.list({ limit: LIMIT });
+      bookmarksIterator.current = masto.v1.bookmarks
+        .list({ limit: LIMIT })
+        .values();
     }
     return await bookmarksIterator.current.next();
   }

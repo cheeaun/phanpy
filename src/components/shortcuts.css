@@ -9,8 +9,12 @@
   z-index: 101;
   transition: all 0.3s ease-in-out;
   border: var(--hairline-width) solid var(--bg-color);
-  box-shadow: inset 0 -4px 16px -8px var(--button-bg-blur-color),
-    0 3px 8px -1px var(--drop-shadow-color);
+
+  body.exp-tab-bar-v2 & {
+    box-shadow:
+      inset 0 -4px 16px -8px var(--button-bg-blur-color),
+      0 3px 8px -1px var(--drop-shadow-color);
+  }
 }
 #shortcuts-button .icon {
   transform: translateY(2px); /* Balance the icon's vertical alignment */
@@ -53,6 +57,17 @@
 
 /* TAB BAR */
 
+body.exp-tab-bar-v2 {
+  --compose-button-width: 56px;
+  --tmp-inset-sides: max(var(--sai-left), var(--sai-right), 16px);
+  --tmp-inset-bottom: max(16px, var(--sai-bottom));
+  --tmp-inset-new: calc(
+    (var(--tmp-inset-sides) + var(--tmp-inset-bottom)) /
+    2.4
+  );
+  --inset-new: var(--tmp-inset-new);
+}
+
 #shortcuts .tab-bar:not([hidden]) {
   position: fixed;
   bottom: 0;
@@ -70,6 +85,43 @@
     env(safe-area-inset-left);
   user-select: none;
   -webkit-touch-callout: none;
+
+  body.exp-tab-bar-v2 & {
+    transition:
+      all 0.3s ease-in-out,
+      max-width 0s;
+    inset-inline-end: auto;
+    --inset-inline-start: max(16px, var(--inset-new), var(--sai-inline-start));
+    --inset-inline-end: max(16px, var(--inset-new), var(--sai-inline-end));
+    inset-inline-start: var(--inset-inline-start);
+    inset-block-end: max(16px, var(--inset-new));
+    max-width: calc(
+      100vw -
+      var(--inset-inline-start) -
+      var(--inset-inline-end) -
+      var(--compose-button-width) -
+      8px
+    );
+    border-radius: 999px;
+    box-shadow:
+      0 3px 8px -1px var(--drop-shadow-color),
+      0 10px 36px -4px var(--drop-shadow-color);
+    outline: 1px solid var(--outline-color);
+    padding: 0;
+
+    @media (pointer: coarse) {
+      &:active {
+        transform: scale(1.025);
+        transition-duration: 0.1s;
+      }
+    }
+  }
+}
+body.exp-tab-bar-v2 {
+  #filters-page ~ #shortcuts .tab-bar:not([hidden]),
+  #lists-page ~ #shortcuts .tab-bar:not([hidden]) {
+    max-width: calc(100vw - var(--inset-inline-start) - var(--inset-inline-end));
+  }
 }
 #shortcuts .tab-bar ul {
   display: flex;
@@ -85,6 +137,20 @@
   justify-content: center;
   min-width: 20vw;
   flex-basis: 20vw;
+
+  body.exp-tab-bar-v2 & {
+    @media (orientation: landscape) {
+      flex-grow: 0;
+      min-width: auto;
+      flex-basis: auto;
+    }
+    ~ li {
+      margin-inline-start: -3%;
+      @media (orientation: landscape) {
+        margin-inline-start: 0;
+      }
+    }
+  }
 }
 #shortcuts .tab-bar li a {
   -webkit-tap-highlight-color: transparent;
@@ -99,6 +165,18 @@
   text-decoration: none;
   text-shadow: 0 var(--hairline-width) var(--bg-color);
   width: 100%;
+
+  body.exp-tab-bar-v2 & {
+    min-height: 56px;
+    justify-content: center;
+    @media (orientation: landscape) {
+      width: auto;
+      font-size: 14px;
+      gap: 4px;
+      flex-direction: row;
+      min-height: 0;
+    }
+  }
 
   @media (hover: hover) {
     &:is(:hover, :focus) {
@@ -120,19 +198,30 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+
+  body.exp-tab-bar-v2 & {
+    @media (orientation: landscape) {
+      text-align: left;
+      line-height: 1;
+    }
+  }
 }
 #shortcuts .tab-bar li a {
   position: relative;
   &:before {
     content: '';
     position: absolute;
-    inset: 4px 0;
     border-radius: 8px;
-    background-color: var(--bg-color);
     z-index: -1;
     transform: scale(0.5);
     opacity: 0;
     transition: all 0.1s ease-in-out;
+    inset: 2px;
+    background-color: var(--bg-faded-color);
+  }
+
+  body.exp-tab-bar-v2 &:before {
+    border-radius: 999px;
   }
 }
 #shortcuts .tab-bar li a.is-active {
@@ -188,6 +277,17 @@ shortcuts .tab-bar[hidden] {
     border: 0;
     box-shadow: none;
     border-bottom: var(--hairline-width) solid var(--bg-faded-color);
+
+    body.exp-tab-bar-v2 & {
+      transition: none;
+      left: 0;
+      right: 0;
+      inset-block-end: auto;
+      border-radius: 0;
+      outline: 0;
+      max-width: none;
+      box-shadow: none;
+    }
   }
   #shortcuts .tab-bar ul:before {
     content: '';
@@ -209,6 +309,20 @@ shortcuts .tab-bar[hidden] {
     font-size: 14px;
     height: 44px;
     gap: 4px;
+
+    &:before {
+      inset: 4px 0;
+      background-color: var(--bg-color);
+    }
+
+    body.exp-tab-bar-v2 & {
+      min-height: 0;
+      &:before {
+        inset: 4px 0;
+        border-radius: 8px;
+        background-color: var(--bg-color);
+      }
+    }
   }
   #shortcuts .tab-bar li a span {
     text-align: left;

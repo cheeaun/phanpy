@@ -1,14 +1,14 @@
 import './welcome.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 
 import boostsCarouselUrl from '../assets/features/boosts-carousel.jpg';
 import groupedNotificationsUrl from '../assets/features/grouped-notifications.jpg';
 import multiColumnUrl from '../assets/features/multi-column.jpg';
 import multiHashtagTimelineUrl from '../assets/features/multi-hashtag-timeline.jpg';
 import nestedCommentsThreadUrl from '../assets/features/nested-comments-thread.jpg';
-import logoText from '../assets/logo-text.svg';
 import logo from '../assets/logo.svg';
+import logoText from '../assets/logo-text.svg';
 
 import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
@@ -31,6 +31,7 @@ const appVersion = __BUILD_TIME__
   : null;
 
 function Welcome() {
+  const { t } = useLingui();
   useTitle(null, ['/', '/welcome']);
   return (
     <main id="welcome">

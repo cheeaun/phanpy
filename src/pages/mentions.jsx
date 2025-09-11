@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useMemo, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ const LIMIT = 20;
 const emptySearchParams = new URLSearchParams();
 
 function Mentions({ columnMode, ...props }) {
+  const { t } = useLingui();
   const { masto, instance } = api();
   const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
   const [stateType, setStateType] = useState(null);
@@ -24,10 +25,12 @@ function Mentions({ columnMode, ...props }) {
 
   async function fetchMentions(firstLoad) {
     if (firstLoad || !mentionsIterator.current) {
-      mentionsIterator.current = masto.v1.notifications.list({
-        limit: LIMIT,
-        types: ['mention'],
-      });
+      mentionsIterator.current = masto.v1.notifications
+        .list({
+          limit: LIMIT,
+          types: ['mention'],
+        })
+        .values();
     }
     const results = await mentionsIterator.current.next();
     let { value } = results;
@@ -53,9 +56,11 @@ function Mentions({ columnMode, ...props }) {
   const latestConversationItem = useRef();
   async function fetchConversations(firstLoad) {
     if (firstLoad || !conversationsIterator.current) {
-      conversationsIterator.current = masto.v1.conversations.list({
-        limit: LIMIT,
-      });
+      conversationsIterator.current = masto.v1.conversations
+        .list({
+          limit: LIMIT,
+        })
+        .values();
     }
     const results = await conversationsIterator.current.next();
     let { value } = results;
@@ -92,6 +97,7 @@ function Mentions({ columnMode, ...props }) {
             limit: 1,
             since_id: latestConversationItem.current,
           })
+          .values()
           .next();
         let { value } = results;
         console.log(
@@ -117,6 +123,7 @@ function Mentions({ columnMode, ...props }) {
             types: ['mention'],
             since_id: latestItem.current,
           })
+          .values()
           .next();
         let { value } = results;
         console.log('checkForUpdates ALL', latestItem.current, value);
@@ -174,6 +181,7 @@ function Mentions({ columnMode, ...props }) {
       useItemID
       timelineStart={TimelineStart}
       refresh={type}
+      filterContext="notifications"
     />
   );
 }

@@ -2,17 +2,29 @@
 @custom-media --viewport-medium (min-width: 40em);
 
 :root {
+  interpolate-size: allow-keywords;
+
   --sai-top: env(safe-area-inset-top);
   --sai-right: env(safe-area-inset-right);
   --sai-bottom: env(safe-area-inset-bottom);
   --sai-left: env(safe-area-inset-left);
 
+  --sai-inline-start: var(--sai-left);
+  &:dir(rtl) {
+    --sai-inline-start: var(--sai-right);
+  }
+  --sai-inline-end: var(--sai-right);
+  &:dir(rtl) {
+    --sai-inline-end: var(--sai-left);
+  }
+
   --text-size: 16px;
   --main-width: 40em;
   text-size-adjust: none;
   --hairline-width: 1px;
-  --monospace-font: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono',
-    Menlo, Courier, monospace;
+  --monospace-font:
+    ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
+    monospace;
 
   --blue-color: royalblue;
   --purple-color: blueviolet;
@@ -88,7 +100,7 @@
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(0, 0, 0, 0.1);
-  --backdrop-solid-color: color-mix(in srgb, var(--bg-color) 90%, #000 10%);
+  --backdrop-solid-color: var(--bg-faded-color);
   --backdrop-theme-color: #e5e5e5;
   --backdrop-darker-color: rgba(0, 0, 0, 0.25);
   --img-bg-color: rgba(128, 128, 128, 0.2);
@@ -190,8 +202,16 @@ html {
 }
 
 body {
-  font-family: ui-rounded, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Ubuntu, Cantarell, Noto Sans, sans-serif;
+  font-family:
+    ui-rounded,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    Noto Sans,
+    sans-serif;
   font-size: var(--text-size);
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -367,6 +387,7 @@ button[hidden] {
 
 input[type='text'],
 input[type='search'],
+input[type='datetime-local'],
 textarea,
 select {
   color: var(--text-color);
@@ -377,6 +398,7 @@ select {
 }
 input[type='text']:focus,
 input[type='search']:focus,
+input[type='datetime-local']:focus,
 textarea:focus,
 select:focus {
   border-color: var(--outline-color);
@@ -578,8 +600,46 @@ kbd {
   grid-template-columns: 0fr;
 }
 
+.shazam {
+  transition: all 0.3s ease-out allow-discrete;
+  @starting-style {
+    display: none;
+    opacity: 0;
+    height: 0;
+    overflow: clip;
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* VIEW TRANSITIONS */
+
+::view-transition-old(status),
+::view-transition-new(status) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-media),
+::view-transition-new(status-media) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-poll),
+::view-transition-new(status-poll) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-card-byline),
+::view-transition-new(status-card-byline),
+::view-transition-old(status-card),
+::view-transition-new(status-card) {
+  width: 100%;
+  height: 100%;
 }

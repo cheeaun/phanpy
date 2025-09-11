@@ -1,0 +1,132 @@
+#scheduled-posts-page {
+  .posts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      > button {
+        text-align: start;
+        color: inherit;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid var(--outline-color);
+        gap: 8px;
+
+        > .status {
+          padding: 8px;
+          pointer-events: none;
+          background-color: var(--bg-blur-color);
+          border-radius: 8px;
+          border: 1px solid var(--outline-color);
+          font-size: 80%;
+          max-height: 160px;
+          overflow: hidden;
+          mask-image: linear-gradient(
+            to bottom,
+            black calc(160px - 16px),
+            transparent
+          );
+
+          .media-container .media {
+            width: 80px !important;
+            height: 80px !important;
+          }
+        }
+      }
+
+      .post-schedule-meta {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        &.post-schedule-time {
+          .icon,
+          b {
+            color: var(--red-text-color);
+          }
+        }
+        &.post-schedule-month b {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    h2 {
+      font-weight: 500;
+      margin: 0;
+      padding: 0;
+      font-size: 1em;
+    }
+  }
+}
+
+#scheduled-post-sheet {
+  header h2 {
+    font-weight: normal;
+
+    small {
+      font-size: var(--text-size);
+    }
+  }
+  main > .status {
+    background-color: var(--bg-blur-color);
+    border-radius: 8px;
+    border: 1px solid var(--outline-color);
+    overflow: auto;
+    max-height: 50svh;
+
+    .media-container .media {
+      width: 80px !important;
+      height: 80px !important;
+    }
+  }
+  .status-reply {
+    border-radius: 16px 16px 0 0;
+    max-height: 160px;
+    background-color: var(--bg-color);
+    margin: 0 12px;
+    border: 1px solid var(--outline-color);
+    border-bottom: 0;
+    -webkit-animation: appear-up 1sease-in-out;
+    animation: appear-up 1sease-in-out;
+    overflow: auto;
+
+    > .status {
+      font-size: 90%;
+    }
+  }
+  footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0;
+
+    .row {
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    input[type='datetime-local'] {
+      max-width: calc(100vw - 32px);
+      min-width: 0; /* Adding a min-width to prevent overflow */
+
+      &:user-invalid {
+        border-color: var(--red-color);
+      }
+
+      @supports not selector(:user-invalid) {
+        &:invalid {
+          border-color: var(--red-color);
+        }
+      }
+    }
+
+    .grow {
+      flex-grow: 1;
+    }
+  }
+}

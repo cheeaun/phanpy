@@ -4,9 +4,9 @@ import { resolve } from 'path';
 
 import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
-import { SondaRollupPlugin } from 'sonda';
+import Sonda from 'sonda/vite';
 import { uid } from 'uid/single';
-import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import generateFile from 'vite-plugin-generate-file';
 import htmlPlugin from 'vite-plugin-html-config';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -21,6 +21,9 @@ const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_CLIENT_NAME: CLIENT_NAME,
   PHANPY_APP_ERROR_LOGGING: ERROR_LOGGING,
+  PHANPY_REFERRER_POLICY: REFERRER_POLICY,
+  PHANPY_DISALLOW_ROBOTS: DISALLOW_ROBOTS,
+  PHANPY_DEV,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
 
 const now = new Date();
@@ -62,7 +65,7 @@ export default defineConfig({
       // Force use Babel instead of ESBuild due to this change: https://github.com/preactjs/preset-vite/pull/114
       // Else, a bug will happen with importing variables from import.meta.env
       babel: {
-        plugins: ['macros'],
+        plugins: ['@lingui/babel-plugin-lingui-macro'],
       },
     }),
     lingui(),
@@ -81,11 +84,17 @@ export default defineConfig({
         // },
       ],
     }),
-    splitVendorChunkPlugin(),
     removeConsole({
       includes: ['log', 'debug', 'info', 'warn', 'error'],
     }),
     htmlPlugin({
+      metas: [
+        // Learn more: https://web.dev/articles/referrer-best-practices
+        {
+          name: 'referrer',
+          content: REFERRER_POLICY || 'origin',
+        },
+      ],
       headScripts: ERROR_LOGGING ? [rollbarCode] : [],
       links: [
         ...ALL_LOCALES.map((lang) => ({
@@ -111,6 +120,15 @@ export default defineConfig({
           commitHash,
         },
       },
+      ...(DISALLOW_ROBOTS
+        ? [
+            {
+              type: 'raw',
+              output: './robots.txt',
+              data: 'User-agent: *\nDisallow: /',
+            },
+          ]
+        : []),
     ]),
     VitePWA({
       manifest: {
@@ -118,7 +136,7 @@ export default defineConfig({
         short_name: CLIENT_NAME,
         description: 'Minimalistic opinionated Mastodon web client',
         // https://github.com/cheeaun/phanpy/issues/231
-        // theme_color: '#ffffff',
+        theme_color: undefined,
         icons: [
           {
             src: 'logo-192.png',
@@ -150,14 +168,17 @@ export default defineConfig({
         type: 'module',
       },
     }),
-    SondaRollupPlugin({
-      detailed: true,
+    Sonda({
+      deep: true,
       brotli: true,
+      open: false,
     }),
   ],
   build: {
     sourcemap: true,
-    cssCodeSplit: false,
+    // Note: In Vite 6, if cssCodeSplit = false, it will show error "Cannot read properties of undefined (reading 'includes')"
+    // TODO: Revisit this when this issue is fixed
+    // cssCodeSplit: false,
     rollupOptions: {
       treeshake: false,
       input: {
@@ -165,10 +186,26 @@ export default defineConfig({
         compose: resolve(__dirname, 'compose/index.html'),
       },
       output: {
-        manualChunks: {
-          // 'intl-segmenter-polyfill': ['@formatjs/intl-segmenter/polyfill'],
-          'tinyld-light': ['tinyld/light'],
-        },
+        // NOTE: Comment this for now. This messes up async imports.
+        // Without SplitVendorChunkPlugin, pushing everything to vendor is not "smart" enough
+        // manualChunks: (id, { getModuleInfo }) => {
+        //   // if (id.includes('@formatjs/intl-segmenter/polyfill')) return 'intl-segmenter-polyfill';
+        //   if (/tiny.*light/.test(id)) return 'tinyld-light';
+
+        //   // Implement logic similar to splitVendorChunkPlugin
+        //   if (id.includes('node_modules')) {
+        //     // Check if this module is dynamically imported
+        //     const moduleInfo = getModuleInfo(id);
+        //     if (moduleInfo) {
+        //       // If it's imported dynamically, don't put in vendor
+        //       const isDynamicOnly =
+        //         moduleInfo.importers.length === 0 &&
+        //         moduleInfo.dynamicImporters.length > 0;
+        //       if (isDynamicOnly) return null;
+        //     }
+        //     return 'vendor';
+        //   }
+        // },
         chunkFileNames: (chunkInfo) => {
           const { facadeModuleId } = chunkInfo;
           if (facadeModuleId && facadeModuleId.includes('icon')) {
@@ -179,7 +216,28 @@ export default defineConfig({
           }
           return 'assets/[name]-[hash].js';
         },
+        assetFileNames: (assetInfo) => {
+          const { originalFileNames } = assetInfo;
+          if (originalFileNames?.[0]?.includes('assets/sandbox')) {
+            return 'assets/sandbox/[name]-[hash].[ext]';
+          }
+          return 'assets/[name]-[hash].[ext]';
+        },
       },
+      plugins: [
+        {
+          name: 'exclude-sandbox',
+          generateBundle(_, bundle) {
+            if (!PHANPY_DEV) {
+              Object.entries(bundle).forEach(([name, chunk]) => {
+                if (name.includes('sandbox')) {
+                  delete bundle[name];
+                }
+              });
+            }
+          },
+        },
+      ],
     },
   },
 });

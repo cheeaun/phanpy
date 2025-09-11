@@ -1,0 +1,23 @@
+#open-link-sheet {
+  .full-url {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    font-variant: no-common-ligatures tabular-nums slashed-zero;
+    font-feature-settings: 'ss01';
+
+    strong {
+      background-color: var(--orange-light-bg-color);
+      text-shadow: 0 1px var(--bg-color);
+      border-radius: 6px;
+      padding: 4px;
+      margin: -3px;
+    }
+  }
+
+  footer {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

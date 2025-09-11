@@ -31,6 +31,7 @@ const states = proxy({
     id: null,
     counter: 0,
   },
+  reloadScheduledPosts: 0,
   spoilers: {},
   spoilersMedia: {},
   scrollPositions: {},
@@ -213,12 +214,33 @@ export function saveStatus(status, instance, opts) {
       states.statuses[srKey] = status.reblog;
     }
     if (status.quote?.id) {
-      const sKey = statusKey(status.quote.id, instance);
+      const { id } = status.quote;
+      const sKey = statusKey(id, instance);
       states.statuses[sKey] = status.quote;
+      const selfURL = `/${instance}/s/${id}`;
       states.statusQuotes[key] = [
         {
-          id: status.quote.id,
+          id,
           instance,
+          url: selfURL,
+          native: true,
+        },
+      ];
+    }
+    // Mastodon native quotes
+    if (status.quote?.state === 'accepted' && status.quote?.quotedStatus) {
+      const { quotedStatus, state } = status.quote;
+      const { id } = quotedStatus;
+      const selfURL = `/${instance}/s/${id}`;
+      const sKey = statusKey(id, instance);
+      states.statuses[sKey] = quotedStatus;
+      states.statusQuotes[key] = [
+        {
+          id,
+          instance,
+          url: selfURL,
+          state,
+          native: true,
         },
       ];
     }

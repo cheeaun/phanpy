@@ -1,7 +1,7 @@
 import './notifications.css';
 
-import { msg, Plural, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg } from '@lingui/core/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import {
@@ -28,6 +28,7 @@ import Notification from '../components/notification';
 import Status from '../components/status';
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
+import FilterContext from '../utils/filter-context';
 import groupNotifications, {
   groupNotifications2,
   massageNotifications2,
@@ -39,7 +40,8 @@ import { getRegistration } from '../utils/push-notifications';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
-import { getCurrentInstance } from '../utils/store-utils';
+import store from '../utils/store';
+import { getAPIVersions, getCurrentInstance } from '../utils/store-utils';
 import supports from '../utils/supports';
 import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
@@ -56,13 +58,13 @@ const scrollIntoViewOptions = {
 };
 
 const memSupportsGroupedNotifications = mem(
-  () => supports('@mastodon/grouped-notifications'),
+  () => getAPIVersions()?.mastodon >= 2,
   {
     maxAge: 1000 * 60 * 5, // 5 minutes
   },
 );
 
-export function mastoFetchNotifications(opts = {}) {
+function mastoFetchNotificationsIterable(opts = {}) {
   const { masto } = api();
   if (
     states.settings.groupedNotificationsAlpha &&
@@ -79,6 +81,9 @@ export function mastoFetchNotifications(opts = {}) {
       ...opts,
     });
   }
+}
+export function mastoFetchNotifications(opts = {}) {
+  return mastoFetchNotificationsIterable(opts).values();
 }
 
 export function getGroupedNotifications(notifications) {
@@ -108,7 +113,7 @@ const NOTIFICATIONS_POLICIES_TEXT = {
 };
 
 function Notifications({ columnMode }) {
-  const { _ } = useLingui();
+  const { _, t } = useLingui();
   useTitle(t`Notifications`, '/notifications');
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
@@ -129,13 +134,15 @@ function Notifications({ columnMode }) {
 
   console.debug('RENDER Notifications');
 
+  const notificationsIterable = useRef();
   const notificationsIterator = useRef();
   async function fetchNotifications(firstLoad) {
     if (firstLoad || !notificationsIterator.current) {
       // Reset iterator
-      notificationsIterator.current = mastoFetchNotifications({
+      notificationsIterable.current = mastoFetchNotificationsIterable({
         excludeTypes: ['follow_request'],
       });
+      notificationsIterator.current = notificationsIterable.current.values();
     }
     if (/max_id=($|&)/i.test(notificationsIterator.current?.nextParams)) {
       // Pixelfed returns next paginationed link with empty max_id
@@ -272,9 +279,10 @@ function Notifications({ columnMode }) {
             .then((announcements) => {
               announcements.sort((a, b) => {
                 // Sort by updatedAt first, then createdAt
-                const aDate = new Date(a.updatedAt || a.createdAt);
-                const bDate = new Date(b.updatedAt || b.createdAt);
-                return bDate - aDate;
+                return (
+                  Date.parse(b.updatedAt || b.createdAt) -
+                  Date.parse(a.updatedAt || a.createdAt)
+                );
               });
               setAnnouncements(announcements);
             })
@@ -409,73 +417,133 @@ function Notifications({ columnMode }) {
   //   }
   // }, [uiState]);
 
+  const [annualReportNotification, setAnnualReportNotification] =
+    useState(null);
+  useEffect(async () => {
+    // Skip this if not in December
+    const date = new Date();
+    if (date.getMonth() !== 11) return;
+
+    // Skip if doesn't support annual report
+    if (!supports('@mastodon/annual-report')) return;
+
+    let annualReportNotification = store.account.get(
+      'annualReportNotification',
+    );
+    if (annualReportNotification) {
+      setAnnualReportNotification(annualReportNotification);
+      return;
+    }
+    const notificationIterator = mastoFetchNotifications({
+      types: ['annual_report'],
+    });
+    try {
+      const notification = await notificationIterator.next();
+      annualReportNotification = notification?.value?.notificationGroups?.[0];
+      const annualReportYear = annualReportNotification?.annualReport?.year;
+      // If same year, show the annual report
+      if (annualReportYear == date.getFullYear()) {
+        console.log(
+          'ANNUAL REPORT',
+          annualReportYear,
+          annualReportNotification,
+        );
+        setAnnualReportNotification(annualReportNotification);
+        store.account.set('annualReportNotification', annualReportNotification);
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  }, []);
+
   const itemsSelector = '.notification';
-  const jRef = useHotkeys('j', () => {
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const activeItemRect = activeItem?.getBoundingClientRect();
-    const allItems = Array.from(
-      scrollableRef.current.querySelectorAll(itemsSelector),
-    );
-    if (
-      activeItem &&
-      activeItemRect.top < scrollableRef.current.clientHeight &&
-      activeItemRect.bottom > 0
-    ) {
-      const activeItemIndex = allItems.indexOf(activeItem);
-      let nextItem = allItems[activeItemIndex + 1];
-      if (nextItem) {
-        nextItem.focus();
-        nextItem.scrollIntoView(scrollIntoViewOptions);
+  const jRef = useHotkeys(
+    'j',
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let nextItem = allItems[activeItemIndex + 1];
+        if (nextItem) {
+          nextItem.focus();
+          nextItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      const topmostItem = allItems.find((item) => {
-        const itemRect = item.getBoundingClientRect();
-        return itemRect.top >= 44 && itemRect.left >= 0;
-      });
-      if (topmostItem) {
-        topmostItem.focus();
-        topmostItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
-  const kRef = useHotkeys('k', () => {
-    // focus on previous status after active item
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const activeItemRect = activeItem?.getBoundingClientRect();
-    const allItems = Array.from(
-      scrollableRef.current.querySelectorAll(itemsSelector),
-    );
-    if (
-      activeItem &&
-      activeItemRect.top < scrollableRef.current.clientHeight &&
-      activeItemRect.bottom > 0
-    ) {
-      const activeItemIndex = allItems.indexOf(activeItem);
-      let prevItem = allItems[activeItemIndex - 1];
-      if (prevItem) {
-        prevItem.focus();
-        prevItem.scrollIntoView(scrollIntoViewOptions);
+  const kRef = useHotkeys(
+    'k',
+    () => {
+      // focus on previous status after active item
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let prevItem = allItems[activeItemIndex - 1];
+        if (prevItem) {
+          prevItem.focus();
+          prevItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      const topmostItem = allItems.find((item) => {
-        const itemRect = item.getBoundingClientRect();
-        return itemRect.top >= 44 && itemRect.left >= 0;
-      });
-      if (topmostItem) {
-        topmostItem.focus();
-        topmostItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
-  const oRef = useHotkeys(['enter', 'o'], () => {
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const statusLink = activeItem?.querySelector('.status-link');
-    if (statusLink) {
-      statusLink.click();
-    }
-  });
+  const oRef = useHotkeys(
+    ['enter', 'o'],
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const statusLink = activeItem?.querySelector('.status-link');
+      if (statusLink) {
+        statusLink.click();
+      }
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
   const today = new Date();
   const todaySubHeading = useMemo(() => {
@@ -492,9 +560,9 @@ function Notifications({ columnMode }) {
       class="deck-container"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef(node);
-        kRef(node);
-        oRef(node);
+        jRef.current = node;
+        kRef.current = node;
+        oRef.current = node;
       }}
       tabIndex="-1"
     >
@@ -728,6 +796,13 @@ function Notifications({ columnMode }) {
               </div>
             </div>
           )}
+        {annualReportNotification && (
+          <div class="shazam-container">
+            <div class="shazam-container-inner">
+              <Notification notification={annualReportNotification} />
+            </div>
+          </div>
+        )}
         <div id="mentions-option">
           <label>
             <input
@@ -750,7 +825,7 @@ function Notifications({ columnMode }) {
           </p>
         )}
         {snapStates.notifications.length ? (
-          <>
+          <FilterContext.Provider value="notifications">
             {snapStates.notifications
               // This is leaked from Notifications popover
               .filter((n) => n.type !== 'follow_request')
@@ -796,7 +871,7 @@ function Notifications({ columnMode }) {
                   </Fragment>
                 );
               })}
-          </>
+          </FilterContext.Provider>
         ) : (
           <>
             {uiState === 'loading' && (
@@ -1126,6 +1201,7 @@ function NotificationRequestModalButton({ request }) {
 }
 
 function NotificationRequestButtons({ request, onChange }) {
+  const { t } = useLingui();
   const { masto } = api();
   const [uiState, setUIState] = useState('default');
   const [requestState, setRequestState] = useState(null); // accept, dismiss

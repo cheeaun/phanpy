@@ -2,8 +2,8 @@ import '../components/links-bar.css';
 import './catchup.css';
 
 import autoAnimate from '@formkit/auto-animate';
-import { msg, Plural, select, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg, select } from '@lingui/core/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
@@ -15,7 +15,6 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { uid } from 'uid/single';
@@ -30,11 +29,12 @@ import Modal from '../components/modal';
 import NameText from '../components/name-text';
 import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
-import { api } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import db from '../utils/db';
 import emojifyText from '../utils/emojify-text';
 import { isFiltered } from '../utils/filters';
+import getDomain from '../utils/get-domain';
 import htmlContentLength from '../utils/html-content-length';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
@@ -42,7 +42,6 @@ import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
-import store from '../utils/store';
 import { getCurrentAccountID, getCurrentAccountNS } from '../utils/store-utils';
 import supports from '../utils/supports';
 import { assignFollowedTags } from '../utils/timeline-utils';
@@ -95,7 +94,7 @@ const DTF = mem(
 );
 
 function Catchup() {
-  const { i18n, _ } = useLingui();
+  const { i18n, _, t } = useLingui();
   const dtf = DTF(i18n.locale);
 
   useTitle(`Catch-up`, '/catchup');
@@ -113,17 +112,17 @@ function Catchup() {
   const supportsPixelfed = supports('@pixelfed/home-include-reblogs');
 
   async function fetchHome({ maxCreatedAt }) {
-    const maxCreatedAtDate = maxCreatedAt ? new Date(maxCreatedAt) : null;
-    console.debug('fetchHome', maxCreatedAtDate);
+    console.debug('fetchHome', maxCreatedAt);
     const allResults = [];
-    const homeIterator = masto.v1.timelines.home.list({ limit: 40 });
+    const homeIterable = masto.v1.timelines.home.list({ limit: 40 });
+    const homeIterator = homeIterable.values();
     mainloop: while (true) {
       try {
-        if (supportsPixelfed && homeIterator.nextParams) {
-          if (typeof homeIterator.nextParams === 'string') {
-            homeIterator.nextParams += '&include_reblogs=true';
+        if (supportsPixelfed && homeIterable.params) {
+          if (typeof homeIterable.params === 'string') {
+            homeIterable.params += '&include_reblogs=true';
           } else {
-            homeIterator.nextParams.include_reblogs = true;
+            homeIterable.params.include_reblogs = true;
           }
         }
         const results = await homeIterator.next();
@@ -134,8 +133,8 @@ function Catchup() {
           let addedResults = false;
           for (let i = 0; i < value.length; i++) {
             const item = value[i];
-            const createdAtDate = new Date(item.createdAt);
-            if (!maxCreatedAtDate || createdAtDate >= maxCreatedAtDate) {
+            const createdAtTime = Date.parse(item.createdAt);
+            if (!maxCreatedAt || createdAtTime >= maxCreatedAt) {
               // Filtered
               const selfPost = isSelf(
                 item.reblog?.account?.id || item.account.id,
@@ -308,7 +307,7 @@ function Catchup() {
       original = 0;
     const links = {};
     for (const post of posts) {
-      if (post._filtered) {
+      if (post._filtered && post._filtered?.action !== 'blur') {
         filtered++;
         post.__FILTER = 'filtered';
       } else if (post.group) {
@@ -715,8 +714,9 @@ function Catchup() {
       }
     },
     {
+      useKey: true,
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -759,8 +759,9 @@ function Catchup() {
       }
     },
     {
+      useKey: true,
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
@@ -788,8 +789,9 @@ function Catchup() {
       }
     },
     {
+      useKey: true,
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
       enableOnFormTags: ['input'],
     },
   );
@@ -802,8 +804,9 @@ function Catchup() {
     },
     {
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
       enableOnFormTags: ['input'],
+      useKey: true,
     },
   );
 
@@ -816,8 +819,9 @@ function Catchup() {
       });
     },
     {
+      useKey: true,
       preventDefault: true,
-      ignoreModifiers: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
       enableOnFormTags: ['input'],
     },
   );
@@ -842,10 +846,11 @@ function Catchup() {
     <div
       ref={(node) => {
         scrollableRef.current = node;
-        jRef(node);
-        kRef(node);
-        hlRef(node);
-        escRef(node);
+        jRef.current = node;
+        kRef.current = node;
+        hlRef.current = node;
+        escRef.current = node;
+        dotRef.current = node;
       }}
       id="catchup-page"
       class="deck-container"
@@ -1171,11 +1176,7 @@ function Catchup() {
                         height,
                         publishedAt,
                       } = card;
-                      const domain = punycode.toUnicode(
-                        URL.parse(url)
-                          .hostname.replace(/^www\./, '')
-                          .replace(/\/$/, ''),
-                      );
+                      const domain = getDomain(url);
                       let accentColor;
                       if (blurhash) {
                         const averageColor = getBlurHashAverageColor(blurhash);
@@ -1192,7 +1193,7 @@ function Catchup() {
                           key={url}
                           href={url}
                           target="_blank"
-                          rel="noopener noreferrer"
+                          rel="noopener"
                           class="link-block"
                           style={
                             accentColor
@@ -1714,7 +1715,7 @@ const PostLine = memo(
       __BOOSTERS,
     } = post;
     const isReplyTo = inReplyToId && inReplyToAccountId !== account.id;
-    const isFiltered = !!filterInfo;
+    const isFiltered = !!filterInfo && filterInfo?.action !== 'blur';
 
     const debugHover = (e) => {
       if (e.shiftKey) {
@@ -1834,6 +1835,7 @@ function postDensity(post) {
 const MEDIA_SIZE = 48;
 
 function PostPeek({ post, filterInfo }) {
+  const { t } = useLingui();
   const {
     spoilerText,
     sensitive,
@@ -1850,12 +1852,12 @@ function PostPeek({ post, filterInfo }) {
   const isThread =
     (inReplyToId && inReplyToAccountId === account.id) || !!_thread;
 
-  const readingExpandSpoilers = useMemo(() => {
-    const prefs = store.account.get('preferences') || {};
-    return !!prefs['reading:expand:spoilers'];
-  }, []);
+  const prefs = getPreferences();
+  const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
   // const readingExpandSpoilers = true;
-  const showMedia = readingExpandSpoilers || (!spoilerText && !sensitive);
+  const showMedia =
+    readingExpandSpoilers ||
+    (!spoilerText && !sensitive && filterInfo?.action !== 'blur');
   const postText = content ? statusPeek(post) : '';
 
   const showPostContent = !spoilerText || readingExpandSpoilers;
@@ -1868,7 +1870,7 @@ function PostPeek({ post, filterInfo }) {
             <span class="post-peek-tag post-peek-thread">Thread</span>{' '}
           </>
         )}
-        {!!filterInfo ? (
+        {!!filterInfo && filterInfo?.action !== 'blur' ? (
           <span class="post-peek-filtered">
             {/* Filtered{filterInfo?.titlesStr ? `: ${filterInfo.titlesStr}` : ''} */}
             {filterInfo?.titlesStr
@@ -1920,7 +1922,7 @@ function PostPeek({ post, filterInfo }) {
           </>
         )}
       </span>
-      {!filterInfo && (
+      {(!filterInfo || filterInfo?.action === 'blur') && (
         <span class="post-peek-post-content">
           {!!poll && (
             <span class="post-peek-tag post-peek-poll">
@@ -2048,6 +2050,7 @@ function PostPeek({ post, filterInfo }) {
 }
 
 function PostStats({ post }) {
+  const { t } = useLingui();
   const { reblogsCount, repliesCount, favouritesCount } = post;
   return (
     <span class="post-stats">
@@ -2088,15 +2091,20 @@ function binByTime(data, key, numBins) {
   );
 
   // Calculate the time span in milliseconds
-  const range = maxDate.getTime() - minDate.getTime();
+  const range = Math.min(maxDate.getTime(), Date.now()) - minDate.getTime();
 
   // Create empty bins and loop through data
   const bins = Array.from({ length: numBins }, () => []);
   data.forEach((item) => {
-    const date = new Date(item[key]);
-    const normalized = (date.getTime() - minDate.getTime()) / range;
-    const binIndex = Math.floor(normalized * (numBins - 1));
-    bins[binIndex].push(item);
+    const dateTime = Date.parse(item[key]);
+    if (dateTime > Date.now()) {
+      // Future dates go into the last bin
+      bins[bins.length - 1].push(item);
+    } else {
+      const normalized = (dateTime - minDate.getTime()) / range;
+      const binIndex = Math.floor(normalized * (numBins - 1));
+      bins[binIndex].push(item);
+    }
   });
 
   return bins;

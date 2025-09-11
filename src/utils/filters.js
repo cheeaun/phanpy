@@ -8,7 +8,7 @@ function _isFiltered(filtered, filterContext) {
     const hasContext = filter.context.includes(filterContext);
     if (!hasContext) return false;
     if (!filter.expiresAt) return hasContext;
-    return new Date(filter.expiresAt) > new Date();
+    return Date.parse(filter.expiresAt) > Date.now();
   });
   if (!appliedFilters.length) return false;
   const isHidden = appliedFilters.some((f) => f.filter.filterAction === 'hide');
@@ -16,7 +16,18 @@ function _isFiltered(filtered, filterContext) {
     return {
       action: 'hide',
     };
-  const isWarn = appliedFilters.some((f) => f.filter.filterAction === 'warn');
+  const isBlur = appliedFilters.every((f) => f.filter.filterAction === 'blur');
+  if (isBlur) {
+    const filterTitles = appliedFilters.map((f) => f.filter.title);
+    return {
+      action: 'blur',
+      titles: filterTitles,
+      titlesStr: filterTitles.join(' • '),
+    };
+  }
+  // const isWarn = appliedFilters.some((f) => f.filter.filterAction === 'warn');
+  const isWarn = appliedFilters.some((f) => !!f.filter.filterAction);
+  // Re: spec; unknown values for filter_action should be treated as warn.
   if (isWarn) {
     const filterTitles = appliedFilters.map((f) => f.filter.title);
     return {

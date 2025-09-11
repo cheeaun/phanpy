@@ -28,6 +28,13 @@ dist-ssr
 phanpy-dist.zip
 phanpy-dist.tar.gz
 sonda-report.html
+.sonda
 
 # Compiled locale files
 src/locales/*.js
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

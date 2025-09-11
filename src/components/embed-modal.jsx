@@ -1,10 +1,11 @@
 import './embed-modal.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 
 import Icon from './icon';
 
 function EmbedModal({ html, url, width, height, onClose = () => {} }) {
+  const { t } = useLingui();
   return (
     <div class="embed-modal-container">
       <div class="top-controls">
@@ -12,12 +13,7 @@ function EmbedModal({ html, url, width, height, onClose = () => {} }) {
           <Icon icon="x" alt={t`Close`} />
         </button>
         {url && (
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="button plain"
-          >
+          <a href={url} target="_blank" rel="noopener" class="button plain">
             <span>
               <Trans>Open in new window</Trans>
             </span>{' '}

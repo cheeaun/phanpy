@@ -1,4 +1,6 @@
-import { Plural, plural, t, Trans } from '@lingui/macro';
+import { i18n } from '@lingui/core';
+import { plural } from '@lingui/core/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useState } from 'preact/hooks';
 
 import shortenNumber from '../utils/shorten-number';
@@ -14,6 +16,7 @@ export default function Poll({
   refresh = () => {},
   votePoll = () => {},
 }) {
+  const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const {
     expired,
@@ -24,7 +27,7 @@ export default function Poll({
     ownVotes,
     voted,
     votersCount,
-    votesCount,
+    votesCount = 0,
     emojis,
   } = poll;
   const expiresAtDate = !!expiresAt && new Date(expiresAt); // Update poll at point of expiry
@@ -49,7 +52,7 @@ export default function Poll({
   //   };
   // }, [expired, expiresAtDate]);
 
-  const pollVotesCount = multiple ? votersCount : votesCount;
+  const pollVotesCount = multiple ? votersCount || votesCount : votesCount;
   let roundPrecision = 0;
 
   if (pollVotesCount <= 1000) {

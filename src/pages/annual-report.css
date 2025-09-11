@@ -31,8 +31,13 @@
     table {
       width: 100%;
 
-      td, th {
+      td,
+      th {
         vertical-align: top;
+
+        &.number {
+          text-align: end;
+        }
       }
 
       th {
@@ -44,6 +49,10 @@
 
       tr > * {
         border-top: 1px dashed var(--outline-color);
+
+        ~ * {
+          padding-inline-start: 1ch;
+        }
       }
     }
 
@@ -68,10 +77,9 @@
 
         .status {
           pointer-events: none;
-          font-size: calc(var(--text-size) * .8);
+          font-size: calc(var(--text-size) * 0.8);
         }
       }
-
     }
   }
 }

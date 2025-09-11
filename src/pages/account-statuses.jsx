@@ -1,5 +1,4 @@
-import { t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
@@ -22,7 +21,11 @@ import { api } from '../utils/api';
 import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
-import { isMediaFirstInstance } from '../utils/store-utils';
+import {
+  getCurrentAccountID,
+  isMediaFirstInstance,
+} from '../utils/store-utils';
+import supports from '../utils/supports';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -41,7 +44,7 @@ const supportsInputMonth = (() => {
 
 async function _isSearchEnabled(instance) {
   const { masto } = api({ instance });
-  const results = await masto.v2.search.fetch({
+  const results = await masto.v2.search.list({
     q: 'from:me',
     type: 'statuses',
     limit: 1,
@@ -51,6 +54,7 @@ async function _isSearchEnabled(instance) {
 const isSearchEnabled = pmem(_isSearchEnabled);
 
 function AccountStatuses() {
+  const { i18n, t } = useLingui();
   const snapStates = useSnapshot(states);
   const { id, ...params } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -137,7 +141,7 @@ function AccountStatuses() {
         searchOffsetRef.current += LIMIT;
       }
 
-      const searchResults = await masto.v2.search.fetch({
+      const searchResults = await masto.v2.search.list({
         q: `from:${account.acct} after:${afterStr} before:${beforeStr}`,
         type: 'statuses',
         limit,
@@ -162,6 +166,7 @@ function AccountStatuses() {
         .statuses.list({
           pinned: true,
         })
+        .values()
         .next();
       if (value?.length && !tagged && !media) {
         const pinnedStatuses = value.map((status) => {
@@ -192,27 +197,31 @@ function AccountStatuses() {
           exclude_reblogs: excludeBoosts,
           only_media: media || undefined,
           tagged,
-        });
+        })
+        .values();
     }
     const { value, done } = await accountStatusesIterator.current.next();
     if (value?.length) {
-      // Check if value is same as pinned post (results)
-      // If the index for every post is the same, means API might not support pinned posts
-      if (results.length) {
-        let pinnedStatusesIds = [];
-        if (results[0]?.type === 'pinned') {
-          pinnedStatusesIds = results[0].id;
-        } else {
-          pinnedStatusesIds = results
-            .filter((status) => status._pinned)
-            .map((status) => status.id);
-        }
-        const containsAllPinned = pinnedStatusesIds.every((postId) =>
-          value.some((status) => status.id === postId),
-        );
-        if (containsAllPinned) {
-          // Remove pinned posts
-          results = [];
+      if (!supports('@mastodon/pinned-posts')) {
+        // Check if value is same as pinned post (results)
+        // If the index for every post is the same, means API might not support pinned posts
+        // TODO: This is a really weird check, fix this at some point
+        if (results.length) {
+          let pinnedStatusesIds = [];
+          if (results[0]?.type === 'pinned') {
+            pinnedStatusesIds = results[0].id;
+          } else {
+            pinnedStatusesIds = results
+              .filter((status) => status._pinned)
+              .map((status) => status.id);
+          }
+          const containsAllPinned = pinnedStatusesIds.every((postId) =>
+            value.some((status) => status.id === postId),
+          );
+          if (containsAllPinned) {
+            // Remove pinned posts
+            results = [];
+          }
         }
       }
 
@@ -229,7 +238,6 @@ function AccountStatuses() {
   }
 
   const [featuredTags, setFeaturedTags] = useState([]);
-  const { i18n } = useLingui();
   let title = t`Account posts`;
   if (account?.acct) {
     const acctDisplay = (/@/.test(account.acct) ? '' : '@') + account.acct;
@@ -256,12 +264,8 @@ function AccountStatuses() {
   }
   useTitle(title, '/:instance?/a/:id');
 
-  const fetchAccountPromiseRef = useRef();
   const fetchAccount = useCallback(() => {
-    const fetchPromise =
-      fetchAccountPromiseRef.current || masto.v1.accounts.$select(id).fetch();
-    fetchAccountPromiseRef.current = fetchPromise;
-    return fetchPromise;
+    return memFetchAccount(id, masto);
   }, [id, masto]);
 
   useEffect(() => {
@@ -291,6 +295,11 @@ function AccountStatuses() {
 
   const { displayName, acct, emojis } = account || {};
 
+  const isSelf = useMemo(
+    () => account?.id === getCurrentAccountID(),
+    [account?.id],
+  );
+
   const filterBarRef = useRef();
   const TimelineStart = useMemo(() => {
     const filtered =
@@ -305,6 +314,7 @@ function AccountStatuses() {
           fetchAccount={fetchAccount}
           authenticated={authenticated}
           standalone
+          showEndorsements
         />
         {!mediaFirst && (
           <div
@@ -472,106 +482,77 @@ function AccountStatuses() {
 
   const accountInstance = useMemo(() => {
     if (!account?.url) return null;
-    const domain = URL.parse(account.url).hostname;
+    const domain = URL.parse(account.url)?.hostname;
     return domain;
   }, [account]);
   const sameInstance = instance === accountInstance;
   const allowSwitch = !!account && !sameInstance;
 
   return (
-    <Timeline
-      key={id}
-      title={`${account?.acct ? '@' + account.acct : t`Posts`}`}
-      titleComponent={
-        <h1
-          class="header-double-lines header-account"
-          // onClick={() => {
-          //   states.showAccount = {
-          //     account,
-          //     instance,
-          //   };
-          // }}
-        >
-          <b>
-            <EmojiText text={displayName} emojis={emojis} />
-          </b>
-          <div>
-            <span class="bidi-isolate">@{acct}</span>
-          </div>
-        </h1>
-      }
-      id="account-statuses"
-      instance={instance}
-      emptyText={t`Nothing to see here yet.`}
-      errorText={t`Unable to load posts`}
-      fetchItems={fetchAccountStatuses}
-      useItemID
-      view={media || mediaFirst ? 'media' : undefined}
-      boostsCarousel={snapStates.settings.boostsCarousel}
-      timelineStart={TimelineStart}
-      refresh={[
-        excludeReplies,
-        excludeBoosts,
-        tagged,
-        media,
-        month + account?.acct,
-      ].toString()}
-      headerEnd={
-        <Menu2
-          portal
-          // setDownOverflow
-          overflow="auto"
-          viewScroll="close"
-          position="anchor"
-          menuButton={
-            <button type="button" class="plain">
-              <Icon icon="more" size="l" alt={t`More`} />
-            </button>
-          }
-        >
-          <MenuItem
-            disabled={!allowSwitch}
-            onClick={() => {
-              (async () => {
-                try {
-                  const { masto } = api({
-                    instance: accountInstance,
-                  });
-                  const acc = await masto.v1.accounts.lookup({
-                    acct: account.acct,
-                  });
-                  const { id } = acc;
-                  location.hash = `/${accountInstance}/a/${id}`;
-                } catch (e) {
-                  console.error(e);
-                  alert(t`Unable to fetch account info`);
-                }
-              })();
-            }}
+    <>
+      <Timeline
+        key={id}
+        title={`${account?.acct ? '@' + account.acct : t`Posts`}`}
+        titleComponent={
+          <h1
+            class="header-double-lines header-account"
+            // onClick={() => {
+            //   states.showAccount = {
+            //     account,
+            //     instance,
+            //   };
+            // }}
           >
-            <Icon icon="transfer" />{' '}
-            <small class="menu-double-lines">
-              <Trans>
-                Switch to account's instance{' '}
-                {accountInstance ? (
-                  <>
-                    {' '}
-                    (<b>{punycode.toUnicode(accountInstance)}</b>)
-                  </>
-                ) : null}
-              </Trans>
-            </small>
-          </MenuItem>
-          {!sameCurrentInstance && (
+            <b>
+              <EmojiText text={displayName} emojis={emojis} />
+            </b>
+            <div>
+              <span class="bidi-isolate">@{acct}</span>
+            </div>
+          </h1>
+        }
+        id="account-statuses"
+        instance={instance}
+        emptyText={t`Nothing to see here yet.`}
+        errorText={t`Unable to load posts`}
+        fetchItems={fetchAccountStatuses}
+        useItemID
+        view={media || mediaFirst ? 'media' : undefined}
+        boostsCarousel={snapStates.settings.boostsCarousel}
+        timelineStart={TimelineStart}
+        refresh={[
+          excludeReplies,
+          excludeBoosts,
+          tagged,
+          media,
+          month + account?.acct,
+        ].toString()}
+        headerEnd={
+          <Menu2
+            portal
+            // setDownOverflow
+            overflow="auto"
+            viewScroll="close"
+            position="anchor"
+            menuButton={
+              <button type="button" class="plain">
+                <Icon icon="more" size="l" alt={t`More`} />
+              </button>
+            }
+          >
             <MenuItem
+              disabled={!allowSwitch}
               onClick={() => {
                 (async () => {
                   try {
-                    const acc = await currentMasto.v1.accounts.lookup({
-                      acct: account.acct + '@' + instance,
+                    const { masto } = api({
+                      instance: accountInstance,
+                    });
+                    const acc = await masto.v1.accounts.lookup({
+                      acct: account.acct,
                     });
                     const { id } = acc;
-                    location.hash = `/${currentInstance}/a/${id}`;
+                    location.hash = `/${accountInstance}/a/${id}`;
                   } catch (e) {
                     console.error(e);
                     alert(t`Unable to fetch account info`);
@@ -582,14 +563,55 @@ function AccountStatuses() {
               <Icon icon="transfer" />{' '}
               <small class="menu-double-lines">
                 <Trans>
-                  Switch to my instance (<b>{currentInstance}</b>)
+                  Switch to account's instance{' '}
+                  {accountInstance ? (
+                    <>
+                      {' '}
+                      (<b>{punycode.toUnicode(accountInstance)}</b>)
+                    </>
+                  ) : null}
                 </Trans>
               </small>
             </MenuItem>
-          )}
-        </Menu2>
-      }
-    />
+            {!sameCurrentInstance && (
+              <MenuItem
+                onClick={() => {
+                  (async () => {
+                    try {
+                      const acc = await currentMasto.v1.accounts.lookup({
+                        acct: account.acct + '@' + instance,
+                      });
+                      const { id } = acc;
+                      location.hash = `/${currentInstance}/a/${id}`;
+                    } catch (e) {
+                      console.error(e);
+                      alert(t`Unable to fetch account info`);
+                    }
+                  })();
+                }}
+              >
+                <Icon icon="transfer" />{' '}
+                <small class="menu-double-lines">
+                  <Trans>
+                    Switch to my instance (<b>{currentInstance}</b>)
+                  </Trans>
+                </small>
+              </MenuItem>
+            )}
+          </Menu2>
+        }
+      />
+      {acct && !isSelf && (
+        <data
+          class="compose-data"
+          value={JSON.stringify({
+            draftStatus: {
+              status: `@${acct} `,
+            },
+          })}
+        />
+      )}
+    </>
   );
 }
 
@@ -650,7 +672,9 @@ function MonthPicker(props) {
           <option
             value={
               // Month is 1-indexed
-              (i + 1).toString().padStart(2, '0')
+              (i + 1)
+                .toString()
+                .padStart(2, '0')
             }
             key={i}
           >
@@ -691,5 +715,12 @@ function MonthPicker(props) {
     </div>
   );
 }
+
+function fetchAccount(id, masto) {
+  return masto.v1.accounts.$select(id).fetch();
+}
+const memFetchAccount = pmem(fetchAccount, {
+  maxAge: 30 * 60 * 1000, // 30 minutes
+});
 
 export default AccountStatuses;

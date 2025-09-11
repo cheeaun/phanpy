@@ -47,10 +47,8 @@ function Public({ variant = 'federated', columnMode, ...props }) {
         limit: LIMIT,
         local: variant === 'local' || undefined,
         bubble: variant === 'bubble' || undefined,
+        remote: variant === 'federated' && supports('@pixelfed/global-feed') || undefined,
       };
-      if (variant === 'federated' && supports('@pixelfed/global-feed')) {
-        opts.remote = true;
-      }
 
       publicIterator.current = masto.v1.timelines.public.list(opts).values();
     }

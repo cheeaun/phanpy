@@ -341,7 +341,7 @@ function CustomEmojisModal({
             onClick={onEmojiSizeDecrease}
             disabled={emojiSize <= EMOJI_SIZE_MIN}
           >
-            <Icon icon="zoom-out" alt={t`Zoom out`} />
+            <Icon icon="zoom-out" size="l" alt={t`Zoom out`} />
           </button>
           <button
             type="button"
@@ -349,7 +349,7 @@ function CustomEmojisModal({
             onClick={onEmojiSizeIncrease}
             disabled={emojiSize >= EMOJI_SIZE_MAX}
           >
-            <Icon icon="zoom-in" alt={t`Zoom in`} />
+            <Icon icon="zoom-in" size="l" alt={t`Zoom in`} />
           </button>
         </div>
       </main>

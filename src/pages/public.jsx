@@ -19,9 +19,11 @@ function Public({ variant = 'federated', columnMode, ...props }) {
   const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const params = columnMode ? {} : useParams();
+  
   const { masto, instance } = api({
     instance: props?.instance || params.instance,
   });
+
   const { masto: currentMasto, instance: currentInstance } = api();
 
   const title = {
@@ -40,9 +42,20 @@ function Public({ variant = 'federated', columnMode, ...props }) {
   // const navigate = useNavigate();
   const latestItem = useRef();
 
+  // TODO: this switches depending on our current instance, and not the instance we're viewing
+  let endpoint;
+  if(supports('@akkoma/bubble-timeline')) {
+    endpoint = masto.v1.timelines.bubble
+  }
+  else {
+    endpoint = masto.v1.timelines.public
+  }
+
   const publicIterator = useRef();
   async function fetchPublic(firstLoad) {
     if (firstLoad || !publicIterator.current) {
+
+      // TODO: same as above for Pixelfed here
       const opts = {
         limit: LIMIT,
         local: variant === 'local' || undefined,
@@ -50,7 +63,7 @@ function Public({ variant = 'federated', columnMode, ...props }) {
         remote: variant === 'federated' && supports('@pixelfed/global-feed') || undefined,
       };
 
-      publicIterator.current = masto.v1.timelines.public.list(opts).values();
+      publicIterator.current = endpoint.list(opts).values();
     }
     const results = await publicIterator.current.next();
     let { value } = results;
@@ -72,7 +85,7 @@ function Public({ variant = 'federated', columnMode, ...props }) {
 
   async function checkForUpdates() {
     try {
-      const results = await masto.v1.timelines.public
+      const results = await endpoint
         .list({
           limit: 1,
           local: variant === 'local',

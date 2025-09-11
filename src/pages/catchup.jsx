@@ -42,7 +42,6 @@ import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
-import store from '../utils/store';
 import { getCurrentAccountID, getCurrentAccountNS } from '../utils/store-utils';
 import supports from '../utils/supports';
 import { assignFollowedTags } from '../utils/timeline-utils';
@@ -113,8 +112,7 @@ function Catchup() {
   const supportsPixelfed = supports('@pixelfed/home-include-reblogs');
 
   async function fetchHome({ maxCreatedAt }) {
-    const maxCreatedAtTime = maxCreatedAt ? Date.parse(maxCreatedAt) : null;
-    console.debug('fetchHome', maxCreatedAtTime);
+    console.debug('fetchHome', maxCreatedAt);
     const allResults = [];
     const homeIterable = masto.v1.timelines.home.list({ limit: 40 });
     const homeIterator = homeIterable.values();
@@ -136,7 +134,7 @@ function Catchup() {
           for (let i = 0; i < value.length; i++) {
             const item = value[i];
             const createdAtTime = Date.parse(item.createdAt);
-            if (!maxCreatedAtTime || createdAtTime >= maxCreatedAtTime) {
+            if (!maxCreatedAt || createdAtTime >= maxCreatedAt) {
               // Filtered
               const selfPost = isSelf(
                 item.reblog?.account?.id || item.account.id,

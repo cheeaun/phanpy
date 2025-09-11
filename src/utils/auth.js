@@ -1,6 +1,7 @@
 import { generateCodeChallenge, verifier } from './oauth-pkce';
 
 const {
+  DEV,
   PHANPY_CLIENT_NAME: CLIENT_NAME,
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_SCHEME: SCHEME = 'https',

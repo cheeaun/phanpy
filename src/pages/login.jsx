@@ -72,7 +72,9 @@ function Login() {
       // WEB_DOMAIN vs LOCAL_DOMAIN negotiation time
       // https://docs.joinmastodon.org/admin/config/#web_domain
       try {
-        const res = await fetch(`https://${instanceURL}/.well-known/host-meta`); // returns XML
+        const res = await fetch(
+          `${PHANPY_SCHEME}://${instanceURL}/.well-known/host-meta`,
+        ); // returns XML
         const text = await res.text();
         // Parse XML
         const parser = new DOMParser();

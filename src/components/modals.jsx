@@ -154,6 +154,7 @@ export default function Modals() {
         >
           <OpenLinkSheet
             url={snapStates.showOpenLink.url}
+            linkText={snapStates.showOpenLink.linkText}
             onClose={() => {
               states.showOpenLink = false;
             }}

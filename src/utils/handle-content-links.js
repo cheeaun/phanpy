@@ -116,7 +116,11 @@ function handleContentLinks(opts) {
       if (!containsDomain && !supportsHover) {
         e.preventDefault();
         e.stopPropagation();
-        states.showOpenLink = { url: href };
+        const linkText = target.innerText.trim();
+        states.showOpenLink = {
+          url: href,
+          linkText,
+        };
       }
     } catch (e) {}
   };

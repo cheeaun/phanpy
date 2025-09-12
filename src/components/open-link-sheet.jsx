@@ -6,7 +6,7 @@ import showToast from '../utils/show-toast';
 
 import Icon from './icon';
 
-export default function OpenLinkSheet({ url, onClose }) {
+export default function OpenLinkSheet({ url, linkText, onClose }) {
   const { t } = useLingui();
   if (!url) return null;
 
@@ -57,6 +57,16 @@ export default function OpenLinkSheet({ url, onClose }) {
         </h2>
       </header>
       <main>
+        {!!linkText && (
+          <>
+            <p class="link-text">
+              <Icon icon="cursor-hand" size="l" /> {linkText}
+            </p>
+            <div class="arrow">
+              <Icon icon="arrow-down" />
+            </div>
+          </>
+        )}
         <p class="full-url">{displayUrl}</p>
       </main>
       <footer>

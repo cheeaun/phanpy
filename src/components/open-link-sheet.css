@@ -1,9 +1,40 @@
 #open-link-sheet {
+  .link-text {
+    color: var(--link-text-color);
+    text-decoration: underline;
+    text-decoration-color: var(--link-color);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+    padding: 4px;
+    margin: 0 auto 8px;
+    background-color: var(--bg-faded-blur-color);
+    border-radius: 4px;
+    width: fit-content;
+    position: relative;
+
+    .icon {
+      color: var(--text-color);
+      position: absolute;
+      inset-inline-end: 4px;
+      top: calc(1em + 4px);
+    }
+  }
+  .arrow {
+    text-align: center;
+    padding: 8px 16px;
+    color: var(--text-insignificant-color);
+  }
   .full-url {
+    border-radius: 16px;
+    padding: 8px;
+    margin-block: 0;
+    background-color: var(--bg-faded-blur-color);
+    text-align: center;
     overflow-wrap: anywhere;
     word-break: break-all;
     font-variant: no-common-ligatures tabular-nums slashed-zero;
     font-feature-settings: 'ss01';
+    line-height: 1.5;
 
     strong {
       background-color: var(--orange-light-bg-color);

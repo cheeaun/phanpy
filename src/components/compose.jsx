@@ -784,7 +784,7 @@ function Compose({
   const highlightVisibilityField = visibility !== 'public';
 
   const addSubToolbarRef = useRef();
-  const [showAddButton, setShowAddButton] = useState(false);
+  const [showAddButton, setShowAddButton] = useState(true);
   const BUTTON_WIDTH = 42; // roughly one button width
   useResizeObserver({
     ref: addSubToolbarRef,
@@ -1523,7 +1523,11 @@ function Compose({
                   )}
                 </Menu2>
               )}
-              <span class="add-sub-toolbar-button-group" ref={addSubToolbarRef}>
+              <span
+                class="add-sub-toolbar-button-group"
+                ref={addSubToolbarRef}
+                hidden
+              >
                 {supportsCameraCapture && (
                   <label class="toolbar-button">
                     <CameraCaptureInput

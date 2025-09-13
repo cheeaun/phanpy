@@ -8,7 +8,7 @@ function _isFiltered(filtered, filterContext) {
     const hasContext = filter.context.includes(filterContext);
     if (!hasContext) return false;
     if (!filter.expiresAt) return hasContext;
-    return new Date(filter.expiresAt) > new Date();
+    return Date.parse(filter.expiresAt) > Date.now();
   });
   if (!appliedFilters.length) return false;
   const isHidden = appliedFilters.some((f) => f.filter.filterAction === 'hide');

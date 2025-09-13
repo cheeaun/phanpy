@@ -71,9 +71,7 @@ function Following({ title, path, id, ...props }) {
 
       // ENFORCE sort by datetime (Latest first)
       value.sort((a, b) => {
-        const aDate = new Date(a.createdAt);
-        const bDate = new Date(b.createdAt);
-        return bDate - aDate;
+        return Date.parse(b.createdAt) - Date.parse(a.createdAt);
       });
     }
     __BENCHMARK.end('fetch-home-first');

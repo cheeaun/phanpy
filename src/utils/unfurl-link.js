@@ -121,6 +121,8 @@ function _unfurlMastodonLink(instance, url) {
       id,
       instance,
       url: selfURL,
+      originalURL: url,
+      originalDomain: domain,
     };
     states.unfurledLinks[url] = data;
     saveStatus(status, instance, {

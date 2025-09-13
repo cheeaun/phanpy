@@ -1,16 +1,47 @@
 import states from './states';
 
+const supportsHover = window.matchMedia('(hover: hover)').matches;
+
 function handleContentLinks(opts) {
   const { mentions = [], instance, previewMode, statusURL } = opts || {};
   return (e) => {
-    let { target } = e;
-    target = target.closest('a');
-    if (!target) return;
-
     // If cmd/ctrl/shift/alt key is pressed or middle-click, let the browser handle it
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.which === 2) {
       return;
     }
+
+    let { target } = e;
+
+    // Experiment opening custom emoji in a modal
+    // TODO: Rename this function because it's not just for links
+    if (target.closest('.shortcode-emoji')) {
+      const { naturalWidth, naturalHeight, width, height } = target;
+      const kindaLargeRatio = 2;
+      const kindaLarge =
+        naturalWidth > width * kindaLargeRatio ||
+        naturalHeight > height * kindaLargeRatio;
+      if (kindaLarge) {
+        e.preventDefault();
+        e.stopPropagation();
+        states.showMediaModal = {
+          mediaAttachments: [
+            {
+              type: 'image',
+              url: target.src,
+              description: target.title || target.alt,
+            },
+          ],
+        };
+        return;
+      }
+    }
+
+    target = target.closest('a');
+    if (!target) return;
+    // Only handle links inside, not itself or anything outside
+    if (!e.currentTarget.contains(target)) return;
+
+    const { href } = target;
 
     const prevText = target.previousSibling?.textContent;
     const textBeforeLinkIsAt = prevText?.endsWith('@');
@@ -25,15 +56,14 @@ function handleContentLinks(opts) {
         target.querySelector('span') || target
       ).innerText.trim();
       const username = targetText.replace(/^@/, '');
-      const url = target.getAttribute('href');
       // Only fallback to acct/username check if url doesn't match
       const mention =
-        mentions.find((mention) => mention.url === url) ||
+        mentions.find((mention) => mention.url === href) ||
         mentions.find(
           (mention) =>
             mention.acct === username || mention.username === username,
         );
-      console.warn('MENTION', mention, url);
+      console.warn('MENTION', mention, href);
       if (mention) {
         e.preventDefault();
         e.stopPropagation();
@@ -41,15 +71,16 @@ function handleContentLinks(opts) {
           account: mention.acct,
           instance,
         };
+        return;
       } else if (!/^http/i.test(targetText)) {
         console.log('mention not found', targetText);
         e.preventDefault();
         e.stopPropagation();
-        const href = target.getAttribute('href');
         states.showAccount = {
           account: href,
           instance,
         };
+        return;
       }
     } else if (!previewMode) {
       const textBeforeLinkIsHash = prevText?.endsWith('#');
@@ -60,19 +91,38 @@ function handleContentLinks(opts) {
         const hashURL = instance ? `#/${instance}/t/${tag}` : `#/t/${tag}`;
         console.log({ hashURL });
         location.hash = hashURL;
-      } else if (
-        states.unfurledLinks[target.href]?.url &&
-        statusURL !== target.href
-      ) {
+        return;
+      } else if (states.unfurledLinks[href]?.url && statusURL !== href) {
         // If unfurled AND not self-referential
         e.preventDefault();
         e.stopPropagation();
         states.prevLocation = {
           pathname: location.hash.replace(/^#/, ''),
         };
-        location.hash = `#${states.unfurledLinks[target.href].url}`;
+        location.hash = `#${states.unfurledLinks[href].url}`;
+        return;
       }
     }
+
+    try {
+      const urlObj = URL.parse(href);
+      const domain = urlObj.hostname.replace(/^www\./i, '');
+      const containsDomain = target.innerText
+        .toLowerCase()
+        .includes(domain.toLowerCase());
+      // Only show this on non-hover devices (touch-only)
+      // Assuming that hover-supported = there's a statusbar to see the URL
+      // Non-hover devices don't have statusbar, so we show this
+      if (!containsDomain && !supportsHover) {
+        e.preventDefault();
+        e.stopPropagation();
+        const linkText = target.innerText.trim();
+        states.showOpenLink = {
+          url: href,
+          linkText,
+        };
+      }
+    } catch (e) {}
   };
 }
 

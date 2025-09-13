@@ -126,6 +126,7 @@ Prerequisites: Node.js 20+
 - `npm run fetch-instances` - Fetch instances list from [joinmastodon.org/servers](https://joinmastodon.org/servers), save it to `src/data/instances.json`
 - `npm run sourcemap` - Run `source-map-explorer` on the production build
 - `npm run messages:extract` - Extract messages from source files and update the locale message catalogs
+- `npm run git:po-filter` - Configure `git` to use `po-filter` for diffing `.po` files
 
 ## Tech stack
 
@@ -282,6 +283,8 @@ Available variables:
   - API key for [GIPHY](https://developers.giphy.com/). See [API docs](https://developers.giphy.com/docs/api/).
   - If provided, a setting will appear for users to enable the GIF picker in the composer. Disabled by default.
   - This is not self-hosted.
+- `PHANPY_DISALLOW_ROBOTS` (optional, default: not set):
+  - Set to any value (`true`, `1`, etc) to override the robots.txt file and disallow all web crawlers from indexing the site
 
 ### Static site hosting
 
@@ -395,6 +398,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17206524/medium/1b0a8f9eafe7326be6968c6aed14c872.png" alt="" width="16" height="16" /> seizeheures (Esperanto)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12381015/medium/35e3557fd61d85f9a5b84545d9e3feb4.png" alt="" width="16" height="16" /> shuuji3 (Japanese)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14565190/medium/79100599131b7776e9803e4b696915a3_default.png" alt="" width="16" height="16" /> Sky_NiniKo (French)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17237304/medium/7954dfd36547e9d1f13266a52e9aa1b5_default.png" alt="" width="16" height="16" /> StasZin4 (Ukrainian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13143526/medium/30871da23d51d7e41bb02f3c92d7f104.png" alt="" width="16" height="16" /> Steffo99 (Italian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532441/medium/1a47e8d80c95636e02d2260f6e233ca5.png" alt="" width="16" height="16" /> Su5hicz (Czech)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12579488/medium/699394d1acfe986a31532007534c7656.jpg" alt="" width="16" height="16" /> svetlemodry (Czech)

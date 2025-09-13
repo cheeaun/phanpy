@@ -8,6 +8,7 @@
   box-shadow: 0 0 0 1px var(--bg-blur-color);
   flex-shrink: 0;
   vertical-align: middle;
+  dynamic-range-limit: standard; /* Disable HDR */
 
   &.has-alpha {
     border-radius: 0;

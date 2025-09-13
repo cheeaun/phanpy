@@ -873,7 +873,7 @@ export default function Sandbox() {
                     checked={toggleState.visibility === 'unlisted'}
                     onChange={() => updateToggles({ visibility: 'unlisted' })}
                   />
-                  <span>Unlisted</span>
+                  <span>Quiet public</span>
                 </label>
               </li>
               <li>

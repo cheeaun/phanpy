@@ -4,6 +4,7 @@ import { Plural, Trans, useLingui } from '@lingui/react/macro';
 
 // import { useNavigate } from 'react-router-dom';
 import enhanceContent from '../utils/enhance-content';
+import getDomain from '../utils/get-domain';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
@@ -66,11 +67,14 @@ function AccountBlock({
     followersCount,
     createdAt,
     locked,
+    roles,
   } = account;
   let [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
   if (accountInstance) {
     acct2 = `@${accountInstance}`;
   }
+
+  const parsedAccountInstance = getDomain(url);
 
   const verifiedField = fields?.find((f) => !!f.verifiedAt && !!f.value);
 
@@ -138,6 +142,22 @@ function AccountBlock({
             </>
           )}
         </span>
+        {roles?.map((role) => (
+          <>
+            {' '}
+            <span class="tag collapsed">
+              {role.name}
+              {!!parsedAccountInstance && (
+                <>
+                  {' '}
+                  <span class="more-insignificant">
+                    {parsedAccountInstance}
+                  </span>
+                </>
+              )}
+            </span>
+          </>
+        ))}
         {showActivity && (
           <div class="account-block-stats">
             <Trans>Posts: {shortenNumber(statusesCount)}</Trans>

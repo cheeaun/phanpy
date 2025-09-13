@@ -100,7 +100,7 @@
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(0, 0, 0, 0.1);
-  --backdrop-solid-color: color-mix(in srgb, var(--bg-color) 90%, #000 10%);
+  --backdrop-solid-color: var(--bg-faded-color);
   --backdrop-theme-color: #e5e5e5;
   --backdrop-darker-color: rgba(0, 0, 0, 0.25);
   --img-bg-color: rgba(128, 128, 128, 0.2);
@@ -614,4 +614,32 @@ kbd {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* VIEW TRANSITIONS */
+
+::view-transition-old(status),
+::view-transition-new(status) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-media),
+::view-transition-new(status-media) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-poll),
+::view-transition-new(status-poll) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-card-byline),
+::view-transition-new(status-card-byline),
+::view-transition-old(status-card),
+::view-transition-new(status-card) {
+  width: 100%;
+  height: 100%;
 }

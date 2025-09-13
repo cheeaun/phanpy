@@ -295,6 +295,7 @@ function Status({
   allowFilters,
   onMediaClick,
   quoted,
+  quoteDomain,
   onStatusLinkClick = () => {},
   showFollowedTags,
   allowContextMenu,
@@ -1838,6 +1839,11 @@ function Status({
           </a>
         )}
         <div class="container">
+          {!!quoteDomain && (
+            <div class="status-quote-meta">
+              <span class="domain">{quoteDomain}</span>
+            </div>
+          )}
           {!!(status.account || createdAt) && (
             <div class="meta">
               <span class="meta-name">
@@ -2711,6 +2717,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
             instance={q.instance}
             size="s"
             quoted={level + 1}
+            quoteDomain={q.originalDomain}
             enableCommentHint
           />
         </Link>

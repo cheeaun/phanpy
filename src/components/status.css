@@ -485,6 +485,16 @@
   padding-inline-start: 12px;
 }
 
+.status > .container .status-quote-meta {
+  font-size: small;
+  color: var(--link-color);
+  margin-block: -4px 2px;
+
+  .status-card-link:visited & {
+    color: var(--link-visited-color);
+  }
+}
+
 .status > .container > .meta {
   display: flex;
   gap: 4px;

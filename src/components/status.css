@@ -2639,6 +2639,17 @@ a.card:is(:hover, :focus):visited {
   object-fit: contain;
   /* object-position: left; */
   dynamic-range-limit: standard; /* Disable HDR */
+
+  &[data-is-larger='true'] {
+    &:hover {
+      transition: transform 0.3s var(--timing-function);
+      transform: scale(1.25);
+    }
+    &:active {
+      transition-duration: 0s;
+      transform: scale(1.25);
+    }
+  }
 }
 
 /* EDIT HISTORY */

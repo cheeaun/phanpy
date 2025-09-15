@@ -1,22 +1,23 @@
 #open-link-sheet {
   .link-text {
-    color: var(--link-text-color);
+    color: var(--text-color);
     text-decoration: underline;
     text-decoration-color: var(--link-color);
     text-decoration-thickness: 2px;
     text-underline-offset: 2px;
-    padding: 4px;
+    padding: 8px;
     margin: 0 auto 8px;
     background-color: var(--bg-faded-blur-color);
-    border-radius: 4px;
+    border-radius: 16px;
     width: fit-content;
     position: relative;
+    line-height: 1.75;
 
     .icon {
       color: var(--text-color);
       position: absolute;
-      inset-inline-end: 4px;
-      top: calc(1em + 4px);
+      inset-inline-end: 8px;
+      top: calc(100% - 8px);
     }
   }
   .arrow {

@@ -60,7 +60,7 @@ export default function OpenLinkSheet({ url, linkText, onClose }) {
         {!!linkText && (
           <>
             <p class="link-text">
-              <Icon icon="cursor-hand" size="l" /> {linkText}
+              <Icon icon="cursor-hand" size="xl" /> {linkText}
             </p>
             <div class="arrow">
               <Icon icon="arrow-down" />

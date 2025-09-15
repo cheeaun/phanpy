@@ -2650,7 +2650,7 @@ const unfulfilledText = {
   deleted: msg`Post unavailable`,
   unauthorized: msg`Post unavailable`,
   rejected: msg`Post unavailable`,
-  revoked: msg`Post unavailable`,
+  revoked: msg`Post removed by author`,
 };
 
 const QuoteStatuses = memo(({ id, instance, level = 0 }) => {

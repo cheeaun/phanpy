@@ -2158,7 +2158,6 @@ function Status({
                       instance={instance}
                       previewMode={previewMode}
                     />
-                    <QuoteStatuses id={id} instance={instance} level={quoted} />
                   </div>
                 )}
                 {!!content && (
@@ -2317,6 +2316,7 @@ function Status({
                       </div>
                     </MultipleMediaFigure>
                   ))}
+                <QuoteStatuses id={id} instance={instance} level={quoted} />
                 {!!card &&
                   /^https/i.test(card?.url) &&
                   !sensitive &&
@@ -2668,62 +2668,67 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
 
   const filterContext = useContext(FilterContext);
   const currentAccount = getCurrentAccountID();
+  const containerRef = useTruncated();
 
-  return uniqueQuotes.map((q) => {
-    let unfulfilledState;
+  return (
+    <div class="status-card-container" ref={containerRef}>
+      {uniqueQuotes.map((q) => {
+        let unfulfilledState;
 
-    const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
-    if (quoteStatus) {
-      const isSelf =
-        currentAccount && currentAccount === quoteStatus.account?.id;
-      const filterInfo =
-        !isSelf && isFiltered(quoteStatus.filtered, filterContext);
+        const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
+        if (quoteStatus) {
+          const isSelf =
+            currentAccount && currentAccount === quoteStatus.account?.id;
+          const filterInfo =
+            !isSelf && isFiltered(quoteStatus.filtered, filterContext);
 
-      if (filterInfo?.action === 'hide') {
-        unfulfilledState = 'filterHidden';
-      }
-    }
+          if (filterInfo?.action === 'hide') {
+            unfulfilledState = 'filterHidden';
+          }
+        }
 
-    if (!unfulfilledState) {
-      unfulfilledState = handledUnfulfilledStates.find(
-        (state) => q.state === state,
-      );
-    }
+        if (!unfulfilledState) {
+          unfulfilledState = handledUnfulfilledStates.find(
+            (state) => q.state === state,
+          );
+        }
 
-    if (unfulfilledState) {
-      return (
-        <div
-          class={`status-card-unfulfilled ${
-            unfulfilledState === 'filterHidden' ? 'status-card-ghost' : ''
-          }`}
-        >
-          <Icon icon="quote" />
-          <i>{_(unfulfilledText[unfulfilledState])}</i>
-        </div>
-      );
-    }
+        if (unfulfilledState) {
+          return (
+            <div
+              class={`status-card-unfulfilled ${
+                unfulfilledState === 'filterHidden' ? 'status-card-ghost' : ''
+              }`}
+            >
+              <Icon icon="quote" />
+              <i>{_(unfulfilledText[unfulfilledState])}</i>
+            </div>
+          );
+        }
 
-    const Parent = q.native ? Fragment : LazyShazam;
-    return (
-      <Parent id={q.instance + q.id} key={q.instance + q.id}>
-        <Link
-          key={q.instance + q.id}
-          to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
-          class={`status-card-link ${q.native ? 'quote-post-native' : ''}`}
-          data-read-more={_(readMoreText)}
-        >
-          <Status
-            statusID={q.id}
-            instance={q.instance}
-            size="s"
-            quoted={level + 1}
-            quoteDomain={q.originalDomain}
-            enableCommentHint
-          />
-        </Link>
-      </Parent>
-    );
-  });
+        const Parent = q.native ? Fragment : LazyShazam;
+        return (
+          <Parent id={q.instance + q.id} key={q.instance + q.id}>
+            <Link
+              key={q.instance + q.id}
+              to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
+              class={`status-card-link ${q.native ? 'quote-post-native' : ''}`}
+              data-read-more={_(readMoreText)}
+            >
+              <Status
+                statusID={q.id}
+                instance={q.instance}
+                size="s"
+                quoted={level + 1}
+                quoteDomain={q.originalDomain}
+                enableCommentHint
+              />
+            </Link>
+          </Parent>
+        );
+      })}
+    </div>
+  );
 });
 
 function EditedAtModal({

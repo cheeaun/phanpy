@@ -163,6 +163,30 @@
   text-decoration: none;
   color: var(--text-color);
 }
+.status-card-container {
+  margin: 1em 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.status:not(.large) {
+  .content.truncated ~ .status-card-container {
+    display: none;
+  }
+  .status-card-container {
+    max-height: max(160px, 33vh);
+    overflow: clip;
+
+    &.truncated {
+      mask-image: linear-gradient(
+        to top,
+        transparent,
+        rgba(0, 0, 0, 0.5) 1em,
+        black 1.5em
+      );
+    }
+  }
+}
 .status-card-link:not(
     .truncated .status-card-link /* parent status already truncated */,
     .status-card-link .status-card-link /* nested status cards */
@@ -211,7 +235,7 @@
 }
 .status-card {
   font-size: calc(var(--text-size) * 0.9);
-  margin: 1em 0 0;
+  /* margin: 1em 0 0; */
   border-radius: 16px;
   padding: 12px;
   border: 1px solid var(--outline-color);
@@ -489,6 +513,7 @@
   font-size: small;
   color: var(--link-color);
   margin-block: -4px 2px;
+  text-shadow: 0 1px var(--bg-color);
 
   .status-card-link:visited & {
     color: var(--link-visited-color);

@@ -354,14 +354,14 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 
 ## September 17, 2025
 
-- Composer relayout
-- Recent searches
-- Edit History Snapshots
-- Show role badges with profile usernames
-- "X months/years later" hint between list of threads or comments
-- "Open link?" prompt when clicking links that don't show domain
-- Larger-than-rendered custom emojis opens up in media modal when clicked.
-- Zoom in/out buttons in Custom Emojis picker
+- 📝 Composer relayout
+- 🔍 Recent searches
+- 🏛️ Edit History Snapshots
+- 🔰 Show role badges with profile usernames
+- ⌛ "X months/years later" hint between list of threads or comments
+- 🔗 "Open link?" prompt when clicking links that don't show domain
+- 🔬 Larger-than-rendered custom emojis opens up in media modal when clicked.
+- 🔭 Zoom in/out buttons in Custom Emojis picker
 - 🐛 Bug fixes
 
 <!--

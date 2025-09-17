@@ -17,6 +17,7 @@ import GenericAccounts from './generic-accounts';
 import MediaAltModal from './media-alt-modal';
 import MediaModal from './media-modal';
 import Modal from './modal';
+import OpenLinkSheet from './open-link-sheet';
 import ReportModal from './report-modal';
 import ShortcutsSettings from './shortcuts-settings';
 
@@ -141,6 +142,21 @@ export default function Modals() {
               // if (destination) {
               //   states.showAccounts = false;
               // }
+            }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showOpenLink && (
+        <Modal
+          onClose={() => {
+            states.showOpenLink = false;
+          }}
+        >
+          <OpenLinkSheet
+            url={snapStates.showOpenLink.url}
+            linkText={snapStates.showOpenLink.linkText}
+            onClose={() => {
+              states.showOpenLink = false;
             }}
           />
         </Modal>

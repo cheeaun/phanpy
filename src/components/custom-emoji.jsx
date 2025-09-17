@@ -14,6 +14,13 @@ export default function CustomEmoji({ staticUrl, alt, url }) {
         loading="lazy"
         decoding="async"
         fetchPriority="low"
+        onLoad={(e) => {
+          try {
+            e.target.dataset.isLarger =
+              e.target.naturalWidth > e.target.width * 2 ||
+              e.target.naturalHeight > e.target.height * 2;
+          } catch (e) {}
+        }}
       />
     </picture>
   );

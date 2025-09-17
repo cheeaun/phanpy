@@ -1,6 +1,9 @@
 import moize from 'moize';
 
-window._moize = moize;
+// Only assign to window if in browser environment
+if (typeof window !== 'undefined') {
+  window._moize = moize;
+}
 
 export default function mem(fn, opts = {}) {
   return moize(fn, {

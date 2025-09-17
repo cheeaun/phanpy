@@ -279,9 +279,10 @@ function Notifications({ columnMode }) {
             .then((announcements) => {
               announcements.sort((a, b) => {
                 // Sort by updatedAt first, then createdAt
-                const aDate = new Date(a.updatedAt || a.createdAt);
-                const bDate = new Date(b.updatedAt || b.createdAt);
-                return bDate - aDate;
+                return (
+                  Date.parse(b.updatedAt || b.createdAt) -
+                  Date.parse(a.updatedAt || a.createdAt)
+                );
               });
               setAnnouncements(announcements);
             })

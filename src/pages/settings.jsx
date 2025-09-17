@@ -318,10 +318,10 @@ function Settings({ onClose }) {
                         <Trans>Public</Trans>
                       </option>
                       <option value="unlisted">
-                        <Trans>Unlisted</Trans>
+                        <Trans>Quiet public</Trans>
                       </option>
                       <option value="private">
-                        <Trans>Followers only</Trans>
+                        <Trans>Followers</Trans>
                       </option>
                     </select>
                   </div>

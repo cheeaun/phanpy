@@ -11,6 +11,9 @@ function _localeMatch(...args) {
     return defaultLocale || false;
   }
 }
+if (typeof window !== 'undefined') {
+  window._localeMatch = _localeMatch; // For debugging
+}
 const localeMatch = mem(_localeMatch);
 
 export default localeMatch;

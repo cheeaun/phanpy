@@ -2,8 +2,8 @@ import { i18n } from '@lingui/core';
 import { t } from '@lingui/core/macro';
 import { useEffect, useMemo, useReducer } from 'preact/hooks';
 
-import localeMatch from '../utils/locale-match';
-import mem from '../utils/mem';
+import DateTimeFormat from '../utils/date-time-format';
+import RTF from '../utils/relative-time-format';
 
 function isValidDate(value) {
   if (value instanceof Date) {
@@ -13,22 +13,6 @@ function isValidDate(value) {
     return !isNaN(date.getTime());
   }
 }
-
-const resolvedLocale = mem(
-  () => new Intl.DateTimeFormat().resolvedOptions().locale,
-);
-const DTF = mem((locale, opts = {}) => {
-  const regionlessLocale = locale.replace(/-[a-z]+$/i, '');
-  const lang = localeMatch([regionlessLocale], [resolvedLocale()], locale);
-  try {
-    return new Intl.DateTimeFormat(lang, opts);
-  } catch (e) {}
-  try {
-    return new Intl.DateTimeFormat(locale, opts);
-  } catch (e) {}
-  return new Intl.DateTimeFormat(undefined, opts);
-});
-const RTF = mem((locale) => new Intl.RelativeTimeFormat(locale || undefined));
 
 const minute = 60;
 const hour = 60 * minute;
@@ -92,13 +76,13 @@ export default function RelativeTime({ datetime, format }) {
       } else {
         const sameYear = now.getFullYear() === date.getFullYear();
         if (sameYear) {
-          str = DTF(i18n.locale, {
+          str = DateTimeFormat(i18n.locale, {
             year: undefined,
             month: 'short',
             day: 'numeric',
           }).format(date);
         } else {
-          str = DTF(i18n.locale, {
+          str = DateTimeFormat(i18n.locale, {
             dateStyle: 'short',
           }).format(date);
         }

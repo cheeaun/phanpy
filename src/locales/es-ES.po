@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-15 13:13\n"
+"PO-Revision-Date: 2025-09-17 15:54\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -84,7 +84,7 @@ msgstr "nombre de usuario"
 
 #: src/components/account-handle-info.jsx:22
 msgid "server domain name"
-msgstr "nombre de dominio del servidor"
+msgstr "nombre del dominio del servidor"
 
 #: src/components/account-info.jsx:363
 msgid "Unable to load account."
@@ -277,8 +277,8 @@ msgstr "Ver las estadísticas de las publicaciones"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:2758
-#: src/components/status.jsx:2970
+#: src/components/status.jsx:2763
+#: src/components/status.jsx:2975
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1582
@@ -1174,8 +1174,8 @@ msgstr "Filtrado: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:2896
-#: src/components/status.jsx:2974
+#: src/components/status.jsx:2901
+#: src/components/status.jsx:2979
 #: src/components/timeline.jsx:1005
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1878
@@ -2397,7 +2397,7 @@ msgstr "Dejar de impulsar"
 #: src/components/status.jsx:999
 #: src/components/status.jsx:2504
 msgid "Quote"
-msgstr "Cita"
+msgstr "Citar"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1011
@@ -2554,7 +2554,7 @@ msgstr "{repliesCount, plural, one {# respuesta} other {# respuestas}}"
 
 #: src/components/status.jsx:2081
 #: src/components/status.jsx:2143
-#: src/components/status.jsx:2247
+#: src/components/status.jsx:2246
 msgid "Show less"
 msgstr "Mostrar menos"
 
@@ -2565,12 +2565,12 @@ msgstr "Mostrar contenido"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2243
+#: src/components/status.jsx:2242
 #: src/pages/catchup.jsx:1877
 msgid "Filtered: {0}"
 msgstr "Filtrado: {0}"
 
-#: src/components/status.jsx:2247
+#: src/components/status.jsx:2246
 msgid "Show media"
 msgstr "Mostrar multimedia"
 
@@ -2600,21 +2600,21 @@ msgstr "Publicación no disponible"
 msgid "Post removed by author"
 msgstr "Publicación eliminada por el autor"
 
-#: src/components/status.jsx:2763
+#: src/components/status.jsx:2768
 msgid "Edit History"
 msgstr "Historial de ediciones"
 
-#: src/components/status.jsx:2767
+#: src/components/status.jsx:2772
 msgid "Failed to load history"
 msgstr "Error al cargar el historial"
 
-#: src/components/status.jsx:2772
+#: src/components/status.jsx:2777
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Cargando…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:2904
+#: src/components/status.jsx:2909
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> impulsó"
 
@@ -2820,7 +2820,7 @@ msgstr "Actual"
 
 #: src/pages/accounts.jsx:110
 msgid "Default"
-msgstr "Predefinida"
+msgstr "Predeterminada"
 
 #: src/pages/accounts.jsx:132
 msgid "Switch to this account"
@@ -2836,7 +2836,7 @@ msgstr "Ver perfil…"
 
 #: src/pages/accounts.jsx:173
 msgid "Set as default"
-msgstr "Establecer como predefinida"
+msgstr "Establecer como predeterminada"
 
 #. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:215
@@ -2858,7 +2858,7 @@ msgstr "Añadir una cuenta existente"
 
 #: src/pages/accounts.jsx:275
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
-msgstr "Nota: la cuenta <0>Predefinida</0> se cargará siempre primero. Si cambias de cuenta, esta se mantendrá durante la sesión."
+msgstr "Nota: la cuenta <0>Predeterminada</0> se cargará siempre primero. Si cambias de cuenta, esta se mantendrá durante toda la sesión."
 
 #: src/pages/bookmarks.jsx:28
 msgid "No bookmarks yet. Go bookmark something!"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-15 11:24\n"
+"PO-Revision-Date: 2025-09-17 15:54\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -277,8 +277,8 @@ msgstr "Wali tidaddanin n tsuffeɣt"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:2758
-#: src/components/status.jsx:2970
+#: src/components/status.jsx:2763
+#: src/components/status.jsx:2975
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1582
@@ -551,7 +551,7 @@ msgstr "Adigan"
 #: src/pages/settings.jsx:321
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
-msgstr ""
+msgstr "Azayez asusam"
 
 #: src/components/compose.jsx:1717
 #: src/components/status.jsx:1998
@@ -616,11 +616,11 @@ msgstr "Wiyyaḍ"
 
 #: src/components/custom-emojis-modal.jsx:344
 msgid "Zoom out"
-msgstr ""
+msgstr "Simẓi"
 
 #: src/components/custom-emojis-modal.jsx:352
 msgid "Zoom in"
-msgstr ""
+msgstr "Simɣeṛ"
 
 #: src/components/drafts.jsx:62
 #: src/pages/settings.jsx:702
@@ -697,7 +697,7 @@ msgstr "Uḍfir"
 
 #: src/components/edit-history-controls.jsx:57
 msgid "Exit"
-msgstr ""
+msgstr "Ffeɣ"
 
 #: src/components/edit-profile-sheet.jsx:147
 msgid "Unable to update profile."
@@ -1174,8 +1174,8 @@ msgstr "Yettwasizdeg: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:2896
-#: src/components/status.jsx:2974
+#: src/components/status.jsx:2901
+#: src/components/status.jsx:2979
 #: src/components/timeline.jsx:1005
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1878
@@ -1336,7 +1336,7 @@ msgstr "Qqen"
 #: src/components/shortcuts-settings.jsx:172
 #: src/pages/trending.jsx:444
 msgid "Trending"
-msgstr "Mucaεen"
+msgstr "Inezzaɣ"
 
 #: src/components/nav-menu.jsx:355
 #: src/components/shortcuts-settings.jsx:165
@@ -1541,7 +1541,7 @@ msgstr "D awezɣi ad d-yenɣel useɣwen"
 
 #: src/components/open-link-sheet.jsx:56
 msgid "Open link?"
-msgstr ""
+msgstr "Ad teldiḍ aseɣwen-a?"
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
@@ -1559,7 +1559,7 @@ msgstr "Bḍu…"
 
 #: src/components/open-link-sheet.jsx:92
 msgid "Open"
-msgstr ""
+msgstr "Ldi"
 
 #: src/components/poll.jsx:113
 msgid "Voted"
@@ -2554,7 +2554,7 @@ msgstr "{repliesCount, plural, one {# tiririt} other {# tiririyin}}"
 
 #: src/components/status.jsx:2081
 #: src/components/status.jsx:2143
-#: src/components/status.jsx:2247
+#: src/components/status.jsx:2246
 msgid "Show less"
 msgstr "Ssken cwiṭ"
 
@@ -2565,12 +2565,12 @@ msgstr "Sken agbur"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2243
+#: src/components/status.jsx:2242
 #: src/pages/catchup.jsx:1877
 msgid "Filtered: {0}"
 msgstr "Yettwasizdeg: {0}"
 
-#: src/components/status.jsx:2247
+#: src/components/status.jsx:2246
 msgid "Show media"
 msgstr "Sken amidya"
 
@@ -2600,21 +2600,21 @@ msgstr ""
 msgid "Post removed by author"
 msgstr ""
 
-#: src/components/status.jsx:2763
+#: src/components/status.jsx:2768
 msgid "Edit History"
 msgstr "Azray n teẓrigin"
 
-#: src/components/status.jsx:2767
+#: src/components/status.jsx:2772
 msgid "Failed to load history"
 msgstr "Yecceḍ usali n uzray"
 
-#: src/components/status.jsx:2772
+#: src/components/status.jsx:2777
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Yessalay-d…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:2904
+#: src/components/status.jsx:2909
 msgid "<0/> <1/> boosted"
 msgstr "Izuzer-itt <0/><1/>"
 
@@ -3817,7 +3817,7 @@ msgstr "{0, plural, one {}=0 {Ffer taqeffalt \"Suqqel\" i:} other {Ffer taqeffal
 
 #: src/pages/settings.jsx:494
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
-msgstr ""
+msgstr "Tamawt: Tamahilt-a tesseqdac imeẓla n usuqqel azɣaray, tella s lmendad n <0>{TRANSLATION_API_NAME}</0>."
 
 #: src/pages/settings.jsx:522
 msgid "Auto inline translation"
@@ -4042,7 +4042,7 @@ msgstr "D awezɣi abeddel"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1543
 msgid "Switch to post's instance ({0})"
-msgstr ""
+msgstr "Uɣal ɣer tummant n tsuffeɣt ({0})"
 
 #: src/pages/status.jsx:1546
 msgid "Switch to post's instance"
@@ -4073,11 +4073,11 @@ msgstr "Wali tasuffeɣt s tririyin-is"
 
 #: src/pages/trending.jsx:77
 msgid "Trending ({instance})"
-msgstr "Amuceε ({instance})"
+msgstr "Inezzaɣ ({instance})"
 
 #: src/pages/trending.jsx:235
 msgid "Trending News"
-msgstr "Isalan mucaɛen"
+msgstr "Isallen inezzaɣ"
 
 #. By [Author]
 #. placeholder {0}: author ? ( <NameText account={author} showAvatar /> ) : authorUrl ? ( <a href={authorUrl} target="_blank" rel="noopener" > {authorName} </a> ) : ( authorName )
@@ -4087,7 +4087,7 @@ msgstr "Sɣur {0}"
 
 #: src/pages/trending.jsx:411
 msgid "Back to showing trending posts"
-msgstr "Uɣal ɣer uskan n tsuffaɣ mucaεen"
+msgstr "Uɣal ɣer uskan n tsuffaɣ tinessaɣ"
 
 #. placeholder {0}: currentLink .replace(/^https?:\/\/(www\.)?/i, '') .replace(/\/$/, '')
 #: src/pages/trending.jsx:416
@@ -4096,11 +4096,11 @@ msgstr "Askan n tsuffaɣ i d-ibedren <0>{0}</0>"
 
 #: src/pages/trending.jsx:428
 msgid "Trending posts"
-msgstr "Tisuffaɣ mucaɛen"
+msgstr "Tisuffaɣ tinezzaɣ"
 
 #: src/pages/trending.jsx:451
 msgid "No trending posts."
-msgstr "Ulac tisuffaɣ mucaɛen."
+msgstr "Ulac tisuffaɣ tinezzaɣ."
 
 #: src/pages/welcome.jsx:54
 msgid "A minimalistic opinionated Mastodon web client."

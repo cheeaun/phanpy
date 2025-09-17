@@ -169,7 +169,7 @@
   flex-direction: column;
   gap: 8px;
 }
-.status:not(.large) {
+.timeline-deck .status:not(.large) {
   .content.truncated ~ .status-card-container {
     display: none;
   }

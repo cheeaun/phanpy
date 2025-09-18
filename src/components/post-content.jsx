@@ -1,7 +1,9 @@
-import { useLayoutEffect, useRef } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useRef } from 'preact/hooks';
+import { useSnapshot } from 'valtio';
 
 import enhanceContent from '../utils/enhance-content';
 import handleContentLinks from '../utils/handle-content-links';
+import states, { statusKey } from '../utils/states';
 
 const HTTP_REGEX = /^http/i;
 
@@ -9,6 +11,9 @@ const PostContent =
   /*memo(*/
   ({ post, instance, previewMode }) => {
     const { content, emojis, language, mentions, url } = post;
+    const snapStates = useSnapshot(states);
+    const sKey = statusKey(post.id, instance);
+    const quotes = snapStates.statusQuotes[sKey];
 
     const divRef = useRef();
     useLayoutEffect(() => {
@@ -25,6 +30,17 @@ const PostContent =
       }
       divRef.current.replaceChildren(dom.cloneNode(true));
     }, [content, emojis?.length]);
+
+    useEffect(() => {
+      // Find all links that's in states.statusQuotes and add 'is-quote' class
+      if (quotes?.length) {
+        for (const a of divRef.current.querySelectorAll('a')) {
+          if (quotes.some((quote) => quote?.originalURL === a.href)) {
+            a.classList.add('is-quote');
+          }
+        }
+      }
+    }, [quotes?.length]);
 
     return (
       <div

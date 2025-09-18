@@ -969,6 +969,13 @@
   color: var(--text-color);
   text-decoration-color: var(--link-color);
 }
+.status .content .inner-content a.is-quote {
+  color: var(--link-text-color);
+
+  &:not(:hover, :focus, :active) {
+    text-decoration-color: var(--link-bg-color);
+  }
+}
 .status .content :is(.h-card, .mention) {
   unicode-bidi: isolate;
 }

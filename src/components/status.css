@@ -164,7 +164,7 @@
   color: var(--text-color);
 }
 .status-card-container {
-  margin: 1em 0 0;
+  margin: 8px 0 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1029,6 +1029,10 @@
     br:has(+ .quote-inline),
     .quote-inline {
       display: none;
+
+      &:is(p:first-child) + p {
+        margin-block-start: 0;
+      }
     }
   }
 }

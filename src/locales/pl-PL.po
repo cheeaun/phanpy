@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-16 00:32\n"
+"PO-Revision-Date: 2025-09-18 21:30\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -277,8 +277,8 @@ msgstr "Pokaż statystyki wpisów"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:2758
-#: src/components/status.jsx:2970
+#: src/components/status.jsx:2763
+#: src/components/status.jsx:2975
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1582
@@ -679,7 +679,7 @@ msgstr "Multimedia"
 
 #: src/components/edit-history-controls.jsx:21
 msgid "Edit History Snapshots"
-msgstr "Zrzuty historii edycji"
+msgstr "Historia edytowania"
 
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:207
@@ -1174,8 +1174,8 @@ msgstr "Odfiltrowano: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:2896
-#: src/components/status.jsx:2974
+#: src/components/status.jsx:2901
+#: src/components/status.jsx:2979
 #: src/components/timeline.jsx:1005
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1878
@@ -2554,7 +2554,7 @@ msgstr "{repliesCount, plural, one {# odpowiedź} few {# odpowiedzi} other {# od
 
 #: src/components/status.jsx:2081
 #: src/components/status.jsx:2143
-#: src/components/status.jsx:2247
+#: src/components/status.jsx:2246
 msgid "Show less"
 msgstr "Pokaż mniej"
 
@@ -2565,12 +2565,12 @@ msgstr "Pokaż zawartość"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2243
+#: src/components/status.jsx:2242
 #: src/pages/catchup.jsx:1877
 msgid "Filtered: {0}"
 msgstr "Odfiltrowano: {0}"
 
-#: src/components/status.jsx:2247
+#: src/components/status.jsx:2246
 msgid "Show media"
 msgstr "Pokaż multimedia"
 
@@ -2600,21 +2600,21 @@ msgstr "Wpis jest niedostępny"
 msgid "Post removed by author"
 msgstr "Post został usunięty przez autora"
 
-#: src/components/status.jsx:2763
+#: src/components/status.jsx:2768
 msgid "Edit History"
-msgstr "Historia zmian"
+msgstr "Historia edytowania"
 
-#: src/components/status.jsx:2767
+#: src/components/status.jsx:2772
 msgid "Failed to load history"
 msgstr "Nie udało się wczytać historii"
 
-#: src/components/status.jsx:2772
+#: src/components/status.jsx:2777
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Wczytywanie…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:2904
+#: src/components/status.jsx:2909
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> podbija"
 
@@ -4050,7 +4050,7 @@ msgstr "Przełącz na instancję wpisu"
 
 #: src/pages/status.jsx:1559
 msgid "View Edit History Snapshots"
-msgstr "Zobacz zrzuty historii edycji"
+msgstr "Zobacz historię edytowania"
 
 #: src/pages/status.jsx:1617
 msgid "Unable to load post"

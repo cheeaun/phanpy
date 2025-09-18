@@ -4,7 +4,6 @@ import { Plural, Trans, useLingui } from '@lingui/react/macro';
 
 // import { useNavigate } from 'react-router-dom';
 import enhanceContent from '../utils/enhance-content';
-import getDomain from '../utils/get-domain';
 import niceDateTime from '../utils/nice-date-time';
 import shortenNumber from '../utils/shorten-number';
 import states from '../utils/states';
@@ -12,6 +11,7 @@ import states from '../utils/states';
 import Avatar from './avatar';
 import EmojiText from './emoji-text';
 import Icon from './icon';
+import RolesTags from './roles-tags';
 
 function AccountBlock({
   skeleton,
@@ -73,8 +73,6 @@ function AccountBlock({
   if (accountInstance) {
     acct2 = `@${accountInstance}`;
   }
-
-  const parsedAccountInstance = getDomain(url);
 
   const verifiedField = fields?.find((f) => !!f.verifiedAt && !!f.value);
 
@@ -142,22 +140,7 @@ function AccountBlock({
             </>
           )}
         </span>
-        {roles?.map((role) => (
-          <>
-            {' '}
-            <span class="tag collapsed">
-              {role.name}
-              {!!parsedAccountInstance && (
-                <>
-                  {' '}
-                  <span class="more-insignificant">
-                    {parsedAccountInstance}
-                  </span>
-                </>
-              )}
-            </span>
-          </>
-        ))}
+        <RolesTags roles={roles} accountUrl={url} />
         {showActivity && (
           <div class="account-block-stats">
             <Trans>Posts: {shortenNumber(statusesCount)}</Trans>

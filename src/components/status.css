@@ -2116,6 +2116,11 @@ a.card:is(:hover, :focus):visited {
     opacity: 1;
     /* font-size: inherit; */
   }
+
+  .card-image {
+    border-inline-end: 0;
+    border-inline-start: 1px solid var(--outline-color);
+  }
 }
 .status.large .card.large.card-post,
 .status-carousel

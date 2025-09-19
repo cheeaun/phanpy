@@ -376,6 +376,7 @@ function Status({
     reblogsCount,
     favourited,
     favouritesCount,
+    quotesCount,
     bookmarked,
     poll,
     muted,
@@ -1016,9 +1017,13 @@ function Status({
               }}
             >
               <Icon icon="rocket" />
-              <span>
+              <span
+                class={reblogsCount > 0 && quotesCount > 0 ? 'smaller' : ''}
+              >
                 {reblogsCount > 0
-                  ? shortenNumber(reblogsCount)
+                  ? `${shortenNumber(reblogsCount)}${
+                      quotesCount > 0 ? `+${shortenNumber(quotesCount)}` : ''
+                    }`
                   : reblogged
                     ? t`Unboost`
                     : t`Boost…`}
@@ -2514,6 +2519,7 @@ function Status({
                       class="reblog-button"
                       icon="rocket"
                       count={reblogsCount}
+                      extraCount={quotesCount}
                       // onClick={boostStatus}
                       disabled={!canBoost}
                     />

@@ -23,6 +23,7 @@ import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import {
+  getAPIVersions,
   getCurrentAccount,
   getCurrentAccountNS,
   getCurrentInstanceConfiguration,
@@ -177,6 +178,8 @@ function Compose({
   const [scheduledAt, setScheduledAt] = useState(null);
 
   const prefs = getPreferences();
+
+  const supportsNativeQuote = getAPIVersions()?.mastodon >= 7;
 
   const oninputTextarea = () => {
     if (!textareaRef.current) return;
@@ -595,9 +598,11 @@ function Compose({
         scheduledAt,
         quoteApprovalPolicy,
       },
-      quoteStatus: {
-        ...quoteStatus,
-      },
+      quoteStatus: quoteStatus
+        ? {
+            ...quoteStatus,
+          }
+        : null,
     };
     if (
       !deepEqual(backgroundDraft, prevBackgroundDraft.current) &&
@@ -1204,18 +1209,23 @@ function Compose({
                   params.quoted_status_id = quoteStatus.id;
                   params.quote_approval_policy = quoteApprovalPolicy;
                 }
-                if (editStatus && supports('@mastodon/edit-media-attributes')) {
-                  params.media_attributes = mediaAttachments.map(
-                    (attachment) => {
-                      return {
-                        id: attachment.id,
-                        description: attachment.description,
-                        // focus
-                        // thumbnail
-                      };
-                    },
-                  );
-                } else if (!editStatus) {
+                if (editStatus) {
+                  if (supportsNativeQuote) {
+                    params.quote_approval_policy = quoteApprovalPolicy;
+                  }
+                  if (supports('@mastodon/edit-media-attributes')) {
+                    params.media_attributes = mediaAttachments.map(
+                      (attachment) => {
+                        return {
+                          id: attachment.id,
+                          description: attachment.description,
+                          // focus
+                          // thumbnail
+                        };
+                      },
+                    );
+                  }
+                } else {
                   params.visibility = visibility;
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
@@ -1674,36 +1684,38 @@ function Compose({
                 hidden={uiState === 'loading'}
               />
             )}
-            <label
-              class={`toolbar-button ${highlightQuoteApprovalPolicyField ? 'highlight' : ''}`}
-            >
-              <Icon icon="quote2" alt="Quote visibility" />
-              {quoteApprovalPolicy === 'followers' && (
-                <Icon icon="group" class="insignificant" />
-              )}
-              {quoteApprovalPolicy === 'nobody' && (
-                <Icon icon="block" class="insignificant" />
-              )}
-              <select
-                name="quoteApprovalPolicy"
-                value={quoteApprovalPolicy}
-                onChange={(e) => {
-                  setQuoteApprovalPolicy(e.target.value);
-                }}
-                disabled={uiState === 'loading'}
-                dir="auto"
+            {supportsNativeQuote && (
+              <label
+                class={`toolbar-button ${highlightQuoteApprovalPolicyField ? 'highlight' : ''}`}
               >
-                <option value="public" disabled={disableQuotePolicy}>
-                  <Trans>Anyone can quote</Trans>
-                </option>
-                <option value="followers" disabled={disableQuotePolicy}>
-                  <Trans>Your followers can quote</Trans>
-                </option>
-                <option value="nobody">
-                  <Trans>Only you can quote</Trans>
-                </option>
-              </select>
-            </label>
+                <Icon icon="quote2" alt="Quote visibility" />
+                {quoteApprovalPolicy === 'followers' && (
+                  <Icon icon="group" class="insignificant" />
+                )}
+                {quoteApprovalPolicy === 'nobody' && (
+                  <Icon icon="block" class="insignificant" />
+                )}
+                <select
+                  name="quoteApprovalPolicy"
+                  value={quoteApprovalPolicy}
+                  onChange={(e) => {
+                    setQuoteApprovalPolicy(e.target.value);
+                  }}
+                  disabled={uiState === 'loading'}
+                  dir="auto"
+                >
+                  <option value="public" disabled={disableQuotePolicy}>
+                    <Trans>Anyone can quote</Trans>
+                  </option>
+                  <option value="followers" disabled={disableQuotePolicy}>
+                    <Trans>Your followers can quote</Trans>
+                  </option>
+                  <option value="nobody">
+                    <Trans>Only you can quote</Trans>
+                  </option>
+                </select>
+              </label>
+            )}
             <label
               class={`toolbar-button ${highlightVisibilityField ? 'highlight' : ''}`}
               title={_(visibilityText[visibility])}

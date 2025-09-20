@@ -76,6 +76,8 @@ function Settings({ onClose }) {
     store.local.get('experiments-tabBarV2') ?? false,
   );
 
+  const disableQuotePolicy = prefs['posting:default:visibility'] === 'private';
+
   return (
     <div
       id="settings-container"
@@ -299,14 +301,16 @@ function Settings({ onClose }) {
                                 privacy: value,
                               },
                             });
-                            setPrefs({
+                            const newPrefs = {
                               ...prefs,
                               'posting:default:visibility': value,
-                            });
-                            setPreferences({
-                              ...prefs,
-                              'posting:default:visibility': value,
-                            });
+                            };
+                            if (value === 'private') {
+                              newPrefs['posting:default:quote_policy'] =
+                                'nobody';
+                            }
+                            setPrefs(newPrefs);
+                            setPreferences(newPrefs);
                           } catch (e) {
                             alert(t`Failed to update posting privacy`);
                             console.error(e);
@@ -322,6 +326,59 @@ function Settings({ onClose }) {
                       </option>
                       <option value="private">
                         <Trans>Followers</Trans>
+                      </option>
+                    </select>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <label for="posting-quote-policy-field">
+                      <Trans>Quote settings</Trans>{' '}
+                      <Icon icon="cloud" alt={t`Synced`} class="synced-icon" />
+                    </label>
+                  </div>
+                  <div>
+                    <select
+                      id="posting-quote-policy-field"
+                      value={
+                        prefs['posting:default:quote_policy'] ||
+                        disableQuotePolicy
+                          ? 'nobody'
+                          : 'public'
+                      }
+                      disabled={disableQuotePolicy}
+                      onChange={(e) => {
+                        const { value } = e.target;
+                        (async () => {
+                          try {
+                            await masto.v1.accounts.updateCredentials({
+                              source: {
+                                quote_policy: value,
+                              },
+                            });
+                            setPrefs({
+                              ...prefs,
+                              'posting:default:quote_policy': value,
+                            });
+                            setPreferences({
+                              ...prefs,
+                              'posting:default:quote_policy': value,
+                            });
+                          } catch (e) {
+                            alert(t`Failed to update quote settings`);
+                            console.error(e);
+                          }
+                        })();
+                      }}
+                    >
+                      <option value="public" disabled={disableQuotePolicy}>
+                        <Trans>Anyone can quote</Trans>
+                      </option>
+                      <option value="followers" disabled={disableQuotePolicy}>
+                        <Trans>Your followers can quote</Trans>
+                      </option>
+                      <option value="nobody">
+                        <Trans>Only you can quote</Trans>
                       </option>
                     </select>
                   </div>

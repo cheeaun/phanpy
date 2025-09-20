@@ -115,6 +115,7 @@ function Compose({
   replyToStatus,
   editStatus,
   draftStatus,
+  quoteStatus,
   standalone,
   hasOpener,
 }) {
@@ -164,6 +165,7 @@ function Compose({
   const spoilerTextRef = useRef();
 
   const [visibility, setVisibility] = useState('public');
+  const [quoteApprovalPolicy, setQuoteApprovalPolicy] = useState('public');
   const [sensitive, setSensitive] = useState(false);
   const [sensitiveMedia, setSensitiveMedia] = useState(false);
   const [language, setLanguage] = useState(
@@ -347,6 +349,16 @@ function Compose({
       if (prefs['posting:default:sensitive']) {
         setSensitive(!!prefs['posting:default:sensitive']);
       }
+      if (prefs['posting:default:quote_policy']) {
+        let policy = prefs['posting:default:quote_policy'].toLowerCase();
+        if (prefs['posting:default:visibility']) {
+          const visibility = prefs['posting:default:visibility'].toLowerCase();
+          if (visibility === 'private' || visibility === 'direct') {
+            policy = 'nobody';
+          }
+        }
+        setQuoteApprovalPolicy(policy);
+      }
     }
     if (draftStatus) {
       const {
@@ -359,6 +371,7 @@ function Compose({
         poll,
         mediaAttachments,
         scheduledAt,
+        quoteApprovalPolicy,
       } = draftStatus;
       const composablePoll = !!poll?.options && {
         ...poll,
@@ -380,6 +393,7 @@ function Compose({
       if (composablePoll) setPoll(composablePoll);
       if (mediaAttachments) setMediaAttachments(mediaAttachments);
       if (scheduledAt) setScheduledAt(scheduledAt);
+      if (quoteApprovalPolicy) setQuoteApprovalPolicy(quoteApprovalPolicy);
     }
   }, [draftStatus, editStatus, replyToStatus]);
 
@@ -579,6 +593,10 @@ function Compose({
         poll,
         mediaAttachments,
         scheduledAt,
+        quoteApprovalPolicy,
+      },
+      quoteStatus: {
+        ...quoteStatus,
       },
     };
     if (
@@ -749,7 +767,8 @@ function Compose({
     uiState === 'loading' ||
     (maxMediaAttachments !== undefined &&
       mediaAttachments.length >= maxMediaAttachments) ||
-    !!poll;
+    !!poll ||
+    !!quoteStatus?.id;
 
   const cwButtonDisabled = uiState === 'loading' || !!sensitive;
   const onCWButtonClick = () => {
@@ -762,7 +781,10 @@ function Compose({
   // If maxOptions is not defined or defined and is greater than 1, show poll button
   const showPollButton = maxOptions == null || maxOptions > 1;
   const pollButtonDisabled =
-    uiState === 'loading' || !!poll || !!mediaAttachments.length;
+    uiState === 'loading' ||
+    !!poll ||
+    !!mediaAttachments.length ||
+    !!quoteStatus?.id;
   const onPollButtonClick = () => {
     setPoll({
       options: ['', ''],
@@ -782,6 +804,10 @@ function Compose({
     (autoDetectedLanguages?.length &&
       !autoDetectedLanguages.includes(language));
   const highlightVisibilityField = visibility !== 'public';
+
+  const highlightQuoteApprovalPolicyField = quoteApprovalPolicy !== 'public';
+  const disableQuotePolicy =
+    visibility === 'private' || visibility === 'direct';
 
   const addSubToolbarRef = useRef();
   const [showAddButton, setShowAddButton] = useState(true);
@@ -866,6 +892,7 @@ function Compose({
                       mediaAttachments,
                       scheduledAt,
                     },
+                    quoteStatus,
                   });
 
                   if (!newWin) {
@@ -956,6 +983,7 @@ function Compose({
                           mediaAttachments,
                           scheduledAt,
                         },
+                        quoteStatus,
                       };
                       window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
                       if (window.opener.__STATES__.showCompose) {
@@ -1045,6 +1073,7 @@ function Compose({
               sensitiveMedia,
               spoilerText,
               scheduledAt,
+              quoteApprovalPolicy,
             } = entries;
 
             // Pre-cleanup
@@ -1171,6 +1200,10 @@ function Compose({
                     (attachment) => attachment.id,
                   ),
                 };
+                if (quoteStatus?.id) {
+                  params.quoted_status_id = quoteStatus.id;
+                  params.quote_approval_policy = quoteApprovalPolicy;
+                }
                 if (editStatus && supports('@mastodon/edit-media-attributes')) {
                   params.media_attributes = mediaAttachments.map(
                     (attachment) => {
@@ -1388,6 +1421,16 @@ function Compose({
                 }
               }}
             />
+          )}
+          {!!quoteStatus?.id && (
+            <div class="quote-status">
+              <Status
+                status={quoteStatus}
+                instance={instance}
+                size="s"
+                readOnly
+              />
+            </div>
           )}
           {scheduledAt && (
             <div class="toolbar scheduled-at">
@@ -1632,6 +1675,83 @@ function Compose({
               />
             )}
             <label
+              class={`toolbar-button ${highlightQuoteApprovalPolicyField ? 'highlight' : ''}`}
+            >
+              <Icon icon="quote2" alt="Quote visibility" />
+              {quoteApprovalPolicy === 'followers' && (
+                <Icon icon="group" class="insignificant" />
+              )}
+              {quoteApprovalPolicy === 'nobody' && (
+                <Icon icon="block" class="insignificant" />
+              )}
+              <select
+                name="quoteApprovalPolicy"
+                value={quoteApprovalPolicy}
+                onChange={(e) => {
+                  setQuoteApprovalPolicy(e.target.value);
+                }}
+                disabled={uiState === 'loading'}
+                dir="auto"
+              >
+                <option value="public" disabled={disableQuotePolicy}>
+                  <Trans>Anyone can quote</Trans>
+                </option>
+                <option value="followers" disabled={disableQuotePolicy}>
+                  <Trans>Your followers can quote</Trans>
+                </option>
+                <option value="nobody">
+                  <Trans>Only you can quote</Trans>
+                </option>
+              </select>
+            </label>
+            <label
+              class={`toolbar-button ${highlightVisibilityField ? 'highlight' : ''}`}
+              title={_(visibilityText[visibility])}
+            >
+              {visibility === 'public' || visibility === 'direct' ? (
+                <Icon
+                  icon={visibilityIconsMap[visibility]}
+                  alt={_(visibilityText[visibility])}
+                />
+              ) : (
+                <span class="icon-text">{_(visibilityText[visibility])}</span>
+              )}
+              <select
+                name="visibility"
+                value={visibility}
+                onChange={(e) => {
+                  setVisibility(e.target.value);
+                  if (
+                    e.target.value === 'private' ||
+                    e.target.value === 'direct'
+                  ) {
+                    setQuoteApprovalPolicy('nobody');
+                  }
+                }}
+                disabled={uiState === 'loading' || !!editStatus}
+                dir="auto"
+              >
+                <option value="public">
+                  <Trans>Public</Trans>
+                </option>
+                {(supports('@pleroma/local-visibility-post') ||
+                  supports('@akkoma/local-visibility-post')) && (
+                  <option value="local">
+                    <Trans>Local</Trans>
+                  </option>
+                )}
+                <option value="unlisted">
+                  <Trans>Quiet public</Trans>
+                </option>
+                <option value="private">
+                  <Trans>Followers</Trans>
+                </option>
+                <option value="direct">
+                  <Trans>Private mention</Trans>
+                </option>
+              </select>
+            </label>{' '}
+            <label
               class={`toolbar-button ${
                 highlightLanguageField ? 'highlight' : ''
               }`}
@@ -1675,47 +1795,6 @@ function Compose({
                     </option>
                   );
                 })}
-              </select>
-            </label>{' '}
-            <label
-              class={`toolbar-button ${highlightVisibilityField ? 'highlight' : ''}`}
-              title={_(visibilityText[visibility])}
-            >
-              {visibility === 'public' || visibility === 'direct' ? (
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={_(visibilityText[visibility])}
-                />
-              ) : (
-                <span class="icon-text">{_(visibilityText[visibility])}</span>
-              )}
-              <select
-                name="visibility"
-                value={visibility}
-                onChange={(e) => {
-                  setVisibility(e.target.value);
-                }}
-                disabled={uiState === 'loading' || !!editStatus}
-                dir="auto"
-              >
-                <option value="public">
-                  <Trans>Public</Trans>
-                </option>
-                {(supports('@pleroma/local-visibility-post') ||
-                  supports('@akkoma/local-visibility-post')) && (
-                  <option value="local">
-                    <Trans>Local</Trans>
-                  </option>
-                )}
-                <option value="unlisted">
-                  <Trans>Quiet public</Trans>
-                </option>
-                <option value="private">
-                  <Trans>Followers</Trans>
-                </option>
-                <option value="direct">
-                  <Trans>Private mention</Trans>
-                </option>
               </select>
             </label>{' '}
             <button type="submit" disabled={uiState === 'loading'}>

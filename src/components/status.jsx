@@ -41,7 +41,7 @@ import showToast from '../utils/show-toast';
 import { speak, supportsTTS } from '../utils/speech';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
-import { getCurrentAccID, getCurrentAccountID } from '../utils/store-utils';
+import { getAPIVersions, getCurrentAccID } from '../utils/store-utils';
 import supports from '../utils/supports';
 import useTruncated from '../utils/useTruncated';
 import visibilityIconsMap from '../utils/visibility-icons-map';
@@ -279,6 +279,16 @@ const checkDifferentLanguage = (
   return different;
 };
 
+const quoteMessages = {
+  quotePrivate: msg`Private posts cannot be quoted`,
+  requestQuote: msg`Request to quote`,
+  quoteManualReview: msg`Author will manually review`,
+  quoteFollowersOnly: msg`Only followers can quote this post`,
+  quoteCannot: msg`You are not allowed to quote this post`,
+};
+
+const { DEV } = import.meta.env;
+
 function Status({
   statusID,
   status,
@@ -399,6 +409,7 @@ function Status({
     emojis,
     tags,
     pinned,
+    quoteApproval,
     // Non-API props
     _deleted,
     _pinned,
@@ -428,9 +439,7 @@ function Status({
   if (mediaFirst && hasMediaAttachments) size = 's';
 
   const currentAccount = getCurrentAccID();
-  const isSelf = useMemo(() => {
-    return currentAccount && currentAccount === accountId;
-  }, [accountId, currentAccount]);
+  const isSelf = currentAccount && currentAccount === accountId;
 
   const filterContext = useContext(FilterContext);
   const filterInfo =
@@ -674,11 +683,42 @@ function Status({
   // - authenticated AND
   // - visibility != direct OR
   // - visibility = private AND isSelf
-  let canBoost =
-    authenticated && visibility !== 'direct' && visibility !== 'private';
+  const isPublic = ['public', 'unlisted'].includes(visibility);
+  let canBoost = authenticated && isPublic;
   if (visibility === 'private' && isSelf) {
     canBoost = true;
   }
+
+  // Quote logic blatantly copied from https://github.com/mastodon/mastodon/blob/854aaec6fe69df02e6d850cb90eef37032b4d72f/app/javascript/mastodon/components/status/boost_button_utils.ts#L131-L163
+  const isMine = isSelf;
+  const isMineAndPrivate = isMine && visibility === 'private';
+  const isQuoteAutomaticallyAccepted =
+    quoteApproval?.currentUser === 'automatic' &&
+    (isPublic || isMineAndPrivate);
+  const isQuoteManuallyAccepted =
+    quoteApproval?.currentUser === 'manual' && (isPublic || isMineAndPrivate);
+  const isQuoteFollowersOnly =
+    quoteApproval?.automatic?.[0] === 'followers' ||
+    quoteApproval?.manual?.[0] === 'followers';
+  let quoteDisabled = false;
+  let quoteText = t`Quote`;
+  let quoteMetaText;
+  if (!isPublic && !isMine) {
+    quoteDisabled = true;
+    quoteMetaText = _(quoteMessages.quotePrivate);
+  } else if (isQuoteAutomaticallyAccepted) {
+    // No need to do anything
+  } else if (isQuoteManuallyAccepted) {
+    quoteText = _(quoteMessages.requestQuote);
+    quoteMetaText = _(quoteMessages.quoteManualReview);
+  } else {
+    quoteDisabled = true;
+    quoteMetaText = isQuoteFollowersOnly
+      ? _(quoteMessages.quoteFollowersOnly)
+      : _(quoteMessages.quoteCannot);
+  }
+
+  const supportsNativeQuote = getAPIVersions()?.mastodon >= 7;
 
   const replyStatus = (e) => {
     if (!sameInstance || !authenticated) {
@@ -944,7 +984,6 @@ function Status({
   }
 
   const actionsRef = useRef();
-  const isPublic = ['public', 'unlisted'].includes(visibility);
   const isPinnable = ['public', 'unlisted', 'private'].includes(visibility);
   const menuFooter =
     mediaNoDesc && !reblogged ? (
@@ -986,20 +1025,48 @@ function Status({
               }
               className={`menu-reblog ${reblogged ? 'checked' : ''}`}
               menuExtras={
-                <MenuItem
-                  onClick={() => {
-                    showCompose({
-                      draftStatus: {
-                        status: `\n${url}`,
-                      },
-                    });
-                  }}
-                >
-                  <Icon icon="quote" />
-                  <span>
-                    <Trans>Quote</Trans>
-                  </span>
-                </MenuItem>
+                <>
+                  {supportsNativeQuote && (
+                    <MenuItem
+                      disabled={quoteDisabled}
+                      onClick={() => {
+                        showCompose({
+                          quoteStatus: status,
+                        });
+                      }}
+                    >
+                      <Icon icon="quote" />
+                      {quoteMetaText ? (
+                        <small>
+                          {quoteText}
+                          <br />
+                          {quoteMetaText}
+                        </small>
+                      ) : (
+                        <span>{quoteText}</span>
+                      )}
+                    </MenuItem>
+                  )}
+                  {(DEV || !supportsNativeQuote) && (
+                    <MenuItem
+                      onClick={() => {
+                        showCompose({
+                          draftStatus: {
+                            status: `\n${url}`,
+                          },
+                        });
+                      }}
+                    >
+                      <Icon icon="quote" />
+                      <span>
+                        <Trans>Quote with link</Trans>
+                      </span>
+                      {supportsNativeQuote && DEV && (
+                        <small class="tag collapsed">DEV</small>
+                      )}
+                    </MenuItem>
+                  )}
+                </>
               }
               menuFooter={menuFooter}
               disabled={!canBoost}
@@ -2495,20 +2562,48 @@ function Status({
                       </>
                     }
                     menuExtras={
-                      <MenuItem
-                        onClick={() => {
-                          showCompose({
-                            draftStatus: {
-                              status: `\n${url}`,
-                            },
-                          });
-                        }}
-                      >
-                        <Icon icon="quote" />
-                        <span>
-                          <Trans>Quote</Trans>
-                        </span>
-                      </MenuItem>
+                      <>
+                        {supportsNativeQuote && (
+                          <MenuItem
+                            disabled={quoteDisabled}
+                            onClick={() => {
+                              showCompose({
+                                quoteStatus: status,
+                              });
+                            }}
+                          >
+                            <Icon icon="quote" />
+                            {quoteMetaText ? (
+                              <small>
+                                {quoteText}
+                                <br />
+                                {quoteMetaText}
+                              </small>
+                            ) : (
+                              <span>{quoteText}</span>
+                            )}
+                          </MenuItem>
+                        )}
+                        {(DEV || !supportsNativeQuote) && (
+                          <MenuItem
+                            onClick={() => {
+                              showCompose({
+                                draftStatus: {
+                                  status: `\n${url}`,
+                                },
+                              });
+                            }}
+                          >
+                            <Icon icon="quote" />
+                            <span>
+                              <Trans>Quote with link</Trans>
+                            </span>
+                            {supportsNativeQuote && DEV && (
+                              <small class="tag collapsed">DEV</small>
+                            )}
+                          </MenuItem>
+                        )}
+                      </>
                     }
                     menuFooter={menuFooter}
                   >
@@ -2673,7 +2768,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   if (level > 2) return;
 
   const filterContext = useContext(FilterContext);
-  const currentAccount = getCurrentAccountID();
+  const currentAccount = getCurrentAccID();
   const containerRef = useTruncated();
 
   return (

@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-20 12:50\n"
+"PO-Revision-Date: 2025-09-20 14:02\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -96,7 +96,7 @@ msgstr "Ir a la página de la cuenta"
 
 #: src/components/account-info.jsx:407
 #: src/components/account-info.jsx:740
-#: src/components/compose.jsx:1747
+#: src/components/compose.jsx:1759
 #: src/pages/settings.jsx:328
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -256,7 +256,7 @@ msgstr "Ver las estadísticas de las publicaciones"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:924
+#: src/components/compose.jsx:929
 #: src/components/custom-emojis-modal.jsx:256
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
@@ -376,7 +376,7 @@ msgid "Remove"
 msgstr "Eliminar"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1482
+#: src/components/compose.jsx:1492
 #: src/components/mention-modal.jsx:220
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
@@ -395,190 +395,190 @@ msgstr "Duración"
 msgid "Remove poll"
 msgstr "Eliminar encuesta"
 
-#: src/components/compose.jsx:102
+#: src/components/compose.jsx:103
 msgid "Take photo or video"
 msgstr "Hacer una foto o un vídeo"
 
-#: src/components/compose.jsx:103
+#: src/components/compose.jsx:104
 msgid "Add media"
 msgstr "Añadir multimedia"
 
-#: src/components/compose.jsx:104
+#: src/components/compose.jsx:105
 msgid "Add custom emoji"
 msgstr "Insertar emoji personalizado"
 
-#: src/components/compose.jsx:105
+#: src/components/compose.jsx:106
 msgid "Add GIF"
 msgstr "Añadir GIF"
 
-#: src/components/compose.jsx:106
+#: src/components/compose.jsx:107
 msgid "Add poll"
 msgstr "Añadir una encuesta"
 
-#: src/components/compose.jsx:107
+#: src/components/compose.jsx:108
 msgid "Add content warning"
 msgstr "Añadir advertencia de contenido"
 
-#: src/components/compose.jsx:108
+#: src/components/compose.jsx:109
 msgid "Schedule post"
 msgstr "Programar publicación"
 
-#: src/components/compose.jsx:410
+#: src/components/compose.jsx:413
 msgid "You have unsaved changes. Discard this post?"
 msgstr "Tienes cambios sin guardar. ¿Deseas descartar esta publicación?"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:653
+#: src/components/compose.jsx:658
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, one {El archivo {1} no es compatible.} other {Los archivos {2} no son compatibles.}}"
 
-#: src/components/compose.jsx:663
-#: src/components/compose.jsx:681
-#: src/components/compose.jsx:1878
+#: src/components/compose.jsx:668
+#: src/components/compose.jsx:686
+#: src/components/compose.jsx:1890
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Solo puedes adjuntar hasta 1 archivo.} other {Solo puedes adjuntar hasta # archivos.}}"
 
-#: src/components/compose.jsx:905
+#: src/components/compose.jsx:910
 msgid "Pop out"
 msgstr "Salir"
 
-#: src/components/compose.jsx:912
+#: src/components/compose.jsx:917
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: src/components/compose.jsx:948
+#: src/components/compose.jsx:953
 msgid "Looks like you closed the parent window."
 msgstr "Parece que has cerrado la ventana principal."
 
-#: src/components/compose.jsx:955
+#: src/components/compose.jsx:960
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Parece que ya tienes una ventana de edición abierta en la ventana principal y que se está publicando. Por favor, espera a que se publique e inténtalo de nuevo más tarde."
 
-#: src/components/compose.jsx:960
+#: src/components/compose.jsx:965
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Parece que ya tienes una ventana de redacción abierta en la ventana principal. Entrando en esta ventana se descartarán los cambios que hiciste. ¿Deseas continuar?"
 
-#: src/components/compose.jsx:1005
+#: src/components/compose.jsx:1010
 msgid "Pop in"
 msgstr "Mostrar"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1015
+#: src/components/compose.jsx:1020
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Respondiendo a la publicación de @{0}(<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1025
+#: src/components/compose.jsx:1030
 msgid "Replying to @{0}’s post"
 msgstr "Respondiendo a la publicación de @{0}"
 
-#: src/components/compose.jsx:1038
+#: src/components/compose.jsx:1043
 msgid "Editing source post"
 msgstr "Editando la publicación original"
 
-#: src/components/compose.jsx:1107
+#: src/components/compose.jsx:1112
 msgid "Poll must have at least 2 options"
 msgstr "La encuesta debe tener al menos 2 opciones"
 
-#: src/components/compose.jsx:1111
+#: src/components/compose.jsx:1116
 msgid "Some poll choices are empty"
 msgstr "Algunas opciones de la encuesta están vacías"
 
-#: src/components/compose.jsx:1124
+#: src/components/compose.jsx:1129
 msgid "Some media have no descriptions. Continue?"
 msgstr "Algunos archivos no tienen descripciones. ¿Desear continuar?"
 
-#: src/components/compose.jsx:1176
+#: src/components/compose.jsx:1181
 msgid "Attachment #{i} failed"
 msgstr "Error al adjuntar #{i}"
 
-#: src/components/compose.jsx:1295
+#: src/components/compose.jsx:1305
 #: src/components/status.jsx:2190
 #: src/components/timeline.jsx:1016
 msgid "Content warning"
 msgstr "Advertencia de contenido"
 
-#: src/components/compose.jsx:1316
-#: src/components/compose.jsx:1459
+#: src/components/compose.jsx:1326
+#: src/components/compose.jsx:1469
 #: src/components/edit-profile-sheet.jsx:323
 #: src/components/open-link-sheet.jsx:74
 #: src/components/private-note-sheet.jsx:94
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/components/compose.jsx:1324
+#: src/components/compose.jsx:1334
 msgid "Post your reply"
 msgstr "Publica tu respuesta"
 
-#: src/components/compose.jsx:1326
+#: src/components/compose.jsx:1336
 msgid "Edit your post"
 msgstr "Edita tu publicación"
 
-#: src/components/compose.jsx:1328
+#: src/components/compose.jsx:1338
 msgid "Ask a question"
 msgstr "Hacer una pregunta"
 
-#: src/components/compose.jsx:1329
+#: src/components/compose.jsx:1339
 msgid "What are you doing?"
 msgstr "¿En qué estás pensando?"
 
-#: src/components/compose.jsx:1399
+#: src/components/compose.jsx:1409
 msgid "Mark media as sensitive"
 msgstr "Añadir advertencia de contenido"
 
-#: src/components/compose.jsx:1439
+#: src/components/compose.jsx:1449
 msgid "Posting on <0/>"
 msgstr "Publicar el <0/>"
 
-#: src/components/compose.jsx:1697
+#: src/components/compose.jsx:1708
 #: src/pages/settings.jsx:375
 msgid "Anyone can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1700
+#: src/components/compose.jsx:1711
 #: src/pages/settings.jsx:378
 msgid "Your followers can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1703
+#: src/components/compose.jsx:1714
 #: src/pages/settings.jsx:381
 msgid "Only you can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1735
+#: src/components/compose.jsx:1747
 #: src/pages/settings.jsx:322
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Pública"
 
-#: src/components/compose.jsx:1740
+#: src/components/compose.jsx:1752
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Local"
 
-#: src/components/compose.jsx:1744
+#: src/components/compose.jsx:1756
 #: src/pages/settings.jsx:325
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "Pública, pero silenciosa"
 
-#: src/components/compose.jsx:1750
+#: src/components/compose.jsx:1762
 #: src/components/status.jsx:2070
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Mención privada"
 
-#: src/components/compose.jsx:1802
+#: src/components/compose.jsx:1814
 msgid "Schedule"
 msgstr "Programar"
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1816
 #: src/components/keyboard-shortcuts-help.jsx:155
 #: src/components/status.jsx:1015
 #: src/components/status.jsx:1833
@@ -587,20 +587,20 @@ msgstr "Programar"
 msgid "Reply"
 msgstr "Responder"
 
-#: src/components/compose.jsx:1806
+#: src/components/compose.jsx:1818
 msgid "Update"
 msgstr "Actualizar"
 
-#: src/components/compose.jsx:1807
+#: src/components/compose.jsx:1819
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Publicar"
 
-#: src/components/compose.jsx:1890
+#: src/components/compose.jsx:1902
 msgid "Downloading GIF…"
 msgstr "Descargando GIF…"
 
-#: src/components/compose.jsx:1918
+#: src/components/compose.jsx:1930
 msgid "Failed to download GIF"
 msgstr "Hubo un fallo al descargar el GIF"
 

@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-20 12:51\n"
+"PO-Revision-Date: 2025-09-20 18:07\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -96,7 +96,7 @@ msgstr "Iri al konta paĝo"
 
 #: src/components/account-info.jsx:407
 #: src/components/account-info.jsx:740
-#: src/components/compose.jsx:1747
+#: src/components/compose.jsx:1759
 #: src/pages/settings.jsx:328
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -256,7 +256,7 @@ msgstr "Vidi afiŝo-statistikojn"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:924
+#: src/components/compose.jsx:929
 #: src/components/custom-emojis-modal.jsx:256
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
@@ -376,7 +376,7 @@ msgid "Remove"
 msgstr "Forigi"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1482
+#: src/components/compose.jsx:1492
 #: src/components/mention-modal.jsx:220
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
@@ -395,190 +395,190 @@ msgstr "Daŭro"
 msgid "Remove poll"
 msgstr "Forigi balotenketon"
 
-#: src/components/compose.jsx:102
+#: src/components/compose.jsx:103
 msgid "Take photo or video"
 msgstr "Fari foton aŭ filmeton"
 
-#: src/components/compose.jsx:103
+#: src/components/compose.jsx:104
 msgid "Add media"
 msgstr "Aldoni plurmedion"
 
-#: src/components/compose.jsx:104
+#: src/components/compose.jsx:105
 msgid "Add custom emoji"
 msgstr "Aldoni propran emoĝion"
 
-#: src/components/compose.jsx:105
+#: src/components/compose.jsx:106
 msgid "Add GIF"
 msgstr "Aldoni GIF-movbildon"
 
-#: src/components/compose.jsx:106
+#: src/components/compose.jsx:107
 msgid "Add poll"
 msgstr "Aldoni balotenketon"
 
-#: src/components/compose.jsx:107
+#: src/components/compose.jsx:108
 msgid "Add content warning"
 msgstr "Aldoni enhavan averton"
 
-#: src/components/compose.jsx:108
+#: src/components/compose.jsx:109
 msgid "Schedule post"
 msgstr "Planu afiŝon"
 
-#: src/components/compose.jsx:410
+#: src/components/compose.jsx:413
 msgid "You have unsaved changes. Discard this post?"
 msgstr "Vi havas nekonservitajn ŝanĝojn. Ĉu forĵeti ĉi tiun afiŝon?"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:653
+#: src/components/compose.jsx:658
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, one {La dosiero {1} ne estas subtenata.} other {La dosieroj {2} ne estas subtenataj.}}"
 
-#: src/components/compose.jsx:663
-#: src/components/compose.jsx:681
-#: src/components/compose.jsx:1878
+#: src/components/compose.jsx:668
+#: src/components/compose.jsx:686
+#: src/components/compose.jsx:1890
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Vi povas nur kunsendi ĝis 1 dosieron.} other {Vi povas nur kunsendi ĝis # dosierojn.}}"
 
-#: src/components/compose.jsx:905
+#: src/components/compose.jsx:910
 msgid "Pop out"
 msgstr "Foriri"
 
-#: src/components/compose.jsx:912
+#: src/components/compose.jsx:917
 msgid "Minimize"
 msgstr "Minimumigi"
 
-#: src/components/compose.jsx:948
+#: src/components/compose.jsx:953
 msgid "Looks like you closed the parent window."
 msgstr "Ŝajnas, ke vi fermis la patran fenestron."
 
-#: src/components/compose.jsx:955
+#: src/components/compose.jsx:960
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Ŝajnas, ke vi jam havas redaktan fenestron malfermita en la ĉefa fenestro kaj vi nun publikigas. Bonvolu atendi, ke ĝi estos publikigita kaj provu denove poste."
 
-#: src/components/compose.jsx:960
+#: src/components/compose.jsx:965
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Ŝajnas, ke vi jam havas redaktan fenestron malfermitan en la ĉefa fenestro. Enirante ĉi tiun fenestron forĵetos la ŝanĝojn kiujn vi faris. Ĉu daŭrigi?"
 
-#: src/components/compose.jsx:1005
+#: src/components/compose.jsx:1010
 msgid "Pop in"
 msgstr "Montri"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1015
+#: src/components/compose.jsx:1020
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Respondante al la afiŝo de @{0} (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1025
+#: src/components/compose.jsx:1030
 msgid "Replying to @{0}’s post"
 msgstr "Respondante al la afiŝo de @{0}"
 
-#: src/components/compose.jsx:1038
+#: src/components/compose.jsx:1043
 msgid "Editing source post"
 msgstr "Redaktante la originalan afiŝon"
 
-#: src/components/compose.jsx:1107
+#: src/components/compose.jsx:1112
 msgid "Poll must have at least 2 options"
 msgstr "Balotenketo devas havi almenaŭ 2 eblojn"
 
-#: src/components/compose.jsx:1111
+#: src/components/compose.jsx:1116
 msgid "Some poll choices are empty"
 msgstr "Iuj elektoj de balotado estas malplenaj"
 
-#: src/components/compose.jsx:1124
+#: src/components/compose.jsx:1129
 msgid "Some media have no descriptions. Continue?"
 msgstr "Iuj plurmedioj ne havas priskribojn. Ĉu daŭrigi?"
 
-#: src/components/compose.jsx:1176
+#: src/components/compose.jsx:1181
 msgid "Attachment #{i} failed"
 msgstr "Eraro aldonante #{i}"
 
-#: src/components/compose.jsx:1295
+#: src/components/compose.jsx:1305
 #: src/components/status.jsx:2190
 #: src/components/timeline.jsx:1016
 msgid "Content warning"
 msgstr "Enhavaverto"
 
-#: src/components/compose.jsx:1316
-#: src/components/compose.jsx:1459
+#: src/components/compose.jsx:1326
+#: src/components/compose.jsx:1469
 #: src/components/edit-profile-sheet.jsx:323
 #: src/components/open-link-sheet.jsx:74
 #: src/components/private-note-sheet.jsx:94
 msgid "Cancel"
 msgstr "Nuligi"
 
-#: src/components/compose.jsx:1324
+#: src/components/compose.jsx:1334
 msgid "Post your reply"
 msgstr "Afiŝi vian respondon"
 
-#: src/components/compose.jsx:1326
+#: src/components/compose.jsx:1336
 msgid "Edit your post"
 msgstr "Redakti vian afiŝon"
 
-#: src/components/compose.jsx:1328
+#: src/components/compose.jsx:1338
 msgid "Ask a question"
 msgstr "Faru demandon"
 
-#: src/components/compose.jsx:1329
+#: src/components/compose.jsx:1339
 msgid "What are you doing?"
 msgstr "Kion vi pensas?"
 
-#: src/components/compose.jsx:1399
+#: src/components/compose.jsx:1409
 msgid "Mark media as sensitive"
 msgstr "Aldoni averton de enhavo"
 
-#: src/components/compose.jsx:1439
+#: src/components/compose.jsx:1449
 msgid "Posting on <0/>"
 msgstr "Afiŝi la <0/>"
 
-#: src/components/compose.jsx:1697
+#: src/components/compose.jsx:1708
 #: src/pages/settings.jsx:375
 msgid "Anyone can quote"
-msgstr ""
+msgstr "Iu ajn povas citi"
 
-#: src/components/compose.jsx:1700
+#: src/components/compose.jsx:1711
 #: src/pages/settings.jsx:378
 msgid "Your followers can quote"
-msgstr ""
+msgstr "Viaj sekvantoj povas citi"
 
-#: src/components/compose.jsx:1703
+#: src/components/compose.jsx:1714
 #: src/pages/settings.jsx:381
 msgid "Only you can quote"
-msgstr ""
+msgstr "Nur vi povas citi"
 
-#: src/components/compose.jsx:1735
+#: src/components/compose.jsx:1747
 #: src/pages/settings.jsx:322
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Publika"
 
-#: src/components/compose.jsx:1740
+#: src/components/compose.jsx:1752
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Loka"
 
-#: src/components/compose.jsx:1744
+#: src/components/compose.jsx:1756
 #: src/pages/settings.jsx:325
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "Diskrete publika"
 
-#: src/components/compose.jsx:1750
+#: src/components/compose.jsx:1762
 #: src/components/status.jsx:2070
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Privata mencio"
 
-#: src/components/compose.jsx:1802
+#: src/components/compose.jsx:1814
 msgid "Schedule"
 msgstr "Plani"
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1816
 #: src/components/keyboard-shortcuts-help.jsx:155
 #: src/components/status.jsx:1015
 #: src/components/status.jsx:1833
@@ -587,20 +587,20 @@ msgstr "Plani"
 msgid "Reply"
 msgstr "Respondi"
 
-#: src/components/compose.jsx:1806
+#: src/components/compose.jsx:1818
 msgid "Update"
 msgstr "Ĝisdatigi"
 
-#: src/components/compose.jsx:1807
+#: src/components/compose.jsx:1819
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Afiŝi"
 
-#: src/components/compose.jsx:1890
+#: src/components/compose.jsx:1902
 msgid "Downloading GIF…"
 msgstr "Elŝutante movbildon…"
 
-#: src/components/compose.jsx:1918
+#: src/components/compose.jsx:1930
 msgid "Failed to download GIF"
 msgstr "Malsukcesis elŝuti movbildon"
 
@@ -1443,7 +1443,7 @@ msgstr "Balotenketo, pri kiu vi voĉdonis, finiĝis."
 
 #: src/components/notification.jsx:203
 msgid "{account} edited a post."
-msgstr ""
+msgstr "{account} redaktis afiŝon."
 
 #: src/components/notification.jsx:205
 msgid "A post you interacted with has been edited."
@@ -1457,11 +1457,11 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 
 #: src/components/notification.jsx:256
 msgid "{account} quoted your post."
-msgstr ""
+msgstr "{account} citis vian afiŝon."
 
 #: src/components/notification.jsx:258
 msgid "{account} edited a post you have quoted."
-msgstr ""
+msgstr "{account} redaktis afiŝon, kiun vi citis."
 
 #: src/components/notification.jsx:260
 msgid "{account} signed up."
@@ -2384,23 +2384,23 @@ msgstr "Importi/eksporti agordojn de/al nodservilo (Tre eksperimenta)"
 
 #: src/components/status.jsx:283
 msgid "Private posts cannot be quoted"
-msgstr ""
+msgstr "Privataj afiŝoj ne povas esti cititaj"
 
 #: src/components/status.jsx:284
 msgid "Request to quote"
-msgstr ""
+msgstr "Peto por citi"
 
 #: src/components/status.jsx:285
 msgid "Author will manually review"
-msgstr ""
+msgstr "Aŭtoro permane revizios"
 
 #: src/components/status.jsx:286
 msgid "Only followers can quote this post"
-msgstr ""
+msgstr "Nur sekvantoj rajtas citi tiun ĉi afiŝon"
 
 #: src/components/status.jsx:287
 msgid "You are not allowed to quote this post"
-msgstr ""
+msgstr "Vi ne rajtas citi ĉi tiun afiŝon"
 
 #: src/components/status.jsx:563
 msgid "<0/> <1>boosted</1>"
@@ -2449,7 +2449,7 @@ msgstr "Ne plu diskonigi"
 #: src/components/status.jsx:1062
 #: src/components/status.jsx:2599
 msgid "Quote with link"
-msgstr ""
+msgstr "Citi kun ligilo"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1079
@@ -2636,7 +2636,7 @@ msgstr "Komentoj"
 
 #: src/components/status.jsx:2749
 msgid "Post hidden by your filters"
-msgstr ""
+msgstr "Afiŝo kaŝita de viaj filtriloj"
 
 #: src/components/status.jsx:2750
 msgid "Post pending"
@@ -2650,7 +2650,7 @@ msgstr "Afiŝo ne disponebla"
 
 #: src/components/status.jsx:2754
 msgid "Post removed by author"
-msgstr ""
+msgstr "Afiŝo forigita de aŭtoro"
 
 #: src/components/status.jsx:2869
 msgid "Edit History"
@@ -3837,11 +3837,11 @@ msgstr "Malsukcesis ĝisdatigi afiŝan privatecon"
 
 #: src/pages/settings.jsx:336
 msgid "Quote settings"
-msgstr ""
+msgstr "Agordoj de citaĵo"
 
 #: src/pages/settings.jsx:368
 msgid "Failed to update quote settings"
-msgstr ""
+msgstr "Malsukcesis ĝisdatigi agordojn de citaĵo"
 
 #: src/pages/settings.jsx:391
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"

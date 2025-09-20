@@ -164,7 +164,7 @@
   color: var(--text-color);
 }
 .status-card-container {
-  margin: 1em 0 0;
+  margin: 8px 0 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -969,6 +969,13 @@
   color: var(--text-color);
   text-decoration-color: var(--link-color);
 }
+.status .content .inner-content a.is-quote {
+  color: var(--link-text-color);
+
+  &:not(:hover, :focus, :active) {
+    text-decoration-color: var(--link-bg-color);
+  }
+}
 .status .content :is(.h-card, .mention) {
   unicode-bidi: isolate;
 }
@@ -1022,6 +1029,10 @@
     br:has(+ .quote-inline),
     .quote-inline {
       display: none;
+
+      &:is(p:first-child) + p {
+        margin-block-start: 0;
+      }
     }
   }
 }
@@ -2115,6 +2126,11 @@ a.card:is(:hover, :focus):visited {
     line-clamp: 10;
     opacity: 1;
     /* font-size: inherit; */
+  }
+
+  .card-image {
+    border-inline-end: 0;
+    border-inline-start: 1px solid var(--outline-color);
   }
 }
 .status.large .card.large.card-post,

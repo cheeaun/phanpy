@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-20 12:51\n"
+"PO-Revision-Date: 2025-09-20 15:17\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -96,7 +96,7 @@ msgstr "转到账户页"
 
 #: src/components/account-info.jsx:407
 #: src/components/account-info.jsx:740
-#: src/components/compose.jsx:1747
+#: src/components/compose.jsx:1759
 #: src/pages/settings.jsx:328
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -256,7 +256,7 @@ msgstr "查看嘟文统计"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:924
+#: src/components/compose.jsx:929
 #: src/components/custom-emojis-modal.jsx:256
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
@@ -376,7 +376,7 @@ msgid "Remove"
 msgstr "移除"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1482
+#: src/components/compose.jsx:1492
 #: src/components/mention-modal.jsx:220
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
@@ -395,190 +395,190 @@ msgstr "时长"
 msgid "Remove poll"
 msgstr "删除投票"
 
-#: src/components/compose.jsx:102
+#: src/components/compose.jsx:103
 msgid "Take photo or video"
 msgstr "拍摄"
 
-#: src/components/compose.jsx:103
+#: src/components/compose.jsx:104
 msgid "Add media"
 msgstr "添加媒体"
 
-#: src/components/compose.jsx:104
+#: src/components/compose.jsx:105
 msgid "Add custom emoji"
 msgstr "添加自定义表情"
 
-#: src/components/compose.jsx:105
+#: src/components/compose.jsx:106
 msgid "Add GIF"
 msgstr "添加GIF"
 
-#: src/components/compose.jsx:106
+#: src/components/compose.jsx:107
 msgid "Add poll"
 msgstr "添加投票"
 
-#: src/components/compose.jsx:107
+#: src/components/compose.jsx:108
 msgid "Add content warning"
 msgstr ""
 
-#: src/components/compose.jsx:108
+#: src/components/compose.jsx:109
 msgid "Schedule post"
 msgstr "设置定时发送"
 
-#: src/components/compose.jsx:410
+#: src/components/compose.jsx:413
 msgid "You have unsaved changes. Discard this post?"
 msgstr "你有尚未保存的更改。是否丢弃这条嘟文？"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:653
+#: src/components/compose.jsx:658
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, other {文件 {2} 的类型不受支持。}}"
 
-#: src/components/compose.jsx:663
-#: src/components/compose.jsx:681
-#: src/components/compose.jsx:1878
+#: src/components/compose.jsx:668
+#: src/components/compose.jsx:686
+#: src/components/compose.jsx:1890
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, other {你最多可以添加 # 个附件。}}"
 
-#: src/components/compose.jsx:905
+#: src/components/compose.jsx:910
 msgid "Pop out"
 msgstr "弹出"
 
-#: src/components/compose.jsx:912
+#: src/components/compose.jsx:917
 msgid "Minimize"
 msgstr "最小化"
 
-#: src/components/compose.jsx:948
+#: src/components/compose.jsx:953
 msgid "Looks like you closed the parent window."
 msgstr "你似乎关闭了上级窗口。"
 
-#: src/components/compose.jsx:955
+#: src/components/compose.jsx:960
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "你似乎已在上级窗口打开了一个撰写框并正在发布内容。请等待其完成后再试。"
 
-#: src/components/compose.jsx:960
+#: src/components/compose.jsx:965
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "你似乎已在上级窗口中打开了一个撰写框。如果在此窗口中新建撰写框，你在上级窗口中所做的更改将丢失。是否继续？"
 
-#: src/components/compose.jsx:1005
+#: src/components/compose.jsx:1010
 msgid "Pop in"
 msgstr "弹回"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1015
+#: src/components/compose.jsx:1020
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "正在回复 @{0} 的嘟文 (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1025
+#: src/components/compose.jsx:1030
 msgid "Replying to @{0}’s post"
 msgstr "正在回复 @{0} 的嘟文"
 
-#: src/components/compose.jsx:1038
+#: src/components/compose.jsx:1043
 msgid "Editing source post"
 msgstr "编辑原嘟"
 
-#: src/components/compose.jsx:1107
+#: src/components/compose.jsx:1112
 msgid "Poll must have at least 2 options"
 msgstr "投票必须至少包含 2 个选项"
 
-#: src/components/compose.jsx:1111
+#: src/components/compose.jsx:1116
 msgid "Some poll choices are empty"
 msgstr "某些投票选项为空"
 
-#: src/components/compose.jsx:1124
+#: src/components/compose.jsx:1129
 msgid "Some media have no descriptions. Continue?"
 msgstr "某些媒体附件没有描述文本。是否继续？"
 
-#: src/components/compose.jsx:1176
+#: src/components/compose.jsx:1181
 msgid "Attachment #{i} failed"
 msgstr "附加附件 #{i} 失败"
 
-#: src/components/compose.jsx:1295
+#: src/components/compose.jsx:1305
 #: src/components/status.jsx:2190
 #: src/components/timeline.jsx:1016
 msgid "Content warning"
 msgstr "内容警告"
 
-#: src/components/compose.jsx:1316
-#: src/components/compose.jsx:1459
+#: src/components/compose.jsx:1326
+#: src/components/compose.jsx:1469
 #: src/components/edit-profile-sheet.jsx:323
 #: src/components/open-link-sheet.jsx:74
 #: src/components/private-note-sheet.jsx:94
 msgid "Cancel"
 msgstr "取消"
 
-#: src/components/compose.jsx:1324
+#: src/components/compose.jsx:1334
 msgid "Post your reply"
 msgstr "发送回复"
 
-#: src/components/compose.jsx:1326
+#: src/components/compose.jsx:1336
 msgid "Edit your post"
 msgstr "编辑嘟文"
 
-#: src/components/compose.jsx:1328
+#: src/components/compose.jsx:1338
 msgid "Ask a question"
 msgstr ""
 
-#: src/components/compose.jsx:1329
+#: src/components/compose.jsx:1339
 msgid "What are you doing?"
 msgstr "在做什么呢？"
 
-#: src/components/compose.jsx:1399
+#: src/components/compose.jsx:1409
 msgid "Mark media as sensitive"
 msgstr "将媒体标记为敏感"
 
-#: src/components/compose.jsx:1439
+#: src/components/compose.jsx:1449
 msgid "Posting on <0/>"
 msgstr "发布于 <0/>"
 
-#: src/components/compose.jsx:1697
+#: src/components/compose.jsx:1708
 #: src/pages/settings.jsx:375
 msgid "Anyone can quote"
-msgstr ""
+msgstr "任何人都能引用"
 
-#: src/components/compose.jsx:1700
+#: src/components/compose.jsx:1711
 #: src/pages/settings.jsx:378
 msgid "Your followers can quote"
-msgstr ""
+msgstr "你的粉丝才能引用"
 
-#: src/components/compose.jsx:1703
+#: src/components/compose.jsx:1714
 #: src/pages/settings.jsx:381
 msgid "Only you can quote"
-msgstr ""
+msgstr "只有你才能引用"
 
-#: src/components/compose.jsx:1735
+#: src/components/compose.jsx:1747
 #: src/pages/settings.jsx:322
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "公开"
 
-#: src/components/compose.jsx:1740
+#: src/components/compose.jsx:1752
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "本站"
 
-#: src/components/compose.jsx:1744
+#: src/components/compose.jsx:1756
 #: src/pages/settings.jsx:325
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr ""
 
-#: src/components/compose.jsx:1750
+#: src/components/compose.jsx:1762
 #: src/components/status.jsx:2070
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "私信"
 
-#: src/components/compose.jsx:1802
+#: src/components/compose.jsx:1814
 msgid "Schedule"
 msgstr "定时发嘟"
 
-#: src/components/compose.jsx:1804
+#: src/components/compose.jsx:1816
 #: src/components/keyboard-shortcuts-help.jsx:155
 #: src/components/status.jsx:1015
 #: src/components/status.jsx:1833
@@ -587,20 +587,20 @@ msgstr "定时发嘟"
 msgid "Reply"
 msgstr "回复"
 
-#: src/components/compose.jsx:1806
+#: src/components/compose.jsx:1818
 msgid "Update"
 msgstr "更新"
 
-#: src/components/compose.jsx:1807
+#: src/components/compose.jsx:1819
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "发布"
 
-#: src/components/compose.jsx:1890
+#: src/components/compose.jsx:1902
 msgid "Downloading GIF…"
 msgstr "正在下载 GIF…"
 
-#: src/components/compose.jsx:1918
+#: src/components/compose.jsx:1930
 msgid "Failed to download GIF"
 msgstr "GIF 下载失败"
 
@@ -1443,7 +1443,7 @@ msgstr "你参与的投票已结束。"
 
 #: src/components/notification.jsx:203
 msgid "{account} edited a post."
-msgstr ""
+msgstr "{account} 编辑了一条嘟文。"
 
 #: src/components/notification.jsx:205
 msgid "A post you interacted with has been edited."
@@ -1457,11 +1457,11 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 
 #: src/components/notification.jsx:256
 msgid "{account} quoted your post."
-msgstr ""
+msgstr "{account} 引用了你的嘟文。"
 
 #: src/components/notification.jsx:258
 msgid "{account} edited a post you have quoted."
-msgstr ""
+msgstr "{account} 编辑了一条你引用过的嘟文。"
 
 #: src/components/notification.jsx:260
 msgid "{account} signed up."
@@ -2384,23 +2384,23 @@ msgstr "导入/导出配置到实例服务器(很不稳定)"
 
 #: src/components/status.jsx:283
 msgid "Private posts cannot be quoted"
-msgstr ""
+msgstr "私密嘟文不能被引用"
 
 #: src/components/status.jsx:284
 msgid "Request to quote"
-msgstr ""
+msgstr "请求引用"
 
 #: src/components/status.jsx:285
 msgid "Author will manually review"
-msgstr ""
+msgstr "作者将手动审核"
 
 #: src/components/status.jsx:286
 msgid "Only followers can quote this post"
-msgstr ""
+msgstr "只有粉丝才能引用这条嘟文"
 
 #: src/components/status.jsx:287
 msgid "You are not allowed to quote this post"
-msgstr ""
+msgstr "你无权引用这条嘟文"
 
 #: src/components/status.jsx:563
 msgid "<0/> <1>boosted</1>"
@@ -2449,7 +2449,7 @@ msgstr "取消转嘟"
 #: src/components/status.jsx:1062
 #: src/components/status.jsx:2599
 msgid "Quote with link"
-msgstr ""
+msgstr "以链接形式引用"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1079
@@ -3837,11 +3837,11 @@ msgstr "更新默认可见性失败"
 
 #: src/pages/settings.jsx:336
 msgid "Quote settings"
-msgstr ""
+msgstr "引用设置"
 
 #: src/pages/settings.jsx:368
 msgid "Failed to update quote settings"
-msgstr ""
+msgstr "引用设置保存失败"
 
 #: src/pages/settings.jsx:391
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"

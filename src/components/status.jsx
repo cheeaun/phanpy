@@ -411,6 +411,7 @@ function Status({
     mentions,
     mediaAttachments = [],
     reblog,
+    quote,
     uri,
     url,
     emojis,
@@ -732,7 +733,7 @@ function Status({
 
   const postQuoteApprovalPolicy =
     (supportsNativeQuote &&
-    isSelf &&
+      isSelf &&
       quoteApproval?.[quoteApproval?.currentUser]?.[0]) ||
     'nobody';
 
@@ -998,6 +999,10 @@ function Status({
       done: true,
     };
   }
+
+  const isQuotingMyPost =
+    quote?.state === 'accepted' &&
+    quote?.quotedStatus?.account?.id === currentAccount;
 
   const actionsRef = useRef();
   const isPinnable = ['public', 'unlisted', 'private'].includes(visibility);
@@ -1417,17 +1422,17 @@ function Status({
         <>
           {supportsNativeQuote &&
             !['private', 'direct'].includes(visibility) && (
-            <MenuItem onClick={() => setShowQuoteSettings(true)}>
-              <Icon icon="quote2" />
-              <small>
-                <Trans>Quote settings</Trans>
-                <br />
-                <span class="more-insignificant">
-                  {_(quoteApprovalPolicyMessages[postQuoteApprovalPolicy])}
-                </span>
-              </small>
-            </MenuItem>
-          )}
+              <MenuItem onClick={() => setShowQuoteSettings(true)}>
+                <Icon icon="quote2" />
+                <small>
+                  <Trans>Quote settings</Trans>
+                  <br />
+                  <span class="more-insignificant">
+                    {_(quoteApprovalPolicyMessages[postQuoteApprovalPolicy])}
+                  </span>
+                </small>
+              </MenuItem>
+            )}
           <div class="menu-horizontal">
             {supports('@mastodon/post-edit') && (
               <MenuItem
@@ -1487,6 +1492,47 @@ function Status({
       {!isSelf && isSizeLarge && (
         <>
           <MenuDivider />
+          {isQuotingMyPost && (
+            <MenuConfirm
+              subMenu
+              confirmLabel={
+                <>
+                  <Icon icon="quote" />
+                  <span>
+                    <Trans>
+                      Remove my post from{' '}
+                      <span class="bidi-isolate">@{username || acct}</span>'s
+                      post?
+                    </Trans>
+                  </span>
+                </>
+              }
+              itemProps={{
+                className: 'danger',
+              }}
+              menuItemClassName="danger"
+              onClick={() => {
+                (async () => {
+                  try {
+                    // POST /api/v1/statuses/:id/quotes/:quoting_status_id/revoke
+                    const quotedStatusID = quote.quotedStatus.id;
+                    await masto.v1.statuses
+                      .$select(quotedStatusID)
+                      .quotes.$select(id)
+                      .revoke.create();
+                    showToast(t`Quote removed`);
+                    states.reloadStatusPage++;
+                  } catch (e) {
+                    console.error(e);
+                    showToast(t`Unable to remove quote`);
+                  }
+                })();
+              }}
+            >
+              <Icon icon="quote" />
+              <Trans>Remove quote…</Trans>
+            </MenuConfirm>
+          )}
           <MenuItem
             className="danger"
             onClick={() => {
@@ -2807,7 +2853,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   const sKey = statusKey(id, instance);
   const quotes = snapStates.statusQuotes[sKey];
   const uniqueQuotes = quotes?.filter(
-    (q, i, arr) => arr.findIndex((q2) => q2.url === q.url) === i,
+    (q, i, arr) => q.native || arr.findIndex((q2) => q2.url === q.url) === i,
   );
 
   if (!uniqueQuotes?.length) return;
@@ -2845,7 +2891,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
             <div
               class={`status-card-unfulfilled ${
                 unfulfilledState === 'filterHidden' ? 'status-card-ghost' : ''
-              }`}
+              } ${q.native ? 'quote-post-native' : ''}`}
             >
               <Icon icon="quote" />
               <i>{_(unfulfilledText[unfulfilledState])}</i>

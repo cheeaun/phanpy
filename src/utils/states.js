@@ -231,21 +231,32 @@ export function saveStatus(status, instance, opts) {
       ];
     }
     // Mastodon native quotes
-    if (theQuote?.state === 'accepted' && theQuote?.quotedStatus) {
+    if (theQuote?.state) {
       const { quotedStatus, state } = theQuote;
-      const { id } = quotedStatus;
-      const selfURL = `/${instance}/s/${id}`;
-      const sKey = statusKey(id, instance);
-      states.statuses[sKey] = quotedStatus;
-      states.statusQuotes[key] = [
-        {
-          id,
-          instance,
-          url: selfURL,
-          state,
-          native: true,
-        },
-      ];
+      if (quotedStatus?.id) {
+        const { id } = quotedStatus;
+        const selfURL = `/${instance}/s/${id}`;
+        const sKey = statusKey(id, instance);
+        states.statuses[sKey] = quotedStatus;
+        states.statusQuotes[key] = [
+          {
+            id,
+            instance,
+            url: selfURL,
+            state,
+            native: true,
+          },
+        ];
+      } else {
+        // Possibly "revoked"
+        states.statusQuotes[key] = [
+          {
+            // There's not much info here
+            state,
+            native: true,
+          },
+        ];
+      }
     }
   });
 

@@ -67,6 +67,7 @@ import Poll from './poll';
 import PostContent from './post-content';
 import PostEmbedModal from './post-embed-modal';
 import QuoteSettingsSheet from './quote-settings-sheet';
+import QuotesModal from './quotes-modal';
 import RelativeTime from './relative-time';
 import StatusButton from './status-button';
 import StatusCard from './status-card';
@@ -661,6 +662,7 @@ function Status({
   const [showEdited, setShowEdited] = useState(false);
   const [showEmbed, setShowEmbed] = useState(false);
   const [showQuoteSettings, setShowQuoteSettings] = useState(false);
+  const [showQuotes, setShowQuotes] = useState(false);
 
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
@@ -1105,13 +1107,11 @@ function Status({
               }}
             >
               <Icon icon="rocket" />
-              <span
-                class={reblogsCount > 0 && quotesCount > 0 ? 'smaller' : ''}
-              >
-                {reblogsCount > 0
-                  ? `${shortenNumber(reblogsCount)}${
-                      quotesCount > 0 ? `+${shortenNumber(quotesCount)}` : ''
-                    }`
+              <span>
+                {reblogsCount > 0 || quotesCount > 0
+                  ? `${reblogsCount > 0 ? shortenNumber(reblogsCount) : ''}${
+                      reblogsCount > 0 && quotesCount > 0 ? '+' : ''
+                    }${quotesCount > 0 ? shortenNumber(quotesCount) : ''}`
                   : reblogged
                     ? t`Unboost`
                     : t`Boost…`}
@@ -1163,6 +1163,18 @@ function Status({
               <Trans>Boosted/Liked by…</Trans>
             </span>
           </MenuItem>
+          {supportsNativeQuote && isSelf && (
+            <MenuItem
+              onClick={() => {
+                setShowQuotes(true);
+              }}
+            >
+              <Icon icon="quote" />
+              <span>
+                <Trans>View Quotes</Trans>
+              </span>
+            </MenuItem>
+          )}
         </>
       )}
       {(isSizeLarge ||
@@ -2798,6 +2810,21 @@ function Status({
               }}
               post={status}
               currentPolicy={postQuoteApprovalPolicy}
+            />
+          </Modal>
+        )}
+        {!!showQuotes && (
+          <Modal
+            onClose={() => {
+              setShowQuotes(false);
+            }}
+          >
+            <QuotesModal
+              statusId={id}
+              instance={instance}
+              onClose={() => {
+                setShowQuotes(false);
+              }}
             />
           </Modal>
         )}

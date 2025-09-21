@@ -56,12 +56,13 @@ const StatusButton = forwardRef((props, ref) => {
       {...otherProps}
     >
       <Icon icon={icon} size={iconSize} alt={iconAlt} />
-      {!!count && (
+      {(!!count || !!extraCount) && (
         <>
           {' '}
-          <small title={count}>{shortenNumber(count)}</small>
+          {!!count && <small title={count}>{shortenNumber(count)}</small>}
+          {!!count && !!extraCount && '+'}
           {!!extraCount && (
-            <small title={extraCount}>+{shortenNumber(extraCount)}</small>
+            <small title={extraCount}>{shortenNumber(extraCount)}</small>
           )}
         </>
       )}

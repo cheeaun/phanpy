@@ -66,6 +66,7 @@ import NameText from './name-text';
 import Poll from './poll';
 import PostContent from './post-content';
 import PostEmbedModal from './post-embed-modal';
+import QuoteSettingsSheet from './quote-settings-sheet';
 import RelativeTime from './relative-time';
 import StatusButton from './status-button';
 import StatusCard from './status-card';
@@ -285,6 +286,12 @@ const quoteMessages = {
   quoteManualReview: msg`Author will manually review`,
   quoteFollowersOnly: msg`Only followers can quote this post`,
   quoteCannot: msg`You are not allowed to quote this post`,
+};
+
+const quoteApprovalPolicyMessages = {
+  public: msg`Anyone can quote`,
+  followers: msg`Your followers can quote`,
+  nobody: msg`Only you can quote`,
 };
 
 const { DEV } = import.meta.env;
@@ -652,6 +659,7 @@ function Status({
 
   const [showEdited, setShowEdited] = useState(false);
   const [showEmbed, setShowEmbed] = useState(false);
+  const [showQuoteSettings, setShowQuoteSettings] = useState(false);
 
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
@@ -690,35 +698,42 @@ function Status({
   }
 
   // Quote logic blatantly copied from https://github.com/mastodon/mastodon/blob/854aaec6fe69df02e6d850cb90eef37032b4d72f/app/javascript/mastodon/components/status/boost_button_utils.ts#L131-L163
-  const isMine = isSelf;
-  const isMineAndPrivate = isMine && visibility === 'private';
-  const isQuoteAutomaticallyAccepted =
-    quoteApproval?.currentUser === 'automatic' &&
-    (isPublic || isMineAndPrivate);
-  const isQuoteManuallyAccepted =
-    quoteApproval?.currentUser === 'manual' && (isPublic || isMineAndPrivate);
-  const isQuoteFollowersOnly =
-    quoteApproval?.automatic?.[0] === 'followers' ||
-    quoteApproval?.manual?.[0] === 'followers';
+  const supportsNativeQuote = getAPIVersions()?.mastodon >= 7;
   let quoteDisabled = false;
   let quoteText = t`Quote`;
   let quoteMetaText;
-  if (!isPublic && !isMine) {
-    quoteDisabled = true;
-    quoteMetaText = _(quoteMessages.quotePrivate);
-  } else if (isQuoteAutomaticallyAccepted) {
-    // No need to do anything
-  } else if (isQuoteManuallyAccepted) {
-    quoteText = _(quoteMessages.requestQuote);
-    quoteMetaText = _(quoteMessages.quoteManualReview);
-  } else {
-    quoteDisabled = true;
-    quoteMetaText = isQuoteFollowersOnly
-      ? _(quoteMessages.quoteFollowersOnly)
-      : _(quoteMessages.quoteCannot);
+
+  if (supportsNativeQuote) {
+    const isMine = isSelf;
+    const isMineAndPrivate = isMine && visibility === 'private';
+    const isQuoteAutomaticallyAccepted =
+      quoteApproval?.currentUser === 'automatic' &&
+      (isPublic || isMineAndPrivate);
+    const isQuoteManuallyAccepted =
+      quoteApproval?.currentUser === 'manual' && (isPublic || isMineAndPrivate);
+    const isQuoteFollowersOnly =
+      quoteApproval?.automatic?.[0] === 'followers' ||
+      quoteApproval?.manual?.[0] === 'followers';
+    if (!isPublic && !isMine) {
+      quoteDisabled = true;
+      quoteMetaText = _(quoteMessages.quotePrivate);
+    } else if (isQuoteAutomaticallyAccepted) {
+      // No need to do anything
+    } else if (isQuoteManuallyAccepted) {
+      quoteText = _(quoteMessages.requestQuote);
+      quoteMetaText = _(quoteMessages.quoteManualReview);
+    } else {
+      quoteDisabled = true;
+      quoteMetaText = isQuoteFollowersOnly
+        ? _(quoteMessages.quoteFollowersOnly)
+        : _(quoteMessages.quoteCannot);
+    }
   }
 
-  const supportsNativeQuote = getAPIVersions()?.mastodon >= 7;
+  const postQuoteApprovalPolicy =
+    supportsNativeQuote &&
+    isSelf &&
+    quoteApproval?.[quoteApproval?.currentUser]?.[0];
 
   const replyStatus = (e) => {
     if (!sameInstance || !authenticated) {
@@ -1398,60 +1413,74 @@ function Status({
         </MenuItem>
       )}
       {isSelf && (
-        <div class="menu-horizontal">
-          {supports('@mastodon/post-edit') && (
-            <MenuItem
-              onClick={() => {
-                showCompose({
-                  editStatus: status,
-                });
-              }}
-            >
-              <Icon icon="pencil" />
-              <span>
-                <Trans>Edit</Trans>
-              </span>
+        <>
+          {supportsNativeQuote && !!postQuoteApprovalPolicy && (
+            <MenuItem onClick={() => setShowQuoteSettings(true)}>
+              <Icon icon="quote2" />
+              <small>
+                <Trans>Quote settings</Trans>
+                <br />
+                <span class="more-insignificant">
+                  {_(quoteApprovalPolicyMessages[postQuoteApprovalPolicy])}
+                </span>
+              </small>
             </MenuItem>
           )}
-          {isSizeLarge && (
-            <MenuConfirm
-              subMenu
-              confirmLabel={
-                <>
-                  <Icon icon="trash" />
-                  <span>
-                    <Trans>Delete this post?</Trans>
-                  </span>
-                </>
-              }
-              itemProps={{
-                className: 'danger',
-              }}
-              menuItemClassName="danger"
-              onClick={() => {
-                // const yes = confirm('Delete this post?');
-                // if (yes) {
-                (async () => {
-                  try {
-                    await masto.v1.statuses.$select(id).remove();
-                    const cachedStatus = getStatus(id, instance);
-                    cachedStatus._deleted = true;
-                    showToast(t`Post deleted`);
-                  } catch (e) {
-                    console.error(e);
-                    showToast(t`Unable to delete post`);
-                  }
-                })();
-                // }
-              }}
-            >
-              <Icon icon="trash" />
-              <span>
-                <Trans>Delete…</Trans>
-              </span>
-            </MenuConfirm>
-          )}
-        </div>
+          <div class="menu-horizontal">
+            {supports('@mastodon/post-edit') && (
+              <MenuItem
+                onClick={() => {
+                  showCompose({
+                    editStatus: status,
+                  });
+                }}
+              >
+                <Icon icon="pencil" />
+                <span>
+                  <Trans>Edit</Trans>
+                </span>
+              </MenuItem>
+            )}
+            {isSizeLarge && (
+              <MenuConfirm
+                subMenu
+                confirmLabel={
+                  <>
+                    <Icon icon="trash" />
+                    <span>
+                      <Trans>Delete this post?</Trans>
+                    </span>
+                  </>
+                }
+                itemProps={{
+                  className: 'danger',
+                }}
+                menuItemClassName="danger"
+                onClick={() => {
+                  // const yes = confirm('Delete this post?');
+                  // if (yes) {
+                  (async () => {
+                    try {
+                      await masto.v1.statuses.$select(id).remove();
+                      const cachedStatus = getStatus(id, instance);
+                      cachedStatus._deleted = true;
+                      showToast(t`Post deleted`);
+                    } catch (e) {
+                      console.error(e);
+                      showToast(t`Unable to delete post`);
+                    }
+                  })();
+                  // }
+                }}
+              >
+                <Icon icon="trash" />
+                <span>
+                  <Trans>Delete…</Trans>
+                </span>
+              </MenuConfirm>
+            )}
+          </div>
+        </>
       )}
       {!isSelf && isSizeLarge && (
         <>
@@ -2694,10 +2723,8 @@ function Status({
         )}
         {!!showEmbed && (
           <Modal
-            onClick={(e) => {
-              if (e.target === e.currentTarget) {
-                setShowEmbed(false);
-              }
+            onClose={() => {
+              setShowEmbed(false);
             }}
           >
             <PostEmbedModal
@@ -2706,6 +2733,23 @@ function Status({
               onClose={() => {
                 setShowEmbed(false);
               }}
+            />
+          </Modal>
+        )}
+        {!!showQuoteSettings && (
+          <Modal
+            onClose={() => {
+              setShowQuoteSettings(false);
+              states.reloadStatusPage++;
+            }}
+          >
+            <QuoteSettingsSheet
+              onClose={() => {
+                setShowQuoteSettings(false);
+                states.reloadStatusPage++;
+              }}
+              post={status}
+              currentPolicy={postQuoteApprovalPolicy}
             />
           </Modal>
         )}

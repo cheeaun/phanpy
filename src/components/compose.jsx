@@ -1688,7 +1688,7 @@ function Compose({
               <label
                 class={`toolbar-button ${highlightQuoteApprovalPolicyField ? 'highlight' : ''}`}
               >
-                <Icon icon="quote2" alt="Quote visibility" />
+                <Icon icon="quote2" alt="Quote settings" />
                 {quoteApprovalPolicy === 'followers' && (
                   <Icon icon="group" class="insignificant" />
                 )}

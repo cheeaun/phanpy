@@ -731,9 +731,10 @@ function Status({
   }
 
   const postQuoteApprovalPolicy =
-    supportsNativeQuote &&
+    (supportsNativeQuote &&
     isSelf &&
-    quoteApproval?.[quoteApproval?.currentUser]?.[0];
+      quoteApproval?.[quoteApproval?.currentUser]?.[0]) ||
+    'nobody';
 
   const replyStatus = (e) => {
     if (!sameInstance || !authenticated) {
@@ -1414,7 +1415,8 @@ function Status({
       )}
       {isSelf && (
         <>
-          {supportsNativeQuote && !!postQuoteApprovalPolicy && (
+          {supportsNativeQuote &&
+            !['private', 'direct'].includes(visibility) && (
             <MenuItem onClick={() => setShowQuoteSettings(true)}>
               <Icon icon="quote2" />
               <small>

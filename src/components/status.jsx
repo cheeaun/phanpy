@@ -1274,7 +1274,7 @@ function Status({
       <MenuItem href={url} target="_blank">
         <Icon icon="external" />
         <small
-          class="menu-double-lines"
+          class="menu-double-lines should-cloak"
           style={{
             maxWidth: '16em',
           }}

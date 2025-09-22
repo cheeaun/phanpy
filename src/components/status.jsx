@@ -1677,6 +1677,36 @@ function Status({
       ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
+  const qRef = useHotkeys(
+    'q',
+    (e) => {
+      if (!sameInstance || !authenticated) {
+        return alert(unauthInteractionErrorMessage);
+      }
+
+      if (supportsNativeQuote) {
+        if (quoteDisabled) {
+          showToast(quoteMetaText);
+        } else {
+          showCompose({
+            quoteStatus: status,
+          });
+        }
+        // Don't fallback to non-native if quoteDisabled
+      } else {
+        showCompose({
+          draftStatus: {
+            status: `\n${url}`,
+          },
+        });
+      }
+    },
+    {
+      enabled: hotkeysEnabled,
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
   const displayedMediaAttachments = mediaAttachments.slice(
     0,
@@ -1830,6 +1860,7 @@ function Status({
           dRef.current = nodeRef;
           bRef.current = nodeRef;
           xRef.current = nodeRef;
+          qRef.current = nodeRef;
         }}
         tabindex="-1"
         class={`status ${

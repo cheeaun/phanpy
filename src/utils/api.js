@@ -52,6 +52,9 @@ export function initClient({ instance, accessToken }) {
     masto,
     instance,
     accessToken,
+    onStreamingReady: function (callback) {
+      this._streamingCallback = callback;
+    },
   };
   apis[instance] = client;
   if (!accountApis[instance]) accountApis[instance] = {};
@@ -161,6 +164,15 @@ export async function initInstance(client, instance) {
     client.streaming = streamClient;
     // masto.ws = streamClient;
     console.log('🎏 Streaming API client:', client);
+
+    if (client._streamingCallback) {
+      try {
+        client._streamingCallback(streamClient);
+      } catch (e) {
+        console.error('Error in streaming callback:', e);
+      }
+      client._streamingCallback = null;
+    }
   }
   __BENCHMARK.end('init-instance');
 }

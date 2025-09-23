@@ -7,34 +7,35 @@
     --post-gradient-angle: -160deg;
     --post-gradient-chip-angle: 20deg;
   }
+  --post-gradient-height: min(160px, 50%);
 }
 
 .status-reblog {
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--reblog-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 .status-group {
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--group-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 .status-followed-tags {
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--hashtag-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 
   .timeline-item-container:not(.timeline-item-container-start) & {
     background: radial-gradient(
       ellipse at 0 1.2em,
       var(--hashtag-faded-color),
-      transparent max(160px, 50%)
+      transparent var(--post-gradient-height)
     );
     background-size: 100% 3em;
     background-repeat: no-repeat;
@@ -44,14 +45,14 @@
   background: linear-gradient(
     var(--post-gradient-angle),
     var(--reply-to-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 :is(.status-reblog, .status-group, .status-followed-tags) .status-reply-to {
   background: linear-gradient(
     var(--post-gradient-chip-angle),
     var(--reply-to-faded-color),
-    transparent min(160px, 50%)
+    transparent var(--post-gradient-height)
   );
 }
 .visibility-direct {
@@ -162,6 +163,30 @@
   text-decoration: none;
   color: var(--text-color);
 }
+.status-card-container {
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.timeline-deck .status:not(.large) {
+  .content.truncated ~ .status-card-container {
+    display: none;
+  }
+  .status-card-container {
+    max-height: max(160px, 33vh);
+    overflow: clip;
+
+    &.truncated {
+      mask-image: linear-gradient(
+        to top,
+        transparent,
+        rgba(0, 0, 0, 0.5) 1em,
+        black 1.5em
+      );
+    }
+  }
+}
 .status-card-link:not(
     .truncated .status-card-link /* parent status already truncated */,
     .status-card-link .status-card-link /* nested status cards */
@@ -210,7 +235,7 @@
 }
 .status-card {
   font-size: calc(var(--text-size) * 0.9);
-  margin: 1em 0 0;
+  /* margin: 1em 0 0; */
   border-radius: 16px;
   padding: 12px;
   border: 1px solid var(--outline-color);
@@ -218,6 +243,7 @@
   box-shadow: inset 0 0 4px var(--outline-color);
   /* box-shadow: inset 0 0 0 2px var(--bg-faded-color); */
   /* filter: drop-shadow(0 2px 4px var(--bg-faded-color)); */
+  max-width: none !important;
 
   .quote-post-native > & {
     border-radius: 8px;
@@ -270,7 +296,7 @@
   flex-direction: row;
   gap: 8px;
   font-size: calc(var(--text-size) * 0.9);
-  margin: 1em 0 0;
+  /* margin: 1em 0 0; */
   border-radius: 8px;
   padding: 12px;
   border: 1px solid var(--outline-color);
@@ -367,10 +393,11 @@
   gap: 8px;
   padding-block: 8px;
 }
-.status.compact-thread .status-thread-badge {
+.status.compact-thread .status-thread-badge-container {
   flex-shrink: 0;
   min-width: 50px;
   justify-content: center;
+  display: flex;
 }
 .status.compact-thread .content-compact {
   overflow: hidden;
@@ -483,6 +510,17 @@
   padding-inline-start: 12px;
 }
 
+.status > .container .status-quote-meta {
+  font-size: small;
+  color: var(--link-color);
+  margin-block: -4px 2px;
+  text-shadow: 0 1px var(--bg-color);
+
+  .status-card-link:visited & {
+    color: var(--link-visited-color);
+  }
+}
+
 .status > .container > .meta {
   display: flex;
   gap: 4px;
@@ -588,6 +626,17 @@
     var(--reply-to-faded-color) 4px
   );
   font-weight: bold;
+  align-self: center;
+  flex-shrink: 0;
+
+  .meta-name + & {
+    margin-inline-start: 4px;
+    margin-block: 0;
+
+    + .time {
+      margin-inline-start: 0 !important;
+    }
+  }
 }
 .status-direct-badge {
   vertical-align: middle;
@@ -920,6 +969,13 @@
   color: var(--text-color);
   text-decoration-color: var(--link-color);
 }
+.status .content .inner-content a.is-quote {
+  color: var(--link-text-color);
+
+  &:not(:hover, :focus, :active) {
+    text-decoration-color: var(--link-bg-color);
+  }
+}
 .status .content :is(.h-card, .mention) {
   unicode-bidi: isolate;
 }
@@ -961,6 +1017,25 @@
     border-radius: 9999px;
   }
 }
+.status .content {
+  /*
+    Hide inline quote (RE: [LINK]) when there's a native quote
+    Examples:
+    - <br><br><span class="quote-inline">xxx</span>
+    - <p class="quote-inline">xxx</p>
+  */
+  &:has(~ .status-card-container > .quote-post-native) .inner-content {
+    br:has(+ br + .quote-inline),
+    br:has(+ .quote-inline),
+    .quote-inline {
+      display: none;
+
+      &:is(p:first-child) + p {
+        margin-block-start: 0;
+      }
+    }
+  }
+}
 .status .content .inner-content {
   > :is(ul, ol),
   > :is(div, blockquote) > :is(ul, ol) {
@@ -974,8 +1049,9 @@
     padding-inline-start: 1.5em;
   }
 
-  /* Hide inline quote (RE: [LINK]) when there's a native quote */
-  &:has(~ .quote-post-native) .quote-inline {
+  /* Hide excessive br(s) in .quote-inline */
+  p.quote-inline br,
+  .quote-inline br + br ~ br {
     display: none;
   }
 }
@@ -1879,6 +1955,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   align-items: stretch;
   background-color: var(--bg-color);
   max-width: 480px;
+  min-height: 3lh;
   /* max-height: 160px; */
 }
 .status.large .card.large,
@@ -1886,6 +1963,15 @@ body:has(#modal-container .carousel) .status .media img:hover {
   border-radius: 16px;
   flex-direction: column;
   max-height: none;
+
+  .title {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  .meta {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
 }
 .card .card-image {
   flex-shrink: 0;
@@ -1956,8 +2042,8 @@ a:focus-visible .card img {
   display: box;
   -webkit-box-orient: vertical;
   box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   text-wrap: balance;
 }
 .card .meta {
@@ -1970,12 +2056,19 @@ a:focus-visible .card img {
   display: box;
   -webkit-box-orient: vertical;
   box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
 }
-.card.no-image :is(.title, .meta) {
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+.content-container[data-content-text-weight='1'] .card,
+.card.no-image {
+  .title {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+  .meta {
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+  }
 }
 .card .meta.domain {
   opacity: 1;
@@ -2028,10 +2121,16 @@ a.card:is(:hover, :focus):visited {
   }
 
   .meta {
-    -webkit-line-clamp: 5;
-    line-clamp: 5;
+    white-space: pre-line;
+    -webkit-line-clamp: 10;
+    line-clamp: 10;
     opacity: 1;
     /* font-size: inherit; */
+  }
+
+  .card-image {
+    border-inline-end: 0;
+    border-inline-start: 1px solid var(--outline-color);
   }
 }
 .status.large .card.large.card-post,
@@ -2073,7 +2172,7 @@ a.card:is(:hover, :focus):visited {
     var(--bg-color) 50%,
     var(--bg-faded-color)
   );
-  overflow: hidden;
+  /* overflow: hidden; */
   box-shadow: inset 0 0 0 1px var(--bg-color);
   min-width: 50%;
 }
@@ -2591,6 +2690,18 @@ a.card:is(:hover, :focus):visited {
   vertical-align: text-bottom;
   object-fit: contain;
   /* object-position: left; */
+  dynamic-range-limit: standard; /* Disable HDR */
+
+  &[data-is-larger='true'] {
+    &:hover {
+      transition: transform 0.3s var(--timing-function);
+      transform: scale(1.25);
+    }
+    &:active {
+      transition-duration: 0s;
+      transform: scale(1.25);
+    }
+  }
 }
 
 /* EDIT HISTORY */

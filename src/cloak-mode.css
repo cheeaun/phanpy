@@ -19,7 +19,9 @@ body.cloak,
   .post-peek-content > *,
   .request-notifications-account *,
   .status.compact-thread *,
-  .status .content-compact {
+  .status .content-compact,
+  .bidi-isolate,
+  .should-cloak {
     text-decoration-thickness: 1.1em;
     text-decoration-line: line-through;
     /* text-rendering: optimizeSpeed; */

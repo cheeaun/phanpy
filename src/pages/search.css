@@ -206,11 +206,15 @@ ul.link-list.hashtag-list li a {
 
 /* Recent Searches */
 .recent-searches {
+  padding-block: 16px;
+
   .recent-searches-header {
+    color: var(--text-insignificant-color);
     display: flex;
     align-items: center;
     gap: 8px;
     padding-inline-start: calc(16px + 12px);
+    padding-inline-end: 16px;
     padding-block-end: 8px;
     text-align: start;
   }
@@ -253,5 +257,6 @@ ul.link-list.hashtag-list li a {
     background-color: var(--link-bg-color);
     unicode-bidi: isolate;
     direction: initial;
+    vertical-align: unset;
   }
 }

@@ -245,6 +245,19 @@ const Textarea = forwardRef((props, ref) => {
             composeHighlightRef.current.scrollTop = scrollTop;
           }
         }}
+        onPaste={(e) => {
+          try {
+            const pastedText = e.clipboardData.getData('text').trim();
+            if (pastedText) {
+              onTrigger?.({
+                name: 'pasted-link',
+                url: pastedText,
+              });
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }}
       />
       <div
         ref={composeHighlightRef}

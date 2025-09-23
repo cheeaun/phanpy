@@ -29,6 +29,7 @@ import {
   getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
 import supports from '../utils/supports';
+import unfurlMastodonLink from '../utils/unfurl-link';
 import urlRegexObj from '../utils/url-regex';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
@@ -52,6 +53,7 @@ import MediaAttachment from './media-attachment';
 import MentionModal from './mention-modal';
 import Menu2 from './menu2';
 import Modal from './modal';
+import QuoteSuggestion from './quote-suggestion';
 import ScheduledAtField, {
   getLocalTimezoneName,
   MIN_SCHEDULED_AT,
@@ -176,10 +178,72 @@ function Compose({
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
   const [scheduledAt, setScheduledAt] = useState(null);
+  const [quoteSuggestion, setQuoteSuggestion] = useState(null);
+  const [localQuoteStatus, setLocalQuoteStatus] = useState(quoteStatus);
 
   const prefs = getPreferences();
 
   const supportsNativeQuote = getAPIVersions()?.mastodon >= 7;
+
+  const currentQuoteStatus = localQuoteStatus || quoteStatus;
+
+  // Quote eligibility logic duplicated from status.jsx
+  const checkQuoteEligibility = (status) => {
+    if (!supportsNativeQuote) return false;
+
+    const { visibility, quoteApproval, account } = status;
+    const isSelf = currentAccountInfo && currentAccountInfo.id === account.id;
+    const isPublic = ['public', 'unlisted'].includes(visibility);
+    const isMineAndPrivate = isSelf && visibility === 'private';
+
+    const isQuoteAutomaticallyAccepted =
+      quoteApproval?.currentUser === 'automatic' &&
+      (isPublic || isMineAndPrivate);
+    const isQuoteManuallyAccepted =
+      quoteApproval?.currentUser === 'manual' && (isPublic || isMineAndPrivate);
+
+    if (!isPublic && !isSelf) {
+      return false;
+    } else if (isQuoteAutomaticallyAccepted) {
+      return true;
+    } else if (isQuoteManuallyAccepted) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handlePastedLink = async (url) => {
+    // Handle QP links
+    if (supportsNativeQuote) {
+      // Quotes cannot coexist with media attachments or polls
+      if (mediaAttachments.length > 0 || poll) {
+        return;
+      }
+
+      try {
+        const unfurledData = await unfurlMastodonLink(instance, url);
+        if (unfurledData?.id) {
+          const status =
+            states.statuses[`${unfurledData.instance}/${unfurledData.id}`];
+          if (status && checkQuoteEligibility(status)) {
+            // Don't show suggestion if it's the same as current quote
+            if (currentQuoteStatus?.id === status.id) {
+              return;
+            }
+
+            setQuoteSuggestion({
+              status,
+              instance: unfurledData.instance,
+              url: unfurledData.originalURL,
+            });
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
   const oninputTextarea = () => {
     if (!textareaRef.current) return;
@@ -598,9 +662,10 @@ function Compose({
         scheduledAt,
         quoteApprovalPolicy,
       },
-      quoteStatus: quoteStatus
+      quote: currentQuoteStatus?.id
         ? {
-            ...quoteStatus,
+            // Smaller payload, same reason as replyTo
+            id: currentQuoteStatus.id,
           }
         : null,
     };
@@ -773,7 +838,7 @@ function Compose({
     (maxMediaAttachments !== undefined &&
       mediaAttachments.length >= maxMediaAttachments) ||
     !!poll ||
-    !!quoteStatus?.id;
+    !!currentQuoteStatus?.id;
 
   const cwButtonDisabled = uiState === 'loading' || !!sensitive;
   const onCWButtonClick = () => {
@@ -789,7 +854,7 @@ function Compose({
     uiState === 'loading' ||
     !!poll ||
     !!mediaAttachments.length ||
-    !!quoteStatus?.id;
+    !!currentQuoteStatus?.id;
   const onPollButtonClick = () => {
     setPoll({
       options: ['', ''],
@@ -897,7 +962,7 @@ function Compose({
                       mediaAttachments,
                       scheduledAt,
                     },
-                    quoteStatus,
+                    quoteStatus: currentQuoteStatus,
                   });
 
                   if (!newWin) {
@@ -988,7 +1053,7 @@ function Compose({
                           mediaAttachments,
                           scheduledAt,
                         },
-                        quoteStatus,
+                        quoteStatus: currentQuoteStatus,
                       };
                       window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
                       if (window.opener.__STATES__.showCompose) {
@@ -1205,8 +1270,8 @@ function Compose({
                     (attachment) => attachment.id,
                   ),
                 };
-                if (quoteStatus?.id) {
-                  params.quoted_status_id = quoteStatus.id;
+                if (currentQuoteStatus?.id) {
+                  params.quoted_status_id = currentQuoteStatus.id;
                   params.quote_approval_policy = quoteApprovalPolicy;
                 }
                 if (editStatus) {
@@ -1360,6 +1425,8 @@ function Compose({
                   action?.languages
                 ) {
                   setAutoDetectedLanguages(action.languages);
+                } else if (action?.name === 'pasted-link' && action?.url) {
+                  handlePastedLink(action.url);
                 }
               }}
             />
@@ -1432,10 +1499,10 @@ function Compose({
               }}
             />
           )}
-          {!!quoteStatus?.id && (
+          {!!currentQuoteStatus?.id && (
             <div class="quote-status">
               <Status
-                status={quoteStatus}
+                status={currentQuoteStatus}
                 instance={instance}
                 size="s"
                 readOnly
@@ -1470,6 +1537,49 @@ function Compose({
               </button>
             </div>
           )}
+          <QuoteSuggestion
+            quoteSuggestion={quoteSuggestion}
+            hasCurrentQuoteStatus={!!currentQuoteStatus?.id}
+            onAccept={() => {
+              const { status } = quoteSuggestion;
+
+              // Remove the pasted link from textarea
+              const currentValue = textareaRef.current?.value || '';
+              // Find pasted link nearest to last cursor position
+              const lastCursorPos = textareaRef.current?.selectionStart || 0;
+              const pastedLinkPos = currentValue.lastIndexOf(
+                quoteSuggestion.url,
+                lastCursorPos,
+              );
+              const newValue =
+                currentValue.slice(0, pastedLinkPos) +
+                currentValue.slice(pastedLinkPos + quoteSuggestion.url.length);
+              if (textareaRef.current) {
+                textareaRef.current.value = newValue;
+                textareaRef.current.dispatchEvent(new Event('input'));
+              }
+
+              const hasCurrentQuote = !!currentQuoteStatus?.id;
+              if (hasCurrentQuote) {
+                // If there's already a quote, replacement doesn't need transition
+                setQuoteSuggestion(null);
+                setLocalQuoteStatus(status);
+              } else {
+                // Transition the unfurled quote to the quote preview
+                if (document.startViewTransition) {
+                  document.startViewTransition(() => {
+                    setQuoteSuggestion(null);
+                    setLocalQuoteStatus(status);
+                  });
+                } else {
+                  setQuoteSuggestion(null);
+                  setLocalQuoteStatus(status);
+                }
+              }
+              focusTextarea();
+            }}
+            onCancel={() => setQuoteSuggestion(null)}
+          />
           <div class="toolbar compose-footer">
             <span class="add-toolbar-button-group spacer">
               {showAddButton && (

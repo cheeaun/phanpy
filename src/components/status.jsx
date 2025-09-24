@@ -105,7 +105,7 @@ function getPollText(poll) {
     .join('\n')}`;
 }
 function getPostText(status, opts) {
-  const { maskCustomEmojis, maskURLs } = opts || {};
+  const { maskCustomEmojis, maskURLs, hideInlineQuote } = opts || {};
   const { spoilerText, poll, emojis } = status;
   let { content } = status;
   if (maskCustomEmojis && emojis?.length) {
@@ -119,13 +119,22 @@ function getPostText(status, opts) {
     (spoilerText ? `${spoilerText}\n\n` : '') +
     getHTMLText(content, {
       preProcess:
-        maskURLs &&
+        (maskURLs || hideInlineQuote) &&
         ((dom) => {
           // Remove links that contains text that starts with https?://
-          for (const a of dom.querySelectorAll('a')) {
-            const text = a.innerText.trim();
-            if (/^https?:\/\//i.test(text)) {
-              a.replaceWith('«🔗»');
+          if (maskURLs) {
+            for (const a of dom.querySelectorAll('a')) {
+              const text = a.innerText.trim();
+              if (/^https?:\/\//i.test(text)) {
+                a.replaceWith('«🔗»');
+              }
+            }
+          }
+          // Hide inline quote
+          if (hideInlineQuote) {
+            const reContainer = dom.querySelector('.quote-inline');
+            if (reContainer) {
+              reContainer.remove();
             }
           }
         }),
@@ -1218,7 +1227,9 @@ function Status({
             <MenuItem
               onClick={() => {
                 try {
-                  const postText = getPostText(status);
+                  const postText = getPostText(status, {
+                    hideInlineQuote: supportsNativeQuote,
+                  });
                   if (postText) {
                     speak(postText, language);
                   }
@@ -1239,7 +1250,9 @@ function Status({
         <MenuItem
           onClick={() => {
             try {
-              const postText = getPostText(status);
+              const postText = getPostText(status, {
+                hideInlineQuote: supportsNativeQuote,
+              });
               navigator.clipboard.writeText(postText);
               showToast(t`Post text copied`);
             } catch (e) {
@@ -2411,6 +2424,9 @@ function Status({
                     text={getPostText(status, {
                       maskCustomEmojis: true,
                       maskURLs: true,
+                      // Hide regardless of native quote support
+                      // They are not useful in translation context
+                      hideInlineQuote: true,
                     })}
                   />
                 )}

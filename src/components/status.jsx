@@ -732,6 +732,7 @@ function Status({
         : _(quoteMessages.quoteCannot);
     }
   }
+  const canQuote = supportsNativeQuote && !quoteDisabled;
 
   const postQuoteApprovalPolicy =
     (supportsNativeQuote &&
@@ -1106,7 +1107,14 @@ function Status({
                 } catch (e) {}
               }}
             >
-              <Icon icon="rocket" />
+              {canQuote ? (
+                <span class="icon">
+                  <Icon icon="rocket" />
+                  <Icon icon="quote" />
+                </span>
+              ) : (
+                <Icon icon="rocket" />
+              )}
               <span>
                 {reblogsCount > 0 || quotesCount > 0
                   ? `${reblogsCount > 0 ? shortenNumber(reblogsCount) : ''}${
@@ -1114,7 +1122,9 @@ function Status({
                     }${quotesCount > 0 ? shortenNumber(quotesCount) : ''}`
                   : reblogged
                     ? t`Unboost`
-                    : t`Boost…`}
+                    : canQuote
+                      ? t`Boost/Quote…`
+                      : t`Boost…`}
               </span>
             </MenuConfirm>
             <MenuItem
@@ -2671,7 +2681,9 @@ function Status({
                   disabled={!canBoost}
                 />
               </div> */}
-                <div class="action has-count">
+                <div
+                  class={`action ${canQuote && reblogsCount > 0 && quotesCount > 0 ? 'has-counts' : 'has-count'}`}
+                >
                   <MenuConfirm
                     disabled={!canBoost}
                     onClick={confirmBoostStatus}
@@ -2729,7 +2741,10 @@ function Status({
                   >
                     <StatusButton
                       checked={reblogged}
-                      title={[t`Boost`, t`Unboost`]}
+                      title={[
+                        canQuote ? t`Boost/Quote…` : t`Boost…`,
+                        t`Unboost`,
+                      ]}
                       alt={[t`Boost`, t`Boosted`]}
                       class="reblog-button"
                       icon="rocket"

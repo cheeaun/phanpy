@@ -1442,6 +1442,7 @@ function Compose({
                     attachment={attachment}
                     disabled={uiState === 'loading'}
                     lang={language}
+                    supportedMimeTypes={supportedMimeTypes}
                     descriptionLimit={descriptionLimit}
                     onDescriptionChange={(value) => {
                       setMediaAttachments((attachments) => {

@@ -1045,7 +1045,11 @@
 
       .account-block-content {
         min-width: 0;
-        mask-image: linear-gradient(var(--to-backward), transparent, black 16px);
+        mask-image: linear-gradient(
+          var(--to-backward),
+          transparent,
+          black 16px
+        );
       }
 
       .account-block-stats {

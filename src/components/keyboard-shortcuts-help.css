@@ -24,7 +24,11 @@
     line-height: 1;
     border: 1px solid var(--outline-color);
     background-color: var(--bg-faded-color);
-    background-image: linear-gradient(to top, var(--bg-blur-color), transparent);
+    background-image: linear-gradient(
+      to top,
+      var(--bg-blur-color),
+      transparent
+    );
     text-shadow: 0 1px var(--bg-color);
     box-shadow:
       0 1px var(--drop-shadow-color),

@@ -118,15 +118,15 @@ function _unfurlMastodonLink(instance, url) {
     const { id } = status;
     const selfURL = `/${instance}/s/${id}`;
     console.debug('🦦 Unfurled URL', url, id, selfURL);
-    const isProxyURL = theURL !== url;
+    const hasCanonical = theURL !== url;
     const data = {
       id,
       instance,
       url: selfURL,
       originalURL: url,
       originalDomain: getDomain(url),
-      proxyURL: isProxyURL ? theURL : undefined,
-      proxyDomain: isProxyURL ? getDomain(theURL) : undefined,
+      canonicalURL: hasCanonical ? theURL : undefined,
+      canonicalDomain: hasCanonical ? getDomain(theURL) : undefined,
     };
     states.unfurledLinks[url] = data;
     saveStatus(status, instance, {

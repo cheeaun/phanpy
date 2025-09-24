@@ -2,6 +2,7 @@ import pThrottle from 'p-throttle';
 import { snapshot } from 'valtio/vanilla';
 
 import { api } from './api';
+import getDomain from './get-domain';
 import states, { saveStatus } from './states';
 
 export const throttle = pThrottle({
@@ -117,12 +118,15 @@ function _unfurlMastodonLink(instance, url) {
     const { id } = status;
     const selfURL = `/${instance}/s/${id}`;
     console.debug('🦦 Unfurled URL', url, id, selfURL);
+    const isProxyURL = theURL !== url;
     const data = {
       id,
       instance,
       url: selfURL,
       originalURL: url,
-      originalDomain: domain,
+      originalDomain: getDomain(url),
+      proxyURL: isProxyURL ? theURL : undefined,
+      proxyDomain: isProxyURL ? getDomain(theURL) : undefined,
     };
     states.unfurledLinks[url] = data;
     saveStatus(status, instance, {

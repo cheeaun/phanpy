@@ -187,10 +187,7 @@
     }
   }
 }
-.status-card-link:not(
-    .truncated .status-card-link /* parent status already truncated */,
-    .status-card-link .status-card-link /* nested status cards */
-  ):has(.truncated) {
+.status-card-container.truncated {
   display: block;
   position: relative;
 
@@ -215,11 +212,6 @@
     font-size: 90%;
     white-space: nowrap;
     transition: transform 0.2s ease-out;
-  }
-
-  &:is(:hover, :focus):after {
-    color: var(--link-color);
-    transform: translate(2px, 0);
   }
 }
 .status-card-link:is(:hover, :focus) .status-card {

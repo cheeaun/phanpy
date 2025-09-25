@@ -2953,7 +2953,11 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   const containerRef = useTruncated();
 
   return (
-    <div class="status-card-container" ref={containerRef}>
+    <div
+      class="status-card-container"
+      ref={containerRef}
+      data-read-more={_(readMoreText)}
+    >
       {uniqueQuotes.map((q) => {
         let unfulfilledState;
 

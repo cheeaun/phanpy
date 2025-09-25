@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-25 10:21\n"
+"PO-Revision-Date: 2025-09-25 14:05\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -270,7 +270,7 @@ msgstr "Ver las estadísticas de las publicaciones"
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
 #: src/components/compose.jsx:993
-#: src/components/custom-emojis-modal.jsx:256
+#: src/components/custom-emojis-modal.jsx:270
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
 #: src/components/embed-modal.jsx:13
@@ -631,31 +631,31 @@ msgstr "Hubo un fallo al descargar el GIF"
 msgid "{0} more…"
 msgstr "{0} más…"
 
-#: src/components/custom-emojis-modal.jsx:262
+#: src/components/custom-emojis-modal.jsx:276
 msgid "Custom emojis"
 msgstr "Emojis personalizados"
 
-#: src/components/custom-emojis-modal.jsx:282
+#: src/components/custom-emojis-modal.jsx:296
 msgid "Search emoji"
 msgstr "Buscar emoji"
 
-#: src/components/custom-emojis-modal.jsx:313
+#: src/components/custom-emojis-modal.jsx:327
 msgid "Error loading custom emojis"
 msgstr "Error al cargar emojis personalizados"
 
-#: src/components/custom-emojis-modal.jsx:324
+#: src/components/custom-emojis-modal.jsx:338
 msgid "Recently used"
 msgstr "Usados recientemente"
 
-#: src/components/custom-emojis-modal.jsx:325
+#: src/components/custom-emojis-modal.jsx:339
 msgid "Others"
 msgstr "Otros"
 
-#: src/components/custom-emojis-modal.jsx:344
+#: src/components/custom-emojis-modal.jsx:358
 msgid "Zoom out"
 msgstr "Alejar"
 
-#: src/components/custom-emojis-modal.jsx:352
+#: src/components/custom-emojis-modal.jsx:366
 msgid "Zoom in"
 msgstr "Acercar"
 
@@ -820,7 +820,7 @@ msgid "Rejected"
 msgstr "Rechazado"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:468
+#: src/components/notification.jsx:516
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:335
 #: src/pages/search.jsx:368
@@ -1484,106 +1484,108 @@ msgstr "Una publicación con la que interactuaste ha sido editada."
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsó y le gustó tu respuesta.} other {{account} impulsó y le gustó tu publicación.}}} other {{account} impulsó y le gustó {postsCount} de tus publicaciones.}}} other {{postType, select, reply {<0><1>{0}</1> personas</0> impulsaron y les gustó tu respuesta.} other {<2><3>{1}</3> personas</2> impulsaron y les gustó tu publicación.}}}}"
 
-#: src/components/notification.jsx:256
-msgid "{account} quoted your post."
-msgstr "{account} citó tu publicación."
+#. placeholder {0}: shortenNumber(count)
+#. placeholder {1}: shortenNumber(count)
+#: src/components/notification.jsx:263
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} quoted your reply.} other {{account} quoted your post.}}} other {{account} quoted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> quoted your reply.} other {<2><3>{1}</3> people</2> quoted your post.}}}}"
+msgstr ""
 
-#: src/components/notification.jsx:258
+#: src/components/notification.jsx:306
 msgid "{account} edited a post you have quoted."
 msgstr "{account} editó una publicación que has citado."
 
-#: src/components/notification.jsx:260
+#: src/components/notification.jsx:308
 msgid "{account} signed up."
 msgstr "{account} registrado."
 
-#: src/components/notification.jsx:262
+#: src/components/notification.jsx:310
 msgid "{account} reported {targetAccount}"
 msgstr "{account} reportó {targetAccount}"
 
-#: src/components/notification.jsx:267
+#: src/components/notification.jsx:315
 msgid "Lost connections with <0>{name}</0>."
 msgstr "Conexiones perdidas con <0>{name}</0>."
 
-#: src/components/notification.jsx:273
+#: src/components/notification.jsx:321
 msgid "Moderation warning"
 msgstr "Advertencia de moderación"
 
-#: src/components/notification.jsx:278
+#: src/components/notification.jsx:326
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "¡Tu #Wrapstodon {year} está aquí!"
 
-#: src/components/notification.jsx:284
+#: src/components/notification.jsx:332
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Un administrador de <0>{from}</0> ha suspendido <1>{targetName}</1>, lo que significa que ya no puedes recibir actualizaciones de sus cuentas o interactuar con ellas."
 
-#: src/components/notification.jsx:290
+#: src/components/notification.jsx:338
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "Un administrador de <0>{from}</0> ha bloqueado <1>{targetName}</1>. Seguidores afectados: {followersCount}, siguiendo: {followingCount}."
 
-#: src/components/notification.jsx:296
+#: src/components/notification.jsx:344
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Has bloqueado <0>{targetName}</0>. Seguidores eliminados: {followersCount}, siguiendo: {followingCount}."
 
-#: src/components/notification.jsx:304
+#: src/components/notification.jsx:352
 msgid "Your account has received a moderation warning."
 msgstr "Tu cuenta ha recibido un aviso de moderación."
 
-#: src/components/notification.jsx:305
+#: src/components/notification.jsx:353
 msgid "Your account has been disabled."
 msgstr "Tu cuenta ha sido desactivada."
 
-#: src/components/notification.jsx:306
+#: src/components/notification.jsx:354
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Se han marcado como sensibles algunas de tus publicaciones."
 
-#: src/components/notification.jsx:307
+#: src/components/notification.jsx:355
 msgid "Some of your posts have been deleted."
 msgstr "Algunas de tus publicaciones han sido eliminadas."
 
-#: src/components/notification.jsx:308
+#: src/components/notification.jsx:356
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "De ahora en adelante, todas tus publicaciones se marcarán como sensibles."
 
-#: src/components/notification.jsx:309
+#: src/components/notification.jsx:357
 msgid "Your account has been limited."
 msgstr "Tu cuenta ha sido limitada."
 
-#: src/components/notification.jsx:310
+#: src/components/notification.jsx:358
 msgid "Your account has been suspended."
 msgstr "Tu cuenta ha sido suspendida."
 
-#: src/components/notification.jsx:387
+#: src/components/notification.jsx:435
 msgid "[Unknown notification type: {type}]"
 msgstr "[Tipo de notificación desconocido: {type}]"
 
-#: src/components/notification.jsx:464
+#: src/components/notification.jsx:512
 #: src/components/status.jsx:1172
 #: src/components/status.jsx:1182
 msgid "Boosted/Liked by…"
 msgstr "Impulsado por/Le gustó a…"
 
-#: src/components/notification.jsx:465
+#: src/components/notification.jsx:513
 msgid "Liked by…"
 msgstr "Le gusta a…"
 
-#: src/components/notification.jsx:466
+#: src/components/notification.jsx:514
 msgid "Boosted by…"
 msgstr "Impulsado por…"
 
-#: src/components/notification.jsx:467
+#: src/components/notification.jsx:515
 msgid "Followed by…"
 msgstr "Seguido por…"
 
-#: src/components/notification.jsx:548
-#: src/components/notification.jsx:564
+#: src/components/notification.jsx:596
+#: src/components/notification.jsx:612
 msgid "Learn more <0/>"
 msgstr "Más información <0/>"
 
-#: src/components/notification.jsx:573
+#: src/components/notification.jsx:621
 msgid "View #Wrapstodon"
 msgstr "Ver #Wrapstodon"
 
-#: src/components/notification.jsx:814
+#: src/components/notification.jsx:862
 #: src/components/status.jsx:266
 msgid "Read more →"
 msgstr "Leer más →"

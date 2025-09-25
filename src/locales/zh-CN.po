@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-25 10:21\n"
+"PO-Revision-Date: 2025-09-25 14:06\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -270,7 +270,7 @@ msgstr "查看嘟文统计"
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
 #: src/components/compose.jsx:993
-#: src/components/custom-emojis-modal.jsx:256
+#: src/components/custom-emojis-modal.jsx:270
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
 #: src/components/embed-modal.jsx:13
@@ -631,31 +631,31 @@ msgstr "GIF 下载失败"
 msgid "{0} more…"
 msgstr "更多 {0} 个…"
 
-#: src/components/custom-emojis-modal.jsx:262
+#: src/components/custom-emojis-modal.jsx:276
 msgid "Custom emojis"
 msgstr "自定义表情"
 
-#: src/components/custom-emojis-modal.jsx:282
+#: src/components/custom-emojis-modal.jsx:296
 msgid "Search emoji"
 msgstr "搜索表情"
 
-#: src/components/custom-emojis-modal.jsx:313
+#: src/components/custom-emojis-modal.jsx:327
 msgid "Error loading custom emojis"
 msgstr "加载自定义表情时出错"
 
-#: src/components/custom-emojis-modal.jsx:324
+#: src/components/custom-emojis-modal.jsx:338
 msgid "Recently used"
 msgstr "最近使用"
 
-#: src/components/custom-emojis-modal.jsx:325
+#: src/components/custom-emojis-modal.jsx:339
 msgid "Others"
 msgstr "其它"
 
-#: src/components/custom-emojis-modal.jsx:344
+#: src/components/custom-emojis-modal.jsx:358
 msgid "Zoom out"
 msgstr ""
 
-#: src/components/custom-emojis-modal.jsx:352
+#: src/components/custom-emojis-modal.jsx:366
 msgid "Zoom in"
 msgstr ""
 
@@ -820,7 +820,7 @@ msgid "Rejected"
 msgstr "已拒绝"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:468
+#: src/components/notification.jsx:516
 #: src/pages/accounts.jsx:50
 #: src/pages/search.jsx:335
 #: src/pages/search.jsx:368
@@ -1484,106 +1484,108 @@ msgstr "你互动过的嘟文已被编辑。"
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} 转嘟和点赞了你的回复。} other {{account} 转嘟和点赞了你的嘟文。}}} other {{account} 转嘟和点赞了你的 {postsCount} 条嘟文。}}} other {{postType, select, reply {<0><1>{0}</1> 人</0> 转嘟和点赞了你的回复。} other {<2><3>{1}</3> 人</2> 转嘟和点赞了你的嘟文。}}}}"
 
-#: src/components/notification.jsx:256
-msgid "{account} quoted your post."
-msgstr "{account} 引用了你的嘟文。"
+#. placeholder {0}: shortenNumber(count)
+#. placeholder {1}: shortenNumber(count)
+#: src/components/notification.jsx:263
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} quoted your reply.} other {{account} quoted your post.}}} other {{account} quoted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> quoted your reply.} other {<2><3>{1}</3> people</2> quoted your post.}}}}"
+msgstr ""
 
-#: src/components/notification.jsx:258
+#: src/components/notification.jsx:306
 msgid "{account} edited a post you have quoted."
 msgstr "{account} 编辑了一条你引用过的嘟文。"
 
-#: src/components/notification.jsx:260
+#: src/components/notification.jsx:308
 msgid "{account} signed up."
 msgstr "{account} 已注册。"
 
-#: src/components/notification.jsx:262
+#: src/components/notification.jsx:310
 msgid "{account} reported {targetAccount}"
 msgstr "{account} 举报了 {targetAccount}"
 
-#: src/components/notification.jsx:267
+#: src/components/notification.jsx:315
 msgid "Lost connections with <0>{name}</0>."
 msgstr "失去了与 <0>{name}</0> 的联系。"
 
-#: src/components/notification.jsx:273
+#: src/components/notification.jsx:321
 msgid "Moderation warning"
 msgstr "管理警告"
 
-#: src/components/notification.jsx:278
+#: src/components/notification.jsx:326
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "你的 {year} #Wrapstodon 年度回顾在此！"
 
-#: src/components/notification.jsx:284
+#: src/components/notification.jsx:332
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "<0>{from}</0> 的一位管理员封禁了 <1>{targetName}</1> 的账户，你不再能接收其更新或与之互动。"
 
-#: src/components/notification.jsx:290
+#: src/components/notification.jsx:338
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "一名来自<0>{from}</0>的管理员已屏蔽<1>{targetName}</1>。受影响的粉丝数:{followersCount}，关注数:{followingCount}。"
 
-#: src/components/notification.jsx:296
+#: src/components/notification.jsx:344
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "你已屏蔽<0>{targetName}</0>。被移除的粉丝数:{followersCount}，关注数:{followingCount}。"
 
-#: src/components/notification.jsx:304
+#: src/components/notification.jsx:352
 msgid "Your account has received a moderation warning."
 msgstr "你的账号收到了一次管理警告。"
 
-#: src/components/notification.jsx:305
+#: src/components/notification.jsx:353
 msgid "Your account has been disabled."
 msgstr "你的账号已被禁用。"
 
-#: src/components/notification.jsx:306
+#: src/components/notification.jsx:354
 msgid "Some of your posts have been marked as sensitive."
 msgstr "你的某些嘟文已被标记为敏感内容。"
 
-#: src/components/notification.jsx:307
+#: src/components/notification.jsx:355
 msgid "Some of your posts have been deleted."
 msgstr "你的某些嘟文已被删除。"
 
-#: src/components/notification.jsx:308
+#: src/components/notification.jsx:356
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "今后你的嘟文将被标记为敏感内容。"
 
-#: src/components/notification.jsx:309
+#: src/components/notification.jsx:357
 msgid "Your account has been limited."
 msgstr "你的账户已被限制。"
 
-#: src/components/notification.jsx:310
+#: src/components/notification.jsx:358
 msgid "Your account has been suspended."
 msgstr "你的账户已被封禁。"
 
-#: src/components/notification.jsx:387
+#: src/components/notification.jsx:435
 msgid "[Unknown notification type: {type}]"
 msgstr "[未知通知类型:{type}]"
 
-#: src/components/notification.jsx:464
+#: src/components/notification.jsx:512
 #: src/components/status.jsx:1172
 #: src/components/status.jsx:1182
 msgid "Boosted/Liked by…"
 msgstr "查看转嘟/点赞…"
 
-#: src/components/notification.jsx:465
+#: src/components/notification.jsx:513
 msgid "Liked by…"
 msgstr "查看点赞…"
 
-#: src/components/notification.jsx:466
+#: src/components/notification.jsx:514
 msgid "Boosted by…"
 msgstr "查看转嘟…"
 
-#: src/components/notification.jsx:467
+#: src/components/notification.jsx:515
 msgid "Followed by…"
 msgstr "被关注…"
 
-#: src/components/notification.jsx:548
-#: src/components/notification.jsx:564
+#: src/components/notification.jsx:596
+#: src/components/notification.jsx:612
 msgid "Learn more <0/>"
 msgstr "了解更多 <0/>"
 
-#: src/components/notification.jsx:573
+#: src/components/notification.jsx:621
 msgid "View #Wrapstodon"
 msgstr "查看 #Wrapstodon 年度回顾"
 
-#: src/components/notification.jsx:814
+#: src/components/notification.jsx:862
 #: src/components/status.jsx:266
 msgid "Read more →"
 msgstr "阅读更多 →"

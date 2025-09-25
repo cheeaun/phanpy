@@ -33,6 +33,7 @@ import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
+import { supportsNativeQuote } from '../utils/quote-utils';
 import RTF from '../utils/relative-time-format';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
@@ -710,12 +711,11 @@ function Status({
   }
 
   // Quote logic blatantly copied from https://github.com/mastodon/mastodon/blob/854aaec6fe69df02e6d850cb90eef37032b4d72f/app/javascript/mastodon/components/status/boost_button_utils.ts#L131-L163
-  const supportsNativeQuote = getAPIVersions()?.mastodon >= 7;
   let quoteDisabled = false;
   let quoteText = t`Quote`;
   let quoteMetaText;
 
-  if (supportsNativeQuote) {
+  if (supportsNativeQuote()) {
     const isMine = isSelf;
     const isMineAndPrivate = isMine && visibility === 'private';
     const isQuoteAutomaticallyAccepted =
@@ -741,10 +741,10 @@ function Status({
         : _(quoteMessages.quoteCannot);
     }
   }
-  const canQuote = supportsNativeQuote && !quoteDisabled;
+  const canQuote = supportsNativeQuote() && !quoteDisabled;
 
   const postQuoteApprovalPolicy =
-    (supportsNativeQuote &&
+    (supportsNativeQuote() &&
       isSelf &&
       quoteApproval?.[quoteApproval?.currentUser]?.[0]) ||
     'nobody';
@@ -1059,7 +1059,7 @@ function Status({
               className={`menu-reblog ${reblogged ? 'checked' : ''}`}
               menuExtras={
                 <>
-                  {supportsNativeQuote && (
+                  {supportsNativeQuote() && (
                     <MenuItem
                       disabled={quoteDisabled}
                       onClick={() => {
@@ -1080,7 +1080,7 @@ function Status({
                       )}
                     </MenuItem>
                   )}
-                  {(DEV || !supportsNativeQuote) && (
+                  {(DEV || !supportsNativeQuote()) && (
                     <MenuItem
                       onClick={() => {
                         showCompose({
@@ -1094,7 +1094,7 @@ function Status({
                       <span>
                         <Trans>Quote with link</Trans>
                       </span>
-                      {supportsNativeQuote && DEV && (
+                      {supportsNativeQuote() && DEV && (
                         <small class="tag collapsed">DEV</small>
                       )}
                     </MenuItem>
@@ -1182,7 +1182,7 @@ function Status({
               <Trans>Boosted/Liked by…</Trans>
             </span>
           </MenuItem>
-          {supportsNativeQuote && isSelf && (
+          {supportsNativeQuote() && isSelf && (
             <MenuItem
               onClick={() => {
                 setShowQuotes(true);
@@ -1228,7 +1228,7 @@ function Status({
               onClick={() => {
                 try {
                   const postText = getPostText(status, {
-                    hideInlineQuote: supportsNativeQuote,
+                    hideInlineQuote: supportsNativeQuote(),
                   });
                   if (postText) {
                     speak(postText, language);
@@ -1251,7 +1251,7 @@ function Status({
           onClick={() => {
             try {
               const postText = getPostText(status, {
-                hideInlineQuote: supportsNativeQuote,
+                hideInlineQuote: supportsNativeQuote(),
               });
               navigator.clipboard.writeText(postText);
               showToast(t`Post text copied`);
@@ -1455,7 +1455,7 @@ function Status({
       )}
       {isSelf && (
         <>
-          {supportsNativeQuote &&
+          {supportsNativeQuote() &&
             !['private', 'direct'].includes(visibility) && (
               <MenuItem onClick={() => setShowQuoteSettings(true)}>
                 <Icon icon="quote2" />
@@ -1707,7 +1707,7 @@ function Status({
         return alert(unauthInteractionErrorMessage);
       }
 
-      if (supportsNativeQuote) {
+      if (supportsNativeQuote()) {
         if (quoteDisabled) {
           showToast(quoteMetaText);
         } else {
@@ -2711,7 +2711,7 @@ function Status({
                     }
                     menuExtras={
                       <>
-                        {supportsNativeQuote && (
+                        {supportsNativeQuote() && (
                           <MenuItem
                             disabled={quoteDisabled}
                             onClick={() => {
@@ -2732,7 +2732,7 @@ function Status({
                             )}
                           </MenuItem>
                         )}
-                        {(DEV || !supportsNativeQuote) && (
+                        {(DEV || !supportsNativeQuote()) && (
                           <MenuItem
                             onClick={() => {
                               showCompose({
@@ -2746,7 +2746,7 @@ function Status({
                             <span>
                               <Trans>Quote with link</Trans>
                             </span>
-                            {supportsNativeQuote && DEV && (
+                            {supportsNativeQuote() && DEV && (
                               <small class="tag collapsed">DEV</small>
                             )}
                           </MenuItem>

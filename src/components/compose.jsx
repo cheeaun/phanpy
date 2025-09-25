@@ -18,6 +18,7 @@ import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import mem from '../utils/mem';
 import openCompose from '../utils/open-compose';
+import { supportsNativeQuote } from '../utils/quote-utils';
 import RTF from '../utils/relative-time-format';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -183,13 +184,11 @@ function Compose({
 
   const prefs = getPreferences();
 
-  const supportsNativeQuote = getAPIVersions()?.mastodon >= 7;
-
   const currentQuoteStatus = localQuoteStatus || quoteStatus;
 
   // Quote eligibility logic duplicated from status.jsx
   const checkQuoteEligibility = (status) => {
-    if (!supportsNativeQuote) return false;
+    if (!supportsNativeQuote()) return false;
 
     const { visibility, quoteApproval, account } = status;
     const isSelf = currentAccountInfo && currentAccountInfo.id === account.id;
@@ -215,7 +214,7 @@ function Compose({
 
   const handlePastedLink = async (url) => {
     // Handle QP links
-    if (supportsNativeQuote) {
+    if (supportsNativeQuote()) {
       // Quotes cannot coexist with media attachments or polls
       if (mediaAttachments.length > 0 || poll) {
         return;
@@ -1275,7 +1274,7 @@ function Compose({
                   params.quote_approval_policy = quoteApprovalPolicy;
                 }
                 if (editStatus) {
-                  if (supportsNativeQuote) {
+                  if (supportsNativeQuote()) {
                     params.quote_approval_policy = quoteApprovalPolicy;
                   }
                   if (supports('@mastodon/edit-media-attributes')) {
@@ -1795,7 +1794,7 @@ function Compose({
                 hidden={uiState === 'loading'}
               />
             )}
-            {supportsNativeQuote && (
+            {supportsNativeQuote() && (
               <label
                 class={`toolbar-button ${highlightQuoteApprovalPolicyField ? 'highlight' : ''}`}
               >

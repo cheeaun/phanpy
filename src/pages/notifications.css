@@ -75,9 +75,11 @@
 .notification-type.notification-favourite {
   color: var(--favourite-color);
 }
-.notification-type.notification-reblog,
-.notification-type.notification-quote {
+.notification-type.notification-reblog {
   color: var(--reblog-color);
+}
+.notification-type.notification-quote {
+  color: var(--quote-color);
 }
 .notification-type.notification-poll {
   color: var(--link-color);

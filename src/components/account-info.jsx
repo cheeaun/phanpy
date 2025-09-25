@@ -85,7 +85,7 @@ async function fetchPostingStats(accountID, masto) {
       status.inReplyToAccountId !== status.account.id // Not self-reply
     ) {
       stats.replies++;
-    } else if (status.quote?.quotedStatus?.id) {
+    } else if (status.quote?.id || status.quote?.quotedStatus?.id) {
       stats.quotes++;
     } else {
       stats.originals++;

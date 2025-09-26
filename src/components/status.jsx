@@ -106,7 +106,12 @@ function getPollText(poll) {
     .join('\n')}`;
 }
 function getPostText(status, opts) {
-  const { maskCustomEmojis, maskURLs, hideInlineQuote } = opts || {};
+  const {
+    maskCustomEmojis,
+    maskURLs,
+    hideInlineQuote,
+    htmlTextOpts = {},
+  } = opts || {};
   const { spoilerText, poll, emojis } = status;
   let { content } = status;
   if (maskCustomEmojis && emojis?.length) {
@@ -119,6 +124,7 @@ function getPostText(status, opts) {
   return (
     (spoilerText ? `${spoilerText}\n\n` : '') +
     getHTMLText(content, {
+      ...htmlTextOpts,
       preProcess:
         (maskURLs || hideInlineQuote) &&
         ((dom) => {
@@ -1252,6 +1258,9 @@ function Status({
             try {
               const postText = getPostText(status, {
                 hideInlineQuote: supportsNativeQuote(),
+                htmlTextOpts: {
+                  truncateLinks: false,
+                },
               });
               navigator.clipboard.writeText(postText);
               showToast(t`Post text copied`);

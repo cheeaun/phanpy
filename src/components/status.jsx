@@ -33,7 +33,10 @@ import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
-import { supportsNativeQuote } from '../utils/quote-utils';
+import {
+  getPostQuoteApprovalPolicy,
+  supportsNativeQuote,
+} from '../utils/quote-utils';
 import RTF from '../utils/relative-time-format';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
@@ -749,11 +752,7 @@ function Status({
   }
   const canQuote = supportsNativeQuote() && !quoteDisabled;
 
-  const postQuoteApprovalPolicy =
-    (supportsNativeQuote() &&
-      isSelf &&
-      quoteApproval?.[quoteApproval?.currentUser]?.[0]) ||
-    'nobody';
+  const postQuoteApprovalPolicy = getPostQuoteApprovalPolicy(quoteApproval);
 
   const replyStatus = (e) => {
     if (!sameInstance || !authenticated) {
@@ -1483,6 +1482,7 @@ function Status({
                 onClick={() => {
                   showCompose({
                     editStatus: status,
+                    quoteStatus: status.quote?.quotedStatus,
                   });
                 }}
               >

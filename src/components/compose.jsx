@@ -18,7 +18,10 @@ import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import mem from '../utils/mem';
 import openCompose from '../utils/open-compose';
-import { supportsNativeQuote } from '../utils/quote-utils';
+import {
+  getPostQuoteApprovalPolicy,
+  supportsNativeQuote,
+} from '../utils/quote-utils';
 import RTF from '../utils/relative-time-format';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -220,6 +223,11 @@ function Compose({
         return;
       }
 
+      // Cannot add/remove/replace current quote when editing
+      if (editStatus) {
+        return;
+      }
+
       try {
         const unfurledData = await unfurlMastodonLink(instance, url);
         if (unfurledData?.id) {
@@ -367,8 +375,14 @@ function Compose({
       );
       setSensitive(!!spoilerText);
     } else if (editStatus) {
-      const { visibility, language, sensitive, poll, mediaAttachments } =
-        editStatus;
+      const {
+        visibility,
+        language,
+        sensitive,
+        poll,
+        mediaAttachments,
+        quoteApproval,
+      } = editStatus;
       const composablePoll = !!poll?.options && {
         ...poll,
         options: poll.options.map((o) => o?.title || o),
@@ -393,6 +407,11 @@ function Compose({
               prefs['posting:default:language']?.toLowerCase() ||
               DEFAULT_LANG,
           );
+          if (supportsNativeQuote()) {
+            const postQuoteApprovalPolicy =
+              getPostQuoteApprovalPolicy(quoteApproval);
+            setQuoteApprovalPolicy(postQuoteApprovalPolicy);
+          }
           setSensitive(sensitive);
           if (composablePoll) setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
@@ -1269,10 +1288,6 @@ function Compose({
                     (attachment) => attachment.id,
                   ),
                 };
-                if (currentQuoteStatus?.id) {
-                  params.quoted_status_id = currentQuoteStatus.id;
-                  params.quote_approval_policy = quoteApprovalPolicy;
-                }
                 if (editStatus) {
                   if (supportsNativeQuote()) {
                     params.quote_approval_policy = quoteApprovalPolicy;
@@ -1290,6 +1305,10 @@ function Compose({
                     );
                   }
                 } else {
+                  if (supportsNativeQuote() && currentQuoteStatus?.id) {
+                    params.quoted_status_id = currentQuoteStatus.id;
+                    params.quote_approval_policy = quoteApprovalPolicy;
+                  }
                   params.visibility = visibility;
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;

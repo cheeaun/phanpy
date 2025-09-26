@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-09-25 14:05\n"
+"PO-Revision-Date: 2025-09-25 15:17\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -205,7 +205,7 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> julkaisu} other {<1>{1}</1> julk
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:892
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
-msgstr ""
+msgstr "{0} alkuperäistä julkaisua, {1} vastausta, {2} lainausta, {3} tehostusta"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -1488,7 +1488,7 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:263
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} quoted your reply.} other {{account} quoted your post.}}} other {{account} quoted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> quoted your reply.} other {<2><3>{1}</3> people</2> quoted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} lainasi vastaustasi.} other {{account} lainasi julkaisuasi.}}} other {{account} lainasi {postsCount} julkaisuasi.}}} other {{postType, select, reply {<0><1>{0}</1> käyttäjää</0> lainasi vastaustasi.} other {<2><3>{1}</3> käyttäjää</2> lainasi julkaisuasi.}}}}"
 
 #: src/components/notification.jsx:306
 msgid "{account} edited a post you have quoted."
@@ -2534,7 +2534,7 @@ msgstr "Tehostettu käyttäjän @{0} julkaisua"
 #: src/components/status.jsx:1135
 #: src/components/status.jsx:2761
 msgid "Boost/Quote…"
-msgstr ""
+msgstr "Tehosta/lainaa…"
 
 #: src/components/status.jsx:1136
 #: src/components/status.jsx:2761

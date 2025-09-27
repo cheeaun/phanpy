@@ -136,7 +136,7 @@ function Compose({
   const UID = useRef(draftStatus?.uid || uid());
   console.log('Compose UID', UID.current);
 
-  const currentAccount = getCurrentAccount();
+  const currentAccount = useMemo(getCurrentAccount, []);
   const currentAccountInfo = currentAccount.info;
 
   const configuration = getCurrentInstanceConfiguration();

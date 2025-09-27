@@ -9,14 +9,17 @@ export function saveAccounts(accounts) {
   store.local.setJSON('accounts', accounts);
 }
 
+const MINS_5 = 5 * 60 * 1000;
 export function getAccount(id) {
   const accounts = getAccounts();
   const account = id ? accounts.find((a) => a.info.id === id) : accounts[0];
   if (!account) return null;
-  account.lastAccessedAt = Date.now();
-  setTimeout(() => {
+  const now = Date.now();
+  // Only update if more than 5 mins
+  if (now - account.lastAccessedAt > MINS_5) {
+    account.lastAccessedAt = now;
     saveAccounts(accounts);
-  }, 1);
+  }
   return account;
 }
 
@@ -52,14 +55,9 @@ export function getCurrentAccountID() {
 }
 
 // Memoized version of getCurrentAccountID for performance
-export const getCurrentAccID = mem(
-  () => {
-    return getCurrentAccountID();
-  },
-  {
-    maxAge: 60 * 1000, // 1 minute
-  },
-);
+export const getCurrentAccID = mem(getCurrentAccountID, {
+  maxAge: 60 * 1000, // 1 minute
+});
 
 export function setCurrentAccountID(id) {
   try {
@@ -82,6 +80,11 @@ export function getCurrentAccount() {
   const account = getAccount(currentAccount);
   return account;
 }
+
+// Memoized version of getCurrentAccount for performance
+export const getCurrentAcc = mem(getCurrentAccount, {
+  maxAge: 60 * 1000, // 1 minute
+});
 
 export function getCurrentAccountNS() {
   const account = getCurrentAccount();

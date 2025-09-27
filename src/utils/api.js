@@ -8,7 +8,7 @@ import {
   getAccount,
   getAccountByAccessToken,
   getAccountByInstance,
-  getCurrentAccount,
+  getCurrentAcc,
   saveAccount,
   setCurrentAccountID,
 } from './store-utils';
@@ -306,7 +306,7 @@ export function api({ instance, accessToken, accountID, account } = {}) {
     }
   }
 
-  const currentAccount = getCurrentAccount();
+  const currentAccount = getCurrentAcc();
 
   // If only instance is provided, get the masto instance for that instance
   if (instance) {

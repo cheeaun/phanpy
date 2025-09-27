@@ -34,6 +34,8 @@ const NOTIFICATION_ICONS = {
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
   annual_report: 'celebrate',
+  quote: 'quote',
+  quoted_update: 'pencil',
 };
 
 /*
@@ -51,6 +53,8 @@ admin.sign_up = Someone signed up (optionally sent to admins)
 admin.report = A new report has been filed
 severed_relationships = Severed relationships
 moderation_warning = Moderation warning
+quote = Someone quoted one of your statuses
+quoted_update = A status you have quoted has been edited
 */
 
 function emojiText({ account, emoji, emoji_url }) {
@@ -194,7 +198,12 @@ const contentText = {
   poll: () => t`A poll you have voted in or created has ended.`,
   'poll-self': () => t`A poll you have created has ended.`,
   'poll-voted': () => t`A poll you have voted in has ended.`,
-  update: () => t`A post you interacted with has been edited.`,
+  update: ({ account }) =>
+    account ? (
+      <Trans>{account} edited a post.</Trans>
+    ) : (
+      t`A post you interacted with has been edited.`
+    ),
   'favourite+reblog': ({
     count,
     account,
@@ -243,6 +252,58 @@ const contentText = {
         />
       }
     />
+  ),
+  quote: ({
+    count,
+    account,
+    postsCount,
+    postType,
+    components: { Subject },
+  }) => (
+    <Plural
+      value={count}
+      _1={
+        <Plural
+          value={postsCount}
+          _1={
+            <Select
+              value={postType}
+              _reply={<Trans>{account} quoted your reply.</Trans>}
+              other={<Trans>{account} quoted your post.</Trans>}
+            />
+          }
+          other={
+            <Trans>
+              {account} quoted {postsCount} of your posts.
+            </Trans>
+          }
+        />
+      }
+      other={
+        <Select
+          value={postType}
+          _reply={
+            <Trans>
+              <Subject clickable={count > 1}>
+                <span title={count}>{shortenNumber(count)}</span> people
+              </Subject>{' '}
+              quoted your reply.
+            </Trans>
+          }
+          other={
+            <Trans>
+              <Subject clickable={count > 1}>
+                <span title={count}>{shortenNumber(count)}</span> people
+              </Subject>{' '}
+              quoted your post.
+            </Trans>
+          }
+        />
+      }
+    />
+  ),
+  quoted_update: ({ account }) => (
+    <Trans>{account} edited a post you have quoted.</Trans>
   ),
   'admin.sign_up': ({ account }) => <Trans>{account} signed up.</Trans>,
   'admin.report': ({ account, targetAccount }) => (

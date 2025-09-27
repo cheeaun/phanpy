@@ -1023,7 +1023,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 
 .timeline .show-more {
-  padding-inline-start: calc(var(--line-end) + var(--line-margin-end)) !important;
+  padding-inline-start: calc(
+    var(--line-end) +
+    var(--line-margin-end)
+  ) !important;
   text-align: start;
   background-color: transparent !important;
   backdrop-filter: none !important;

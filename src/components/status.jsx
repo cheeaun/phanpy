@@ -33,6 +33,10 @@ import localeMatch from '../utils/locale-match';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
+import {
+  getPostQuoteApprovalPolicy,
+  supportsNativeQuote,
+} from '../utils/quote-utils';
 import RTF from '../utils/relative-time-format';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
@@ -41,7 +45,7 @@ import showToast from '../utils/show-toast';
 import { speak, supportsTTS } from '../utils/speech';
 import states, { getStatus, saveStatus, statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
-import { getCurrentAccID, getCurrentAccountID } from '../utils/store-utils';
+import { getAPIVersions, getCurrentAccID } from '../utils/store-utils';
 import supports from '../utils/supports';
 import useTruncated from '../utils/useTruncated';
 import visibilityIconsMap from '../utils/visibility-icons-map';
@@ -66,6 +70,8 @@ import NameText from './name-text';
 import Poll from './poll';
 import PostContent from './post-content';
 import PostEmbedModal from './post-embed-modal';
+import QuoteSettingsSheet from './quote-settings-sheet';
+import QuotesModal from './quotes-modal';
 import RelativeTime from './relative-time';
 import StatusButton from './status-button';
 import StatusCard from './status-card';
@@ -103,7 +109,12 @@ function getPollText(poll) {
     .join('\n')}`;
 }
 function getPostText(status, opts) {
-  const { maskCustomEmojis, maskURLs } = opts || {};
+  const {
+    maskCustomEmojis,
+    maskURLs,
+    hideInlineQuote,
+    htmlTextOpts = {},
+  } = opts || {};
   const { spoilerText, poll, emojis } = status;
   let { content } = status;
   if (maskCustomEmojis && emojis?.length) {
@@ -116,14 +127,24 @@ function getPostText(status, opts) {
   return (
     (spoilerText ? `${spoilerText}\n\n` : '') +
     getHTMLText(content, {
+      ...htmlTextOpts,
       preProcess:
-        maskURLs &&
+        (maskURLs || hideInlineQuote) &&
         ((dom) => {
           // Remove links that contains text that starts with https?://
-          for (const a of dom.querySelectorAll('a')) {
-            const text = a.innerText.trim();
-            if (/^https?:\/\//i.test(text)) {
-              a.replaceWith('«🔗»');
+          if (maskURLs) {
+            for (const a of dom.querySelectorAll('a')) {
+              const text = a.innerText.trim();
+              if (/^https?:\/\//i.test(text)) {
+                a.replaceWith('«🔗»');
+              }
+            }
+          }
+          // Hide inline quote
+          if (hideInlineQuote) {
+            const reContainer = dom.querySelector('.quote-inline');
+            if (reContainer) {
+              reContainer.remove();
             }
           }
         }),
@@ -279,6 +300,22 @@ const checkDifferentLanguage = (
   return different;
 };
 
+const quoteMessages = {
+  quotePrivate: msg`Private posts cannot be quoted`,
+  requestQuote: msg`Request to quote`,
+  quoteManualReview: msg`Author will manually review`,
+  quoteFollowersOnly: msg`Only followers can quote this post`,
+  quoteCannot: msg`You are not allowed to quote this post`,
+};
+
+const quoteApprovalPolicyMessages = {
+  public: msg`Anyone can quote`,
+  followers: msg`Your followers can quote`,
+  nobody: msg`Only you can quote`,
+};
+
+const { DEV } = import.meta.env;
+
 function Status({
   statusID,
   status,
@@ -376,6 +413,7 @@ function Status({
     reblogsCount,
     favourited,
     favouritesCount,
+    quotesCount,
     bookmarked,
     poll,
     muted,
@@ -393,11 +431,13 @@ function Status({
     mentions,
     mediaAttachments = [],
     reblog,
+    quote,
     uri,
     url,
     emojis,
     tags,
     pinned,
+    quoteApproval,
     // Non-API props
     _deleted,
     _pinned,
@@ -427,9 +467,7 @@ function Status({
   if (mediaFirst && hasMediaAttachments) size = 's';
 
   const currentAccount = getCurrentAccID();
-  const isSelf = useMemo(() => {
-    return currentAccount && currentAccount === accountId;
-  }, [accountId, currentAccount]);
+  const isSelf = currentAccount && currentAccount === accountId;
 
   const filterContext = useContext(FilterContext);
   const filterInfo =
@@ -642,6 +680,8 @@ function Status({
 
   const [showEdited, setShowEdited] = useState(false);
   const [showEmbed, setShowEmbed] = useState(false);
+  const [showQuoteSettings, setShowQuoteSettings] = useState(false);
+  const [showQuotes, setShowQuotes] = useState(false);
 
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
@@ -673,11 +713,46 @@ function Status({
   // - authenticated AND
   // - visibility != direct OR
   // - visibility = private AND isSelf
-  let canBoost =
-    authenticated && visibility !== 'direct' && visibility !== 'private';
+  const isPublic = ['public', 'unlisted'].includes(visibility);
+  let canBoost = authenticated && isPublic;
   if (visibility === 'private' && isSelf) {
     canBoost = true;
   }
+
+  // Quote logic blatantly copied from https://github.com/mastodon/mastodon/blob/854aaec6fe69df02e6d850cb90eef37032b4d72f/app/javascript/mastodon/components/status/boost_button_utils.ts#L131-L163
+  let quoteDisabled = false;
+  let quoteText = t`Quote`;
+  let quoteMetaText;
+
+  if (supportsNativeQuote()) {
+    const isMine = isSelf;
+    const isMineAndPrivate = isMine && visibility === 'private';
+    const isQuoteAutomaticallyAccepted =
+      quoteApproval?.currentUser === 'automatic' &&
+      (isPublic || isMineAndPrivate);
+    const isQuoteManuallyAccepted =
+      quoteApproval?.currentUser === 'manual' && (isPublic || isMineAndPrivate);
+    const isQuoteFollowersOnly =
+      quoteApproval?.automatic?.[0] === 'followers' ||
+      quoteApproval?.manual?.[0] === 'followers';
+    if (!isPublic && !isMine) {
+      quoteDisabled = true;
+      quoteMetaText = _(quoteMessages.quotePrivate);
+    } else if (isQuoteAutomaticallyAccepted) {
+      // No need to do anything
+    } else if (isQuoteManuallyAccepted) {
+      quoteText = _(quoteMessages.requestQuote);
+      quoteMetaText = _(quoteMessages.quoteManualReview);
+    } else {
+      quoteDisabled = true;
+      quoteMetaText = isQuoteFollowersOnly
+        ? _(quoteMessages.quoteFollowersOnly)
+        : _(quoteMessages.quoteCannot);
+    }
+  }
+  const canQuote = supportsNativeQuote() && !quoteDisabled;
+
+  const postQuoteApprovalPolicy = getPostQuoteApprovalPolicy(quoteApproval);
 
   const replyStatus = (e) => {
     if (!sameInstance || !authenticated) {
@@ -942,8 +1017,11 @@ function Status({
     };
   }
 
+  const isQuotingMyPost =
+    quote?.state === 'accepted' &&
+    quote?.quotedStatus?.account?.id === currentAccount;
+
   const actionsRef = useRef();
-  const isPublic = ['public', 'unlisted'].includes(visibility);
   const isPinnable = ['public', 'unlisted', 'private'].includes(visibility);
   const menuFooter =
     mediaNoDesc && !reblogged ? (
@@ -985,20 +1063,48 @@ function Status({
               }
               className={`menu-reblog ${reblogged ? 'checked' : ''}`}
               menuExtras={
-                <MenuItem
-                  onClick={() => {
-                    showCompose({
-                      draftStatus: {
-                        status: `\n${url}`,
-                      },
-                    });
-                  }}
-                >
-                  <Icon icon="quote" />
-                  <span>
-                    <Trans>Quote</Trans>
-                  </span>
-                </MenuItem>
+                <>
+                  {supportsNativeQuote() && (
+                    <MenuItem
+                      disabled={quoteDisabled}
+                      onClick={() => {
+                        showCompose({
+                          quoteStatus: status,
+                        });
+                      }}
+                    >
+                      <Icon icon="quote" />
+                      {quoteMetaText ? (
+                        <small>
+                          {quoteText}
+                          <br />
+                          {quoteMetaText}
+                        </small>
+                      ) : (
+                        <span>{quoteText}</span>
+                      )}
+                    </MenuItem>
+                  )}
+                  {(DEV || !supportsNativeQuote()) && (
+                    <MenuItem
+                      onClick={() => {
+                        showCompose({
+                          draftStatus: {
+                            status: `\n${url}`,
+                          },
+                        });
+                      }}
+                    >
+                      <Icon icon="quote" />
+                      <span>
+                        <Trans>Quote with link</Trans>
+                      </span>
+                      {supportsNativeQuote() && DEV && (
+                        <small class="tag collapsed">DEV</small>
+                      )}
+                    </MenuItem>
+                  )}
+                </>
               }
               menuFooter={menuFooter}
               disabled={!canBoost}
@@ -1015,13 +1121,24 @@ function Status({
                 } catch (e) {}
               }}
             >
-              <Icon icon="rocket" />
+              {canQuote ? (
+                <span class="icon">
+                  <Icon icon="rocket" />
+                  <Icon icon="quote" />
+                </span>
+              ) : (
+                <Icon icon="rocket" />
+              )}
               <span>
-                {reblogsCount > 0
-                  ? shortenNumber(reblogsCount)
+                {reblogsCount > 0 || quotesCount > 0
+                  ? `${reblogsCount > 0 ? shortenNumber(reblogsCount) : ''}${
+                      reblogsCount > 0 && quotesCount > 0 ? '+' : ''
+                    }${quotesCount > 0 ? shortenNumber(quotesCount) : ''}`
                   : reblogged
                     ? t`Unboost`
-                    : t`Boost…`}
+                    : canQuote
+                      ? t`Boost/Quote…`
+                      : t`Boost…`}
               </span>
             </MenuConfirm>
             <MenuItem
@@ -1070,6 +1187,18 @@ function Status({
               <Trans>Boosted/Liked by…</Trans>
             </span>
           </MenuItem>
+          {supportsNativeQuote() && isSelf && (
+            <MenuItem
+              onClick={() => {
+                setShowQuotes(true);
+              }}
+            >
+              <Icon icon="quote" />
+              <span>
+                <Trans>View Quotes</Trans>
+              </span>
+            </MenuItem>
+          )}
         </>
       )}
       {(isSizeLarge ||
@@ -1103,7 +1232,9 @@ function Status({
             <MenuItem
               onClick={() => {
                 try {
-                  const postText = getPostText(status);
+                  const postText = getPostText(status, {
+                    hideInlineQuote: supportsNativeQuote(),
+                  });
                   if (postText) {
                     speak(postText, language);
                   }
@@ -1124,7 +1255,12 @@ function Status({
         <MenuItem
           onClick={() => {
             try {
-              const postText = getPostText(status);
+              const postText = getPostText(status, {
+                hideInlineQuote: supportsNativeQuote(),
+                htmlTextOpts: {
+                  truncateLinks: false,
+                },
+              });
               navigator.clipboard.writeText(postText);
               showToast(t`Post text copied`);
             } catch (e) {
@@ -1186,7 +1322,7 @@ function Status({
       <MenuItem href={url} target="_blank">
         <Icon icon="external" />
         <small
-          class="menu-double-lines"
+          class="menu-double-lines should-cloak"
           style={{
             maxWidth: '16em',
           }}
@@ -1326,29 +1462,92 @@ function Status({
         </MenuItem>
       )}
       {isSelf && (
-        <div class="menu-horizontal">
-          {supports('@mastodon/post-edit') && (
-            <MenuItem
-              onClick={() => {
-                showCompose({
-                  editStatus: status,
-                });
-              }}
-            >
-              <Icon icon="pencil" />
-              <span>
-                <Trans>Edit</Trans>
-              </span>
-            </MenuItem>
-          )}
-          {isSizeLarge && (
+        <>
+          {supportsNativeQuote() &&
+            !['private', 'direct'].includes(visibility) && (
+              <MenuItem onClick={() => setShowQuoteSettings(true)}>
+                <Icon icon="quote2" />
+                <small>
+                  <Trans>Quote settings</Trans>
+                  <br />
+                  <span class="more-insignificant">
+                    {_(quoteApprovalPolicyMessages[postQuoteApprovalPolicy])}
+                  </span>
+                </small>
+              </MenuItem>
+            )}
+          <div class="menu-horizontal">
+            {supports('@mastodon/post-edit') && (
+              <MenuItem
+                onClick={() => {
+                  showCompose({
+                    editStatus: status,
+                    quoteStatus: status.quote?.quotedStatus,
+                  });
+                }}
+              >
+                <Icon icon="pencil" />
+                <span>
+                  <Trans>Edit</Trans>
+                </span>
+              </MenuItem>
+            )}
+            {isSizeLarge && (
+              <MenuConfirm
+                subMenu
+                confirmLabel={
+                  <>
+                    <Icon icon="trash" />
+                    <span>
+                      <Trans>Delete this post?</Trans>
+                    </span>
+                  </>
+                }
+                itemProps={{
+                  className: 'danger',
+                }}
+                menuItemClassName="danger"
+                onClick={() => {
+                  // const yes = confirm('Delete this post?');
+                  // if (yes) {
+                  (async () => {
+                    try {
+                      await masto.v1.statuses.$select(id).remove();
+                      const cachedStatus = getStatus(id, instance);
+                      cachedStatus._deleted = true;
+                      showToast(t`Post deleted`);
+                    } catch (e) {
+                      console.error(e);
+                      showToast(t`Unable to delete post`);
+                    }
+                  })();
+                  // }
+                }}
+              >
+                <Icon icon="trash" />
+                <span>
+                  <Trans>Delete…</Trans>
+                </span>
+              </MenuConfirm>
+            )}
+          </div>
+        </>
+      )}
+      {!isSelf && isSizeLarge && (
+        <>
+          <MenuDivider />
+          {isQuotingMyPost && (
             <MenuConfirm
               subMenu
               confirmLabel={
                 <>
-                  <Icon icon="trash" />
+                  <Icon icon="quote" />
                   <span>
-                    <Trans>Delete this post?</Trans>
+                    <Trans>
+                      Remove my post from{' '}
+                      <span class="bidi-isolate">@{username || acct}</span>'s
+                      post?
+                    </Trans>
                   </span>
                 </>
               }
@@ -1357,33 +1556,27 @@ function Status({
               }}
               menuItemClassName="danger"
               onClick={() => {
-                // const yes = confirm('Delete this post?');
-                // if (yes) {
                 (async () => {
                   try {
-                    await masto.v1.statuses.$select(id).remove();
-                    const cachedStatus = getStatus(id, instance);
-                    cachedStatus._deleted = true;
-                    showToast(t`Post deleted`);
+                    // POST /api/v1/statuses/:id/quotes/:quoting_status_id/revoke
+                    const quotedStatusID = quote.quotedStatus.id;
+                    await masto.v1.statuses
+                      .$select(quotedStatusID)
+                      .quotes.$select(id)
+                      .revoke.create();
+                    showToast(t`Quote removed`);
+                    states.reloadStatusPage++;
                   } catch (e) {
                     console.error(e);
-                    showToast(t`Unable to delete post`);
+                    showToast(t`Unable to remove quote`);
                   }
                 })();
-                // }
               }}
             >
-              <Icon icon="trash" />
-              <span>
-                <Trans>Delete…</Trans>
-              </span>
+              <Icon icon="quote" />
+              <Trans>Remove quote…</Trans>
             </MenuConfirm>
           )}
-        </div>
-      )}
-      {!isSelf && isSizeLarge && (
-        <>
-          <MenuDivider />
           <MenuItem
             className="danger"
             onClick={() => {
@@ -1512,6 +1705,36 @@ function Status({
       }
     },
     {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
+  const qRef = useHotkeys(
+    'q',
+    (e) => {
+      if (!sameInstance || !authenticated) {
+        return alert(unauthInteractionErrorMessage);
+      }
+
+      if (supportsNativeQuote()) {
+        if (quoteDisabled) {
+          showToast(quoteMetaText);
+        } else {
+          showCompose({
+            quoteStatus: status,
+          });
+        }
+        // Don't fallback to non-native if quoteDisabled
+      } else {
+        showCompose({
+          draftStatus: {
+            status: `\n${url}`,
+          },
+        });
+      }
+    },
+    {
+      enabled: hotkeysEnabled,
       useKey: true,
       ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
@@ -1669,6 +1892,7 @@ function Status({
           dRef.current = nodeRef;
           bRef.current = nodeRef;
           xRef.current = nodeRef;
+          qRef.current = nodeRef;
         }}
         tabindex="-1"
         class={`status ${
@@ -2209,6 +2433,9 @@ function Status({
                     text={getPostText(status, {
                       maskCustomEmojis: true,
                       maskURLs: true,
+                      // Hide regardless of native quote support
+                      // They are not useful in translation context
+                      hideInlineQuote: true,
                     })}
                   />
                 )}
@@ -2479,7 +2706,9 @@ function Status({
                   disabled={!canBoost}
                 />
               </div> */}
-                <div class="action has-count">
+                <div
+                  class={`action ${canQuote && reblogsCount > 0 && quotesCount > 0 ? 'has-counts' : 'has-count'}`}
+                >
                   <MenuConfirm
                     disabled={!canBoost}
                     onClick={confirmBoostStatus}
@@ -2490,30 +2719,62 @@ function Status({
                       </>
                     }
                     menuExtras={
-                      <MenuItem
-                        onClick={() => {
-                          showCompose({
-                            draftStatus: {
-                              status: `\n${url}`,
-                            },
-                          });
-                        }}
-                      >
-                        <Icon icon="quote" />
-                        <span>
-                          <Trans>Quote</Trans>
-                        </span>
-                      </MenuItem>
+                      <>
+                        {supportsNativeQuote() && (
+                          <MenuItem
+                            disabled={quoteDisabled}
+                            onClick={() => {
+                              showCompose({
+                                quoteStatus: status,
+                              });
+                            }}
+                          >
+                            <Icon icon="quote" />
+                            {quoteMetaText ? (
+                              <small>
+                                {quoteText}
+                                <br />
+                                {quoteMetaText}
+                              </small>
+                            ) : (
+                              <span>{quoteText}</span>
+                            )}
+                          </MenuItem>
+                        )}
+                        {(DEV || !supportsNativeQuote()) && (
+                          <MenuItem
+                            onClick={() => {
+                              showCompose({
+                                draftStatus: {
+                                  status: `\n${url}`,
+                                },
+                              });
+                            }}
+                          >
+                            <Icon icon="quote" />
+                            <span>
+                              <Trans>Quote with link</Trans>
+                            </span>
+                            {supportsNativeQuote() && DEV && (
+                              <small class="tag collapsed">DEV</small>
+                            )}
+                          </MenuItem>
+                        )}
+                      </>
                     }
                     menuFooter={menuFooter}
                   >
                     <StatusButton
                       checked={reblogged}
-                      title={[t`Boost`, t`Unboost`]}
+                      title={[
+                        canQuote ? t`Boost/Quote…` : t`Boost…`,
+                        t`Unboost`,
+                      ]}
                       alt={[t`Boost`, t`Boosted`]}
                       class="reblog-button"
                       icon="rocket"
                       count={reblogsCount}
+                      extraCount={quotesCount}
                       // onClick={boostStatus}
                       disabled={!canBoost}
                     />
@@ -2593,10 +2854,8 @@ function Status({
         )}
         {!!showEmbed && (
           <Modal
-            onClick={(e) => {
-              if (e.target === e.currentTarget) {
-                setShowEmbed(false);
-              }
+            onClose={() => {
+              setShowEmbed(false);
             }}
           >
             <PostEmbedModal
@@ -2604,6 +2863,38 @@ function Status({
               instance={instance}
               onClose={() => {
                 setShowEmbed(false);
+              }}
+            />
+          </Modal>
+        )}
+        {!!showQuoteSettings && (
+          <Modal
+            onClose={() => {
+              setShowQuoteSettings(false);
+              states.reloadStatusPage++;
+            }}
+          >
+            <QuoteSettingsSheet
+              onClose={() => {
+                setShowQuoteSettings(false);
+                states.reloadStatusPage++;
+              }}
+              post={status}
+              currentPolicy={postQuoteApprovalPolicy}
+            />
+          </Modal>
+        )}
+        {!!showQuotes && (
+          <Modal
+            onClose={() => {
+              setShowQuotes(false);
+            }}
+          >
+            <QuotesModal
+              statusId={id}
+              instance={instance}
+              onClose={() => {
+                setShowQuotes(false);
               }}
             />
           </Modal>
@@ -2660,18 +2951,22 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
   const sKey = statusKey(id, instance);
   const quotes = snapStates.statusQuotes[sKey];
   const uniqueQuotes = quotes?.filter(
-    (q, i, arr) => arr.findIndex((q2) => q2.url === q.url) === i,
+    (q, i, arr) => q.native || arr.findIndex((q2) => q2.url === q.url) === i,
   );
 
   if (!uniqueQuotes?.length) return;
   if (level > 2) return;
 
   const filterContext = useContext(FilterContext);
-  const currentAccount = getCurrentAccountID();
+  const currentAccount = getCurrentAccID();
   const containerRef = useTruncated();
 
   return (
-    <div class="status-card-container" ref={containerRef}>
+    <div
+      class="status-card-container"
+      ref={containerRef}
+      data-read-more={_(readMoreText)}
+    >
       {uniqueQuotes.map((q) => {
         let unfulfilledState;
 
@@ -2698,7 +2993,7 @@ const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
             <div
               class={`status-card-unfulfilled ${
                 unfulfilledState === 'filterHidden' ? 'status-card-ghost' : ''
-              }`}
+              } ${q.native ? 'quote-post-native' : ''}`}
             >
               <Icon icon="quote" />
               <i>{_(unfulfilledText[unfulfilledState])}</i>

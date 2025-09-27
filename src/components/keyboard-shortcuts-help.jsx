@@ -181,6 +181,10 @@ export default memo(function KeyboardShortcutsHelp() {
                     ),
                   },
                   {
+                    action: t`Quote`,
+                    keys: <kbd>q</kbd>,
+                  },
+                  {
                     action: t`Bookmark`,
                     keys: <kbd>d</kbd>,
                   },

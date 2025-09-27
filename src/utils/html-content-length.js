@@ -1,11 +1,17 @@
-const div = document.createElement('div');
+const template = document.createElement('template');
 export default function htmlContentLength(html) {
   if (!html) return 0;
-  div.innerHTML = html;
+  template.innerHTML = html;
   // .invisible spans for links
   // e.g. <span class="invisible">https://</span>mastodon.social
-  div.querySelectorAll('.invisible').forEach((el) => {
-    el.remove();
-  });
-  return div.innerText.length;
+  const invisibleElements = template.content.querySelectorAll('.invisible');
+  for (let i = 0; i < invisibleElements.length; i++) {
+    invisibleElements[i].remove();
+  }
+  // Collect innerText from all child nodes since DocumentFragment doesn't have innerText
+  let textContent = '';
+  for (let i = 0; i < template.content.childNodes.length; i++) {
+    textContent += template.content.childNodes[i].innerText || '';
+  }
+  return textContent.length;
 }

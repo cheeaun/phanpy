@@ -1,5 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
-import { useEffect, useRef } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import Timeline from '../components/timeline';
@@ -26,11 +26,22 @@ function Following({ title, path, id, ...props }) {
       }),
     path || '/following',
   );
-  const { masto, streaming, instance } = api();
+  const { masto, streaming, instance, client } = api();
+  const [streamingClient, setStreamingClient] = useState(streaming);
+
   const snapStates = useSnapshot(states);
   const homeIterable = useRef();
   const homeIterator = useRef();
   const latestItem = useRef();
+
+  // Streaming only happens after instance is initialized
+  useEffect(() => {
+    if (!streaming && client?.onStreamingReady) {
+      client.onStreamingReady((streamingClient) => {
+        setStreamingClient(streamingClient);
+      });
+    }
+  }, [client]);
   __BENCHMARK.end('time-to-following');
 
   console.debug('RENDER Following', title, id);
@@ -112,8 +123,8 @@ function Following({ title, path, id, ...props }) {
   useEffect(() => {
     let sub;
     (async () => {
-      if (streaming) {
-        sub = streaming.user.subscribe();
+      if (streamingClient) {
+        sub = streamingClient.user.subscribe();
         console.log('🎏 Streaming user', sub);
         for await (const entry of sub) {
           if (!sub) break;
@@ -136,7 +147,7 @@ function Following({ title, path, id, ...props }) {
       sub?.unsubscribe?.();
       sub = null;
     };
-  }, [streaming]);
+  }, [streamingClient]);
 
   return (
     <Timeline

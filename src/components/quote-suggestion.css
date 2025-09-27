@@ -1,0 +1,81 @@
+.quote-suggestion {
+  margin: 0 8px;
+  border: 2px dotted var(--outline-color);
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: inset 0 0 16px 8px var(--bg-color);
+  font-size: calc(var(--text-size) * 0.9);
+  perspective: 1000px;
+  background-image:
+    radial-gradient(var(--outline-color) 1px, transparent 1px),
+    radial-gradient(var(--outline-color) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position:
+    50% 50%,
+    calc(50% + 8px) calc(50% + 8px);
+  background-clip: padding-box;
+
+  transition:
+    all 0.6s var(--timing-function),
+    height 0.3s var(--timing-function) allow-discrete;
+  @starting-style {
+    opacity: 0;
+    height: 0;
+    transform: translateY(-20%) scale(0.8);
+    overflow: clip;
+  }
+
+  @media (min-width: 40em) {
+    margin: 0;
+  }
+
+  .quote-suggestion-url {
+    color: var(--text-insignificant-color);
+  }
+
+  .quote-status {
+    margin-block: 8px !important;
+    --floating-scale: 0.975;
+    --floating-rotate: 5deg;
+    /* transform: scale(var(--floating-scale))
+      rotate3d(1, 1, 0, var(--floating-rotate)); */
+    animation: floating 16s linear infinite;
+    box-shadow:
+      0 2px 8px -2px var(--drop-shadow-color),
+      0 16px 8px -8px var(--drop-shadow-color),
+      0 8px 32px -8px var(--drop-shadow-color) !important;
+  }
+
+  .quote-suggestion-actions {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+/* iOS widget-style 3D floating animation, tilts to every corner */
+@keyframes floating {
+  0% {
+    transform: scale(var(--floating-scale))
+      rotate3d(1, 1, 0, var(--floating-rotate));
+  }
+  25% {
+    transform: scale(var(--floating-scale))
+      rotate3d(-1, 1, 0, var(--floating-rotate));
+  }
+  50% {
+    transform: scale(var(--floating-scale))
+      rotate3d(-1, -1, 0, var(--floating-rotate));
+  }
+  75% {
+    transform: scale(var(--floating-scale))
+      rotate3d(1, -1, 0, var(--floating-rotate));
+  }
+  100% {
+    transform: scale(var(--floating-scale))
+      rotate3d(1, 1, 0, var(--floating-rotate));
+  }
+}

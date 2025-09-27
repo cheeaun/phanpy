@@ -11,6 +11,7 @@ import { render } from 'preact';
 import { HashRouter } from 'react-router-dom';
 
 import { App } from './app';
+import { IconSpriteProvider } from './components/icon-sprite-manager';
 import { initActivateLang } from './utils/lang';
 
 initActivateLang();
@@ -22,7 +23,9 @@ if (import.meta.env.DEV) {
 render(
   <I18nProvider i18n={i18n}>
     <HashRouter>
-      <App />
+      <IconSpriteProvider>
+        <App />
+      </IconSpriteProvider>
     </HashRouter>
   </I18nProvider>,
   document.getElementById('app'),

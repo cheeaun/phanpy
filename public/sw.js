@@ -12,6 +12,15 @@ navigationPreload.enable();
 
 self.__WB_DISABLE_DEV_LOGS = true;
 
+const expirationPluginOptions = {
+  purgeOnQuotaError: true,
+  // "CacheFirst image maxEntries not working" https://github.com/GoogleChrome/workbox/issues/2768#issuecomment-793109906
+  matchOptions: {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Cache/delete#Parameters
+    ignoreVary: true,
+  },
+};
+
 const iconsRoute = new Route(
   ({ request, sameOrigin }) => {
     const isIcon = request.url.includes('/icons/');
@@ -25,7 +34,7 @@ const iconsRoute = new Route(
         // NOTE: Temporary fix
         maxEntries: 300,
         maxAgeSeconds: 3 * 24 * 60 * 60, // 3 days
-        purgeOnQuotaError: true,
+        ...expirationPluginOptions,
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],
@@ -48,7 +57,7 @@ const assetsRoute = new Route(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 40,
-        purgeOnQuotaError: true,
+        ...expirationPluginOptions,
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],
@@ -72,7 +81,7 @@ const imageRoute = new Route(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 30,
-        purgeOnQuotaError: true,
+        ...expirationPluginOptions,
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],
@@ -93,7 +102,7 @@ const apiExtendedRoute = new RegExpRoute(
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: 12 * 60 * 60, // 12 hours
-        purgeOnQuotaError: true,
+        ...expirationPluginOptions,
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],
@@ -136,7 +145,7 @@ const apiRoute = new RegExpRoute(
       new ExpirationPlugin({
         maxEntries: 30,
         maxAgeSeconds: 5 * 60, // 5 minutes
-        purgeOnQuotaError: true,
+        ...expirationPluginOptions,
       }),
       new CacheableResponsePlugin({
         statuses: [0, 200],

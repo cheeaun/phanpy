@@ -840,6 +840,26 @@
             text-decoration: none;
           }
         }
+
+        /* Quotes */
+        &:has(.post-peek-quote) .quote-inline {
+          display: none;
+
+          + *:before {
+            /* Hide the ↵ */
+            display: none;
+          }
+        }
+        .post-peek-quote {
+          display: block;
+          font-style: italic;
+
+          &:before {
+            font-size: 1em;
+            content: ' ❝ ';
+            opacity: 1;
+          }
+        }
       }
 
       .post-peek-spoiler {

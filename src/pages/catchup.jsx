@@ -612,6 +612,7 @@ function Catchup() {
         original: 'original posts',
         replies: 'replies',
         boosts: 'boosts',
+        quotes: 'quotes',
         followedTags: 'followed tags',
         groups: 'groups',
         filtered: 'filtered posts',
@@ -1854,7 +1855,7 @@ const MEDIA_SIZE = 48;
 
 function PostPeek({ post, filterInfo }) {
   const { t } = useLingui();
-  const {
+  let {
     spoilerText,
     sensitive,
     content,
@@ -1866,9 +1867,19 @@ function PostPeek({ post, filterInfo }) {
     inReplyToAccountId,
     account,
     _thread,
+    quote,
   } = post;
   const isThread =
     (inReplyToId && inReplyToAccountId === account.id) || !!_thread;
+  let theQuote =
+    supportsNativeQuote() && hasQuote(quote)
+      ? quote.quotedStatus || quote
+      : null;
+  if (theQuote?.spoilerText || theQuote?.sensitive) theQuote = null;
+  if (theQuote?.emojis) emojis.push(...theQuote.emojis);
+  if (!mediaAttachments?.length && theQuote?.mediaAttachments?.length) {
+    mediaAttachments = theQuote.mediaAttachments;
+  }
 
   const prefs = getPreferences();
   const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
@@ -1917,7 +1928,11 @@ function PostPeek({ post, filterInfo }) {
                 {!!content && (
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: emojifyText(content, emojis),
+                      __html:
+                        emojifyText(content, emojis) +
+                        (!!theQuote?.content
+                          ? `<blockquote class="post-peek-quote">${theQuote.content}</blockquote>`
+                          : ''),
                     }}
                   />
                 )}

@@ -10,7 +10,7 @@ const notificationTypeKeys = {
   update: ['status'],
 };
 
-const GROUP_TYPES = ['favourite', 'reblog', 'follow', 'quote'];
+const GROUP_TYPES = ['favourite', 'reblog', 'follow'];
 const groupable = (type) => GROUP_TYPES.includes(type);
 
 export function fixNotifications(notifications) {
@@ -165,8 +165,7 @@ export function groupNotifications2(groupNotifications) {
     if (
       (type === 'favourite' ||
         type === 'reblog' ||
-        type === 'favourite+reblog' ||
-        type === 'quote') &&
+        type === 'favourite+reblog') &&
       hasOneAccount
     ) {
       const key = `${account?.id}-${type}-${date}`;

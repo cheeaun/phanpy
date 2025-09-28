@@ -253,55 +253,7 @@ const contentText = {
       }
     />
   ),
-  quote: ({
-    count,
-    account,
-    postsCount,
-    postType,
-    components: { Subject },
-  }) => (
-    <Plural
-      value={count}
-      _1={
-        <Plural
-          value={postsCount}
-          _1={
-            <Select
-              value={postType}
-              _reply={<Trans>{account} quoted your reply.</Trans>}
-              other={<Trans>{account} quoted your post.</Trans>}
-            />
-          }
-          other={
-            <Trans>
-              {account} quoted {postsCount} of your posts.
-            </Trans>
-          }
-        />
-      }
-      other={
-        <Select
-          value={postType}
-          _reply={
-            <Trans>
-              <Subject clickable={count > 1}>
-                <span title={count}>{shortenNumber(count)}</span> people
-              </Subject>{' '}
-              quoted your reply.
-            </Trans>
-          }
-          other={
-            <Trans>
-              <Subject clickable={count > 1}>
-                <span title={count}>{shortenNumber(count)}</span> people
-              </Subject>{' '}
-              quoted your post.
-            </Trans>
-          }
-        />
-      }
-    />
-  ),
+  quote: ({ account }) => <Trans>{account} quoted your post.</Trans>,
   quoted_update: ({ account }) => (
     <Trans>{account} edited a post you have quoted.</Trans>
   ),

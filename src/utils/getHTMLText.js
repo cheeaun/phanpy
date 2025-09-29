@@ -39,7 +39,8 @@ function getHTMLText(html, opts) {
   // Collect innerText from all child nodes since DocumentFragment doesn't have innerText
   let textContent = '';
   for (let i = 0; i < content.childNodes.length; i++) {
-    textContent += content.childNodes[i].innerText || '';
+    const n = content.childNodes[i];
+    textContent += n.innerText || n.textContent || '';
   }
 
   return textContent.replace(MULTIPLE_LINE_BREAKS_RE, '\n\n').trim();

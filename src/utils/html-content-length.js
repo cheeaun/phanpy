@@ -11,7 +11,8 @@ export default function htmlContentLength(html) {
   // Collect innerText from all child nodes since DocumentFragment doesn't have innerText
   let textContent = '';
   for (let i = 0; i < template.content.childNodes.length; i++) {
-    textContent += template.content.childNodes[i].innerText || '';
+    const n = template.content.childNodes[i];
+    textContent += n.innerText || n.textContent || '';
   }
   return textContent.length;
 }

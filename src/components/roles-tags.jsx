@@ -15,7 +15,7 @@ function RolesTags({ roles, accountId, accountUrl, hideSelf = false }) {
   return roles?.map((role) => (
     <>
       {' '}
-      <span class="tag collapsed">
+      <span class="tag collapsed tag-role">
         {role.name}
         {!!parsedAccountInstance && (
           <>

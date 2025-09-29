@@ -2686,6 +2686,8 @@ a.card:is(:hover, :focus):visited {
   object-fit: contain;
   /* object-position: left; */
   dynamic-range-limit: standard; /* Disable HDR */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1.2em;
 
   &[data-is-larger='true'] {
     &:hover {

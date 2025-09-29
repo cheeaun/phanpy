@@ -11,11 +11,13 @@ import { useEffect, useState } from 'preact/hooks';
 import ComposeSuspense from './components/compose-suspense';
 import Loader from './components/loader';
 import { initActivateLang } from './utils/lang';
+import { initPWAViewport } from './utils/pwa-viewport';
 import { initStates } from './utils/states';
 import { getCurrentAccount } from './utils/store-utils';
 import useTitle from './utils/useTitle';
 
 initActivateLang();
+initPWAViewport();
 
 if (window.opener) {
   console = window.opener.console;

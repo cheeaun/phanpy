@@ -13,8 +13,10 @@ import { HashRouter } from 'react-router-dom';
 import { App } from './app';
 import { IconSpriteProvider } from './components/icon-sprite-manager';
 import { initActivateLang } from './utils/lang';
+import { initPWAViewport } from './utils/pwa-viewport';
 
 initActivateLang();
+initPWAViewport();
 
 if (import.meta.env.DEV) {
   import('preact/debug');

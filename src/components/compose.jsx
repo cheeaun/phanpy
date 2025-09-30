@@ -8,7 +8,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
-import useResizeObserver from 'use-resize-observer';
+import useThrottledResizeObserver from '../utils/useThrottledResizeObserver';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
@@ -900,7 +900,7 @@ function Compose({
   const addSubToolbarRef = useRef();
   const [showAddButton, setShowAddButton] = useState(true);
   const BUTTON_WIDTH = 42; // roughly one button width
-  useResizeObserver({
+  useThrottledResizeObserver({
     ref: addSubToolbarRef,
     box: 'border-box',
     onResize: ({ width }) => {

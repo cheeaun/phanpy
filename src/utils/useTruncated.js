@@ -1,4 +1,5 @@
 import { useRef } from 'preact/hooks';
+
 import useThrottledResizeObserver from './useThrottledResizeObserver';
 
 export default function useTruncated({ className = 'truncated' } = {}) {

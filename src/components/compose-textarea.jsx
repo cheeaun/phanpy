@@ -2,11 +2,11 @@ import { forwardRef } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
 
-import useThrottledResizeObserver from '../utils/useThrottledResizeObserver';
 import { langDetector } from '../utils/browser-translator';
 import escapeHTML from '../utils/escape-html';
 import states from '../utils/states';
 import urlRegexObj from '../utils/url-regex';
+import useThrottledResizeObserver from '../utils/useThrottledResizeObserver';
 
 import TextExpander from './text-expander';
 

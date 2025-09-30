@@ -8,7 +8,6 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
-import useThrottledResizeObserver from '../utils/useThrottledResizeObserver';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
@@ -37,6 +36,7 @@ import unfurlMastodonLink from '../utils/unfurl-link';
 import urlRegexObj from '../utils/url-regex';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
+import useThrottledResizeObserver from '../utils/useThrottledResizeObserver';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 import visibilityText from '../utils/visibility-text';
 

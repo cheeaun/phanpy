@@ -38,14 +38,17 @@ export function hasAccountInInstance(instance) {
   return accounts.some((a) => a.instanceURL === instance);
 }
 
-const standaloneMQ = window.matchMedia('(display-mode: standalone)');
+const standaloneMQ =
+  typeof window !== 'undefined'
+    ? window.matchMedia('(display-mode: standalone)')
+    : null;
 
 export function getCurrentAccountID() {
   try {
     const id = store.session.get('currentAccount');
     if (id) return id;
   } catch (e) {}
-  if (standaloneMQ.matches) {
+  if (standaloneMQ?.matches) {
     try {
       const id = store.local.get('currentAccount');
       if (id) return id;
@@ -63,7 +66,7 @@ export function setCurrentAccountID(id) {
   try {
     store.session.set('currentAccount', id);
   } catch (e) {}
-  if (standaloneMQ.matches) {
+  if (standaloneMQ?.matches) {
     try {
       store.local.set('currentAccount', id);
     } catch (e) {}

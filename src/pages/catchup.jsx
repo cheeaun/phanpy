@@ -391,6 +391,8 @@ function Catchup() {
       if (a.boosts < b.boosts) return 1;
       if (a.likes > b.likes) return -1;
       if (a.likes < b.likes) return 1;
+      if (a.quotes > b.quotes) return -1;
+      if (a.quotes < b.quotes) return 1;
       return 0;
     });
 
@@ -1777,6 +1779,18 @@ const PostLine = memo(
               squircle={reblog.account.bot}
             /> */}
               <NameText account={reblog.account} showAvatar />
+            </span>
+          ) : hasQuote(quote) ? (
+            <span class="post-quote-avatar">
+              <Avatar
+                url={account.avatarStatic || account.avatar}
+                squircle={account.bot}
+              />{' '}
+              <Icon icon="quote" />{' '}
+              <NameText
+                account={quote.quotedStatus?.account || quote.account}
+                showAvatar
+              />
             </span>
           ) : (
             <NameText account={account} showAvatar />

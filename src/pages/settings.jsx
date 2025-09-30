@@ -160,7 +160,7 @@ function Settings({ onClose }) {
                       .querySelector('meta[name="color-scheme"]')
                       .setAttribute(
                         'content',
-                        theme === 'auto' ? 'dark light' : theme,
+                        theme === 'auto' ? 'light dark' : theme,
                       );
 
                     if (theme === 'auto') {

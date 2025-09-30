@@ -855,8 +855,8 @@ function Compose({
     uiState === 'loading' ||
     (maxMediaAttachments !== undefined &&
       mediaAttachments.length >= maxMediaAttachments) ||
-    !!poll ||
-    !!currentQuoteStatus?.id;
+    !!poll; /* ||
+    !!currentQuoteStatus?.id; */
 
   const cwButtonDisabled = uiState === 'loading' || !!sensitive;
   const onCWButtonClick = () => {
@@ -869,10 +869,8 @@ function Compose({
   // If maxOptions is not defined or defined and is greater than 1, show poll button
   const showPollButton = maxOptions == null || maxOptions > 1;
   const pollButtonDisabled =
-    uiState === 'loading' ||
-    !!poll ||
-    !!mediaAttachments.length ||
-    !!currentQuoteStatus?.id;
+    uiState === 'loading' || !!poll || !!mediaAttachments.length; /* ||
+    !!currentQuoteStatus?.id; */
   const onPollButtonClick = () => {
     setPoll({
       options: ['', ''],

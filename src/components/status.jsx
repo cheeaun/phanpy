@@ -639,6 +639,8 @@ function Status({
 
   const isSizeLarge = size === 'l';
 
+  const contentLength = useMemo(() => htmlContentLength(content), [content]);
+
   const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
   // const targetLanguage = getTranslateTargetLanguage(true);
   // const contentTranslationHideLanguages =
@@ -661,7 +663,6 @@ function Status({
     ) {
       return false;
     }
-    const contentLength = htmlContentLength(content);
     return contentLength > 0 && contentLength <= INLINE_TRANSLATE_LIMIT;
   }, [
     contentTranslation,
@@ -675,7 +676,7 @@ function Status({
     poll,
     card,
     mediaAttachments,
-    content,
+    contentLength,
   ]);
 
   const [showEdited, setShowEdited] = useState(false);
@@ -698,12 +699,10 @@ function Status({
   const textWeight = useCallback(
     () =>
       Math.max(
-        Math.round(
-          ((spoilerText?.length || 0) + htmlContentLength(content)) / 140,
-        ) || 1,
+        Math.round(((spoilerText?.length || 0) + contentLength) / 140) || 1,
         1,
       ),
-    [spoilerText, content],
+    [spoilerText, contentLength],
   );
 
   const createdDateText = createdAt && niceDateTime(createdAtDate);
@@ -1852,7 +1851,6 @@ function Status({
     const questionRegex = /[??？︖❓❔⁇⁈⁉¿‽؟]/;
     const containsQuestion = questionRegex.test(content);
     if (!containsQuestion) return false;
-    const contentLength = htmlContentLength(content);
     if (contentLength > 0 && contentLength <= SHOW_COMMENT_COUNT_LIMIT) {
       return true;
     }
@@ -1868,6 +1866,7 @@ function Status({
     inReplyToId,
     repliesCount,
     content,
+    contentLength,
   ]);
 
   return (

@@ -1,21 +1,13 @@
+import { clearDtfLocaleCache, getDtfLocale } from './dtf-locale';
 import localeMatch from './locale-match';
 import mem from './mem';
-import store from './store';
 
-const DTFLOCALE_CACHE_KEY = 'dtflocale';
 function initLocales() {
   const newLocales = [...navigator.languages];
-  try {
-    const cachedDtf = store.session.get(DTFLOCALE_CACHE_KEY);
-    const dtfLocale =
-      cachedDtf || new Intl.DateTimeFormat().resolvedOptions().locale;
-    if (!newLocales.includes(dtfLocale)) {
-      newLocales.unshift(dtfLocale);
-    }
-    if (!cachedDtf) {
-      store.session.set(DTFLOCALE_CACHE_KEY, dtfLocale);
-    }
-  } catch {}
+  const dtfLocale = getDtfLocale();
+  if (dtfLocale && !newLocales.includes(dtfLocale)) {
+    newLocales.unshift(dtfLocale);
+  }
   return newLocales;
 }
 
@@ -23,7 +15,7 @@ let locales = initLocales();
 
 // For testing: refresh locales from current navigator state
 export function refreshLocales() {
-  store.session.del(DTFLOCALE_CACHE_KEY);
+  clearDtfLocaleCache();
   locales = initLocales();
 }
 

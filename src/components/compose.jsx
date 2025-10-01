@@ -13,6 +13,7 @@ import { useSnapshot } from 'valtio';
 import supportedLanguages from '../data/status-supported-languages';
 import { api, getPreferences } from '../utils/api';
 import db from '../utils/db';
+import { getDtfLocale } from '../utils/dtf-locale';
 import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import mem from '../utils/mem';
@@ -88,7 +89,7 @@ const expiresInFromExpiresAt = (expiresAt) => {
 };
 
 const DEFAULT_LANG = localeMatch(
-  [new Intl.DateTimeFormat().resolvedOptions().locale, ...navigator.languages],
+  [getDtfLocale(), ...navigator.languages],
   supportedLanguages.map((l) => l[0]),
   'en',
 );

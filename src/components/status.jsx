@@ -532,7 +532,7 @@ function Status({
     }
   }
   const mentionSelf =
-    inReplyToAccountId === currentAccount ||
+    (inReplyToAccountId && inReplyToAccountId === currentAccount) ||
     mentions?.find((mention) => mention.id === currentAccount);
 
   const prefs = getPreferences();
@@ -1383,6 +1383,8 @@ function Status({
           </span>
         </MenuItem>
       )}
+      {authenticated && (
+        <>
       {(isSelf || mentionSelf) && <MenuDivider />}
       {(isSelf || mentionSelf) && (
         <MenuItem
@@ -1470,7 +1472,9 @@ function Status({
                   <Trans>Quote settings</Trans>
                   <br />
                   <span class="more-insignificant">
-                    {_(quoteApprovalPolicyMessages[postQuoteApprovalPolicy])}
+                        {_(
+                          quoteApprovalPolicyMessages[postQuoteApprovalPolicy],
+                        )}
                   </span>
                 </small>
               </MenuItem>
@@ -1544,8 +1548,8 @@ function Status({
                   <span>
                     <Trans>
                       Remove my post from{' '}
-                      <span class="bidi-isolate">@{username || acct}</span>'s
-                      post?
+                          <span class="bidi-isolate">@{username || acct}</span>
+                          's post?
                     </Trans>
                   </span>
                 </>
@@ -1591,6 +1595,8 @@ function Status({
             </span>
           </MenuItem>
         </>
+      )}
+    </>
       )}
     </>
   );

@@ -1385,218 +1385,218 @@ function Status({
       )}
       {authenticated && (
         <>
-      {(isSelf || mentionSelf) && <MenuDivider />}
-      {(isSelf || mentionSelf) && (
-        <MenuItem
-          onClick={async () => {
-            try {
-              const newStatus = await masto.v1.statuses
-                .$select(id)
-                [muted ? 'unmute' : 'mute']();
-              saveStatus(newStatus, instance);
-              showToast(
-                muted ? t`Conversation unmuted` : t`Conversation muted`,
-              );
-            } catch (e) {
-              console.error(e);
-              showToast(
-                muted
-                  ? t`Unable to unmute conversation`
-                  : t`Unable to mute conversation`,
-              );
-            }
-          }}
-        >
-          {muted ? (
-            <>
-              <Icon icon="unmute" />
-              <span>
-                <Trans>Unmute conversation</Trans>
-              </span>
-            </>
-          ) : (
-            <>
-              <Icon icon="mute" />
-              <span>
-                <Trans>Mute conversation</Trans>
-              </span>
-            </>
+          {(isSelf || mentionSelf) && <MenuDivider />}
+          {(isSelf || mentionSelf) && (
+            <MenuItem
+              onClick={async () => {
+                try {
+                  const newStatus = await masto.v1.statuses
+                    .$select(id)
+                    [muted ? 'unmute' : 'mute']();
+                  saveStatus(newStatus, instance);
+                  showToast(
+                    muted ? t`Conversation unmuted` : t`Conversation muted`,
+                  );
+                } catch (e) {
+                  console.error(e);
+                  showToast(
+                    muted
+                      ? t`Unable to unmute conversation`
+                      : t`Unable to mute conversation`,
+                  );
+                }
+              }}
+            >
+              {muted ? (
+                <>
+                  <Icon icon="unmute" />
+                  <span>
+                    <Trans>Unmute conversation</Trans>
+                  </span>
+                </>
+              ) : (
+                <>
+                  <Icon icon="mute" />
+                  <span>
+                    <Trans>Mute conversation</Trans>
+                  </span>
+                </>
+              )}
+            </MenuItem>
           )}
-        </MenuItem>
-      )}
-      {isSelf && isPinnable && (
-        <MenuItem
-          onClick={async () => {
-            try {
-              const newStatus = await masto.v1.statuses
-                .$select(id)
-                [pinned ? 'unpin' : 'pin']();
-              saveStatus(newStatus, instance);
-              showToast(
-                pinned
-                  ? t`Post unpinned from profile`
-                  : t`Post pinned to profile`,
-              );
-            } catch (e) {
-              console.error(e);
-              showToast(
-                pinned ? t`Unable to unpin post` : t`Unable to pin post`,
-              );
-            }
-          }}
-        >
-          {pinned ? (
-            <>
-              <Icon icon="unpin" />
-              <span>
-                <Trans>Unpin from profile</Trans>
-              </span>
-            </>
-          ) : (
-            <>
-              <Icon icon="pin" />
-              <span>
-                <Trans>Pin to profile</Trans>
-              </span>
-            </>
+          {isSelf && isPinnable && (
+            <MenuItem
+              onClick={async () => {
+                try {
+                  const newStatus = await masto.v1.statuses
+                    .$select(id)
+                    [pinned ? 'unpin' : 'pin']();
+                  saveStatus(newStatus, instance);
+                  showToast(
+                    pinned
+                      ? t`Post unpinned from profile`
+                      : t`Post pinned to profile`,
+                  );
+                } catch (e) {
+                  console.error(e);
+                  showToast(
+                    pinned ? t`Unable to unpin post` : t`Unable to pin post`,
+                  );
+                }
+              }}
+            >
+              {pinned ? (
+                <>
+                  <Icon icon="unpin" />
+                  <span>
+                    <Trans>Unpin from profile</Trans>
+                  </span>
+                </>
+              ) : (
+                <>
+                  <Icon icon="pin" />
+                  <span>
+                    <Trans>Pin to profile</Trans>
+                  </span>
+                </>
+              )}
+            </MenuItem>
           )}
-        </MenuItem>
-      )}
-      {isSelf && (
-        <>
-          {supportsNativeQuote() &&
-            !['private', 'direct'].includes(visibility) && (
-              <MenuItem onClick={() => setShowQuoteSettings(true)}>
-                <Icon icon="quote2" />
-                <small>
-                  <Trans>Quote settings</Trans>
-                  <br />
-                  <span class="more-insignificant">
+          {isSelf && (
+            <>
+              {supportsNativeQuote() &&
+                !['private', 'direct'].includes(visibility) && (
+                  <MenuItem onClick={() => setShowQuoteSettings(true)}>
+                    <Icon icon="quote2" />
+                    <small>
+                      <Trans>Quote settings</Trans>
+                      <br />
+                      <span class="more-insignificant">
                         {_(
                           quoteApprovalPolicyMessages[postQuoteApprovalPolicy],
                         )}
-                  </span>
-                </small>
-              </MenuItem>
-            )}
-          <div class="menu-horizontal">
-            {supports('@mastodon/post-edit') && (
-              <MenuItem
-                onClick={() => {
-                  showCompose({
-                    editStatus: status,
-                    quoteStatus: status.quote?.quotedStatus,
-                  });
-                }}
-              >
-                <Icon icon="pencil" />
-                <span>
-                  <Trans>Edit</Trans>
-                </span>
-              </MenuItem>
-            )}
-            {isSizeLarge && (
-              <MenuConfirm
-                subMenu
-                confirmLabel={
-                  <>
+                      </span>
+                    </small>
+                  </MenuItem>
+                )}
+              <div class="menu-horizontal">
+                {supports('@mastodon/post-edit') && (
+                  <MenuItem
+                    onClick={() => {
+                      showCompose({
+                        editStatus: status,
+                        quoteStatus: status.quote?.quotedStatus,
+                      });
+                    }}
+                  >
+                    <Icon icon="pencil" />
+                    <span>
+                      <Trans>Edit</Trans>
+                    </span>
+                  </MenuItem>
+                )}
+                {isSizeLarge && (
+                  <MenuConfirm
+                    subMenu
+                    confirmLabel={
+                      <>
+                        <Icon icon="trash" />
+                        <span>
+                          <Trans>Delete this post?</Trans>
+                        </span>
+                      </>
+                    }
+                    itemProps={{
+                      className: 'danger',
+                    }}
+                    menuItemClassName="danger"
+                    onClick={() => {
+                      // const yes = confirm('Delete this post?');
+                      // if (yes) {
+                      (async () => {
+                        try {
+                          await masto.v1.statuses.$select(id).remove();
+                          const cachedStatus = getStatus(id, instance);
+                          cachedStatus._deleted = true;
+                          showToast(t`Post deleted`);
+                        } catch (e) {
+                          console.error(e);
+                          showToast(t`Unable to delete post`);
+                        }
+                      })();
+                      // }
+                    }}
+                  >
                     <Icon icon="trash" />
                     <span>
-                      <Trans>Delete this post?</Trans>
+                      <Trans>Delete…</Trans>
                     </span>
-                  </>
-                }
-                itemProps={{
-                  className: 'danger',
-                }}
-                menuItemClassName="danger"
-                onClick={() => {
-                  // const yes = confirm('Delete this post?');
-                  // if (yes) {
-                  (async () => {
-                    try {
-                      await masto.v1.statuses.$select(id).remove();
-                      const cachedStatus = getStatus(id, instance);
-                      cachedStatus._deleted = true;
-                      showToast(t`Post deleted`);
-                    } catch (e) {
-                      console.error(e);
-                      showToast(t`Unable to delete post`);
-                    }
-                  })();
-                  // }
-                }}
-              >
-                <Icon icon="trash" />
-                <span>
-                  <Trans>Delete…</Trans>
-                </span>
-              </MenuConfirm>
-            )}
-          </div>
-        </>
-      )}
-      {!isSelf && isSizeLarge && (
-        <>
-          <MenuDivider />
-          {isQuotingMyPost && (
-            <MenuConfirm
-              subMenu
-              confirmLabel={
-                <>
-                  <Icon icon="quote" />
-                  <span>
-                    <Trans>
-                      Remove my post from{' '}
+                  </MenuConfirm>
+                )}
+              </div>
+            </>
+          )}
+          {!isSelf && isSizeLarge && (
+            <>
+              <MenuDivider />
+              {isQuotingMyPost && (
+                <MenuConfirm
+                  subMenu
+                  confirmLabel={
+                    <>
+                      <Icon icon="quote" />
+                      <span>
+                        <Trans>
+                          Remove my post from{' '}
                           <span class="bidi-isolate">@{username || acct}</span>
                           's post?
-                    </Trans>
-                  </span>
-                </>
-              }
-              itemProps={{
-                className: 'danger',
-              }}
-              menuItemClassName="danger"
-              onClick={() => {
-                (async () => {
-                  try {
-                    // POST /api/v1/statuses/:id/quotes/:quoting_status_id/revoke
-                    const quotedStatusID = quote.quotedStatus.id;
-                    await masto.v1.statuses
-                      .$select(quotedStatusID)
-                      .quotes.$select(id)
-                      .revoke.create();
-                    showToast(t`Quote removed`);
-                    states.reloadStatusPage++;
-                  } catch (e) {
-                    console.error(e);
-                    showToast(t`Unable to remove quote`);
+                        </Trans>
+                      </span>
+                    </>
                   }
-                })();
-              }}
-            >
-              <Icon icon="quote" />
-              <Trans>Remove quote…</Trans>
-            </MenuConfirm>
+                  itemProps={{
+                    className: 'danger',
+                  }}
+                  menuItemClassName="danger"
+                  onClick={() => {
+                    (async () => {
+                      try {
+                        // POST /api/v1/statuses/:id/quotes/:quoting_status_id/revoke
+                        const quotedStatusID = quote.quotedStatus.id;
+                        await masto.v1.statuses
+                          .$select(quotedStatusID)
+                          .quotes.$select(id)
+                          .revoke.create();
+                        showToast(t`Quote removed`);
+                        states.reloadStatusPage++;
+                      } catch (e) {
+                        console.error(e);
+                        showToast(t`Unable to remove quote`);
+                      }
+                    })();
+                  }}
+                >
+                  <Icon icon="quote" />
+                  <Trans>Remove quote…</Trans>
+                </MenuConfirm>
+              )}
+              <MenuItem
+                className="danger"
+                onClick={() => {
+                  states.showReportModal = {
+                    account: status.account,
+                    post: status,
+                  };
+                }}
+              >
+                <Icon icon="flag" />
+                <span>
+                  <Trans>Report post…</Trans>
+                </span>
+              </MenuItem>
+            </>
           )}
-          <MenuItem
-            className="danger"
-            onClick={() => {
-              states.showReportModal = {
-                account: status.account,
-                post: status,
-              };
-            }}
-          >
-            <Icon icon="flag" />
-            <span>
-              <Trans>Report post…</Trans>
-            </span>
-          </MenuItem>
         </>
-      )}
-    </>
       )}
     </>
   );

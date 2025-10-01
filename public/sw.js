@@ -12,6 +12,68 @@ navigationPreload.enable();
 
 self.__WB_DISABLE_DEV_LOGS = true;
 
+// Custom plugin to manage hashed assets
+class AssetHashPlugin {
+  constructor(options = {}) {
+    this.maxHashes = options.maxHashes || 2;
+  }
+
+  // Extract base filename from a hashed URL
+  // e.g., "main-abc123.js" -> "main"
+  _getBaseName(url) {
+    const urlObj = new URL(url);
+    const pathname = urlObj.pathname;
+    const filename = pathname.split('/').pop();
+
+    // Match pattern: basename-hash.extension
+    // Hash can be alphanumeric with dashes, typically 8+ chars
+    const match = filename.match(/^(.+?)-[0-9a-z-]{4,}\.(js|css)$/i);
+    return match ? match[1] : null;
+  }
+
+  async cacheDidUpdate({ cacheName, request }) {
+    const cache = await caches.open(cacheName);
+    const requestUrl = request.url;
+    const baseName = this._getBaseName(requestUrl);
+
+    if (!baseName) return;
+
+    // Find all cached entries with the same base name
+    const cachedRequests = await cache.keys();
+    const matchingEntries = [];
+
+    for (const cachedRequest of cachedRequests) {
+      const cachedBaseName = this._getBaseName(cachedRequest.url);
+      if (cachedBaseName === baseName) {
+        const response = await cache.match(cachedRequest);
+        if (response) {
+          const dateHeader = response.headers.get('date');
+          const timestamp = dateHeader ? new Date(dateHeader).getTime() : 0;
+
+          matchingEntries.push({
+            request: cachedRequest,
+            url: cachedRequest.url,
+            timestamp,
+          });
+        }
+      }
+    }
+
+    // Keep only the maxHashes most recent, delete the rest
+    if (matchingEntries.length > this.maxHashes) {
+      // Sort by timestamp (newest first)
+      matchingEntries.sort((a, b) => b.timestamp - a.timestamp);
+
+      const toDelete = matchingEntries.slice(this.maxHashes);
+
+      for (const entry of toDelete) {
+        await cache.delete(entry.request);
+        console.log(`[AssetHashPlugin] Deleted old hash: ${entry.url}`);
+      }
+    }
+  }
+}
+
 const expirationPluginOptions = {
   purgeOnQuotaError: true,
   // "CacheFirst image maxEntries not working" https://github.com/GoogleChrome/workbox/issues/2768#issuecomment-793109906
@@ -55,6 +117,9 @@ const assetsRoute = new Route(
     cacheName: 'assets',
     networkTimeoutSeconds: 5,
     plugins: [
+      new AssetHashPlugin({
+        maxHashes: 2, // Keep only 2 most recent hashes of each file
+      }),
       new ExpirationPlugin({
         maxEntries: 40,
         ...expirationPluginOptions,

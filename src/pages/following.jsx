@@ -78,7 +78,9 @@ function Following({ title, path, id, ...props }) {
       });
       value = dedupeBoosts(value, instance);
       if (firstLoad && latestItemChanged) clearFollowedTagsState();
-      assignFollowedTags(value, instance);
+      setTimeout(() => {
+        assignFollowedTags(value, instance);
+      }, 100);
 
       // ENFORCE sort by datetime (Latest first)
       value.sort((a, b) => {

@@ -262,16 +262,16 @@ export function saveStatus(status, instance, opts) {
 
   // THREAD TRAVERSER
   if (!skipThreading) {
-    queueMicrotask(() => {
+    setTimeout(() => {
       threadifyStatus(status.reblog || status, instance);
-    });
+    }, 100);
   }
 
   // UNFURLER
   if (!skipUnfurling) {
-    queueMicrotask(() => {
+    setTimeout(() => {
       unfurlStatus(status.reblog || status, instance);
-    });
+    }, 100);
   }
 }
 

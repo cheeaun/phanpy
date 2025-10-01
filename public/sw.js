@@ -16,6 +16,8 @@ self.__WB_DISABLE_DEV_LOGS = true;
 class AssetHashPlugin {
   constructor(options = {}) {
     this.maxHashes = options.maxHashes || 2;
+    this.dbName = 'workbox-expiration';
+    this.storeName = 'cache-entries';
   }
 
   // Extract base filename from a hashed URL
@@ -31,45 +33,97 @@ class AssetHashPlugin {
     return match ? match[1] : null;
   }
 
-  async cacheDidUpdate({ cacheName, request }) {
-    const cache = await caches.open(cacheName);
-    const requestUrl = request.url;
-    const baseName = this._getBaseName(requestUrl);
+  // Get timestamps for multiple URLs from Workbox's ExpirationPlugin IndexedDB
+  async _getTimestampsFromDB(cacheName, urls) {
+    try {
+      const db = await new Promise((resolve, reject) => {
+        const request = indexedDB.open(this.dbName);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
 
-    if (!baseName) return;
+      const tx = db.transaction(this.storeName, 'readonly');
+      const store = tx.objectStore(this.storeName);
 
-    // Find all cached entries with the same base name
-    const cachedRequests = await cache.keys();
-    const matchingEntries = [];
+      // Batch read all timestamps in a single transaction
+      const timestamps = await Promise.all(
+        urls.map((url) => {
+          // Workbox stores entries with key format: `${cacheName}|${url}`
+          const key = `${cacheName}|${url}`;
 
-    for (const cachedRequest of cachedRequests) {
-      const cachedBaseName = this._getBaseName(cachedRequest.url);
-      if (cachedBaseName === baseName) {
-        const response = await cache.match(cachedRequest);
-        if (response) {
-          const dateHeader = response.headers.get('date');
-          const timestamp = dateHeader ? new Date(dateHeader).getTime() : 0;
-
-          matchingEntries.push({
-            request: cachedRequest,
-            url: cachedRequest.url,
-            timestamp,
+          return new Promise((resolve) => {
+            const request = store.get(key);
+            request.onsuccess = () =>
+              resolve(request.result?.timestamp || Date.now());
+            request.onerror = () => resolve(Date.now());
           });
+        }),
+      );
+
+      db.close();
+
+      return timestamps;
+    } catch (error) {
+      console.warn(
+        `[AssetHashPlugin] Error reading timestamps from IndexedDB:`,
+        error,
+      );
+      // Return current time for all URLs as fallback
+      return urls.map(() => Date.now());
+    }
+  }
+
+  cacheDidUpdate({ cacheName, request }) {
+    // Run cleanup asynchronously without blocking the cache operation
+    this._cleanupOldHashes(cacheName, request.url);
+  }
+
+  async _cleanupOldHashes(cacheName, requestUrl) {
+    try {
+      const baseName = this._getBaseName(requestUrl);
+      if (!baseName) return;
+
+      const cache = await caches.open(cacheName);
+
+      // Find all cached entries with the same base name
+      const cachedRequests = await cache.keys();
+      const matchingRequests = [];
+
+      for (const cachedRequest of cachedRequests) {
+        const cachedBaseName = this._getBaseName(cachedRequest.url);
+        if (cachedBaseName === baseName) {
+          const response = await cache.match(cachedRequest);
+          if (response) {
+            matchingRequests.push(cachedRequest);
+          }
         }
       }
-    }
 
-    // Keep only the maxHashes most recent, delete the rest
-    if (matchingEntries.length > this.maxHashes) {
+      if (matchingRequests.length <= this.maxHashes) return;
+
+      // Batch read all timestamps in a single database transaction
+      const urls = matchingRequests.map((req) => req.url);
+      const timestamps = await this._getTimestampsFromDB(cacheName, urls);
+
+      // Build matching entries with timestamps
+      const matchingEntries = matchingRequests.map((req, index) => ({
+        request: req,
+        url: req.url,
+        timestamp: timestamps[index],
+      }));
+
       // Sort by timestamp (newest first)
       matchingEntries.sort((a, b) => b.timestamp - a.timestamp);
 
+      // Keep only the maxHashes most recent, delete the rest
       const toDelete = matchingEntries.slice(this.maxHashes);
 
       for (const entry of toDelete) {
         await cache.delete(entry.request);
         console.log(`[AssetHashPlugin] Deleted old hash: ${entry.url}`);
       }
+    } catch (error) {
+      console.warn(`[AssetHashPlugin] Error during cleanup:`, error);
     }
   }
 }
@@ -117,9 +171,14 @@ const assetsRoute = new Route(
     cacheName: 'assets',
     networkTimeoutSeconds: 5,
     plugins: [
-      new AssetHashPlugin({
-        maxHashes: 2, // Keep only 2 most recent hashes of each file
-      }),
+      // Only enable AssetHashPlugin in production
+      ...(import.meta.env.PROD
+        ? [
+            new AssetHashPlugin({
+              maxHashes: 2, // Keep only 2 most recent hashes of each file
+            }),
+          ]
+        : []),
       new ExpirationPlugin({
         maxEntries: 40,
         ...expirationPluginOptions,

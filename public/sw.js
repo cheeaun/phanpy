@@ -28,8 +28,8 @@ class AssetHashPlugin {
     const filename = pathname.split('/').pop();
 
     // Match pattern: basename-hash.extension
-    // Hash can be alphanumeric with dashes, typically 8+ chars
-    const match = filename.match(/^(.+?)-[0-9a-z-]{4,}\.(js|css)$/i);
+    // Hash uses URL-safe base64 characters (A-Za-z0-9_-), typically 8+ chars
+    const match = filename.match(/^(.+?)-[A-Za-z0-9_-]{8,}\.(js|css)$/);
     return match ? match[1] : null;
   }
 

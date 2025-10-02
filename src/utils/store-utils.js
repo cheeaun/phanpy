@@ -80,7 +80,11 @@ export function getCurrentAccount() {
     if (import.meta.env.DEV) console.trace();
   }
   const currentAccount = getCurrentAccountID();
-  const account = getAccount(currentAccount);
+  let account = getAccount(currentAccount);
+  if (!account) {
+    // Fallback to the first account if currentAccount is not found
+    account = getAccount();
+  }
   return account;
 }
 

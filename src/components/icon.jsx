@@ -52,7 +52,7 @@ function Icon({
     if (!isIconLoaded(icon)) {
       loadIcon(icon);
     }
-  }, [icon, isIconLoaded, loadIcon]);
+  }, [icon]);
 
   const loaded = isIconLoaded(icon);
 

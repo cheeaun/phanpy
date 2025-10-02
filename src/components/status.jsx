@@ -1186,7 +1186,7 @@ function Status({
               <Trans>Boosted/Liked by…</Trans>
             </span>
           </MenuItem>
-          {supportsNativeQuote() && isSelf && (
+          {supportsNativeQuote() && (
             <MenuItem
               onClick={() => {
                 setShowQuotes(true);

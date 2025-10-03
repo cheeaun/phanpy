@@ -21,6 +21,7 @@ import {
   removeSubscription,
   updateSubscription,
 } from '../utils/push-notifications';
+import { supportsNativeQuote } from '../utils/quote-utils';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -330,59 +331,65 @@ function Settings({ onClose }) {
                     </select>
                   </div>
                 </li>
-                <li>
-                  <div>
-                    <label for="posting-quote-policy-field">
-                      <Trans>Quote settings</Trans>{' '}
-                      <Icon icon="cloud" alt={t`Synced`} class="synced-icon" />
-                    </label>
-                  </div>
-                  <div>
-                    <select
-                      id="posting-quote-policy-field"
-                      value={
-                        prefs['posting:default:quote_policy'] ||
-                        disableQuotePolicy
-                          ? 'nobody'
-                          : 'public'
-                      }
-                      disabled={disableQuotePolicy}
-                      onChange={(e) => {
-                        const { value } = e.target;
-                        (async () => {
-                          try {
-                            await masto.v1.accounts.updateCredentials({
-                              source: {
-                                quote_policy: value,
-                              },
-                            });
-                            setPrefs({
-                              ...prefs,
-                              'posting:default:quote_policy': value,
-                            });
-                            setPreferences({
-                              ...prefs,
-                              'posting:default:quote_policy': value,
-                            });
-                          } catch (e) {
-                            alert(t`Failed to update quote settings`);
-                            console.error(e);
-                          }
-                        })();
-                      }}
-                    >
-                      <option value="public" disabled={disableQuotePolicy}>
-                        <Trans>Anyone can quote</Trans>
-                      </option>
-                      <option value="followers" disabled={disableQuotePolicy}>
-                        <Trans>Your followers can quote</Trans>
-                      </option>
-                      <option value="nobody">
-                        <Trans>Only you can quote</Trans>
-                      </option>
-                    </select>
-                  </div>
-                </li>
+                {supportsNativeQuote() && (
+                  <li>
+                    <div>
+                      <label for="posting-quote-policy-field">
+                        <Trans>Quote settings</Trans>{' '}
+                        <Icon
+                          icon="cloud"
+                          alt={t`Synced`}
+                          class="synced-icon"
+                        />
+                      </label>
+                    </div>
+                    <div>
+                      <select
+                        id="posting-quote-policy-field"
+                        value={
+                          prefs['posting:default:quote_policy'] ||
+                          disableQuotePolicy
+                            ? 'nobody'
+                            : 'public'
+                        }
+                        disabled={disableQuotePolicy}
+                        onChange={(e) => {
+                          const { value } = e.target;
+                          (async () => {
+                            try {
+                              await masto.v1.accounts.updateCredentials({
+                                source: {
+                                  quote_policy: value,
+                                },
+                              });
+                              setPrefs({
+                                ...prefs,
+                                'posting:default:quote_policy': value,
+                              });
+                              setPreferences({
+                                ...prefs,
+                                'posting:default:quote_policy': value,
+                              });
+                            } catch (e) {
+                              alert(t`Failed to update quote settings`);
+                              console.error(e);
+                            }
+                          })();
+                        }}
+                      >
+                        <option value="public" disabled={disableQuotePolicy}>
+                          <Trans>Anyone can quote</Trans>
+                        </option>
+                        <option value="followers" disabled={disableQuotePolicy}>
+                          <Trans>Your followers can quote</Trans>
+                        </option>
+                        <option value="nobody">
+                          <Trans>Only you can quote</Trans>
+                        </option>
+                      </select>
+                    </div>
+                  </li>
+                )}
               </ul>
             </section>
             <p class="section-postnote">

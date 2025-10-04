@@ -130,7 +130,7 @@ function MediaAttachment({
     supportedMimeTypes.forEach((mimeType) => {
       const [t, st] = mimeType.split('/');
       subTypeMap[st] = t;
-      suffixTypes.add(st);
+      suffixTypes.add(t);
     });
   }
   if (!suffixTypes.has(suffixType)) {

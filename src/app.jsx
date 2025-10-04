@@ -278,7 +278,7 @@ if (isIOS) {
     document.documentElement.classList.add(`is-${theme}`);
     document
       .querySelector('meta[name="color-scheme"]')
-      .setAttribute('content', theme || 'dark light');
+      .setAttribute('content', theme || 'light dark');
 
     // Enable manual theme <meta>
     const $manualMeta = document.querySelector(

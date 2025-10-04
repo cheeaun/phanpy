@@ -1,6 +1,7 @@
 // This is like very lame "type-checking" lol
 const notificationTypeKeys = {
   mention: ['account', 'status'],
+  quote: ['account', 'status'],
   status: ['account', 'status'],
   reblog: ['account', 'status'],
   follow: ['account'],

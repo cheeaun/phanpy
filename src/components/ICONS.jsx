@@ -171,6 +171,10 @@ export const ICONS = {
     module: () => import('@iconify-icons/mingcute/quote-left-line'),
     rtl: true,
   },
+  quote2: {
+    module: () => import('@iconify-icons/mingcute/blockquote-line'),
+    rtl: true,
+  },
   settings: () => import('@iconify-icons/mingcute/settings-6-line'),
   'heart-break': () => import('@iconify-icons/mingcute/heart-crack-line'),
   'user-x': () => import('@iconify-icons/mingcute/user-x-line'),

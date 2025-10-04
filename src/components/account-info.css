@@ -67,7 +67,11 @@
       var(--reply-to-color) calc(var(--replies-percentage) - var(--gap)),
       var(--gap-color) calc(var(--replies-percentage) - var(--gap)),
       var(--gap-color) calc(var(--replies-percentage) + var(--gap)),
-      var(--reblog-color) calc(var(--replies-percentage) + var(--gap)),
+      var(--quote-color) calc(var(--replies-percentage) + var(--gap)),
+      var(--quote-color) calc(var(--quotes-percentage, 0%) - var(--gap)),
+      var(--gap-color) calc(var(--quotes-percentage, 0%) - var(--gap)),
+      var(--gap-color) calc(var(--quotes-percentage, 0%) + var(--gap)),
+      var(--reblog-color) calc(var(--quotes-percentage, 0%) + var(--gap)),
       var(--reblog-color) 100%
     );
   }
@@ -95,6 +99,9 @@
     }
     &.posting-stats-legend-item-replies {
       background-color: var(--reply-to-color);
+    }
+    &.posting-stats-legend-item-quotes {
+      background-color: var(--quote-color);
     }
     &.posting-stats-legend-item-boosts {
       background-color: var(--reblog-color);
@@ -1045,7 +1052,11 @@
 
       .account-block-content {
         min-width: 0;
-        mask-image: linear-gradient(var(--to-backward), transparent, black 16px);
+        mask-image: linear-gradient(
+          var(--to-backward),
+          transparent,
+          black 16px
+        );
       }
 
       .account-block-stats {

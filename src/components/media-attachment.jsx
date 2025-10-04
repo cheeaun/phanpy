@@ -30,6 +30,7 @@ function MediaAttachment({
   attachment,
   disabled,
   lang,
+  supportedMimeTypes,
   descriptionLimit = 1500,
   onDescriptionChange = () => {},
   onRemove = () => {},
@@ -119,7 +120,23 @@ function MediaAttachment({
   }, [videoMatrix, videoMatrixLimit, checkMaxError]);
 
   const [description, setDescription] = useState(attachment.description);
-  const [suffixType, subtype] = type.split('/');
+
+  let [suffixType, subtype] = type.split('/');
+  // If type is not supported, try to find a supported type with the same subtype
+  // E.g. application/ogg -> audio/ogg
+  const suffixTypes = new Set();
+  const subTypeMap = {};
+  if (supportedMimeTypes?.length) {
+    supportedMimeTypes.forEach((mimeType) => {
+      const [t, st] = mimeType.split('/');
+      subTypeMap[st] = t;
+      suffixTypes.add(t);
+    });
+  }
+  if (!suffixTypes.has(suffixType)) {
+    suffixType = subTypeMap[subtype];
+  }
+
   const debouncedOnDescriptionChange = useDebouncedCallback(
     onDescriptionChange,
     250,

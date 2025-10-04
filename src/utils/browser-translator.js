@@ -9,18 +9,23 @@ if (supportsLanguageDetector) {
     try {
       const availability = await LanguageDetector.availability();
       if (availability === 'unavailable') {
+        console.log('🎺 Language detector is unavailable');
         // The language detector isn't usable.
         return;
       }
       if (availability === 'available') {
+        console.log('🎺 Language detector is available');
         // The language detector can immediately be used.
         langDetector = await LanguageDetector.create();
       } else {
+        console.log(`🎺 Language detector is ${availability}`);
         // The language detector can be used after model download.
         langDetector = await LanguageDetector.create({
           monitor(m) {
             m.addEventListener('downloadprogress', (e) => {
-              console.log(`Detector: Downloaded ${e.loaded * 100}%`);
+              console.log(
+                `🎺 Language detector: Downloaded ${e.loaded * 100}%`,
+              );
             });
           },
         });

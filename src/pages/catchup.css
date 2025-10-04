@@ -661,6 +661,31 @@
       }
     }
 
+    .post-quote-avatar {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-shrink: 0;
+      min-height: 24px;
+
+      > .avatar {
+        outline: 1px solid var(--bg-blur-color);
+      }
+
+      > .avatar ~ .avatar {
+        margin-inline-start: -8px;
+      }
+
+      > .icon {
+        color: var(--quote-color);
+      }
+
+      > .name-text {
+        opacity: 0.75;
+        filter: grayscale(0.75);
+      }
+    }
+
     .post-author {
       grid-area: author;
       flex-shrink: 0;
@@ -838,6 +863,26 @@
 
           span {
             text-decoration: none;
+          }
+        }
+
+        /* Quotes */
+        &:has(.post-peek-quote) .quote-inline {
+          display: none;
+
+          + *:before {
+            /* Hide the ↵ */
+            display: none;
+          }
+        }
+        .post-peek-quote {
+          display: block;
+          font-style: italic;
+
+          &:before {
+            font-size: 1em;
+            content: ' ❝ ';
+            opacity: 1;
           }
         }
       }

@@ -9,6 +9,7 @@ const StatusButton = forwardRef((props, ref) => {
   let {
     checked,
     count,
+    extraCount,
     class: className,
     title,
     alt,
@@ -55,10 +56,14 @@ const StatusButton = forwardRef((props, ref) => {
       {...otherProps}
     >
       <Icon icon={icon} size={iconSize} alt={iconAlt} />
-      {!!count && (
+      {(!!count || !!extraCount) && (
         <>
           {' '}
-          <small title={count}>{shortenNumber(count)}</small>
+          {!!count && <small title={count}>{shortenNumber(count)}</small>}
+          {!!count && !!extraCount && <small>+</small>}
+          {!!extraCount && (
+            <small title={extraCount}>{shortenNumber(extraCount)}</small>
+          )}
         </>
       )}
     </button>

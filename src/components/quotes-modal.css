@@ -1,0 +1,50 @@
+#quotes-modal {
+  background-color: var(--bg-faded-color);
+
+  .quoted-posts-list {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quoted-post-item {
+    margin: 0;
+    padding: 0;
+
+    .status-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--outline-color);
+      border-radius: 8px;
+      background-color: var(--bg-color);
+
+      &:hover {
+        border-color: var(--outline-hover-color);
+      }
+
+      > * {
+        pointer-events: none;
+      }
+    }
+
+    .status {
+      font-size: calc(var(--text-size) * 0.9);
+
+      .status-card-container {
+        display: none;
+      }
+
+      .quote-inline {
+        display: none;
+
+        &:is(p:first-child) + p {
+          margin-block-start: 0;
+        }
+      }
+    }
+  }
+}

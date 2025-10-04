@@ -9,13 +9,16 @@ import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import ComposeSuspense from './components/compose-suspense';
+import { IconSpriteProvider } from './components/icon-sprite-manager';
 import Loader from './components/loader';
 import { initActivateLang } from './utils/lang';
+import { initPWAViewport } from './utils/pwa-viewport';
 import { initStates } from './utils/states';
 import { getCurrentAccount } from './utils/store-utils';
 import useTitle from './utils/useTitle';
 
 initActivateLang();
+initPWAViewport();
 
 if (window.opener) {
   console = window.opener.console;
@@ -26,7 +29,8 @@ function App() {
   const [uiState, setUIState] = useState('default');
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
-  const { editStatus, replyToStatus, draftStatus } = window.__COMPOSE__ || {};
+  const { editStatus, replyToStatus, draftStatus, quoteStatus } =
+    window.__COMPOSE__ || {};
 
   useTitle(
     editStatus
@@ -101,6 +105,7 @@ function App() {
         editStatus={editStatus}
         replyToStatus={replyToStatus}
         draftStatus={draftStatus}
+        quoteStatus={quoteStatus}
         standalone
         hasOpener={window.opener}
         onClose={(results) => {
@@ -126,7 +131,9 @@ function App() {
 
 render(
   <I18nProvider i18n={i18n}>
-    <App />
+    <IconSpriteProvider>
+      <App />
+    </IconSpriteProvider>
   </I18nProvider>,
   document.getElementById('app-standalone'),
 );

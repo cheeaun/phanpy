@@ -164,7 +164,7 @@
   color: var(--text-color);
 }
 .status-card-container {
-  margin: 1em 0 0;
+  margin: 8px 0 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -187,10 +187,7 @@
     }
   }
 }
-.status-card-link:not(
-    .truncated .status-card-link /* parent status already truncated */,
-    .status-card-link .status-card-link /* nested status cards */
-  ):has(.truncated) {
+.status-card-container.truncated {
   display: block;
   position: relative;
 
@@ -215,11 +212,6 @@
     font-size: 90%;
     white-space: nowrap;
     transition: transform 0.2s ease-out;
-  }
-
-  &:is(:hover, :focus):after {
-    color: var(--link-color);
-    transform: translate(2px, 0);
   }
 }
 .status-card-link:is(:hover, :focus) .status-card {
@@ -296,7 +288,7 @@
   flex-direction: row;
   gap: 8px;
   font-size: calc(var(--text-size) * 0.9);
-  margin: 1em 0 0;
+  /* margin: 1em 0 0; */
   border-radius: 8px;
   padding: 12px;
   border: 1px solid var(--outline-color);
@@ -969,6 +961,13 @@
   color: var(--text-color);
   text-decoration-color: var(--link-color);
 }
+.status .content .inner-content a.is-quote {
+  color: var(--link-text-color);
+
+  &:not(:hover, :focus, :active) {
+    text-decoration-color: var(--link-bg-color);
+  }
+}
 .status .content :is(.h-card, .mention) {
   unicode-bidi: isolate;
 }
@@ -1022,6 +1021,10 @@
     br:has(+ .quote-inline),
     .quote-inline {
       display: none;
+
+      &:is(p:first-child) + p {
+        margin-block-start: 0;
+      }
     }
   }
 }
@@ -2076,7 +2079,6 @@ a:focus-visible .card img {
 a.card {
   text-decoration: none;
   transition: opacity 0.2s ease-in-out;
-  touch-action: manipulation;
 }
 a.card:is(:hover, :focus) {
   border: 1px solid var(--link-color);
@@ -2115,6 +2117,11 @@ a.card:is(:hover, :focus):visited {
     line-clamp: 10;
     opacity: 1;
     /* font-size: inherit; */
+  }
+
+  .card-image {
+    border-inline-end: 0;
+    border-inline-start: 1px solid var(--outline-color);
   }
 }
 .status.large .card.large.card-post,
@@ -2310,6 +2317,9 @@ a.card:is(:hover, :focus):visited {
 }
 .status .action.has-count {
   flex: 1;
+}
+.status .action.has-counts {
+  flex: 1.5;
 }
 .status .action > button {
   min-height: 40px;
@@ -2675,6 +2685,8 @@ a.card:is(:hover, :focus):visited {
   object-fit: contain;
   /* object-position: left; */
   dynamic-range-limit: standard; /* Disable HDR */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1.2em;
 
   &[data-is-larger='true'] {
     &:hover {

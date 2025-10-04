@@ -1,5 +1,6 @@
 import languages from '../data/translang-languages';
 
+import { getDtfLocale } from './dtf-locale';
 import localeMatch from './locale-match';
 import states from './states';
 
@@ -11,12 +12,10 @@ const translationTargetLanguages = Object.entries(languages.tl).map(
 );
 
 const locales = [...navigator.languages];
-try {
-  const dtfLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
-  if (!locales.includes(dtfLocale)) {
-    locales.unshift(dtfLocale);
-  }
-} catch {}
+const dtfLocale = getDtfLocale();
+if (dtfLocale && !locales.includes(dtfLocale)) {
+  locales.unshift(dtfLocale);
+}
 
 const localeTargetLanguages = () =>
   localeMatch(

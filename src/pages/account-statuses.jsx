@@ -18,6 +18,7 @@ import Link from '../components/link';
 import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import mem from '../utils/mem';
 import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -32,7 +33,7 @@ const LIMIT = 20;
 const MIN_YEAR = 1983;
 const MIN_YEAR_MONTH = `${MIN_YEAR}-01`; // Birth of the Internet
 
-const supportsInputMonth = (() => {
+const supportsInputMonth = mem(() => {
   try {
     const input = document.createElement('input');
     input.setAttribute('type', 'month');
@@ -40,7 +41,7 @@ const supportsInputMonth = (() => {
   } catch (e) {
     return false;
   }
-})();
+});
 
 async function _isSearchEnabled(instance) {
   const { masto } = api({ instance });
@@ -400,7 +401,7 @@ function AccountStatuses() {
               </Link>
             ))}
             {searchEnabled &&
-              (supportsInputMonth ? (
+              (supportsInputMonth() ? (
                 <label class={`filter-field ${month ? 'is-active' : ''}`}>
                   <Icon icon="month" size="l" />
                   <input

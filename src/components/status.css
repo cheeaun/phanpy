@@ -187,10 +187,7 @@
     }
   }
 }
-.status-card-link:not(
-    .truncated .status-card-link /* parent status already truncated */,
-    .status-card-link .status-card-link /* nested status cards */
-  ):has(.truncated) {
+.status-card-container.truncated {
   display: block;
   position: relative;
 
@@ -215,11 +212,6 @@
     font-size: 90%;
     white-space: nowrap;
     transition: transform 0.2s ease-out;
-  }
-
-  &:is(:hover, :focus):after {
-    color: var(--link-color);
-    transform: translate(2px, 0);
   }
 }
 .status-card-link:is(:hover, :focus) .status-card {
@@ -2087,7 +2079,6 @@ a:focus-visible .card img {
 a.card {
   text-decoration: none;
   transition: opacity 0.2s ease-in-out;
-  touch-action: manipulation;
 }
 a.card:is(:hover, :focus) {
   border: 1px solid var(--link-color);
@@ -2326,6 +2317,9 @@ a.card:is(:hover, :focus):visited {
 }
 .status .action.has-count {
   flex: 1;
+}
+.status .action.has-counts {
+  flex: 1.5;
 }
 .status .action > button {
   min-height: 40px;
@@ -2691,6 +2685,8 @@ a.card:is(:hover, :focus):visited {
   object-fit: contain;
   /* object-position: left; */
   dynamic-range-limit: standard; /* Disable HDR */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1.2em;
 
   &[data-is-larger='true'] {
     &:hover {

@@ -17,6 +17,7 @@ import getDomain from '../utils/get-domain';
 import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
 import pmem from '../utils/pmem';
+import { supportsNativeQuote } from '../utils/quote-utils';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
@@ -68,12 +69,14 @@ async function fetchPostingStats(accountID, masto) {
     originals: 0,
     replies: 0,
     boosts: 0,
+    quotes: 0,
   };
   // Categories statuses by type
   // - Original posts (not replies to others)
   // - Threads (self-replies + 1st original post)
   // - Boosts (reblogs)
   // - Replies (not-self replies)
+  // - Quotes
   statuses.forEach((status) => {
     if (status.reblog) {
       stats.boosts++;
@@ -82,6 +85,11 @@ async function fetchPostingStats(accountID, masto) {
       status.inReplyToAccountId !== status.account.id // Not self-reply
     ) {
       stats.replies++;
+    } else if (
+      supportsNativeQuote() &&
+      (status.quote?.id || status.quote?.quotedStatus?.id)
+    ) {
+      stats.quotes++;
     } else {
       stats.originals++;
     }
@@ -879,19 +887,39 @@ function AccountInfo({
                         {hasPostingStats ? (
                           <div
                             class="posting-stats"
-                            title={t`${(
-                              postingStats.originals / postingStats.total
-                            ).toLocaleString(i18n.locale || undefined, {
-                              style: 'percent',
-                            })} original posts, ${(
-                              postingStats.replies / postingStats.total
-                            ).toLocaleString(i18n.locale || undefined, {
-                              style: 'percent',
-                            })} replies, ${(
-                              postingStats.boosts / postingStats.total
-                            ).toLocaleString(i18n.locale || undefined, {
-                              style: 'percent',
-                            })} boosts`}
+                            title={
+                              supportsNativeQuote()
+                                ? t`${(
+                                    postingStats.originals / postingStats.total
+                                  ).toLocaleString(i18n.locale || undefined, {
+                                    style: 'percent',
+                                  })} original posts, ${(
+                                    postingStats.replies / postingStats.total
+                                  ).toLocaleString(i18n.locale || undefined, {
+                                    style: 'percent',
+                                  })} replies, ${(
+                                    postingStats.quotes / postingStats.total
+                                  ).toLocaleString(i18n.locale || undefined, {
+                                    style: 'percent',
+                                  })} quotes, ${(
+                                    postingStats.boosts / postingStats.total
+                                  ).toLocaleString(i18n.locale || undefined, {
+                                    style: 'percent',
+                                  })} boosts`
+                                : t`${(
+                                    postingStats.originals / postingStats.total
+                                  ).toLocaleString(i18n.locale || undefined, {
+                                    style: 'percent',
+                                  })} original posts, ${(
+                                    postingStats.replies / postingStats.total
+                                  ).toLocaleString(i18n.locale || undefined, {
+                                    style: 'percent',
+                                  })} replies, ${(
+                                    postingStats.boosts / postingStats.total
+                                  ).toLocaleString(i18n.locale || undefined, {
+                                    style: 'percent',
+                                  })} boosts`
+                            }
                           >
                             <div>
                               {postingStats.daysSinceLastPost < 365
@@ -931,6 +959,13 @@ function AccountInfo({
                                     postingStats.total) *
                                   100
                                 }%`,
+                                '--quotes-percentage': `${
+                                  ((postingStats.originals +
+                                    postingStats.replies +
+                                    postingStats.quotes) /
+                                    postingStats.total) *
+                                  100
+                                }%`,
                               }}
                             />
                             <div class="posting-stats-legends">
@@ -942,6 +977,12 @@ function AccountInfo({
                                 <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
                                 <Trans>Replies</Trans>
                               </span>{' '}
+                              {supportsNativeQuote() && (
+                                <span class="ib">
+                                  <span class="posting-stats-legend-item posting-stats-legend-item-quotes" />{' '}
+                                  <Trans>Quotes</Trans>
+                                </span>
+                              )}
                               <span class="ib">
                                 <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
                                 <Trans>Boosts</Trans>
@@ -976,10 +1017,18 @@ function AccountInfo({
                             class={`posting-stats-bar posting-stats-icon ${
                               postingStatsUIState === 'loading' ? 'loading' : ''
                             }`}
-                            style={{
-                              '--originals-percentage': '33%',
-                              '--replies-percentage': '66%',
-                            }}
+                            style={
+                              supportsNativeQuote()
+                                ? {
+                                    '--originals-percentage': '25%',
+                                    '--replies-percentage': '50%',
+                                    '--quotes-percentage': '75%',
+                                  }
+                                : {
+                                    '--originals-percentage': '33%',
+                                    '--replies-percentage': '66%',
+                                  }
+                            }
                           />
                           <Trans>View post stats</Trans>{' '}
                           {/* <Loader

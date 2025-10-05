@@ -253,7 +253,6 @@ const contentText = {
       }
     />
   ),
-  quote: ({ account }) => <Trans>{account} quoted your post.</Trans>,
   quoted_update: ({ account }) => (
     <Trans>{account} edited a post you have quoted.</Trans>
   ),
@@ -342,7 +341,7 @@ function Notification({
   } = notification;
   let { type } = notification;
 
-  if (type === 'mention' && !status) {
+  if ((type === 'mention' || type === 'quote') && !status) {
     // Could be deleted
     return null;
   }
@@ -527,7 +526,7 @@ function Notification({
             </mark>
           </>
         )} */}
-        {type !== 'mention' && (
+        {type !== 'mention' && type !== 'quote' && (
           <>
             <p>{text}</p>
             {type === 'follow_request' && (

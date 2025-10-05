@@ -8,16 +8,20 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
-import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
 import { api, getPreferences } from '../utils/api';
 import db from '../utils/db';
+import { getDtfLocale } from '../utils/dtf-locale';
 import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import mem from '../utils/mem';
 import openCompose from '../utils/open-compose';
+import {
+  getPostQuoteApprovalPolicy,
+  supportsNativeQuote,
+} from '../utils/quote-utils';
 import RTF from '../utils/relative-time-format';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -33,6 +37,7 @@ import unfurlMastodonLink from '../utils/unfurl-link';
 import urlRegexObj from '../utils/url-regex';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
+import useThrottledResizeObserver from '../utils/useThrottledResizeObserver';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 import visibilityText from '../utils/visibility-text';
 
@@ -84,7 +89,7 @@ const expiresInFromExpiresAt = (expiresAt) => {
 };
 
 const DEFAULT_LANG = localeMatch(
-  [new Intl.DateTimeFormat().resolvedOptions().locale, ...navigator.languages],
+  [getDtfLocale(), ...navigator.languages],
   supportedLanguages.map((l) => l[0]),
   'en',
 );
@@ -132,7 +137,7 @@ function Compose({
   const UID = useRef(draftStatus?.uid || uid());
   console.log('Compose UID', UID.current);
 
-  const currentAccount = getCurrentAccount();
+  const currentAccount = useMemo(getCurrentAccount, []);
   const currentAccountInfo = currentAccount.info;
 
   const configuration = getCurrentInstanceConfiguration();
@@ -183,13 +188,11 @@ function Compose({
 
   const prefs = getPreferences();
 
-  const supportsNativeQuote = getAPIVersions()?.mastodon >= 7;
-
   const currentQuoteStatus = localQuoteStatus || quoteStatus;
 
   // Quote eligibility logic duplicated from status.jsx
   const checkQuoteEligibility = (status) => {
-    if (!supportsNativeQuote) return false;
+    if (!supportsNativeQuote()) return false;
 
     const { visibility, quoteApproval, account } = status;
     const isSelf = currentAccountInfo && currentAccountInfo.id === account.id;
@@ -215,9 +218,14 @@ function Compose({
 
   const handlePastedLink = async (url) => {
     // Handle QP links
-    if (supportsNativeQuote) {
+    if (supportsNativeQuote()) {
       // Quotes cannot coexist with media attachments or polls
       if (mediaAttachments.length > 0 || poll) {
+        return;
+      }
+
+      // Cannot add/remove/replace current quote when editing
+      if (editStatus) {
         return;
       }
 
@@ -368,8 +376,14 @@ function Compose({
       );
       setSensitive(!!spoilerText);
     } else if (editStatus) {
-      const { visibility, language, sensitive, poll, mediaAttachments } =
-        editStatus;
+      const {
+        visibility,
+        language,
+        sensitive,
+        poll,
+        mediaAttachments,
+        quoteApproval,
+      } = editStatus;
       const composablePoll = !!poll?.options && {
         ...poll,
         options: poll.options.map((o) => o?.title || o),
@@ -394,6 +408,11 @@ function Compose({
               prefs['posting:default:language']?.toLowerCase() ||
               DEFAULT_LANG,
           );
+          if (supportsNativeQuote()) {
+            const postQuoteApprovalPolicy =
+              getPostQuoteApprovalPolicy(quoteApproval);
+            setQuoteApprovalPolicy(postQuoteApprovalPolicy);
+          }
           setSensitive(sensitive);
           if (composablePoll) setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
@@ -837,8 +856,8 @@ function Compose({
     uiState === 'loading' ||
     (maxMediaAttachments !== undefined &&
       mediaAttachments.length >= maxMediaAttachments) ||
-    !!poll ||
-    !!currentQuoteStatus?.id;
+    !!poll; /* ||
+    !!currentQuoteStatus?.id; */
 
   const cwButtonDisabled = uiState === 'loading' || !!sensitive;
   const onCWButtonClick = () => {
@@ -851,10 +870,8 @@ function Compose({
   // If maxOptions is not defined or defined and is greater than 1, show poll button
   const showPollButton = maxOptions == null || maxOptions > 1;
   const pollButtonDisabled =
-    uiState === 'loading' ||
-    !!poll ||
-    !!mediaAttachments.length ||
-    !!currentQuoteStatus?.id;
+    uiState === 'loading' || !!poll || !!mediaAttachments.length; /* ||
+    !!currentQuoteStatus?.id; */
   const onPollButtonClick = () => {
     setPoll({
       options: ['', ''],
@@ -882,7 +899,7 @@ function Compose({
   const addSubToolbarRef = useRef();
   const [showAddButton, setShowAddButton] = useState(true);
   const BUTTON_WIDTH = 42; // roughly one button width
-  useResizeObserver({
+  useThrottledResizeObserver({
     ref: addSubToolbarRef,
     box: 'border-box',
     onResize: ({ width }) => {
@@ -1270,12 +1287,8 @@ function Compose({
                     (attachment) => attachment.id,
                   ),
                 };
-                if (currentQuoteStatus?.id) {
-                  params.quoted_status_id = currentQuoteStatus.id;
-                  params.quote_approval_policy = quoteApprovalPolicy;
-                }
                 if (editStatus) {
-                  if (supportsNativeQuote) {
+                  if (supportsNativeQuote()) {
                     params.quote_approval_policy = quoteApprovalPolicy;
                   }
                   if (supports('@mastodon/edit-media-attributes')) {
@@ -1291,6 +1304,10 @@ function Compose({
                     );
                   }
                 } else {
+                  if (supportsNativeQuote() && currentQuoteStatus?.id) {
+                    params.quoted_status_id = currentQuoteStatus.id;
+                    params.quote_approval_policy = quoteApprovalPolicy;
+                  }
                   params.visibility = visibility;
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
@@ -1442,6 +1459,7 @@ function Compose({
                     attachment={attachment}
                     disabled={uiState === 'loading'}
                     lang={language}
+                    supportedMimeTypes={supportedMimeTypes}
                     descriptionLimit={descriptionLimit}
                     onDescriptionChange={(value) => {
                       setMediaAttachments((attachments) => {
@@ -1794,7 +1812,7 @@ function Compose({
                 hidden={uiState === 'loading'}
               />
             )}
-            {supportsNativeQuote && (
+            {supportsNativeQuote() && (
               <label
                 class={`toolbar-button ${highlightQuoteApprovalPolicyField ? 'highlight' : ''}`}
               >

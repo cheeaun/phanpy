@@ -40,7 +40,11 @@
       var(--compose-button-dimension-margin),
       env(safe-area-inset-bottom)
     );
-    --origin-end: calc(100% - var(--compose-button-dimension-half) - var(--end));
+    --origin-end: calc(
+      100% -
+      var(--compose-button-dimension-half) -
+      var(--end)
+    );
     :dir(rtl) & {
       --origin-end: calc(var(--compose-button-dimension-half) + var(--end));
     }

@@ -236,6 +236,15 @@ function Accounts({ onClose }) {
                           accounts.splice(i, 1);
                           saveAccounts(accounts);
                           // location.reload();
+                          try {
+                            // Clean up session currentAccount if same as deleted
+                            if (
+                              store.session.get('currentAccount') ===
+                              account.info.id
+                            ) {
+                              store.session.del('currentAccount');
+                            }
+                          } catch (e) {}
                           location.href = location.pathname || '/';
                         }}
                       >

@@ -6,6 +6,7 @@ import { langDetector } from '../utils/browser-translator';
 import escapeHTML from '../utils/escape-html';
 import states from '../utils/states';
 import urlRegexObj from '../utils/url-regex';
+import useThrottledResizeObserver from '../utils/useThrottledResizeObserver';
 
 import TextExpander from './text-expander';
 
@@ -99,22 +100,18 @@ const Textarea = forwardRef((props, ref) => {
 
   const textExpanderRef = useRef();
 
-  useEffect(() => {
-    // Resize observer for textarea
-    const textarea = ref.current;
-    if (!textarea) return;
-    const resizeObserver = new ResizeObserver(() => {
+  useThrottledResizeObserver({
+    ref,
+    onResize: () => {
       // Get height of textarea, set height to textExpander
-      if (textExpanderRef.current) {
-        const { height } = textarea.getBoundingClientRect();
-        // textExpanderRef.current.style.height = height + 'px';
+      if (textExpanderRef.current && ref.current) {
+        const { height } = ref.current.getBoundingClientRect();
         if (height) {
           textExpanderRef.current.setStyle({ minHeight: height + 'px' });
         }
       }
-    });
-    resizeObserver.observe(textarea);
-  }, []);
+    },
+  });
 
   const slowHighlightPerf = useRef(0); // increment if slow
   const composeHighlightRef = useRef();

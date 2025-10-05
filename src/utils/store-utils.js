@@ -9,14 +9,17 @@ export function saveAccounts(accounts) {
   store.local.setJSON('accounts', accounts);
 }
 
+const MINS_5 = 5 * 60 * 1000;
 export function getAccount(id) {
   const accounts = getAccounts();
   const account = id ? accounts.find((a) => a.info.id === id) : accounts[0];
   if (!account) return null;
-  account.lastAccessedAt = Date.now();
-  setTimeout(() => {
+  const now = Date.now();
+  // Only update if more than 5 mins
+  if (now - account.lastAccessedAt > MINS_5) {
+    account.lastAccessedAt = now;
     saveAccounts(accounts);
-  }, 1);
+  }
   return account;
 }
 
@@ -35,14 +38,17 @@ export function hasAccountInInstance(instance) {
   return accounts.some((a) => a.instanceURL === instance);
 }
 
-const standaloneMQ = window.matchMedia('(display-mode: standalone)');
+const standaloneMQ =
+  typeof window !== 'undefined'
+    ? window.matchMedia('(display-mode: standalone)')
+    : null;
 
 export function getCurrentAccountID() {
   try {
     const id = store.session.get('currentAccount');
     if (id) return id;
   } catch (e) {}
-  if (standaloneMQ.matches) {
+  if (standaloneMQ?.matches) {
     try {
       const id = store.local.get('currentAccount');
       if (id) return id;
@@ -52,20 +58,15 @@ export function getCurrentAccountID() {
 }
 
 // Memoized version of getCurrentAccountID for performance
-export const getCurrentAccID = mem(
-  () => {
-    return getCurrentAccountID();
-  },
-  {
-    maxAge: 60 * 1000, // 1 minute
-  },
-);
+export const getCurrentAccID = mem(getCurrentAccountID, {
+  maxAge: 60 * 1000, // 1 minute
+});
 
 export function setCurrentAccountID(id) {
   try {
     store.session.set('currentAccount', id);
   } catch (e) {}
-  if (standaloneMQ.matches) {
+  if (standaloneMQ?.matches) {
     try {
       store.local.set('currentAccount', id);
     } catch (e) {}
@@ -79,9 +80,18 @@ export function getCurrentAccount() {
     if (import.meta.env.DEV) console.trace();
   }
   const currentAccount = getCurrentAccountID();
-  const account = getAccount(currentAccount);
+  let account = getAccount(currentAccount);
+  if (!account) {
+    // Fallback to the first account if currentAccount is not found
+    account = getAccount();
+  }
   return account;
 }
+
+// Memoized version of getCurrentAccount for performance
+export const getCurrentAcc = mem(getCurrentAccount, {
+  maxAge: 60 * 1000, // 1 minute
+});
 
 export function getCurrentAccountNS() {
   const account = getCurrentAccount();

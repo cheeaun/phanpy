@@ -159,7 +159,7 @@ function TranslationBlock({
         }
         setTranslatedContent(content);
         setUIState('default');
-        if (!mini && content.trim() !== text.trim()) {
+        if (!mini && content.trim() !== text.trim() && detailsRef.current) {
           detailsRef.current.open = true;
           detailsRef.current.scrollIntoView({
             behavior: 'smooth',

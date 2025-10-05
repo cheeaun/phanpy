@@ -339,6 +339,7 @@ function Status({
   showActionsBar,
   showReplyParent,
   mediaFirst,
+  showCommentCount: forceShowCommentCount,
 }) {
   const { _, t, i18n } = useLingui();
   const rtf = RTF(i18n.locale);
@@ -1841,6 +1842,7 @@ function Status({
     visibility,
   ]);
   const showCommentCount = useMemo(() => {
+    if (forceShowCommentCount && repliesCount > 0) return true;
     if (
       card ||
       poll ||
@@ -1861,6 +1863,7 @@ function Status({
       return true;
     }
   }, [
+    forceShowCommentCount,
     card,
     poll,
     sensitive,

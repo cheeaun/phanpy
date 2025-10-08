@@ -34,6 +34,10 @@
     .status {
       font-size: calc(var(--text-size) * 0.9);
 
+      .meta-name {
+        pointer-events: auto;
+      }
+
       .status-card-container {
         display: none;
       }

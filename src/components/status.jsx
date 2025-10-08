@@ -2551,7 +2551,12 @@ function Status({
                       </div>
                     </MultipleMediaFigure>
                   ))}
-                <QuoteStatuses id={id} instance={instance} level={quoted} />
+                <QuoteStatuses
+                  id={id}
+                  instance={instance}
+                  level={quoted}
+                  collapsed={!isSizeLarge && !withinContext}
+                />
                 {!!card &&
                   /^https/i.test(card?.url) &&
                   !sensitive &&
@@ -2952,18 +2957,23 @@ const unfulfilledText = {
   revoked: msg`Post removed by author`,
 };
 
-const QuoteStatuses = memo(({ id, instance, level = 0 }) => {
+const QuoteStatuses = memo(({ id, instance, level = 0, collapsed = false }) => {
   if (!id || !instance) return;
   const { _ } = useLingui();
   const snapStates = useSnapshot(states);
   const sKey = statusKey(id, instance);
   const quotes = snapStates.statusQuotes[sKey];
-  const uniqueQuotes = quotes?.filter(
+  let uniqueQuotes = quotes?.filter(
     (q, i, arr) => q.native || arr.findIndex((q2) => q2.url === q.url) === i,
   );
 
   if (!uniqueQuotes?.length) return;
   if (level > 2) return;
+
+  if (collapsed) {
+    // Only show the first quote if "collapsed"
+    uniqueQuotes = [uniqueQuotes[0]];
+  }
 
   const filterContext = useContext(FilterContext);
   const currentAccount = getCurrentAccID();

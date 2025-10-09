@@ -22,7 +22,7 @@ export function refreshLocales() {
 const createLocale = mem((language, options = {}) => {
   try {
     return new Intl.Locale(language, options);
-  } catch {
+  } catch (e) {
     // Fallback to simple string splitting
     // May not work properly due to how complicated this is
     if (!language) return null;
@@ -77,7 +77,7 @@ const _DateTimeFormat = (locale, opts) => {
 
   try {
     return new Intl.DateTimeFormat(matchedLocale, options);
-  } catch {
+  } catch (e) {
     return new Intl.DateTimeFormat(undefined, options);
   }
 };

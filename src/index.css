@@ -323,6 +323,19 @@ body {
     Ubuntu,
     Cantarell,
     Noto Sans,
+    /* Note: Reference from emojipedia.org's CSS source */
+    /* 1. System Emoji */
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    /* 2. Others if available */
+    'Android Emoji',
+    'EmojiSymbols',
+    'EmojiOne Mozilla',
+    'Twemoji Mozilla',
+    'Noto Color Emoji',
+    /* 3. Self-hosted Noto Emoji */
+    'Noto Emoji',
     sans-serif;
   font-size: var(--text-size);
   word-wrap: break-word;

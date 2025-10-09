@@ -1,6 +1,12 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 
+// Silence console output except errors
+console.log = () => {};
+console.warn = () => {};
+console.info = () => {};
+console.debug = () => {};
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv

@@ -160,6 +160,27 @@ const iconsRoute = new Route(
 );
 registerRoute(iconsRoute);
 
+const fontsRoute = new Route(
+  ({ request, sameOrigin }) => {
+    const isFont = request.url.includes('/fonts/');
+    return sameOrigin && isFont;
+  },
+  new CacheFirst({
+    cacheName: 'fonts',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+        ...expirationPluginOptions,
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  }),
+);
+registerRoute(fontsRoute);
+
 const assetsRoute = new Route(
   ({ request, sameOrigin }) => {
     const isAsset =

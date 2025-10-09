@@ -1,6 +1,7 @@
 import './index.css';
 import './cloak-mode.css';
 import './polyfills';
+import '@fontsource/noto-emoji/400.css';
 
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
@@ -11,9 +12,12 @@ import { render } from 'preact';
 import { HashRouter } from 'react-router-dom';
 
 import { App } from './app';
+import { IconSpriteProvider } from './components/icon-sprite-manager';
 import { initActivateLang } from './utils/lang';
+import { initPWAViewport } from './utils/pwa-viewport';
 
 initActivateLang();
+initPWAViewport();
 
 if (import.meta.env.DEV) {
   import('preact/debug');
@@ -22,7 +26,9 @@ if (import.meta.env.DEV) {
 render(
   <I18nProvider i18n={i18n}>
     <HashRouter>
-      <App />
+      <IconSpriteProvider>
+        <App />
+      </IconSpriteProvider>
     </HashRouter>
   </I18nProvider>,
   document.getElementById('app'),

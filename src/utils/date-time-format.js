@@ -1,14 +1,13 @@
-import localeMatch from './locale-match.js';
-import mem from './mem.js';
+import { clearDtfLocaleCache, getDtfLocale } from './dtf-locale';
+import localeMatch from './locale-match';
+import mem from './mem';
 
 function initLocales() {
   const newLocales = [...navigator.languages];
-  try {
-    const dtfLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
-    if (!newLocales.includes(dtfLocale)) {
-      newLocales.unshift(dtfLocale);
-    }
-  } catch {}
+  const dtfLocale = getDtfLocale();
+  if (dtfLocale && !newLocales.includes(dtfLocale)) {
+    newLocales.unshift(dtfLocale);
+  }
   return newLocales;
 }
 
@@ -16,13 +15,14 @@ let locales = initLocales();
 
 // For testing: refresh locales from current navigator state
 export function refreshLocales() {
+  clearDtfLocaleCache();
   locales = initLocales();
 }
 
 const createLocale = mem((language, options = {}) => {
   try {
     return new Intl.Locale(language, options);
-  } catch {
+  } catch (e) {
     // Fallback to simple string splitting
     // May not work properly due to how complicated this is
     if (!language) return null;
@@ -77,7 +77,7 @@ const _DateTimeFormat = (locale, opts) => {
 
   try {
     return new Intl.DateTimeFormat(matchedLocale, options);
-  } catch {
+  } catch (e) {
     return new Intl.DateTimeFormat(undefined, options);
   }
 };

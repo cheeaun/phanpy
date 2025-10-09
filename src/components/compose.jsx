@@ -8,29 +8,36 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import stringLength from 'string-length';
 import { uid } from 'uid/single';
-import useResizeObserver from 'use-resize-observer';
 import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
 import { api, getPreferences } from '../utils/api';
 import db from '../utils/db';
+import { getDtfLocale } from '../utils/dtf-locale';
 import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import mem from '../utils/mem';
 import openCompose from '../utils/open-compose';
+import {
+  getPostQuoteApprovalPolicy,
+  supportsNativeQuote,
+} from '../utils/quote-utils';
 import RTF from '../utils/relative-time-format';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import {
+  getAPIVersions,
   getCurrentAccount,
   getCurrentAccountNS,
   getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
 import supports from '../utils/supports';
+import unfurlMastodonLink from '../utils/unfurl-link';
 import urlRegexObj from '../utils/url-regex';
 import useCloseWatcher from '../utils/useCloseWatcher';
 import useInterval from '../utils/useInterval';
+import useThrottledResizeObserver from '../utils/useThrottledResizeObserver';
 import visibilityIconsMap from '../utils/visibility-icons-map';
 import visibilityText from '../utils/visibility-text';
 
@@ -51,6 +58,7 @@ import MediaAttachment from './media-attachment';
 import MentionModal from './mention-modal';
 import Menu2 from './menu2';
 import Modal from './modal';
+import QuoteSuggestion from './quote-suggestion';
 import ScheduledAtField, {
   getLocalTimezoneName,
   MIN_SCHEDULED_AT,
@@ -81,7 +89,7 @@ const expiresInFromExpiresAt = (expiresAt) => {
 };
 
 const DEFAULT_LANG = localeMatch(
-  [new Intl.DateTimeFormat().resolvedOptions().locale, ...navigator.languages],
+  [getDtfLocale(), ...navigator.languages],
   supportedLanguages.map((l) => l[0]),
   'en',
 );
@@ -115,6 +123,7 @@ function Compose({
   replyToStatus,
   editStatus,
   draftStatus,
+  quoteStatus,
   standalone,
   hasOpener,
 }) {
@@ -128,7 +137,7 @@ function Compose({
   const UID = useRef(draftStatus?.uid || uid());
   console.log('Compose UID', UID.current);
 
-  const currentAccount = getCurrentAccount();
+  const currentAccount = useMemo(getCurrentAccount, []);
   const currentAccountInfo = currentAccount.info;
 
   const configuration = getCurrentInstanceConfiguration();
@@ -164,6 +173,7 @@ function Compose({
   const spoilerTextRef = useRef();
 
   const [visibility, setVisibility] = useState('public');
+  const [quoteApprovalPolicy, setQuoteApprovalPolicy] = useState('public');
   const [sensitive, setSensitive] = useState(false);
   const [sensitiveMedia, setSensitiveMedia] = useState(false);
   const [language, setLanguage] = useState(
@@ -173,8 +183,75 @@ function Compose({
   const [mediaAttachments, setMediaAttachments] = useState([]);
   const [poll, setPoll] = useState(null);
   const [scheduledAt, setScheduledAt] = useState(null);
+  const [quoteSuggestion, setQuoteSuggestion] = useState(null);
+  const [localQuoteStatus, setLocalQuoteStatus] = useState(quoteStatus);
 
   const prefs = getPreferences();
+
+  const currentQuoteStatus = localQuoteStatus || quoteStatus;
+
+  // Quote eligibility logic duplicated from status.jsx
+  const checkQuoteEligibility = (status) => {
+    if (!supportsNativeQuote()) return false;
+
+    const { visibility, quoteApproval, account } = status;
+    const isSelf = currentAccountInfo && currentAccountInfo.id === account.id;
+    const isPublic = ['public', 'unlisted'].includes(visibility);
+    const isMineAndPrivate = isSelf && visibility === 'private';
+
+    const isQuoteAutomaticallyAccepted =
+      quoteApproval?.currentUser === 'automatic' &&
+      (isPublic || isMineAndPrivate);
+    const isQuoteManuallyAccepted =
+      quoteApproval?.currentUser === 'manual' && (isPublic || isMineAndPrivate);
+
+    if (!isPublic && !isSelf) {
+      return false;
+    } else if (isQuoteAutomaticallyAccepted) {
+      return true;
+    } else if (isQuoteManuallyAccepted) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handlePastedLink = async (url) => {
+    // Handle QP links
+    if (supportsNativeQuote()) {
+      // Quotes cannot coexist with media attachments or polls
+      if (mediaAttachments.length > 0 || poll) {
+        return;
+      }
+
+      // Cannot add/remove/replace current quote when editing
+      if (editStatus) {
+        return;
+      }
+
+      try {
+        const unfurledData = await unfurlMastodonLink(instance, url);
+        if (unfurledData?.id) {
+          const status =
+            states.statuses[`${unfurledData.instance}/${unfurledData.id}`];
+          if (status && checkQuoteEligibility(status)) {
+            // Don't show suggestion if it's the same as current quote
+            if (currentQuoteStatus?.id === status.id) {
+              return;
+            }
+
+            setQuoteSuggestion({
+              status,
+              instance: unfurledData.instance,
+              url: unfurledData.originalURL,
+            });
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
   const oninputTextarea = () => {
     if (!textareaRef.current) return;
@@ -299,8 +376,14 @@ function Compose({
       );
       setSensitive(!!spoilerText);
     } else if (editStatus) {
-      const { visibility, language, sensitive, poll, mediaAttachments } =
-        editStatus;
+      const {
+        visibility,
+        language,
+        sensitive,
+        poll,
+        mediaAttachments,
+        quoteApproval,
+      } = editStatus;
       const composablePoll = !!poll?.options && {
         ...poll,
         options: poll.options.map((o) => o?.title || o),
@@ -325,6 +408,11 @@ function Compose({
               prefs['posting:default:language']?.toLowerCase() ||
               DEFAULT_LANG,
           );
+          if (supportsNativeQuote()) {
+            const postQuoteApprovalPolicy =
+              getPostQuoteApprovalPolicy(quoteApproval);
+            setQuoteApprovalPolicy(postQuoteApprovalPolicy);
+          }
           setSensitive(sensitive);
           if (composablePoll) setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
@@ -347,6 +435,16 @@ function Compose({
       if (prefs['posting:default:sensitive']) {
         setSensitive(!!prefs['posting:default:sensitive']);
       }
+      if (prefs['posting:default:quote_policy']) {
+        let policy = prefs['posting:default:quote_policy'].toLowerCase();
+        if (prefs['posting:default:visibility']) {
+          const visibility = prefs['posting:default:visibility'].toLowerCase();
+          if (visibility === 'private' || visibility === 'direct') {
+            policy = 'nobody';
+          }
+        }
+        setQuoteApprovalPolicy(policy);
+      }
     }
     if (draftStatus) {
       const {
@@ -359,6 +457,7 @@ function Compose({
         poll,
         mediaAttachments,
         scheduledAt,
+        quoteApprovalPolicy,
       } = draftStatus;
       const composablePoll = !!poll?.options && {
         ...poll,
@@ -380,6 +479,7 @@ function Compose({
       if (composablePoll) setPoll(composablePoll);
       if (mediaAttachments) setMediaAttachments(mediaAttachments);
       if (scheduledAt) setScheduledAt(scheduledAt);
+      if (quoteApprovalPolicy) setQuoteApprovalPolicy(quoteApprovalPolicy);
     }
   }, [draftStatus, editStatus, replyToStatus]);
 
@@ -579,7 +679,14 @@ function Compose({
         poll,
         mediaAttachments,
         scheduledAt,
+        quoteApprovalPolicy,
       },
+      quote: currentQuoteStatus?.id
+        ? {
+            // Smaller payload, same reason as replyTo
+            id: currentQuoteStatus.id,
+          }
+        : null,
     };
     if (
       !deepEqual(backgroundDraft, prevBackgroundDraft.current) &&
@@ -749,7 +856,8 @@ function Compose({
     uiState === 'loading' ||
     (maxMediaAttachments !== undefined &&
       mediaAttachments.length >= maxMediaAttachments) ||
-    !!poll;
+    !!poll; /* ||
+    !!currentQuoteStatus?.id; */
 
   const cwButtonDisabled = uiState === 'loading' || !!sensitive;
   const onCWButtonClick = () => {
@@ -762,7 +870,8 @@ function Compose({
   // If maxOptions is not defined or defined and is greater than 1, show poll button
   const showPollButton = maxOptions == null || maxOptions > 1;
   const pollButtonDisabled =
-    uiState === 'loading' || !!poll || !!mediaAttachments.length;
+    uiState === 'loading' || !!poll || !!mediaAttachments.length; /* ||
+    !!currentQuoteStatus?.id; */
   const onPollButtonClick = () => {
     setPoll({
       options: ['', ''],
@@ -783,10 +892,14 @@ function Compose({
       !autoDetectedLanguages.includes(language));
   const highlightVisibilityField = visibility !== 'public';
 
+  const highlightQuoteApprovalPolicyField = quoteApprovalPolicy !== 'public';
+  const disableQuotePolicy =
+    visibility === 'private' || visibility === 'direct';
+
   const addSubToolbarRef = useRef();
   const [showAddButton, setShowAddButton] = useState(true);
   const BUTTON_WIDTH = 42; // roughly one button width
-  useResizeObserver({
+  useThrottledResizeObserver({
     ref: addSubToolbarRef,
     box: 'border-box',
     onResize: ({ width }) => {
@@ -866,6 +979,7 @@ function Compose({
                       mediaAttachments,
                       scheduledAt,
                     },
+                    quoteStatus: currentQuoteStatus,
                   });
 
                   if (!newWin) {
@@ -956,6 +1070,7 @@ function Compose({
                           mediaAttachments,
                           scheduledAt,
                         },
+                        quoteStatus: currentQuoteStatus,
                       };
                       window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
                       if (window.opener.__STATES__.showCompose) {
@@ -980,9 +1095,9 @@ function Compose({
           )}
         </div>
         {!!replyToStatus && (
-          <div class="status-preview">
+          <details class="status-preview" open>
             <Status status={replyToStatus} size="s" previewMode />
-            <div class="status-preview-legend reply-to">
+            <summary class="status-preview-legend reply-to">
               {replyToStatusMonthsAgo > 0 ? (
                 <Trans>
                   Replying to @
@@ -1000,16 +1115,16 @@ function Compose({
                   &rsquo;s post
                 </Trans>
               )}
-            </div>
-          </div>
+            </summary>
+          </details>
         )}
         {!!editStatus && (
-          <div class="status-preview">
+          <details class="status-preview">
             <Status status={editStatus} size="s" previewMode />
-            <div class="status-preview-legend">
+            <summary class="status-preview-legend">
               <Trans>Editing source post</Trans>
-            </div>
-          </div>
+            </summary>
+          </details>
         )}
         <form
           ref={formRef}
@@ -1045,6 +1160,7 @@ function Compose({
               sensitiveMedia,
               spoilerText,
               scheduledAt,
+              quoteApprovalPolicy,
             } = entries;
 
             // Pre-cleanup
@@ -1171,18 +1287,27 @@ function Compose({
                     (attachment) => attachment.id,
                   ),
                 };
-                if (editStatus && supports('@mastodon/edit-media-attributes')) {
-                  params.media_attributes = mediaAttachments.map(
-                    (attachment) => {
-                      return {
-                        id: attachment.id,
-                        description: attachment.description,
-                        // focus
-                        // thumbnail
-                      };
-                    },
-                  );
-                } else if (!editStatus) {
+                if (editStatus) {
+                  if (supportsNativeQuote()) {
+                    params.quote_approval_policy = quoteApprovalPolicy;
+                  }
+                  if (supports('@mastodon/edit-media-attributes')) {
+                    params.media_attributes = mediaAttachments.map(
+                      (attachment) => {
+                        return {
+                          id: attachment.id,
+                          description: attachment.description,
+                          // focus
+                          // thumbnail
+                        };
+                      },
+                    );
+                  }
+                } else {
+                  if (supportsNativeQuote() && currentQuoteStatus?.id) {
+                    params.quoted_status_id = currentQuoteStatus.id;
+                    params.quote_approval_policy = quoteApprovalPolicy;
+                  }
                   params.visibility = visibility;
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
@@ -1317,6 +1442,8 @@ function Compose({
                   action?.languages
                 ) {
                   setAutoDetectedLanguages(action.languages);
+                } else if (action?.name === 'pasted-link' && action?.url) {
+                  handlePastedLink(action.url);
                 }
               }}
             />
@@ -1332,6 +1459,7 @@ function Compose({
                     attachment={attachment}
                     disabled={uiState === 'loading'}
                     lang={language}
+                    supportedMimeTypes={supportedMimeTypes}
                     descriptionLimit={descriptionLimit}
                     onDescriptionChange={(value) => {
                       setMediaAttachments((attachments) => {
@@ -1389,6 +1517,16 @@ function Compose({
               }}
             />
           )}
+          {!!currentQuoteStatus?.id && (
+            <div class="quote-status">
+              <Status
+                status={currentQuoteStatus}
+                instance={instance}
+                size="s"
+                readOnly
+              />
+            </div>
+          )}
           {scheduledAt && (
             <div class="toolbar scheduled-at">
               <span>
@@ -1417,6 +1555,49 @@ function Compose({
               </button>
             </div>
           )}
+          <QuoteSuggestion
+            quoteSuggestion={quoteSuggestion}
+            hasCurrentQuoteStatus={!!currentQuoteStatus?.id}
+            onAccept={() => {
+              const { status } = quoteSuggestion;
+
+              // Remove the pasted link from textarea
+              const currentValue = textareaRef.current?.value || '';
+              // Find pasted link nearest to last cursor position
+              const lastCursorPos = textareaRef.current?.selectionStart || 0;
+              const pastedLinkPos = currentValue.lastIndexOf(
+                quoteSuggestion.url,
+                lastCursorPos,
+              );
+              const newValue =
+                currentValue.slice(0, pastedLinkPos) +
+                currentValue.slice(pastedLinkPos + quoteSuggestion.url.length);
+              if (textareaRef.current) {
+                textareaRef.current.value = newValue;
+                textareaRef.current.dispatchEvent(new Event('input'));
+              }
+
+              const hasCurrentQuote = !!currentQuoteStatus?.id;
+              if (hasCurrentQuote) {
+                // If there's already a quote, replacement doesn't need transition
+                setQuoteSuggestion(null);
+                setLocalQuoteStatus(status);
+              } else {
+                // Transition the unfurled quote to the quote preview
+                if (document.startViewTransition) {
+                  document.startViewTransition(() => {
+                    setQuoteSuggestion(null);
+                    setLocalQuoteStatus(status);
+                  });
+                } else {
+                  setQuoteSuggestion(null);
+                  setLocalQuoteStatus(status);
+                }
+              }
+              focusTextarea();
+            }}
+            onCancel={() => setQuoteSuggestion(null)}
+          />
           <div class="toolbar compose-footer">
             <span class="add-toolbar-button-group spacer">
               {showAddButton && (
@@ -1631,6 +1812,85 @@ function Compose({
                 hidden={uiState === 'loading'}
               />
             )}
+            {supportsNativeQuote() && (
+              <label
+                class={`toolbar-button ${highlightQuoteApprovalPolicyField ? 'highlight' : ''}`}
+              >
+                <Icon icon="quote2" alt="Quote settings" />
+                {quoteApprovalPolicy === 'followers' && (
+                  <Icon icon="group" class="insignificant" />
+                )}
+                {quoteApprovalPolicy === 'nobody' && (
+                  <Icon icon="block" class="insignificant" />
+                )}
+                <select
+                  name="quoteApprovalPolicy"
+                  value={quoteApprovalPolicy}
+                  onChange={(e) => {
+                    setQuoteApprovalPolicy(e.target.value);
+                  }}
+                  disabled={uiState === 'loading'}
+                  dir="auto"
+                >
+                  <option value="public" disabled={disableQuotePolicy}>
+                    <Trans>Anyone can quote</Trans>
+                  </option>
+                  <option value="followers" disabled={disableQuotePolicy}>
+                    <Trans>Your followers can quote</Trans>
+                  </option>
+                  <option value="nobody">
+                    <Trans>Only you can quote</Trans>
+                  </option>
+                </select>
+              </label>
+            )}
+            <label
+              class={`toolbar-button ${highlightVisibilityField ? 'highlight' : ''}`}
+              title={_(visibilityText[visibility])}
+            >
+              {visibility === 'public' || visibility === 'direct' ? (
+                <Icon
+                  icon={visibilityIconsMap[visibility]}
+                  alt={_(visibilityText[visibility])}
+                />
+              ) : (
+                <span class="icon-text">{_(visibilityText[visibility])}</span>
+              )}
+              <select
+                name="visibility"
+                value={visibility}
+                onChange={(e) => {
+                  setVisibility(e.target.value);
+                  if (
+                    e.target.value === 'private' ||
+                    e.target.value === 'direct'
+                  ) {
+                    setQuoteApprovalPolicy('nobody');
+                  }
+                }}
+                disabled={uiState === 'loading' || !!editStatus}
+                dir="auto"
+              >
+                <option value="public">
+                  <Trans>Public</Trans>
+                </option>
+                {(supports('@pleroma/local-visibility-post') ||
+                  supports('@akkoma/local-visibility-post')) && (
+                  <option value="local">
+                    <Trans>Local</Trans>
+                  </option>
+                )}
+                <option value="unlisted">
+                  <Trans>Quiet public</Trans>
+                </option>
+                <option value="private">
+                  <Trans>Followers</Trans>
+                </option>
+                <option value="direct">
+                  <Trans>Private mention</Trans>
+                </option>
+              </select>
+            </label>{' '}
             <label
               class={`toolbar-button ${
                 highlightLanguageField ? 'highlight' : ''
@@ -1675,47 +1935,6 @@ function Compose({
                     </option>
                   );
                 })}
-              </select>
-            </label>{' '}
-            <label
-              class={`toolbar-button ${highlightVisibilityField ? 'highlight' : ''}`}
-              title={_(visibilityText[visibility])}
-            >
-              {visibility === 'public' || visibility === 'direct' ? (
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={_(visibilityText[visibility])}
-                />
-              ) : (
-                <span class="icon-text">{_(visibilityText[visibility])}</span>
-              )}
-              <select
-                name="visibility"
-                value={visibility}
-                onChange={(e) => {
-                  setVisibility(e.target.value);
-                }}
-                disabled={uiState === 'loading' || !!editStatus}
-                dir="auto"
-              >
-                <option value="public">
-                  <Trans>Public</Trans>
-                </option>
-                {(supports('@pleroma/local-visibility-post') ||
-                  supports('@akkoma/local-visibility-post')) && (
-                  <option value="local">
-                    <Trans>Local</Trans>
-                  </option>
-                )}
-                <option value="unlisted">
-                  <Trans>Quiet public</Trans>
-                </option>
-                <option value="private">
-                  <Trans>Followers</Trans>
-                </option>
-                <option value="direct">
-                  <Trans>Private mention</Trans>
-                </option>
               </select>
             </label>{' '}
             <button type="submit" disabled={uiState === 'loading'}>

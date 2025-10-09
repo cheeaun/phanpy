@@ -34,6 +34,8 @@ const NOTIFICATION_ICONS = {
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
   annual_report: 'celebrate',
+  quote: 'quote',
+  quoted_update: 'pencil',
 };
 
 /*
@@ -51,6 +53,8 @@ admin.sign_up = Someone signed up (optionally sent to admins)
 admin.report = A new report has been filed
 severed_relationships = Severed relationships
 moderation_warning = Moderation warning
+quote = Someone quoted one of your statuses
+quoted_update = A status you have quoted has been edited
 */
 
 function emojiText({ account, emoji, emoji_url }) {
@@ -194,7 +198,12 @@ const contentText = {
   poll: () => t`A poll you have voted in or created has ended.`,
   'poll-self': () => t`A poll you have created has ended.`,
   'poll-voted': () => t`A poll you have voted in has ended.`,
-  update: () => t`A post you interacted with has been edited.`,
+  update: ({ account }) =>
+    account ? (
+      <Trans>{account} edited a post.</Trans>
+    ) : (
+      t`A post you interacted with has been edited.`
+    ),
   'favourite+reblog': ({
     count,
     account,
@@ -243,6 +252,9 @@ const contentText = {
         />
       }
     />
+  ),
+  quoted_update: ({ account }) => (
+    <Trans>{account} edited a post you have quoted.</Trans>
   ),
   'admin.sign_up': ({ account }) => <Trans>{account} signed up.</Trans>,
   'admin.report': ({ account, targetAccount }) => (
@@ -329,7 +341,7 @@ function Notification({
   } = notification;
   let { type } = notification;
 
-  if (type === 'mention' && !status) {
+  if ((type === 'mention' || type === 'quote') && !status) {
     // Could be deleted
     return null;
   }
@@ -514,7 +526,7 @@ function Notification({
             </mark>
           </>
         )} */}
-        {type !== 'mention' && (
+        {type !== 'mention' && type !== 'quote' && (
           <>
             <p>{text}</p>
             {type === 'follow_request' && (

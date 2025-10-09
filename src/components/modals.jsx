@@ -63,6 +63,11 @@ export default function Modals() {
               window.__COMPOSE__?.draftStatus ||
               null
             }
+            quoteStatus={
+              states.showCompose?.quoteStatus ||
+              window.__COMPOSE__?.quoteStatus ||
+              null
+            }
             onClose={(results) => {
               const { newStatus, instance, type, scheduledAt } = results || {};
               states.showCompose = false;

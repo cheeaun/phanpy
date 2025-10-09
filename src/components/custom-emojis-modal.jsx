@@ -107,6 +107,8 @@ const CustomEmojisList = memo(({ emojis, onSelect }) => {
   );
 });
 
+const CUSTOM_EMOJI_SIZE = 'composer-customEmojiSize';
+
 function CustomEmojisModal({
   masto,
   instance,
@@ -165,15 +167,27 @@ function CustomEmojisModal({
 
   const scrollableRef = useRef();
   const [matches, setMatches] = useState(null);
-  const [emojiSize, setEmojiSize] = useState(EMOJI_SIZE_MIN);
+  const [emojiSize, setEmojiSize] = useState(
+    store.local.get(CUSTOM_EMOJI_SIZE) || EMOJI_SIZE_MIN,
+  );
   const onEmojiSizeDecrease = useCallback(() => {
     const newSize = Math.max(EMOJI_SIZE_MIN, emojiSize - EMOJI_SIZE_STEP);
     setEmojiSize(newSize);
+    if (newSize === EMOJI_SIZE_MIN) {
+      store.local.del(CUSTOM_EMOJI_SIZE);
+    } else {
+      store.local.set(CUSTOM_EMOJI_SIZE, newSize);
+    }
   }, [emojiSize]);
 
   const onEmojiSizeIncrease = useCallback(() => {
     const newSize = Math.min(EMOJI_SIZE_MAX, emojiSize + EMOJI_SIZE_STEP);
     setEmojiSize(newSize);
+    if (newSize === EMOJI_SIZE_MIN) {
+      store.local.del(CUSTOM_EMOJI_SIZE);
+    } else {
+      store.local.set(CUSTOM_EMOJI_SIZE, newSize);
+    }
   }, [emojiSize]);
 
   const onFind = useCallback(

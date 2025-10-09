@@ -10,6 +10,7 @@ import states from '../utils/states';
 
 import Avatar from './avatar';
 import EmojiText from './emoji-text';
+import RolesTags from './roles-tags';
 
 const nameCollator = mem((locale) => {
   const options = {
@@ -118,22 +119,12 @@ function NameText({
             <>
               {' '}
               <i class="bidi-isolate">@{username}</i>
-              {roles?.map((role) => (
-                <>
-                  {' '}
-                  <span class="tag collapsed">
-                    {role.name}
-                    {!!accountInstance && (
-                      <>
-                        {' '}
-                        <span class="more-insignificant">
-                          {accountInstance}
-                        </span>
-                      </>
-                    )}
-                  </span>
-                </>
-              ))}
+              <RolesTags
+                roles={roles}
+                accountId={id}
+                accountUrl={url}
+                hideSelf
+              />
             </>
           )}
         </>
@@ -150,20 +141,7 @@ function NameText({
             {acct1}
             {!!acct2 && <span class="ib">{acct2}</span>}
           </i>
-          {roles?.map((role) => (
-            <>
-              {' '}
-              <span class="tag collapsed">
-                {role.name}
-                {!!accountInstance && (
-                  <>
-                    {' '}
-                    <span class="more-insignificant">{accountInstance}</span>
-                  </>
-                )}
-              </span>
-            </>
-          ))}
+          <RolesTags roles={roles} accountUrl={url} />
         </>
       )}
     </a>

@@ -76,6 +76,13 @@
   animation: appear-up 1s ease-in-out;
   overflow: auto;
   box-shadow: 0 0px 12px -6px var(--drop-shadow-color);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  > .status {
+    font-size: calc(var(--text-size) * 0.9);
+  }
 }
 #compose-container .status-preview:has(.status-badge:not(:empty)) {
   border-start-end-radius: 8px;
@@ -91,20 +98,29 @@
 }
 
 #compose-container .status-preview-legend {
-  pointer-events: none;
-  position: sticky;
+  color: var(--text-insignificant-color);
+  cursor: pointer;
+  list-style-type: ' ▼ ';
+  order: 1;
+  /* pointer-events: none; */
   bottom: 0;
   padding: 8px;
   font-size: 80%;
   font-weight: bold;
   text-align: center;
-  color: var(--text-insignificant-color);
+
+  strong {
+    color: var(--red-color);
+  }
+
+  &:is(:hover, :focus) {
+    color: var(--text-color);
+  }
+}
+#compose-container .status-preview[open] .status-preview-legend {
+  list-style-type: ' ▲ ';
+  position: sticky;
   background-color: var(--bg-blur-color);
-  /* background-image: linear-gradient(
-    to bottom,
-    transparent,
-    var(--bg-faded-color)
-  ); */
   border-top: var(--hairline-width) solid var(--outline-color);
   backdrop-filter: blur(8px);
   text-shadow:
@@ -114,10 +130,6 @@
     0 1px 10px var(--bg-color),
     0 1px 10px var(--bg-color);
   z-index: 2;
-
-  strong {
-    color: var(--red-color);
-  }
 }
 #_compose-container .status-preview-legend.reply-to {
   color: var(--reply-to-color);
@@ -224,8 +236,8 @@
   cursor: inherit;
   outline: 0;
 }
-#compose-container .toolbar-button:has([disabled]),
-#compose-container .toolbar-button[disabled] {
+#compose-container .toolbar-button:has(:not(option):disabled),
+#compose-container .toolbar-button:disabled {
   pointer-events: none;
   background-color: transparent;
   opacity: 0.5;
@@ -627,6 +639,38 @@
   background-color: var(--bg-blur-color);
   border-radius: 8px;
   width: fit-content;
+}
+
+#compose-container {
+  .quote-status {
+    border-radius: 8px;
+    border: 1px solid var(--outline-color);
+    background-color: var(--bg-color);
+    box-shadow: inset 0 0 2px var(--outline-color);
+    margin: 0 8px;
+    overflow: auto;
+    max-height: 160px;
+    view-transition-name: compose-quote-status;
+
+    @media (min-width: 40em) {
+      margin: 0;
+    }
+
+    > .status {
+      font-size: calc(var(--text-size) * 0.9);
+      pointer-events: none;
+    }
+  }
+}
+
+::view-transition-group(compose-quote-status) {
+  animation-duration: 0.5s;
+  animation-delay: 0.1s;
+}
+::view-transition-old(compose-quote-status),
+::view-transition-new(compose-quote-status) {
+  width: 100%;
+  height: 100%;
 }
 
 #compose-container {

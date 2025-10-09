@@ -76,7 +76,7 @@ function Drafts({ onClose }) {
           <>
             <ul class="drafts-list">
               {drafts.map((draft) => {
-                const { updatedAt, key, draftStatus, replyTo } = draft;
+                const { updatedAt, key, draftStatus, replyTo, quote } = draft;
                 const updatedAtDate = new Date(updatedAt);
                 return (
                   <li key={updatedAt}>
@@ -134,23 +134,40 @@ function Drafts({ onClose }) {
                       onClick={async () => {
                         // console.log({ draftStatus });
                         let replyToStatus;
-                        if (replyTo) {
+                        let quoteStatus;
+                        if (replyTo?.id || quote?.id) {
                           setUIState('loading');
-                          try {
-                            replyToStatus = await masto.v1.statuses
-                              .$select(replyTo.id)
-                              .fetch();
-                          } catch (e) {
-                            console.error(e);
-                            alert(t`Error fetching reply-to status!`);
-                            setUIState('default');
-                            return;
+                          if (replyTo) {
+                            try {
+                              replyToStatus = await masto.v1.statuses
+                                .$select(replyTo.id)
+                                .fetch();
+                            } catch (e) {
+                              console.error(e);
+                              alert(t`Error fetching reply-to status!`);
+                              setUIState('default');
+                              return;
+                            }
+                          }
+                          if (quote) {
+                            try {
+                              quoteStatus = await masto.v1.statuses
+                                .$select(quote.id)
+                                .fetch();
+                            } catch (e) {
+                              console.error(e);
+                              alert(t`Error fetching quoted status!`);
+                              setUIState('default');
+                              // Don't return. Fail and still allow draft without quote
+                              // return;
+                            }
                           }
                           setUIState('default');
                         }
                         window.__COMPOSE__ = {
                           draftStatus,
                           replyToStatus,
+                          quoteStatus,
                         };
                         states.showCompose = true;
                         states.showDrafts = false;
@@ -215,11 +232,12 @@ function Drafts({ onClose }) {
 
 function MiniDraft({ draft }) {
   const { t } = useLingui();
-  const { draftStatus, replyTo } = draft;
+  const { draftStatus, replyTo, quote } = draft;
   const { status, spoilerText, poll, mediaAttachments } = draftStatus;
   const hasPoll = poll?.options?.length > 0;
   const hasMedia = mediaAttachments?.length > 0;
-  const hasPollOrMedia = hasPoll || hasMedia;
+  const hasQuote = !!quote?.id;
+  const hasPollOrMedia = hasPoll || hasMedia || hasQuote;
   const firstImageMedia = useMemo(() => {
     if (!hasMedia) return;
     const image = mediaAttachments.find((media) => /image/.test(media.type));
@@ -249,6 +267,7 @@ function MiniDraft({ draft }) {
                 <small>{mediaAttachments?.length}</small>
               </span>
             )}
+            {hasQuote && <Icon icon="quote" alt={t`Quote`} />}
           </div>
         )}
         <div class="mini-draft-main">

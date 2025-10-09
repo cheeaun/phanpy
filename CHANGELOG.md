@@ -364,7 +364,7 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - 🔭 Zoom in/out buttons in Custom Emojis picker
 - 🐛 Bug fixes
 
-## Next
+## October 9, 2025
 
 - 💬 More support for Mastodon v4.5's native quote posts
 - 🐛 Bug fixes

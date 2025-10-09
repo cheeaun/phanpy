@@ -217,14 +217,9 @@ export default defineConfig({
           return 'assets/[name]-[hash].js';
         },
         assetFileNames: (assetInfo) => {
-          const { originalFileNames, names } = assetInfo;
+          const { originalFileNames } = assetInfo;
           if (originalFileNames?.[0]?.includes('assets/sandbox')) {
             return 'assets/sandbox/[name]-[hash].[ext]';
-          }
-          // Handle font files
-          const fontExtensions = /\.(woff2?|ttf|otf|eot)$/i;
-          if (names?.[0] && fontExtensions.test(names[0])) {
-            return 'assets/fonts/[name]-[hash].[ext]';
           }
           return 'assets/[name]-[hash].[ext]';
         },

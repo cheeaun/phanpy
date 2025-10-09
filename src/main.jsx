@@ -1,7 +1,6 @@
 import './index.css';
 import './cloak-mode.css';
 import './polyfills';
-import '@fontsource/noto-emoji/400.css';
 
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';

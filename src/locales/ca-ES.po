@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-08 23:51\n"
+"PO-Revision-Date: 2025-10-09 00:54\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -564,14 +564,14 @@ msgstr "Qualsevol pot citar-vos"
 #: src/components/status.jsx:313
 #: src/pages/settings.jsx:384
 msgid "Your followers can quote"
-msgstr ""
+msgstr "Els vostres seguidors poden citar-vos"
 
 #: src/components/compose.jsx:1842
 #: src/components/quote-settings-sheet.jsx:79
 #: src/components/status.jsx:314
 #: src/pages/settings.jsx:387
 msgid "Only you can quote"
-msgstr ""
+msgstr "Només vosaltres podeu citar-vos"
 
 #: src/components/compose.jsx:1875
 #: src/pages/settings.jsx:323
@@ -692,7 +692,7 @@ msgstr "S'ha produït un error en obtenir l'estat de resposta!"
 
 #: src/components/drafts.jsx:159
 msgid "Error fetching quoted status!"
-msgstr ""
+msgstr "S'ha produït un error en obtenir l'estat de la publicació citada!"
 
 #: src/components/drafts.jsx:187
 msgid "Delete all drafts?"
@@ -1475,7 +1475,7 @@ msgstr "Ha finalitzat una enquesta en què heu votat."
 
 #: src/components/notification.jsx:203
 msgid "{account} edited a post."
-msgstr ""
+msgstr "{account} ha editat una publicació."
 
 #: src/components/notification.jsx:205
 msgid "A post you interacted with has been edited."
@@ -1489,7 +1489,7 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 
 #: src/components/notification.jsx:257
 msgid "{account} edited a post you have quoted."
-msgstr ""
+msgstr "{account} ha editat una publicació que heu citat."
 
 #: src/components/notification.jsx:259
 msgid "{account} signed up."
@@ -1757,40 +1757,40 @@ msgstr "Desa i tanca"
 
 #: src/components/quote-settings-sheet.jsx:34
 msgid "Quote settings updated"
-msgstr ""
+msgstr "S'ha actualitzat la configuració de les cites"
 
 #: src/components/quote-settings-sheet.jsx:38
 #: src/pages/settings.jsx:374
 msgid "Failed to update quote settings"
-msgstr ""
+msgstr "No s'ha pogut actualitzar la configuració de les cites"
 
 #: src/components/quote-settings-sheet.jsx:57
 msgid "Quote settings for this post"
-msgstr ""
+msgstr "Configuració de cites per a aquesta publicació"
 
 #: src/components/quote-suggestion.jsx:19
 msgid "Turn link into a quote?"
-msgstr ""
+msgstr "Voleu convertir l'enllaç en una cita?"
 
 #: src/components/quote-suggestion.jsx:37
 msgid "Keep as link"
-msgstr ""
+msgstr "Manté com un enllaç"
 
 #: src/components/quote-suggestion.jsx:42
 msgid "Replace current quote"
-msgstr ""
+msgstr "Substitueix la cita actual"
 
 #: src/components/quote-suggestion.jsx:44
 msgid "Turn into quote"
-msgstr ""
+msgstr "Converteix en cita"
 
 #: src/components/quotes-modal.jsx:149
 msgid "Error loading quotes"
-msgstr ""
+msgstr "S'ha produït un error en carregar les cites"
 
 #: src/components/quotes-modal.jsx:153
 msgid "No quotes yet"
-msgstr ""
+msgstr "Encara no teniu cap citació"
 
 #: src/components/recent-searches.jsx:27
 msgid "Cleared recent searches"
@@ -2449,23 +2449,23 @@ msgstr "Importació o exportació de la configuració des de o cap a la instànc
 
 #: src/components/status.jsx:304
 msgid "Private posts cannot be quoted"
-msgstr ""
+msgstr "No es poden citar les publicacions privades"
 
 #: src/components/status.jsx:305
 msgid "Request to quote"
-msgstr ""
+msgstr "Sol·licitud per a citar"
 
 #: src/components/status.jsx:306
 msgid "Author will manually review"
-msgstr ""
+msgstr "Serà revisat manualment"
 
 #: src/components/status.jsx:307
 msgid "Only followers can quote this post"
-msgstr ""
+msgstr "Només els seguidors poden citar aquesta publicació"
 
 #: src/components/status.jsx:308
 msgid "You are not allowed to quote this post"
-msgstr ""
+msgstr "No se us permet citar aquesta publicació"
 
 #: src/components/status.jsx:592
 msgid "<0/> <1>boosted</1>"
@@ -2514,7 +2514,7 @@ msgstr "Desfés l'impuls"
 #: src/components/status.jsx:1100
 #: src/components/status.jsx:2769
 msgid "Quote with link"
-msgstr ""
+msgstr "Cita amb enllaç"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1117
@@ -2531,7 +2531,7 @@ msgstr "Heu impulsat la publicació de @{0}"
 #: src/components/status.jsx:1140
 #: src/components/status.jsx:2783
 msgid "Boost/Quote…"
-msgstr ""
+msgstr "Impuls/Cita…"
 
 #: src/components/status.jsx:1141
 #: src/components/status.jsx:2783
@@ -2559,7 +2559,7 @@ msgstr "Suprimeix l'adreça d'interès"
 
 #: src/components/status.jsx:1198
 msgid "View Quotes"
-msgstr ""
+msgstr "Veure les cites"
 
 #: src/components/status.jsx:1265
 msgid "Post text copied"
@@ -2637,7 +2637,7 @@ msgstr "Fixa al perfil"
 #: src/components/status.jsx:1473
 #: src/pages/settings.jsx:338
 msgid "Quote settings"
-msgstr ""
+msgstr "Configuració de les cites"
 
 #: src/components/status.jsx:1506
 msgid "Delete this post?"
@@ -2654,19 +2654,19 @@ msgstr "No ha estat possible esborrar la publicació"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1550
 msgid "Remove my post from <0>@{0}</0>'s post?"
-msgstr ""
+msgstr "Voleu eliminar la vostra publicació de la publicació de <0>@{0}</0>?"
 
 #: src/components/status.jsx:1571
 msgid "Quote removed"
-msgstr ""
+msgstr "S'ha eliminat la cita"
 
 #: src/components/status.jsx:1575
 msgid "Unable to remove quote"
-msgstr ""
+msgstr "No s'ha pogut eliminar la cita"
 
 #: src/components/status.jsx:1581
 msgid "Remove quote…"
-msgstr ""
+msgstr "Elimina la cita…"
 
 #: src/components/status.jsx:1595
 msgid "Report post…"
@@ -3079,7 +3079,7 @@ msgstr "Grups"
 
 #: src/pages/catchup.jsx:612
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} quotes {quotes} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr ""
+msgstr "Es mostren {selectedFilterCategory, select, all {totes les publicacions} original {publicacions originals} replies {respostes} boosts {impulsos} quotes {cites} followedTags {etiquetes seguides} groups {grups} filtered {publicacions filtrades}}, {sortBy, select, createdAt {{sortOrder, select, asc {més antiga} desc {més recent}}} reblogsCount {{sortOrder, select, asc {amb menys impulsos} desc {amb més impulsos}}} favouritesCount {{sortOrder, select, asc {amb menys favorits} desc {amb més favorits}}} repliesCount {{sortOrder, select, asc {amb menys respostes} desc {amb més respostes}}} density {{sortOrder, select, asc {amb menys densitat} desc {amb més densitat}}}} primer{groupBy, select, account {, agrupat per autors} other {}}"
 
 #: src/pages/catchup.jsx:905
 #: src/pages/catchup.jsx:929

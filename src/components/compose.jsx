@@ -1095,9 +1095,9 @@ function Compose({
           )}
         </div>
         {!!replyToStatus && (
-          <div class="status-preview">
+          <details class="status-preview" open>
             <Status status={replyToStatus} size="s" previewMode />
-            <div class="status-preview-legend reply-to">
+            <summary class="status-preview-legend reply-to">
               {replyToStatusMonthsAgo > 0 ? (
                 <Trans>
                   Replying to @
@@ -1115,16 +1115,16 @@ function Compose({
                   &rsquo;s post
                 </Trans>
               )}
-            </div>
-          </div>
+            </summary>
+          </details>
         )}
         {!!editStatus && (
-          <div class="status-preview">
+          <details class="status-preview">
             <Status status={editStatus} size="s" previewMode />
-            <div class="status-preview-legend">
+            <summary class="status-preview-legend">
               <Trans>Editing source post</Trans>
-            </div>
-          </div>
+            </summary>
+          </details>
         )}
         <form
           ref={formRef}

@@ -10,7 +10,7 @@ function _getDtfLocale() {
     const dtfLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
     store.session.set(DTFLOCALE_CACHE_KEY, dtfLocale);
     return dtfLocale;
-  } catch {
+  } catch (e) {
     return null;
   }
 }

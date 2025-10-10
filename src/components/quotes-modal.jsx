@@ -92,13 +92,27 @@ export default function QuotesModal({
                       instance ? `/${instance}/s/${post.id}` : `/s/${post.id}`
                     }
                     class="status-link"
+                    onContextMenu={(e) => {
+                      const post = e.target.querySelector('.status');
+                      if (post) {
+                        // Fire a custom event to open the context menu
+                        if (e.metaKey) return;
+                        e.preventDefault();
+                        post.dispatchEvent(
+                          new MouseEvent('contextmenu', {
+                            clientX: e.clientX,
+                            clientY: e.clientY,
+                          }),
+                        );
+                      }
+                    }}
                   >
                     <Status
                       status={post}
                       instance={instance}
                       size="s"
                       readOnly
-                      enableCommentHint
+                      showCommentCount
                     />
                   </Link>
                 </li>

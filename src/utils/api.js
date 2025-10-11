@@ -13,6 +13,8 @@ import {
   setCurrentAccountID,
 } from './store-utils';
 
+const { PHANPY_SCHEME: SCHEME = 'https' } = import.meta.env;
+
 // Default *fallback* instance
 const DEFAULT_INSTANCE = 'mastodon.social';
 
@@ -40,7 +42,9 @@ export function initClient({ instance, accessToken }) {
       .replace(/\/+$/, '')
       .toLowerCase();
   }
-  const url = instance ? `https://${instance}` : `https://${DEFAULT_INSTANCE}`;
+  const url = instance
+    ? `${SCHEME}://${instance}`
+    : `${SCHEME}://${DEFAULT_INSTANCE}`;
 
   const masto = createRestAPIClient({
     url,

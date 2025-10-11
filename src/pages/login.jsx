@@ -25,7 +25,10 @@ import {
 } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
-const { PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE } = import.meta.env;
+const {
+  PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE,
+  PHANPY_SCHEME: SCHEME = 'https',
+} = import.meta.env;
 
 function Login() {
   const { t } = useLingui();
@@ -69,7 +72,9 @@ function Login() {
       // WEB_DOMAIN vs LOCAL_DOMAIN negotiation time
       // https://docs.joinmastodon.org/admin/config/#web_domain
       try {
-        const res = await fetch(`https://${instanceURL}/.well-known/host-meta`); // returns XML
+        const res = await fetch(
+          `${PHANPY_SCHEME}://${instanceURL}/.well-known/host-meta`,
+        ); // returns XML
         const text = await res.text();
         // Parse XML
         const parser = new DOMParser();
@@ -148,8 +153,11 @@ function Login() {
         .trim()
     : null;
   const instanceTextLooksLikeDomain =
-    /[^\s\r\n\t\/\\]+\.[^\s\r\n\t\/\\]+/.test(cleanInstanceText) &&
-    !/[\s\/\\@]/.test(cleanInstanceText);
+    (/[^\s\r\n\t\/\\]+\.[^\s\r\n\t\/\\]+/.test(cleanInstanceText) &&
+      !/[\s\/\\@]/.test(cleanInstanceText)) ||
+    SCHEME === 'http';
+
+  console.log(SCHEME);
 
   const instancesSuggestions = cleanInstanceText
     ? searcher.current

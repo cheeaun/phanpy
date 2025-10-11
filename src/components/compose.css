@@ -90,7 +90,7 @@
 #compose-container .status-preview :is(.content-container, .time) {
   pointer-events: none;
 }
-#compose-container.standalone .status-preview * {
+#compose-container.standalone .status-preview .status {
   /*
     For standalone mode (new window), prevent interacting with the status preview for now
   */

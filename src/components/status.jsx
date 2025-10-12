@@ -1717,11 +1717,19 @@ function Status({
   );
 
   const hotkeysEnabled = !readOnly && !previewMode && !quoted;
-  const rRef = useHotkeys('r, shift+r', replyStatus, {
-    enabled: hotkeysEnabled,
-    useKey: true,
-    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
-  });
+  const rRef = useHotkeys(
+    'r, shift+r',
+    (e, handler) => {
+      // Fix bug: shift+r is fired even when r is pressed due to useKey: true
+      if (e.shiftKey !== handler.shift) return;
+      replyStatus(e);
+    },
+    {
+      enabled: hotkeysEnabled,
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
+    },
+  );
   const fRef = useHotkeys('f, l', favouriteStatusNotify, {
     enabled: hotkeysEnabled,
     ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,

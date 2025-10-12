@@ -1104,6 +1104,9 @@
 
   &:not(.media-figure-multiple .media-container) {
     margin-bottom: -16px;
+    &:has(+ .status-card-container) {
+      margin-bottom: 0;
+    }
 
     &.media-eq1:not(:has(figure)) {
       text-align: center;

@@ -366,7 +366,7 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 
 ## October 9, 2025
 
-- 💬 More support for Mastodon v4.5's native quote posts
+- 💬 More support for (upcoming) Mastodon v4.5's native quote posts
 - 🐛 Bug fixes
 
 <!--

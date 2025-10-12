@@ -149,7 +149,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} ${
             blurhashImage ? '' : size
-          }`}
+          } ${hasIframeHTML ? 'can-show-embed' : ''}`}
           style={{
             '--average-color':
               rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,

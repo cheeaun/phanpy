@@ -4,7 +4,7 @@ import { msg, plural } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { shallowEqual } from 'fast-equals';
-import pThrottle from 'p-throttle';
+import PQueue from 'p-queue';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import {
@@ -83,14 +83,17 @@ import TranslationBlock from './translation-block';
 const SHOW_COMMENT_COUNT_LIMIT = 280;
 const INLINE_TRANSLATE_LIMIT = 140;
 
-const throttle = pThrottle({
-  limit: 1,
+const accountQueue = new PQueue({
+  concurrency: 1,
   interval: 1000,
+  intervalCap: 1,
 });
-function fetchAccount(id, masto) {
-  return masto.v1.accounts.$select(id).fetch();
+function fetchAccount(id, masto, signal) {
+  return accountQueue.add(() => masto.v1.accounts.$select(id).fetch(), {
+    signal,
+  });
 }
-const memFetchAccount = pmem(throttle(fetchAccount));
+const memFetchAccount = pmem(fetchAccount);
 
 const isIOS =
   window.ontouchstart !== undefined &&
@@ -520,19 +523,27 @@ function Status({
     inReplyToAccountRef = { url: accountURL, username, displayName };
   }
   const [inReplyToAccount, setInReplyToAccount] = useState(inReplyToAccountRef);
-  if (!withinContext && !inReplyToAccount && inReplyToAccountId) {
-    const account = states.accounts[inReplyToAccountId];
-    if (account) {
-      setInReplyToAccount(account);
-    } else {
-      memFetchAccount(inReplyToAccountId, masto)
+  useEffect(() => {
+    if (!withinContext && !inReplyToAccount && inReplyToAccountId) {
+      const account = states.accounts[inReplyToAccountId];
+      if (account) {
+        setInReplyToAccount(account);
+        return;
+      }
+
+      const abortController = new AbortController();
+      memFetchAccount(inReplyToAccountId, masto, abortController.signal)
         .then((account) => {
           setInReplyToAccount(account);
           states.accounts[account.id] = account;
         })
         .catch((e) => {});
+
+      return () => {
+        abortController.abort();
+      };
     }
-  }
+  }, [withinContext, inReplyToAccount, inReplyToAccountId]);
   const mentionSelf =
     (inReplyToAccountId && inReplyToAccountId === currentAccount) ||
     mentions?.find((mention) => mention.id === currentAccount);

@@ -1,8 +1,8 @@
 import './translation-block.css';
 
 import { Trans, useLingui } from '@lingui/react/macro';
+import PQueue from 'p-queue';
 import pRetry from 'p-retry';
-import pThrottle from 'p-throttle';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import languages from '../data/translang-languages';
@@ -28,9 +28,10 @@ const TRANSLANG_INSTANCES = PHANPY_TRANSLANG_INSTANCES
   ? PHANPY_TRANSLANG_INSTANCES.split(/\s+/)
   : [];
 
-const throttle = pThrottle({
-  limit: 1,
+const translationQueue = new PQueue({
+  concurrency: 1,
   interval: 2000,
+  intervalCap: 1,
 });
 
 const TRANSLATED_MAX_AGE = 1000 * 60 * 60; // 1 hour
@@ -98,12 +99,21 @@ function _translangTranslate(text, source, target) {
 const translangTranslate = pmem(_translangTranslate, {
   maxAge: TRANSLATED_MAX_AGE,
 });
-const throttledTranslangTranslate = pmem(throttle(translangTranslate), {
-  // I know, this is double-layered memoization
-  maxAge: TRANSLATED_MAX_AGE,
-});
+const throttledTranslangTranslate = pmem(
+  ({ signal, text, source, target }) =>
+    translationQueue.add(() => translangTranslate(text, source, target), {
+      signal,
+    }),
+  {
+    // I know, this is double-layered memoization
+    maxAge: TRANSLATED_MAX_AGE,
+  },
+);
 
-const throttledBrowserTranslate = throttle(browserTranslate);
+const throttledBrowserTranslate = ({ text, source, target, signal }) =>
+  translationQueue.add(() => browserTranslate(text, source, target), {
+    signal,
+  });
 
 function TranslationBlock({
   forceTranslate,
@@ -120,6 +130,7 @@ function TranslationBlock({
   const [translatedContent, setTranslatedContent] = useState(null);
   const [detectedLang, setDetectedLang] = useState(null);
   const detailsRef = useRef();
+  const abortControllerRef = useRef();
 
   const sourceLangText = sourceLanguage
     ? localeCode2Text(sourceLanguage)
@@ -128,16 +139,21 @@ function TranslationBlock({
   const apiSourceLang = useRef('auto');
 
   if (!onTranslate) {
-    onTranslate = async (...args) => {
+    onTranslate = async ({ text, source, target, signal }) => {
       if (supportsBrowserTranslator) {
-        const result = await throttledBrowserTranslate(...args);
+        const result = await throttledBrowserTranslate({
+          text,
+          source,
+          target,
+          signal,
+        });
         if (result && !result.error) {
           return result;
         }
       }
       return mini
-        ? await throttledTranslangTranslate(...args)
-        : await translangTranslate(...args);
+        ? await throttledTranslangTranslate({ signal, text, source, target })
+        : await translangTranslate(text, source, target);
     };
   }
 
@@ -145,7 +161,12 @@ function TranslationBlock({
     setUIState('loading');
     try {
       const { content, detectedSourceLanguage, provider, error, ...props } =
-        await onTranslate(text, apiSourceLang.current, targetLang);
+        await onTranslate({
+          text,
+          source: apiSourceLang.current,
+          target: targetLang,
+          signal: abortControllerRef.current?.signal,
+        });
       if (content) {
         if (detectedSourceLanguage) {
           const detectedLangText = localeCode2Text(detectedSourceLanguage);
@@ -171,8 +192,10 @@ function TranslationBlock({
         setUIState('error');
       }
     } catch (e) {
-      console.error(e);
-      setUIState('error');
+      if (e.name !== 'AbortError') {
+        console.error(e);
+        setUIState('error');
+      }
     }
   };
 
@@ -181,6 +204,13 @@ function TranslationBlock({
       translate();
     }
   }, [forceTranslate]);
+
+  useEffect(() => {
+    abortControllerRef.current = new AbortController();
+    return () => {
+      abortControllerRef.current.abort();
+    };
+  }, []);
 
   if (mini) {
     if (

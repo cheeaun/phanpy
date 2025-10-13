@@ -1,4 +1,4 @@
-import pThrottle from 'p-throttle';
+import PQueue from 'p-queue';
 import { useEffect, useState } from 'preact/hooks';
 
 import { getGifFirstFrame } from '../utils/get-gif-first-frame';
@@ -6,10 +6,14 @@ import mem from '../utils/mem';
 
 import CustomEmoji from './custom-emoji';
 
-const throttledFetch = pThrottle({
-  limit: 2,
+const fetchQueue = new PQueue({
+  concurrency: 2,
   interval: 1000,
-})(fetch);
+  intervalCap: 2,
+});
+
+const throttledFetch = (signal, ...args) =>
+  fetchQueue.add(() => fetch(...args), { signal });
 
 const SHORTCODES_REGEX = /(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g;
 
@@ -35,12 +39,18 @@ function EmojiText({ text, emojis = [], staticEmoji, resolverURL }) {
 
     setLoading(true);
 
+    const abortController = new AbortController();
+
     (async () => {
       try {
-        const response = await throttledFetch(resolverURL, {
-          headers: { accept: 'application/activity+json' },
-          referrerPolicy: 'no-referrer',
-        });
+        const response = await throttledFetch(
+          abortController.signal,
+          resolverURL,
+          {
+            headers: { accept: 'application/activity+json' },
+            referrerPolicy: 'no-referrer',
+          },
+        );
 
         const data = await response.json();
         const emojiTags = data.tag?.filter((t) => t.type === 'Emoji') || [];
@@ -64,11 +74,17 @@ function EmojiText({ text, emojis = [], staticEmoji, resolverURL }) {
 
         setResolvedEmojis(emojis);
       } catch (error) {
-        console.error('Failed to resolve emojis:', error);
+        if (error.name !== 'AbortError') {
+          console.error('Failed to resolve emojis:', error);
+        }
       } finally {
         setLoading(false);
       }
     })();
+
+    return () => {
+      abortController.abort();
+    };
   }, [resolverURL, text, emojis?.length]);
 
   if (!text) return '';

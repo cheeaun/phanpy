@@ -505,7 +505,11 @@ function AccountStatuses() {
             // }}
           >
             <b>
-              <EmojiText text={displayName} emojis={emojis} />
+              <EmojiText
+                text={displayName}
+                emojis={emojis}
+                resolverURL={account?.url}
+              />
             </b>
             <div>
               <span class="bidi-isolate">@{acct}</span>

@@ -1,7 +1,7 @@
 import './status.css';
 
 import { msg, plural } from '@lingui/core/macro';
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { shallowEqual } from 'fast-equals';
 import pThrottle from 'p-throttle';
@@ -76,6 +76,7 @@ import RelativeTime from './relative-time';
 import StatusButton from './status-button';
 import StatusCard from './status-card';
 import StatusCompact from './status-compact';
+import SubMenu2 from './submenu2';
 import ThreadBadge from './thread-badge';
 import TranslationBlock from './translation-block';
 
@@ -754,7 +755,7 @@ function Status({
 
   const postQuoteApprovalPolicy = getPostQuoteApprovalPolicy(quoteApproval);
 
-  const replyStatus = (e) => {
+  const replyStatus = (e, replyMode = 'all') => {
     if (!sameInstance || !authenticated) {
       return alert(unauthInteractionErrorMessage);
     }
@@ -762,11 +763,13 @@ function Status({
     if (e?.shiftKey || e?.syntheticEvent?.shiftKey) {
       const newWin = openCompose({
         replyToStatus: status,
+        replyMode,
       });
       if (newWin) return;
     }
     showCompose({
       replyToStatus: status,
+      replyMode,
     });
   };
 
@@ -1042,17 +1045,85 @@ function Status({
         </div>
       )
     );
+  const mentionsCount = useMemo(() => {
+    if (!mentions?.length) return false;
+    const allMentions = new Set([accountId, ...mentions.map((m) => m.id)]);
+    return [...allMentions].filter((m) => m !== currentAccount).length;
+  }, [accountId, mentions?.length, currentAccount]);
+  const tooManyMentions = mentionsCount >= 3;
+  const replyMenuContent = (
+    <>
+      <Icon icon="comment" />
+      <span>
+        {repliesCount > 0
+          ? shortenNumber(repliesCount)
+          : tooManyMentions
+            ? t`Reply…`
+            : t`Reply`}
+      </span>
+    </>
+  );
+  const replyModeMenuItems = (
+    <>
+      <MenuItem onClick={(e) => replyStatus(e, 'all')}>
+        <small>
+          <Trans>Reply all</Trans>
+          <br />
+          <span class="more-insignificant">
+            <Plural value={mentionsCount} other="# mentions" />
+          </span>
+        </small>
+      </MenuItem>
+      <MenuItem onClick={(e) => replyStatus(e, 'author-first')}>
+        <small>
+          <Trans>Reply all</Trans>
+          <br />
+          <span class="more-insignificant">
+            <Plural
+              value={mentionsCount - 1}
+              other={
+                <Trans comment="Author mention appears first, other mentions appear below with newlines in between">
+                  <span class="bidi-isolate">@{username || acct}</span> first, #
+                  others below
+                </Trans>
+              }
+            />
+          </span>
+        </small>
+      </MenuItem>
+      <MenuItem onClick={(e) => replyStatus(e, 'author-only')}>
+        <small>
+          <Trans>Reply</Trans>
+          <br />
+          <span class="more-insignificant">
+            <Trans>
+              Only <span class="bidi-isolate">@{username || acct}</span>
+            </Trans>
+          </span>
+        </small>
+      </MenuItem>
+    </>
+  );
   const StatusMenuItems = (
     <>
       {!isSizeLarge && sameInstance && (
         <>
           <div class="menu-control-group-horizontal status-menu">
-            <MenuItem onClick={replyStatus}>
-              <Icon icon="comment" />
-              <span>
-                {repliesCount > 0 ? shortenNumber(repliesCount) : t`Reply`}
-              </span>
-            </MenuItem>
+            {tooManyMentions ? (
+              <SubMenu2
+                openTrigger="clickOnly"
+                direction="bottom"
+                overflow="auto"
+                gap={-8}
+                shift={8}
+                menuClassName="menu-emphasized"
+                label={replyMenuContent}
+              >
+                {replyModeMenuItems}
+              </SubMenu2>
+            ) : (
+              <MenuItem onClick={replyStatus}>{replyMenuContent}</MenuItem>
+            )}
             <MenuConfirm
               subMenu
               confirmLabel={
@@ -1646,11 +1717,19 @@ function Status({
   );
 
   const hotkeysEnabled = !readOnly && !previewMode && !quoted;
-  const rRef = useHotkeys('r, shift+r', replyStatus, {
-    enabled: hotkeysEnabled,
-    useKey: true,
-    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
-  });
+  const rRef = useHotkeys(
+    'r, shift+r',
+    (e, handler) => {
+      // Fix bug: shift+r is fired even when r is pressed due to useKey: true
+      if (e.shiftKey !== handler.shift) return;
+      replyStatus(e);
+    },
+    {
+      enabled: hotkeysEnabled,
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
+    },
+  );
   const fRef = useHotkeys('f, l', favouriteStatusNotify, {
     enabled: hotkeysEnabled,
     ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
@@ -1988,15 +2067,37 @@ function Status({
               }`}
               ref={actionsRef}
             >
-              <StatusButton
-                size="s"
-                title={t`Reply`}
-                alt={t`Reply`}
-                class="reply-button"
-                icon="comment"
-                iconSize="m"
-                onClick={replyStatus}
-              />
+              {tooManyMentions ? (
+                <Menu2
+                  portal
+                  align="center"
+                  gap={4}
+                  overflow="auto"
+                  viewScroll="close"
+                  menuButton={
+                    <StatusButton
+                      size="s"
+                      title={t`Reply`}
+                      alt={t`Reply`}
+                      class="reply-button"
+                      icon="comment"
+                      iconSize="m"
+                    />
+                  }
+                >
+                  {replyModeMenuItems}
+                </Menu2>
+              ) : (
+                <StatusButton
+                  size="s"
+                  title={t`Reply`}
+                  alt={t`Reply`}
+                  class="reply-button"
+                  icon="comment"
+                  iconSize="m"
+                  onClick={replyStatus}
+                />
+              )}
               <StatusButton
                 size="s"
                 checked={favourited}
@@ -2698,14 +2799,36 @@ function Status({
               )}
               <div class={`actions ${_deleted ? 'disabled' : ''}`}>
                 <div class="action has-count">
-                  <StatusButton
-                    title={t`Reply`}
-                    alt={t`Comments`}
-                    class="reply-button"
-                    icon="comment"
-                    count={repliesCount}
-                    onClick={replyStatus}
-                  />
+                  {tooManyMentions ? (
+                    <Menu2
+                      openTrigger="clickOnly"
+                      direction="bottom"
+                      overflow="auto"
+                      gap={-8}
+                      shift={8}
+                      menuClassName="menu-emphasized"
+                      menuButton={
+                        <StatusButton
+                          title={t`Reply`}
+                          alt={t`Comments`}
+                          class="reply-button"
+                          icon="comment"
+                          count={repliesCount}
+                        />
+                      }
+                    >
+                      {replyModeMenuItems}
+                    </Menu2>
+                  ) : (
+                    <StatusButton
+                      title={t`Reply`}
+                      alt={t`Comments`}
+                      class="reply-button"
+                      icon="comment"
+                      count={repliesCount}
+                      onClick={replyStatus}
+                    />
+                  )}
                 </div>
                 {/* <div class="action has-count">
                 <StatusButton

@@ -10,6 +10,15 @@ import states from '../utils/states';
 import Icon from './icon';
 import Modal from './modal';
 
+// Helper component for sequential key shortcuts
+function SequentialKeys({ key1, key2 }) {
+  return (
+    <Trans>
+      <kbd>{key1}</kbd> then <kbd>{key2}</kbd>
+    </Trans>
+  );
+}
+
 export default memo(function KeyboardShortcutsHelp() {
   const { t } = useLingui();
   const snapStates = useSnapshot(states);
@@ -195,6 +204,14 @@ export default memo(function KeyboardShortcutsHelp() {
                         <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>k</kbd>
                       </Trans>
                     ),
+                  },
+                  {
+                    action: t`Go to Home`,
+                    keys: <SequentialKeys key1="g" key2="h" />,
+                  },
+                  {
+                    action: t`Go to Notifications`,
+                    keys: <SequentialKeys key1="g" key2="n" />,
                   },
                 ].map(({ action, className, keys }) => (
                   <tr key={action}>

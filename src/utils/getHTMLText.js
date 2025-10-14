@@ -1,5 +1,3 @@
-import mem from './mem';
-
 const template = document.createElement('template');
 
 // Regex patterns for HTML text processing
@@ -46,4 +44,4 @@ function getHTMLText(html, opts) {
   return textContent.replace(MULTIPLE_LINE_BREAKS_RE, '\n\n').trim();
 }
 
-export default mem(getHTMLText);
+export default getHTMLText;

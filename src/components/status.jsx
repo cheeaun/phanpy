@@ -30,6 +30,7 @@ import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import htmlContentLength from '../utils/html-content-length';
 import localeMatch from '../utils/locale-match';
+import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import pmem from '../utils/pmem';
@@ -168,9 +169,8 @@ function forgivingQSA(selectors = [], dom = document) {
   return [];
 }
 
-function isTranslateble(content, emojis) {
-  if (!content) return false;
-  // Remove custom emojis
+const getHTMLTextForDetectLang = mem((content, emojis) => {
+  if (!content) return '';
   if (emojis?.length) {
     const emojisRegex = new RegExp(
       `:(${emojis.map((e) => e.shortcode).join('|')}):`,
@@ -179,30 +179,7 @@ function isTranslateble(content, emojis) {
     content = content.replace(emojisRegex, '');
   }
   content = content.trim();
-  if (!content) return false;
-  const text = getHTMLText(content, {
-    preProcess: (dom) => {
-      // Remove .mention, pre, code, a:has(.invisible)
-      for (const a of forgivingQSA(
-        ['.mention, pre, code, a:has(.invisible)', '.mention, pre, code'],
-        dom,
-      )) {
-        a.remove();
-      }
-    },
-  });
-  return !!text;
-}
-
-function getHTMLTextForDetectLang(content, emojis) {
-  if (emojis?.length) {
-    const emojisRegex = new RegExp(
-      `:(${emojis.map((e) => e.shortcode).join('|')}):`,
-      'g',
-    );
-    content = content.replace(emojisRegex, '');
-  }
-
+  if (!content) return '';
   return getHTMLText(content, {
     preProcess: (dom) => {
       // Remove anything that can skew the language detection
@@ -227,6 +204,10 @@ function getHTMLTextForDetectLang(content, emojis) {
       }
     },
   });
+});
+
+function isTranslateble(content, emojis) {
+  return !!getHTMLTextForDetectLang(content, emojis);
 }
 
 const SIZE_CLASS = {
@@ -317,6 +298,8 @@ const quoteApprovalPolicyMessages = {
   followers: msg`Your followers can quote`,
   nobody: msg`Only you can quote`,
 };
+
+const QUESTION_REGEX = /[??？︖❓❔⁇⁈⁉¿‽؟]/;
 
 const { DEV } = import.meta.env;
 
@@ -1062,7 +1045,7 @@ function Status({
     return [...allMentions].filter((m) => m !== currentAccount).length;
   }, [accountId, mentions?.length, currentAccount]);
   const tooManyMentions = mentionsCount >= 3;
-  const replyMenuContent = (
+  const ReplyMenuContent = () => (
     <>
       <Icon icon="comment" />
       <span>
@@ -1128,12 +1111,12 @@ function Status({
                 gap={-8}
                 shift={8}
                 menuClassName="menu-emphasized"
-                label={replyMenuContent}
+                label={<ReplyMenuContent />}
               >
                 {replyModeMenuItems}
               </SubMenu2>
             ) : (
-              <MenuItem onClick={replyStatus}>{replyMenuContent}</MenuItem>
+              <MenuItem onClick={replyStatus}>{<ReplyMenuContent />}</MenuItem>
             )}
             <MenuConfirm
               subMenu
@@ -1946,8 +1929,7 @@ function Status({
     ) {
       return false;
     }
-    const questionRegex = /[??？︖❓❔⁇⁈⁉¿‽؟]/;
-    const containsQuestion = questionRegex.test(content);
+    const containsQuestion = QUESTION_REGEX.test(content);
     if (!containsQuestion) return false;
     if (contentLength > 0 && contentLength <= SHOW_COMMENT_COUNT_LIMIT) {
       return true;

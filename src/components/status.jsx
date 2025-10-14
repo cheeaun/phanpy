@@ -2060,37 +2060,19 @@ function Status({
               }`}
               ref={actionsRef}
             >
-              {tooManyMentions ? (
-                <Menu2
-                  portal
-                  align="center"
-                  gap={4}
-                  overflow="auto"
-                  viewScroll="close"
-                  menuButton={
-                    <StatusButton
-                      size="s"
-                      title={t`Reply`}
-                      alt={t`Reply`}
-                      class="reply-button"
-                      icon="comment"
-                      iconSize="m"
-                    />
-                  }
-                >
-                  {replyModeMenuItems}
-                </Menu2>
-              ) : (
-                <StatusButton
-                  size="s"
-                  title={t`Reply`}
-                  alt={t`Reply`}
-                  class="reply-button"
-                  icon="comment"
-                  iconSize="m"
-                  onClick={replyStatus}
-                />
-              )}
+              <StatusButton
+                size="s"
+                title={t`Reply`}
+                alt={t`Reply`}
+                class="reply-button"
+                icon="comment"
+                iconSize="m"
+                // Menu doesn't work here
+                // Temporary solution: reply author-first if too many mentions
+                onClick={(e) =>
+                  replyStatus(e, tooManyMentions ? 'author-first' : 'all')
+                }
+              />
               <StatusButton
                 size="s"
                 checked={favourited}

@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-13 02:33\n"
+"PO-Revision-Date: 2025-10-14 07:01\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -39,7 +39,7 @@ msgstr "자동화됨"
 
 #: src/components/account-block.jsx:177
 #: src/components/account-info.jsx:683
-#: src/components/status.jsx:569
+#: src/components/status.jsx:563
 msgid "Group"
 msgstr "그룹"
 
@@ -120,11 +120,11 @@ msgstr "게시물"
 #: src/components/media-attachment.jsx:397
 #: src/components/media-modal.jsx:363
 #: src/components/related-actions.jsx:238
-#: src/components/status.jsx:2114
-#: src/components/status.jsx:2131
-#: src/components/status.jsx:2267
-#: src/components/status.jsx:2955
-#: src/components/status.jsx:2958
+#: src/components/status.jsx:2089
+#: src/components/status.jsx:2106
+#: src/components/status.jsx:2242
+#: src/components/status.jsx:2930
+#: src/components/status.jsx:2933
 #: src/pages/account-statuses.jsx:544
 #: src/pages/accounts.jsx:118
 #: src/pages/hashtag.jsx:203
@@ -237,7 +237,7 @@ msgid "Original"
 msgstr "원본"
 
 #: src/components/account-info.jsx:978
-#: src/components/status.jsx:2684
+#: src/components/status.jsx:2659
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1463
 #: src/pages/catchup.jsx:2106
@@ -278,7 +278,7 @@ msgstr "게시물 통계 보기"
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
 #: src/components/gif-picker-modal.jsx:71
-#: src/components/keyboard-shortcuts-help.jsx:43
+#: src/components/keyboard-shortcuts-help.jsx:52
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
 #: src/components/media-attachment.jsx:353
@@ -294,8 +294,8 @@ msgstr "게시물 통계 보기"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3199
-#: src/components/status.jsx:3411
+#: src/components/status.jsx:3174
+#: src/components/status.jsx:3386
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1600
@@ -514,8 +514,8 @@ msgid "Attachment #{i} failed"
 msgstr "첨부 파일 #{i} 실패"
 
 #: src/components/compose.jsx:1418
-#: src/components/status.jsx:2451
-#: src/components/timeline.jsx:1009
+#: src/components/status.jsx:2426
+#: src/components/timeline.jsx:990
 msgid "Content warning"
 msgstr "열람 주의"
 
@@ -554,21 +554,21 @@ msgstr ""
 
 #: src/components/compose.jsx:1867
 #: src/components/quote-settings-sheet.jsx:73
-#: src/components/status.jsx:313
+#: src/components/status.jsx:297
 #: src/pages/settings.jsx:381
 msgid "Anyone can quote"
 msgstr ""
 
 #: src/components/compose.jsx:1870
 #: src/components/quote-settings-sheet.jsx:76
-#: src/components/status.jsx:314
+#: src/components/status.jsx:298
 #: src/pages/settings.jsx:384
 msgid "Your followers can quote"
 msgstr ""
 
 #: src/components/compose.jsx:1873
 #: src/components/quote-settings-sheet.jsx:79
-#: src/components/status.jsx:315
+#: src/components/status.jsx:299
 #: src/pages/settings.jsx:387
 msgid "Only you can quote"
 msgstr ""
@@ -593,7 +593,7 @@ msgid "Quiet public"
 msgstr ""
 
 #: src/components/compose.jsx:1921
-#: src/components/status.jsx:2331
+#: src/components/status.jsx:2306
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "쪽지"
@@ -603,15 +603,13 @@ msgid "Schedule"
 msgstr ""
 
 #: src/components/compose.jsx:1975
-#: src/components/keyboard-shortcuts-help.jsx:155
-#: src/components/status.jsx:1062
-#: src/components/status.jsx:1096
-#: src/components/status.jsx:2080
-#: src/components/status.jsx:2081
-#: src/components/status.jsx:2093
-#: src/components/status.jsx:2094
-#: src/components/status.jsx:2812
-#: src/components/status.jsx:2824
+#: src/components/keyboard-shortcuts-help.jsx:164
+#: src/components/status.jsx:1056
+#: src/components/status.jsx:1090
+#: src/components/status.jsx:2065
+#: src/components/status.jsx:2066
+#: src/components/status.jsx:2787
+#: src/components/status.jsx:2799
 msgid "Reply"
 msgstr "댓글"
 
@@ -684,7 +682,7 @@ msgstr "초고를 지우다가 오류가 났습니다! 다시 한 번 시도해 
 
 #: src/components/drafts.jsx:126
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1604
+#: src/components/status.jsx:1598
 #: src/pages/filters.jsx:603
 #: src/pages/scheduled-posts.jsx:368
 msgid "Delete…"
@@ -725,8 +723,8 @@ msgid "Media"
 msgstr "매체"
 
 #: src/components/drafts.jsx:270
-#: src/components/keyboard-shortcuts-help.jsx:184
-#: src/components/status.jsx:725
+#: src/components/keyboard-shortcuts-help.jsx:193
+#: src/components/status.jsx:719
 msgid "Quote"
 msgstr "인용"
 
@@ -737,14 +735,14 @@ msgstr ""
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:207
 #: src/components/media-modal.jsx:469
-#: src/components/timeline.jsx:922
+#: src/components/timeline.jsx:903
 msgid "Previous"
 msgstr "이전"
 
 #: src/components/edit-history-controls.jsx:47
 #: src/components/gif-picker-modal.jsx:225
 #: src/components/media-modal.jsx:488
-#: src/components/timeline.jsx:939
+#: src/components/timeline.jsx:920
 msgid "Next"
 msgstr "다음"
 
@@ -875,104 +873,108 @@ msgstr "움짤을 검색하려면 입력하세요"
 msgid "Error loading GIFs"
 msgstr "GIF 불러오기 오류"
 
-#: src/components/keyboard-shortcuts-help.jsx:47
+#: src/components/keyboard-shortcuts-help.jsx:16
+msgid "<0>{key1}</0> then <1>{key2}</1>"
+msgstr ""
+
+#: src/components/keyboard-shortcuts-help.jsx:56
 #: src/components/nav-menu.jsx:368
 #: src/pages/catchup.jsx:1638
 msgid "Keyboard shortcuts"
 msgstr "키보드 단축키"
 
-#: src/components/keyboard-shortcuts-help.jsx:55
+#: src/components/keyboard-shortcuts-help.jsx:64
 msgid "Keyboard shortcuts help"
 msgstr "키보드 단축키 도움말"
 
-#: src/components/keyboard-shortcuts-help.jsx:59
+#: src/components/keyboard-shortcuts-help.jsx:68
 #: src/pages/catchup.jsx:1663
 msgid "Next post"
 msgstr "다음 게시물"
 
-#: src/components/keyboard-shortcuts-help.jsx:63
+#: src/components/keyboard-shortcuts-help.jsx:72
 #: src/pages/catchup.jsx:1671
 msgid "Previous post"
 msgstr "이전 게시물"
 
-#: src/components/keyboard-shortcuts-help.jsx:67
+#: src/components/keyboard-shortcuts-help.jsx:76
 msgid "Skip carousel to next post"
 msgstr "다음 게시물로 캐러셀 넘기기"
 
-#: src/components/keyboard-shortcuts-help.jsx:69
+#: src/components/keyboard-shortcuts-help.jsx:78
 msgid "<0>Shift</0> + <1>j</1>"
 msgstr "<0>Shift</0> + <1>j</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:75
+#: src/components/keyboard-shortcuts-help.jsx:84
 msgid "Skip carousel to previous post"
 msgstr "이전 게시물로 캐러셀 넘기기"
 
-#: src/components/keyboard-shortcuts-help.jsx:77
+#: src/components/keyboard-shortcuts-help.jsx:86
 msgid "<0>Shift</0> + <1>k</1>"
 msgstr "<0>Shift</0> + <1>k</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:83
+#: src/components/keyboard-shortcuts-help.jsx:92
 msgid "Load new posts"
 msgstr "새 게시물 불러오기"
 
-#: src/components/keyboard-shortcuts-help.jsx:87
+#: src/components/keyboard-shortcuts-help.jsx:96
 #: src/pages/catchup.jsx:1695
 msgid "Open post details"
 msgstr "게시물 자세히 보기"
 
-#: src/components/keyboard-shortcuts-help.jsx:89
+#: src/components/keyboard-shortcuts-help.jsx:98
 msgid "<0>Enter</0> or <1>o</1>"
 msgstr "<0>Enter</0> 또는 <1>o</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:96
+#: src/components/keyboard-shortcuts-help.jsx:105
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
 msgstr "열람 주의를 펼치거나<0/>글타래 펼치기·접기"
 
-#: src/components/keyboard-shortcuts-help.jsx:105
+#: src/components/keyboard-shortcuts-help.jsx:114
 msgid "Close post or dialogs"
 msgstr "게시물 혹은 창 닫기"
 
-#: src/components/keyboard-shortcuts-help.jsx:107
+#: src/components/keyboard-shortcuts-help.jsx:116
 msgid "<0>Esc</0> or <1>Backspace</1>"
 msgstr "<0>Esc</0> 또는 <1>Backspace</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:113
+#: src/components/keyboard-shortcuts-help.jsx:122
 msgid "Focus column in multi-column mode"
 msgstr "멀티 칼럼 모드에서 특정 칼럼으로 이동"
 
-#: src/components/keyboard-shortcuts-help.jsx:115
+#: src/components/keyboard-shortcuts-help.jsx:124
 msgid "<0>1</0> to <1>9</1>"
 msgstr "<0>1</0> 에서 <1>9</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:121
+#: src/components/keyboard-shortcuts-help.jsx:130
 msgid "Focus next column in multi-column mode"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:125
+#: src/components/keyboard-shortcuts-help.jsx:134
 msgid "Focus previous column in multi-column mode"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:129
+#: src/components/keyboard-shortcuts-help.jsx:138
 msgid "Compose new post"
 msgstr "새 게시물 쓰기"
 
-#: src/components/keyboard-shortcuts-help.jsx:133
+#: src/components/keyboard-shortcuts-help.jsx:142
 msgid "Compose new post (new window)"
 msgstr "새 게시물 쓰기 (새 창)"
 
-#: src/components/keyboard-shortcuts-help.jsx:136
+#: src/components/keyboard-shortcuts-help.jsx:145
 msgid "<0>Shift</0> + <1>c</1>"
 msgstr "<0>Shift</0> + <1>c</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:142
+#: src/components/keyboard-shortcuts-help.jsx:151
 msgid "Send post"
 msgstr "게시물 올리기"
 
-#: src/components/keyboard-shortcuts-help.jsx:144
+#: src/components/keyboard-shortcuts-help.jsx:153
 msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr "<0>Ctrl</0> + <1>Enter</1> 또는 <2>⌘</2> + <3>Enter</3>"
 
-#: src/components/keyboard-shortcuts-help.jsx:151
+#: src/components/keyboard-shortcuts-help.jsx:160
 #: src/components/nav-menu.jsx:337
 #: src/components/search-form.jsx:204
 #: src/components/shortcuts-settings.jsx:52
@@ -982,47 +984,55 @@ msgstr "<0>Ctrl</0> + <1>Enter</1> 또는 <2>⌘</2> + <3>Enter</3>"
 msgid "Search"
 msgstr "검색"
 
-#: src/components/keyboard-shortcuts-help.jsx:159
+#: src/components/keyboard-shortcuts-help.jsx:168
 msgid "Reply (new window)"
 msgstr "댓글 (새 창)"
 
-#: src/components/keyboard-shortcuts-help.jsx:162
+#: src/components/keyboard-shortcuts-help.jsx:171
 msgid "<0>Shift</0> + <1>r</1>"
 msgstr "<0>Shift</0> + <1>r</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:168
+#: src/components/keyboard-shortcuts-help.jsx:177
 msgid "Like (favourite)"
 msgstr "좋아요 (즐겨찾기)"
 
-#: src/components/keyboard-shortcuts-help.jsx:170
+#: src/components/keyboard-shortcuts-help.jsx:179
 msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> 또는 <1>f</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:176
-#: src/components/status.jsx:1132
-#: src/components/status.jsx:2854
-#: src/components/status.jsx:2909
+#: src/components/keyboard-shortcuts-help.jsx:185
+#: src/components/status.jsx:1126
+#: src/components/status.jsx:2829
+#: src/components/status.jsx:2884
 msgid "Boost"
 msgstr "부스트"
 
-#: src/components/keyboard-shortcuts-help.jsx:178
+#: src/components/keyboard-shortcuts-help.jsx:187
 msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Shift</0> + <1>b</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:188
-#: src/components/status.jsx:1234
-#: src/components/status.jsx:2934
-#: src/components/status.jsx:2935
+#: src/components/keyboard-shortcuts-help.jsx:197
+#: src/components/status.jsx:1228
+#: src/components/status.jsx:2909
+#: src/components/status.jsx:2910
 msgid "Bookmark"
 msgstr "책갈피"
 
-#: src/components/keyboard-shortcuts-help.jsx:192
+#: src/components/keyboard-shortcuts-help.jsx:201
 msgid "Toggle Cloak mode"
 msgstr "가리기 모드 켜고 끄기"
 
-#: src/components/keyboard-shortcuts-help.jsx:194
+#: src/components/keyboard-shortcuts-help.jsx:203
 msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 msgstr "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
+
+#: src/components/keyboard-shortcuts-help.jsx:209
+msgid "Go to Home"
+msgstr ""
+
+#: src/components/keyboard-shortcuts-help.jsx:213
+msgid "Go to Notifications"
+msgstr ""
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1095,14 +1105,14 @@ msgid "Media description"
 msgstr "매체 설명"
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1289
-#: src/components/status.jsx:1298
-#: src/components/translation-block.jsx:239
+#: src/components/status.jsx:1283
+#: src/components/status.jsx:1292
+#: src/components/translation-block.jsx:269
 msgid "Translate"
 msgstr "번역"
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1319
+#: src/components/status.jsx:1313
 msgid "Speak"
 msgstr "말하기"
 
@@ -1229,15 +1239,15 @@ msgstr "필터됨: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:3337
-#: src/components/status.jsx:3415
-#: src/components/timeline.jsx:998
+#: src/components/status.jsx:3312
+#: src/components/status.jsx:3390
+#: src/components/timeline.jsx:979
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1921
 msgid "Filtered"
 msgstr "필터된"
 
-#: src/components/media.jsx:479
+#: src/components/media.jsx:482
 msgid "Open file"
 msgstr ""
 
@@ -1559,8 +1569,8 @@ msgid "[Unknown notification type: {type}]"
 msgstr "[알 수 없는 알림 유형: {type}]"
 
 #: src/components/notification.jsx:463
-#: src/components/status.jsx:1248
-#: src/components/status.jsx:1258
+#: src/components/status.jsx:1242
+#: src/components/status.jsx:1252
 msgid "Boosted/Liked by…"
 msgstr "부스트·좋아한 사용자…"
 
@@ -1586,19 +1596,19 @@ msgid "View #Wrapstodon"
 msgstr ""
 
 #: src/components/notification.jsx:813
-#: src/components/status.jsx:276
+#: src/components/status.jsx:260
 msgid "Read more →"
 msgstr "더 보기 →"
 
 #: src/components/open-link-sheet.jsx:30
 #: src/components/related-actions.jsx:492
-#: src/components/status.jsx:1410
+#: src/components/status.jsx:1404
 msgid "Link copied"
 msgstr "링크 복사됨"
 
 #: src/components/open-link-sheet.jsx:33
 #: src/components/related-actions.jsx:495
-#: src/components/status.jsx:1413
+#: src/components/status.jsx:1407
 msgid "Unable to copy link"
 msgstr "링크를 복사할 수 없음"
 
@@ -1610,13 +1620,13 @@ msgstr ""
 #: src/components/post-embed-modal.jsx:232
 #: src/components/related-actions.jsx:501
 #: src/components/shortcuts-settings.jsx:1059
-#: src/components/status.jsx:1419
+#: src/components/status.jsx:1413
 msgid "Copy"
 msgstr "복사"
 
 #: src/components/open-link-sheet.jsx:82
 #: src/components/related-actions.jsx:522
-#: src/components/status.jsx:1441
+#: src/components/status.jsx:1435
 msgid "Share…"
 msgstr "공유…"
 
@@ -1684,7 +1694,7 @@ msgid "Ending"
 msgstr "마감"
 
 #: src/components/post-embed-modal.jsx:201
-#: src/components/status.jsx:1454
+#: src/components/status.jsx:1448
 msgid "Embed post"
 msgstr "게시물 임베드하기"
 
@@ -1913,7 +1923,7 @@ msgstr ""
 
 #: src/components/related-actions.jsx:516
 #: src/components/shortcuts-settings.jsx:1077
-#: src/components/status.jsx:1435
+#: src/components/status.jsx:1429
 msgid "Sharing doesn't seem to work."
 msgstr "공유 기능이 작동하지 않습니다."
 
@@ -2251,7 +2261,7 @@ msgid "Move down"
 msgstr "아래로 내리기"
 
 #: src/components/shortcuts-settings.jsx:379
-#: src/components/status.jsx:1566
+#: src/components/status.jsx:1560
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "고치기"
@@ -2450,348 +2460,348 @@ msgstr "바로 가기 JSON 코드"
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr "인스턴스 서버에서 설정 가져오기·인스턴스 서버에 설정 내보내기 (매우 시범적)"
 
-#: src/components/status.jsx:305
+#: src/components/status.jsx:289
 msgid "Private posts cannot be quoted"
 msgstr ""
 
-#: src/components/status.jsx:306
+#: src/components/status.jsx:290
 msgid "Request to quote"
 msgstr ""
 
-#: src/components/status.jsx:307
+#: src/components/status.jsx:291
 msgid "Author will manually review"
 msgstr ""
 
-#: src/components/status.jsx:308
+#: src/components/status.jsx:292
 msgid "Only followers can quote this post"
 msgstr ""
 
-#: src/components/status.jsx:309
+#: src/components/status.jsx:293
 msgid "You are not allowed to quote this post"
 msgstr ""
 
-#: src/components/status.jsx:593
+#: src/components/status.jsx:587
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> 님이 <1>부스트 함</1>"
 
-#: src/components/status.jsx:699
+#: src/components/status.jsx:693
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
 msgstr "죄송합니다. 현재 로그인한 인스턴스는 다른 인스턴스에 있는 이 게시물과 상호작용할 수 없습니다."
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:888
+#: src/components/status.jsx:882
 msgid "Unliked @{0}'s post"
 msgstr "@{0} 님의 게시물을 좋아했던 것 취소"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:889
+#: src/components/status.jsx:883
 msgid "Liked @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:928
+#: src/components/status.jsx:922
 msgid "Unbookmarked @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:929
+#: src/components/status.jsx:923
 msgid "Bookmarked @{0}'s post"
 msgstr ""
 
-#: src/components/status.jsx:1033
+#: src/components/status.jsx:1027
 msgid "Some media have no descriptions."
 msgstr "첨부한 매체 중에 설명이 없는 게 있습니다."
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
-#: src/components/status.jsx:1040
+#: src/components/status.jsx:1034
 msgid "Old post (<0>{0}</0>)"
 msgstr "오래된 게시물 (<0>{0}</0>)"
 
-#: src/components/status.jsx:1061
+#: src/components/status.jsx:1055
 msgid "Reply…"
 msgstr ""
 
-#: src/components/status.jsx:1070
-#: src/components/status.jsx:1079
+#: src/components/status.jsx:1064
+#: src/components/status.jsx:1073
 msgid "Reply all"
 msgstr ""
 
-#: src/components/status.jsx:1073
+#: src/components/status.jsx:1067
 msgid "{mentionsCount, plural, other {# mentions}}"
 msgstr ""
 
 #. placeholder {0}: mentionsCount - 1
 #. placeholder {1}: username || acct
-#: src/components/status.jsx:1082
+#: src/components/status.jsx:1076
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1099
+#: src/components/status.jsx:1093
 msgid "Only <0>@{0}</0>"
 msgstr ""
 
-#: src/components/status.jsx:1132
-#: src/components/status.jsx:1209
-#: src/components/status.jsx:2854
-#: src/components/status.jsx:2907
+#: src/components/status.jsx:1126
+#: src/components/status.jsx:1203
+#: src/components/status.jsx:2829
+#: src/components/status.jsx:2882
 msgid "Unboost"
 msgstr "부스트 취소"
 
-#: src/components/status.jsx:1171
-#: src/components/status.jsx:2892
+#: src/components/status.jsx:1165
+#: src/components/status.jsx:2867
 msgid "Quote with link"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1188
-#: src/components/status.jsx:1755
+#: src/components/status.jsx:1182
+#: src/components/status.jsx:1749
 msgid "Unboosted @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1189
-#: src/components/status.jsx:1756
+#: src/components/status.jsx:1183
+#: src/components/status.jsx:1750
 msgid "Boosted @{0}'s post"
 msgstr ""
 
-#: src/components/status.jsx:1211
-#: src/components/status.jsx:2906
+#: src/components/status.jsx:1205
+#: src/components/status.jsx:2881
 msgid "Boost/Quote…"
 msgstr ""
 
-#: src/components/status.jsx:1212
-#: src/components/status.jsx:2906
+#: src/components/status.jsx:1206
+#: src/components/status.jsx:2881
 msgid "Boost…"
 msgstr "부스트…"
 
-#: src/components/status.jsx:1224
-#: src/components/status.jsx:2104
-#: src/components/status.jsx:2922
+#: src/components/status.jsx:1218
+#: src/components/status.jsx:2079
+#: src/components/status.jsx:2897
 msgid "Unlike"
 msgstr "좋아요 취소"
 
-#: src/components/status.jsx:1225
-#: src/components/status.jsx:2104
-#: src/components/status.jsx:2105
-#: src/components/status.jsx:2922
-#: src/components/status.jsx:2923
+#: src/components/status.jsx:1219
+#: src/components/status.jsx:2079
+#: src/components/status.jsx:2080
+#: src/components/status.jsx:2897
+#: src/components/status.jsx:2898
 msgid "Like"
 msgstr "좋아요"
 
-#: src/components/status.jsx:1234
-#: src/components/status.jsx:2934
+#: src/components/status.jsx:1228
+#: src/components/status.jsx:2909
 msgid "Unbookmark"
 msgstr "책갈피 빼기"
 
-#: src/components/status.jsx:1269
+#: src/components/status.jsx:1263
 msgid "View Quotes"
 msgstr ""
 
-#: src/components/status.jsx:1336
+#: src/components/status.jsx:1330
 msgid "Post text copied"
 msgstr ""
 
-#: src/components/status.jsx:1339
+#: src/components/status.jsx:1333
 msgid "Unable to copy post text"
 msgstr ""
 
-#: src/components/status.jsx:1345
+#: src/components/status.jsx:1339
 msgid "Copy post text"
 msgstr ""
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1363
+#: src/components/status.jsx:1357
 msgid "View post by <0>@{0}</0>"
 msgstr "<0>@{0}</0> 님의 게시물 보기"
 
-#: src/components/status.jsx:1384
+#: src/components/status.jsx:1378
 msgid "Show Edit History"
 msgstr "수정 내역 보기"
 
-#: src/components/status.jsx:1387
+#: src/components/status.jsx:1381
 msgid "Edited: {editedDateText}"
 msgstr "{editedDateText}에 고쳐짐"
 
-#: src/components/status.jsx:1470
+#: src/components/status.jsx:1464
 msgid "Conversation unmuted"
 msgstr "대화 뮤트 풀림"
 
-#: src/components/status.jsx:1470
+#: src/components/status.jsx:1464
 msgid "Conversation muted"
 msgstr "대화 뮤트됨"
 
-#: src/components/status.jsx:1476
+#: src/components/status.jsx:1470
 msgid "Unable to unmute conversation"
 msgstr "대화 뮤트를 풀 수 없음"
 
-#: src/components/status.jsx:1477
+#: src/components/status.jsx:1471
 msgid "Unable to mute conversation"
 msgstr "대화를 뮤트할 수 없음"
 
-#: src/components/status.jsx:1486
+#: src/components/status.jsx:1480
 msgid "Unmute conversation"
 msgstr "대화 뮤트 풀기"
 
-#: src/components/status.jsx:1493
+#: src/components/status.jsx:1487
 msgid "Mute conversation"
 msgstr "대화 뮤트하기"
 
-#: src/components/status.jsx:1509
+#: src/components/status.jsx:1503
 msgid "Post unpinned from profile"
 msgstr "프로필에 고정됐던 게시물을 내림"
 
-#: src/components/status.jsx:1510
+#: src/components/status.jsx:1504
 msgid "Post pinned to profile"
 msgstr "게시물이 프로필에 고정됨"
 
-#: src/components/status.jsx:1515
+#: src/components/status.jsx:1509
 msgid "Unable to unpin post"
 msgstr "게시물 고정을 풀 수 없음"
 
-#: src/components/status.jsx:1515
+#: src/components/status.jsx:1509
 msgid "Unable to pin post"
 msgstr "게시물을 고정할 수 없음"
 
-#: src/components/status.jsx:1524
+#: src/components/status.jsx:1518
 msgid "Unpin from profile"
 msgstr "프로필에 고정된 게시물 내리기"
 
-#: src/components/status.jsx:1531
+#: src/components/status.jsx:1525
 msgid "Pin to profile"
 msgstr "프로필에 고정"
 
-#: src/components/status.jsx:1544
+#: src/components/status.jsx:1538
 #: src/pages/settings.jsx:338
 msgid "Quote settings"
 msgstr ""
 
-#: src/components/status.jsx:1577
+#: src/components/status.jsx:1571
 msgid "Delete this post?"
 msgstr "게시물을 지울까요?"
 
-#: src/components/status.jsx:1593
+#: src/components/status.jsx:1587
 msgid "Post deleted"
 msgstr "게시물 지워짐"
 
-#: src/components/status.jsx:1596
+#: src/components/status.jsx:1590
 msgid "Unable to delete post"
 msgstr "게시물 지울 수 없음"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1621
+#: src/components/status.jsx:1615
 msgid "Remove my post from <0>@{0}</0>'s post?"
 msgstr ""
 
-#: src/components/status.jsx:1642
+#: src/components/status.jsx:1636
 msgid "Quote removed"
 msgstr ""
 
-#: src/components/status.jsx:1646
+#: src/components/status.jsx:1640
 msgid "Unable to remove quote"
 msgstr ""
 
-#: src/components/status.jsx:1652
+#: src/components/status.jsx:1646
 msgid "Remove quote…"
 msgstr ""
 
-#: src/components/status.jsx:1666
+#: src/components/status.jsx:1660
 msgid "Report post…"
 msgstr "게시물 신고…"
 
-#: src/components/status.jsx:2105
-#: src/components/status.jsx:2141
-#: src/components/status.jsx:2923
+#: src/components/status.jsx:2080
+#: src/components/status.jsx:2116
+#: src/components/status.jsx:2898
 msgid "Liked"
 msgstr "좋아함"
 
-#: src/components/status.jsx:2138
-#: src/components/status.jsx:2909
+#: src/components/status.jsx:2113
+#: src/components/status.jsx:2884
 msgid "Boosted"
 msgstr "부스트함"
 
-#: src/components/status.jsx:2148
-#: src/components/status.jsx:2935
+#: src/components/status.jsx:2123
+#: src/components/status.jsx:2910
 msgid "Bookmarked"
 msgstr "책갈피 꽂음"
 
-#: src/components/status.jsx:2152
+#: src/components/status.jsx:2127
 msgid "Pinned"
 msgstr "고정됨"
 
-#: src/components/status.jsx:2209
-#: src/components/status.jsx:2692
+#: src/components/status.jsx:2184
+#: src/components/status.jsx:2667
 msgid "Deleted"
 msgstr "지워짐"
 
-#: src/components/status.jsx:2250
+#: src/components/status.jsx:2225
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, other {#개의 댓글}}"
 
-#: src/components/status.jsx:2414
-#: src/components/status.jsx:2476
-#: src/components/status.jsx:2582
+#: src/components/status.jsx:2389
+#: src/components/status.jsx:2451
+#: src/components/status.jsx:2557
 msgid "Show less"
 msgstr "접기"
 
-#: src/components/status.jsx:2414
-#: src/components/status.jsx:2476
+#: src/components/status.jsx:2389
+#: src/components/status.jsx:2451
 msgid "Show content"
 msgstr "내용 보기"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2578
+#: src/components/status.jsx:2553
 #: src/pages/catchup.jsx:1920
 msgid "Filtered: {0}"
 msgstr "필터됨: {0}"
 
-#: src/components/status.jsx:2582
+#: src/components/status.jsx:2557
 msgid "Show media"
 msgstr "매체 보기"
 
-#: src/components/status.jsx:2727
+#: src/components/status.jsx:2702
 msgid "Edited"
 msgstr "고쳐짐"
 
-#: src/components/status.jsx:2813
-#: src/components/status.jsx:2825
+#: src/components/status.jsx:2788
+#: src/components/status.jsx:2800
 msgid "Comments"
 msgstr "댓글들"
 
-#: src/components/status.jsx:3075
+#: src/components/status.jsx:3050
 msgid "Post hidden by your filters"
 msgstr ""
 
-#: src/components/status.jsx:3076
+#: src/components/status.jsx:3051
 msgid "Post pending"
 msgstr ""
 
-#: src/components/status.jsx:3077
-#: src/components/status.jsx:3078
-#: src/components/status.jsx:3079
+#: src/components/status.jsx:3052
+#: src/components/status.jsx:3053
+#: src/components/status.jsx:3054
 msgid "Post unavailable"
 msgstr ""
 
-#: src/components/status.jsx:3080
+#: src/components/status.jsx:3055
 msgid "Post removed by author"
 msgstr ""
 
-#: src/components/status.jsx:3204
+#: src/components/status.jsx:3179
 msgid "Edit History"
 msgstr "수정 내역"
 
-#: src/components/status.jsx:3208
+#: src/components/status.jsx:3183
 msgid "Failed to load history"
 msgstr "내역 불러오기 실패"
 
-#: src/components/status.jsx:3213
+#: src/components/status.jsx:3188
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "불러오는 중…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3345
+#: src/components/status.jsx:3320
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> 님이 부스트 함"
 
@@ -2844,7 +2854,7 @@ msgid "Pinned posts"
 msgstr ""
 
 #. placeholder {0}: filterInfo.titlesStr
-#: src/components/timeline.jsx:993
+#: src/components/timeline.jsx:974
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>필터됨</0>: <1>{0}</1>"
 
@@ -2852,28 +2862,28 @@ msgstr "<0>필터됨</0>: <1>{0}</1>"
 msgid "Translated Bio"
 msgstr "번역된 소개문"
 
-#: src/components/translation-block.jsx:196
+#: src/components/translation-block.jsx:226
 msgid "Auto-translated from {sourceLangText}"
 msgstr "{sourceLangText}에서 자동 번역됨"
 
-#: src/components/translation-block.jsx:234
+#: src/components/translation-block.jsx:264
 msgid "Translating…"
 msgstr "번역중…"
 
-#: src/components/translation-block.jsx:237
+#: src/components/translation-block.jsx:267
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "{sourceLangText}(자동 인식됨)를 번역"
 
-#: src/components/translation-block.jsx:238
+#: src/components/translation-block.jsx:268
 msgid "Translate from {sourceLangText}"
 msgstr "{sourceLangText}를 번역"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:266
+#: src/components/translation-block.jsx:296
 msgid "Auto ({0})"
 msgstr "자동 ({0})"
 
-#: src/components/translation-block.jsx:279
+#: src/components/translation-block.jsx:309
 msgid "Failed to translate"
 msgstr "번역 실패"
 

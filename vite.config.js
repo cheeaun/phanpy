@@ -176,9 +176,7 @@ export default defineConfig({
   ],
   build: {
     sourcemap: true,
-    // Note: In Vite 6, if cssCodeSplit = false, it will show error "Cannot read properties of undefined (reading 'includes')"
-    // TODO: Revisit this when this issue is fixed
-    // cssCodeSplit: false,
+    cssCodeSplit: false,
     rollupOptions: {
       treeshake: false,
       input: {

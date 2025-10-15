@@ -130,6 +130,21 @@ export default defineConfig({
           ]
         : []),
     ]),
+    {
+      // https://developers.cloudflare.com/pages/configuration/early-hints/
+      name: 'generate-headers',
+      writeBundle(_, bundle) {
+        const cssFiles = Object.keys(bundle).filter((file) =>
+          file.endsWith('.css'),
+        );
+        if (cssFiles.length > 0) {
+          const links = cssFiles
+            .map((file) => `  Link: <${file}>; rel=preload; as=style`)
+            .join('\n');
+          fs.writeFileSync(resolve(__dirname, 'dist/_headers'), `/\n${links}`);
+        }
+      },
+    },
     VitePWA({
       manifest: {
         name: CLIENT_NAME,

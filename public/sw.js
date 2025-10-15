@@ -167,9 +167,8 @@ const assetsRoute = new Route(
     const hasHash = /-[0-9a-z-]{4,}\./i.test(request.url);
     return sameOrigin && isAsset && hasHash;
   },
-  new NetworkFirst({
+  new StaleWhileRevalidate({
     cacheName: 'assets',
-    networkTimeoutSeconds: 5,
     plugins: [
       // Only enable AssetHashPlugin in production
       ...(import.meta.env.PROD

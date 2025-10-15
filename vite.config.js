@@ -173,6 +173,31 @@ export default defineConfig({
       brotli: true,
       open: false,
     }),
+    {
+      name: 'css-ordering-plugin',
+      transformIndexHtml(html) {
+        const stylesheets = [];
+        html = html.replace(
+          /<link[^>]*rel=["']stylesheet["'][^>]*>/g,
+          (match) => {
+            stylesheets.push(match);
+            return '';
+          },
+        );
+
+        // Try to place before first <link> tag, fallback to after last <meta> tag
+        const linkRegex = /<link[^>]*>/;
+        if (linkRegex.test(html)) {
+          return html.replace(linkRegex, (match) => {
+            return stylesheets.join('') + match;
+          });
+        } else {
+          return html.replace(/(<meta[^>]*>)(?![\s\S]*<meta)/, (match) => {
+            return match + stylesheets.join('');
+          });
+        }
+      },
+    },
   ],
   build: {
     sourcemap: true,

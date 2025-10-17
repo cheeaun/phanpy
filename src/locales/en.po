@@ -198,14 +198,14 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:892
+#: src/components/account-info.jsx:900
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:909
+#: src/components/account-info.jsx:917
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} original posts, {1} replies, {2} boosts"
 
@@ -216,22 +216,22 @@ msgstr "{0} original posts, {1} replies, {2} boosts"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:926
+#: src/components/account-info.jsx:934
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:942
+#: src/components/account-info.jsx:950
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 
-#: src/components/account-info.jsx:974
+#: src/components/account-info.jsx:1008
 #: src/pages/catchup.jsx:70
 msgid "Original"
 msgstr ""
 
-#: src/components/account-info.jsx:978
+#: src/components/account-info.jsx:1012
 #: src/components/status.jsx:2659
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1463
@@ -241,14 +241,14 @@ msgstr ""
 msgid "Replies"
 msgstr ""
 
-#: src/components/account-info.jsx:983
+#: src/components/account-info.jsx:1017
 #: src/components/quotes-modal.jsx:81
 #: src/pages/catchup.jsx:73
 #: src/pages/catchup.jsx:1466
 msgid "Quotes"
 msgstr "Quotes"
 
-#: src/components/account-info.jsx:988
+#: src/components/account-info.jsx:1022
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1465
 #: src/pages/catchup.jsx:2118
@@ -256,11 +256,11 @@ msgstr "Quotes"
 msgid "Boosts"
 msgstr ""
 
-#: src/components/account-info.jsx:994
+#: src/components/account-info.jsx:1028
 msgid "Post stats unavailable."
 msgstr "Post stats unavailable."
 
-#: src/components/account-info.jsx:1033
+#: src/components/account-info.jsx:1055
 msgid "View post stats"
 msgstr "View post stats"
 

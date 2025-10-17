@@ -39,73 +39,147 @@
     background-color: var(--bg-faded-color);
     padding: 8px 12px;
 
-    &:is(:hover, :focus-within) {
+    a:is(:hover, :focus-within) & {
       background-color: var(--link-bg-hover-color);
+    }
+
+    --pattern-color: rgba(255, 255, 255, 0.35);
+    @media (prefers-color-scheme: dark) {
+      --pattern-color: rgba(0, 0, 0, 0.35);
+    }
+
+    > div:first-child {
+      animation: appear-smooth 0.3s both ease-in-out 0.3s;
     }
   }
 
   .posting-stats-bar {
-    --gap: 0.5px;
-    --gap-color: var(--outline-color);
+    --gap: var(--hairline-width);
     height: var(--posting-stats-size);
     border-radius: var(--posting-stats-size);
     overflow: hidden;
     margin: 8px 0;
-    box-shadow:
-      inset 0 0 0 1px var(--outline-color),
-      inset 0 0 0 1.5px var(--bg-blur-color);
+    display: flex;
+    gap: var(--gap);
+    box-shadow: 0 0 0 1px var(--bg-color);
     background-color: var(--bg-color);
-    background-repeat: no-repeat;
-    animation: swoosh-bg-image 0.3s ease-in-out 0.3s both;
-    background-image: linear-gradient(
-      var(--to-forward),
-      var(--original-color) 0%,
-      var(--original-color) calc(var(--originals-percentage) - var(--gap)),
-      var(--gap-color) calc(var(--originals-percentage) - var(--gap)),
-      var(--gap-color) calc(var(--originals-percentage) + var(--gap)),
-      var(--reply-to-color) calc(var(--originals-percentage) + var(--gap)),
-      var(--reply-to-color) calc(var(--replies-percentage) - var(--gap)),
-      var(--gap-color) calc(var(--replies-percentage) - var(--gap)),
-      var(--gap-color) calc(var(--replies-percentage) + var(--gap)),
-      var(--quote-color) calc(var(--replies-percentage) + var(--gap)),
-      var(--quote-color) calc(var(--quotes-percentage, 0%) - var(--gap)),
-      var(--gap-color) calc(var(--quotes-percentage, 0%) - var(--gap)),
-      var(--gap-color) calc(var(--quotes-percentage, 0%) + var(--gap)),
-      var(--reblog-color) calc(var(--quotes-percentage, 0%) + var(--gap)),
-      var(--reblog-color) 100%
+    position: relative;
+    animation: woop-in 0.1s var(--timing-function) 0.4s both;
+  }
+
+  .posting-stats-bar-section {
+    width: var(--percentage);
+  }
+
+  .posting-stats-bar-originals {
+    --stripe-width: 3px;
+    --stripe-gap: 4px;
+    background-color: var(--original-color);
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--pattern-color) 0px,
+      var(--pattern-color) var(--stripe-width),
+      transparent var(--stripe-width),
+      transparent calc(var(--stripe-width) + var(--stripe-gap))
     );
+  }
+
+  .posting-stats-bar-replies {
+    --dot-size: 2px;
+    --dot-spacing: 10px;
+    --dot-offset-x: 0px;
+    --dot-offset-y: 1.5px;
+    background-color: var(--reply-to-color);
+    background-image:
+      radial-gradient(
+        circle,
+        var(--pattern-color) var(--dot-size),
+        transparent var(--dot-size)
+      ),
+      radial-gradient(
+        circle,
+        var(--pattern-color) var(--dot-size),
+        transparent var(--dot-size)
+      );
+    background-size: var(--dot-spacing) var(--dot-spacing);
+    background-position:
+      var(--dot-offset-x) var(--dot-offset-y),
+      calc(var(--dot-spacing) / 2 + var(--dot-offset-x))
+      calc(var(--dot-spacing) / 2 + var(--dot-offset-y));
+  }
+
+  .posting-stats-bar-quotes {
+    --checker-size: 8px;
+    background-color: var(--quote-color);
+    background-image:
+      linear-gradient(
+        45deg,
+        var(--pattern-color) 25%,
+        transparent 25%,
+        transparent 75%,
+        var(--pattern-color) 75%
+      ),
+      linear-gradient(
+        45deg,
+        var(--pattern-color) 25%,
+        transparent 25%,
+        transparent 75%,
+        var(--pattern-color) 75%
+      );
+    background-size: var(--checker-size) var(--checker-size);
+    background-position:
+      0 0,
+      calc(var(--checker-size) / 2) calc(var(--checker-size) / 2);
+  }
+
+  .posting-stats-bar-boosts {
+    --grid-line-width: 1px;
+    --grid-spacing: 3px;
+    background-color: var(--reblog-color);
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        var(--pattern-color) 0px,
+        var(--pattern-color) var(--grid-line-width),
+        transparent var(--grid-line-width),
+        transparent calc(var(--grid-line-width) + var(--grid-spacing))
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        var(--pattern-color) 0px,
+        var(--pattern-color) var(--grid-line-width),
+        transparent var(--grid-line-width),
+        transparent calc(var(--grid-line-width) + var(--grid-spacing))
+      );
   }
 
   .posting-stats-legends {
     font-size: 12px;
     text-transform: uppercase;
+
+    > span {
+      animation: appear-smooth 0.5s both ease-in-out 0.25s;
+
+      &:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      &:nth-child(3) {
+        animation-delay: 0.35s;
+      }
+      &:nth-child(n + 4) {
+        animation-delay: 0.4s;
+      }
+    }
   }
 
   .posting-stats-legend-item {
     display: inline-block;
-    width: var(--posting-stats-size);
+    width: calc(var(--posting-stats-size) * 2);
     height: var(--posting-stats-size);
     border-radius: var(--posting-stats-size);
-    background-color: var(--text-insignificant-color);
     vertical-align: middle;
     margin: 0 4px 2px;
-    /* border: 1px solid var(--outline-color); */
-    box-shadow:
-      inset 0 0 0 1px var(--outline-color),
-      inset 0 0 0 1.5px var(--bg-blur-color);
-
-    &.posting-stats-legend-item-originals {
-      background-color: var(--original-color);
-    }
-    &.posting-stats-legend-item-replies {
-      background-color: var(--reply-to-color);
-    }
-    &.posting-stats-legend-item-quotes {
-      background-color: var(--quote-color);
-    }
-    &.posting-stats-legend-item-boosts {
-      background-color: var(--reblog-color);
-    }
+    box-shadow: 0 0 0 1px var(--bg-color);
   }
 }
 
@@ -646,16 +720,6 @@
   }
 }
 
-@keyframes swoosh-bg-image {
-  0% {
-    background-position: -320px 0;
-    opacity: 0.25;
-  }
-  100% {
-    background-position: 0 0;
-    opacity: 1;
-  }
-}
 .account-container .posting-stats-button {
   display: flex;
   align-items: center;
@@ -701,11 +765,32 @@
   }
 }
 .posting-stats-icon {
+  --gap: var(--hairline-width);
   display: inline-block;
-  width: 24px;
-  height: 8px;
+  width: 20px;
+  height: 6px;
   filter: opacity(0.75);
-  animation: wobble 2s linear both infinite alternate !important;
+  border-radius: var(--posting-stats-size);
+  box-shadow: 0 0 0 1px var(--bg-color);
+  overflow: hidden;
+  animation: wobble 2s linear both infinite alternate;
+  background-image: linear-gradient(
+    to right,
+    var(--original-color) 0%,
+    var(--original-color) calc(25% - var(--gap) / 2),
+    transparent calc(25% - var(--gap) / 2),
+    transparent calc(25% + var(--gap) / 2),
+    var(--reply-to-color) calc(25% + var(--gap) / 2),
+    var(--reply-to-color) calc(50% - var(--gap) / 2),
+    transparent calc(50% - var(--gap) / 2),
+    transparent calc(50% + var(--gap) / 2),
+    var(--quote-color) calc(50% + var(--gap) / 2),
+    var(--quote-color) calc(75% - var(--gap) / 2),
+    transparent calc(75% - var(--gap) / 2),
+    transparent calc(75% + var(--gap) / 2),
+    var(--reblog-color) calc(75% + var(--gap) / 2),
+    var(--reblog-color) 100%
+  );
 
   &.loading {
     animation: loading-spin 0.35s linear both infinite !important;
@@ -1085,5 +1170,18 @@
         background-color: var(--bg-color);
       }
     }
+  }
+}
+
+@keyframes woop-in {
+  0% {
+    opacity: 0;
+    border-radius: 50%;
+    transform: translateY(-200%) scale(0.3, 0.9);
+  }
+  100% {
+    opacity: 1;
+    border-radius: 999px;
+    transform: translateY(0) scale(1);
   }
 }

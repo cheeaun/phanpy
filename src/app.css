@@ -2356,10 +2356,12 @@ body > .szh-menu-container {
       padding-block: 12px !important;
     }
 
-    > [class^='szh-menu']:first-child {
+    > [class^='szh-menu']:first-child,
+    > [class^='szh-menu']:first-child > [class^='szh-menu'] {
       border-start-start-radius: 8px;
     }
-    > [class^='szh-menu']:last-child {
+    > [class^='szh-menu']:last-child,
+    > [class^='szh-menu']:last-child > [class^='szh-menu'] {
       border-start-end-radius: 8px;
     }
   }

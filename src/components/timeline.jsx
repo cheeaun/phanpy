@@ -870,27 +870,8 @@ const TimelineItem = memo(
 function StatusCarousel({ title, class: className, children }) {
   const { t } = useLingui();
   const carouselRef = useRef();
-  // const { reachStart, reachEnd, init } = useScroll({
-  //   scrollableRef: carouselRef,
-  //   direction: 'horizontal',
-  // });
   const startButtonRef = useRef();
   const endButtonRef = useRef();
-  // useScrollFn(
-  //   {
-  //     scrollableRef: carouselRef,
-  //     direction: 'horizontal',
-  //     init: true,
-  //   },
-  //   ({ reachStart, reachEnd }) => {
-  //     if (startButtonRef.current) startButtonRef.current.disabled = reachStart;
-  //     if (endButtonRef.current) endButtonRef.current.disabled = reachEnd;
-  //   },
-  //   [],
-  // );
-  // useEffect(() => {
-  //   init?.();
-  // }, []);
 
   const [render, setRender] = useState(false);
   useEffect(() => {

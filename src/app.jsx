@@ -22,6 +22,7 @@ import { ICONS } from './components/ICONS';
 import KeyboardShortcutsHelp from './components/keyboard-shortcuts-help';
 import Loader from './components/loader';
 import Modals from './components/modals';
+import NavigationCommand from './components/navigation-command';
 import NotificationService from './components/notification-service';
 import SearchCommand from './components/search-command';
 import Shortcuts from './components/shortcuts';
@@ -514,6 +515,7 @@ function App() {
       <Modals />
       {isLoggedIn && <NotificationService />}
       <BackgroundService isLoggedIn={isLoggedIn} />
+      {isLoggedIn && <NavigationCommand />}
       <SearchCommand onClose={focusDeck} />
       <KeyboardShortcutsHelp />
     </>

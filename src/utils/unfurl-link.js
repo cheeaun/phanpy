@@ -1,13 +1,14 @@
-import pThrottle from 'p-throttle';
+import PQueue from 'p-queue';
 import { snapshot } from 'valtio/vanilla';
 
 import { api } from './api';
 import getDomain from './get-domain';
 import states, { saveStatus } from './states';
 
-export const throttle = pThrottle({
-  limit: 1,
+export const unfurlQueue = new PQueue({
+  concurrency: 1,
   interval: 1000,
+  intervalCap: 1,
 });
 
 const STATUS_ID_REGEXES = [
@@ -156,5 +157,6 @@ function _unfurlMastodonLink(instance, url) {
   }
 }
 
-const unfurlMastodonLink = throttle(_unfurlMastodonLink);
+const unfurlMastodonLink = (instance, url, signal) =>
+  unfurlQueue.add(() => _unfurlMastodonLink(instance, url), { signal });
 export default unfurlMastodonLink;

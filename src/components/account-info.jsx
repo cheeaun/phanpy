@@ -881,6 +881,14 @@ function AccountInfo({
                     // onClick={() => {
                     //   states.showAccount = false;
                     // }}
+                    onClick={
+                      import.meta.env.DEV && standalone
+                        ? () => {
+                            // Debug: undo back
+                            setPostingStats(null);
+                          }
+                        : undefined
+                    }
                   >
                     <div class="shazam-container">
                       <div class="shazam-container-inner">
@@ -944,47 +952,73 @@ function AccountInfo({
                                     other: `Last ${postingStats.total} posts in the past year(s)`,
                                   })}
                             </div>
-                            <div
-                              class="posting-stats-bar"
-                              style={{
-                                // [originals | replies | boosts]
-                                '--originals-percentage': `${
-                                  (postingStats.originals /
-                                    postingStats.total) *
-                                  100
-                                }%`,
-                                '--replies-percentage': `${
-                                  ((postingStats.originals +
-                                    postingStats.replies) /
-                                    postingStats.total) *
-                                  100
-                                }%`,
-                                '--quotes-percentage': `${
-                                  ((postingStats.originals +
-                                    postingStats.replies +
-                                    postingStats.quotes) /
-                                    postingStats.total) *
-                                  100
-                                }%`,
-                              }}
-                            />
+                            <div class="posting-stats-bar">
+                              {postingStats.originals > 0 && (
+                                <div
+                                  class="posting-stats-bar-section posting-stats-bar-originals"
+                                  style={{
+                                    '--percentage': `${
+                                      (postingStats.originals /
+                                        postingStats.total) *
+                                      100
+                                    }%`,
+                                  }}
+                                />
+                              )}
+                              {postingStats.replies > 0 && (
+                                <div
+                                  class="posting-stats-bar-section posting-stats-bar-replies"
+                                  style={{
+                                    '--percentage': `${
+                                      (postingStats.replies /
+                                        postingStats.total) *
+                                      100
+                                    }%`,
+                                  }}
+                                />
+                              )}
+                              {postingStats.quotes > 0 && (
+                                <div
+                                  class="posting-stats-bar-section posting-stats-bar-quotes"
+                                  style={{
+                                    '--percentage': `${
+                                      (postingStats.quotes /
+                                        postingStats.total) *
+                                      100
+                                    }%`,
+                                  }}
+                                />
+                              )}
+                              {postingStats.boosts > 0 && (
+                                <div
+                                  class="posting-stats-bar-section posting-stats-bar-boosts"
+                                  style={{
+                                    '--percentage': `${
+                                      (postingStats.boosts /
+                                        postingStats.total) *
+                                      100
+                                    }%`,
+                                  }}
+                                />
+                              )}
+                            </div>
                             <div class="posting-stats-legends">
                               <span class="ib">
-                                <span class="posting-stats-legend-item posting-stats-legend-item-originals" />{' '}
+                                <span class="posting-stats-legend-item posting-stats-bar-originals" />{' '}
                                 <Trans>Original</Trans>
                               </span>{' '}
                               <span class="ib">
-                                <span class="posting-stats-legend-item posting-stats-legend-item-replies" />{' '}
+                                <span class="posting-stats-legend-item posting-stats-bar-replies" />{' '}
                                 <Trans>Replies</Trans>
                               </span>{' '}
                               {supportsNativeQuote() && (
                                 <span class="ib">
-                                  <span class="posting-stats-legend-item posting-stats-legend-item-quotes" />{' '}
+                                  <span class="posting-stats-legend-item posting-stats-bar-quotes" />{' '}
                                   <Trans>Quotes</Trans>
                                 </span>
                               )}
                               <span class="ib">
-                                <span class="posting-stats-legend-item posting-stats-legend-item-boosts" />{' '}
+                                <span class="posting-stats-legend-item posting-stats-bar-boosts" />{' '}
                                 <Trans>Boosts</Trans>
                               </span>
                             </div>
@@ -1014,21 +1048,9 @@ function AccountInfo({
                           }}
                         >
                           <div
-                            class={`posting-stats-bar posting-stats-icon ${
+                            class={`posting-stats-icon ${
                               postingStatsUIState === 'loading' ? 'loading' : ''
                             }`}
-                            style={
-                              supportsNativeQuote()
-                                ? {
-                                    '--originals-percentage': '25%',
-                                    '--replies-percentage': '50%',
-                                    '--quotes-percentage': '75%',
-                                  }
-                                : {
-                                    '--originals-percentage': '33%',
-                                    '--replies-percentage': '66%',
-                                  }
-                            }
                           />
                           <Trans>View post stats</Trans>{' '}
                           {/* <Loader

@@ -53,6 +53,11 @@ export default function Modals() {
                 ? snapStates.showCompose.replyToStatus
                 : window.__COMPOSE__?.replyToStatus || null
             }
+            replyMode={
+              states.showCompose?.replyMode ||
+              window.__COMPOSE__?.replyMode ||
+              'all'
+            }
             editStatus={
               states.showCompose?.editStatus ||
               window.__COMPOSE__?.editStatus ||

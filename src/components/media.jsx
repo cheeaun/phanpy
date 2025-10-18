@@ -261,8 +261,6 @@ function Media({
         );
       };
 
-  const [hasNaturalAspectRatio, setHasNaturalAspectRatio] = useState(undefined);
-
   const postViewState = () =>
     window.matchMedia('(min-width: calc(40em + 350px))').matches
       ? 'large'
@@ -337,7 +335,6 @@ function Media({
           onClick={interceptOnClick}
           data-orientation={orientation}
           data-has-alt={!showInlineDesc || undefined}
-          data-has-natural-aspect-ratio={hasNaturalAspectRatio || undefined}
           style={
             showOriginal
               ? {
@@ -425,35 +422,41 @@ function Media({
 
                   // Check natural aspect ratio vs display aspect ratio
                   if (checkAspectRatio && $media) {
-                    const {
-                      clientWidth,
-                      clientHeight,
-                      naturalWidth,
-                      naturalHeight,
-                    } = e.target;
-                    if (
-                      clientWidth &&
-                      clientHeight &&
-                      naturalWidth &&
-                      naturalHeight
-                    ) {
-                      const minDimension = 88;
+                    const { target } = e;
+                    setTimeout(() => {
+                      const {
+                        clientWidth,
+                        clientHeight,
+                        naturalWidth,
+                        naturalHeight,
+                      } = target;
                       if (
-                        naturalWidth < minDimension ||
-                        naturalHeight < minDimension
+                        clientWidth &&
+                        clientHeight &&
+                        naturalWidth &&
+                        naturalHeight
                       ) {
-                        $media.dataset.hasSmallDimension = true;
-                      } else {
-                        const displayNaturalHeight =
-                          (naturalHeight * clientWidth) / naturalWidth;
-                        const almostSimilarHeight =
-                          Math.abs(displayNaturalHeight - clientHeight) < 5;
+                        const minDimension = 88;
+                        if (
+                          naturalWidth < minDimension ||
+                          naturalHeight < minDimension
+                        ) {
+                          $media.dataset.hasSmallDimension = true;
+                        } else {
+                          const displayNaturalHeight =
+                            (naturalHeight * clientWidth) / naturalWidth;
+                          const almostSimilarHeight =
+                            Math.abs(displayNaturalHeight - clientHeight) < 5;
 
-                        if (almostSimilarHeight) {
-                          setHasNaturalAspectRatio(true);
+                          if (almostSimilarHeight) {
+                            const $mediaParent = $media.closest('.media');
+                            if ($mediaParent) {
+                              $mediaParent.dataset.hasNaturalAspectRatio = true;
+                            }
+                          }
                         }
                       }
-                    }
+                    }, 300);
                   }
                 }}
                 onError={(e) => {

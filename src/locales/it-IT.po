@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-14 07:01\n"
+"PO-Revision-Date: 2025-10-18 15:20\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -203,14 +203,14 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Post}}"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:892
+#: src/components/account-info.jsx:900
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
-msgstr ""
+msgstr "{0} post originali, {1} risposte, {2} citazioni, {3} reblog"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:909
+#: src/components/account-info.jsx:917
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} post originali, {1} risposte, {2} reblog"
 
@@ -221,22 +221,22 @@ msgstr "{0} post originali, {1} risposte, {2} reblog"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:926
+#: src/components/account-info.jsx:934
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural,one {{1, plural,one {Ultimo post nell'ultimo giorno}other {Ultimo post negli ultimi {2} giorni}}} other {{3, plural,one {Ultimi {4} post nell'ultimo giorno} other {Ultimi {5} post negli ultimi {6} giorni}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:942
+#: src/components/account-info.jsx:950
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Ultimo post nell'ultimo anno(i)} other {Ultimi {1} post nell'ultimo anno(i)}}"
 
-#: src/components/account-info.jsx:974
+#: src/components/account-info.jsx:1008
 #: src/pages/catchup.jsx:70
 msgid "Original"
 msgstr "Originali"
 
-#: src/components/account-info.jsx:978
+#: src/components/account-info.jsx:1012
 #: src/components/status.jsx:2659
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1463
@@ -246,14 +246,14 @@ msgstr "Originali"
 msgid "Replies"
 msgstr "Risposte"
 
-#: src/components/account-info.jsx:983
+#: src/components/account-info.jsx:1017
 #: src/components/quotes-modal.jsx:81
 #: src/pages/catchup.jsx:73
 #: src/pages/catchup.jsx:1466
 msgid "Quotes"
 msgstr "Citazioni"
 
-#: src/components/account-info.jsx:988
+#: src/components/account-info.jsx:1022
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1465
 #: src/pages/catchup.jsx:2118
@@ -261,11 +261,11 @@ msgstr "Citazioni"
 msgid "Boosts"
 msgstr "Reblog"
 
-#: src/components/account-info.jsx:994
+#: src/components/account-info.jsx:1028
 msgid "Post stats unavailable."
 msgstr "Statistiche post non disponibili."
 
-#: src/components/account-info.jsx:1033
+#: src/components/account-info.jsx:1055
 msgid "View post stats"
 msgstr "Visualizza statistiche post"
 
@@ -590,7 +590,7 @@ msgstr "Locale"
 #: src/pages/settings.jsx:326
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
-msgstr ""
+msgstr "Non in lista"
 
 #: src/components/compose.jsx:1921
 #: src/components/status.jsx:2306
@@ -694,7 +694,7 @@ msgstr "Errore nel recupero dello stato in risposta!"
 
 #: src/components/drafts.jsx:159
 msgid "Error fetching quoted status!"
-msgstr ""
+msgstr "Errore nel recupero del post citato!"
 
 #: src/components/drafts.jsx:187
 msgid "Delete all drafts?"
@@ -730,7 +730,7 @@ msgstr "Cita"
 
 #: src/components/edit-history-controls.jsx:21
 msgid "Edit History Snapshots"
-msgstr ""
+msgstr "Istantanee della cronologia modifiche"
 
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:207
@@ -875,7 +875,7 @@ msgstr "Errore caricamento GIF"
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
-msgstr ""
+msgstr "<0>{key1}</0> poi <1>{key2}</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:56
 #: src/components/nav-menu.jsx:368
@@ -1028,11 +1028,11 @@ msgstr "<0>Maiusc</0> + <1>Alt</1> + <2>k</2>"
 
 #: src/components/keyboard-shortcuts-help.jsx:209
 msgid "Go to Home"
-msgstr ""
+msgstr "Vai a Home"
 
 #: src/components/keyboard-shortcuts-help.jsx:213
 msgid "Go to Notifications"
-msgstr ""
+msgstr "Vai a Notifiche"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1775,11 +1775,11 @@ msgstr "Impostazioni delle citazioni aggiornate"
 #: src/components/quote-settings-sheet.jsx:38
 #: src/pages/settings.jsx:374
 msgid "Failed to update quote settings"
-msgstr ""
+msgstr "Impossibile aggiornare impostazioni di citazione"
 
 #: src/components/quote-settings-sheet.jsx:57
 msgid "Quote settings for this post"
-msgstr ""
+msgstr "Impostazioni di citazione per questo post"
 
 #: src/components/quote-suggestion.jsx:19
 msgid "Turn link into a quote?"
@@ -1929,11 +1929,11 @@ msgstr "La condivisione non sembra funzionare."
 
 #: src/components/related-actions.jsx:542
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "Hai riattivato @{username}"
 
 #: src/components/related-actions.jsx:554
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "Riattiva <0>@{username}</0>"
 
 #: src/components/related-actions.jsx:570
 msgid "Mute <0>@{username}</0>…"
@@ -2462,23 +2462,23 @@ msgstr "Importa/esporta impostazioni da/su un server istanza (molto sperimentale
 
 #: src/components/status.jsx:289
 msgid "Private posts cannot be quoted"
-msgstr ""
+msgstr "Non puoi citare i post privati"
 
 #: src/components/status.jsx:290
 msgid "Request to quote"
-msgstr ""
+msgstr "Richiedi di citare"
 
 #: src/components/status.jsx:291
 msgid "Author will manually review"
-msgstr ""
+msgstr "L'autore approverà o rifiuterà manualmente"
 
 #: src/components/status.jsx:292
 msgid "Only followers can quote this post"
-msgstr ""
+msgstr "Solo i seguaci possono citare questo post"
 
 #: src/components/status.jsx:293
 msgid "You are not allowed to quote this post"
-msgstr ""
+msgstr "Non ti è permesso citare questo post"
 
 #: src/components/status.jsx:587
 msgid "<0/> <1>boosted</1>"
@@ -2519,27 +2519,27 @@ msgstr "Post vecchio (<0>{0}</0>)"
 
 #: src/components/status.jsx:1055
 msgid "Reply…"
-msgstr ""
+msgstr "Rispondi…"
 
 #: src/components/status.jsx:1064
 #: src/components/status.jsx:1073
 msgid "Reply all"
-msgstr ""
+msgstr "Rispondi a tutti"
 
 #: src/components/status.jsx:1067
 msgid "{mentionsCount, plural, other {# mentions}}"
-msgstr ""
+msgstr "{mentionsCount, plural, other {# menzioni}}"
 
 #. placeholder {0}: mentionsCount - 1
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:1076
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
-msgstr ""
+msgstr "{0, plural, other {<0>@{1}</0> prima, # altri sotto}}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1093
 msgid "Only <0>@{0}</0>"
-msgstr ""
+msgstr "Solo <0>@{0}</0>"
 
 #: src/components/status.jsx:1126
 #: src/components/status.jsx:1203
@@ -2551,7 +2551,7 @@ msgstr "Annulla reblog"
 #: src/components/status.jsx:1165
 #: src/components/status.jsx:2867
 msgid "Quote with link"
-msgstr ""
+msgstr "Cita con link"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1182
@@ -2568,7 +2568,7 @@ msgstr "Hai rebloggato il post di @{0}"
 #: src/components/status.jsx:1205
 #: src/components/status.jsx:2881
 msgid "Boost/Quote…"
-msgstr ""
+msgstr "Reblogga/cita…"
 
 #: src/components/status.jsx:1206
 #: src/components/status.jsx:2881
@@ -2674,7 +2674,7 @@ msgstr "Fissa sul profilo"
 #: src/components/status.jsx:1538
 #: src/pages/settings.jsx:338
 msgid "Quote settings"
-msgstr ""
+msgstr "Impostazioni citazione"
 
 #: src/components/status.jsx:1571
 msgid "Delete this post?"
@@ -2691,7 +2691,7 @@ msgstr "Impossibile eliminare post"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1615
 msgid "Remove my post from <0>@{0}</0>'s post?"
-msgstr ""
+msgstr "Rimuovere il post dal post di <0>@{0}</0>?"
 
 #: src/components/status.jsx:1636
 msgid "Quote removed"
@@ -2789,7 +2789,7 @@ msgstr "Post rimosso dall'autore"
 
 #: src/components/status.jsx:3179
 msgid "Edit History"
-msgstr "Modifica cronologia"
+msgstr "Cronologia modifiche"
 
 #: src/components/status.jsx:3183
 msgid "Failed to load history"
@@ -2814,12 +2814,12 @@ msgstr "Thread"
 
 #: src/components/thread-badge.jsx:28
 msgid "Thread {index}/{total}"
-msgstr ""
+msgstr "Thread {index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
 msgid "Thread {index}/X"
-msgstr ""
+msgstr "Thread {index}/X"
 
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
@@ -3117,7 +3117,7 @@ msgstr "Gruppi"
 
 #: src/pages/catchup.jsx:612
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} quotes {quotes} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr ""
+msgstr "Mostrando {selectedFilterCategory, select, all {tutti i post} original {post originali} replies {risposte} boosts {reblog} quotes {citazioni} followedTags {hashtag seguiti} groups {gruppi} filtered {post filtrati}}, {sortBy, select, createdAt {{sortOrder, select, asc {più vecchi} desc {più recenti}}} reblogsCount {{sortOrder, select, asc {meno reblog} desc {più reblog}}} favouritesCount {{sortOrder, select, asc {meno Mi piace} desc {più Mi piace}}} repliesCount {{sortOrder, select, asc {meno risposte} desc {più risposte}}} density {{sortOrder, select, asc {meno densi} desc {più densi}}}} per primi{groupBy, select, account {, raggruppati per autore} other {}}"
 
 #: src/pages/catchup.jsx:905
 #: src/pages/catchup.jsx:929
@@ -4187,11 +4187,11 @@ msgstr "Impossibile caricare risposte."
 
 #: src/pages/status.jsx:1200
 msgid "{months, plural, one {# month later} other {# months later}}"
-msgstr ""
+msgstr "{months, plural, one {# mese dopo} other {# mesi dopo}}"
 
 #: src/pages/status.jsx:1206
 msgid "{years, plural, one {# year later} other {# years later}}"
-msgstr ""
+msgstr "{years, plural, one {# anno dopo} other {# anni dopo}}"
 
 #: src/pages/status.jsx:1338
 msgid "Back"
@@ -4238,7 +4238,7 @@ msgstr "Passa all'istanza del post"
 
 #: src/pages/status.jsx:1559
 msgid "View Edit History Snapshots"
-msgstr ""
+msgstr "Visualizza istantanee della cronologia modifiche"
 
 #: src/pages/status.jsx:1617
 msgid "Unable to load post"

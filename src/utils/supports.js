@@ -30,6 +30,8 @@ const platformFeatures = {
 
 const supportsCache = {};
 
+const semverExtract = /^\d+\.\d+(\.\d+)?/;
+
 function supports(feature) {
   try {
     let { version, domain } = getCurrentInstance();
@@ -54,12 +56,24 @@ function supports(feature) {
     const featureSoftware = feature.match(/^@([a-z]+)\//)[1];
 
     const doesSoftwareMatch = featureSoftware === softwareName.toLowerCase();
-    return (supportsCache[key] =
-      doesSoftwareMatch &&
-      satisfies(version, range, {
-        includePrerelease: true,
-        loose: true,
-      }));
+    let satisfiesRange = satisfies(version, range, {
+      includePrerelease: true,
+      loose: true,
+    });
+    if (!satisfiesRange) {
+      try {
+        // E.g. "4.2.1 (compatible; Iceshrimp 2023.12.14-dev-046d237af)" is invalid semver 😅
+        // This regex extracts numbers with dots out and tries again
+        // Hopefully this doesn't break anything
+        satisfiesRange = satisfies(version.match(semverExtract)?.[0], range, {
+          includePrerelease: true,
+          loose: false,
+        });
+      } catch (e) {
+        // Ignore
+      }
+    }
+    return (supportsCache[key] = doesSoftwareMatch && satisfiesRange);
   } catch (e) {
     return false;
   }

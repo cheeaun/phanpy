@@ -12,7 +12,8 @@
       "scripts/**/*.js",
       "!wrangler.jsonc",
       "!i18n-volunteers.json"
-    ]
+    ],
+    "experimentalScannerIgnores": [".git", "dist", "node_modules"]
   },
   "formatter": {
     "indentStyle": "space"

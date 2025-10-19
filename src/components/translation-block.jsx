@@ -250,6 +250,7 @@ function TranslationBlock({
         <summary>
           <button
             type="button"
+            class={uiState === 'loading' ? 'loading' : ''}
             onClick={async (e) => {
               e.preventDefault();
               e.stopPropagation();

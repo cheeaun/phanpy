@@ -123,7 +123,7 @@ const MathBlock = ({ content, contentRef, onRevert }) => {
             },
           });
 
-          const hasMath = contentRef.current.querySelector('math.tml-display');
+          const hasMath = contentRef.current.querySelector('math');
           const htmlChanged =
             contentRef.current.innerHTML !== originalContentRefHTML;
           if (hasMath && htmlChanged) {

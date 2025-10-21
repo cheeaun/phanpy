@@ -1044,7 +1044,7 @@ function Status({
     const allMentions = new Set([accountId, ...mentions.map((m) => m.id)]);
     return [...allMentions].filter((m) => m !== currentAccount).length;
   }, [accountId, mentions?.length, currentAccount]);
-  const tooManyMentions = mentionsCount >= 3;
+  const tooManyMentions = mentionsCount > 3;
   const ReplyMenuContent = () => (
     <>
       <Icon icon="comment" />

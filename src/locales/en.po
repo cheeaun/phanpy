@@ -198,14 +198,14 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:892
+#: src/components/account-info.jsx:900
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:909
+#: src/components/account-info.jsx:917
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} original posts, {1} replies, {2} boosts"
 
@@ -216,22 +216,22 @@ msgstr "{0} original posts, {1} replies, {2} boosts"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:926
+#: src/components/account-info.jsx:934
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:942
+#: src/components/account-info.jsx:950
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 
-#: src/components/account-info.jsx:974
+#: src/components/account-info.jsx:1008
 #: src/pages/catchup.jsx:70
 msgid "Original"
 msgstr ""
 
-#: src/components/account-info.jsx:978
+#: src/components/account-info.jsx:1012
 #: src/components/status.jsx:2659
 #: src/pages/catchup.jsx:71
 #: src/pages/catchup.jsx:1463
@@ -241,14 +241,14 @@ msgstr ""
 msgid "Replies"
 msgstr ""
 
-#: src/components/account-info.jsx:983
+#: src/components/account-info.jsx:1017
 #: src/components/quotes-modal.jsx:81
 #: src/pages/catchup.jsx:73
 #: src/pages/catchup.jsx:1466
 msgid "Quotes"
 msgstr "Quotes"
 
-#: src/components/account-info.jsx:988
+#: src/components/account-info.jsx:1022
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1465
 #: src/pages/catchup.jsx:2118
@@ -256,11 +256,11 @@ msgstr "Quotes"
 msgid "Boosts"
 msgstr ""
 
-#: src/components/account-info.jsx:994
+#: src/components/account-info.jsx:1028
 msgid "Post stats unavailable."
 msgstr "Post stats unavailable."
 
-#: src/components/account-info.jsx:1033
+#: src/components/account-info.jsx:1055
 msgid "View post stats"
 msgstr "View post stats"
 
@@ -297,7 +297,7 @@ msgstr "View post stats"
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
 #: src/pages/notifications.jsx:943
-#: src/pages/scheduled-posts.jsx:258
+#: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:93
 #: src/pages/status.jsx:1563
 msgid "Close"
@@ -679,7 +679,7 @@ msgstr ""
 #: src/components/list-add-edit.jsx:188
 #: src/components/status.jsx:1598
 #: src/pages/filters.jsx:603
-#: src/pages/scheduled-posts.jsx:368
+#: src/pages/scheduled-posts.jsx:398
 msgid "Delete…"
 msgstr ""
 
@@ -1102,7 +1102,7 @@ msgstr ""
 #: src/components/media-alt-modal.jsx:67
 #: src/components/status.jsx:1283
 #: src/components/status.jsx:1292
-#: src/components/translation-block.jsx:269
+#: src/components/translation-block.jsx:270
 msgid "Translate"
 msgstr ""
 
@@ -2861,24 +2861,24 @@ msgstr ""
 msgid "Auto-translated from {sourceLangText}"
 msgstr ""
 
-#: src/components/translation-block.jsx:264
+#: src/components/translation-block.jsx:265
 msgid "Translating…"
 msgstr ""
 
-#: src/components/translation-block.jsx:267
+#: src/components/translation-block.jsx:268
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr ""
 
-#: src/components/translation-block.jsx:268
+#: src/components/translation-block.jsx:269
 msgid "Translate from {sourceLangText}"
 msgstr ""
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:296
+#: src/components/translation-block.jsx:297
 msgid "Auto ({0})"
 msgstr ""
 
-#: src/components/translation-block.jsx:309
+#: src/components/translation-block.jsx:310
 msgid "Failed to translate"
 msgstr ""
 
@@ -3820,36 +3820,36 @@ msgstr "No scheduled posts."
 
 #. Scheduled [in 1 day] ([Thu, Feb 27, 6:30:00 PM])
 #. placeholder {0}: niceDateTime(scheduledAt, { formatOpts: { weekday: 'short', second: 'numeric', }, })
-#: src/pages/scheduled-posts.jsx:206
+#: src/pages/scheduled-posts.jsx:210
 msgid "Scheduled <0><1/></0> <2>({0})</2>"
 msgstr "Scheduled <0><1/></0> <2>({0})</2>"
 
 #. Scheduled [in 1 day]
-#: src/pages/scheduled-posts.jsx:262
+#: src/pages/scheduled-posts.jsx:292
 msgid "Scheduled <0><1/></0>"
 msgstr "Scheduled <0><1/></0>"
 
-#: src/pages/scheduled-posts.jsx:307
+#: src/pages/scheduled-posts.jsx:337
 msgid "Scheduled post rescheduled"
 msgstr "Scheduled post rescheduled"
 
-#: src/pages/scheduled-posts.jsx:314
+#: src/pages/scheduled-posts.jsx:344
 msgid "Failed to reschedule post"
 msgstr "Failed to reschedule post"
 
-#: src/pages/scheduled-posts.jsx:337
+#: src/pages/scheduled-posts.jsx:367
 msgid "Reschedule"
 msgstr "Reschedule"
 
-#: src/pages/scheduled-posts.jsx:343
+#: src/pages/scheduled-posts.jsx:373
 msgid "Delete scheduled post?"
 msgstr "Delete scheduled post?"
 
-#: src/pages/scheduled-posts.jsx:351
+#: src/pages/scheduled-posts.jsx:381
 msgid "Scheduled post deleted"
 msgstr "Scheduled post deleted"
 
-#: src/pages/scheduled-posts.jsx:358
+#: src/pages/scheduled-posts.jsx:388
 msgid "Failed to delete scheduled post"
 msgstr "Failed to delete scheduled post"
 

@@ -497,6 +497,26 @@ button[hidden] {
   opacity: 0;
 }
 
+@keyframes loading-mask {
+  0% {
+    mask-position: 100%;
+  }
+  100% {
+    mask-position: -100%;
+  }
+}
+:is(button, .button).loading > * {
+  mask-image: linear-gradient(
+    var(--to-forward),
+    rgba(0, 0, 0, 0.15),
+    black,
+    rgba(0, 0, 0, 0.15)
+  );
+  mask-size: 200% 100%;
+  mask-clip: content-box;
+  animation: loading-mask 2s linear infinite;
+}
+
 input[type='text'],
 input[type='search'],
 input[type='datetime-local'],

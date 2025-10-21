@@ -167,9 +167,8 @@ const assetsRoute = new Route(
     const hasHash = /-[0-9a-z-]{4,}\./i.test(request.url);
     return sameOrigin && isAsset && hasHash;
   },
-  new NetworkFirst({
+  new StaleWhileRevalidate({
     cacheName: 'assets',
-    networkTimeoutSeconds: 5,
     plugins: [
       // Only enable AssetHashPlugin in production
       ...(import.meta.env.PROD
@@ -235,6 +234,28 @@ const apiExtendedRoute = new RegExpRoute(
   }),
 );
 registerRoute(apiExtendedRoute);
+
+// Cache ActivityPub requests (Accept: application/activity+json)
+const activityPubRoute = new Route(
+  ({ request }) => {
+    const acceptHeader = request.headers.get('accept');
+    return acceptHeader?.includes('application/activity+json');
+  },
+  new StaleWhileRevalidate({
+    cacheName: 'activity-json',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 30,
+        maxAgeSeconds: 60 * 60, // 1 hour
+        ...expirationPluginOptions,
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  }),
+);
+registerRoute(activityPubRoute);
 
 // Note: expiration is not working as expected
 // https://github.com/GoogleChrome/workbox/issues/3316

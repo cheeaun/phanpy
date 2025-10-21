@@ -4,8 +4,9 @@ export const MIN_SCHEDULED_AT = 6 * 60 * 1000; // 6 mins
 const MAX_SCHEDULED_AT = 90 * 24 * 60 * 60 * 1000; // 90 days
 
 export default function ScheduledAtField({ scheduledAt, setScheduledAt }) {
-  if (!scheduledAt || !(scheduledAt instanceof Date)) {
-    console.warn('scheduledAt is not a Date:', scheduledAt);
+  if (!scheduledAt || !scheduledAt?.getTime) {
+    // Not using "instanceof Date" check due to "cross-realm" issues
+    console.warn('scheduledAt is invalid', scheduledAt);
     return;
   }
   const [minStr, setMinStr] = useState();

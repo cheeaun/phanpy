@@ -1104,6 +1104,9 @@
 
   &:not(.media-figure-multiple .media-container) {
     margin-bottom: -16px;
+    &:has(+ .status-card-container) {
+      margin-bottom: 0;
+    }
 
     &.media-eq1:not(:has(figure)) {
       text-align: center;
@@ -2079,6 +2082,12 @@ a:focus-visible .card img {
 a.card {
   text-decoration: none;
   transition: opacity 0.2s ease-in-out;
+
+  &.can-show-embed {
+    .meta .domain {
+      color: var(--link-text-color);
+    }
+  }
 }
 a.card:is(:hover, :focus) {
   border: 1px solid var(--link-color);

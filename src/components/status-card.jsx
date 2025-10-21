@@ -65,21 +65,28 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   const [cardStatusURL, setCardStatusURL] = useState(null);
   // const [cardStatusID, setCardStatusID] = useState(null);
   useEffect(() => {
-    if (hasText && image && !selfReferential && isMastodonLinkMaybe(url)) {
-      unfurlMastodonLink(instance, url).then((result) => {
-        if (!result) return;
-        const { id, url } = result;
-        setCardStatusURL('#' + url);
-
-        // NOTE: This is for quote post
-        // (async () => {
-        //   const { masto } = api({ instance });
-        //   const status = await masto.v1.statuses.$select(id).fetch();
-        //   saveStatus(status, instance);
-        //   setCardStatusID(id);
-        // })();
-      });
+    if (!hasText || !image || selfReferential || !isMastodonLinkMaybe(url)) {
+      return;
     }
+
+    const abortController = new AbortController();
+    unfurlMastodonLink(instance, url, abortController.signal).then((result) => {
+      if (!result) return;
+      const { id, url } = result;
+      setCardStatusURL('#' + url);
+
+      // NOTE: This is for quote post
+      // (async () => {
+      //   const { masto } = api({ instance });
+      //   const status = await masto.v1.statuses.$select(id).fetch();
+      //   saveStatus(status, instance);
+      //   setCardStatusID(id);
+      // })();
+    });
+
+    return () => {
+      abortController.abort();
+    };
   }, [hasText, image, selfReferential]);
 
   // if (cardStatusID) {
@@ -149,7 +156,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} ${
             blurhashImage ? '' : size
-          }`}
+          } ${hasIframeHTML ? 'can-show-embed' : ''}`}
           style={{
             '--average-color':
               rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,

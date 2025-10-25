@@ -56,6 +56,11 @@ export default defineConfig({
   },
   server: {
     host: true,
+    watch: {
+      awaitWriteFinish: {
+        pollInterval: 1000,
+      },
+    },
   },
   css: {
     preprocessorMaxWorkers: 1,

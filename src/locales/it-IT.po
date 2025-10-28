@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-18 15:20\n"
+"PO-Revision-Date: 2025-10-28 15:19\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -96,7 +96,7 @@ msgstr "Vai alla pagina dell'account"
 
 #: src/components/account-info.jsx:415
 #: src/components/account-info.jsx:748
-#: src/components/compose.jsx:1918
+#: src/components/compose.jsx:1921
 #: src/pages/settings.jsx:329
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -117,7 +117,7 @@ msgstr "Post"
 
 #: src/components/account-info.jsx:430
 #: src/components/media-alt-modal.jsx:55
-#: src/components/media-attachment.jsx:397
+#: src/components/media-attachment.jsx:399
 #: src/components/media-modal.jsx:363
 #: src/components/related-actions.jsx:238
 #: src/components/status.jsx:2089
@@ -281,7 +281,7 @@ msgstr "Visualizza statistiche post"
 #: src/components/keyboard-shortcuts-help.jsx:52
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
-#: src/components/media-attachment.jsx:353
+#: src/components/media-attachment.jsx:355
 #: src/components/media-modal.jsx:327
 #: src/components/mention-modal.jsx:162
 #: src/components/notification-service.jsx:157
@@ -302,7 +302,7 @@ msgstr "Visualizza statistiche post"
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
 #: src/pages/notifications.jsx:943
-#: src/pages/scheduled-posts.jsx:258
+#: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:93
 #: src/pages/status.jsx:1563
 msgid "Close"
@@ -385,7 +385,7 @@ msgid "Choice {0}"
 msgstr "Opzione {0}"
 
 #: src/components/compose-poll.jsx:64
-#: src/components/media-attachment.jsx:317
+#: src/components/media-attachment.jsx:319
 #: src/components/shortcuts-settings.jsx:726
 #: src/pages/catchup.jsx:1097
 #: src/pages/filters.jsx:413
@@ -393,7 +393,7 @@ msgid "Remove"
 msgstr "Rimuovi"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1651
+#: src/components/compose.jsx:1654
 #: src/components/mention-modal.jsx:220
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
@@ -453,7 +453,7 @@ msgstr "{0, plural, one {Il file {1} non è supportato.} other {I file {2} non s
 
 #: src/components/compose.jsx:782
 #: src/components/compose.jsx:800
-#: src/components/compose.jsx:2049
+#: src/components/compose.jsx:2052
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Puoi allegare fino a 1 documento.} other {Puoi allegare fino a # documenti.}}"
@@ -513,14 +513,14 @@ msgstr "Alcuni contenuti multimediali sono senza descrizione. Continuare?"
 msgid "Attachment #{i} failed"
 msgstr "Allegato #{i} fallito"
 
-#: src/components/compose.jsx:1418
+#: src/components/compose.jsx:1421
 #: src/components/status.jsx:2426
 #: src/components/timeline.jsx:990
 msgid "Content warning"
 msgstr "Avviso contenuto"
 
-#: src/components/compose.jsx:1439
-#: src/components/compose.jsx:1585
+#: src/components/compose.jsx:1442
+#: src/components/compose.jsx:1588
 #: src/components/edit-profile-sheet.jsx:323
 #: src/components/open-link-sheet.jsx:74
 #: src/components/private-note-sheet.jsx:94
@@ -528,81 +528,81 @@ msgstr "Avviso contenuto"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: src/components/compose.jsx:1447
+#: src/components/compose.jsx:1450
 msgid "Post your reply"
 msgstr "Pubblica la tua risposta"
 
-#: src/components/compose.jsx:1449
+#: src/components/compose.jsx:1452
 msgid "Edit your post"
 msgstr "Modifica il tuo post"
 
-#: src/components/compose.jsx:1451
+#: src/components/compose.jsx:1454
 msgid "Ask a question"
 msgstr "Fai una domanda"
 
-#: src/components/compose.jsx:1452
+#: src/components/compose.jsx:1455
 msgid "What are you doing?"
 msgstr "Che stai facendo?"
 
-#: src/components/compose.jsx:1525
+#: src/components/compose.jsx:1528
 msgid "Mark media as sensitive"
 msgstr "Contrassegna contenuti come sensibili"
 
-#: src/components/compose.jsx:1565
+#: src/components/compose.jsx:1568
 msgid "Posting on <0/>"
 msgstr "Data pubblicazione: <0/>"
 
-#: src/components/compose.jsx:1867
+#: src/components/compose.jsx:1870
 #: src/components/quote-settings-sheet.jsx:73
 #: src/components/status.jsx:297
 #: src/pages/settings.jsx:381
 msgid "Anyone can quote"
 msgstr "Chiunque può citare"
 
-#: src/components/compose.jsx:1870
+#: src/components/compose.jsx:1873
 #: src/components/quote-settings-sheet.jsx:76
 #: src/components/status.jsx:298
 #: src/pages/settings.jsx:384
 msgid "Your followers can quote"
 msgstr "I tuoi seguaci possono citarti"
 
-#: src/components/compose.jsx:1873
+#: src/components/compose.jsx:1876
 #: src/components/quote-settings-sheet.jsx:79
 #: src/components/status.jsx:299
 #: src/pages/settings.jsx:387
 msgid "Only you can quote"
 msgstr "Solo tu puoi citare"
 
-#: src/components/compose.jsx:1906
+#: src/components/compose.jsx:1909
 #: src/pages/settings.jsx:323
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Pubblico"
 
-#: src/components/compose.jsx:1911
+#: src/components/compose.jsx:1914
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Locale"
 
-#: src/components/compose.jsx:1915
+#: src/components/compose.jsx:1918
 #: src/pages/settings.jsx:326
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "Non in lista"
 
-#: src/components/compose.jsx:1921
+#: src/components/compose.jsx:1924
 #: src/components/status.jsx:2306
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Menzione privata"
 
-#: src/components/compose.jsx:1973
+#: src/components/compose.jsx:1976
 msgid "Schedule"
 msgstr "Programma"
 
-#: src/components/compose.jsx:1975
+#: src/components/compose.jsx:1978
 #: src/components/keyboard-shortcuts-help.jsx:164
 #: src/components/status.jsx:1056
 #: src/components/status.jsx:1090
@@ -613,20 +613,20 @@ msgstr "Programma"
 msgid "Reply"
 msgstr "Rispondi"
 
-#: src/components/compose.jsx:1977
+#: src/components/compose.jsx:1980
 msgid "Update"
 msgstr "Aggiorna"
 
-#: src/components/compose.jsx:1978
+#: src/components/compose.jsx:1981
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Pubblica"
 
-#: src/components/compose.jsx:2061
+#: src/components/compose.jsx:2064
 msgid "Downloading GIF…"
 msgstr "Scarico GIF…"
 
-#: src/components/compose.jsx:2089
+#: src/components/compose.jsx:2092
 msgid "Failed to download GIF"
 msgstr "Download GIF fallito"
 
@@ -684,7 +684,7 @@ msgstr "Errore eliminazione bozza! Riprova."
 #: src/components/list-add-edit.jsx:188
 #: src/components/status.jsx:1598
 #: src/pages/filters.jsx:603
-#: src/pages/scheduled-posts.jsx:368
+#: src/pages/scheduled-posts.jsx:398
 msgid "Delete…"
 msgstr "Elimina…"
 
@@ -976,7 +976,7 @@ msgstr "<0>Ctrl</0> + <1>Invio</1> o <2>⌘</2> + <3>Invio</3>"
 
 #: src/components/keyboard-shortcuts-help.jsx:160
 #: src/components/nav-menu.jsx:337
-#: src/components/search-form.jsx:204
+#: src/components/search-form.jsx:208
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:179
 #: src/pages/search.jsx:47
@@ -1107,7 +1107,7 @@ msgstr "Descrizione contenuti"
 #: src/components/media-alt-modal.jsx:67
 #: src/components/status.jsx:1283
 #: src/components/status.jsx:1292
-#: src/components/translation-block.jsx:269
+#: src/components/translation-block.jsx:270
 msgid "Translate"
 msgstr "Traduci"
 
@@ -1116,19 +1116,19 @@ msgstr "Traduci"
 msgid "Speak"
 msgstr "Leggi"
 
-#: src/components/media-attachment.jsx:167
+#: src/components/media-attachment.jsx:169
 msgid "Uploaded"
 msgstr "Caricato"
 
-#: src/components/media-attachment.jsx:180
+#: src/components/media-attachment.jsx:182
 msgid "Image description"
 msgstr "Descrizione immagine"
 
-#: src/components/media-attachment.jsx:181
+#: src/components/media-attachment.jsx:183
 msgid "Video description"
 msgstr "Descrizione video"
 
-#: src/components/media-attachment.jsx:182
+#: src/components/media-attachment.jsx:184
 msgid "Audio description"
 msgstr "Descrizione audio"
 
@@ -1136,8 +1136,8 @@ msgstr "Descrizione audio"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/media-attachment.jsx:217
-#: src/components/media-attachment.jsx:237
+#: src/components/media-attachment.jsx:219
+#: src/components/media-attachment.jsx:239
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "File troppo pesante. Potrebbero verificarsi errori nel caricamento. Prova a ridurre le dimensioni del file da {0} a {1} o meno."
 
@@ -1145,63 +1145,63 @@ msgstr "File troppo pesante. Potrebbero verificarsi errori nel caricamento. Prov
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/media-attachment.jsx:229
-#: src/components/media-attachment.jsx:249
+#: src/components/media-attachment.jsx:231
+#: src/components/media-attachment.jsx:251
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Dimensioni eccessive. Potrebbero verificarsi errori nel caricamento. Prova a ridurre le dimensioni da {0}×{1}px a {2}×{3}px."
 
-#: src/components/media-attachment.jsx:257
+#: src/components/media-attachment.jsx:259
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Frequenza dei fotogrammi troppo alta. Potrebbero verificarsi errori nel caricamento."
 
-#: src/components/media-attachment.jsx:334
+#: src/components/media-attachment.jsx:336
 #: src/compose.jsx:88
 msgid "Error"
 msgstr "Errore"
 
-#: src/components/media-attachment.jsx:359
+#: src/components/media-attachment.jsx:361
 msgid "Edit image description"
 msgstr "Modifica descrizione immagine"
 
-#: src/components/media-attachment.jsx:360
+#: src/components/media-attachment.jsx:362
 msgid "Edit video description"
 msgstr "Modifica descrizione video"
 
-#: src/components/media-attachment.jsx:361
+#: src/components/media-attachment.jsx:363
 msgid "Edit audio description"
 msgstr "Modifica descrizione audio"
 
-#: src/components/media-attachment.jsx:406
-#: src/components/media-attachment.jsx:455
+#: src/components/media-attachment.jsx:408
+#: src/components/media-attachment.jsx:457
 msgid "Generating description. Please wait…"
 msgstr "Genero descrizione. Attendere…"
 
 #. placeholder {0}: e.message
-#: src/components/media-attachment.jsx:426
+#: src/components/media-attachment.jsx:428
 msgid "Failed to generate description: {0}"
 msgstr "Generazione descrizione fallita: {0}"
 
-#: src/components/media-attachment.jsx:427
+#: src/components/media-attachment.jsx:429
 msgid "Failed to generate description"
 msgstr "Generazione descrizione fallita"
 
-#: src/components/media-attachment.jsx:439
-#: src/components/media-attachment.jsx:445
-#: src/components/media-attachment.jsx:491
+#: src/components/media-attachment.jsx:441
+#: src/components/media-attachment.jsx:447
+#: src/components/media-attachment.jsx:493
 msgid "Generate description…"
 msgstr "Genera descrizione…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/media-attachment.jsx:478
+#: src/components/media-attachment.jsx:480
 msgid "Failed to generate description{0}"
 msgstr "Generazione descrizione fallita{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/media-attachment.jsx:493
+#: src/components/media-attachment.jsx:495
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— sperimentale</0>"
 
-#: src/components/media-attachment.jsx:512
+#: src/components/media-attachment.jsx:514
 msgid "Done"
 msgstr "Fine"
 
@@ -1339,7 +1339,7 @@ msgid "Bookmarks"
 msgstr "Segnalibri"
 
 #: src/components/nav-menu.jsx:244
-#: src/components/text-expander.jsx:213
+#: src/components/text-expander.jsx:215
 msgid "More…"
 msgstr "Altro…"
 
@@ -1810,7 +1810,7 @@ msgid "Cleared recent searches"
 msgstr "Ricerche recenti cancellate"
 
 #: src/components/recent-searches.jsx:49
-#: src/components/search-form.jsx:328
+#: src/components/search-form.jsx:332
 msgid "Recent searches"
 msgstr "Ricerche recenti"
 
@@ -2149,20 +2149,19 @@ msgstr "Post con <0>{query}</0>"
 msgid "Accounts with <0>{query}</0>"
 msgstr "Account con <0>{query}</0>"
 
-#. placeholder {0}: query.replace(/^#/, '')
-#: src/components/search-form.jsx:34
-msgid "Posts tagged with <0>#{0}</0>"
-msgstr "Post taggati con <0>#{0}</0>"
+#: src/components/search-form.jsx:37
+msgid "Posts tagged with <0>{hashtag}</0>"
+msgstr ""
 
-#: src/components/search-form.jsx:43
+#: src/components/search-form.jsx:46
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
 msgstr "{query} <0>- account, hashtag e post</0>"
 
-#: src/components/search-form.jsx:135
+#: src/components/search-form.jsx:139
 msgid "Look up <0>{query}</0>"
 msgstr "Cerca <0>{query}</0>"
 
-#: src/components/search-form.jsx:361
+#: src/components/search-form.jsx:365
 #: src/pages/home.jsx:251
 msgid "See all"
 msgstr "Mostra tutto"
@@ -2866,24 +2865,24 @@ msgstr "Bio tradotta"
 msgid "Auto-translated from {sourceLangText}"
 msgstr "Traduzione automatica da {sourceLangText}"
 
-#: src/components/translation-block.jsx:264
+#: src/components/translation-block.jsx:265
 msgid "Translating…"
 msgstr "Traduco…"
 
-#: src/components/translation-block.jsx:267
+#: src/components/translation-block.jsx:268
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr "Traduci da {sourceLangText} (rilevato automaticamente)"
 
-#: src/components/translation-block.jsx:268
+#: src/components/translation-block.jsx:269
 msgid "Translate from {sourceLangText}"
 msgstr "Traduci da {sourceLangText}"
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:296
+#: src/components/translation-block.jsx:297
 msgid "Auto ({0})"
 msgstr "Auto ({0})"
 
-#: src/components/translation-block.jsx:309
+#: src/components/translation-block.jsx:310
 msgid "Failed to translate"
 msgstr "Traduzione fallita"
 
@@ -3825,36 +3824,36 @@ msgstr "Nessun post programmato."
 
 #. Scheduled [in 1 day] ([Thu, Feb 27, 6:30:00 PM])
 #. placeholder {0}: niceDateTime(scheduledAt, { formatOpts: { weekday: 'short', second: 'numeric', }, })
-#: src/pages/scheduled-posts.jsx:206
+#: src/pages/scheduled-posts.jsx:210
 msgid "Scheduled <0><1/></0> <2>({0})</2>"
 msgstr "Programmato <0><1/></0> <2>({0})</2>"
 
 #. Scheduled [in 1 day]
-#: src/pages/scheduled-posts.jsx:262
+#: src/pages/scheduled-posts.jsx:292
 msgid "Scheduled <0><1/></0>"
 msgstr "Programmato <0><1/></0>"
 
-#: src/pages/scheduled-posts.jsx:307
+#: src/pages/scheduled-posts.jsx:337
 msgid "Scheduled post rescheduled"
 msgstr "Post programmato aggiornato"
 
-#: src/pages/scheduled-posts.jsx:314
+#: src/pages/scheduled-posts.jsx:344
 msgid "Failed to reschedule post"
 msgstr "Aggiornamento post programmato fallito"
 
-#: src/pages/scheduled-posts.jsx:337
+#: src/pages/scheduled-posts.jsx:367
 msgid "Reschedule"
 msgstr "Riprogramma"
 
-#: src/pages/scheduled-posts.jsx:343
+#: src/pages/scheduled-posts.jsx:373
 msgid "Delete scheduled post?"
 msgstr "Eliminare il post programmato?"
 
-#: src/pages/scheduled-posts.jsx:351
+#: src/pages/scheduled-posts.jsx:381
 msgid "Scheduled post deleted"
 msgstr "Post programmato eliminato"
 
-#: src/pages/scheduled-posts.jsx:358
+#: src/pages/scheduled-posts.jsx:388
 msgid "Failed to delete scheduled post"
 msgstr "Eliminazione post programmato fallita"
 

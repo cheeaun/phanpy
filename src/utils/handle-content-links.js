@@ -44,8 +44,10 @@ function handleContentLinks(opts) {
     const { href } = target;
 
     const prevText = target.previousSibling?.textContent;
-    const textBeforeLinkIsAt = prevText?.endsWith('@');
-    const textStartsWithAt = target.innerText.startsWith('@');
+    const textBeforeLinkIsAt =
+      prevText?.endsWith('@') || prevText?.endsWith('＠');
+    const textStartsWithAt =
+      target.innerText.startsWith('@') || target.innerText.startsWith('＠');
     if (
       ((target.classList.contains('u-url') ||
         target.classList.contains('mention')) &&
@@ -55,7 +57,7 @@ function handleContentLinks(opts) {
       const targetText = (
         target.querySelector('span') || target
       ).innerText.trim();
-      const username = targetText.replace(/^@/, '');
+      const username = targetText.replace(/^[@＠]/, '');
       // Only fallback to acct/username check if url doesn't match
       const mention =
         mentions.find((mention) => mention.url === href) ||
@@ -83,11 +85,12 @@ function handleContentLinks(opts) {
         return;
       }
     } else if (!previewMode) {
-      const textBeforeLinkIsHash = prevText?.endsWith('#');
+      const textBeforeLinkIsHash =
+        prevText?.endsWith('#') || prevText?.endsWith('＃');
       if (target.classList.contains('hashtag') || textBeforeLinkIsHash) {
         e.preventDefault();
         e.stopPropagation();
-        const tag = target.innerText.replace(/^#/, '').trim();
+        const tag = target.innerText.replace(/^[#＃]/, '').trim();
         const hashURL = instance ? `#/${instance}/t/${tag}` : `#/t/${tag}`;
         console.log({ hashURL });
         location.hash = hashURL;

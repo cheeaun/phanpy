@@ -7,8 +7,8 @@ const whitelistLinkClasses = ['u-url', 'mention', 'hashtag'];
 
 const LINK_REGEX = /<a/i;
 const HTTP_LINK_REGEX = /^https?:\/\//i;
-const MENTION_REGEX = /^@[^@]+(@[^@]+)?$/;
-const HASHTAG_REGEX = /^#[^#]+$/;
+const MENTION_REGEX = /^[@＠][^@＠]+(@[^@＠]+)?$/;
+const HASHTAG_REGEX = /^[#＃][^#＃]+$/;
 const CODE_BLOCK_REGEX = /^```[^]+```$/;
 const CODE_BLOCK_START_REGEX = /^```/;
 const CODE_BLOCK_END_REGEX = /```$/;
@@ -80,23 +80,26 @@ function _enhanceContent(content, opts = {}) {
       // If text looks like @username@domain, then it's a mention
       if (MENTION_REGEX.test(text)) {
         // Only show @username
-        const [_, username, domain] = text.split('@');
+        const atSymbol = text[0]; // Preserve the original @ or ＠
+        const [_, username, domain] = text.split(/[@＠]/);
         if (!hasChildren) {
           if (
             !usernames.some(([u]) => u === username) ||
             usernames.some(([u, d]) => u === username && d === domain)
           ) {
-            link.innerHTML = `@<span>${username}</span>`;
+            link.innerHTML = `${atSymbol}<span>${username}</span>`;
             usernames.push([username, domain]);
           } else {
-            link.innerHTML = `@<span>${username}@${domain}</span>`;
+            link.innerHTML = `${atSymbol}<span>${username}@${domain}</span>`;
           }
         }
         link.classList.add('mention');
       }
       // If text looks like #hashtag, then it's a hashtag
       if (HASHTAG_REGEX.test(text)) {
-        if (!hasChildren) link.innerHTML = `#<span>${text.slice(1)}</span>`;
+        const hashSymbol = text[0]; // Preserve the original # or ＃
+        if (!hasChildren)
+          link.innerHTML = `${hashSymbol}<span>${text.slice(1)}</span>`;
         link.classList.add('mention', 'hashtag');
       }
     }
@@ -219,7 +222,7 @@ function _enhanceContent(content, opts = {}) {
   // HASHTAG STUFFING
   // ================
   // Get the <p> that contains a lot of hashtags, add a class to it
-  if (enhancedContent.includes('#')) {
+  if (enhancedContent.includes('#') || enhancedContent.includes('＃')) {
     let prevIndex = null;
     const hashtagStuffedParagraphs = [...dom.querySelectorAll('p')].filter(
       (p, index) => {
@@ -236,7 +239,10 @@ function _enhanceContent(content, opts = {}) {
             // Ignore <br />
           } else if (node.tagName === 'A') {
             const linkText = node.textContent.trim();
-            if (!linkText || !linkText.startsWith('#')) {
+            if (
+              !linkText ||
+              !(linkText.startsWith('#') || linkText.startsWith('＃'))
+            ) {
               return false;
             } else {
               hashtagCount++;

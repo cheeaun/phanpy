@@ -499,10 +499,10 @@ button[hidden] {
 
 @keyframes loading-mask {
   0% {
-    mask-position: 0%;
+    mask-position: 100%;
   }
   100% {
-    mask-position: 100%;
+    mask-position: 0%;
   }
 }
 .loading-mask > * {
@@ -519,6 +519,10 @@ button[hidden] {
   mask-clip: content-box;
   mask-repeat: no-repeat;
   animation: loading-mask 1.5s ease-in-out infinite alternate;
+
+  :dir(rtl) & {
+    animation-direction: alternate-reverse;
+  }
 }
 
 input[type='text'],

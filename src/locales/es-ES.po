@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-30 01:52\n"
+"PO-Revision-Date: 2025-10-30 22:13\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -205,7 +205,7 @@ msgstr "{statusesCount, plural,one {<0>{0}</0> Publicación} other {<1>{1}</1> P
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:900
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
-msgstr ""
+msgstr "{0} publicaciones originales, {1} respuestas, {2} citaciones, {3} impulsos"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -875,7 +875,7 @@ msgstr "Error al cargar los GIF"
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
-msgstr ""
+msgstr "<0>{key1}</0> luego <1>{key2}</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:56
 #: src/components/nav-menu.jsx:368
@@ -1028,11 +1028,11 @@ msgstr "<0>Mayús</0> + <1>Alt</1> + <2>k</2>"
 
 #: src/components/keyboard-shortcuts-help.jsx:209
 msgid "Go to Home"
-msgstr ""
+msgstr "Ir al inicio"
 
 #: src/components/keyboard-shortcuts-help.jsx:213
 msgid "Go to Notifications"
-msgstr ""
+msgstr "Ir a notificaciones"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -2151,7 +2151,7 @@ msgstr "Cuentas con <0>{query}</0>"
 
 #: src/components/search-form.jsx:37
 msgid "Posts tagged with <0>{hashtag}</0>"
-msgstr ""
+msgstr "Publicaciones etiquetadas con <0>{hashtag}</0>"
 
 #: src/components/search-form.jsx:46
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
@@ -2518,27 +2518,27 @@ msgstr "Antiguas publicaciones (<0>{0}</0>)"
 
 #: src/components/status.jsx:1055
 msgid "Reply…"
-msgstr ""
+msgstr "Responder…"
 
 #: src/components/status.jsx:1064
 #: src/components/status.jsx:1073
 msgid "Reply all"
-msgstr ""
+msgstr "Responder a todos"
 
 #: src/components/status.jsx:1067
 msgid "{mentionsCount, plural, other {# mentions}}"
-msgstr ""
+msgstr "{mentionsCount, plural,other {# menciones}}"
 
 #. placeholder {0}: mentionsCount - 1
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:1076
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
-msgstr ""
+msgstr "{0, plural,other {<0>@{1}</0> primero, # otros debajo}}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1093
 msgid "Only <0>@{0}</0>"
-msgstr ""
+msgstr "Solo <0>@{0}</0>"
 
 #: src/components/status.jsx:1126
 #: src/components/status.jsx:1203
@@ -2567,7 +2567,7 @@ msgstr "Impulsó la publicación de @{0}"
 #: src/components/status.jsx:1205
 #: src/components/status.jsx:2881
 msgid "Boost/Quote…"
-msgstr ""
+msgstr "Impulsar/citar…"
 
 #: src/components/status.jsx:1206
 #: src/components/status.jsx:2881
@@ -2788,19 +2788,19 @@ msgstr "Publicación eliminada por el autor"
 
 #: src/components/status.jsx:3064
 msgid "Post hidden because you've blocked @{name}."
-msgstr ""
+msgstr "Publicación oculta porque tú has bloqueado a @{name}."
 
 #: src/components/status.jsx:3066
 msgid "Post hidden because you've blocked {domain}."
-msgstr ""
+msgstr "Publicación oculta porque tú has bloqueado {domain}."
 
 #: src/components/status.jsx:3067
 msgid "Post hidden because you've muted @{name}."
-msgstr ""
+msgstr "Publicación oculta porque tú has silenciado a @{name}."
 
 #: src/components/status.jsx:3138
 msgid "Show anyway"
-msgstr ""
+msgstr "Mostrar de todos modos"
 
 #: src/components/status.jsx:3237
 msgid "Edit History"
@@ -3132,7 +3132,7 @@ msgstr "Grupos"
 
 #: src/pages/catchup.jsx:612
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} quotes {quotes} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr ""
+msgstr "Mostrando {selectedFilterCategory, select,all {todas las publicaciones}original {publicaciones originales} replies {respuestas} boosts {impulsos} quotes {citaciones} followedTags {etiquetas seguidas} groups {grupos} filtered {publicaciones filtradas}}, {sortBy, select,createdAt {{sortOrder, select,asc {más antiguos} desc {más recientes}}} reblogsCount {{sortOrder, select,asc {menos impulsados} desc {más impulsados}}} favouritesCount {{sortOrder,select,asc {con menos likes} desc {con más likes}}}repliesCount {{sortOrder, select,asc {con menos respuestas}desc {con más respuestas}}}density {{sortOrder, select,asc {menos densos} desc {más densos}}}} primero{groupBy, select,account {, agrupados por autores} other {}}"
 
 #: src/pages/catchup.jsx:905
 #: src/pages/catchup.jsx:929

@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-28 15:19\n"
+"PO-Revision-Date: 2025-10-30 01:52\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -294,8 +294,8 @@ msgstr "Переглянути статистику дописів"
 #: src/components/shortcuts-settings.jsx:230
 #: src/components/shortcuts-settings.jsx:583
 #: src/components/shortcuts-settings.jsx:783
-#: src/components/status.jsx:3174
-#: src/components/status.jsx:3386
+#: src/components/status.jsx:3232
+#: src/components/status.jsx:3444
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1600
@@ -1239,8 +1239,8 @@ msgstr "Відфільтровано: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:3312
-#: src/components/status.jsx:3390
+#: src/components/status.jsx:3370
+#: src/components/status.jsx:3448
 #: src/components/timeline.jsx:979
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1921
@@ -2768,39 +2768,55 @@ msgstr "Відредаговано"
 msgid "Comments"
 msgstr "Коментарі"
 
-#: src/components/status.jsx:3050
+#: src/components/status.jsx:3058
 msgid "Post hidden by your filters"
 msgstr ""
 
-#: src/components/status.jsx:3051
+#: src/components/status.jsx:3059
 msgid "Post pending"
 msgstr ""
 
-#: src/components/status.jsx:3052
-#: src/components/status.jsx:3053
-#: src/components/status.jsx:3054
+#: src/components/status.jsx:3060
+#: src/components/status.jsx:3061
+#: src/components/status.jsx:3062
 msgid "Post unavailable"
 msgstr ""
 
-#: src/components/status.jsx:3055
+#: src/components/status.jsx:3063
 msgid "Post removed by author"
 msgstr ""
 
-#: src/components/status.jsx:3179
+#: src/components/status.jsx:3064
+msgid "Post hidden because you've blocked @{name}."
+msgstr ""
+
+#: src/components/status.jsx:3066
+msgid "Post hidden because you've blocked {domain}."
+msgstr ""
+
+#: src/components/status.jsx:3067
+msgid "Post hidden because you've muted @{name}."
+msgstr ""
+
+#: src/components/status.jsx:3138
+msgid "Show anyway"
+msgstr ""
+
+#: src/components/status.jsx:3237
 msgid "Edit History"
 msgstr "Історія Змін"
 
-#: src/components/status.jsx:3183
+#: src/components/status.jsx:3241
 msgid "Failed to load history"
 msgstr "Не вдалося завантажити історію"
 
-#: src/components/status.jsx:3188
+#: src/components/status.jsx:3246
 #: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Завантаження…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3320
+#: src/components/status.jsx:3378
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> поширили"
 

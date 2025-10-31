@@ -750,6 +750,9 @@ function Compose({
 
   useEffect(() => {
     const handleItems = (e) => {
+      // Ignore drops when a sheet is open
+      if (document.querySelector('.sheet')) return;
+
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
       const unsupportedFiles = [];

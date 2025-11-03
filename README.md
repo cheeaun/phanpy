@@ -408,7 +408,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15752199/medium/7e9efd828c4691368d063b19d19eb894.png" alt="" width="16" height="16" /> tkbremnes (Norwegian Bokmal)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16527851/medium/649e5a9a8a8cc61ced670d89e9cca082.png" alt="" width="16" height="16" /> tux93 (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16236470/medium/315b1ebbd38e0f7e41d44bee752afa33.jpg" alt="" width="16" height="16" /> Usia (Ukrainian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16791511/medium/321c72613cd27efc3005e7c3bf383578.jpeg" alt="" width="16" height="16" /> uzaylul (Turkish)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16791511/medium/13af704ac9b4ce8350cd2dc6b823d050.jpg" alt="" width="16" height="16" /> uzaylul (Turkish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14427566/medium/ab733b5044c21867fc5a9d1b22cd2c03.png" alt="" width="16" height="16" /> Vac31. (Lithuanian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16026914/medium/4f2a96210b76cbc330584cfdd01fabc4_default.png" alt="" width="16" height="16" /> valtlai (Finnish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16608515/medium/85506c21dce8df07843ca11908ee3951.jpeg" alt="" width="16" height="16" /> vasiriri (Polish)

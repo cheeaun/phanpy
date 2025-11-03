@@ -502,19 +502,27 @@ button[hidden] {
     mask-position: 100%;
   }
   100% {
-    mask-position: -100%;
+    mask-position: 0%;
   }
 }
-:is(button, .button).loading > * {
+.loading-mask > * {
+  display: inline-block;
   mask-image: linear-gradient(
-    var(--to-forward),
+    100deg,
+    black 33%,
+    rgba(0, 0, 0, 0.4),
     rgba(0, 0, 0, 0.15),
-    black,
-    rgba(0, 0, 0, 0.15)
+    rgba(0, 0, 0, 0.4),
+    black 66%
   );
-  mask-size: 200% 100%;
+  mask-size: 300% 100%;
   mask-clip: content-box;
-  animation: loading-mask 2s linear infinite;
+  mask-repeat: no-repeat;
+  animation: loading-mask 1.5s ease-in-out infinite alternate;
+
+  :dir(rtl) & {
+    animation-direction: alternate-reverse;
+  }
 }
 
 input[type='text'],

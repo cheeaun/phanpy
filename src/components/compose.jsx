@@ -95,7 +95,7 @@ const DEFAULT_LANG = localeMatch(
 );
 
 // https://github.com/mastodon/mastodon/blob/c4a429ed47e85a6bbf0d470a41cc2f64cf120c19/app/javascript/mastodon/features/compose/util/counter.js
-const usernameRegex = /(^|[^\/\w])@(([a-z0-9_]+)@[a-z0-9\.\-]+[a-z0-9]+)/gi;
+const usernameRegex = /(^|[^\/\w])[@＠](([a-z0-9_]+)@[a-z0-9\.\-]+[a-z0-9]+)/gi;
 const urlPlaceholder = '$2xxxxxxxxxxxxxxxxxxxxxxx';
 function countableText(inputText) {
   return inputText
@@ -750,6 +750,9 @@ function Compose({
 
   useEffect(() => {
     const handleItems = (e) => {
+      // Ignore drops when a sheet is open
+      if (document.querySelector('.sheet')) return;
+
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
       const unsupportedFiles = [];
@@ -1322,7 +1325,10 @@ function Compose({
                   if (supportsNativeQuote()) {
                     params.quote_approval_policy = quoteApprovalPolicy;
                   }
-                  if (supports('@mastodon/edit-media-attributes')) {
+                  if (
+                    supports('@mastodon/edit-media-attributes') ||
+                    supports('@gotosocial/edit-media-attributes')
+                  ) {
                     params.media_attributes = mediaAttachments.map(
                       (attachment) => {
                         return {

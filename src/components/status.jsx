@@ -3045,6 +3045,14 @@ const handledUnfulfilledStates = [
   'pending',
   'rejected',
   'revoked',
+  'blocked_account',
+  'blocked_domain',
+  'muted_account',
+];
+const revealableUnfulfilledStates = [
+  'blocked_account',
+  'blocked_domain',
+  'muted_account',
 ];
 const unfulfilledText = {
   filterHidden: msg`Post hidden by your filters`,
@@ -3053,7 +3061,108 @@ const unfulfilledText = {
   unauthorized: msg`Post unavailable`,
   rejected: msg`Post unavailable`,
   revoked: msg`Post removed by author`,
+  blocked_account: (name) => msg`Post hidden because you've blocked @${name}.`,
+  blocked_domain: (domain) =>
+    msg`Post hidden because you've blocked ${domain}.`,
+  muted_account: (name) => msg`Post hidden because you've muted @${name}.`,
 };
+
+const QuoteStatus = memo(({ quote, level = 0 }) => {
+  const { _ } = useLingui();
+  const snapStates = useSnapshot(states);
+  const filterContext = useContext(FilterContext);
+  const currentAccount = getCurrentAccID();
+
+  const q = quote;
+  let unfulfilledState;
+
+  const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
+  if (quoteStatus) {
+    const isSelf = currentAccount && currentAccount === quoteStatus.account?.id;
+    const filterInfo =
+      !isSelf && isFiltered(quoteStatus.filtered, filterContext);
+
+    if (filterInfo?.action === 'hide') {
+      unfulfilledState = 'filterHidden';
+    }
+  }
+
+  if (!unfulfilledState) {
+    unfulfilledState = handledUnfulfilledStates.find(
+      (state) => q.state === state,
+    );
+  }
+
+  const isRevealable = revealableUnfulfilledStates.includes(unfulfilledState);
+  const quoteKey = q.id ? statusKey(q.id, q.instance) : null;
+  const isRevealed = quoteKey && snapStates.revealedQuotes[quoteKey];
+
+  if (unfulfilledState && (!isRevealable || !isRevealed)) {
+    // Get account info for revealable states
+    const quotedAccount = quoteStatus?.account;
+    const quotedAccountAcct = quotedAccount?.acct;
+    const domain = quotedAccountAcct?.split('@')[1];
+
+    let message;
+    if (isRevealable) {
+      if (unfulfilledState === 'blocked_account') {
+        message = _(unfulfilledText.blocked_account(quotedAccountAcct));
+      } else if (unfulfilledState === 'blocked_domain') {
+        message = _(unfulfilledText.blocked_domain(domain));
+      } else if (unfulfilledState === 'muted_account') {
+        message = _(unfulfilledText.muted_account(quotedAccountAcct));
+      }
+    } else {
+      message = _(unfulfilledText[unfulfilledState]);
+    }
+
+    return (
+      <div
+        key={quoteKey}
+        class={`status-card-unfulfilled ${
+          unfulfilledState === 'filterHidden' || isRevealable
+            ? 'status-card-ghost'
+            : ''
+        } ${q.native ? 'quote-post-native' : ''}`}
+      >
+        <Icon icon="quote" />
+        <i>{message}</i>
+        {isRevealable && quoteKey && (
+          <button
+            type="button"
+            class="textual"
+            onClick={() => {
+              states.revealedQuotes[quoteKey] = true;
+            }}
+          >
+            <Trans>Show anyway</Trans>
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  const Parent = q.native ? Fragment : LazyShazam;
+  return (
+    <Parent id={q.instance + q.id} key={q.instance + q.id}>
+      <Link
+        key={q.instance + q.id}
+        to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
+        class={`status-card-link ${q.native ? 'quote-post-native' : ''}`}
+        data-read-more={_(readMoreText)}
+      >
+        <Status
+          statusID={q.id}
+          instance={q.instance}
+          size="s"
+          quoted={level + 1}
+          quoteDomain={q.originalDomain}
+          enableCommentHint
+        />
+      </Link>
+    </Parent>
+  );
+});
 
 const QuoteStatuses = memo(({ id, instance, level = 0, collapsed = false }) => {
   if (!id || !instance) return;
@@ -3073,8 +3182,6 @@ const QuoteStatuses = memo(({ id, instance, level = 0, collapsed = false }) => {
     uniqueQuotes = [uniqueQuotes[0]];
   }
 
-  const filterContext = useContext(FilterContext);
-  const currentAccount = getCurrentAccID();
   const containerRef = useTruncated();
 
   return (
@@ -3084,59 +3191,10 @@ const QuoteStatuses = memo(({ id, instance, level = 0, collapsed = false }) => {
       data-read-more={_(readMoreText)}
     >
       {uniqueQuotes.map((q) => {
-        let unfulfilledState;
-
-        const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
-        if (quoteStatus) {
-          const isSelf =
-            currentAccount && currentAccount === quoteStatus.account?.id;
-          const filterInfo =
-            !isSelf && isFiltered(quoteStatus.filtered, filterContext);
-
-          if (filterInfo?.action === 'hide') {
-            unfulfilledState = 'filterHidden';
-          }
-        }
-
-        if (!unfulfilledState) {
-          unfulfilledState = handledUnfulfilledStates.find(
-            (state) => q.state === state,
-          );
-        }
-
-        if (unfulfilledState) {
-          return (
-            <div
-              class={`status-card-unfulfilled ${
-                unfulfilledState === 'filterHidden' ? 'status-card-ghost' : ''
-              } ${q.native ? 'quote-post-native' : ''}`}
-            >
-              <Icon icon="quote" />
-              <i>{_(unfulfilledText[unfulfilledState])}</i>
-            </div>
-          );
-        }
-
-        const Parent = q.native ? Fragment : LazyShazam;
-        return (
-          <Parent id={q.instance + q.id} key={q.instance + q.id}>
-            <Link
-              key={q.instance + q.id}
-              to={`${q.instance ? `/${q.instance}` : ''}/s/${q.id}`}
-              class={`status-card-link ${q.native ? 'quote-post-native' : ''}`}
-              data-read-more={_(readMoreText)}
-            >
-              <Status
-                statusID={q.id}
-                instance={q.instance}
-                size="s"
-                quoted={level + 1}
-                quoteDomain={q.originalDomain}
-                enableCommentHint
-              />
-            </Link>
-          </Parent>
-        );
+        const quoteKey = q.id
+          ? statusKey(q.id, q.instance)
+          : `${q.instance || ''}-${q.state}`;
+        return <QuoteStatus key={quoteKey} quote={q} level={level} />;
       })}
     </div>
   );

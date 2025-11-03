@@ -119,7 +119,9 @@ function TextExpander({ onTrigger = null, ...props }, ref) {
       // Handle @ mentions and # hashtags
       const type = {
         '@': 'accounts',
+        '＠': 'accounts',
         '#': 'hashtags',
+        '＃': 'hashtags',
       }[key];
 
       if (type) {

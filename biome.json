@@ -11,9 +11,11 @@
       "*.{js,jsx,ts,tsx,json,jsonc}",
       "scripts/**/*.js",
       "!wrangler.jsonc",
-      "!i18n-volunteers.json"
-    ],
-    "experimentalScannerIgnores": [".git", "dist", "node_modules"]
+      "!i18n-volunteers.json",
+      "!!**/.git",
+      "!!**/dist",
+      "!!**/node_modules"
+    ]
   },
   "formatter": {
     "indentStyle": "space"

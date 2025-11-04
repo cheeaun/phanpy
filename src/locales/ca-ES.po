@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-30 01:52\n"
+"PO-Revision-Date: 2025-11-04 09:57\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -96,7 +96,7 @@ msgstr "Ves a la pàgina del compte"
 
 #: src/components/account-info.jsx:415
 #: src/components/account-info.jsx:748
-#: src/components/compose.jsx:1921
+#: src/components/compose.jsx:1924
 #: src/pages/settings.jsx:329
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -271,7 +271,7 @@ msgstr "Veure estadístiques de les publicacions"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:1041
+#: src/components/compose.jsx:1044
 #: src/components/custom-emojis-modal.jsx:270
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
@@ -393,7 +393,7 @@ msgid "Remove"
 msgstr "Suprimeix"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1654
+#: src/components/compose.jsx:1657
 #: src/components/mention-modal.jsx:220
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
@@ -447,80 +447,80 @@ msgstr "Hi ha canvis sense desar. Voleu descartar la publicació?"
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:772
+#: src/components/compose.jsx:775
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, one {{1} fitxer no és compatible.} other {{2} fitxers no són compatibles.}}"
 
-#: src/components/compose.jsx:782
-#: src/components/compose.jsx:800
-#: src/components/compose.jsx:2052
+#: src/components/compose.jsx:785
+#: src/components/compose.jsx:803
+#: src/components/compose.jsx:2055
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Només podeu adjuntar com a màxim 1 fitxer.} other {Només podeu adjuntar un màxim de # fitxers.}}"
 
-#: src/components/compose.jsx:1022
+#: src/components/compose.jsx:1025
 msgid "Pop out"
 msgstr "Finestra emergent"
 
-#: src/components/compose.jsx:1029
+#: src/components/compose.jsx:1032
 msgid "Minimize"
 msgstr "Minimitza"
 
-#: src/components/compose.jsx:1065
+#: src/components/compose.jsx:1068
 msgid "Looks like you closed the parent window."
 msgstr "Sembla que heu tancat la finestra principal."
 
-#: src/components/compose.jsx:1072
+#: src/components/compose.jsx:1075
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Sembla que ja teniu un camp d'edició obert a la finestra principal i que esteu publicant. Espereu que es publiqui i torneu-ho a provar més tard."
 
-#: src/components/compose.jsx:1077
+#: src/components/compose.jsx:1080
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Sembla que ja teniu un camp d'edició obert a la finestra principal. Si l'utilitzeu en aquesta finestra, es descartaran els canvis que heu fet a la finestra principal. Voleu continuar?"
 
-#: src/components/compose.jsx:1123
+#: src/components/compose.jsx:1126
 msgid "Pop in"
 msgstr "Mostra"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1133
+#: src/components/compose.jsx:1136
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Contestant la publicació de @{0} (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1143
+#: src/components/compose.jsx:1146
 msgid "Replying to @{0}’s post"
 msgstr "En resposta a la publicació de @{0}"
 
-#: src/components/compose.jsx:1156
+#: src/components/compose.jsx:1159
 msgid "Editing source post"
 msgstr "Editant la publicació original"
 
-#: src/components/compose.jsx:1225
+#: src/components/compose.jsx:1228
 msgid "Poll must have at least 2 options"
 msgstr "L'enquesta ha de tenir si més no 2 opcions"
 
-#: src/components/compose.jsx:1229
+#: src/components/compose.jsx:1232
 msgid "Some poll choices are empty"
 msgstr "Alguna opció de l'enquesta és buida"
 
-#: src/components/compose.jsx:1242
+#: src/components/compose.jsx:1245
 msgid "Some media have no descriptions. Continue?"
 msgstr "Alguns mitjans no tenen descripcions. Voleu continuar?"
 
-#: src/components/compose.jsx:1294
+#: src/components/compose.jsx:1297
 msgid "Attachment #{i} failed"
 msgstr "El fitxer adjunt #{i} ha fallat"
 
-#: src/components/compose.jsx:1421
+#: src/components/compose.jsx:1424
 #: src/components/status.jsx:2426
 #: src/components/timeline.jsx:990
 msgid "Content warning"
 msgstr "Avís de contingut"
 
-#: src/components/compose.jsx:1442
-#: src/components/compose.jsx:1588
+#: src/components/compose.jsx:1445
+#: src/components/compose.jsx:1591
 #: src/components/edit-profile-sheet.jsx:323
 #: src/components/open-link-sheet.jsx:74
 #: src/components/private-note-sheet.jsx:94
@@ -528,81 +528,81 @@ msgstr "Avís de contingut"
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: src/components/compose.jsx:1450
+#: src/components/compose.jsx:1453
 msgid "Post your reply"
 msgstr "Publica la resposta"
 
-#: src/components/compose.jsx:1452
+#: src/components/compose.jsx:1455
 msgid "Edit your post"
 msgstr "Edita la publicació"
 
-#: src/components/compose.jsx:1454
+#: src/components/compose.jsx:1457
 msgid "Ask a question"
 msgstr "Fes una pregunta"
 
-#: src/components/compose.jsx:1455
+#: src/components/compose.jsx:1458
 msgid "What are you doing?"
 msgstr "Què feu ara?"
 
-#: src/components/compose.jsx:1528
+#: src/components/compose.jsx:1531
 msgid "Mark media as sensitive"
 msgstr "Marca els mitjans com a sensibles"
 
-#: src/components/compose.jsx:1568
+#: src/components/compose.jsx:1571
 msgid "Posting on <0/>"
 msgstr "Data de la publicació: <0/>"
 
-#: src/components/compose.jsx:1870
+#: src/components/compose.jsx:1873
 #: src/components/quote-settings-sheet.jsx:73
 #: src/components/status.jsx:297
 #: src/pages/settings.jsx:381
 msgid "Anyone can quote"
 msgstr "Qualsevol pot citar-vos"
 
-#: src/components/compose.jsx:1873
+#: src/components/compose.jsx:1876
 #: src/components/quote-settings-sheet.jsx:76
 #: src/components/status.jsx:298
 #: src/pages/settings.jsx:384
 msgid "Your followers can quote"
 msgstr "Els vostres seguidors poden citar-vos"
 
-#: src/components/compose.jsx:1876
+#: src/components/compose.jsx:1879
 #: src/components/quote-settings-sheet.jsx:79
 #: src/components/status.jsx:299
 #: src/pages/settings.jsx:387
 msgid "Only you can quote"
 msgstr "Només vosaltres podeu citar-vos"
 
-#: src/components/compose.jsx:1909
+#: src/components/compose.jsx:1912
 #: src/pages/settings.jsx:323
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Públic"
 
-#: src/components/compose.jsx:1914
+#: src/components/compose.jsx:1917
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Local"
 
-#: src/components/compose.jsx:1918
+#: src/components/compose.jsx:1921
 #: src/pages/settings.jsx:326
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "Públic limitat"
 
-#: src/components/compose.jsx:1924
+#: src/components/compose.jsx:1927
 #: src/components/status.jsx:2306
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Menció privada"
 
-#: src/components/compose.jsx:1976
+#: src/components/compose.jsx:1979
 msgid "Schedule"
 msgstr "Programa"
 
-#: src/components/compose.jsx:1978
+#: src/components/compose.jsx:1981
 #: src/components/keyboard-shortcuts-help.jsx:164
 #: src/components/status.jsx:1056
 #: src/components/status.jsx:1090
@@ -613,20 +613,20 @@ msgstr "Programa"
 msgid "Reply"
 msgstr "Respon"
 
-#: src/components/compose.jsx:1980
+#: src/components/compose.jsx:1983
 msgid "Update"
 msgstr "Actualitza"
 
-#: src/components/compose.jsx:1981
+#: src/components/compose.jsx:1984
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Publica"
 
-#: src/components/compose.jsx:2064
+#: src/components/compose.jsx:2067
 msgid "Downloading GIF…"
 msgstr "S'està baixant el GIF…"
 
-#: src/components/compose.jsx:2092
+#: src/components/compose.jsx:2095
 msgid "Failed to download GIF"
 msgstr "Ha fallat la descàrrega del GIF"
 
@@ -2152,7 +2152,7 @@ msgstr "Comptes amb <0>{query}</0>"
 
 #: src/components/search-form.jsx:37
 msgid "Posts tagged with <0>{hashtag}</0>"
-msgstr ""
+msgstr "Publicacions etiquetades amb <0>{hashtag}</0>"
 
 #: src/components/search-form.jsx:46
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
@@ -2789,19 +2789,19 @@ msgstr "Publicació eliminada per l'autor o l'autora"
 
 #: src/components/status.jsx:3064
 msgid "Post hidden because you've blocked @{name}."
-msgstr ""
+msgstr "Publicació amagada perquè has bloquejat a @{name}."
 
 #: src/components/status.jsx:3066
 msgid "Post hidden because you've blocked {domain}."
-msgstr ""
+msgstr "Publicació amagada perquè has bloquejat a {domain}."
 
 #: src/components/status.jsx:3067
 msgid "Post hidden because you've muted @{name}."
-msgstr ""
+msgstr "Publicació amagada perquè has silenciat a @{name}."
 
 #: src/components/status.jsx:3138
 msgid "Show anyway"
-msgstr ""
+msgstr "Mostra-ho de totes maneres"
 
 #: src/components/status.jsx:3237
 msgid "Edit History"

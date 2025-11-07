@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-30 01:52\n"
+"PO-Revision-Date: 2025-11-07 10:31\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -96,8 +96,8 @@ msgstr "계정 페이지로 이동"
 
 #: src/components/account-info.jsx:415
 #: src/components/account-info.jsx:748
-#: src/components/compose.jsx:1921
-#: src/pages/settings.jsx:329
+#: src/components/compose.jsx:1961
+#: src/pages/settings.jsx:325
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
 msgstr "팔로워"
@@ -257,7 +257,7 @@ msgstr ""
 #: src/pages/catchup.jsx:72
 #: src/pages/catchup.jsx:1465
 #: src/pages/catchup.jsx:2118
-#: src/pages/settings.jsx:1262
+#: src/pages/settings.jsx:1249
 msgid "Boosts"
 msgstr "부스트"
 
@@ -271,7 +271,7 @@ msgstr "게시물 통계 보기"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:1041
+#: src/components/compose.jsx:1052
 #: src/components/custom-emojis-modal.jsx:270
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
@@ -393,7 +393,7 @@ msgid "Remove"
 msgstr "지우기"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1654
+#: src/components/compose.jsx:1665
 #: src/components/mention-modal.jsx:220
 #: src/components/shortcuts-settings.jsx:715
 #: src/pages/list.jsx:388
@@ -440,87 +440,87 @@ msgstr ""
 msgid "Schedule post"
 msgstr ""
 
-#: src/components/compose.jsx:526
+#: src/components/compose.jsx:534
 msgid "You have unsaved changes. Discard this post?"
 msgstr "저장되지 않은 변경 사항이 있습니다. 해당 게시물을 지우시겠습니까?"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:772
+#: src/components/compose.jsx:783
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr ""
 
-#: src/components/compose.jsx:782
-#: src/components/compose.jsx:800
-#: src/components/compose.jsx:2052
+#: src/components/compose.jsx:793
+#: src/components/compose.jsx:811
+#: src/components/compose.jsx:2092
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {파일은 1개까지만 첨부할 수 있습니다.} other {파일은 #개 까지만 첨부할 수 있습니다.}}"
 
-#: src/components/compose.jsx:1022
+#: src/components/compose.jsx:1033
 msgid "Pop out"
 msgstr "새 창으로 열기"
 
-#: src/components/compose.jsx:1029
+#: src/components/compose.jsx:1040
 msgid "Minimize"
 msgstr "최소화"
 
-#: src/components/compose.jsx:1065
+#: src/components/compose.jsx:1076
 msgid "Looks like you closed the parent window."
 msgstr "Parent window를 닫으신거 같습니다."
 
-#: src/components/compose.jsx:1072
+#: src/components/compose.jsx:1083
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Parent window에 이미 작성 필드가 열려 있고 현재 게시 중인 것 같습니다. 완료될 때까지 기다렸다가 나중에 다시 시도하세요."
 
-#: src/components/compose.jsx:1077
+#: src/components/compose.jsx:1088
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Parent window에 이미 작성 필드가 열려 있는 것 같습니다. 이 창을 열면 Parent window에서 변경한 내용이 취소됩니다. 계속하시겠습니까?"
 
-#: src/components/compose.jsx:1123
+#: src/components/compose.jsx:1134
 msgid "Pop in"
 msgstr "창 합치기"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1133
+#: src/components/compose.jsx:1144
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "@{0} 님 게시물에 답글 달기(<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1143
+#: src/components/compose.jsx:1154
 msgid "Replying to @{0}’s post"
 msgstr "@{0} 님 게시물에 답글 달기"
 
-#: src/components/compose.jsx:1156
+#: src/components/compose.jsx:1167
 msgid "Editing source post"
 msgstr "원본 게시물 고치기"
 
-#: src/components/compose.jsx:1225
+#: src/components/compose.jsx:1236
 msgid "Poll must have at least 2 options"
 msgstr "설문에는 적어도 2개 이상의 선택지가 있어야 합니다"
 
-#: src/components/compose.jsx:1229
+#: src/components/compose.jsx:1240
 msgid "Some poll choices are empty"
 msgstr "선택지 중에 비어있는 게 있습니다"
 
-#: src/components/compose.jsx:1242
+#: src/components/compose.jsx:1253
 msgid "Some media have no descriptions. Continue?"
 msgstr "첨부한 매체 중에 설명이 없는 게 있습니다. 그래도 올릴까요?"
 
-#: src/components/compose.jsx:1294
+#: src/components/compose.jsx:1305
 msgid "Attachment #{i} failed"
 msgstr "첨부 파일 #{i} 실패"
 
-#: src/components/compose.jsx:1421
+#: src/components/compose.jsx:1432
 #: src/components/status.jsx:2426
 #: src/components/timeline.jsx:990
 msgid "Content warning"
 msgstr "열람 주의"
 
-#: src/components/compose.jsx:1442
-#: src/components/compose.jsx:1588
+#: src/components/compose.jsx:1453
+#: src/components/compose.jsx:1599
 #: src/components/edit-profile-sheet.jsx:323
 #: src/components/open-link-sheet.jsx:74
 #: src/components/private-note-sheet.jsx:94
@@ -528,81 +528,85 @@ msgstr "열람 주의"
 msgid "Cancel"
 msgstr "취소"
 
-#: src/components/compose.jsx:1450
+#: src/components/compose.jsx:1461
 msgid "Post your reply"
 msgstr "댓글 달기"
 
-#: src/components/compose.jsx:1452
+#: src/components/compose.jsx:1463
 msgid "Edit your post"
 msgstr "게시물 고치기"
 
-#: src/components/compose.jsx:1454
+#: src/components/compose.jsx:1465
 msgid "Ask a question"
 msgstr ""
 
-#: src/components/compose.jsx:1455
+#: src/components/compose.jsx:1466
 msgid "What are you doing?"
 msgstr "지금은 무얼 하고 계신가요?"
 
-#: src/components/compose.jsx:1528
+#: src/components/compose.jsx:1539
 msgid "Mark media as sensitive"
 msgstr "민감하다고 표시"
 
-#: src/components/compose.jsx:1568
+#: src/components/compose.jsx:1579
 msgid "Posting on <0/>"
 msgstr ""
 
-#: src/components/compose.jsx:1870
+#: src/components/compose.jsx:1881
 #: src/components/quote-settings-sheet.jsx:73
 #: src/components/status.jsx:297
-#: src/pages/settings.jsx:381
+#: src/pages/settings.jsx:369
 msgid "Anyone can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1873
+#: src/components/compose.jsx:1884
 #: src/components/quote-settings-sheet.jsx:76
 #: src/components/status.jsx:298
-#: src/pages/settings.jsx:384
+#: src/pages/settings.jsx:372
 msgid "Your followers can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1876
+#: src/components/compose.jsx:1887
 #: src/components/quote-settings-sheet.jsx:79
 #: src/components/status.jsx:299
-#: src/pages/settings.jsx:387
+#: src/pages/settings.jsx:375
 msgid "Only you can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1909
-#: src/pages/settings.jsx:323
+#: src/components/compose.jsx:1927
+msgid "Quotes can't be embedded in private mentions."
+msgstr ""
+
+#: src/components/compose.jsx:1949
+#: src/pages/settings.jsx:319
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "공개"
 
-#: src/components/compose.jsx:1914
+#: src/components/compose.jsx:1954
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:165
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "로컬"
 
-#: src/components/compose.jsx:1918
-#: src/pages/settings.jsx:326
+#: src/components/compose.jsx:1958
+#: src/pages/settings.jsx:322
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr ""
 
-#: src/components/compose.jsx:1924
+#: src/components/compose.jsx:1964
 #: src/components/status.jsx:2306
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "쪽지"
 
-#: src/components/compose.jsx:1976
+#: src/components/compose.jsx:2016
 msgid "Schedule"
 msgstr ""
 
-#: src/components/compose.jsx:1978
+#: src/components/compose.jsx:2018
 #: src/components/keyboard-shortcuts-help.jsx:164
 #: src/components/status.jsx:1056
 #: src/components/status.jsx:1090
@@ -613,20 +617,20 @@ msgstr ""
 msgid "Reply"
 msgstr "댓글"
 
-#: src/components/compose.jsx:1980
+#: src/components/compose.jsx:2020
 msgid "Update"
 msgstr "업데이트"
 
-#: src/components/compose.jsx:1981
+#: src/components/compose.jsx:2021
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "올리기"
 
-#: src/components/compose.jsx:2064
+#: src/components/compose.jsx:2104
 msgid "Downloading GIF…"
 msgstr "움짤 받는 중…"
 
-#: src/components/compose.jsx:2092
+#: src/components/compose.jsx:2132
 msgid "Failed to download GIF"
 msgstr "움짤 받기 실패"
 
@@ -664,7 +668,7 @@ msgid "Zoom in"
 msgstr ""
 
 #: src/components/drafts.jsx:62
-#: src/pages/settings.jsx:766
+#: src/pages/settings.jsx:753
 msgid "Unsent drafts"
 msgstr "올리지 않은 초고"
 
@@ -1306,7 +1310,7 @@ msgstr "따라잡기"
 #: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1254
+#: src/pages/settings.jsx:1241
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "언급"
@@ -1350,7 +1354,7 @@ msgstr "더 보기…"
 #: src/pages/catchup.jsx:2112
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1258
+#: src/pages/settings.jsx:1245
 msgid "Likes"
 msgstr "좋아요"
 
@@ -1773,7 +1777,7 @@ msgid "Quote settings updated"
 msgstr ""
 
 #: src/components/quote-settings-sheet.jsx:38
-#: src/pages/settings.jsx:374
+#: src/pages/settings.jsx:362
 msgid "Failed to update quote settings"
 msgstr ""
 
@@ -2671,7 +2675,7 @@ msgid "Pin to profile"
 msgstr "프로필에 고정"
 
 #: src/components/status.jsx:1538
-#: src/pages/settings.jsx:338
+#: src/pages/settings.jsx:332
 msgid "Quote settings"
 msgstr ""
 
@@ -2847,7 +2851,7 @@ msgid "{index}/X"
 msgstr ""
 
 #: src/components/timeline.jsx:480
-#: src/pages/settings.jsx:1282
+#: src/pages/settings.jsx:1269
 msgid "New posts"
 msgstr "새 게시물"
 
@@ -3711,7 +3715,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, other {공지}}"
 
 #: src/pages/notifications.jsx:682
-#: src/pages/settings.jsx:1270
+#: src/pages/settings.jsx:1257
 msgid "Follow requests"
 msgstr "팔로 요청"
 
@@ -3971,206 +3975,206 @@ msgstr "번역 참여하기"
 msgid "Posting"
 msgstr "게시"
 
-#: src/pages/settings.jsx:288
+#: src/pages/settings.jsx:287
 msgid "Default visibility"
 msgstr "기본 공개 범위"
 
-#: src/pages/settings.jsx:289
-#: src/pages/settings.jsx:341
-#: src/pages/settings.jsx:396
+#: src/pages/settings.jsx:288
+#: src/pages/settings.jsx:333
+#: src/pages/settings.jsx:383
 msgid "Synced"
 msgstr "동기화 됨"
 
-#: src/pages/settings.jsx:316
+#: src/pages/settings.jsx:312
 msgid "Failed to update posting privacy"
 msgstr "게시물 공개 범위 수정 실패"
 
-#: src/pages/settings.jsx:398
+#: src/pages/settings.jsx:385
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
 msgstr "인스턴스 서버의 설정과 동기화 됩니다. <0>쓰고 있는 인스턴스({instance})에서 더 많은 설정이 가능합니다.</0>"
 
-#: src/pages/settings.jsx:413
+#: src/pages/settings.jsx:400
 msgid "Experiments"
 msgstr "시범 기능"
 
-#: src/pages/settings.jsx:426
+#: src/pages/settings.jsx:413
 msgid "Auto refresh timeline posts"
 msgstr "타임라인 게시물 알아서 새로 고침"
 
-#: src/pages/settings.jsx:438
+#: src/pages/settings.jsx:425
 msgid "Boosts carousel"
 msgstr "부스트 캐러셀"
 
-#: src/pages/settings.jsx:455
+#: src/pages/settings.jsx:442
 msgid "Post translation"
 msgstr "게시물 번역"
 
-#: src/pages/settings.jsx:466
+#: src/pages/settings.jsx:453
 msgid "Translate to "
 msgstr ""
 
-#: src/pages/settings.jsx:477
+#: src/pages/settings.jsx:464
 msgid "System language ({systemTargetLanguageText})"
 msgstr "시스템 언어 ({systemTargetLanguageText})"
 
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
-#: src/pages/settings.jsx:503
+#: src/pages/settings.jsx:490
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr "{0, plural, =0 {다음 언어에 대해 “번역” 버튼 가리기:} other {다음 #개 언어에 대해 “번역” 버튼 가리기:}}"
 
-#: src/pages/settings.jsx:558
+#: src/pages/settings.jsx:545
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:586
+#: src/pages/settings.jsx:573
 msgid "Auto inline translation"
 msgstr "자동 번역"
 
-#: src/pages/settings.jsx:590
+#: src/pages/settings.jsx:577
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr "타임라인에서 게시물에 번역을 자동으로 보여줍니다. 열람 주의나 매체, 설문 조사가 없는 <0>짧은</0> 게시물에만 적용 됩니다."
 
-#: src/pages/settings.jsx:611
+#: src/pages/settings.jsx:598
 msgid "GIF Picker for composer"
 msgstr "글쓰기 창에서 움짤 고르기"
 
-#: src/pages/settings.jsx:615
+#: src/pages/settings.jsx:602
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr "이 기능은 외부 움짤 검색 서비스인 <0>GIPHY</0>를 이용합니다. 전체관람가 움짤만 제공되며, 추적 매개변수는 제거되고 리퍼러 정보는 요청에서 생략되지만, 그럼에도 검색어와 IP 주소 정보는 해당 서비스에 전달 됩니다."
 
-#: src/pages/settings.jsx:644
+#: src/pages/settings.jsx:631
 msgid "Image description generator"
 msgstr "이미지 설명 자동 생성기"
 
-#: src/pages/settings.jsx:649
+#: src/pages/settings.jsx:636
 msgid "Only for new images while composing new posts."
 msgstr "새 게시물을 쓸 때 새로운 이미지에만 적용 됩니다."
 
-#: src/pages/settings.jsx:656
+#: src/pages/settings.jsx:643
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr "참고: 이 기능은 외부 인공지능 서비스인 <0>img-alt-api</0>를 이용합니다. 잘 동작하지 않을 수 있으며, 이미지에만 적용 가능하고 영어만 지원합니다."
 
-#: src/pages/settings.jsx:682
+#: src/pages/settings.jsx:669
 msgid "Server-side grouped notifications"
 msgstr "서버측에서 알림 묶기"
 
-#: src/pages/settings.jsx:686
+#: src/pages/settings.jsx:673
 msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
 msgstr "알파 단계 기능입니다. 묶음의 크기가 커질 수도 있지만, 묶는 규칙은 기초적입니다."
 
-#: src/pages/settings.jsx:707
+#: src/pages/settings.jsx:694
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr "바로 가기 설정을 위해 \"클라우드\" 가져오기/내보내기"
 
-#: src/pages/settings.jsx:712
+#: src/pages/settings.jsx:699
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr ""
 
-#: src/pages/settings.jsx:723
+#: src/pages/settings.jsx:710
 msgid "Note: This feature uses currently-logged-in instance server API."
 msgstr "알림: 이 기능은 현재 로그인한 인스턴스 서버 API를 사용합니다."
 
-#: src/pages/settings.jsx:740
+#: src/pages/settings.jsx:727
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "가리기 모드 <0>(<1>글자들</1> → <2>███</2>)</0>"
 
-#: src/pages/settings.jsx:749
+#: src/pages/settings.jsx:736
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr "글자를 모두 네모로 바꿔서 개인정보 염려 없이 스크린숏을 캡처할 수 있게 합니다."
 
-#: src/pages/settings.jsx:774
+#: src/pages/settings.jsx:761
 msgid "About"
 msgstr "정보"
 
-#: src/pages/settings.jsx:813
+#: src/pages/settings.jsx:800
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr "<1>@cheeaun</1>이 <0>만듦</0>"
 
-#: src/pages/settings.jsx:842
+#: src/pages/settings.jsx:829
 msgid "Sponsor"
 msgstr "후원자"
 
-#: src/pages/settings.jsx:850
+#: src/pages/settings.jsx:837
 msgid "Donate"
 msgstr "기부"
 
-#: src/pages/settings.jsx:866
+#: src/pages/settings.jsx:853
 msgid "What's new"
 msgstr ""
 
-#: src/pages/settings.jsx:870
+#: src/pages/settings.jsx:857
 msgid "Privacy Policy"
 msgstr "개인 정보 보호 정책"
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:877
+#: src/pages/settings.jsx:864
 msgid "<0>Site:</0> {0}"
 msgstr "<0>사이트:</0> {0}"
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:884
+#: src/pages/settings.jsx:871
 msgid "<0>Version:</0> <1/> {0}"
 msgstr "<0>버전:</0> <1/> {0}"
 
-#: src/pages/settings.jsx:899
+#: src/pages/settings.jsx:886
 msgid "Version string copied"
 msgstr "버전 번호 복사 됨"
 
-#: src/pages/settings.jsx:902
+#: src/pages/settings.jsx:889
 msgid "Unable to copy version string"
 msgstr "버전 번호를 복사할 수 없음"
 
-#: src/pages/settings.jsx:1167
-#: src/pages/settings.jsx:1172
+#: src/pages/settings.jsx:1154
+#: src/pages/settings.jsx:1159
 msgid "Failed to update subscription. Please try again."
 msgstr "구독을 갱신하는 데 실패했습니다. 다시 시도해 보세요."
 
-#: src/pages/settings.jsx:1178
+#: src/pages/settings.jsx:1165
 msgid "Failed to remove subscription. Please try again."
 msgstr "구독을 삭제하는 데 실패했습니다. 다시 시도하세요."
 
-#: src/pages/settings.jsx:1185
+#: src/pages/settings.jsx:1172
 msgid "Push Notifications (beta)"
 msgstr "푸시 알림 (베타)"
 
-#: src/pages/settings.jsx:1207
+#: src/pages/settings.jsx:1194
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "푸시 알림이 차단되었습니다. 브라우저 설정에서 푸시 알림을 활성화하세요."
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1216
+#: src/pages/settings.jsx:1203
 msgid "Allow from <0>{0}</0>"
 msgstr "<0>{0}</0>에게서 알림 받기"
 
-#: src/pages/settings.jsx:1225
+#: src/pages/settings.jsx:1212
 msgid "anyone"
 msgstr "모두"
 
-#: src/pages/settings.jsx:1229
+#: src/pages/settings.jsx:1216
 msgid "people I follow"
 msgstr "내가 팔로하는 사람들"
 
-#: src/pages/settings.jsx:1233
+#: src/pages/settings.jsx:1220
 msgid "followers"
 msgstr "팔로워"
 
-#: src/pages/settings.jsx:1266
+#: src/pages/settings.jsx:1253
 msgid "Follows"
 msgstr "팔로"
 
-#: src/pages/settings.jsx:1274
+#: src/pages/settings.jsx:1261
 msgid "Polls"
 msgstr "설문 조사"
 
-#: src/pages/settings.jsx:1278
+#: src/pages/settings.jsx:1265
 msgid "Post edits"
 msgstr "게시물 수정"
 
-#: src/pages/settings.jsx:1299
+#: src/pages/settings.jsx:1286
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "마지막 로그인 이후 푸시 권한이 부여되지 않았습니다. <0>푸시 권한을 다시 얻으려면<1>로그인</1>을</0>해야합니다."
 
-#: src/pages/settings.jsx:1315
+#: src/pages/settings.jsx:1302
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "주의: 푸시 알림은 <0>단 하나의 계정</0>에만 작동합니다."
 

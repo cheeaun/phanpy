@@ -37,7 +37,7 @@ function statusPeek(status) {
               video: '📹',
               audio: '🎵',
               unknown: '',
-            }[m.type] || ''),
+            })[m.type] || '',
         )
         .join('');
   }

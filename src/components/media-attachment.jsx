@@ -37,7 +37,9 @@ function MediaAttachment({
 }) {
   const { i18n, t } = useLingui();
   const [uiState, setUIState] = useState('default');
-  const supportsEdit = supports('@mastodon/edit-media-attributes');
+  const supportsEdit =
+    supports('@mastodon/edit-media-attributes') ||
+    supports('@gotosocial/edit-media-attributes');
   const { type, id, file } = attachment;
   const url = useMemo(
     () => (file ? URL.createObjectURL(file) : attachment.url),

@@ -13,13 +13,13 @@ import TextExpander from './text-expander';
 // https://github.com/mastodon/mastodon/blob/c03bd2a238741a012aa4b98dc4902d6cf948ab63/app/models/account.rb#L69
 const USERNAME_RE = /[a-z0-9_]+([a-z0-9_.-]+[a-z0-9_]+)?/i;
 const MENTION_RE = new RegExp(
-  `(^|[^=\\/\\w])(@${USERNAME_RE.source}(?:@[\\p{L}\\w.-]+[\\w]+)?)`,
+  `(^|[^=\\/\\w])([@＠]${USERNAME_RE.source}(?:@[\\p{L}\\w.-]+[\\w]+)?)`,
   'uig',
 );
 
 // AI-generated, all other regexes are too complicated
 const HASHTAG_RE = new RegExp(
-  `(^|[^=\\/\\w])(#[\\p{L}\\p{N}_]+([\\p{L}\\p{N}_.]+[\\p{L}\\p{N}_]+)?)(?![\\/\\w])`,
+  `(^|[^=\\/\\w])([#＃][\\p{L}\\p{N}_]+([\\p{L}\\p{N}_.]+[\\p{L}\\p{N}_]+)?)(?![\\/\\w])`,
   'iug',
 );
 
@@ -165,7 +165,7 @@ const Textarea = forwardRef((props, ref) => {
   return (
     <TextExpander
       ref={textExpanderRef}
-      keys="@ # :"
+      keys="@ ＠ : # ＃"
       class="compose-field-container"
       onTrigger={onTrigger}
     >

@@ -20,7 +20,7 @@ import Status from '../components/status';
 import { api } from '../utils/api';
 import niceDateTime from '../utils/nice-date-time';
 import showToast from '../utils/show-toast';
-import states from '../utils/states';
+import states, { saveStatus, statusKey } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 40;
@@ -121,6 +121,8 @@ export default function ScheduledPosts() {
                   spoilerText,
                   text,
                   visibility,
+                  quotedStatusId,
+                  quoteApprovalPolicy,
                 } = params;
                 const status = {
                   // account: account.info,
@@ -144,6 +146,8 @@ export default function ScheduledPosts() {
                   visibility,
                   content: `<p>${text}</p>`,
                   // createdAt: scheduledAt,
+                  quotedStatusId,
+                  quoteApprovalPolicy,
                 };
 
                 return (
@@ -227,7 +231,7 @@ function ScheduledPostPreview({ status, scheduledAt, onClick }) {
 }
 
 function ScheduledPostEdit({ post, scheduledAt, onClose }) {
-  const { masto } = api();
+  const { masto, instance } = api();
   const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const [newScheduledAt, setNewScheduledAt] = useState();
@@ -251,6 +255,32 @@ function ScheduledPostEdit({ post, scheduledAt, onClose }) {
   //     })();
   //   }
   // }, [inReplyToId]);
+
+  const { quotedStatusId } = post;
+  // TODO: Uncomment this once https://github.com/mastodon/mastodon/issues/36536 is fixed
+  // useEffect(() => {
+  //   if (post.id && quotedStatusId) {
+  //     (async () => {
+  //       try {
+  //         const quotedStatus = await masto.v1.statuses
+  //           .$select(quotedStatusId)
+  //           .fetch();
+  //         saveStatus(quotedStatus, instance);
+  //         const sKey = statusKey(post.id, instance);
+  //         states.statusQuotes[sKey] = [
+  //           {
+  //             id: quotedStatus.id,
+  //             instance,
+  //             url: `/${instance}/s/${quotedStatus.id}`,
+  //             native: true,
+  //           },
+  //         ];
+  //       } catch (e) {
+  //         console.error('Failed to fetch quoted status:', e);
+  //       }
+  //     })();
+  //   }
+  // }, [post.id, quotedStatusId]);
 
   return (
     <div id="scheduled-post-sheet" class="sheet">

@@ -1,12 +1,23 @@
 import getHTMLText from './getHTMLText';
 
 function statusPeek(status) {
-  const { spoilerText, content, poll, mediaAttachments } = status;
+  const { spoilerText, content, poll, mediaAttachments, quote } = status;
   let text = '';
+  // Don't need supportsNativeQuote because checking quotedStatus ID is enough
+  const hasQuote = !!quote?.quotedStatus?.id;
   if (spoilerText?.trim()) {
     text += spoilerText;
   } else {
-    text += getHTMLText(content);
+    text += getHTMLText(content, {
+      preProcess: (dom) => {
+        if (hasQuote) {
+          const reContainer = dom.querySelector('.quote-inline');
+          if (reContainer) {
+            reContainer.remove();
+          }
+        }
+      },
+    });
   }
   text = text.trim();
   if (poll?.options?.length) {
@@ -29,6 +40,10 @@ function statusPeek(status) {
             })[m.type] || '',
         )
         .join('');
+  }
+  if (hasQuote) {
+    const quotePeek = statusPeek(quote.quotedStatus);
+    text += `\n\n❝\n${quotePeek}\n❞`;
   }
   return text;
 }

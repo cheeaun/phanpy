@@ -497,6 +497,34 @@ button[hidden] {
   opacity: 0;
 }
 
+@keyframes loading-mask {
+  0% {
+    mask-position: 100%;
+  }
+  100% {
+    mask-position: 0%;
+  }
+}
+.loading-mask > * {
+  display: inline-block;
+  mask-image: linear-gradient(
+    100deg,
+    black 33%,
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.4),
+    black 66%
+  );
+  mask-size: 300% 100%;
+  mask-clip: content-box;
+  mask-repeat: no-repeat;
+  animation: loading-mask 1.5s ease-in-out infinite alternate;
+
+  :dir(rtl) & {
+    animation-direction: alternate-reverse;
+  }
+}
+
 input[type='text'],
 input[type='search'],
 input[type='datetime-local'],

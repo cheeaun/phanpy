@@ -95,7 +95,7 @@ const DEFAULT_LANG = localeMatch(
 );
 
 // https://github.com/mastodon/mastodon/blob/c4a429ed47e85a6bbf0d470a41cc2f64cf120c19/app/javascript/mastodon/features/compose/util/counter.js
-const usernameRegex = /(^|[^\/\w])@(([a-z0-9_]+)@[a-z0-9\.\-]+[a-z0-9]+)/gi;
+const usernameRegex = /(^|[^\/\w])[@＠](([a-z0-9_]+)@[a-z0-9\.\-]+[a-z0-9]+)/gi;
 const urlPlaceholder = '$2xxxxxxxxxxxxxxxxxxxxxxx';
 function countableText(inputText) {
   return inputText
@@ -121,6 +121,7 @@ const DEFAULT_SCHEDULED_AT = Math.max(10 * 60 * 1000, MIN_SCHEDULED_AT); // 10 m
 function Compose({
   onClose,
   replyToStatus,
+  replyMode = 'all',
   editStatus,
   draftStatus,
   quoteStatus,
@@ -185,10 +186,13 @@ function Compose({
   const [scheduledAt, setScheduledAt] = useState(null);
   const [quoteSuggestion, setQuoteSuggestion] = useState(null);
   const [localQuoteStatus, setLocalQuoteStatus] = useState(quoteStatus);
+  const [quoteCleared, setQuoteCleared] = useState(false);
 
   const prefs = getPreferences();
 
-  const currentQuoteStatus = localQuoteStatus || quoteStatus;
+  const currentQuoteStatus = quoteCleared
+    ? null
+    : localQuoteStatus || quoteStatus;
 
   // Quote eligibility logic duplicated from status.jsx
   const checkQuoteEligibility = (status) => {
@@ -229,6 +233,11 @@ function Compose({
         return;
       }
 
+      // Don't show quote suggestion when visibility is 'direct'
+      if (visibility === 'direct') {
+        return;
+      }
+
       try {
         const unfurledData = await unfurlMastodonLink(instance, url);
         if (unfurledData?.id) {
@@ -257,13 +266,12 @@ function Compose({
     if (!textareaRef.current) return;
     textareaRef.current.dispatchEvent(new Event('input'));
   };
-  const focusTextarea = () => {
+  const focusTextarea = (cursorPosition) => {
     setTimeout(() => {
       if (!textareaRef.current) return;
-      // status starts with newline or space, focus on first position
-      if (/^\n|\s/.test(draftStatus?.status)) {
-        textareaRef.current.selectionStart = 0;
-        textareaRef.current.selectionEnd = 0;
+      // If cursor position is provided, set it
+      if (cursorPosition !== undefined) {
+        textareaRef.current.setSelectionRange(cursorPosition, cursorPosition);
       }
       console.debug('FOCUS textarea');
       textareaRef.current?.focus();
@@ -357,13 +365,41 @@ function Compose({
       const allMentions = [...mentions].filter(
         (m) => m !== currentAccountInfo.acct,
       );
+
       if (allMentions.length > 0) {
-        textareaRef.current.value = `${allMentions
-          .map((m) => `@${m}`)
-          .join(' ')} `;
-        oninputTextarea();
+        const authorMention = `@${replyToStatus.account.acct}`;
+        const otherMentions = allMentions
+          .filter((m) => m !== replyToStatus.account.acct)
+          .map((m) => `@${m}`);
+
+        if (replyMode === 'author-only') {
+          // Mode 1: Only mention the author
+          textareaRef.current.value = `${authorMention} `;
+          oninputTextarea();
+          focusTextarea();
+        } else if (replyMode === 'author-first') {
+          // Mode 2: Mention author first, then others at the end after 2 newlines
+          if (otherMentions.length > 0) {
+            textareaRef.current.value = `${authorMention} \n\n${otherMentions.join(' ')}`;
+            oninputTextarea();
+            // Set cursor position after the author mention
+            const cursorPosition = authorMention.length + 1; // +1 for the space
+            focusTextarea(cursorPosition);
+          } else {
+            // If no other mentions, just mention the author
+            textareaRef.current.value = `${authorMention} `;
+            oninputTextarea();
+            focusTextarea();
+          }
+        } else {
+          // Mode 3 (default 'all'): All mentions at the beginning
+          textareaRef.current.value = `${allMentions
+            .map((m) => `@${m}`)
+            .join(' ')} `;
+          oninputTextarea();
+          focusTextarea();
+        }
       }
-      focusTextarea();
       setVisibility(
         visibility === 'public' && prefs['posting:default:visibility']
           ? prefs['posting:default:visibility'].toLowerCase()
@@ -466,7 +502,9 @@ function Compose({
       };
       textareaRef.current.value = status;
       oninputTextarea();
-      focusTextarea();
+      // status starts with newline or space, focus on first position
+      const cursorPos = /^\n|\s/.test(status) ? 0 : undefined;
+      focusTextarea(cursorPos);
       if (spoilerText) spoilerTextRef.current.value = spoilerText;
       if (visibility) setVisibility(visibility);
       setLanguage(
@@ -481,7 +519,7 @@ function Compose({
       if (scheduledAt) setScheduledAt(scheduledAt);
       if (quoteApprovalPolicy) setQuoteApprovalPolicy(quoteApprovalPolicy);
     }
-  }, [draftStatus, editStatus, replyToStatus]);
+  }, [draftStatus, editStatus, replyToStatus, replyMode]);
 
   // focus textarea when state.composerState.minimized turns false
   const snapStates = useSnapshot(states);
@@ -720,6 +758,9 @@ function Compose({
 
   useEffect(() => {
     const handleItems = (e) => {
+      // Ignore drops when a sheet is open
+      if (document.querySelector('.sheet')) return;
+
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
       const unsupportedFiles = [];
@@ -1058,6 +1099,7 @@ function Compose({
                       const passData = {
                         editStatus,
                         replyToStatus,
+                        replyMode,
                         draftStatus: {
                           uid: UID.current,
                           status: textareaRef.current.value,
@@ -1291,7 +1333,10 @@ function Compose({
                   if (supportsNativeQuote()) {
                     params.quote_approval_policy = quoteApprovalPolicy;
                   }
-                  if (supports('@mastodon/edit-media-attributes')) {
+                  if (
+                    supports('@mastodon/edit-media-attributes') ||
+                    supports('@gotosocial/edit-media-attributes')
+                  ) {
                     params.media_attributes = mediaAttachments.map(
                       (attachment) => {
                         return {
@@ -1866,6 +1911,35 @@ function Compose({
                     e.target.value === 'direct'
                   ) {
                     setQuoteApprovalPolicy('nobody');
+                  }
+
+                  if (e.target.value === 'direct' && currentQuoteStatus?.id) {
+                    const quoteURL = currentQuoteStatus.url;
+                    if (quoteURL) {
+                      const currentText = textareaRef.current.value;
+                      if (!currentText.includes(quoteURL)) {
+                        textareaRef.current.value =
+                          currentText + (currentText ? '\n' : '') + quoteURL;
+                        oninputTextarea();
+                      }
+                    }
+                    setQuoteCleared(true);
+                    showToast(t`Quotes can't be embedded in private mentions.`);
+                  } else if (e.target.value !== 'direct' && quoteCleared) {
+                    const quoteURL = (localQuoteStatus || quoteStatus)?.url;
+                    if (quoteURL && textareaRef.current) {
+                      const currentValue = textareaRef.current.value;
+                      const linkPos = currentValue.indexOf(quoteURL);
+                      if (linkPos !== -1) {
+                        let newValue =
+                          currentValue.slice(0, linkPos) +
+                          currentValue.slice(linkPos + quoteURL.length);
+                        newValue = newValue.replace(/\n+$/, '');
+                        textareaRef.current.value = newValue;
+                        oninputTextarea();
+                      }
+                    }
+                    setQuoteCleared(false);
                   }
                 }}
                 disabled={uiState === 'loading' || !!editStatus}

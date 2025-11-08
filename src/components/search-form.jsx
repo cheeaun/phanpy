@@ -30,12 +30,15 @@ export const generateSearchItemData = (query, queryType, instance) => {
     to = `/search?q=${encodeURIComponent(query)}&type=accounts`;
     icon = 'group';
   } else if (queryType === 'hashtags') {
+    const hashSymbol = query[0]; // Preserve original # or ＃
+    const hashtagText = query.replace(/^[#＃]/, '');
+    const hashtag = `${hashSymbol}${hashtagText}`;
     label = (
       <Trans>
-        Posts tagged with <mark>#{query.replace(/^#/, '')}</mark>
+        Posts tagged with <mark>{hashtag}</mark>
       </Trans>
     );
-    to = `/${instance}/t/${query.replace(/^#/, '')}`;
+    to = `/${instance}/t/${hashtagText}`;
     icon = 'hashtag';
   } else {
     // Default/general search
@@ -124,8 +127,9 @@ const SearchForm = forwardRef((props, ref) => {
       // Hashtag search
       {
         ...generateSearchItemData(query, 'hashtags', instance),
-        hidden: /^@/.test(query) || /^https?:/.test(query) || /\s/.test(query),
-        top: /^#/.test(query),
+        hidden:
+          /^[@＠]/.test(query) || /^https?:/.test(query) || /\s/.test(query),
+        top: /^[#＃]/.test(query),
         type: 'link',
         queryType: 'hashtags',
       },

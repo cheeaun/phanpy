@@ -1,10 +1,8 @@
 import './name-text.css';
 
 import { useLingui } from '@lingui/react';
-import { memo } from 'preact/compat';
 
 import { api } from '../utils/api';
-import getDomain from '../utils/get-domain';
 import mem from '../utils/mem';
 import states from '../utils/states';
 
@@ -54,8 +52,6 @@ function NameText({
   const [_, acct1, acct2] = acct.match(ACCT_REGEX) || [, acct];
 
   if (!instance) instance = api().instance;
-
-  const accountInstance = getDomain(url);
 
   const trimmedUsername = username.toLowerCase().trim();
   const trimmedDisplayName = (displayName || '').toLowerCase().trim();
@@ -113,7 +109,12 @@ function NameText({
       {displayName && !short ? (
         <>
           <b dir="auto">
-            <EmojiText text={displayName} emojis={emojis} staticEmoji />
+            <EmojiText
+              text={displayName}
+              emojis={emojis}
+              resolverURL={account.url}
+              staticEmoji
+            />
           </b>
           {!showAcct && !hideUsername && (
             <>
@@ -148,11 +149,4 @@ function NameText({
   );
 }
 
-export default mem(NameText);
-
-// export default memo(NameText, (oldProps, newProps) => {
-//   // Only care about account.id, the other props usually don't change
-//   const { account } = oldProps;
-//   const { account: newAccount } = newProps;
-//   return account?.acct === newAccount?.acct;
-// });
+export default NameText;

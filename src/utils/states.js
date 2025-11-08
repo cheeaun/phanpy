@@ -34,6 +34,7 @@ const states = proxy({
   reloadScheduledPosts: 0,
   spoilers: {},
   spoilersMedia: {},
+  revealedQuotes: {},
   scrollPositions: {},
   unfurledLinks: {},
   statusQuotes: {},

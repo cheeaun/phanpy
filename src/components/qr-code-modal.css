@@ -118,9 +118,7 @@
   .qr-code {
     border-radius: 12px;
     overflow: hidden;
-    box-shadow:
-      0 2px 8px -2px var(--drop-shadow-color),
-      0 8px 48px -16px var(--drop-shadow-color);
+    border: 2px solid var(--outline-color);
     animation: dynamic-entrance var(--spring-timing-duration) both
       var(--spring-timing-function) 0.5s;
   }

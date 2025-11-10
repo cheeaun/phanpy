@@ -596,6 +596,23 @@ function AccountInfo({
                         <Trans>Copy handle</Trans>
                       </span>
                     </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        states.showQrCodeModal = {
+                          text: url,
+                          arena: avatarStatic,
+                          backgroundMask: headerStatic,
+                          caption: acct.includes('@')
+                            ? acct
+                            : `${acct}@${instance}`,
+                        };
+                      }}
+                    >
+                      <Icon icon="qrcode-2-line" />
+                      <span>
+                        <Trans>QR code</Trans>
+                      </span>
+                    </MenuItem>
                     <MenuItem href={url} target="_blank">
                       <Icon icon="external" />
                       <span>

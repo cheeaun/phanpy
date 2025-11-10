@@ -1,0 +1,23 @@
+svg.qr-code {
+  width: min(320px, fit-content);
+  max-width: min(100%, 320px);
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  vertical-align: top;
+
+  * {
+    pointer-events: none;
+    shape-rendering: optimizeSpeed;
+    user-select: none;
+  }
+
+  .qr-code-caption {
+    font-size: 2px !important;
+    letter-spacing: -0.08px;
+    font-weight: bold;
+    color: currentColor;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}

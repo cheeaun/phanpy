@@ -173,6 +173,13 @@ function RelatedActions({
   const [showPrivateNoteModal, setShowPrivateNoteModal] = useState(false);
   const [lists, setLists] = useState([]);
 
+  let { headerStatic, avatarStatic } = info;
+  if (!headerStatic || /missing\.png$/.test(headerStatic)) {
+    if (avatarStatic && !/missing\.png$/.test(avatarStatic)) {
+      headerStatic = avatarStatic;
+    }
+  }
+
   return (
     <>
       <div class="actions">
@@ -524,6 +531,21 @@ function RelatedActions({
                   </MenuItem>
                 )}
             </div>
+            <MenuItem
+              onClick={() => {
+                states.showQrCodeModal = {
+                  text: url,
+                  arena: avatarStatic,
+                  backgroundMask: headerStatic,
+                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                };
+              }}
+            >
+              <Icon icon="qrcode-2-line" />
+              <span>
+                <Trans>QR code</Trans>
+              </span>
+            </MenuItem>
             {!!relationship && (
               <>
                 <MenuDivider />

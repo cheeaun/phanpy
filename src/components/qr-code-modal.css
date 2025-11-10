@@ -19,7 +19,11 @@
   &::after {
     content: '';
     position: absolute;
-    inset: 0;
+    width: 100vmax;
+    height: 100vmax;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
     background: conic-gradient(
       from 0deg at 50% 50%,
       var(--sunray-color) 0deg,
@@ -95,11 +99,7 @@
       transparent 350deg,
       transparent 360deg
     );
-    mask-image: radial-gradient(
-      circle closest-side at center,
-      black 50%,
-      transparent
-    );
+    mask-image: radial-gradient(closest-side, black 50%, transparent);
     animation:
       rotate-sunray 360s linear infinite,
       fade-in-sunray 1s var(--timing-function) 0.4s both;
@@ -139,7 +139,7 @@
       display: none;
     }
     .qr-code {
-      min-height: 320px;
+      min-height: 160px;
     }
   }
 }

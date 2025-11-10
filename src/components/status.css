@@ -214,11 +214,14 @@
     transition: transform 0.2s ease-out;
   }
 }
-.status-card-link:is(:hover, :focus) .status-card {
+.status-card-link:is(:hover, :focus)
+  .status-card:not(.status-card .status-card) {
   border-color: var(--outline-hover-color);
   box-shadow: inset 0 0 0 4px var(--bg-faded-blur-color);
 }
-.status-card-link:is(:hover, :focus) .status-card img {
+.status-card-link:is(:hover, :focus)
+  .status-card:not(.status-card .status-card)
+  img {
   animation: position-object 5s ease-in-out 1s 5;
   animation-duration: var(--anim-duration, 5s);
 }
@@ -239,6 +242,10 @@
 
   .quote-post-native > & {
     border-radius: 8px;
+  }
+
+  .status-card {
+    box-shadow: none;
   }
 }
 .status-card:has(.status-badge:not(:empty)) {

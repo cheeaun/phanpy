@@ -369,6 +369,14 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - 💬 More support for (upcoming) Mastodon v4.5's native quote posts
 - 🐛 Bug fixes
 
+## November 8, 2025
+
+- 🗣️ Reply/Reply all
+- ⌨️ Sequential hotkeys, only g>h and g>n for now
+- 💈 Decal patterns for posting stats
+- 💬 Slightly more support for Mastodon v4.5's native quote posts
+- 🐛 Bug fixes
+
 <!--
 
 ## Next

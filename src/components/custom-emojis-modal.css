@@ -1,10 +1,13 @@
 #custom-emojis-sheet {
   --custom-emoji-size: 1;
   --size-bump: 210px;
-  height: min(
-    95vh,
-    calc(50vh + ((var(--custom-emoji-size) - 1) * var(--size-bump)))
-  );
+  height: 50svh;
+  @media (hover: hover) {
+    height: min(
+      95svh,
+      calc(50svh + ((var(--custom-emoji-size) - 1) * var(--size-bump)))
+    );
+  }
   max-width: calc(
     var(--main-width) +
     ((var(--custom-emoji-size) - 1) * var(--size-bump)) -

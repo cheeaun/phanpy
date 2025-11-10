@@ -18,6 +18,7 @@ import MediaAltModal from './media-alt-modal';
 import MediaModal from './media-modal';
 import Modal from './modal';
 import OpenLinkSheet from './open-link-sheet';
+import QrCodeModal from './qr-code-modal';
 import ReportModal from './report-modal';
 import ShortcutsSettings from './shortcuts-settings';
 
@@ -274,6 +275,24 @@ export default function Modals() {
             post={snapStates.showReportModal.post}
             onClose={() => {
               states.showReportModal = false;
+            }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showQrCodeModal && (
+        <Modal
+          class="solid"
+          onClose={() => {
+            states.showQrCodeModal = false;
+          }}
+        >
+          <QrCodeModal
+            text={snapStates.showQrCodeModal.text}
+            arena={snapStates.showQrCodeModal.arena}
+            backgroundMask={snapStates.showQrCodeModal.backgroundMask}
+            caption={snapStates.showQrCodeModal.caption}
+            onClose={() => {
+              states.showQrCodeModal = false;
             }}
           />
         </Modal>

@@ -56,6 +56,7 @@ const states = proxy({
   showMediaAlt: false,
   showEmbedModal: false,
   showReportModal: false,
+  showQrCodeModal: false,
   // Shortcuts
   shortcuts: [],
   // Settings
@@ -176,6 +177,8 @@ export function hideAllModals() {
   states.showGenericAccounts = false;
   states.showMediaAlt = false;
   states.showEmbedModal = false;
+  states.showReportModal = false;
+  states.showQrCodeModal = false;
 }
 
 export function statusKey(id, instance) {

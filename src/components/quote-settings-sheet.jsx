@@ -5,6 +5,7 @@ import { useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
 import showToast from '../utils/show-toast';
+import { saveStatus } from '../utils/states';
 
 import Icon from './icon';
 import Status from './status';
@@ -27,12 +28,20 @@ function QuoteSettingsSheet({ onClose, post, currentPolicy }) {
     setUIState('loading');
 
     try {
-      await masto.v1.statuses.$select(post.id).interactionPolicy.update({
-        quote_approval_policy: quoteApprovalPolicy,
-      });
+      const newStatus = await masto.v1.statuses
+        .$select(post.id)
+        .interactionPolicy.update({
+          quote_approval_policy: quoteApprovalPolicy,
+        });
       onClose(true);
       showToast(t`Quote settings updated`);
       setUIState('default');
+
+      // Update the status with new quote policy
+      saveStatus(newStatus, post.instance, {
+        skipThreading: true,
+        skipUnfurling: true,
+      });
     } catch (e) {
       console.error(e);
       showToast(t`Failed to update quote settings`);

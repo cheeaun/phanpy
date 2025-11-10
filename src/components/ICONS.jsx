@@ -168,7 +168,7 @@ export const ICONS = {
   code: () => import('@iconify-icons/mingcute/code-line'),
   copy: () => import('@iconify-icons/mingcute/copy-2-line'),
   quote: {
-    module: () => import('@iconify-icons/mingcute/quote-left-line'),
+    module: () => import('@iconify-icons/mingcute/quote-left-fill'),
     rtl: true,
   },
   quote2: {

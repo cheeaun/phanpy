@@ -110,7 +110,6 @@ export default function QrCode({
         ecc: 'high',
         border: 0,
         scale: 1,
-        mask: 1,
       }),
     [text],
   );

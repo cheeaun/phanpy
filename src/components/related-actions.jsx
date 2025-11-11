@@ -227,6 +227,22 @@ function RelatedActions({
               <span>{privateNote}</span>
             </button>
           )}
+          {currentAuthenticated && isSelf && (
+            <button
+              type="button"
+              class="plain"
+              onClick={() => {
+                states.showQrCodeModal = {
+                  text: url,
+                  arena: avatarStatic,
+                  backgroundMask: headerStatic,
+                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                };
+              }}
+            >
+              <Icon icon="qrcode-2-line" alt={t`QR code`} />
+            </button>
+          )}
           <Menu2
             portal={{
               target: document.body,

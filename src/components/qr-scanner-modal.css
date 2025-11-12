@@ -18,7 +18,6 @@
 
   .qr-scanner-video-container {
     position: relative;
-    max-width: 500px;
     border-radius: 8px;
     overflow: hidden;
     flex-grow: 0;
@@ -51,8 +50,7 @@
     image-rendering: pixelated;
 
     path {
-      stroke: #fff;
-      mix-blend-mode: difference;
+      stroke: rgba(255, 255, 255, 0.5);
       shape-rendering: optimizeSpeed;
     }
   }

@@ -8,6 +8,7 @@ import Icon from './icon';
 
 function QrScannerModal({ onClose }) {
   const { t } = useLingui();
+  const containerRef = useRef(null);
   const videoRef = useRef(null);
   const overlayRef = useRef(null);
   const [decodedText, setDecodedText] = useState('');
@@ -40,6 +41,10 @@ function QrScannerModal({ onClose }) {
           video.addEventListener('play', () => {
             // We won't have correct size until video starts playing
             console.log('Video started playing, beginning scan loop');
+
+            const { videoWidth, videoHeight } = video;
+            video.style.aspectRatio = `${videoWidth} / ${videoHeight}`;
+            containerRef.current.style.maxWidth = `${videoWidth}px`;
 
             const mainLoop = () => {
               try {
@@ -103,7 +108,7 @@ function QrScannerModal({ onClose }) {
         </div>
       ) : (
         <>
-          <div class="qr-scanner-video-container">
+          <div ref={containerRef} class="qr-scanner-video-container">
             <video ref={videoRef} playsInline muted disablepictureinpicture />
             <canvas ref={overlayRef} class="qr-scanner-canvas" />
             <svg

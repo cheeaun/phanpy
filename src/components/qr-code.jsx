@@ -20,9 +20,7 @@ export default function QrCode({
 }) {
   const captionRef = useRef(null);
   const [captionHeight, setCaptionHeight] = useState(0);
-  const [arenaDataUri, setArenaDataUri] = useState(arena);
-  const [backgroundMaskDataUri, setBackgroundMaskDataUri] =
-    useState(backgroundMask);
+  const [arenaLoaded, setArenaLoaded] = useState(false);
   const [arenaHasAlpha, setArenaHasAlpha] = useState(false);
 
   const effectiveArenaCircle = arenaHasAlpha ? false : arenaCircle;
@@ -39,17 +37,11 @@ export default function QrCode({
       const img = new Image();
       img.crossOrigin = 'anonymous';
       img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        const dataUri = canvas.toDataURL();
-        setArenaDataUri(dataUri);
+        setArenaLoaded(true);
         try {
           const { width, height } = img;
-          if (canvas.width !== width) canvas.width = width;
-          if (canvas.height !== height) canvas.height = height;
+          canvas.width = width;
+          canvas.height = height;
           ctx.drawImage(img, 0, 0);
           const allPixels = ctx.getImageData(0, 0, width, height);
           const data = allPixels.data;
@@ -64,43 +56,19 @@ export default function QrCode({
             }
           }
           setArenaHasAlpha(hasAlpha);
-          ctx.clearRect(0, 0, width, height);
         } catch (e) {
           setArenaHasAlpha(false);
         }
       };
       img.onerror = (error) => {
         console.error('Failed to load arena image:', error);
-        setArenaDataUri(arena);
+        setArenaLoaded(true); // Still show the image even on CORS error
       };
       img.src = arena;
     } else {
-      setArenaDataUri(null);
+      setArenaLoaded(false);
     }
   }, [arena]);
-
-  useEffect(() => {
-    if (backgroundMask) {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        const dataUri = canvas.toDataURL();
-        setBackgroundMaskDataUri(dataUri);
-      };
-      img.onerror = (error) => {
-        console.error('Failed to load backgroundMask image:', error);
-        setBackgroundMaskDataUri(backgroundMask);
-      };
-      img.src = backgroundMask;
-    } else {
-      setBackgroundMaskDataUri(null);
-    }
-  }, [backgroundMask]);
 
   if (!text) return null;
 
@@ -115,7 +83,7 @@ export default function QrCode({
   );
   const gridSize = qrData.length;
 
-  const centerExcludeSize = arenaDataUri ? Math.ceil(gridSize * 0.3) : 0;
+  const centerExcludeSize = arenaLoaded ? Math.ceil(gridSize * 0.3) : 0;
   const centerStart = Math.floor((gridSize - centerExcludeSize) / 2);
   const centerEnd = centerStart + centerExcludeSize;
 
@@ -123,7 +91,7 @@ export default function QrCode({
     if (x < 0 || x >= gridSize || y < 0 || y >= gridSize) return false;
 
     if (
-      arenaDataUri &&
+      arenaLoaded &&
       x >= centerStart &&
       x < centerEnd &&
       y >= centerStart &&
@@ -192,7 +160,7 @@ export default function QrCode({
   }, [
     gridSize,
     qrData,
-    arenaDataUri,
+    arenaLoaded,
     centerStart,
     centerEnd,
     centerExcludeSize,
@@ -273,7 +241,18 @@ export default function QrCode({
             ry={markerInnerRadius}
           />
         </g>
-        {backgroundMaskDataUri && (
+        {backgroundMask && (
+          <filter id="blur-mask">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+            <feColorMatrix type="saturate" values="2" />
+            <feComponentTransfer>
+              <feFuncR type="linear" slope="1.2" intercept="0.3" />
+              <feFuncG type="linear" slope="1.2" intercept="0.3" />
+              <feFuncB type="linear" slope="1.2" intercept="0.3" />
+            </feComponentTransfer>
+          </filter>
+        )}
+        {backgroundMask && (
           <mask id="qr-pattern-mask">
             <path
               fill="white"
@@ -293,7 +272,7 @@ export default function QrCode({
                 />
               ))}
             </g>
-            {arenaDataUri && effectiveArenaCircle && (
+            {arenaLoaded && effectiveArenaCircle && (
               <circle
                 cx={centerImageX + centerImageSize / 2}
                 cy={centerImageY + centerImageSize / 2}
@@ -301,7 +280,7 @@ export default function QrCode({
                 fill="black"
               />
             )}
-            {arenaDataUri && !arenaCircle && (
+            {arenaLoaded && !arenaCircle && (
               <rect
                 x={centerImageX}
                 y={centerImageY}
@@ -335,33 +314,23 @@ export default function QrCode({
           />
         ))}
       </g>
-      {backgroundMaskDataUri && (
+      {backgroundMask && (
         <g mask="url(#qr-pattern-mask)">
           <image
-            href={backgroundMaskDataUri}
+            href={backgroundMask}
             x={-padding - bleed}
             y={-padding - bleed}
             width={viewBoxWidth + bleed * 2}
             height={viewBoxWidth + bleed * 2}
             preserveAspectRatio="none"
-            class={`blur-mask ${
-              backgroundMaskDataUri.startsWith('data:') ? '' : 'remote-image'
-            }`.trim()}
-          >
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              from={`0 ${viewBoxWidth / 2} ${viewBoxWidth / 2}`}
-              to={`360 ${viewBoxWidth / 2} ${viewBoxWidth / 2}`}
-              dur="30s"
-              repeatCount="indefinite"
-            />
-          </image>
+            opacity="0.5"
+            filter="url(#blur-mask)"
+          />
         </g>
       )}
-      {arenaDataUri && (
+      {arena && (
         <image
-          href={arenaDataUri}
+          href={arena}
           x={centerImageX}
           y={centerImageY}
           width={centerImageSize}
@@ -372,7 +341,6 @@ export default function QrCode({
               ? `circle(${centerImageSize / 2}px at ${centerImageSize / 2}px ${centerImageSize / 2}px)`
               : `inset(0% round ${arenaImageRadius}px)`
           }
-          class={arenaDataUri.startsWith('data:') ? '' : 'remote-image'}
         />
       )}
       {caption && (

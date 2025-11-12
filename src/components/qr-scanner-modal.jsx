@@ -154,7 +154,12 @@ function QrScannerModal({ onClose }) {
                   <a
                     class="button plain6"
                     href={`/#/${decodedText}`}
-                    onClick={onClose}
+                    onClick={() => {
+                      // Close QR code modal
+                      states.showQrCodeModal = false;
+                      // Close itself
+                      onClose();
+                    }}
                   >
                     <Trans>View profile</Trans>
                   </a>

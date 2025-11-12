@@ -240,7 +240,7 @@ function RelatedActions({
                 };
               }}
             >
-              <Icon icon="qrcode-2-line" alt={t`QR code`} />
+              <Icon icon="qrcode" alt={t`QR code`} />
             </button>
           )}
           <Menu2
@@ -557,7 +557,7 @@ function RelatedActions({
                 };
               }}
             >
-              <Icon icon="qrcode-2-line" />
+              <Icon icon="qrcode" />
               <span>
                 <Trans>QR code</Trans>
               </span>

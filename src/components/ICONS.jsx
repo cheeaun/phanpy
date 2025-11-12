@@ -192,5 +192,6 @@ export const ICONS = {
   'zoom-in': () => import('@iconify-icons/mingcute/zoom-in-line'),
   'zoom-out': () => import('@iconify-icons/mingcute/zoom-out-line'),
   'cursor-hand': () => import('@iconify-icons/mingcute/hand-finger-2-line'),
-  'qrcode-2-line': () => import('@iconify-icons/mingcute/qrcode-2-line'),
+  qrcode: () => import('@iconify-icons/mingcute/qrcode-2-line'),
+  scan: () => import('@iconify-icons/mingcute/scan-line'),
 };

@@ -608,7 +608,7 @@ function AccountInfo({
                         };
                       }}
                     >
-                      <Icon icon="qrcode-2-line" />
+                      <Icon icon="qrcode" />
                       <span>
                         <Trans>QR code</Trans>
                       </span>

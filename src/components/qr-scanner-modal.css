@@ -1,0 +1,71 @@
+.qr-scanner-modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  gap: 16px;
+  padding: 16px;
+
+  .qr-scanner-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .qr-scanner-video-container {
+    position: relative;
+    max-width: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 1;
+    background-color: var(--media-bg-color);
+  }
+
+  .qr-scanner-video-container video {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .qr-scanner-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transform: translate3d(0, 0, 0);
+    image-rendering: pixelated;
+  }
+
+  .qr-scanner-corner-hint {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    image-rendering: pixelated;
+
+    path {
+      stroke: #fff;
+      mix-blend-mode: difference;
+      shape-rendering: optimizeSpeed;
+    }
+  }
+
+  .qr-scanner-result {
+    flex-shrink: 0;
+    text-align: center;
+    min-height: 5em;
+
+    .qr-scanner-text {
+      margin-top: 0;
+      padding-top: 0;
+      word-break: break-all;
+    }
+  }
+}

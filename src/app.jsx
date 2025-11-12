@@ -78,6 +78,19 @@ const Sandbox =
     ? lazy(() => import('./pages/sandbox'))
     : () => null;
 
+// QR Scan Test component for development
+function QrScanTest() {
+  useEffect(() => {
+    states.showQrScannerModal = {
+      onClose: () => {
+        location.hash = '/';
+      },
+    };
+  }, []);
+
+  return null;
+}
+
 window.__STATES__ = states;
 window.__STATES_STATS__ = () => {
   const keys = [
@@ -533,7 +546,7 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/^\/(login|welcome|_sandbox)/i.test(pathname);
+    return !/^\/(login|welcome|_sandbox|_qr-scan)/i.test(pathname);
   }, [location]);
 
   return (
@@ -542,14 +555,17 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
       {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
-        <Route
-          path="/_sandbox"
-          element={
-            <Suspense fallback={<Loader id="loader-sandbox" />}>
-              <Sandbox />
-            </Suspense>
-          }
-        />
+        <>
+          <Route
+            path="/_sandbox"
+            element={
+              <Suspense fallback={<Loader id="loader-sandbox" />}>
+                <Sandbox />
+              </Suspense>
+            }
+          />
+          <Route path="/_qr-scan" element={<QrScanTest />} />
+        </>
       )}
     </Routes>
   );

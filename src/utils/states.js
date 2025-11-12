@@ -57,6 +57,7 @@ const states = proxy({
   showEmbedModal: false,
   showReportModal: false,
   showQrCodeModal: false,
+  showQrScannerModal: false,
   // Shortcuts
   shortcuts: [],
   // Settings
@@ -179,6 +180,7 @@ export function hideAllModals() {
   states.showEmbedModal = false;
   states.showReportModal = false;
   states.showQrCodeModal = false;
+  states.showQrScannerModal = false;
 }
 
 export function statusKey(id, instance) {

@@ -19,6 +19,7 @@ import MediaModal from './media-modal';
 import Modal from './modal';
 import OpenLinkSheet from './open-link-sheet';
 import QrCodeModal from './qr-code-modal';
+import QrScannerModal from './qr-scanner-modal';
 import ReportModal from './report-modal';
 import ShortcutsSettings from './shortcuts-settings';
 
@@ -293,6 +294,23 @@ export default function Modals() {
             caption={snapStates.showQrCodeModal.caption}
             onClose={() => {
               states.showQrCodeModal = false;
+            }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showQrScannerModal && (
+        <Modal
+          class="solid"
+          onClose={() => {
+            states.showQrScannerModal = false;
+          }}
+        >
+          <QrScannerModal
+            onClose={() => {
+              if (snapStates.showQrScannerModal.onClose) {
+                snapStates.showQrScannerModal.onClose();
+              }
+              states.showQrScannerModal = false;
             }}
           />
         </Modal>

@@ -274,17 +274,6 @@ export default function QrCode({
           />
         </g>
         {backgroundMaskDataUri && (
-          <filter id="blur-mask">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
-            <feColorMatrix type="saturate" values="2" />
-            <feComponentTransfer>
-              <feFuncR type="linear" slope="1.2" intercept="0.3" />
-              <feFuncG type="linear" slope="1.2" intercept="0.3" />
-              <feFuncB type="linear" slope="1.2" intercept="0.3" />
-            </feComponentTransfer>
-          </filter>
-        )}
-        {backgroundMaskDataUri && (
           <mask id="qr-pattern-mask">
             <path
               fill="white"
@@ -355,11 +344,9 @@ export default function QrCode({
             width={viewBoxWidth + bleed * 2}
             height={viewBoxWidth + bleed * 2}
             preserveAspectRatio="none"
-            opacity="0.5"
-            filter="url(#blur-mask)"
-            class={
+            class={`blur-mask ${
               backgroundMaskDataUri.startsWith('data:') ? '' : 'remote-image'
-            }
+            }`.trim()}
           >
             <animateTransform
               attributeName="transform"

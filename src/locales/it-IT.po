@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-10 21:33\n"
+"PO-Revision-Date: 2025-11-12 09:08\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -48,12 +48,12 @@ msgid "Mutual"
 msgstr "Reciproci"
 
 #: src/components/account-block.jsx:191
-#: src/components/related-actions.jsx:904
+#: src/components/related-actions.jsx:920
 msgid "Requested"
 msgstr "Richiesta inviata"
 
 #: src/components/account-block.jsx:195
-#: src/components/related-actions.jsx:895
+#: src/components/related-actions.jsx:911
 msgid "Following"
 msgstr "Segui già"
 
@@ -119,7 +119,7 @@ msgstr "Post"
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-attachment.jsx:399
 #: src/components/media-modal.jsx:363
-#: src/components/related-actions.jsx:245
+#: src/components/related-actions.jsx:261
 #: src/components/status.jsx:2089
 #: src/components/status.jsx:2106
 #: src/components/status.jsx:2242
@@ -141,22 +141,23 @@ msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> ha indicato che il suo nuovo account è ora:"
 
 #: src/components/account-info.jsx:587
-#: src/components/related-actions.jsx:473
+#: src/components/related-actions.jsx:489
 msgid "Handle copied"
 msgstr "Nome utente copiato"
 
 #: src/components/account-info.jsx:590
-#: src/components/related-actions.jsx:476
+#: src/components/related-actions.jsx:492
 msgid "Unable to copy handle"
 msgstr "Impossibile copiare nome utente"
 
 #: src/components/account-info.jsx:596
-#: src/components/related-actions.jsx:482
+#: src/components/related-actions.jsx:498
 msgid "Copy handle"
 msgstr "Copia nome utente"
 
 #: src/components/account-info.jsx:613
-#: src/components/related-actions.jsx:546
+#: src/components/related-actions.jsx:243
+#: src/components/related-actions.jsx:562
 msgid "QR code"
 msgstr "Codice QR"
 
@@ -174,7 +175,7 @@ msgstr "Visualizza immagine di copertina"
 
 #: src/components/account-info.jsx:671
 #: src/components/edit-profile-sheet.jsx:92
-#: src/components/related-actions.jsx:798
+#: src/components/related-actions.jsx:814
 msgid "Edit profile"
 msgstr "Modifica profilo"
 
@@ -293,7 +294,8 @@ msgstr "Visualizza statistiche post"
 #: src/components/open-link-sheet.jsx:51
 #: src/components/post-embed-modal.jsx:196
 #: src/components/private-note-sheet.jsx:36
-#: src/components/qr-code-modal.jsx:19
+#: src/components/qr-code-modal.jsx:25
+#: src/components/qr-scanner-modal.jsx:95
 #: src/components/quote-settings-sheet.jsx:61
 #: src/components/quotes-modal.jsx:76
 #: src/components/report-modal.jsx:118
@@ -315,8 +317,8 @@ msgid "Close"
 msgstr "Chiudi"
 
 #: src/components/add-remove-lists-sheet.jsx:50
-#: src/components/related-actions.jsx:439
-#: src/components/related-actions.jsx:449
+#: src/components/related-actions.jsx:455
+#: src/components/related-actions.jsx:465
 msgid "Add/Remove from Lists"
 msgstr "Aggiungi/rimuovi dalle liste"
 
@@ -1265,23 +1267,23 @@ msgstr "Apri file"
 msgid "Search accounts"
 msgstr "Cerca account"
 
-#: src/components/modals.jsx:87
+#: src/components/modals.jsx:88
 msgid "Post scheduled"
 msgstr "Post programmato"
 
-#: src/components/modals.jsx:88
+#: src/components/modals.jsx:89
 msgid "Post published. Check it out."
 msgstr "Post pubblicato. Dai un'occhiata."
 
-#: src/components/modals.jsx:90
+#: src/components/modals.jsx:91
 msgid "Reply scheduled"
 msgstr "Risposta programmata"
 
-#: src/components/modals.jsx:91
+#: src/components/modals.jsx:92
 msgid "Reply posted. Check it out."
 msgstr "Risposta pubblicata. Dai un'occhiata."
 
-#: src/components/modals.jsx:92
+#: src/components/modals.jsx:93
 msgid "Post updated. Check it out."
 msgstr "Post aggiornato. Dai un'occhiata."
 
@@ -1611,13 +1613,13 @@ msgid "Read more →"
 msgstr "Leggi di più →"
 
 #: src/components/open-link-sheet.jsx:30
-#: src/components/related-actions.jsx:499
+#: src/components/related-actions.jsx:515
 #: src/components/status.jsx:1404
 msgid "Link copied"
 msgstr "Link copiato"
 
 #: src/components/open-link-sheet.jsx:33
-#: src/components/related-actions.jsx:502
+#: src/components/related-actions.jsx:518
 #: src/components/status.jsx:1407
 msgid "Unable to copy link"
 msgstr "Impossibile copiare link"
@@ -1628,14 +1630,14 @@ msgstr "Aprire il link?"
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
-#: src/components/related-actions.jsx:508
+#: src/components/related-actions.jsx:524
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1413
 msgid "Copy"
 msgstr "Copia"
 
 #: src/components/open-link-sheet.jsx:82
-#: src/components/related-actions.jsx:529
+#: src/components/related-actions.jsx:545
 #: src/components/status.jsx:1435
 msgid "Share…"
 msgstr "Condividi…"
@@ -1778,6 +1780,18 @@ msgstr "Impossibile aggiornare nota privata."
 msgid "Save & close"
 msgstr "Salva e chiudi"
 
+#: src/components/qr-code-modal.jsx:21
+msgid "Scan QR code"
+msgstr ""
+
+#: src/components/qr-scanner-modal.jsx:101
+msgid "Unable to access camera. Please check permissions."
+msgstr ""
+
+#: src/components/qr-scanner-modal.jsx:154
+msgid "View profile"
+msgstr ""
+
 #: src/components/quote-settings-sheet.jsx:37
 msgid "Quote settings updated"
 msgstr "Impostazioni delle citazioni aggiornate"
@@ -1854,173 +1868,173 @@ msgstr "Bloccato"
 msgid "Private note"
 msgstr "Nota privata"
 
-#: src/components/related-actions.jsx:278
+#: src/components/related-actions.jsx:294
 msgid "Mention <0>@{username}</0>"
 msgstr "Menziona  <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:290
+#: src/components/related-actions.jsx:306
 msgid "Translate bio"
 msgstr "Traduci bio"
 
-#: src/components/related-actions.jsx:301
+#: src/components/related-actions.jsx:317
 msgid "Edit private note"
 msgstr "Modifica nota privata"
 
-#: src/components/related-actions.jsx:301
+#: src/components/related-actions.jsx:317
 msgid "Add private note"
 msgstr "Aggiungi nota privata"
 
-#: src/components/related-actions.jsx:321
+#: src/components/related-actions.jsx:337
 msgid "Notifications enabled for @{username}'s posts."
 msgstr "Notifiche attivate per i post di @{username}."
 
-#: src/components/related-actions.jsx:322
+#: src/components/related-actions.jsx:338
 msgid " Notifications disabled for @{username}'s posts."
 msgstr "Notifiche disattivate per i post di {username}."
 
-#: src/components/related-actions.jsx:334
+#: src/components/related-actions.jsx:350
 msgid "Disable notifications"
 msgstr "Disattiva notifiche"
 
-#: src/components/related-actions.jsx:335
+#: src/components/related-actions.jsx:351
 msgid "Enable notifications"
 msgstr "Attiva notifiche"
 
-#: src/components/related-actions.jsx:352
+#: src/components/related-actions.jsx:368
 msgid "Boosts from @{username} enabled."
 msgstr "Reblog da @{username} attivati."
 
-#: src/components/related-actions.jsx:353
+#: src/components/related-actions.jsx:369
 msgid "Boosts from @{username} disabled."
 msgstr "Reblog da @{username} disattivati."
 
-#: src/components/related-actions.jsx:364
+#: src/components/related-actions.jsx:380
 msgid "Disable boosts"
 msgstr "Disattiva reblog"
 
-#: src/components/related-actions.jsx:364
+#: src/components/related-actions.jsx:380
 msgid "Enable boosts"
 msgstr "Attiva reblog"
 
-#: src/components/related-actions.jsx:383
+#: src/components/related-actions.jsx:399
 msgid "@{username} is no longer featured on your profile."
 msgstr "@{username} non è più fra i consigliati sul tuo profilo."
 
-#: src/components/related-actions.jsx:393
+#: src/components/related-actions.jsx:409
 msgid "@{username} is now featured on your profile."
 msgstr "@{username} è ora fra i consigliati sul tuo profilo."
 
-#: src/components/related-actions.jsx:401
+#: src/components/related-actions.jsx:417
 msgid "Unable to unfeature @{username} on your profile."
 msgstr "Impossibile rimuovere @{username} dai consigliati sul tuo profilo."
 
-#: src/components/related-actions.jsx:405
+#: src/components/related-actions.jsx:421
 msgid "Unable to feature @{username} on your profile."
 msgstr "Impossibile aggiungere @{username} ai consigliati sul tuo profilo."
 
-#: src/components/related-actions.jsx:414
+#: src/components/related-actions.jsx:430
 msgid "Don't feature on profile"
 msgstr "Non consigliare sul profilo"
 
-#: src/components/related-actions.jsx:415
+#: src/components/related-actions.jsx:431
 #: src/pages/hashtag.jsx:333
 msgid "Feature on profile"
 msgstr "Consiglia sul profilo"
 
-#: src/components/related-actions.jsx:424
+#: src/components/related-actions.jsx:440
 msgid "Show featured profiles"
 msgstr "Mostra profili consigliati"
 
-#: src/components/related-actions.jsx:523
+#: src/components/related-actions.jsx:539
 #: src/components/shortcuts-settings.jsx:1077
 #: src/components/status.jsx:1429
 msgid "Sharing doesn't seem to work."
 msgstr "La condivisione non sembra funzionare."
 
-#: src/components/related-actions.jsx:564
+#: src/components/related-actions.jsx:580
 msgid "Unmuted @{username}"
 msgstr "Hai riattivato @{username}"
 
-#: src/components/related-actions.jsx:576
+#: src/components/related-actions.jsx:592
 msgid "Unmute <0>@{username}</0>"
 msgstr "Riattiva <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:592
+#: src/components/related-actions.jsx:608
 msgid "Mute <0>@{username}</0>…"
 msgstr "Silenzia <0>@{username}</0>…"
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:624
+#: src/components/related-actions.jsx:640
 msgid "Muted @{username} for {0}"
 msgstr "Hai silenziato @{username} per {0}"
 
-#: src/components/related-actions.jsx:636
+#: src/components/related-actions.jsx:652
 msgid "Unable to mute @{username}"
 msgstr "Impossibile silenziare @{username}"
 
-#: src/components/related-actions.jsx:657
+#: src/components/related-actions.jsx:673
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "Rimuovere <0>@{username}</0> dai seguaci?"
 
-#: src/components/related-actions.jsx:677
+#: src/components/related-actions.jsx:693
 msgid "@{username} removed from followers"
 msgstr "Hai rimosso @{username} dai seguaci"
 
-#: src/components/related-actions.jsx:689
+#: src/components/related-actions.jsx:705
 msgid "Remove follower…"
 msgstr "Rimuovi seguace…"
 
-#: src/components/related-actions.jsx:700
+#: src/components/related-actions.jsx:716
 msgid "Block <0>@{username}</0>?"
 msgstr "Bloccare <0>@{username}</0>?"
 
-#: src/components/related-actions.jsx:724
+#: src/components/related-actions.jsx:740
 msgid "Unblocked @{username}"
 msgstr "Hai sbloccato @{username}"
 
-#: src/components/related-actions.jsx:732
+#: src/components/related-actions.jsx:748
 msgid "Blocked @{username}"
 msgstr "Hai bloccato @{username}"
 
-#: src/components/related-actions.jsx:740
+#: src/components/related-actions.jsx:756
 msgid "Unable to unblock @{username}"
 msgstr "Impossibile sbloccare @{username}"
 
-#: src/components/related-actions.jsx:742
+#: src/components/related-actions.jsx:758
 msgid "Unable to block @{username}"
 msgstr "Impossibile bloccare @{username}"
 
-#: src/components/related-actions.jsx:752
+#: src/components/related-actions.jsx:768
 msgid "Unblock <0>@{username}</0>"
 msgstr "Sblocca <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:761
+#: src/components/related-actions.jsx:777
 msgid "Block <0>@{username}</0>…"
 msgstr "Blocca <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:778
+#: src/components/related-actions.jsx:794
 msgid "Report <0>@{username}</0>…"
 msgstr "Segnala <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:834
+#: src/components/related-actions.jsx:850
 msgid "Withdraw follow request?"
 msgstr "Ritirare richiesta di seguire?"
 
 #. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:835
+#: src/components/related-actions.jsx:851
 msgid "Unfollow @{0}?"
 msgstr "Smettere di seguire @{0}?"
 
-#: src/components/related-actions.jsx:898
+#: src/components/related-actions.jsx:914
 msgid "Unfollow…"
 msgstr "Smetti di seguire…"
 
-#: src/components/related-actions.jsx:907
+#: src/components/related-actions.jsx:923
 msgid "Withdraw…"
 msgstr "Ritira…"
 
-#: src/components/related-actions.jsx:914
-#: src/components/related-actions.jsx:918
+#: src/components/related-actions.jsx:930
+#: src/components/related-actions.jsx:934
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "Segui"

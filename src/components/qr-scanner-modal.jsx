@@ -42,15 +42,22 @@ function QrScannerModal({ onClose }) {
             // We won't have correct size until video starts playing
             console.log('Video started playing, beginning scan loop');
 
-            console.log('📹', { cam });
             // Get aspectRatio, width, height from stream
-            const { aspectRatio, width, height } =
+            const camSettings =
               cam.stream?.getVideoTracks?.()?.[0]?.getSettings?.() || {};
+            const { width, height } = camSettings;
 
-            if (aspectRatio || (width && height)) {
-              containerRef.current.style.maxWidth = `${width}px`;
-              containerRef.current.style.aspectRatio =
-                aspectRatio || `${width} / ${height}`;
+            console.log('📹', { cam, camSettings });
+
+            if (width && height) {
+              containerRef.current.style.setProperty(
+                '--long-dimension',
+                Math.max(width, height),
+              );
+              containerRef.current.style.setProperty(
+                '--short-dimension',
+                Math.min(width, height),
+              );
             }
 
             const mainLoop = () => {

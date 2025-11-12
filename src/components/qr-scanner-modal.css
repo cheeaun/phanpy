@@ -24,7 +24,20 @@
     flex-shrink: 1;
     background-color: var(--media-bg-color);
     width: 100%;
-    aspect-ratio: 1;
+
+    /* default to 1:1 */
+    --long-dimension: 1;
+    --short-dimension: 1;
+
+    /* landscape */
+    max-width: calc(var(--long-dimension) * 1px);
+    aspect-ratio: calc(var(--long-dimension) / var(--short-dimension));
+
+    /* portrait */
+    @media (orientation: portrait) {
+      max-width: calc(var(--short-dimension) * 1px);
+      aspect-ratio: calc(var(--short-dimension) / var(--long-dimension));
+    }
   }
 
   .qr-scanner-video-container video {

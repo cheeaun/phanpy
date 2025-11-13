@@ -2,9 +2,66 @@ import './qr-scanner-modal.css';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { frameLoop, frontalCamera, QRCanvas } from 'qr/dom.js';
+import { frameLoop, getSize, QRCanvas } from 'qr/dom.js';
 
 import Icon from './icon';
+
+// Copied from qr/dom.js because it's not exported
+class QRCamera {
+  constructor(stream, player) {
+    this.stream = stream;
+    this.player = player;
+    this.setStream(stream);
+  }
+  setStream(stream) {
+    this.stream = stream;
+    const { player } = this;
+    player.setAttribute('autoplay', '');
+    player.setAttribute('muted', '');
+    player.setAttribute('playsinline', '');
+    player.srcObject = stream;
+  }
+  async listDevices() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices)
+      throw new Error('Media Devices not supported');
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    return devices
+      .filter((device) => device.kind === 'videoinput')
+      .map((i) => ({
+        deviceId: i.deviceId,
+        label: i.label || `Camera ${i.deviceId}`,
+      }));
+  }
+  async setDevice(deviceId) {
+    this.stop();
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { deviceId: { exact: deviceId } },
+    });
+    this.setStream(stream);
+  }
+  readFrame(canvas, fullSize = false) {
+    const { player } = this;
+    if (fullSize)
+      return canvas.drawImage(player, player.videoHeight, player.videoWidth);
+    const size = getSize(player);
+    return canvas.drawImage(player, size.height, size.width);
+  }
+  stop() {
+    for (const track of this.stream.getTracks()) track.stop();
+  }
+}
+
+// Copy of frontalCamera from qr/dom.js, but with custom constraints
+const createQRCamera = async (player) => {
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: {
+      height: { ideal: 720 },
+      width: { ideal: 1280 },
+      facingMode: 'environment',
+    },
+  });
+  return new QRCamera(stream, player);
+};
 
 function QrScannerModal({ onClose }) {
   const { t } = useLingui();
@@ -22,7 +79,7 @@ function QrScannerModal({ onClose }) {
 
     const startCamera = async () => {
       try {
-        cam = await frontalCamera(videoRef.current);
+        cam = await createQRCamera(videoRef.current);
 
         qrCanvas = new QRCanvas(
           {

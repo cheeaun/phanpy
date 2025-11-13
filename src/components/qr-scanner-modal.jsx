@@ -4,7 +4,11 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { frameLoop, getSize, QRCanvas } from 'qr/dom.js';
 
+import states from '../utils/states';
+
 import Icon from './icon';
+import Link from './link';
+import Loader from './loader';
 
 // Copied from qr/dom.js because it's not exported
 class QRCamera {
@@ -53,6 +57,21 @@ class QRCamera {
 
 // Copy of frontalCamera from qr/dom.js, but with custom constraints
 const createQRCamera = async (player) => {
+  if (navigator.permissions?.query) {
+    try {
+      const permission = await navigator.permissions.query({
+        name: 'camera',
+      });
+      console.log('Camera permission status:', permission.state);
+
+      permission.addEventListener('change', () => {
+        console.log('Camera permission changed to:', permission.state);
+      });
+    } catch (err) {
+      console.warn('Permissions API camera query not supported:', err);
+    }
+  }
+
   const stream = await navigator.mediaDevices.getUserMedia({
     video: {
       height: { ideal: 720 },
@@ -71,6 +90,42 @@ function QrScannerModal({ onClose }) {
   const [decodedText, setDecodedText] = useState('');
   const [isScanning, setIsScanning] = useState(true);
   const [uiState, setUIState] = useState('loading');
+
+  // Based on screen, not viewport or window
+  useEffect(() => {
+    // portrait as default
+    let handleScreenOrientationChange;
+    if (screen?.orientation?.type && containerRef.current) {
+      handleScreenOrientationChange = () => {
+        const screenOrientation = /landscape/.test(
+          window.screen.orientation.type,
+        )
+          ? 'landscape'
+          : 'portrait';
+        containerRef.current.classList.toggle(
+          'landscape',
+          screenOrientation === 'landscape',
+        );
+      };
+
+      screen.orientation.addEventListener(
+        'change',
+        handleScreenOrientationChange,
+      );
+      handleScreenOrientationChange();
+    }
+    return () => {
+      if (
+        handleScreenOrientationChange &&
+        screen?.orientation?.removeEventListener
+      ) {
+        screen.orientation.removeEventListener(
+          'change',
+          handleScreenOrientationChange,
+        );
+      }
+    };
+  }, []);
 
   useEffect(() => {
     let cancelMainLoop;
@@ -99,7 +154,7 @@ function QrScannerModal({ onClose }) {
             // We won't have correct size until video starts playing
             console.log('Video started playing, beginning scan loop');
 
-            // Get aspectRatio, width, height from video
+            // Get width, height from video
             const { videoWidth: width, videoHeight: height } = video;
 
             console.log('📹', { cam, video });
@@ -130,6 +185,8 @@ function QrScannerModal({ onClose }) {
 
             cancelMainLoop = frameLoop(mainLoop);
           });
+
+          setUIState('default');
         }
       } catch (err) {
         console.error('Error accessing camera:', err);
@@ -165,6 +222,7 @@ function QrScannerModal({ onClose }) {
   return (
     <div class="qr-scanner-modal">
       <div class="qr-scanner-header">
+        <Loader hidden={uiState !== 'loading'} />
         <button type="button" class="plain4" onClick={onClose}>
           <Icon icon="x" alt={t`Close`} />
         </button>
@@ -220,10 +278,11 @@ function QrScannerModal({ onClose }) {
               <>
                 <p class="qr-scanner-text">{decodedText}</p>
                 {isValidUrl(decodedText) && (
-                  <a
+                  <Link
                     class="button plain6"
-                    href={`/#/${decodedText}`}
+                    to={`/${decodedText}`}
                     onClick={() => {
+                      console.log('CLICK');
                       // Close QR code modal
                       states.showQrCodeModal = false;
                       // Close itself
@@ -231,7 +290,7 @@ function QrScannerModal({ onClose }) {
                     }}
                   >
                     <Trans>View profile</Trans>
-                  </a>
+                  </Link>
                 )}
               </>
             )}

@@ -14,7 +14,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 
   .qr-scanner-video-container {
@@ -24,20 +24,19 @@
     flex-grow: 0;
     flex-shrink: 1;
     background-color: var(--media-bg-color);
-    width: 100%;
 
     /* default to 1:1 */
     --long-dimension: 1;
     --short-dimension: 1;
 
-    /* landscape */
-    max-width: calc(var(--long-dimension) * 1px);
-    aspect-ratio: calc(var(--long-dimension) / var(--short-dimension));
-
     /* portrait */
-    @media (orientation: portrait) {
-      max-width: calc(var(--short-dimension) * 1px);
-      aspect-ratio: calc(var(--short-dimension) / var(--long-dimension));
+    max-width: calc(var(--short-dimension) * 1px);
+    aspect-ratio: calc(var(--short-dimension) / var(--long-dimension));
+
+    /* landscape */
+    &.landscape {
+      max-width: calc(var(--long-dimension) * 1px);
+      aspect-ratio: calc(var(--long-dimension) / var(--short-dimension));
     }
   }
 

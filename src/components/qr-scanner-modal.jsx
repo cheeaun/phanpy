@@ -159,6 +159,9 @@ function QrScannerModal({ onClose }) {
         // Start scanning loop when video plays (following demo pattern)
         const video = videoRef.current;
         if (video) {
+          video.addEventListener('loadedmetadata', () => {
+            setUIState('default');
+          });
           video.addEventListener('play', () => {
             // We won't have correct size until video starts playing
             console.log('Video started playing, beginning scan loop');
@@ -194,8 +197,6 @@ function QrScannerModal({ onClose }) {
 
             cancelMainLoop = frameLoop(mainLoop);
           });
-
-          setUIState('default');
         }
       } catch (err) {
         console.error('Error accessing camera:', err);
@@ -222,7 +223,7 @@ function QrScannerModal({ onClose }) {
   return (
     <div class="qr-scanner-modal">
       <div class="qr-scanner-header">
-        <Loader hidden={uiState !== 'loading'} />
+        <Loader abrupt hidden={uiState !== 'loading'} />
         <button type="button" class="plain4" onClick={onClose}>
           <Icon icon="x" alt={t`Close`} />
         </button>

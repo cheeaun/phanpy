@@ -99,12 +99,10 @@ function QrScannerModal({ onClose }) {
             // We won't have correct size until video starts playing
             console.log('Video started playing, beginning scan loop');
 
-            // Get aspectRatio, width, height from stream
-            const camSettings =
-              cam.stream?.getVideoTracks?.()?.[0]?.getSettings?.() || {};
-            const { width, height } = camSettings;
+            // Get aspectRatio, width, height from video
+            const { videoWidth: width, videoHeight: height } = video;
 
-            console.log('📹', { cam, camSettings });
+            console.log('📹', { cam, video });
 
             if (width && height) {
               containerRef.current.style.setProperty(

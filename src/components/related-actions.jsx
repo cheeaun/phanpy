@@ -475,7 +475,7 @@ function RelatedActions({
                 <>
                   <MenuItem onClick={() => setRenderEndorsements(true)}>
                     <Icon icon="endorsement" />
-                    Show featured profiles
+                    <Trans>Show featured profiles</Trans>
                   </MenuItem>
                   <MenuDivider />
                 </>

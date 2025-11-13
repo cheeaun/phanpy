@@ -4,7 +4,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { frameLoop, getSize, QRCanvas } from 'qr/dom.js';
 
-import states from '../utils/states';
+import { hideAllModals } from '../utils/states';
 
 import Icon from './icon';
 import Link from './link';
@@ -80,6 +80,15 @@ const createQRCamera = async (player) => {
     },
   });
   return new QRCamera(stream, player);
+};
+
+const isValidUrl = (string) => {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
 };
 
 function QrScannerModal({ onClose }) {
@@ -210,15 +219,6 @@ function QrScannerModal({ onClose }) {
     };
   }, [isScanning]);
 
-  const isValidUrl = (string) => {
-    try {
-      new URL(string);
-      return true;
-    } catch (_) {
-      return false;
-    }
-  };
-
   return (
     <div class="qr-scanner-modal">
       <div class="qr-scanner-header">
@@ -282,10 +282,7 @@ function QrScannerModal({ onClose }) {
                     class="button plain6"
                     to={`/${decodedText}`}
                     onClick={() => {
-                      console.log('CLICK');
-                      // Close QR code modal
-                      states.showQrCodeModal = false;
-                      // Close itself
+                      hideAllModals();
                       onClose();
                     }}
                   >

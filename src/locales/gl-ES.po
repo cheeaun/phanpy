@@ -8,7 +8,7 @@ msgstr ""
 "Language: gl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-12 09:09\n"
+"PO-Revision-Date: 2025-11-14 09:58\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -294,8 +294,8 @@ msgstr "Ver estatísticas de publicación"
 #: src/components/open-link-sheet.jsx:51
 #: src/components/post-embed-modal.jsx:196
 #: src/components/private-note-sheet.jsx:36
-#: src/components/qr-code-modal.jsx:25
-#: src/components/qr-scanner-modal.jsx:95
+#: src/components/qr-code-modal.jsx:31
+#: src/components/qr-scanner-modal.jsx:264
 #: src/components/quote-settings-sheet.jsx:61
 #: src/components/quotes-modal.jsx:76
 #: src/components/report-modal.jsx:118
@@ -1780,17 +1780,17 @@ msgstr "Non se puido actualizar a nota privada."
 msgid "Save & close"
 msgstr "Gardar e pechar"
 
-#: src/components/qr-code-modal.jsx:21
+#: src/components/qr-code-modal.jsx:24
 msgid "Scan QR code"
-msgstr ""
+msgstr "Escanear código QR"
 
-#: src/components/qr-scanner-modal.jsx:101
+#: src/components/qr-scanner-modal.jsx:270
 msgid "Unable to access camera. Please check permissions."
-msgstr ""
+msgstr "Non se puido acceder á cámara. Comproba os permisos."
 
-#: src/components/qr-scanner-modal.jsx:154
+#: src/components/qr-scanner-modal.jsx:328
 msgid "View profile"
-msgstr ""
+msgstr "Ver perfil"
 
 #: src/components/quote-settings-sheet.jsx:37
 msgid "Quote settings updated"
@@ -1942,6 +1942,7 @@ msgid "Feature on profile"
 msgstr "Destacar no perfil"
 
 #: src/components/related-actions.jsx:440
+#: src/components/related-actions.jsx:478
 msgid "Show featured profiles"
 msgstr "Mostrar perfís destacados"
 

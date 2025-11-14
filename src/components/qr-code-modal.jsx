@@ -2,18 +2,36 @@ import './qr-code-modal.css';
 
 import { useLingui } from '@lingui/react/macro';
 
-import states from '../utils/states';
+import states, { hideAllModals } from '../utils/states';
 
 import Icon from './icon';
 import QrCode from './qr-code';
 
 const mediaDevicesSupported = !!navigator.mediaDevices?.getUserMedia;
 
+const isValidUrl = (string) => {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+};
+
 function QrCodeModal({ text, arena, backgroundMask, caption, onClose }) {
   const { t } = useLingui();
 
   const handleScanClick = () => {
-    states.showQrScannerModal = true;
+    states.showQrScannerModal = {
+      checkValidity: isValidUrl,
+      actionableText: t`View profile`,
+      onClose: ({ text } = {}) => {
+        if (text) {
+          hideAllModals();
+          location.hash = `/${text}`;
+        }
+      },
+    };
   };
 
   return (

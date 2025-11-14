@@ -60,7 +60,7 @@ import {
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
 import focusDeck from './utils/focus-deck';
-import states, { initStates, statusKey } from './utils/states';
+import states, { hideAllModals, initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import {
   getAccount,
@@ -82,8 +82,9 @@ const Sandbox =
 function QrScanTest() {
   useEffect(() => {
     states.showQrScannerModal = {
-      onClose: () => {
-        location.hash = '/';
+      onClose: ({ text } = {}) => {
+        hideAllModals();
+        location.hash = text ? `/${text}` : '/';
       },
     };
   }, []);

@@ -3,8 +3,6 @@ import './qr-scanner-modal.css';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
-import { hideAllModals } from '../utils/states';
-
 const hasBarcodeDetector = 'BarcodeDetector' in window;
 
 if (!hasBarcodeDetector) {
@@ -15,7 +13,6 @@ if (!hasBarcodeDetector) {
 }
 
 import Icon from './icon';
-import Link from './link';
 import Loader from './loader';
 
 // Copied from qr/dom.js because it's not exported
@@ -90,16 +87,7 @@ const createQRCamera = async (player) => {
   return new QRCamera(stream, player);
 };
 
-const isValidUrl = (string) => {
-  try {
-    new URL(string);
-    return true;
-  } catch (_) {
-    return false;
-  }
-};
-
-function QrScannerModal({ onClose }) {
+function QrScannerModal({ onClose, checkValidity, actionableText }) {
   const { t } = useLingui();
   const containerRef = useRef(null);
   const videoRef = useRef(null);
@@ -256,6 +244,11 @@ function QrScannerModal({ onClose }) {
     };
   }, [isScanning]);
 
+  const showActionableButton =
+    typeof checkValidity === 'function'
+      ? checkValidity(decodedText)
+      : !!decodedText;
+
   return (
     <div class="qr-scanner-modal">
       <div class="qr-scanner-header">
@@ -316,17 +309,16 @@ function QrScannerModal({ onClose }) {
             {!!decodedText && (
               <>
                 <p class="qr-scanner-text">{decodedText}</p>
-                {isValidUrl(decodedText) && (
-                  <Link
+                {showActionableButton && (
+                  <button
+                    type="button"
                     class="button plain6"
-                    to={`/${decodedText}`}
                     onClick={() => {
-                      hideAllModals();
-                      onClose();
+                      onClose({ text: decodedText });
                     }}
                   >
-                    <Trans>View profile</Trans>
-                  </Link>
+                    {actionableText || <Icon icon="arrow-right" />}
+                  </button>
                 )}
               </>
             )}

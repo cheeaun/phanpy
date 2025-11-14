@@ -306,9 +306,11 @@ export default function Modals() {
           }}
         >
           <QrScannerModal
-            onClose={() => {
+            checkValidity={snapStates.showQrScannerModal.checkValidity}
+            actionableText={snapStates.showQrScannerModal.actionableText}
+            onClose={(...args) => {
               if (snapStates.showQrScannerModal.onClose) {
-                snapStates.showQrScannerModal.onClose();
+                snapStates.showQrScannerModal.onClose(...args);
               }
               states.showQrScannerModal = false;
             }}

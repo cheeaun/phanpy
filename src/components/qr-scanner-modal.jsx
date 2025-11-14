@@ -2,9 +2,17 @@ import './qr-scanner-modal.css';
 
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { frameLoop, getSize, QRCanvas } from 'qr/dom.js';
 
 import { hideAllModals } from '../utils/states';
+
+const hasBarcodeDetector = 'BarcodeDetector' in window;
+
+if (!hasBarcodeDetector) {
+  // Prefetch qr/dom.js for caching
+  setTimeout(() => {
+    import('qr/dom.js').catch(() => {});
+  }, 1000);
+}
 
 import Icon from './icon';
 import Link from './link';
@@ -140,21 +148,28 @@ function QrScannerModal({ onClose }) {
     let cancelMainLoop;
     let cam;
     let qrCanvas;
+    let detector;
+    let qrDom;
 
     const startCamera = async () => {
       try {
         cam = await createQRCamera(videoRef.current);
 
-        qrCanvas = new QRCanvas(
-          {
-            overlay: overlayRef.current,
-          },
-          {
-            cropToSquare: false,
-            overlayMainColor: 'transparent',
-            overlayFinderColor: 'rgba(255, 0, 255, 0.5)',
-          },
-        );
+        if (hasBarcodeDetector) {
+          detector = new BarcodeDetector({ formats: ['qr_code'] });
+        } else {
+          qrDom = await import('qr/dom.js');
+          qrCanvas = new qrDom.QRCanvas(
+            {
+              overlay: overlayRef.current,
+            },
+            {
+              cropToSquare: false,
+              overlayMainColor: 'transparent',
+              overlayFinderColor: 'rgba(255, 0, 255, 0.5)',
+            },
+          );
+        }
 
         // Start scanning loop when video plays (following demo pattern)
         const video = videoRef.current;
@@ -182,20 +197,41 @@ function QrScannerModal({ onClose }) {
               );
             }
 
-            const mainLoop = () => {
-              try {
-                const result = cam.readFrame(qrCanvas, true);
-                if (result !== undefined && result !== null) {
-                  console.log('Scan result:', result);
-                  setDecodedText(result);
-                  // Keep scanning continuously - don't stop on success
+            if (hasBarcodeDetector) {
+              const mainLoop = async () => {
+                try {
+                  const results = await detector.detect(videoRef.current);
+                  if (results.length > 0) {
+                    console.log('Scan result:', results[0].rawValue);
+                    setDecodedText(results[0].rawValue);
+                  }
+                } catch (e) {
+                  console.error('Error in barcode detection:', e);
                 }
-              } catch (e) {
-                console.error('Error in scan loop:', e);
-              }
-            };
+              };
 
-            cancelMainLoop = frameLoop(mainLoop);
+              let animationId;
+              const rafLoop = () => {
+                mainLoop();
+                animationId = requestAnimationFrame(rafLoop);
+              };
+              rafLoop();
+              cancelMainLoop = () => cancelAnimationFrame(animationId);
+            } else {
+              const mainLoop = () => {
+                try {
+                  const result = cam.readFrame(qrCanvas, true);
+                  if (result !== undefined && result !== null) {
+                    console.log('Scan result:', result);
+                    setDecodedText(result);
+                  }
+                } catch (e) {
+                  console.error('Error in scan loop:', e);
+                }
+              };
+
+              cancelMainLoop = qrDom.frameLoop(mainLoop);
+            }
           });
         }
       } catch (err) {
@@ -238,7 +274,9 @@ function QrScannerModal({ onClose }) {
         <>
           <div ref={containerRef} class="qr-scanner-video-container">
             <video ref={videoRef} playsInline muted disablepictureinpicture />
-            <canvas ref={overlayRef} class="qr-scanner-canvas" />
+            {!hasBarcodeDetector && (
+              <canvas ref={overlayRef} class="qr-scanner-canvas" />
+            )}
             <svg
               class="qr-scanner-corner-hint"
               viewBox="0 0 100 100"

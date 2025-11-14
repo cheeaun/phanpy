@@ -180,7 +180,6 @@ export default function QrCode({
   const centerImageSize = centerExcludeSize - centerImagePadding * 2;
   const centerImageX = centerStart + centerImagePadding;
   const centerImageY = centerStart + centerImagePadding;
-  const arenaImageRadius = 1.1;
   const padding = 2;
   const captionSpacing = 2; // Space between QR code and caption
 
@@ -287,8 +286,6 @@ export default function QrCode({
                 width={centerImageSize}
                 height={centerImageSize}
                 fill="black"
-                rx={arenaImageRadius}
-                ry={arenaImageRadius}
               />
             )}
           </mask>
@@ -339,7 +336,7 @@ export default function QrCode({
           clip-path={
             effectiveArenaCircle
               ? `circle(${centerImageSize / 2}px at ${centerImageSize / 2}px ${centerImageSize / 2}px)`
-              : `inset(0% round ${arenaImageRadius}px)`
+              : undefined
           }
         />
       )}

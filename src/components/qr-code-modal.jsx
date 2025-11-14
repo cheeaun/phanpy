@@ -5,7 +5,7 @@ import { useLingui } from '@lingui/react/macro';
 import Icon from './icon';
 import QrCode from './qr-code';
 
-const mediaDevicesSupported = !!navigator.mediaDevices?.getUserMedia;
+export const mediaDevicesSupported = !!navigator.mediaDevices?.getUserMedia;
 
 function QrCodeModal({
   text,

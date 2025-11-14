@@ -27,6 +27,7 @@ import AsyncText from './AsyncText';
 import Icon from './icon';
 import MenuConfirm from './menu-confirm';
 import Modal from './modal';
+import { mediaDevicesSupported } from './qr-code-modal';
 
 export const SHORTCUTS_LIMIT = 9;
 
@@ -810,6 +811,28 @@ function ImportExport({ shortcuts, onClose }) {
               }}
               dir="auto"
             />
+            {mediaDevicesSupported && (
+              <button
+                type="button"
+                class="plain2"
+                onClick={() => {
+                  states.showQrScannerModal = {
+                    actionableText: t`Import`,
+                    onClose: ({ text } = {}) => {
+                      if (text) {
+                        setImportShortcutStr(text);
+                        shortcutsImportFieldRef.current.value = text;
+                        shortcutsImportFieldRef.current.dispatchEvent(
+                          new Event('input'),
+                        );
+                      }
+                    },
+                  };
+                }}
+              >
+                <Icon icon="scan" alt={t`Scan QR code`} />
+              </button>
+            )}
             {states.settings.shortcutSettingsCloudImportExport && (
               <button
                 type="button"
@@ -1018,7 +1041,7 @@ function ImportExport({ shortcuts, onClose }) {
               <Trans>Export</Trans>
             </span>
           </h3>
-          <p>
+          <p class="field-button">
             <input
               style={{ width: '100%' }}
               type="text"
@@ -1038,6 +1061,18 @@ function ImportExport({ shortcuts, onClose }) {
               }}
               dir="auto"
             />
+            <button
+              type="button"
+              class="plain2"
+              disabled={!shortcutsStr}
+              onClick={() => {
+                states.showQrCodeModal = {
+                  text: shortcutsStr,
+                };
+              }}
+            >
+              <Icon icon="qrcode" alt={t`QR code`} />
+            </button>
           </p>
           <p>
             <button

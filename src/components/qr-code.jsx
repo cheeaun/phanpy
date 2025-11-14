@@ -325,7 +325,7 @@ export default function QrCode({
           />
         </g>
       )}
-      {arena && (
+      {arena && arenaLoaded && (
         <image
           href={arena}
           x={centerImageX}

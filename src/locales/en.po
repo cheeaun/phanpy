@@ -28,12 +28,12 @@ msgid "Last posted: {0}"
 msgstr ""
 
 #: src/components/account-block.jsx:170
-#: src/components/account-info.jsx:695
+#: src/components/account-info.jsx:717
 msgid "Automated"
 msgstr ""
 
 #: src/components/account-block.jsx:177
-#: src/components/account-info.jsx:700
+#: src/components/account-info.jsx:722
 #: src/components/status.jsx:563
 msgid "Group"
 msgstr ""
@@ -43,17 +43,17 @@ msgid "Mutual"
 msgstr ""
 
 #: src/components/account-block.jsx:191
-#: src/components/related-actions.jsx:920
+#: src/components/related-actions.jsx:923
 msgid "Requested"
 msgstr ""
 
 #: src/components/account-block.jsx:195
-#: src/components/related-actions.jsx:911
+#: src/components/related-actions.jsx:914
 msgid "Following"
 msgstr ""
 
 #: src/components/account-block.jsx:199
-#: src/components/related-actions.jsx:189
+#: src/components/related-actions.jsx:190
 msgid "Follows you"
 msgstr ""
 
@@ -62,14 +62,14 @@ msgid "{followersCount, plural, one {# follower} other {# followers}}"
 msgstr ""
 
 #: src/components/account-block.jsx:216
-#: src/components/account-info.jsx:743
+#: src/components/account-info.jsx:765
 msgid "Verified"
 msgstr ""
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:231
-#: src/components/account-info.jsx:882
+#: src/components/account-info.jsx:904
 msgid "Joined <0>{0}</0>"
 msgstr ""
 
@@ -81,16 +81,20 @@ msgstr ""
 msgid "server domain name"
 msgstr ""
 
-#: src/components/account-info.jsx:371
+#: src/components/account-info.jsx:124
+msgid "View profile"
+msgstr "View profile"
+
+#: src/components/account-info.jsx:392
 msgid "Unable to load account."
 msgstr "Unable to load account."
 
-#: src/components/account-info.jsx:386
+#: src/components/account-info.jsx:407
 msgid "Go to account page"
 msgstr "Go to account page"
 
-#: src/components/account-info.jsx:415
-#: src/components/account-info.jsx:765
+#: src/components/account-info.jsx:436
+#: src/components/account-info.jsx:787
 #: src/components/compose.jsx:1961
 #: src/pages/settings.jsx:325
 #: src/utils/visibility-text.jsx:7
@@ -98,23 +102,23 @@ msgid "Followers"
 msgstr "Followers"
 
 #. js-lingui-explicit-id
-#: src/components/account-info.jsx:419
-#: src/components/account-info.jsx:820
+#: src/components/account-info.jsx:440
+#: src/components/account-info.jsx:842
 msgid "following.stats"
 msgstr "Following"
 
-#: src/components/account-info.jsx:422
+#: src/components/account-info.jsx:443
 #: src/pages/account-statuses.jsx:496
 #: src/pages/search.jsx:345
 #: src/pages/search.jsx:492
 msgid "Posts"
 msgstr ""
 
-#: src/components/account-info.jsx:430
+#: src/components/account-info.jsx:451
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-attachment.jsx:399
 #: src/components/media-modal.jsx:363
-#: src/components/related-actions.jsx:261
+#: src/components/related-actions.jsx:263
 #: src/components/status.jsx:2089
 #: src/components/status.jsx:2106
 #: src/components/status.jsx:2242
@@ -131,72 +135,72 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#: src/components/account-info.jsx:442
+#: src/components/account-info.jsx:463
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> has indicated that their new account is now:"
 
-#: src/components/account-info.jsx:587
-#: src/components/related-actions.jsx:489
+#: src/components/account-info.jsx:608
+#: src/components/related-actions.jsx:491
 msgid "Handle copied"
 msgstr "Handle copied"
 
-#: src/components/account-info.jsx:590
-#: src/components/related-actions.jsx:492
+#: src/components/account-info.jsx:611
+#: src/components/related-actions.jsx:494
 msgid "Unable to copy handle"
 msgstr "Unable to copy handle"
 
-#: src/components/account-info.jsx:596
-#: src/components/related-actions.jsx:498
+#: src/components/account-info.jsx:617
+#: src/components/related-actions.jsx:500
 msgid "Copy handle"
 msgstr ""
 
-#: src/components/account-info.jsx:613
-#: src/components/related-actions.jsx:243
-#: src/components/related-actions.jsx:562
+#: src/components/account-info.jsx:635
+#: src/components/related-actions.jsx:245
+#: src/components/related-actions.jsx:565
 msgid "QR code"
 msgstr "QR code"
 
-#: src/components/account-info.jsx:619
+#: src/components/account-info.jsx:641
 msgid "Go to original profile page"
 msgstr ""
 
-#: src/components/account-info.jsx:637
+#: src/components/account-info.jsx:659
 msgid "View profile image"
 msgstr "View profile image"
 
-#: src/components/account-info.jsx:655
+#: src/components/account-info.jsx:677
 msgid "View profile header"
 msgstr "View profile header"
 
-#: src/components/account-info.jsx:671
+#: src/components/account-info.jsx:693
 #: src/components/edit-profile-sheet.jsx:92
-#: src/components/related-actions.jsx:814
+#: src/components/related-actions.jsx:817
 msgid "Edit profile"
 msgstr ""
 
-#: src/components/account-info.jsx:690
+#: src/components/account-info.jsx:712
 msgid "In Memoriam"
 msgstr ""
 
-#: src/components/account-info.jsx:772
-#: src/components/account-info.jsx:830
+#: src/components/account-info.jsx:794
+#: src/components/account-info.jsx:852
 msgid "This user has chosen to not make this information available."
 msgstr "This user has chosen to not make this information available."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-info.jsx:792
+#: src/components/account-info.jsx:814
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 
 #. placeholder {0}: shortenNumber(followingCount)
-#: src/components/account-info.jsx:836
+#: src/components/account-info.jsx:858
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, other {<0>{0}</0> Following}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
-#: src/components/account-info.jsx:860
+#: src/components/account-info.jsx:882
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 
@@ -204,14 +208,14 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:917
+#: src/components/account-info.jsx:939
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:934
+#: src/components/account-info.jsx:956
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} original posts, {1} replies, {2} boosts"
 
@@ -222,22 +226,22 @@ msgstr "{0} original posts, {1} replies, {2} boosts"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:951
+#: src/components/account-info.jsx:973
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:967
+#: src/components/account-info.jsx:989
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 
-#: src/components/account-info.jsx:1025
+#: src/components/account-info.jsx:1047
 #: src/pages/catchup.jsx:73
 msgid "Original"
 msgstr ""
 
-#: src/components/account-info.jsx:1029
+#: src/components/account-info.jsx:1051
 #: src/components/status.jsx:2659
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1564
@@ -247,14 +251,14 @@ msgstr ""
 msgid "Replies"
 msgstr ""
 
-#: src/components/account-info.jsx:1034
+#: src/components/account-info.jsx:1056
 #: src/components/quotes-modal.jsx:81
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1567
 msgid "Quotes"
 msgstr "Quotes"
 
-#: src/components/account-info.jsx:1039
+#: src/components/account-info.jsx:1061
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1566
 #: src/pages/catchup.jsx:2219
@@ -262,11 +266,11 @@ msgstr "Quotes"
 msgid "Boosts"
 msgstr ""
 
-#: src/components/account-info.jsx:1045
+#: src/components/account-info.jsx:1067
 msgid "Post stats unavailable."
 msgstr "Post stats unavailable."
 
-#: src/components/account-info.jsx:1072
+#: src/components/account-info.jsx:1094
 msgid "View post stats"
 msgstr "View post stats"
 
@@ -289,7 +293,7 @@ msgstr "View post stats"
 #: src/components/open-link-sheet.jsx:51
 #: src/components/post-embed-modal.jsx:196
 #: src/components/private-note-sheet.jsx:36
-#: src/components/qr-code-modal.jsx:49
+#: src/components/qr-code-modal.jsx:33
 #: src/components/qr-scanner-modal.jsx:257
 #: src/components/quote-settings-sheet.jsx:61
 #: src/components/quotes-modal.jsx:76
@@ -312,8 +316,8 @@ msgid "Close"
 msgstr ""
 
 #: src/components/add-remove-lists-sheet.jsx:50
-#: src/components/related-actions.jsx:455
-#: src/components/related-actions.jsx:465
+#: src/components/related-actions.jsx:457
+#: src/components/related-actions.jsx:467
 msgid "Add/Remove from Lists"
 msgstr ""
 
@@ -1608,13 +1612,13 @@ msgid "Read more →"
 msgstr ""
 
 #: src/components/open-link-sheet.jsx:30
-#: src/components/related-actions.jsx:515
+#: src/components/related-actions.jsx:517
 #: src/components/status.jsx:1404
 msgid "Link copied"
 msgstr ""
 
 #: src/components/open-link-sheet.jsx:33
-#: src/components/related-actions.jsx:518
+#: src/components/related-actions.jsx:520
 #: src/components/status.jsx:1407
 msgid "Unable to copy link"
 msgstr ""
@@ -1625,14 +1629,14 @@ msgstr "Open link?"
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
-#: src/components/related-actions.jsx:524
+#: src/components/related-actions.jsx:526
 #: src/components/shortcuts-settings.jsx:1059
 #: src/components/status.jsx:1413
 msgid "Copy"
 msgstr ""
 
 #: src/components/open-link-sheet.jsx:82
-#: src/components/related-actions.jsx:545
+#: src/components/related-actions.jsx:547
 #: src/components/status.jsx:1435
 msgid "Share…"
 msgstr ""
@@ -1775,11 +1779,7 @@ msgstr "Unable to update private note."
 msgid "Save & close"
 msgstr ""
 
-#: src/components/qr-code-modal.jsx:27
-msgid "View profile"
-msgstr "View profile"
-
-#: src/components/qr-code-modal.jsx:42
+#: src/components/qr-code-modal.jsx:26
 msgid "Scan QR code"
 msgstr "Scan QR code"
 
@@ -1842,195 +1842,195 @@ msgstr "Clear all"
 msgid "Clear"
 msgstr ""
 
-#: src/components/related-actions.jsx:38
+#: src/components/related-actions.jsx:39
 msgid "Forever"
 msgstr ""
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
-#: src/components/related-actions.jsx:193
+#: src/components/related-actions.jsx:194
 msgid "Last post: <0>{0}</0>"
 msgstr ""
 
-#: src/components/related-actions.jsx:207
+#: src/components/related-actions.jsx:208
 msgid "Muted"
 msgstr ""
 
-#: src/components/related-actions.jsx:212
+#: src/components/related-actions.jsx:213
 msgid "Blocked"
 msgstr ""
 
-#: src/components/related-actions.jsx:221
+#: src/components/related-actions.jsx:222
 msgid "Private note"
 msgstr "Private note"
 
-#: src/components/related-actions.jsx:294
+#: src/components/related-actions.jsx:296
 msgid "Mention <0>@{username}</0>"
 msgstr ""
 
-#: src/components/related-actions.jsx:306
+#: src/components/related-actions.jsx:308
 msgid "Translate bio"
 msgstr ""
 
-#: src/components/related-actions.jsx:317
+#: src/components/related-actions.jsx:319
 msgid "Edit private note"
 msgstr "Edit private note"
 
-#: src/components/related-actions.jsx:317
+#: src/components/related-actions.jsx:319
 msgid "Add private note"
 msgstr "Add private note"
 
-#: src/components/related-actions.jsx:337
+#: src/components/related-actions.jsx:339
 msgid "Notifications enabled for @{username}'s posts."
 msgstr "Notifications enabled for @{username}'s posts."
 
-#: src/components/related-actions.jsx:338
+#: src/components/related-actions.jsx:340
 msgid " Notifications disabled for @{username}'s posts."
 msgstr " Notifications disabled for @{username}'s posts."
 
-#: src/components/related-actions.jsx:350
+#: src/components/related-actions.jsx:352
 msgid "Disable notifications"
 msgstr "Disable notifications"
 
-#: src/components/related-actions.jsx:351
+#: src/components/related-actions.jsx:353
 msgid "Enable notifications"
 msgstr "Enable notifications"
 
-#: src/components/related-actions.jsx:368
+#: src/components/related-actions.jsx:370
 msgid "Boosts from @{username} enabled."
 msgstr "Boosts from @{username} enabled."
 
-#: src/components/related-actions.jsx:369
+#: src/components/related-actions.jsx:371
 msgid "Boosts from @{username} disabled."
 msgstr "Boosts from @{username} disabled."
 
-#: src/components/related-actions.jsx:380
+#: src/components/related-actions.jsx:382
 msgid "Disable boosts"
 msgstr "Disable boosts"
 
-#: src/components/related-actions.jsx:380
+#: src/components/related-actions.jsx:382
 msgid "Enable boosts"
 msgstr "Enable boosts"
 
-#: src/components/related-actions.jsx:399
+#: src/components/related-actions.jsx:401
 msgid "@{username} is no longer featured on your profile."
 msgstr "@{username} is no longer featured on your profile."
 
-#: src/components/related-actions.jsx:409
+#: src/components/related-actions.jsx:411
 msgid "@{username} is now featured on your profile."
 msgstr "@{username} is now featured on your profile."
 
-#: src/components/related-actions.jsx:417
+#: src/components/related-actions.jsx:419
 msgid "Unable to unfeature @{username} on your profile."
 msgstr "Unable to unfeature @{username} on your profile."
 
-#: src/components/related-actions.jsx:421
+#: src/components/related-actions.jsx:423
 msgid "Unable to feature @{username} on your profile."
 msgstr "Unable to feature @{username} on your profile."
 
-#: src/components/related-actions.jsx:430
+#: src/components/related-actions.jsx:432
 msgid "Don't feature on profile"
 msgstr "Don't feature on profile"
 
-#: src/components/related-actions.jsx:431
+#: src/components/related-actions.jsx:433
 #: src/pages/hashtag.jsx:333
 msgid "Feature on profile"
 msgstr ""
 
-#: src/components/related-actions.jsx:440
-#: src/components/related-actions.jsx:478
+#: src/components/related-actions.jsx:442
+#: src/components/related-actions.jsx:480
 msgid "Show featured profiles"
 msgstr "Show featured profiles"
 
-#: src/components/related-actions.jsx:539
+#: src/components/related-actions.jsx:541
 #: src/components/shortcuts-settings.jsx:1077
 #: src/components/status.jsx:1429
 msgid "Sharing doesn't seem to work."
 msgstr ""
 
-#: src/components/related-actions.jsx:580
+#: src/components/related-actions.jsx:583
 msgid "Unmuted @{username}"
 msgstr "Unmuted @{username}"
 
-#: src/components/related-actions.jsx:592
+#: src/components/related-actions.jsx:595
 msgid "Unmute <0>@{username}</0>"
 msgstr "Unmute <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:608
+#: src/components/related-actions.jsx:611
 msgid "Mute <0>@{username}</0>…"
 msgstr ""
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:640
+#: src/components/related-actions.jsx:643
 msgid "Muted @{username} for {0}"
 msgstr "Muted @{username} for {0}"
 
-#: src/components/related-actions.jsx:652
+#: src/components/related-actions.jsx:655
 msgid "Unable to mute @{username}"
 msgstr "Unable to mute @{username}"
 
-#: src/components/related-actions.jsx:673
+#: src/components/related-actions.jsx:676
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr ""
 
-#: src/components/related-actions.jsx:693
+#: src/components/related-actions.jsx:696
 msgid "@{username} removed from followers"
 msgstr "@{username} removed from followers"
 
-#: src/components/related-actions.jsx:705
+#: src/components/related-actions.jsx:708
 msgid "Remove follower…"
 msgstr ""
 
-#: src/components/related-actions.jsx:716
+#: src/components/related-actions.jsx:719
 msgid "Block <0>@{username}</0>?"
 msgstr ""
 
-#: src/components/related-actions.jsx:740
+#: src/components/related-actions.jsx:743
 msgid "Unblocked @{username}"
 msgstr "Unblocked @{username}"
 
-#: src/components/related-actions.jsx:748
+#: src/components/related-actions.jsx:751
 msgid "Blocked @{username}"
 msgstr "Blocked @{username}"
 
-#: src/components/related-actions.jsx:756
+#: src/components/related-actions.jsx:759
 msgid "Unable to unblock @{username}"
 msgstr "Unable to unblock @{username}"
 
-#: src/components/related-actions.jsx:758
+#: src/components/related-actions.jsx:761
 msgid "Unable to block @{username}"
 msgstr "Unable to block @{username}"
 
-#: src/components/related-actions.jsx:768
+#: src/components/related-actions.jsx:771
 msgid "Unblock <0>@{username}</0>"
 msgstr ""
 
-#: src/components/related-actions.jsx:777
+#: src/components/related-actions.jsx:780
 msgid "Block <0>@{username}</0>…"
 msgstr ""
 
-#: src/components/related-actions.jsx:794
+#: src/components/related-actions.jsx:797
 msgid "Report <0>@{username}</0>…"
 msgstr ""
 
-#: src/components/related-actions.jsx:850
+#: src/components/related-actions.jsx:853
 msgid "Withdraw follow request?"
 msgstr "Withdraw follow request?"
 
 #. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:851
+#: src/components/related-actions.jsx:854
 msgid "Unfollow @{0}?"
 msgstr "Unfollow @{0}?"
 
-#: src/components/related-actions.jsx:914
+#: src/components/related-actions.jsx:917
 msgid "Unfollow…"
 msgstr ""
 
-#: src/components/related-actions.jsx:923
+#: src/components/related-actions.jsx:926
 msgid "Withdraw…"
 msgstr ""
 
-#: src/components/related-actions.jsx:930
-#: src/components/related-actions.jsx:934
+#: src/components/related-actions.jsx:933
+#: src/components/related-actions.jsx:937
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr ""

@@ -88,7 +88,7 @@ const createQRCamera = async (player) => {
 };
 
 function QrScannerModal({ onClose, checkValidity, actionableText }) {
-  const { t } = useLingui();
+  const { t, _ } = useLingui();
   const containerRef = useRef(null);
   const videoRef = useRef(null);
   const overlayRef = useRef(null);
@@ -317,7 +317,11 @@ function QrScannerModal({ onClose, checkValidity, actionableText }) {
                       onClose({ text: decodedText });
                     }}
                   >
-                    {actionableText || <Icon icon="arrow-right" />}
+                    {actionableText ? (
+                      _(actionableText)
+                    ) : (
+                      <Icon icon="arrow-right" />
+                    )}
                   </button>
                 )}
               </>

@@ -13,6 +13,7 @@ import states from '../utils/states';
 import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
 import supports from '../utils/supports';
 
+import { handleScannerClick } from './account-info';
 import AddRemoveListsSheet from './add-remove-lists-sheet';
 import Icon from './icon';
 import Loader from './loader';
@@ -237,6 +238,7 @@ function RelatedActions({
                   arena: avatarStatic,
                   backgroundMask: headerStatic,
                   caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                  onScannerClick: handleScannerClick,
                 };
               }}
             >
@@ -554,6 +556,7 @@ function RelatedActions({
                   arena: avatarStatic,
                   backgroundMask: headerStatic,
                   caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                  onScannerClick: handleScannerClick,
                 };
               }}
             >

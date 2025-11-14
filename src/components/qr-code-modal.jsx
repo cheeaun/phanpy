@@ -2,43 +2,27 @@ import './qr-code-modal.css';
 
 import { useLingui } from '@lingui/react/macro';
 
-import states, { hideAllModals } from '../utils/states';
-
 import Icon from './icon';
 import QrCode from './qr-code';
 
 const mediaDevicesSupported = !!navigator.mediaDevices?.getUserMedia;
 
-const isValidUrl = (string) => {
-  try {
-    new URL(string);
-    return true;
-  } catch (_) {
-    return false;
-  }
-};
-
-function QrCodeModal({ text, arena, backgroundMask, caption, onClose }) {
+function QrCodeModal({
+  text,
+  arena,
+  backgroundMask,
+  caption,
+  onClose,
+  onScannerClick,
+}) {
   const { t } = useLingui();
-
-  const handleScanClick = () => {
-    states.showQrScannerModal = {
-      checkValidity: isValidUrl,
-      actionableText: t`View profile`,
-      onClose: ({ text } = {}) => {
-        if (text) {
-          hideAllModals();
-          location.hash = `/${text}`;
-        }
-      },
-    };
-  };
+  console.log('onScannerClick', onScannerClick);
 
   return (
     <div class="qr-code-modal-container">
       <div class="qr-code-modal-controls">
-        {mediaDevicesSupported ? (
-          <button type="button" class="plain4" onClick={handleScanClick}>
+        {mediaDevicesSupported && typeof onScannerClick === 'function' ? (
+          <button type="button" class="plain4" onClick={onScannerClick}>
             <Icon icon="scan" alt={t`Scan QR code`} />
           </button>
         ) : (

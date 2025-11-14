@@ -295,6 +295,7 @@ export default function Modals() {
             onClose={() => {
               states.showQrCodeModal = false;
             }}
+            onScannerClick={snapStates.showQrCodeModal.onScannerClick}
           />
         </Modal>
       )}

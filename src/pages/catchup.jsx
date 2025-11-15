@@ -10,6 +10,7 @@ import { memo } from 'preact/compat';
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useReducer,
   useRef,
@@ -43,12 +44,14 @@ import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
+import store from '../utils/store';
 import { getCurrentAccountID, getCurrentAccountNS } from '../utils/store-utils';
 import supports from '../utils/supports';
 import { assignFollowedTags } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const FILTER_CONTEXT = 'home';
+const CATCHUP_NS = 'catchup';
 
 const RANGES = [
   { label: msg`last 1 hour`, value: 1 },
@@ -247,6 +250,20 @@ function Catchup() {
   const [reloadCatchupsCount, reloadCatchups] = useReducer((c) => c + 1, 0);
   const [lastCatchupEndAt, setLastCatchupEndAt] = useState(null);
   const [prevCatchups, setPrevCatchups] = useState([]);
+
+  useEffect(() => {
+    const catchupIds = new Set(prevCatchups.map((pc) => pc.id));
+    for (let i = sessionStorage.length - 1; i >= 0; i--) {
+      const key = sessionStorage.key(i);
+      if (key?.startsWith(`${CATCHUP_NS}-`)) {
+        const catchupId = key.replace(`${CATCHUP_NS}-`, '');
+        if (!catchupIds.has(catchupId)) {
+          store.session.del(key);
+        }
+      }
+    }
+  }, [prevCatchups]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -430,6 +447,53 @@ function Catchup() {
   const [sortOrder, setSortOrder] = useState('asc');
   const [groupBy, setGroupBy] = useState(null);
 
+  useEffect(() => {
+    if (!id) return;
+    const savedState = store.session.getJSON(`${CATCHUP_NS}-${id}`);
+    if (savedState) {
+      if (savedState.selectedFilterCategory !== undefined) {
+        setSelectedFilterCategory(savedState.selectedFilterCategory);
+      }
+      if (savedState.selectedAuthor !== undefined) {
+        setSelectedAuthor(savedState.selectedAuthor);
+      }
+      if (savedState.sortBy !== undefined) {
+        setSortBy(savedState.sortBy);
+      }
+      if (savedState.sortOrder !== undefined) {
+        setSortOrder(savedState.sortOrder);
+      }
+      if (savedState.groupBy !== undefined) {
+        setGroupBy(savedState.groupBy);
+      }
+      if (savedState.showTopLinks !== undefined) {
+        setShowTopLinks(savedState.showTopLinks);
+      }
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (!id || uiState !== 'results') return;
+    const state = {
+      selectedFilterCategory,
+      selectedAuthor,
+      sortBy,
+      sortOrder,
+      groupBy,
+      showTopLinks,
+    };
+    store.session.setJSON(`${CATCHUP_NS}-${id}`, state);
+  }, [
+    id,
+    uiState,
+    selectedFilterCategory,
+    selectedAuthor,
+    sortBy,
+    sortOrder,
+    groupBy,
+    showTopLinks,
+  ]);
+
   const [filteredPosts, authors, authorCounts] = useMemo(() => {
     const authorsHash = {};
     const authorCountsMap = new Map();
@@ -588,6 +652,43 @@ function Catchup() {
   }, [filteredPostsMap]);
 
   const scrollableRef = useRef(null);
+
+  useLayoutEffect(() => {
+    if (!id || uiState !== 'results' || !scrollableRef.current) return;
+    if (!sortedFilteredPosts.length) return;
+
+    const savedState = store.session.getJSON(`${CATCHUP_NS}-${id}`);
+    if (savedState?.scrollTop !== undefined && savedState.scrollTop > 0) {
+      const timeoutId = setTimeout(() => {
+        if (scrollableRef.current) {
+          scrollableRef.current.scrollTo({
+            top: savedState.scrollTop,
+            behavior: 'instant',
+          });
+        }
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [id, uiState, sortedFilteredPosts.length]);
+
+  useEffect(() => {
+    if (!id || uiState !== 'results' || !scrollableRef.current) return;
+
+    const handleScroll = () => {
+      if (!scrollableRef.current) return;
+      const savedState = store.session.getJSON(`${CATCHUP_NS}-${id}`) || {};
+      savedState.scrollTop = scrollableRef.current.scrollTop;
+      store.session.setJSON(`${CATCHUP_NS}-${id}`, savedState);
+    };
+
+    const scrollElement = scrollableRef.current;
+    scrollElement.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      scrollElement.removeEventListener('scroll', handleScroll);
+    };
+  }, [id, uiState]);
 
   // if range value exceeded lastCatchupEndAt, show error
   const lastCatchupRange = useMemo(() => {

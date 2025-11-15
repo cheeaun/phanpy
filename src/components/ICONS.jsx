@@ -168,7 +168,7 @@ export const ICONS = {
   code: () => import('@iconify-icons/mingcute/code-line'),
   copy: () => import('@iconify-icons/mingcute/copy-2-line'),
   quote: {
-    module: () => import('@iconify-icons/mingcute/quote-left-line'),
+    module: () => import('@iconify-icons/mingcute/quote-left-fill'),
     rtl: true,
   },
   quote2: {
@@ -192,4 +192,6 @@ export const ICONS = {
   'zoom-in': () => import('@iconify-icons/mingcute/zoom-in-line'),
   'zoom-out': () => import('@iconify-icons/mingcute/zoom-out-line'),
   'cursor-hand': () => import('@iconify-icons/mingcute/hand-finger-2-line'),
+  qrcode: () => import('@iconify-icons/mingcute/qrcode-2-line'),
+  scan: () => import('@iconify-icons/mingcute/scan-line'),
 };

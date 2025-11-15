@@ -27,6 +27,7 @@ import AsyncText from './AsyncText';
 import Icon from './icon';
 import MenuConfirm from './menu-confirm';
 import Modal from './modal';
+import { mediaDevicesSupported } from './qr-code-modal';
 
 export const SHORTCUTS_LIMIT = 9;
 
@@ -757,6 +758,7 @@ function ImportExport({ shortcuts, onClose }) {
       // Very basic validation, I know
       if (!Array.isArray(parsed)) throw new Error('Not an array');
       setImportUIState('default');
+      console.log('⚡ Parsed imported shortcuts', parsed);
       return parsed;
     } catch (err) {
       // Fallback to JSON string parsing
@@ -810,6 +812,27 @@ function ImportExport({ shortcuts, onClose }) {
               }}
               dir="auto"
             />
+            {mediaDevicesSupported && (
+              <button
+                type="button"
+                class="plain2 small"
+                onClick={() => {
+                  states.showQrScannerModal = {
+                    onClose: ({ text } = {}) => {
+                      if (text) {
+                        setImportShortcutStr(text);
+                        shortcutsImportFieldRef.current.value = text;
+                        shortcutsImportFieldRef.current.dispatchEvent(
+                          new Event('input'),
+                        );
+                      }
+                    },
+                  };
+                }}
+              >
+                <Icon icon="scan" alt={t`Scan QR code`} />
+              </button>
+            )}
             {states.settings.shortcutSettingsCloudImportExport && (
               <button
                 type="button"
@@ -854,7 +877,7 @@ function ImportExport({ shortcuts, onClose }) {
                 title={t`Download shortcuts from instance server`}
               >
                 <Icon icon="cloud" />
-                <Icon icon="arrow-down" />
+                <Icon icon="arrow-down" size="s" />
               </button>
             )}
           </p>
@@ -875,9 +898,18 @@ function ImportExport({ shortcuts, onClose }) {
                         style={{
                           opacity: shortcuts.some((s) =>
                             // Compare all properties
-                            Object.keys(s).every(
-                              (key) => s[key] === shortcut[key],
-                            ),
+                            Object.keys(s).every((key) => {
+                              if (!(key in shortcut)) return true;
+                              const val = shortcut[key];
+                              if (
+                                val === '' ||
+                                val === null ||
+                                val === undefined
+                              ) {
+                                return true;
+                              }
+                              return s[key] === val;
+                            }),
                           )
                             ? 1
                             : 0,
@@ -887,13 +919,13 @@ function ImportExport({ shortcuts, onClose }) {
                       </span>
                       <span>
                         {_(TYPE_TEXT[shortcut.type])}
-                        {shortcut.type === 'list' && ' ⚠️'}{' '}
+                        {shortcut.type === 'list' && !!shortcut.id && ' ⚠️'}{' '}
                         {TYPE_PARAMS[shortcut.type]?.map?.(
                           ({ text, name, type }) =>
                             shortcut[name] ? (
                               <>
                                 <span class="tag collapsed insignificant">
-                                  {text}:{' '}
+                                  {_(text)}:{' '}
                                   {type === 'checkbox'
                                     ? shortcut[name] === 'on'
                                       ? '✅'
@@ -1018,7 +1050,7 @@ function ImportExport({ shortcuts, onClose }) {
               <Trans>Export</Trans>
             </span>
           </h3>
-          <p>
+          <p class="field-button">
             <input
               style={{ width: '100%' }}
               type="text"
@@ -1038,56 +1070,22 @@ function ImportExport({ shortcuts, onClose }) {
               }}
               dir="auto"
             />
-          </p>
-          <p>
             <button
               type="button"
-              class="plain2"
+              class="plain2 small"
               disabled={!shortcutsStr}
               onClick={() => {
-                try {
-                  navigator.clipboard.writeText(shortcutsStr);
-                  showToast(t`Shortcut settings copied`);
-                } catch (e) {
-                  console.error(e);
-                  showToast(t`Unable to copy shortcut settings`);
-                }
+                states.showQrCodeModal = {
+                  text: shortcutsStr,
+                };
               }}
             >
-              <Icon icon="clipboard" />{' '}
-              <span>
-                <Trans>Copy</Trans>
-              </span>
-            </button>{' '}
-            {navigator?.share &&
-              navigator?.canShare?.({
-                text: shortcutsStr,
-              }) && (
-                <button
-                  type="button"
-                  class="plain2"
-                  disabled={!shortcutsStr}
-                  onClick={() => {
-                    try {
-                      navigator.share({
-                        text: shortcutsStr,
-                      });
-                    } catch (e) {
-                      console.error(e);
-                      alert(t`Sharing doesn't seem to work.`);
-                    }
-                  }}
-                >
-                  <Icon icon="share" />{' '}
-                  <span>
-                    <Trans>Share</Trans>
-                  </span>
-                </button>
-              )}{' '}
+              <Icon icon="qrcode" alt={t`QR code`} />
+            </button>
             {states.settings.shortcutSettingsCloudImportExport && (
               <button
                 type="button"
-                class="plain2"
+                class="plain2 small"
                 disabled={importUIState === 'cloud-uploading'}
                 onClick={async () => {
                   setImportUIState('cloud-uploading');
@@ -1137,9 +1135,55 @@ function ImportExport({ shortcuts, onClose }) {
                 title={t`Sync to instance server`}
               >
                 <Icon icon="cloud" />
-                <Icon icon="arrow-up" />
+                <Icon icon="arrow-up" size="s" />
               </button>
-            )}{' '}
+            )}
+          </p>
+          <p>
+            <button
+              type="button"
+              class="plain2"
+              disabled={!shortcutsStr}
+              onClick={() => {
+                try {
+                  navigator.clipboard.writeText(shortcutsStr);
+                  showToast(t`Shortcut settings copied`);
+                } catch (e) {
+                  console.error(e);
+                  showToast(t`Unable to copy shortcut settings`);
+                }
+              }}
+            >
+              <Icon icon="clipboard" />{' '}
+              <span>
+                <Trans>Copy</Trans>
+              </span>
+            </button>{' '}
+            {navigator?.share &&
+              navigator?.canShare?.({
+                text: shortcutsStr,
+              }) && (
+                <button
+                  type="button"
+                  class="plain2"
+                  disabled={!shortcutsStr}
+                  onClick={() => {
+                    try {
+                      navigator.share({
+                        text: shortcutsStr,
+                      });
+                    } catch (e) {
+                      console.error(e);
+                      alert(t`Sharing doesn't seem to work.`);
+                    }
+                  }}
+                >
+                  <Icon icon="share" />{' '}
+                  <span>
+                    <Trans>Share</Trans>
+                  </span>
+                </button>
+              )}{' '}
             {shortcutsStr.length > 0 && (
               <small class="insignificant ib">
                 <Plural

@@ -13,6 +13,7 @@ import states from '../utils/states';
 import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
 import supports from '../utils/supports';
 
+import { handleScannerClick } from './account-info';
 import AddRemoveListsSheet from './add-remove-lists-sheet';
 import Icon from './icon';
 import Loader from './loader';
@@ -173,6 +174,13 @@ function RelatedActions({
   const [showPrivateNoteModal, setShowPrivateNoteModal] = useState(false);
   const [lists, setLists] = useState([]);
 
+  let { headerStatic, avatarStatic } = info;
+  if (!headerStatic || /missing\.png$/.test(headerStatic)) {
+    if (avatarStatic && !/missing\.png$/.test(avatarStatic)) {
+      headerStatic = avatarStatic;
+    }
+  }
+
   return (
     <>
       <div class="actions">
@@ -218,6 +226,23 @@ function RelatedActions({
               dir="auto"
             >
               <span>{privateNote}</span>
+            </button>
+          )}
+          {currentAuthenticated && isSelf && (
+            <button
+              type="button"
+              class="plain"
+              onClick={() => {
+                states.showQrCodeModal = {
+                  text: url,
+                  arena: avatarStatic,
+                  backgroundMask: headerStatic,
+                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                  onScannerClick: handleScannerClick,
+                };
+              }}
+            >
+              <Icon icon="qrcode" alt={t`QR code`} />
             </button>
           )}
           <Menu2
@@ -452,7 +477,7 @@ function RelatedActions({
                 <>
                   <MenuItem onClick={() => setRenderEndorsements(true)}>
                     <Icon icon="endorsement" />
-                    Show featured profiles
+                    <Trans>Show featured profiles</Trans>
                   </MenuItem>
                   <MenuDivider />
                 </>
@@ -524,6 +549,22 @@ function RelatedActions({
                   </MenuItem>
                 )}
             </div>
+            <MenuItem
+              onClick={() => {
+                states.showQrCodeModal = {
+                  text: url,
+                  arena: avatarStatic,
+                  backgroundMask: headerStatic,
+                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                  onScannerClick: handleScannerClick,
+                };
+              }}
+            >
+              <Icon icon="qrcode" />
+              <span>
+                <Trans>QR code</Trans>
+              </span>
+            </MenuItem>
             {!!relationship && (
               <>
                 <MenuDivider />

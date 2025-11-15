@@ -157,7 +157,7 @@ msgstr ""
 #: src/components/account-info.jsx:635
 #: src/components/related-actions.jsx:245
 #: src/components/related-actions.jsx:565
-#: src/components/shortcuts-settings.jsx:1074
+#: src/components/shortcuts-settings.jsx:1083
 msgid "QR code"
 msgstr "QR code"
 
@@ -301,7 +301,7 @@ msgstr "View post stats"
 #: src/components/report-modal.jsx:118
 #: src/components/shortcuts-settings.jsx:231
 #: src/components/shortcuts-settings.jsx:584
-#: src/components/shortcuts-settings.jsx:784
+#: src/components/shortcuts-settings.jsx:785
 #: src/components/status.jsx:3232
 #: src/components/status.jsx:3444
 #: src/components/translated-bio-sheet.jsx:21
@@ -1631,7 +1631,7 @@ msgstr "Open link?"
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
 #: src/components/related-actions.jsx:526
-#: src/components/shortcuts-settings.jsx:1094
+#: src/components/shortcuts-settings.jsx:1159
 #: src/components/status.jsx:1413
 msgid "Copy"
 msgstr ""
@@ -1944,7 +1944,7 @@ msgid "Show featured profiles"
 msgstr "Show featured profiles"
 
 #: src/components/related-actions.jsx:541
-#: src/components/shortcuts-settings.jsx:1112
+#: src/components/shortcuts-settings.jsx:1177
 #: src/components/status.jsx:1429
 msgid "Sharing doesn't seem to work."
 msgstr ""
@@ -2351,16 +2351,15 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:789
+#: src/components/shortcuts-settings.jsx:790
 msgid "Import/Export <0>Shortcuts</0>"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:799
-#: src/components/shortcuts-settings.jsx:820
+#: src/components/shortcuts-settings.jsx:800
 msgid "Import"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:807
+#: src/components/shortcuts-settings.jsx:808
 msgid "Paste shortcuts here"
 msgstr ""
 
@@ -2376,109 +2375,109 @@ msgstr ""
 msgid "Download shortcuts from instance server"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:935
+#: src/components/shortcuts-settings.jsx:944
 msgid "* Exists in current shortcuts"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:940
+#: src/components/shortcuts-settings.jsx:949
 msgid "List may not work if it's from a different account."
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:950
+#: src/components/shortcuts-settings.jsx:959
 msgid "Invalid settings format"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:958
+#: src/components/shortcuts-settings.jsx:967
 msgid "Append to current shortcuts?"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:961
+#: src/components/shortcuts-settings.jsx:970
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:983
+#: src/components/shortcuts-settings.jsx:992
 msgid "No new shortcuts to import"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:998
+#: src/components/shortcuts-settings.jsx:1007
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:999
-#: src/components/shortcuts-settings.jsx:1023
+#: src/components/shortcuts-settings.jsx:1008
+#: src/components/shortcuts-settings.jsx:1032
 msgid "Shortcuts imported"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1009
+#: src/components/shortcuts-settings.jsx:1018
 msgid "Import & append…"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1017
+#: src/components/shortcuts-settings.jsx:1026
 msgid "Override current shortcuts?"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1018
+#: src/components/shortcuts-settings.jsx:1027
 msgid "Import shortcuts?"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1032
+#: src/components/shortcuts-settings.jsx:1041
 msgid "or override…"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1032
+#: src/components/shortcuts-settings.jsx:1041
 msgid "Import…"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1041
+#: src/components/shortcuts-settings.jsx:1050
 msgid "Export"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1056
+#: src/components/shortcuts-settings.jsx:1065
 msgid "Shortcuts copied"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1059
+#: src/components/shortcuts-settings.jsx:1068
 msgid "Unable to copy shortcuts"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1085
-msgid "Shortcut settings copied"
-msgstr ""
-
-#: src/components/shortcuts-settings.jsx:1088
-msgid "Unable to copy shortcut settings"
-msgstr ""
-
-#: src/components/shortcuts-settings.jsx:1118
-msgid "Share"
-msgstr ""
-
-#: src/components/shortcuts-settings.jsx:1157
+#: src/components/shortcuts-settings.jsx:1120
 msgid "Saving shortcuts to instance server…"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1164
+#: src/components/shortcuts-settings.jsx:1127
 msgid "Shortcuts saved"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1169
+#: src/components/shortcuts-settings.jsx:1132
 msgid "Unable to save shortcuts"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1172
+#: src/components/shortcuts-settings.jsx:1135
 msgid "Sync to instance server"
 msgstr ""
 
+#: src/components/shortcuts-settings.jsx:1150
+msgid "Shortcut settings copied"
+msgstr ""
+
+#: src/components/shortcuts-settings.jsx:1153
+msgid "Unable to copy shortcut settings"
+msgstr ""
+
+#: src/components/shortcuts-settings.jsx:1183
+msgid "Share"
+msgstr ""
+
 #. placeholder {0}: shortcutsStr.length
-#: src/components/shortcuts-settings.jsx:1180
+#: src/components/shortcuts-settings.jsx:1189
 msgid "{0, plural, one {# character} other {# characters}}"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1192
+#: src/components/shortcuts-settings.jsx:1201
 msgid "Raw Shortcuts JSON"
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:1205
+#: src/components/shortcuts-settings.jsx:1214
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr ""
 

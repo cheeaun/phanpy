@@ -758,6 +758,7 @@ function ImportExport({ shortcuts, onClose }) {
       // Very basic validation, I know
       if (!Array.isArray(parsed)) throw new Error('Not an array');
       setImportUIState('default');
+      console.log('⚡ Parsed imported shortcuts', parsed);
       return parsed;
     } catch (err) {
       // Fallback to JSON string parsing
@@ -814,10 +815,9 @@ function ImportExport({ shortcuts, onClose }) {
             {mediaDevicesSupported && (
               <button
                 type="button"
-                class="plain2"
+                class="plain2 small"
                 onClick={() => {
                   states.showQrScannerModal = {
-                    actionableText: t`Import`,
                     onClose: ({ text } = {}) => {
                       if (text) {
                         setImportShortcutStr(text);
@@ -877,7 +877,7 @@ function ImportExport({ shortcuts, onClose }) {
                 title={t`Download shortcuts from instance server`}
               >
                 <Icon icon="cloud" />
-                <Icon icon="arrow-down" />
+                <Icon icon="arrow-down" size="s" />
               </button>
             )}
           </p>
@@ -898,9 +898,18 @@ function ImportExport({ shortcuts, onClose }) {
                         style={{
                           opacity: shortcuts.some((s) =>
                             // Compare all properties
-                            Object.keys(s).every(
-                              (key) => s[key] === shortcut[key],
-                            ),
+                            Object.keys(s).every((key) => {
+                              if (!(key in shortcut)) return true;
+                              const val = shortcut[key];
+                              if (
+                                val === '' ||
+                                val === null ||
+                                val === undefined
+                              ) {
+                                return true;
+                              }
+                              return s[key] === val;
+                            }),
                           )
                             ? 1
                             : 0,
@@ -910,13 +919,13 @@ function ImportExport({ shortcuts, onClose }) {
                       </span>
                       <span>
                         {_(TYPE_TEXT[shortcut.type])}
-                        {shortcut.type === 'list' && ' ⚠️'}{' '}
+                        {shortcut.type === 'list' && !!shortcut.id && ' ⚠️'}{' '}
                         {TYPE_PARAMS[shortcut.type]?.map?.(
                           ({ text, name, type }) =>
                             shortcut[name] ? (
                               <>
                                 <span class="tag collapsed insignificant">
-                                  {text}:{' '}
+                                  {_(text)}:{' '}
                                   {type === 'checkbox'
                                     ? shortcut[name] === 'on'
                                       ? '✅'
@@ -1063,7 +1072,7 @@ function ImportExport({ shortcuts, onClose }) {
             />
             <button
               type="button"
-              class="plain2"
+              class="plain2 small"
               disabled={!shortcutsStr}
               onClick={() => {
                 states.showQrCodeModal = {
@@ -1073,56 +1082,10 @@ function ImportExport({ shortcuts, onClose }) {
             >
               <Icon icon="qrcode" alt={t`QR code`} />
             </button>
-          </p>
-          <p>
-            <button
-              type="button"
-              class="plain2"
-              disabled={!shortcutsStr}
-              onClick={() => {
-                try {
-                  navigator.clipboard.writeText(shortcutsStr);
-                  showToast(t`Shortcut settings copied`);
-                } catch (e) {
-                  console.error(e);
-                  showToast(t`Unable to copy shortcut settings`);
-                }
-              }}
-            >
-              <Icon icon="clipboard" />{' '}
-              <span>
-                <Trans>Copy</Trans>
-              </span>
-            </button>{' '}
-            {navigator?.share &&
-              navigator?.canShare?.({
-                text: shortcutsStr,
-              }) && (
-                <button
-                  type="button"
-                  class="plain2"
-                  disabled={!shortcutsStr}
-                  onClick={() => {
-                    try {
-                      navigator.share({
-                        text: shortcutsStr,
-                      });
-                    } catch (e) {
-                      console.error(e);
-                      alert(t`Sharing doesn't seem to work.`);
-                    }
-                  }}
-                >
-                  <Icon icon="share" />{' '}
-                  <span>
-                    <Trans>Share</Trans>
-                  </span>
-                </button>
-              )}{' '}
             {states.settings.shortcutSettingsCloudImportExport && (
               <button
                 type="button"
-                class="plain2"
+                class="plain2 small"
                 disabled={importUIState === 'cloud-uploading'}
                 onClick={async () => {
                   setImportUIState('cloud-uploading');
@@ -1172,9 +1135,55 @@ function ImportExport({ shortcuts, onClose }) {
                 title={t`Sync to instance server`}
               >
                 <Icon icon="cloud" />
-                <Icon icon="arrow-up" />
+                <Icon icon="arrow-up" size="s" />
               </button>
-            )}{' '}
+            )}
+          </p>
+          <p>
+            <button
+              type="button"
+              class="plain2"
+              disabled={!shortcutsStr}
+              onClick={() => {
+                try {
+                  navigator.clipboard.writeText(shortcutsStr);
+                  showToast(t`Shortcut settings copied`);
+                } catch (e) {
+                  console.error(e);
+                  showToast(t`Unable to copy shortcut settings`);
+                }
+              }}
+            >
+              <Icon icon="clipboard" />{' '}
+              <span>
+                <Trans>Copy</Trans>
+              </span>
+            </button>{' '}
+            {navigator?.share &&
+              navigator?.canShare?.({
+                text: shortcutsStr,
+              }) && (
+                <button
+                  type="button"
+                  class="plain2"
+                  disabled={!shortcutsStr}
+                  onClick={() => {
+                    try {
+                      navigator.share({
+                        text: shortcutsStr,
+                      });
+                    } catch (e) {
+                      console.error(e);
+                      alert(t`Sharing doesn't seem to work.`);
+                    }
+                  }}
+                >
+                  <Icon icon="share" />{' '}
+                  <span>
+                    <Trans>Share</Trans>
+                  </span>
+                </button>
+              )}{' '}
             {shortcutsStr.length > 0 && (
               <small class="insignificant ib">
                 <Plural

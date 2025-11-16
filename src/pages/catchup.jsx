@@ -2101,7 +2101,11 @@ function PostPeek({ post, filterInfo }) {
                             loading="lazy"
                             onError={(e) => {
                               const { src } = e.target;
-                              if (src === mediaURL) {
+                              if (
+                                src === mediaURL &&
+                                remoteMediaURL &&
+                                mediaURL !== remoteMediaURL
+                              ) {
                                 e.target.src = remoteMediaURL;
                               }
                             }}
@@ -2125,7 +2129,11 @@ function PostPeek({ post, filterInfo }) {
                             loading="lazy"
                             onError={(e) => {
                               const { src } = e.target;
-                              if (src === mediaURL) {
+                              if (
+                                src === mediaURL &&
+                                remoteMediaURL &&
+                                mediaURL !== remoteMediaURL
+                              ) {
                                 e.target.src = remoteMediaURL;
                               }
                             }}
@@ -2143,7 +2151,11 @@ function PostPeek({ post, filterInfo }) {
                             loading="lazy"
                             onError={(e) => {
                               const { src } = e.target;
-                              if (src === mediaURL) {
+                              if (
+                                src === mediaURL &&
+                                remoteMediaURL &&
+                                mediaURL !== remoteMediaURL
+                              ) {
                                 e.target.src = remoteMediaURL;
                               }
                             }}

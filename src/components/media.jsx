@@ -461,7 +461,11 @@ function Media({
                 }}
                 onError={(e) => {
                   const { src } = e.target;
-                  if (src === mediaURL && mediaURL !== remoteMediaURL) {
+                  if (
+                    src === mediaURL &&
+                    remoteMediaURL &&
+                    mediaURL !== remoteMediaURL
+                  ) {
                     e.target.src = remoteMediaURL;
                   } else {
                     setMediaLoadError(true);

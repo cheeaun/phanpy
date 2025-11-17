@@ -109,7 +109,7 @@ function Login() {
         const authPKCE = await supportsPKCE({ instanceURL });
         console.log({ authPKCE });
         const forceLogin = hasAccountInInstance(instanceURL);
-        if (authPKCE) {
+        if (authPKCE && window.isSecureContext) {
           if (client_id && client_secret) {
             const [url, verifier] = await getPKCEAuthorizationURL({
               instanceURL,

@@ -8,7 +8,7 @@ msgstr ""
 "Language: ko\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-12 09:08\n"
+"PO-Revision-Date: 2025-11-17 13:24\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -33,12 +33,12 @@ msgid "Last posted: {0}"
 msgstr "마지막 게시일: {0}"
 
 #: src/components/account-block.jsx:170
-#: src/components/account-info.jsx:695
+#: src/components/account-info.jsx:717
 msgid "Automated"
 msgstr "자동화됨"
 
 #: src/components/account-block.jsx:177
-#: src/components/account-info.jsx:700
+#: src/components/account-info.jsx:722
 #: src/components/status.jsx:563
 msgid "Group"
 msgstr "그룹"
@@ -48,17 +48,17 @@ msgid "Mutual"
 msgstr "맞팔"
 
 #: src/components/account-block.jsx:191
-#: src/components/related-actions.jsx:920
+#: src/components/related-actions.jsx:923
 msgid "Requested"
 msgstr "요청함"
 
 #: src/components/account-block.jsx:195
-#: src/components/related-actions.jsx:911
+#: src/components/related-actions.jsx:914
 msgid "Following"
 msgstr "팔로잉"
 
 #: src/components/account-block.jsx:199
-#: src/components/related-actions.jsx:189
+#: src/components/related-actions.jsx:190
 msgid "Follows you"
 msgstr "날 팔로 함"
 
@@ -67,14 +67,14 @@ msgid "{followersCount, plural, one {# follower} other {# followers}}"
 msgstr "{followersCount, plural, one {# 팔로워} other {# 팔로워}}"
 
 #: src/components/account-block.jsx:216
-#: src/components/account-info.jsx:743
+#: src/components/account-info.jsx:765
 msgid "Verified"
 msgstr "인증됨"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:231
-#: src/components/account-info.jsx:882
+#: src/components/account-info.jsx:904
 msgid "Joined <0>{0}</0>"
 msgstr "<0>{0}</0> 가입"
 
@@ -86,16 +86,20 @@ msgstr "사용자명"
 msgid "server domain name"
 msgstr "서버 도메인 이름"
 
-#: src/components/account-info.jsx:371
+#: src/components/account-info.jsx:124
+msgid "View profile"
+msgstr ""
+
+#: src/components/account-info.jsx:392
 msgid "Unable to load account."
 msgstr "계정을 불러 올 수 없습니다."
 
-#: src/components/account-info.jsx:386
+#: src/components/account-info.jsx:407
 msgid "Go to account page"
 msgstr "계정 페이지로 이동"
 
-#: src/components/account-info.jsx:415
-#: src/components/account-info.jsx:765
+#: src/components/account-info.jsx:436
+#: src/components/account-info.jsx:787
 #: src/components/compose.jsx:1961
 #: src/pages/settings.jsx:325
 #: src/utils/visibility-text.jsx:7
@@ -103,23 +107,23 @@ msgid "Followers"
 msgstr "팔로워"
 
 #. js-lingui-explicit-id
-#: src/components/account-info.jsx:419
-#: src/components/account-info.jsx:820
+#: src/components/account-info.jsx:440
+#: src/components/account-info.jsx:842
 msgid "following.stats"
 msgstr ""
 
-#: src/components/account-info.jsx:422
+#: src/components/account-info.jsx:443
 #: src/pages/account-statuses.jsx:496
 #: src/pages/search.jsx:345
 #: src/pages/search.jsx:492
 msgid "Posts"
 msgstr "게시물"
 
-#: src/components/account-info.jsx:430
+#: src/components/account-info.jsx:451
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-attachment.jsx:399
 #: src/components/media-modal.jsx:363
-#: src/components/related-actions.jsx:261
+#: src/components/related-actions.jsx:263
 #: src/components/status.jsx:2089
 #: src/components/status.jsx:2106
 #: src/components/status.jsx:2242
@@ -136,72 +140,73 @@ msgstr "게시물"
 msgid "More"
 msgstr "더 보기"
 
-#: src/components/account-info.jsx:442
+#: src/components/account-info.jsx:463
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> 님은 새 계정으로 옮기셨습니다:"
 
-#: src/components/account-info.jsx:587
-#: src/components/related-actions.jsx:489
+#: src/components/account-info.jsx:608
+#: src/components/related-actions.jsx:491
 msgid "Handle copied"
 msgstr "핸들 복사됨"
 
-#: src/components/account-info.jsx:590
-#: src/components/related-actions.jsx:492
+#: src/components/account-info.jsx:611
+#: src/components/related-actions.jsx:494
 msgid "Unable to copy handle"
 msgstr "핸들을 복사할 수 없습니다"
 
-#: src/components/account-info.jsx:596
-#: src/components/related-actions.jsx:498
+#: src/components/account-info.jsx:617
+#: src/components/related-actions.jsx:500
 msgid "Copy handle"
 msgstr "핸들 복사"
 
-#: src/components/account-info.jsx:613
-#: src/components/related-actions.jsx:243
-#: src/components/related-actions.jsx:562
+#: src/components/account-info.jsx:635
+#: src/components/related-actions.jsx:245
+#: src/components/related-actions.jsx:565
+#: src/components/shortcuts-settings.jsx:1083
 msgid "QR code"
 msgstr ""
 
-#: src/components/account-info.jsx:619
+#: src/components/account-info.jsx:641
 msgid "Go to original profile page"
 msgstr "원본 프로필 페이지로 가기"
 
-#: src/components/account-info.jsx:637
+#: src/components/account-info.jsx:659
 msgid "View profile image"
 msgstr "프로필 이미지 보기"
 
-#: src/components/account-info.jsx:655
+#: src/components/account-info.jsx:677
 msgid "View profile header"
 msgstr "프로필 헤더 보기"
 
-#: src/components/account-info.jsx:671
+#: src/components/account-info.jsx:693
 #: src/components/edit-profile-sheet.jsx:92
-#: src/components/related-actions.jsx:814
+#: src/components/related-actions.jsx:817
 msgid "Edit profile"
 msgstr "프로필 고치기"
 
-#: src/components/account-info.jsx:690
+#: src/components/account-info.jsx:712
 msgid "In Memoriam"
 msgstr "고인을 추모함"
 
-#: src/components/account-info.jsx:772
-#: src/components/account-info.jsx:830
+#: src/components/account-info.jsx:794
+#: src/components/account-info.jsx:852
 msgid "This user has chosen to not make this information available."
 msgstr "이 사용자는 해당 정보를 볼 수 없도록 설정했습니다."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-info.jsx:792
+#: src/components/account-info.jsx:814
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(followingCount)
-#: src/components/account-info.jsx:836
+#: src/components/account-info.jsx:858
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
-#: src/components/account-info.jsx:860
+#: src/components/account-info.jsx:882
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr ""
 
@@ -209,14 +214,14 @@ msgstr ""
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:917
+#: src/components/account-info.jsx:939
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr ""
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:934
+#: src/components/account-info.jsx:956
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0}개의 원문 게시물, {1}개의 댓글, {2}개의 부스트"
 
@@ -227,51 +232,51 @@ msgstr "{0}개의 원문 게시물, {1}개의 댓글, {2}개의 부스트"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:951
+#: src/components/account-info.jsx:973
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {지난 하루 동안 1개의 게시물} other {지난 {2}일 동안 1개의 게시물}}} other {{3, plural, one {지난 하루 동안 {4}개의 게시물} other {지난 {6}일 동안 {5}개의 게시물}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:967
+#: src/components/account-info.jsx:989
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {지난 몇 해 동안 1개의 게시물} other {지난 몇 해 동안 {1}개의 게시물}}"
 
-#: src/components/account-info.jsx:1025
+#: src/components/account-info.jsx:1047
 #: src/pages/catchup.jsx:73
 msgid "Original"
 msgstr "원본"
 
-#: src/components/account-info.jsx:1029
+#: src/components/account-info.jsx:1051
 #: src/components/status.jsx:2659
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1564
-#: src/pages/catchup.jsx:2207
+#: src/pages/catchup.jsx:2219
 #: src/pages/status.jsx:1100
 #: src/pages/status.jsx:1824
 msgid "Replies"
 msgstr "댓글"
 
-#: src/components/account-info.jsx:1034
+#: src/components/account-info.jsx:1056
 #: src/components/quotes-modal.jsx:81
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1567
 msgid "Quotes"
 msgstr ""
 
-#: src/components/account-info.jsx:1039
+#: src/components/account-info.jsx:1061
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1566
-#: src/pages/catchup.jsx:2219
-#: src/pages/settings.jsx:1249
+#: src/pages/catchup.jsx:2231
+#: src/pages/settings.jsx:1226
 msgid "Boosts"
 msgstr "부스트"
 
-#: src/components/account-info.jsx:1045
+#: src/components/account-info.jsx:1067
 msgid "Post stats unavailable."
 msgstr "게시물 통계 못 봄."
 
-#: src/components/account-info.jsx:1072
+#: src/components/account-info.jsx:1094
 msgid "View post stats"
 msgstr "게시물 통계 보기"
 
@@ -294,14 +299,14 @@ msgstr "게시물 통계 보기"
 #: src/components/open-link-sheet.jsx:51
 #: src/components/post-embed-modal.jsx:196
 #: src/components/private-note-sheet.jsx:36
-#: src/components/qr-code-modal.jsx:25
-#: src/components/qr-scanner-modal.jsx:95
+#: src/components/qr-code-modal.jsx:33
+#: src/components/qr-scanner-modal.jsx:257
 #: src/components/quote-settings-sheet.jsx:61
 #: src/components/quotes-modal.jsx:76
 #: src/components/report-modal.jsx:118
-#: src/components/shortcuts-settings.jsx:230
-#: src/components/shortcuts-settings.jsx:583
-#: src/components/shortcuts-settings.jsx:783
+#: src/components/shortcuts-settings.jsx:231
+#: src/components/shortcuts-settings.jsx:584
+#: src/components/shortcuts-settings.jsx:785
 #: src/components/status.jsx:3232
 #: src/components/status.jsx:3444
 #: src/components/translated-bio-sheet.jsx:21
@@ -309,7 +314,7 @@ msgstr "게시물 통계 보기"
 #: src/pages/catchup.jsx:1701
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
-#: src/pages/notifications.jsx:943
+#: src/pages/notifications.jsx:937
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:93
 #: src/pages/status.jsx:1563
@@ -317,8 +322,8 @@ msgid "Close"
 msgstr "닫기"
 
 #: src/components/add-remove-lists-sheet.jsx:50
-#: src/components/related-actions.jsx:455
-#: src/components/related-actions.jsx:465
+#: src/components/related-actions.jsx:457
+#: src/components/related-actions.jsx:467
 msgid "Add/Remove from Lists"
 msgstr "리스트에서 더하기·빼기"
 
@@ -360,13 +365,13 @@ msgstr ""
 
 #: src/components/columns.jsx:27
 #: src/components/nav-menu.jsx:181
-#: src/components/shortcuts-settings.jsx:139
+#: src/components/shortcuts-settings.jsx:140
 #: src/components/timeline.jsx:464
 #: src/pages/catchup.jsx:1000
 #: src/pages/filters.jsx:90
 #: src/pages/followed-hashtags.jsx:41
 #: src/pages/home.jsx:54
-#: src/pages/notifications.jsx:588
+#: src/pages/notifications.jsx:582
 #: src/pages/scheduled-posts.jsx:74
 msgid "Home"
 msgstr "홈"
@@ -394,7 +399,7 @@ msgstr ""
 
 #: src/components/compose-poll.jsx:64
 #: src/components/media-attachment.jsx:319
-#: src/components/shortcuts-settings.jsx:726
+#: src/components/shortcuts-settings.jsx:727
 #: src/pages/catchup.jsx:1198
 #: src/pages/filters.jsx:413
 msgid "Remove"
@@ -403,7 +408,7 @@ msgstr "지우기"
 #: src/components/compose-poll.jsx:80
 #: src/components/compose.jsx:1665
 #: src/components/mention-modal.jsx:220
-#: src/components/shortcuts-settings.jsx:715
+#: src/components/shortcuts-settings.jsx:716
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr "더하기"
@@ -593,7 +598,7 @@ msgstr "공개"
 
 #: src/components/compose.jsx:1954
 #: src/components/nav-menu.jsx:349
-#: src/components/shortcuts-settings.jsx:165
+#: src/components/shortcuts-settings.jsx:166
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "로컬"
@@ -676,7 +681,7 @@ msgid "Zoom in"
 msgstr ""
 
 #: src/components/drafts.jsx:62
-#: src/pages/settings.jsx:753
+#: src/pages/settings.jsx:730
 msgid "Unsent drafts"
 msgstr "올리지 않은 초고"
 
@@ -798,9 +803,9 @@ msgstr "내용"
 #: src/components/edit-profile-sheet.jsx:326
 #: src/components/list-add-edit.jsx:152
 #: src/components/quote-settings-sheet.jsx:92
-#: src/components/shortcuts-settings.jsx:715
+#: src/components/shortcuts-settings.jsx:716
 #: src/pages/filters.jsx:570
-#: src/pages/notifications.jsx:1009
+#: src/pages/notifications.jsx:1003
 msgid "Save"
 msgstr "저장"
 
@@ -818,7 +823,7 @@ msgid "No featured profiles."
 msgstr ""
 
 #: src/components/follow-request-buttons.jsx:43
-#: src/pages/notifications.jsx:993
+#: src/pages/notifications.jsx:987
 msgid "Accept"
 msgstr "수락"
 
@@ -827,7 +832,7 @@ msgid "Reject"
 msgstr "거절"
 
 #: src/components/follow-request-buttons.jsx:76
-#: src/pages/notifications.jsx:1277
+#: src/pages/notifications.jsx:1271
 msgid "Accepted"
 msgstr "수락함"
 
@@ -847,7 +852,7 @@ msgstr "계정"
 #: src/components/quotes-modal.jsx:128
 #: src/components/timeline.jsx:546
 #: src/pages/list.jsx:321
-#: src/pages/notifications.jsx:923
+#: src/pages/notifications.jsx:917
 #: src/pages/search.jsx:562
 #: src/pages/status.jsx:1597
 msgid "Show more…"
@@ -989,8 +994,8 @@ msgstr "<0>Ctrl</0> + <1>Enter</1> 또는 <2>⌘</2> + <3>Enter</3>"
 #: src/components/keyboard-shortcuts-help.jsx:160
 #: src/components/nav-menu.jsx:337
 #: src/components/search-form.jsx:208
-#: src/components/shortcuts-settings.jsx:52
-#: src/components/shortcuts-settings.jsx:179
+#: src/components/shortcuts-settings.jsx:53
+#: src/components/shortcuts-settings.jsx:180
 #: src/pages/search.jsx:47
 #: src/pages/search.jsx:317
 msgid "Search"
@@ -1259,7 +1264,7 @@ msgstr "필터됨: {filterTitleStr}"
 msgid "Filtered"
 msgstr "필터된"
 
-#: src/components/media.jsx:482
+#: src/components/media.jsx:486
 msgid "Open file"
 msgstr ""
 
@@ -1301,7 +1306,7 @@ msgstr "새 버전이 올라왔습니다…"
 
 #. js-lingui-explicit-id
 #: src/components/nav-menu.jsx:190
-#: src/components/shortcuts-settings.jsx:140
+#: src/components/shortcuts-settings.jsx:141
 #: src/pages/following.jsx:23
 #: src/pages/following.jsx:156
 msgid "following.title"
@@ -1309,28 +1314,29 @@ msgstr ""
 
 #: src/components/nav-menu.jsx:197
 #: src/pages/catchup.jsx:995
+#: src/pages/welcome.jsx:146
 msgid "Catch-up"
 msgstr "따라잡기"
 
 #: src/components/nav-menu.jsx:204
-#: src/components/shortcuts-settings.jsx:58
-#: src/components/shortcuts-settings.jsx:146
+#: src/components/shortcuts-settings.jsx:59
+#: src/components/shortcuts-settings.jsx:147
 #: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1241
+#: src/pages/settings.jsx:1218
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "언급"
 
 #: src/components/nav-menu.jsx:211
-#: src/components/shortcuts-settings.jsx:49
-#: src/components/shortcuts-settings.jsx:152
+#: src/components/shortcuts-settings.jsx:50
+#: src/components/shortcuts-settings.jsx:153
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:86
 #: src/pages/home.jsx:198
-#: src/pages/notifications.jsx:117
-#: src/pages/notifications.jsx:592
+#: src/pages/notifications.jsx:111
+#: src/pages/notifications.jsx:586
 msgid "Notifications"
 msgstr "알림"
 
@@ -1343,8 +1349,8 @@ msgid "Profile"
 msgstr "프로필"
 
 #: src/components/nav-menu.jsx:233
-#: src/components/shortcuts-settings.jsx:54
-#: src/components/shortcuts-settings.jsx:195
+#: src/components/shortcuts-settings.jsx:55
+#: src/components/shortcuts-settings.jsx:196
 #: src/pages/bookmarks.jsx:12
 #: src/pages/bookmarks.jsx:26
 msgid "Bookmarks"
@@ -1356,13 +1362,13 @@ msgid "More…"
 msgstr "더 보기…"
 
 #: src/components/nav-menu.jsx:253
-#: src/components/shortcuts-settings.jsx:55
-#: src/components/shortcuts-settings.jsx:201
+#: src/components/shortcuts-settings.jsx:56
+#: src/components/shortcuts-settings.jsx:202
 #: src/pages/catchup.jsx:1565
-#: src/pages/catchup.jsx:2213
+#: src/pages/catchup.jsx:2225
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1245
+#: src/pages/settings.jsx:1222
 msgid "Likes"
 msgstr "좋아요"
 
@@ -1409,14 +1415,14 @@ msgid "Log in"
 msgstr "로그인"
 
 #: src/components/nav-menu.jsx:343
-#: src/components/shortcuts-settings.jsx:57
-#: src/components/shortcuts-settings.jsx:172
+#: src/components/shortcuts-settings.jsx:58
+#: src/components/shortcuts-settings.jsx:173
 #: src/pages/trending.jsx:444
 msgid "Trending"
 msgstr "인기"
 
 #: src/components/nav-menu.jsx:355
-#: src/components/shortcuts-settings.jsx:165
+#: src/components/shortcuts-settings.jsx:166
 msgid "Federated"
 msgstr "연합"
 
@@ -1431,8 +1437,8 @@ msgstr "설정…"
 
 #: src/components/nav-menu.jsx:432
 #: src/components/nav-menu.jsx:467
-#: src/components/shortcuts-settings.jsx:50
-#: src/components/shortcuts-settings.jsx:158
+#: src/components/shortcuts-settings.jsx:51
+#: src/components/shortcuts-settings.jsx:159
 #: src/pages/list.jsx:127
 #: src/pages/lists.jsx:18
 #: src/pages/lists.jsx:54
@@ -1613,13 +1619,13 @@ msgid "Read more →"
 msgstr "더 보기 →"
 
 #: src/components/open-link-sheet.jsx:30
-#: src/components/related-actions.jsx:515
+#: src/components/related-actions.jsx:517
 #: src/components/status.jsx:1404
 msgid "Link copied"
 msgstr "링크 복사됨"
 
 #: src/components/open-link-sheet.jsx:33
-#: src/components/related-actions.jsx:518
+#: src/components/related-actions.jsx:520
 #: src/components/status.jsx:1407
 msgid "Unable to copy link"
 msgstr "링크를 복사할 수 없음"
@@ -1630,14 +1636,14 @@ msgstr ""
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
-#: src/components/related-actions.jsx:524
-#: src/components/shortcuts-settings.jsx:1059
+#: src/components/related-actions.jsx:526
+#: src/components/shortcuts-settings.jsx:1159
 #: src/components/status.jsx:1413
 msgid "Copy"
 msgstr "복사"
 
 #: src/components/open-link-sheet.jsx:82
-#: src/components/related-actions.jsx:545
+#: src/components/related-actions.jsx:547
 #: src/components/status.jsx:1435
 msgid "Share…"
 msgstr "공유…"
@@ -1780,16 +1786,13 @@ msgstr ""
 msgid "Save & close"
 msgstr "저장하고 닫기"
 
-#: src/components/qr-code-modal.jsx:21
+#: src/components/qr-code-modal.jsx:26
+#: src/components/shortcuts-settings.jsx:833
 msgid "Scan QR code"
 msgstr ""
 
-#: src/components/qr-scanner-modal.jsx:101
+#: src/components/qr-scanner-modal.jsx:263
 msgid "Unable to access camera. Please check permissions."
-msgstr ""
-
-#: src/components/qr-scanner-modal.jsx:154
-msgid "View profile"
 msgstr ""
 
 #: src/components/quote-settings-sheet.jsx:37
@@ -1847,194 +1850,195 @@ msgstr ""
 msgid "Clear"
 msgstr "초기화"
 
-#: src/components/related-actions.jsx:38
+#: src/components/related-actions.jsx:39
 msgid "Forever"
 msgstr "무기한"
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
-#: src/components/related-actions.jsx:193
+#: src/components/related-actions.jsx:194
 msgid "Last post: <0>{0}</0>"
 msgstr "마지막 게시물: <0>{0}</0>"
 
-#: src/components/related-actions.jsx:207
+#: src/components/related-actions.jsx:208
 msgid "Muted"
 msgstr "뮤트됨"
 
-#: src/components/related-actions.jsx:212
+#: src/components/related-actions.jsx:213
 msgid "Blocked"
 msgstr "차단됨"
 
-#: src/components/related-actions.jsx:221
+#: src/components/related-actions.jsx:222
 msgid "Private note"
 msgstr ""
 
-#: src/components/related-actions.jsx:294
+#: src/components/related-actions.jsx:296
 msgid "Mention <0>@{username}</0>"
 msgstr "<0>@{username}</0> 님 언급하기"
 
-#: src/components/related-actions.jsx:306
+#: src/components/related-actions.jsx:308
 msgid "Translate bio"
 msgstr "소개문 번역"
 
-#: src/components/related-actions.jsx:317
+#: src/components/related-actions.jsx:319
 msgid "Edit private note"
 msgstr ""
 
-#: src/components/related-actions.jsx:317
+#: src/components/related-actions.jsx:319
 msgid "Add private note"
 msgstr ""
 
-#: src/components/related-actions.jsx:337
+#: src/components/related-actions.jsx:339
 msgid "Notifications enabled for @{username}'s posts."
 msgstr ""
 
-#: src/components/related-actions.jsx:338
+#: src/components/related-actions.jsx:340
 msgid " Notifications disabled for @{username}'s posts."
 msgstr ""
 
-#: src/components/related-actions.jsx:350
+#: src/components/related-actions.jsx:352
 msgid "Disable notifications"
 msgstr ""
 
-#: src/components/related-actions.jsx:351
+#: src/components/related-actions.jsx:353
 msgid "Enable notifications"
 msgstr ""
 
-#: src/components/related-actions.jsx:368
+#: src/components/related-actions.jsx:370
 msgid "Boosts from @{username} enabled."
 msgstr ""
 
-#: src/components/related-actions.jsx:369
+#: src/components/related-actions.jsx:371
 msgid "Boosts from @{username} disabled."
 msgstr ""
 
-#: src/components/related-actions.jsx:380
+#: src/components/related-actions.jsx:382
 msgid "Disable boosts"
 msgstr ""
 
-#: src/components/related-actions.jsx:380
+#: src/components/related-actions.jsx:382
 msgid "Enable boosts"
 msgstr ""
 
-#: src/components/related-actions.jsx:399
+#: src/components/related-actions.jsx:401
 msgid "@{username} is no longer featured on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:409
+#: src/components/related-actions.jsx:411
 msgid "@{username} is now featured on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:417
+#: src/components/related-actions.jsx:419
 msgid "Unable to unfeature @{username} on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:421
+#: src/components/related-actions.jsx:423
 msgid "Unable to feature @{username} on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:430
+#: src/components/related-actions.jsx:432
 msgid "Don't feature on profile"
 msgstr ""
 
-#: src/components/related-actions.jsx:431
+#: src/components/related-actions.jsx:433
 #: src/pages/hashtag.jsx:333
 msgid "Feature on profile"
 msgstr "프로필에 내보이기"
 
-#: src/components/related-actions.jsx:440
+#: src/components/related-actions.jsx:442
+#: src/components/related-actions.jsx:480
 msgid "Show featured profiles"
 msgstr ""
 
-#: src/components/related-actions.jsx:539
-#: src/components/shortcuts-settings.jsx:1077
+#: src/components/related-actions.jsx:541
+#: src/components/shortcuts-settings.jsx:1177
 #: src/components/status.jsx:1429
 msgid "Sharing doesn't seem to work."
 msgstr "공유 기능이 작동하지 않습니다."
 
-#: src/components/related-actions.jsx:580
+#: src/components/related-actions.jsx:583
 msgid "Unmuted @{username}"
 msgstr ""
 
-#: src/components/related-actions.jsx:592
+#: src/components/related-actions.jsx:595
 msgid "Unmute <0>@{username}</0>"
 msgstr ""
 
-#: src/components/related-actions.jsx:608
+#: src/components/related-actions.jsx:611
 msgid "Mute <0>@{username}</0>…"
 msgstr "<0>@{username}</0> 님 뮤트…"
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:640
+#: src/components/related-actions.jsx:643
 msgid "Muted @{username} for {0}"
 msgstr ""
 
-#: src/components/related-actions.jsx:652
+#: src/components/related-actions.jsx:655
 msgid "Unable to mute @{username}"
 msgstr ""
 
-#: src/components/related-actions.jsx:673
+#: src/components/related-actions.jsx:676
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "<0>@{username}</0> 님을 팔로워에서 뺄까요?"
 
-#: src/components/related-actions.jsx:693
+#: src/components/related-actions.jsx:696
 msgid "@{username} removed from followers"
 msgstr ""
 
-#: src/components/related-actions.jsx:705
+#: src/components/related-actions.jsx:708
 msgid "Remove follower…"
 msgstr "팔로워에서 빼기…"
 
-#: src/components/related-actions.jsx:716
+#: src/components/related-actions.jsx:719
 msgid "Block <0>@{username}</0>?"
 msgstr "<0>@{username}</0> 님을 차단할까요?"
 
-#: src/components/related-actions.jsx:740
+#: src/components/related-actions.jsx:743
 msgid "Unblocked @{username}"
 msgstr ""
 
-#: src/components/related-actions.jsx:748
+#: src/components/related-actions.jsx:751
 msgid "Blocked @{username}"
 msgstr ""
 
-#: src/components/related-actions.jsx:756
+#: src/components/related-actions.jsx:759
 msgid "Unable to unblock @{username}"
 msgstr ""
 
-#: src/components/related-actions.jsx:758
+#: src/components/related-actions.jsx:761
 msgid "Unable to block @{username}"
 msgstr ""
 
-#: src/components/related-actions.jsx:768
+#: src/components/related-actions.jsx:771
 msgid "Unblock <0>@{username}</0>"
 msgstr "<0>@{username}</0> 님 차단 풀기"
 
-#: src/components/related-actions.jsx:777
+#: src/components/related-actions.jsx:780
 msgid "Block <0>@{username}</0>…"
 msgstr "<0>@{username}</0> 님 차단…"
 
-#: src/components/related-actions.jsx:794
+#: src/components/related-actions.jsx:797
 msgid "Report <0>@{username}</0>…"
 msgstr "<0>@{username}</0> 님 신고…"
 
-#: src/components/related-actions.jsx:850
+#: src/components/related-actions.jsx:853
 msgid "Withdraw follow request?"
 msgstr ""
 
 #. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:851
+#: src/components/related-actions.jsx:854
 msgid "Unfollow @{0}?"
 msgstr ""
 
-#: src/components/related-actions.jsx:914
+#: src/components/related-actions.jsx:917
 msgid "Unfollow…"
 msgstr "그만 팔로하기…"
 
-#: src/components/related-actions.jsx:923
+#: src/components/related-actions.jsx:926
 msgid "Withdraw…"
 msgstr "취소…"
 
-#: src/components/related-actions.jsx:930
-#: src/components/related-actions.jsx:934
+#: src/components/related-actions.jsx:933
+#: src/components/related-actions.jsx:937
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "팔로"
@@ -2190,296 +2194,296 @@ msgstr "<0>{query}</0> 찾기"
 msgid "See all"
 msgstr "모두 보기"
 
-#: src/components/shortcuts-settings.jsx:48
+#: src/components/shortcuts-settings.jsx:49
 msgid "Home / Following"
 msgstr "홈·팔로잉"
 
-#: src/components/shortcuts-settings.jsx:51
+#: src/components/shortcuts-settings.jsx:52
 msgid "Public (Local / Federated)"
 msgstr "공개(로컬/연합)"
 
-#: src/components/shortcuts-settings.jsx:53
+#: src/components/shortcuts-settings.jsx:54
 msgid "Account"
 msgstr "계정"
 
-#: src/components/shortcuts-settings.jsx:56
+#: src/components/shortcuts-settings.jsx:57
 msgid "Hashtag"
 msgstr "해시태그"
 
-#: src/components/shortcuts-settings.jsx:63
+#: src/components/shortcuts-settings.jsx:64
 msgid "List ID"
 msgstr "리스트 ID"
 
-#: src/components/shortcuts-settings.jsx:70
+#: src/components/shortcuts-settings.jsx:71
 msgid "Local only"
 msgstr "로컬만"
 
-#: src/components/shortcuts-settings.jsx:75
-#: src/components/shortcuts-settings.jsx:84
-#: src/components/shortcuts-settings.jsx:122
+#: src/components/shortcuts-settings.jsx:76
+#: src/components/shortcuts-settings.jsx:85
+#: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:203
 msgid "Instance"
 msgstr "인스턴스"
 
-#: src/components/shortcuts-settings.jsx:78
-#: src/components/shortcuts-settings.jsx:87
-#: src/components/shortcuts-settings.jsx:125
+#: src/components/shortcuts-settings.jsx:79
+#: src/components/shortcuts-settings.jsx:88
+#: src/components/shortcuts-settings.jsx:126
 msgid "Optional, e.g. mastodon.social"
 msgstr "생략 가능 (예: mastodon.social)"
 
-#: src/components/shortcuts-settings.jsx:93
+#: src/components/shortcuts-settings.jsx:94
 msgid "Search term"
 msgstr "검색어"
 
-#: src/components/shortcuts-settings.jsx:96
+#: src/components/shortcuts-settings.jsx:97
 msgid "Optional, unless for multi-column mode"
 msgstr "멀티칼럼 모드가 아니면 생략 가능"
 
-#: src/components/shortcuts-settings.jsx:113
+#: src/components/shortcuts-settings.jsx:114
 msgid "e.g. PixelArt (Max 5, space-separated)"
 msgstr "예: 픽셀아트 (최대 5개, 띄어쓰기로 구분)"
 
-#: src/components/shortcuts-settings.jsx:117
+#: src/components/shortcuts-settings.jsx:118
 #: src/pages/hashtag.jsx:360
 msgid "Media only"
 msgstr "매체만"
 
-#: src/components/shortcuts-settings.jsx:235
+#: src/components/shortcuts-settings.jsx:236
 #: src/components/shortcuts.jsx:220
 msgid "Shortcuts"
 msgstr "바로 가기"
 
-#: src/components/shortcuts-settings.jsx:243
+#: src/components/shortcuts-settings.jsx:244
 msgid "beta"
 msgstr "베타"
 
-#: src/components/shortcuts-settings.jsx:249
+#: src/components/shortcuts-settings.jsx:250
 msgid "Specify a list of shortcuts that'll appear as:"
 msgstr "표시할 바로 가기 목록을 지정합니다:"
 
-#: src/components/shortcuts-settings.jsx:255
+#: src/components/shortcuts-settings.jsx:256
 msgid "Floating button"
 msgstr "구석에 떠 있는 버튼"
 
-#: src/components/shortcuts-settings.jsx:260
+#: src/components/shortcuts-settings.jsx:261
 msgid "Tab/Menu bar"
 msgstr "탭·메뉴 바"
 
-#: src/components/shortcuts-settings.jsx:265
+#: src/components/shortcuts-settings.jsx:266
 msgid "Multi-column"
 msgstr "멀티칼럼"
 
-#: src/components/shortcuts-settings.jsx:332
+#: src/components/shortcuts-settings.jsx:333
 msgid "Not available in current view mode"
 msgstr "현재 보기 모드에서는 못 씀"
 
-#: src/components/shortcuts-settings.jsx:351
+#: src/components/shortcuts-settings.jsx:352
 #: src/pages/accounts.jsx:188
 msgid "Move up"
 msgstr "위로 올리기"
 
-#: src/components/shortcuts-settings.jsx:367
+#: src/components/shortcuts-settings.jsx:368
 #: src/pages/accounts.jsx:203
 msgid "Move down"
 msgstr "아래로 내리기"
 
-#: src/components/shortcuts-settings.jsx:379
+#: src/components/shortcuts-settings.jsx:380
 #: src/components/status.jsx:1560
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "고치기"
 
-#: src/components/shortcuts-settings.jsx:400
+#: src/components/shortcuts-settings.jsx:401
 msgid "Add more than one shortcut/column to make this work."
 msgstr "바로 가기/열을 두 개 이상 추가하여 작동하도록 합니다."
 
-#: src/components/shortcuts-settings.jsx:411
+#: src/components/shortcuts-settings.jsx:412
 msgid "No columns yet. Tap on the Add column button."
 msgstr "아직 아무 칼럼도 없습니다. 칼럼 추가 버튼을 눌러 보세요."
 
-#: src/components/shortcuts-settings.jsx:412
+#: src/components/shortcuts-settings.jsx:413
 msgid "No shortcuts yet. Tap on the Add shortcut button."
 msgstr "아직 아무 바로 가기도 없습니다. 바로 가기 추가 버튼을 눌러 보세요."
 
-#: src/components/shortcuts-settings.jsx:415
+#: src/components/shortcuts-settings.jsx:416
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
 msgstr "뭘 넣어야 할 지 모르겠나요?<0/>우선 <1>홈·팔로잉과 알림</1>부터 넣어보세요."
 
-#: src/components/shortcuts-settings.jsx:443
+#: src/components/shortcuts-settings.jsx:444
 msgid "Max {SHORTCUTS_LIMIT} columns"
 msgstr "최대 {SHORTCUTS_LIMIT} 칼럼"
 
-#: src/components/shortcuts-settings.jsx:444
+#: src/components/shortcuts-settings.jsx:445
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
 msgstr "최다 {SHORTCUTS_LIMIT}개의 바로 가기"
 
-#: src/components/shortcuts-settings.jsx:458
+#: src/components/shortcuts-settings.jsx:459
 msgid "Import/export"
 msgstr "가져오기·내보내기"
 
-#: src/components/shortcuts-settings.jsx:468
+#: src/components/shortcuts-settings.jsx:469
 msgid "Add column…"
 msgstr "칼럼 추가…"
 
-#: src/components/shortcuts-settings.jsx:469
+#: src/components/shortcuts-settings.jsx:470
 msgid "Add shortcut…"
 msgstr "바로 가기 추가…"
 
-#: src/components/shortcuts-settings.jsx:516
+#: src/components/shortcuts-settings.jsx:517
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:517
+#: src/components/shortcuts-settings.jsx:518
 msgid "For multi-column mode, search term is required, else the column will not be shown."
 msgstr "멀티 칼럼 모드의 경우 검색어가 필수이며, 그렇지 않으면 칼럼이 표시되지 않습니다."
 
-#: src/components/shortcuts-settings.jsx:518
+#: src/components/shortcuts-settings.jsx:519
 msgid "Multiple hashtags are supported. Space-separated."
 msgstr "멀티 해시태그가 지원됩니다. (띄어쓰기로 구분)"
 
-#: src/components/shortcuts-settings.jsx:587
+#: src/components/shortcuts-settings.jsx:588
 msgid "Edit shortcut"
 msgstr "바로 가기 고치기"
 
-#: src/components/shortcuts-settings.jsx:587
+#: src/components/shortcuts-settings.jsx:588
 msgid "Add shortcut"
 msgstr "바로 가기 추가"
 
-#: src/components/shortcuts-settings.jsx:623
+#: src/components/shortcuts-settings.jsx:624
 msgid "Timeline"
 msgstr "타임라인"
 
-#: src/components/shortcuts-settings.jsx:649
+#: src/components/shortcuts-settings.jsx:650
 msgid "List"
 msgstr "리스트"
 
-#: src/components/shortcuts-settings.jsx:788
+#: src/components/shortcuts-settings.jsx:790
 msgid "Import/Export <0>Shortcuts</0>"
 msgstr "<0>바로 가기</0> 가져오기·내보내기"
 
-#: src/components/shortcuts-settings.jsx:798
+#: src/components/shortcuts-settings.jsx:800
 msgid "Import"
 msgstr "가져오기"
 
-#: src/components/shortcuts-settings.jsx:806
+#: src/components/shortcuts-settings.jsx:808
 msgid "Paste shortcuts here"
 msgstr "여기에 바로 가기를 붙이세요"
 
-#: src/components/shortcuts-settings.jsx:822
+#: src/components/shortcuts-settings.jsx:845
 msgid "Downloading saved shortcuts from instance server…"
 msgstr "인스턴스 서버에서 저장된 바로 가기를 받는 중…"
 
-#: src/components/shortcuts-settings.jsx:851
+#: src/components/shortcuts-settings.jsx:874
 msgid "Unable to download shortcuts"
 msgstr "바로 가기 받을 수 없음"
 
-#: src/components/shortcuts-settings.jsx:854
+#: src/components/shortcuts-settings.jsx:877
 msgid "Download shortcuts from instance server"
 msgstr "인스턴스 서버에서 바로 가기 받기"
 
-#: src/components/shortcuts-settings.jsx:912
+#: src/components/shortcuts-settings.jsx:944
 msgid "* Exists in current shortcuts"
 msgstr "* 현재 바로 가기에 이미 있음"
 
-#: src/components/shortcuts-settings.jsx:917
+#: src/components/shortcuts-settings.jsx:949
 msgid "List may not work if it's from a different account."
 msgstr "다른 계정에서 온 리스트는 못 가져올 수 있습니다."
 
-#: src/components/shortcuts-settings.jsx:927
+#: src/components/shortcuts-settings.jsx:959
 msgid "Invalid settings format"
 msgstr "잘못된 설정 형식"
 
-#: src/components/shortcuts-settings.jsx:935
+#: src/components/shortcuts-settings.jsx:967
 msgid "Append to current shortcuts?"
 msgstr "현재 바로 가기에 덧붙일까요?"
 
-#: src/components/shortcuts-settings.jsx:938
+#: src/components/shortcuts-settings.jsx:970
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
 msgstr ""
 
-#: src/components/shortcuts-settings.jsx:960
+#: src/components/shortcuts-settings.jsx:992
 msgid "No new shortcuts to import"
 msgstr "가져올 바로가기가 없습니다"
 
-#: src/components/shortcuts-settings.jsx:975
+#: src/components/shortcuts-settings.jsx:1007
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
 msgstr "바로 가기를 가져왔습니다. 최다치인 {SHORTCUTS_LIMIT}개를 넘겼으므로, 나머지는 가져오지 못했습니다."
 
-#: src/components/shortcuts-settings.jsx:976
-#: src/components/shortcuts-settings.jsx:1000
+#: src/components/shortcuts-settings.jsx:1008
+#: src/components/shortcuts-settings.jsx:1032
 msgid "Shortcuts imported"
 msgstr "바로가기 복사됨"
 
-#: src/components/shortcuts-settings.jsx:986
+#: src/components/shortcuts-settings.jsx:1018
 msgid "Import & append…"
 msgstr "가져와서 덧붙이기…"
 
-#: src/components/shortcuts-settings.jsx:994
+#: src/components/shortcuts-settings.jsx:1026
 msgid "Override current shortcuts?"
 msgstr "현재 바로가기를 덮어쓸까요?"
 
-#: src/components/shortcuts-settings.jsx:995
+#: src/components/shortcuts-settings.jsx:1027
 msgid "Import shortcuts?"
 msgstr "바로 가기를 가져올까요?"
 
-#: src/components/shortcuts-settings.jsx:1009
+#: src/components/shortcuts-settings.jsx:1041
 msgid "or override…"
 msgstr "또는 덮어쓰기…"
 
-#: src/components/shortcuts-settings.jsx:1009
+#: src/components/shortcuts-settings.jsx:1041
 msgid "Import…"
 msgstr "가져오기…"
 
-#: src/components/shortcuts-settings.jsx:1018
+#: src/components/shortcuts-settings.jsx:1050
 msgid "Export"
 msgstr "내보내기"
 
-#: src/components/shortcuts-settings.jsx:1033
+#: src/components/shortcuts-settings.jsx:1065
 msgid "Shortcuts copied"
 msgstr "바로 가기 복사됨"
 
-#: src/components/shortcuts-settings.jsx:1036
+#: src/components/shortcuts-settings.jsx:1068
 msgid "Unable to copy shortcuts"
 msgstr "바로 가기를 복사할 수 없음"
 
-#: src/components/shortcuts-settings.jsx:1050
-msgid "Shortcut settings copied"
-msgstr "바로 가기 설정을 복사함"
-
-#: src/components/shortcuts-settings.jsx:1053
-msgid "Unable to copy shortcut settings"
-msgstr "바로 가기 설정을 복사할 수 없음"
-
-#: src/components/shortcuts-settings.jsx:1083
-msgid "Share"
-msgstr "공유"
-
-#: src/components/shortcuts-settings.jsx:1122
+#: src/components/shortcuts-settings.jsx:1120
 msgid "Saving shortcuts to instance server…"
 msgstr "바로 가기를 인스턴스 서버에 저장중…"
 
-#: src/components/shortcuts-settings.jsx:1129
+#: src/components/shortcuts-settings.jsx:1127
 msgid "Shortcuts saved"
 msgstr "바로 가기 저장됨"
 
-#: src/components/shortcuts-settings.jsx:1134
+#: src/components/shortcuts-settings.jsx:1132
 msgid "Unable to save shortcuts"
 msgstr "바로 가기를 저장할 수 없음"
 
-#: src/components/shortcuts-settings.jsx:1137
+#: src/components/shortcuts-settings.jsx:1135
 msgid "Sync to instance server"
 msgstr "인스턴스 서버에 동기화"
 
+#: src/components/shortcuts-settings.jsx:1150
+msgid "Shortcut settings copied"
+msgstr "바로 가기 설정을 복사함"
+
+#: src/components/shortcuts-settings.jsx:1153
+msgid "Unable to copy shortcut settings"
+msgstr "바로 가기 설정을 복사할 수 없음"
+
+#: src/components/shortcuts-settings.jsx:1183
+msgid "Share"
+msgstr "공유"
+
 #. placeholder {0}: shortcutsStr.length
-#: src/components/shortcuts-settings.jsx:1145
+#: src/components/shortcuts-settings.jsx:1189
 msgid "{0, plural, one {# character} other {# characters}}"
 msgstr "{0, plural, other {# 글자}}"
 
-#: src/components/shortcuts-settings.jsx:1157
+#: src/components/shortcuts-settings.jsx:1201
 msgid "Raw Shortcuts JSON"
 msgstr "바로 가기 JSON 코드"
 
-#: src/components/shortcuts-settings.jsx:1170
+#: src/components/shortcuts-settings.jsx:1214
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr "인스턴스 서버에서 설정 가져오기·인스턴스 서버에 설정 내보내기 (매우 시범적)"
 
@@ -2871,13 +2875,13 @@ msgid "{index}/X"
 msgstr ""
 
 #: src/components/timeline.jsx:480
-#: src/pages/settings.jsx:1269
+#: src/pages/settings.jsx:1246
 msgid "New posts"
 msgstr "새 게시물"
 
 #: src/components/timeline.jsx:581
 #: src/pages/home.jsx:228
-#: src/pages/notifications.jsx:899
+#: src/pages/notifications.jsx:893
 #: src/pages/status.jsx:1153
 #: src/pages/status.jsx:1626
 msgid "Try again"
@@ -3700,133 +3704,133 @@ msgstr "아무도 언급하지 않았습니다"
 msgid "Unable to load mentions."
 msgstr "언급을 가져올 수 없습니다."
 
-#: src/pages/notifications.jsx:108
+#: src/pages/notifications.jsx:102
 msgid "You don't follow"
 msgstr "팔로하지 않은 사람"
 
-#: src/pages/notifications.jsx:109
+#: src/pages/notifications.jsx:103
 msgid "Who don't follow you"
 msgstr "날 팔로하지 않는 사람"
 
-#: src/pages/notifications.jsx:110
+#: src/pages/notifications.jsx:104
 msgid "With a new account"
 msgstr "새 계정으로"
 
-#: src/pages/notifications.jsx:111
+#: src/pages/notifications.jsx:105
 msgid "Who unsolicitedly private mention you"
 msgstr ""
 
-#: src/pages/notifications.jsx:112
+#: src/pages/notifications.jsx:106
 msgid "Who are limited by server moderators"
 msgstr "모더레이터를 통해 제한된 유저"
 
-#: src/pages/notifications.jsx:606
-#: src/pages/notifications.jsx:947
+#: src/pages/notifications.jsx:600
+#: src/pages/notifications.jsx:941
 msgid "Notifications settings"
 msgstr "알림 설정"
 
-#: src/pages/notifications.jsx:624
+#: src/pages/notifications.jsx:618
 msgid "New notifications"
 msgstr "새 알림"
 
 #. placeholder {0}: announcements.length
-#: src/pages/notifications.jsx:635
+#: src/pages/notifications.jsx:629
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, other {공지}}"
 
-#: src/pages/notifications.jsx:682
-#: src/pages/settings.jsx:1257
+#: src/pages/notifications.jsx:676
+#: src/pages/settings.jsx:1234
 msgid "Follow requests"
 msgstr "팔로 요청"
 
 #. placeholder {0}: followRequests.length
-#: src/pages/notifications.jsx:687
+#: src/pages/notifications.jsx:681
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr "{0, plural, other {팔로 요청 #건}}"
 
 #. placeholder {0}: notificationsPolicy.summary.pendingRequestsCount
-#: src/pages/notifications.jsx:742
+#: src/pages/notifications.jsx:736
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr "{0, plural, other {#사람으로부터 필터된 알림}}"
 
-#: src/pages/notifications.jsx:815
+#: src/pages/notifications.jsx:809
 msgid "Only mentions"
 msgstr "내 언급만"
 
-#: src/pages/notifications.jsx:819
+#: src/pages/notifications.jsx:813
 msgid "Today"
 msgstr "오늘"
 
-#: src/pages/notifications.jsx:824
+#: src/pages/notifications.jsx:818
 msgid "You're all caught up."
 msgstr "모두 따라잡았습니다."
 
-#: src/pages/notifications.jsx:847
+#: src/pages/notifications.jsx:841
 msgid "Yesterday"
 msgstr "어제"
 
-#: src/pages/notifications.jsx:895
+#: src/pages/notifications.jsx:889
 msgid "Unable to load notifications"
 msgstr "알림을 가져올 수 없음"
 
-#: src/pages/notifications.jsx:974
+#: src/pages/notifications.jsx:968
 msgid "Notifications settings updated"
 msgstr "알림 설정이 바뀜"
 
-#: src/pages/notifications.jsx:982
+#: src/pages/notifications.jsx:976
 msgid "Filter out notifications from people:"
 msgstr "다음 사용자로부터 알림을 제외:"
 
-#: src/pages/notifications.jsx:996
+#: src/pages/notifications.jsx:990
 msgid "Filter"
 msgstr "필터"
 
-#: src/pages/notifications.jsx:999
+#: src/pages/notifications.jsx:993
 msgid "Ignore"
 msgstr "무시"
 
 #. placeholder {0}: niceDateTime(updatedAtDate)
-#: src/pages/notifications.jsx:1072
+#: src/pages/notifications.jsx:1066
 msgid "Updated <0>{0}</0>"
 msgstr "<0>{0}</0> 업데이트됨"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1140
+#: src/pages/notifications.jsx:1134
 msgid "View notifications from <0>@{0}</0>"
 msgstr "<0>@{0}</0> 로부터 받은 알림 보기"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1161
+#: src/pages/notifications.jsx:1155
 msgid "Notifications from <0>@{0}</0>"
 msgstr "<0>@{0}</0> 로부터 받은 알림"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1229
+#: src/pages/notifications.jsx:1223
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr "<0>@{0}</0> 로부터 받은 알림은 이제부터 필터링되지 않습니다."
 
-#: src/pages/notifications.jsx:1234
+#: src/pages/notifications.jsx:1228
 msgid "Unable to accept notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1239
+#: src/pages/notifications.jsx:1233
 msgid "Allow"
 msgstr "수락"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1259
+#: src/pages/notifications.jsx:1253
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr ""
 
-#: src/pages/notifications.jsx:1264
+#: src/pages/notifications.jsx:1258
 msgid "Unable to dismiss notification request"
 msgstr "알림 요청을 해제할 수 없습니다."
 
-#: src/pages/notifications.jsx:1269
+#: src/pages/notifications.jsx:1263
 msgid "Dismiss"
 msgstr "닫기"
 
-#: src/pages/notifications.jsx:1284
+#: src/pages/notifications.jsx:1278
 msgid "Dismissed"
 msgstr "닫힘"
 
@@ -4074,127 +4078,119 @@ msgstr "새 게시물을 쓸 때 새로운 이미지에만 적용 됩니다."
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr "참고: 이 기능은 외부 인공지능 서비스인 <0>img-alt-api</0>를 이용합니다. 잘 동작하지 않을 수 있으며, 이미지에만 적용 가능하고 영어만 지원합니다."
 
-#: src/pages/settings.jsx:669
-msgid "Server-side grouped notifications"
-msgstr "서버측에서 알림 묶기"
-
-#: src/pages/settings.jsx:673
-msgid "Alpha-stage feature. Potentially improved grouping window but basic grouping logic."
-msgstr "알파 단계 기능입니다. 묶음의 크기가 커질 수도 있지만, 묶는 규칙은 기초적입니다."
-
-#: src/pages/settings.jsx:694
+#: src/pages/settings.jsx:671
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr "바로 가기 설정을 위해 \"클라우드\" 가져오기/내보내기"
 
-#: src/pages/settings.jsx:699
+#: src/pages/settings.jsx:676
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr ""
 
-#: src/pages/settings.jsx:710
+#: src/pages/settings.jsx:687
 msgid "Note: This feature uses currently-logged-in instance server API."
 msgstr "알림: 이 기능은 현재 로그인한 인스턴스 서버 API를 사용합니다."
 
-#: src/pages/settings.jsx:727
+#: src/pages/settings.jsx:704
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "가리기 모드 <0>(<1>글자들</1> → <2>███</2>)</0>"
 
-#: src/pages/settings.jsx:736
+#: src/pages/settings.jsx:713
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr "글자를 모두 네모로 바꿔서 개인정보 염려 없이 스크린숏을 캡처할 수 있게 합니다."
 
-#: src/pages/settings.jsx:761
+#: src/pages/settings.jsx:738
 msgid "About"
 msgstr "정보"
 
-#: src/pages/settings.jsx:800
+#: src/pages/settings.jsx:777
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr "<1>@cheeaun</1>이 <0>만듦</0>"
 
-#: src/pages/settings.jsx:829
+#: src/pages/settings.jsx:806
 msgid "Sponsor"
 msgstr "후원자"
 
-#: src/pages/settings.jsx:837
+#: src/pages/settings.jsx:814
 msgid "Donate"
 msgstr "기부"
 
-#: src/pages/settings.jsx:853
+#: src/pages/settings.jsx:830
 msgid "What's new"
 msgstr ""
 
-#: src/pages/settings.jsx:857
+#: src/pages/settings.jsx:834
 msgid "Privacy Policy"
 msgstr "개인 정보 보호 정책"
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:864
+#: src/pages/settings.jsx:841
 msgid "<0>Site:</0> {0}"
 msgstr "<0>사이트:</0> {0}"
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:871
+#: src/pages/settings.jsx:848
 msgid "<0>Version:</0> <1/> {0}"
 msgstr "<0>버전:</0> <1/> {0}"
 
-#: src/pages/settings.jsx:886
+#: src/pages/settings.jsx:863
 msgid "Version string copied"
 msgstr "버전 번호 복사 됨"
 
-#: src/pages/settings.jsx:889
+#: src/pages/settings.jsx:866
 msgid "Unable to copy version string"
 msgstr "버전 번호를 복사할 수 없음"
 
-#: src/pages/settings.jsx:1154
-#: src/pages/settings.jsx:1159
+#: src/pages/settings.jsx:1131
+#: src/pages/settings.jsx:1136
 msgid "Failed to update subscription. Please try again."
 msgstr "구독을 갱신하는 데 실패했습니다. 다시 시도해 보세요."
 
-#: src/pages/settings.jsx:1165
+#: src/pages/settings.jsx:1142
 msgid "Failed to remove subscription. Please try again."
 msgstr "구독을 삭제하는 데 실패했습니다. 다시 시도하세요."
 
-#: src/pages/settings.jsx:1172
+#: src/pages/settings.jsx:1149
 msgid "Push Notifications (beta)"
 msgstr "푸시 알림 (베타)"
 
-#: src/pages/settings.jsx:1194
+#: src/pages/settings.jsx:1171
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "푸시 알림이 차단되었습니다. 브라우저 설정에서 푸시 알림을 활성화하세요."
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1203
+#: src/pages/settings.jsx:1180
 msgid "Allow from <0>{0}</0>"
 msgstr "<0>{0}</0>에게서 알림 받기"
 
-#: src/pages/settings.jsx:1212
+#: src/pages/settings.jsx:1189
 msgid "anyone"
 msgstr "모두"
 
-#: src/pages/settings.jsx:1216
+#: src/pages/settings.jsx:1193
 msgid "people I follow"
 msgstr "내가 팔로하는 사람들"
 
-#: src/pages/settings.jsx:1220
+#: src/pages/settings.jsx:1197
 msgid "followers"
 msgstr "팔로워"
 
-#: src/pages/settings.jsx:1253
+#: src/pages/settings.jsx:1230
 msgid "Follows"
 msgstr "팔로"
 
-#: src/pages/settings.jsx:1261
+#: src/pages/settings.jsx:1238
 msgid "Polls"
 msgstr "설문 조사"
 
-#: src/pages/settings.jsx:1265
+#: src/pages/settings.jsx:1242
 msgid "Post edits"
 msgstr "게시물 수정"
 
-#: src/pages/settings.jsx:1286
+#: src/pages/settings.jsx:1263
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "마지막 로그인 이후 푸시 권한이 부여되지 않았습니다. <0>푸시 권한을 다시 얻으려면<1>로그인</1>을</0>해야합니다."
 
-#: src/pages/settings.jsx:1302
+#: src/pages/settings.jsx:1279
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "주의: 푸시 알림은 <0>단 하나의 계정</0>에만 작동합니다."
 
@@ -4362,27 +4358,23 @@ msgid "Visually separate original posts and re-shared posts (boosted posts)."
 msgstr ""
 
 #: src/pages/welcome.jsx:142
-msgid "Screenshot of nested comments thread"
-msgstr ""
-
-#: src/pages/welcome.jsx:146
-msgid "Nested comments thread"
+msgid "Screenshot of Catch-up"
 msgstr ""
 
 #: src/pages/welcome.jsx:149
+msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
+msgstr ""
+
+#: src/pages/welcome.jsx:158
+msgid "Screenshot of nested comments thread"
+msgstr ""
+
+#: src/pages/welcome.jsx:162
+msgid "Nested comments thread"
+msgstr ""
+
+#: src/pages/welcome.jsx:165
 msgid "Effortlessly follow conversations. Semi-collapsible replies."
-msgstr ""
-
-#: src/pages/welcome.jsx:157
-msgid "Screenshot of grouped notifications"
-msgstr ""
-
-#: src/pages/welcome.jsx:161
-msgid "Grouped notifications"
-msgstr "그룹 알림"
-
-#: src/pages/welcome.jsx:164
-msgid "Similar notifications are grouped and collapsed to reduce clutter."
 msgstr ""
 
 #: src/pages/welcome.jsx:173

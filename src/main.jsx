@@ -36,20 +36,8 @@ render(
 // Storage cleanup
 setTimeout(() => {
   try {
-    // Clean up iconify localStorage
-    Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith('iconify')) {
-        localStorage.removeItem(key);
-      }
-    });
-    Object.keys(sessionStorage).forEach((key) => {
-      if (key.startsWith('iconify')) {
-        sessionStorage.removeItem(key);
-      }
-    });
-
     // Clean up old settings key
-    localStorage.removeItem('settings:boostsCarousel');
+    localStorage.removeItem('settings-groupedNotificationsAlpha');
   } catch (e) {}
 }, 5000);
 

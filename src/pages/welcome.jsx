@@ -3,7 +3,6 @@ import './welcome.css';
 import { Trans, useLingui } from '@lingui/react/macro';
 
 import boostsCarouselUrl from '../assets/features/boosts-carousel.jpg';
-import groupedNotificationsUrl from '../assets/features/grouped-notifications.jpg';
 import multiColumnUrl from '../assets/features/multi-column.jpg';
 import multiHashtagTimelineUrl from '../assets/features/multi-hashtag-timeline.jpg';
 import nestedCommentsThreadUrl from '../assets/features/nested-comments-thread.jpg';
@@ -148,22 +147,6 @@ function Welcome() {
             <p>
               <Trans>
                 Effortlessly follow conversations. Semi-collapsible replies.
-              </Trans>
-            </p>
-          </section>
-          <section>
-            <img
-              src={groupedNotificationsUrl}
-              alt={t`Screenshot of grouped notifications`}
-              loading="lazy"
-            />
-            <h4>
-              <Trans>Grouped notifications</Trans>
-            </h4>
-            <p>
-              <Trans>
-                Similar notifications are grouped and collapsed to reduce
-                clutter.
               </Trans>
             </p>
           </section>

@@ -655,29 +655,6 @@ function Settings({ onClose }) {
                 </div>
               </li>
             )}
-            {authenticated && getAPIVersions()?.mastodon >= 2 && (
-              <li class="block">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={snapStates.settings.groupedNotificationsAlpha}
-                    onChange={(e) => {
-                      states.settings.groupedNotificationsAlpha =
-                        e.target.checked;
-                    }}
-                  />{' '}
-                  <Trans>Server-side grouped notifications</Trans>
-                </label>
-                <div class="sub-section insignificant">
-                  <small>
-                    <Trans>
-                      Alpha-stage feature. Potentially improved grouping window
-                      but basic grouping logic.
-                    </Trans>
-                  </small>
-                </div>
-              </li>
-            )}
             {authenticated && (
               <li class="block">
                 <label>

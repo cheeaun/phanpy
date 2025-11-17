@@ -3,6 +3,7 @@ import './welcome.css';
 import { Trans, useLingui } from '@lingui/react/macro';
 
 import boostsCarouselUrl from '../assets/features/boosts-carousel.jpg';
+import catchupUrl from '../assets/features/catch-up.png';
 import multiColumnUrl from '../assets/features/multi-column.jpg';
 import multiHashtagTimelineUrl from '../assets/features/multi-hashtag-timeline.jpg';
 import nestedCommentsThreadUrl from '../assets/features/nested-comments-thread.jpg';
@@ -132,6 +133,22 @@ function Welcome() {
               <Trans>
                 Visually separate original posts and re-shared posts (boosted
                 posts).
+              </Trans>
+            </p>
+          </section>
+          <section>
+            <img
+              src={catchupUrl}
+              alt={t`Screenshot of Catch-up`}
+              loading="lazy"
+            />
+            <h4>
+              <Trans>Catch-up</Trans>
+            </h4>
+            <p>
+              <Trans>
+                A separate timeline for followings. Email-inspired interface to
+                sort and filter posts.
               </Trans>
             </p>
           </section>

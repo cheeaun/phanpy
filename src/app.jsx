@@ -383,6 +383,11 @@ if (import.meta.env.DEV) {
   );
 }
 
+// const isPWA = true; // testing
+const isPWA =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  window.navigator.standalone === true;
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
@@ -509,6 +514,43 @@ function App() {
 
   useEffect(focusDeck, [location, isLoggedIn]);
 
+  // Save last page for PWA restoration
+  const restoredRef = useRef(false);
+  const lastPathKey = 'pwaLastPath';
+  useEffect(() => {
+    if (!restoredRef.current) return;
+    // console.log('location.pathname', location.pathname);
+    if (isPWA && isLoggedIn) {
+      if (isRootPath(location.pathname)) {
+        store.local.del(lastPathKey);
+      } else {
+        store.local.set(lastPathKey, {
+          path: location.pathname,
+          lastAccessed: Date.now(),
+        });
+      }
+    }
+  }, [location.pathname, isLoggedIn]);
+
+  // Restore last page on PWA reopen
+  useEffect(() => {
+    if (restoredRef.current) return;
+    const isRootPath = !location.pathname || location.pathname === '/';
+    if (!isRootPath) return;
+    if (isPWA && isLoggedIn && uiState === 'default') {
+      const lastPath = store.local.get(lastPathKey);
+      if (lastPath) {
+        setTimeout(() => {
+          if (lastPath?.path) {
+            window.location.hash = lastPath.path;
+          }
+          store.local.del(lastPathKey);
+        }, 300);
+      }
+      restoredRef.current = true;
+    }
+  }, [uiState, isLoggedIn]);
+
   if (/\/https?:/.test(location.pathname)) {
     return <HttpRoute />;
   }
@@ -543,11 +585,15 @@ function Root({ isLoggedIn }) {
   return isLoggedIn ? <Home /> : <Welcome />;
 }
 
+function isRootPath(pathname) {
+  return /^\/(login|welcome|_sandbox|_qr-scan)/i.test(pathname);
+}
+
 const PrimaryRoutes = memo(({ isLoggedIn }) => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/^\/(login|welcome|_sandbox|_qr-scan)/i.test(pathname);
+    return !isRootPath(pathname);
   }, [location]);
 
   return (

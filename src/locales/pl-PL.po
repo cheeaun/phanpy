@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-17 13:24\n"
+"PO-Revision-Date: 2025-11-18 17:23\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -121,7 +121,7 @@ msgstr "Wpisy"
 
 #: src/components/account-info.jsx:451
 #: src/components/media-alt-modal.jsx:55
-#: src/components/media-attachment.jsx:399
+#: src/components/media-attachment.jsx:398
 #: src/components/media-modal.jsx:363
 #: src/components/related-actions.jsx:263
 #: src/components/status.jsx:2089
@@ -292,7 +292,7 @@ msgstr "Pokaż statystyki wpisów"
 #: src/components/keyboard-shortcuts-help.jsx:52
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
-#: src/components/media-attachment.jsx:355
+#: src/components/media-attachment.jsx:354
 #: src/components/media-modal.jsx:327
 #: src/components/mention-modal.jsx:162
 #: src/components/notification-service.jsx:157
@@ -398,7 +398,7 @@ msgid "Choice {0}"
 msgstr "Wybór {0}"
 
 #: src/components/compose-poll.jsx:64
-#: src/components/media-attachment.jsx:319
+#: src/components/media-attachment.jsx:318
 #: src/components/shortcuts-settings.jsx:727
 #: src/pages/catchup.jsx:1198
 #: src/pages/filters.jsx:413
@@ -555,7 +555,7 @@ msgstr "Zadaj pytanie"
 
 #: src/components/compose.jsx:1466
 msgid "What are you doing?"
-msgstr "Co robisz?"
+msgstr "Czym chcesz się podzielić?"
 
 #: src/components/compose.jsx:1539
 msgid "Mark media as sensitive"
@@ -1133,19 +1133,19 @@ msgstr "Przetłumacz"
 msgid "Speak"
 msgstr "Powiedz"
 
-#: src/components/media-attachment.jsx:169
+#: src/components/media-attachment.jsx:168
 msgid "Uploaded"
 msgstr "Załadowano"
 
-#: src/components/media-attachment.jsx:182
+#: src/components/media-attachment.jsx:181
 msgid "Image description"
 msgstr "Opis obrazka"
 
-#: src/components/media-attachment.jsx:183
+#: src/components/media-attachment.jsx:182
 msgid "Video description"
 msgstr "Opis wideo"
 
-#: src/components/media-attachment.jsx:184
+#: src/components/media-attachment.jsx:183
 msgid "Audio description"
 msgstr "Opis audio"
 
@@ -1153,8 +1153,8 @@ msgstr "Opis audio"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/media-attachment.jsx:219
-#: src/components/media-attachment.jsx:239
+#: src/components/media-attachment.jsx:218
+#: src/components/media-attachment.jsx:238
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Rozmiar pliku jest za duży. Upload może spowodować błędy. Spróbuj zredukować rozmiar pliku z {0} do maksymalnie {1}."
 
@@ -1162,63 +1162,63 @@ msgstr "Rozmiar pliku jest za duży. Upload może spowodować błędy. Spróbuj 
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/media-attachment.jsx:231
-#: src/components/media-attachment.jsx:251
+#: src/components/media-attachment.jsx:230
+#: src/components/media-attachment.jsx:250
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Wymiary są za duże. Upload może spowodować błędy. Spróbuj zredukować wymiary z {0}×{1} do {2}×{3}px."
 
-#: src/components/media-attachment.jsx:259
+#: src/components/media-attachment.jsx:258
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Liczba klatek na sekundę jest za wysoka. Upload może spowodować błędy."
 
-#: src/components/media-attachment.jsx:336
+#: src/components/media-attachment.jsx:335
 #: src/compose.jsx:88
 msgid "Error"
 msgstr "Błąd"
 
-#: src/components/media-attachment.jsx:361
+#: src/components/media-attachment.jsx:360
 msgid "Edit image description"
 msgstr "Edytuj opis obrazka"
 
-#: src/components/media-attachment.jsx:362
+#: src/components/media-attachment.jsx:361
 msgid "Edit video description"
 msgstr "Edytuj opis wideo"
 
-#: src/components/media-attachment.jsx:363
+#: src/components/media-attachment.jsx:362
 msgid "Edit audio description"
 msgstr "Edytuj opis audio"
 
-#: src/components/media-attachment.jsx:408
-#: src/components/media-attachment.jsx:457
+#: src/components/media-attachment.jsx:407
+#: src/components/media-attachment.jsx:456
 msgid "Generating description. Please wait…"
 msgstr "Generowanie opisu. Proszę czekać…"
 
 #. placeholder {0}: e.message
-#: src/components/media-attachment.jsx:428
+#: src/components/media-attachment.jsx:427
 msgid "Failed to generate description: {0}"
 msgstr "Błąd podczas generowania opisu: {0}"
 
-#: src/components/media-attachment.jsx:429
+#: src/components/media-attachment.jsx:428
 msgid "Failed to generate description"
 msgstr "Błąd przy generowaniu opisu."
 
-#: src/components/media-attachment.jsx:441
-#: src/components/media-attachment.jsx:447
-#: src/components/media-attachment.jsx:493
+#: src/components/media-attachment.jsx:440
+#: src/components/media-attachment.jsx:446
+#: src/components/media-attachment.jsx:492
 msgid "Generate description…"
 msgstr "Wygeneruj opis…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/media-attachment.jsx:480
+#: src/components/media-attachment.jsx:479
 msgid "Failed to generate description{0}"
 msgstr "Błąd podczas generowania opisu{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/media-attachment.jsx:495
+#: src/components/media-attachment.jsx:494
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— eksperymentalne</0>"
 
-#: src/components/media-attachment.jsx:514
+#: src/components/media-attachment.jsx:513
 msgid "Done"
 msgstr "Zrobione"
 
@@ -4359,11 +4359,11 @@ msgstr "Oddziel wizualnie oryginalne wpisy i podbicia."
 
 #: src/pages/welcome.jsx:142
 msgid "Screenshot of Catch-up"
-msgstr ""
+msgstr "Zrzut ekranu funkcji nadrabiania zaległości"
 
 #: src/pages/welcome.jsx:149
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
-msgstr ""
+msgstr "Osobna linia czasowa dla obserwowanych. Interfejs inspirowany e-mailem służący do sortowania i filtrowania wpisów."
 
 #: src/pages/welcome.jsx:158
 msgid "Screenshot of nested comments thread"

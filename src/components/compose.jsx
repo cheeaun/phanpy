@@ -1334,7 +1334,7 @@ function Compose({
                     params.quote_approval_policy = quoteApprovalPolicy;
                   }
                   if (
-                    supports('@mastodon/edit-media-attributes') ||
+                    supports('@mastodon') ||
                     supports('@gotosocial/edit-media-attributes')
                   ) {
                     params.media_attributes = mediaAttachments.map(

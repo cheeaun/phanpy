@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-17 13:24\n"
+"PO-Revision-Date: 2025-11-18 15:47\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -121,7 +121,7 @@ msgstr "Post"
 
 #: src/components/account-info.jsx:451
 #: src/components/media-alt-modal.jsx:55
-#: src/components/media-attachment.jsx:399
+#: src/components/media-attachment.jsx:398
 #: src/components/media-modal.jsx:363
 #: src/components/related-actions.jsx:263
 #: src/components/status.jsx:2089
@@ -292,7 +292,7 @@ msgstr "Visualizza statistiche post"
 #: src/components/keyboard-shortcuts-help.jsx:52
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
-#: src/components/media-attachment.jsx:355
+#: src/components/media-attachment.jsx:354
 #: src/components/media-modal.jsx:327
 #: src/components/mention-modal.jsx:162
 #: src/components/notification-service.jsx:157
@@ -398,7 +398,7 @@ msgid "Choice {0}"
 msgstr "Opzione {0}"
 
 #: src/components/compose-poll.jsx:64
-#: src/components/media-attachment.jsx:319
+#: src/components/media-attachment.jsx:318
 #: src/components/shortcuts-settings.jsx:727
 #: src/pages/catchup.jsx:1198
 #: src/pages/filters.jsx:413
@@ -1133,19 +1133,19 @@ msgstr "Traduci"
 msgid "Speak"
 msgstr "Leggi"
 
-#: src/components/media-attachment.jsx:169
+#: src/components/media-attachment.jsx:168
 msgid "Uploaded"
 msgstr "Caricato"
 
-#: src/components/media-attachment.jsx:182
+#: src/components/media-attachment.jsx:181
 msgid "Image description"
 msgstr "Descrizione immagine"
 
-#: src/components/media-attachment.jsx:183
+#: src/components/media-attachment.jsx:182
 msgid "Video description"
 msgstr "Descrizione video"
 
-#: src/components/media-attachment.jsx:184
+#: src/components/media-attachment.jsx:183
 msgid "Audio description"
 msgstr "Descrizione audio"
 
@@ -1153,8 +1153,8 @@ msgstr "Descrizione audio"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/media-attachment.jsx:219
-#: src/components/media-attachment.jsx:239
+#: src/components/media-attachment.jsx:218
+#: src/components/media-attachment.jsx:238
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "File troppo pesante. Potrebbero verificarsi errori nel caricamento. Prova a ridurre le dimensioni del file da {0} a {1} o meno."
 
@@ -1162,63 +1162,63 @@ msgstr "File troppo pesante. Potrebbero verificarsi errori nel caricamento. Prov
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/media-attachment.jsx:231
-#: src/components/media-attachment.jsx:251
+#: src/components/media-attachment.jsx:230
+#: src/components/media-attachment.jsx:250
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Dimensioni eccessive. Potrebbero verificarsi errori nel caricamento. Prova a ridurre le dimensioni da {0}×{1}px a {2}×{3}px."
 
-#: src/components/media-attachment.jsx:259
+#: src/components/media-attachment.jsx:258
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Frequenza dei fotogrammi troppo alta. Potrebbero verificarsi errori nel caricamento."
 
-#: src/components/media-attachment.jsx:336
+#: src/components/media-attachment.jsx:335
 #: src/compose.jsx:88
 msgid "Error"
 msgstr "Errore"
 
-#: src/components/media-attachment.jsx:361
+#: src/components/media-attachment.jsx:360
 msgid "Edit image description"
 msgstr "Modifica descrizione immagine"
 
-#: src/components/media-attachment.jsx:362
+#: src/components/media-attachment.jsx:361
 msgid "Edit video description"
 msgstr "Modifica descrizione video"
 
-#: src/components/media-attachment.jsx:363
+#: src/components/media-attachment.jsx:362
 msgid "Edit audio description"
 msgstr "Modifica descrizione audio"
 
-#: src/components/media-attachment.jsx:408
-#: src/components/media-attachment.jsx:457
+#: src/components/media-attachment.jsx:407
+#: src/components/media-attachment.jsx:456
 msgid "Generating description. Please wait…"
 msgstr "Genero descrizione. Attendere…"
 
 #. placeholder {0}: e.message
-#: src/components/media-attachment.jsx:428
+#: src/components/media-attachment.jsx:427
 msgid "Failed to generate description: {0}"
 msgstr "Generazione descrizione fallita: {0}"
 
-#: src/components/media-attachment.jsx:429
+#: src/components/media-attachment.jsx:428
 msgid "Failed to generate description"
 msgstr "Generazione descrizione fallita"
 
-#: src/components/media-attachment.jsx:441
-#: src/components/media-attachment.jsx:447
-#: src/components/media-attachment.jsx:493
+#: src/components/media-attachment.jsx:440
+#: src/components/media-attachment.jsx:446
+#: src/components/media-attachment.jsx:492
 msgid "Generate description…"
 msgstr "Genera descrizione…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/media-attachment.jsx:480
+#: src/components/media-attachment.jsx:479
 msgid "Failed to generate description{0}"
 msgstr "Generazione descrizione fallita{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/media-attachment.jsx:495
+#: src/components/media-attachment.jsx:494
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>— sperimentale</0>"
 
-#: src/components/media-attachment.jsx:514
+#: src/components/media-attachment.jsx:513
 msgid "Done"
 msgstr "Fine"
 
@@ -4359,11 +4359,11 @@ msgstr "Separa visivamente i post originali e i post ricondivisi (post rebloggat
 
 #: src/pages/welcome.jsx:142
 msgid "Screenshot of Catch-up"
-msgstr ""
+msgstr "Screenshot di Recupera"
 
 #: src/pages/welcome.jsx:149
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
-msgstr ""
+msgstr "Una timeline separata per i seguiti. Un'interfaccia ispirata alle email per ordinare e filtrare i post."
 
 #: src/pages/welcome.jsx:158
 msgid "Screenshot of nested comments thread"

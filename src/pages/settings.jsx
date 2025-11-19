@@ -834,7 +834,7 @@ function Settings({ onClose }) {
               <Trans>Privacy Policy</Trans>
             </a>
           </p>
-          {__BUILD_TIME__ && (
+          {__COMMIT_TIME__ && (
             <p>
               {WEBSITE && (
                 <>
@@ -852,7 +852,7 @@ function Settings({ onClose }) {
                   class="version-string"
                   readOnly
                   size="18" // Manually calculated here
-                  value={`${__BUILD_TIME__.slice(0, 10).replace(/-/g, '.')}${
+                  value={`${__COMMIT_TIME__.slice(0, 10).replace(/-/g, '.')}${
                     __COMMIT_HASH__ ? `.${__COMMIT_HASH__}` : ''
                   }`}
                   onClick={(e) => {

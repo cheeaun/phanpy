@@ -28,13 +28,18 @@ const {
 
 const now = new Date();
 let commitHash;
+let commitTime;
 let fakeCommitHash = false;
 try {
-  commitHash = execSync('git rev-parse --short HEAD').toString().trim();
+  const gitResult = execSync('git log -1 --format="%h %cI"').toString().trim();
+  const [hash, time] = gitResult.split(' ');
+  commitHash = hash;
+  commitTime = new Date(time);
 } catch (error) {
   // If error, means git is not installed or not a git repo (could be downloaded instead of git cloned)
   // Fallback to random hash which should be different on every build run 🤞
   commitHash = uid();
+  commitTime = now;
   fakeCommitHash = true;
 }
 
@@ -52,6 +57,7 @@ export default defineConfig({
   define: {
     __BUILD_TIME__: JSON.stringify(now),
     __COMMIT_HASH__: JSON.stringify(commitHash),
+    __COMMIT_TIME__: JSON.stringify(commitTime),
     __FAKE_COMMIT_HASH__: fakeCommitHash,
   },
   server: {

@@ -24,8 +24,8 @@ const {
 const appSite = WEBSITE
   ? WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
   : null;
-const appVersion = __BUILD_TIME__
-  ? `${__BUILD_TIME__.slice(0, 10).replace(/-/g, '.')}${
+const appVersion = __COMMIT_TIME__
+  ? `${__COMMIT_TIME__.slice(0, 10).replace(/-/g, '.')}${
       __COMMIT_HASH__ ? `.${__COMMIT_HASH__}` : ''
     }`
   : null;

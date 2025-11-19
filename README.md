@@ -13,12 +13,12 @@ Phanpy
 
 This is an alternative web client for [Mastodon](https://joinmastodon.org/).
 
-- 🏢 **Production**: https://phanpy.social
+- 🏢 **Production**: https://phanpy.social [![Uptime Robot status](https://img.shields.io/uptimerobot/status/m795572454-df4518f96a3784401b550a6c)](https://stats.uptimerobot.com/rVO1RkbwMB)
   - ![GitHub Release](https://img.shields.io/github/v/release/cheeaun/phanpy)
   - `production` branch
   - break less often
   - slower fixes unless critical
-- 🏗️ **Development**: https://dev.phanpy.social
+- 🏗️ **Development**: https://dev.phanpy.social [![Uptime Robot status](https://img.shields.io/uptimerobot/status/m801824077-77302887dc81a5ac4a45e231)](https://stats.uptimerobot.com/rVO1RkbwMB)
   - ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/cheeaun/phanpy/main)
   - `main` branch
   - may see new cool stuff sooner

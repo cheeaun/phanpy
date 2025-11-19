@@ -9,15 +9,17 @@ Phanpy
 
 ![Fancy screenshot](readme-assets/fancy-screenshot.jpg)
 
-**🗣️ Pronunciation**: [`/fænpi/`](https://ythi.net/how-do-you-pronounce/phanpy/english/) ([`FAN-pee`](https://www.smogon.com/forums/threads/the-official-name-pronunciation-guide.3474941/)) [🔊 Listen](https://www.youtube.com/watch?v=DIUbWe-ysJI)
+**🗣️ Pronunciation**: `/fænpi/` ([`FAN-pee`](https://www.smogon.com/forums/threads/the-official-name-pronunciation-guide.3474941/)) [🔊 Listen](https://www.youtube.com/watch?v=DIUbWe-ysJI)
 
 This is an alternative web client for [Mastodon](https://joinmastodon.org/).
 
 - 🏢 **Production**: https://phanpy.social
+  - ![GitHub Release](https://img.shields.io/github/v/release/cheeaun/phanpy)
   - `production` branch
   - break less often
   - slower fixes unless critical
 - 🏗️ **Development**: https://dev.phanpy.social
+  - ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/cheeaun/phanpy/main)
   - `main` branch
   - may see new cool stuff sooner
   - may break more often

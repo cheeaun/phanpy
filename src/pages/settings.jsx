@@ -308,8 +308,9 @@ function Settings({ onClose }) {
                           }
                           setPrefs(newPrefs);
                           setPreferences(newPrefs);
+                          showToast(t`Default visibility updated`);
                         } catch (e) {
-                          alert(t`Failed to update posting privacy`);
+                          alert(t`Failed to update default visibility`);
                           console.error(e);
                         }
                       })();
@@ -335,8 +336,9 @@ function Settings({ onClose }) {
                     <select
                       id="posting-quote-policy-field"
                       value={
-                        prefs['posting:default:quote_policy'] ||
-                        (disableQuotePolicy ? 'nobody' : 'public')
+                        disableQuotePolicy
+                          ? 'nobody'
+                          : prefs['posting:default:quote_policy'] || 'public'
                       }
                       disabled={disableQuotePolicy}
                       onChange={(e) => {
@@ -354,6 +356,7 @@ function Settings({ onClose }) {
                             };
                             setPrefs(newPrefs);
                             setPreferences(newPrefs);
+                            showToast(t`Quote settings updated`);
                           } catch (e) {
                             alert(t`Failed to update quote settings`);
                             console.error(e);

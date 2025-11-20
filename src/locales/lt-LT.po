@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-17 13:24\n"
+"PO-Revision-Date: 2025-11-20 06:17\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -101,7 +101,7 @@ msgstr "Eiti į paskyros puslapį"
 #: src/components/account-info.jsx:436
 #: src/components/account-info.jsx:787
 #: src/components/compose.jsx:1961
-#: src/pages/settings.jsx:325
+#: src/pages/settings.jsx:326
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
 msgstr "Sekėjai"
@@ -121,7 +121,7 @@ msgstr "Įrašai"
 
 #: src/components/account-info.jsx:451
 #: src/components/media-alt-modal.jsx:55
-#: src/components/media-attachment.jsx:399
+#: src/components/media-attachment.jsx:398
 #: src/components/media-modal.jsx:363
 #: src/components/related-actions.jsx:263
 #: src/components/status.jsx:2089
@@ -268,7 +268,7 @@ msgstr ""
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1566
 #: src/pages/catchup.jsx:2231
-#: src/pages/settings.jsx:1226
+#: src/pages/settings.jsx:1225
 msgid "Boosts"
 msgstr "Pasidalinimai"
 
@@ -292,7 +292,7 @@ msgstr "Peržiūrėti įrašų statistiką"
 #: src/components/keyboard-shortcuts-help.jsx:52
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
-#: src/components/media-attachment.jsx:355
+#: src/components/media-attachment.jsx:354
 #: src/components/media-modal.jsx:327
 #: src/components/mention-modal.jsx:162
 #: src/components/notification-service.jsx:157
@@ -398,7 +398,7 @@ msgid "Choice {0}"
 msgstr "{0} pasirinkimas"
 
 #: src/components/compose-poll.jsx:64
-#: src/components/media-attachment.jsx:319
+#: src/components/media-attachment.jsx:318
 #: src/components/shortcuts-settings.jsx:727
 #: src/pages/catchup.jsx:1198
 #: src/pages/filters.jsx:413
@@ -568,21 +568,21 @@ msgstr "Skelbimiama <0/>"
 #: src/components/compose.jsx:1881
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:297
-#: src/pages/settings.jsx:369
+#: src/pages/settings.jsx:368
 msgid "Anyone can quote"
 msgstr ""
 
 #: src/components/compose.jsx:1884
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:298
-#: src/pages/settings.jsx:372
+#: src/pages/settings.jsx:371
 msgid "Your followers can quote"
 msgstr ""
 
 #: src/components/compose.jsx:1887
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:299
-#: src/pages/settings.jsx:375
+#: src/pages/settings.jsx:374
 msgid "Only you can quote"
 msgstr ""
 
@@ -591,7 +591,7 @@ msgid "Quotes can't be embedded in private mentions."
 msgstr ""
 
 #: src/components/compose.jsx:1949
-#: src/pages/settings.jsx:319
+#: src/pages/settings.jsx:320
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Vieša"
@@ -604,7 +604,7 @@ msgid "Local"
 msgstr "Vietinis"
 
 #: src/components/compose.jsx:1958
-#: src/pages/settings.jsx:322
+#: src/pages/settings.jsx:323
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr ""
@@ -681,7 +681,7 @@ msgid "Zoom in"
 msgstr ""
 
 #: src/components/drafts.jsx:62
-#: src/pages/settings.jsx:730
+#: src/pages/settings.jsx:729
 msgid "Unsent drafts"
 msgstr "Neišsiųsti juodraščiai"
 
@@ -1133,19 +1133,19 @@ msgstr "Versti"
 msgid "Speak"
 msgstr "Kalbėti"
 
-#: src/components/media-attachment.jsx:169
+#: src/components/media-attachment.jsx:168
 msgid "Uploaded"
 msgstr "Įkelta"
 
-#: src/components/media-attachment.jsx:182
+#: src/components/media-attachment.jsx:181
 msgid "Image description"
 msgstr "Vaizdo aprašymas"
 
-#: src/components/media-attachment.jsx:183
+#: src/components/media-attachment.jsx:182
 msgid "Video description"
 msgstr "Vaizdo įrašo aprašymas"
 
-#: src/components/media-attachment.jsx:184
+#: src/components/media-attachment.jsx:183
 msgid "Audio description"
 msgstr "Garso įrašo aprašymas"
 
@@ -1153,8 +1153,8 @@ msgstr "Garso įrašo aprašymas"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/media-attachment.jsx:219
-#: src/components/media-attachment.jsx:239
+#: src/components/media-attachment.jsx:218
+#: src/components/media-attachment.jsx:238
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "Per didelis failo dydis. Įkeliant gali kilti problemų. Bandyk sumažinti failo dydį nuo {0} iki {1} arba mažiau."
 
@@ -1162,63 +1162,63 @@ msgstr "Per didelis failo dydis. Įkeliant gali kilti problemų. Bandyk sumažin
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/media-attachment.jsx:231
-#: src/components/media-attachment.jsx:251
+#: src/components/media-attachment.jsx:230
+#: src/components/media-attachment.jsx:250
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Per didelis matmuo. Įkeliant gali kilti problemų. Bandykite sumažinti matmenis nuo {0}×{1} tšk. iki {2}×{3} tšk."
 
-#: src/components/media-attachment.jsx:259
+#: src/components/media-attachment.jsx:258
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Per didelis kadrų dažnis. Įkeliant gali kilti problemų."
 
-#: src/components/media-attachment.jsx:336
+#: src/components/media-attachment.jsx:335
 #: src/compose.jsx:88
 msgid "Error"
 msgstr "Klaida"
 
-#: src/components/media-attachment.jsx:361
+#: src/components/media-attachment.jsx:360
 msgid "Edit image description"
 msgstr "Redaguoti vaizdo aprašymą"
 
-#: src/components/media-attachment.jsx:362
+#: src/components/media-attachment.jsx:361
 msgid "Edit video description"
 msgstr "Redaguoti vaizdo įrašo aprašymą"
 
-#: src/components/media-attachment.jsx:363
+#: src/components/media-attachment.jsx:362
 msgid "Edit audio description"
 msgstr "Redaguoti garso įrašo aprašymą"
 
-#: src/components/media-attachment.jsx:408
-#: src/components/media-attachment.jsx:457
+#: src/components/media-attachment.jsx:407
+#: src/components/media-attachment.jsx:456
 msgid "Generating description. Please wait…"
 msgstr "Generuojamas aprašymas. Palauk…"
 
 #. placeholder {0}: e.message
-#: src/components/media-attachment.jsx:428
+#: src/components/media-attachment.jsx:427
 msgid "Failed to generate description: {0}"
 msgstr "Nepavyko sugeneruoti aprašo: {0}."
 
-#: src/components/media-attachment.jsx:429
+#: src/components/media-attachment.jsx:428
 msgid "Failed to generate description"
 msgstr "Nepavyko sugeneruoti aprašymo."
 
-#: src/components/media-attachment.jsx:441
-#: src/components/media-attachment.jsx:447
-#: src/components/media-attachment.jsx:493
+#: src/components/media-attachment.jsx:440
+#: src/components/media-attachment.jsx:446
+#: src/components/media-attachment.jsx:492
 msgid "Generate description…"
 msgstr "Generuoti aprašymą…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/media-attachment.jsx:480
+#: src/components/media-attachment.jsx:479
 msgid "Failed to generate description{0}"
 msgstr "Nepavyko sugeneruoti aprašo{0}."
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/media-attachment.jsx:495
+#: src/components/media-attachment.jsx:494
 msgid "({0}) <0>— experimental</0>"
 msgstr "({0}) <0>– eksperimentinė</0>"
 
-#: src/components/media-attachment.jsx:514
+#: src/components/media-attachment.jsx:513
 msgid "Done"
 msgstr "Atlikta"
 
@@ -1324,7 +1324,7 @@ msgstr "Pasivijimas"
 #: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1218
+#: src/pages/settings.jsx:1217
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "Paminėjimai"
@@ -1368,7 +1368,7 @@ msgstr "Daugiau…"
 #: src/pages/catchup.jsx:2225
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1222
+#: src/pages/settings.jsx:1221
 msgid "Likes"
 msgstr "Patiktukų"
 
@@ -1796,11 +1796,12 @@ msgid "Unable to access camera. Please check permissions."
 msgstr ""
 
 #: src/components/quote-settings-sheet.jsx:37
+#: src/pages/settings.jsx:359
 msgid "Quote settings updated"
 msgstr ""
 
 #: src/components/quote-settings-sheet.jsx:47
-#: src/pages/settings.jsx:362
+#: src/pages/settings.jsx:361
 msgid "Failed to update quote settings"
 msgstr ""
 
@@ -2699,7 +2700,7 @@ msgid "Pin to profile"
 msgstr "Prisegti prie profilio"
 
 #: src/components/status.jsx:1538
-#: src/pages/settings.jsx:332
+#: src/pages/settings.jsx:333
 msgid "Quote settings"
 msgstr ""
 
@@ -2839,7 +2840,6 @@ msgid "Failed to load history"
 msgstr "Nepavyko įkelti istorijos."
 
 #: src/components/status.jsx:3246
-#: src/pages/annual-report.jsx:45
 msgid "Loading…"
 msgstr "Įkeliama…"
 
@@ -2875,7 +2875,7 @@ msgid "{index}/X"
 msgstr ""
 
 #: src/components/timeline.jsx:480
-#: src/pages/settings.jsx:1246
+#: src/pages/settings.jsx:1245
 msgid "New posts"
 msgstr "Nauji įrašai"
 
@@ -2952,7 +2952,7 @@ msgid "Login required."
 msgstr "Privalomas prisijungimas."
 
 #: src/compose.jsx:95
-#: src/pages/annual-report.jsx:164
+#: src/pages/annual-report.jsx:189
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:280
 msgid "Go home"
@@ -3739,7 +3739,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Skelbimas} few {Skelbimai} many {Skelbimo} other {Skelbimų}}"
 
 #: src/pages/notifications.jsx:676
-#: src/pages/settings.jsx:1234
+#: src/pages/settings.jsx:1233
 msgid "Follow requests"
 msgstr "Sekimo prašymai"
 
@@ -4004,193 +4004,197 @@ msgid "Default visibility"
 msgstr "Numatytasis matomumas"
 
 #: src/pages/settings.jsx:288
-#: src/pages/settings.jsx:333
-#: src/pages/settings.jsx:383
+#: src/pages/settings.jsx:334
+#: src/pages/settings.jsx:382
 msgid "Synced"
 msgstr "Sinchronizuota"
 
-#: src/pages/settings.jsx:312
-msgid "Failed to update posting privacy"
-msgstr "Nepavyko atnaujinti skelbimo privatumo."
+#: src/pages/settings.jsx:311
+msgid "Default visibility updated"
+msgstr ""
 
-#: src/pages/settings.jsx:385
+#: src/pages/settings.jsx:313
+msgid "Failed to update default visibility"
+msgstr ""
+
+#: src/pages/settings.jsx:384
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
 msgstr "Sinchronizuota su serverio nustatymais. <0>Eiti į savo serverį ({instance}), kad sužinoti daugiau nustatymų.</0>"
 
-#: src/pages/settings.jsx:400
+#: src/pages/settings.jsx:399
 msgid "Experiments"
 msgstr "Eksperimentai"
 
-#: src/pages/settings.jsx:413
+#: src/pages/settings.jsx:412
 msgid "Auto refresh timeline posts"
 msgstr "Automatiškai atnaujinti laiko skalės įrašus"
 
-#: src/pages/settings.jsx:425
+#: src/pages/settings.jsx:424
 msgid "Boosts carousel"
 msgstr "Pasidalinimų karuselė"
 
-#: src/pages/settings.jsx:442
+#: src/pages/settings.jsx:441
 msgid "Post translation"
 msgstr "Įrašo vertimas"
 
-#: src/pages/settings.jsx:453
+#: src/pages/settings.jsx:452
 msgid "Translate to "
 msgstr "Versti į "
 
-#: src/pages/settings.jsx:464
+#: src/pages/settings.jsx:463
 msgid "System language ({systemTargetLanguageText})"
 msgstr "Sistemos kalbą ({systemTargetLanguageText})"
 
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
-#: src/pages/settings.jsx:490
+#: src/pages/settings.jsx:489
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr "{0, plural, one {Slėpti Versti mygtuką (#):} few {Slėpti Versti mygtuką (#):} many {Slėpti Versti mygtuką (#):}=0 {} other {Slėpti Versti mygtuką (#):}}"
 
-#: src/pages/settings.jsx:545
+#: src/pages/settings.jsx:544
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
 msgstr "Pastaba: ši funkcija naudoja išorines vertimo paslaugas, veikiančias su <0>„{TRANSLATION_API_NAME}“</0>."
 
-#: src/pages/settings.jsx:573
+#: src/pages/settings.jsx:572
 msgid "Auto inline translation"
 msgstr "Automatinis įterptinis vertimas"
 
-#: src/pages/settings.jsx:577
+#: src/pages/settings.jsx:576
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr "Automatiškai rodyti vertimą įrašams laiko skalėje. Veikia tik <0>trumpiems</0> įrašams be turinio įspėjimo, medijos ir apklausos."
 
-#: src/pages/settings.jsx:598
+#: src/pages/settings.jsx:597
 msgid "GIF Picker for composer"
 msgstr "GIF parinkiklis rengyklei"
 
-#: src/pages/settings.jsx:602
+#: src/pages/settings.jsx:601
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr "Pastaba: ši funkcija naudoja išorinę GIF paieškos paslaugą, veikiančią su <0>„GIPHY“</0>. „G-rated“ (skirta visiems amžiaus grupėms), sekimo parametrai pašalinami, užklausose nepateikiama nukreipiančioji informacija, bet paieškos užklausos ir IP adreso informacija vis tiek pasieks jų serverius."
 
-#: src/pages/settings.jsx:631
+#: src/pages/settings.jsx:630
 msgid "Image description generator"
 msgstr "Vaizdų aprašymo generatorius"
 
-#: src/pages/settings.jsx:636
+#: src/pages/settings.jsx:635
 msgid "Only for new images while composing new posts."
 msgstr "Tik naujiems vaizdams, kai kuriami nauji įrašai."
 
-#: src/pages/settings.jsx:643
+#: src/pages/settings.jsx:642
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr "Pastaba: ši funkcija naudoja išorinę DI paslaugą, veikiančią su <0>„img-alt-api“</0>. Gali veikti netinkamai. Tik vaizdams ir anglų kalba."
 
-#: src/pages/settings.jsx:671
+#: src/pages/settings.jsx:670
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr "„Debesis“ importuoti / eksportuoti trumpųjų nuorodų nustatymus"
 
-#: src/pages/settings.jsx:676
+#: src/pages/settings.jsx:675
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr "⚠️⚠️⚠️ Labai eksperimentinis.<0/>Įrašyta jūsų profilio pastabose. Profilio (privačios) pastabos daugiausia naudojamos kitiems profiliams, o savo profilyje yra paslėptos."
 
-#: src/pages/settings.jsx:687
+#: src/pages/settings.jsx:686
 msgid "Note: This feature uses currently-logged-in instance server API."
 msgstr "Pastaba: ši funkcija naudoja šiuo metu prisijungusio serverio API."
 
-#: src/pages/settings.jsx:704
+#: src/pages/settings.jsx:703
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "Slėpimo režimas <0>(<1>Tekstas</1> → <2>███████</2>)</0>"
 
-#: src/pages/settings.jsx:713
+#: src/pages/settings.jsx:712
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr "Pakeiskite tekstą blokais – tai naudinga darant ekrano kopijas dėl privatumo priežasčių."
 
-#: src/pages/settings.jsx:738
+#: src/pages/settings.jsx:737
 msgid "About"
 msgstr "Apie"
 
-#: src/pages/settings.jsx:777
+#: src/pages/settings.jsx:776
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr "<0>Sukūrė</0> <1>@cheeaun</1>"
 
-#: src/pages/settings.jsx:806
+#: src/pages/settings.jsx:805
 msgid "Sponsor"
 msgstr "Remti"
 
-#: src/pages/settings.jsx:814
+#: src/pages/settings.jsx:813
 msgid "Donate"
 msgstr "Aukoti"
 
-#: src/pages/settings.jsx:830
+#: src/pages/settings.jsx:829
 msgid "What's new"
 msgstr ""
 
-#: src/pages/settings.jsx:834
+#: src/pages/settings.jsx:833
 msgid "Privacy Policy"
 msgstr "Privatumo politika"
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:841
+#: src/pages/settings.jsx:840
 msgid "<0>Site:</0> {0}"
 msgstr "<0>Svetainė:</0> {0}"
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:848
+#: src/pages/settings.jsx:847
 msgid "<0>Version:</0> <1/> {0}"
 msgstr "<0>Versija:</0> <1/> {0}"
 
-#: src/pages/settings.jsx:863
+#: src/pages/settings.jsx:862
 msgid "Version string copied"
 msgstr "Nukopijuota versijos eilutė"
 
-#: src/pages/settings.jsx:866
+#: src/pages/settings.jsx:865
 msgid "Unable to copy version string"
 msgstr "Nepavyksta nukopijuoti versijos eilutės."
 
-#: src/pages/settings.jsx:1131
-#: src/pages/settings.jsx:1136
+#: src/pages/settings.jsx:1130
+#: src/pages/settings.jsx:1135
 msgid "Failed to update subscription. Please try again."
 msgstr "Nepavyko atnaujinti prenumeratos. Bandykite dar kartą."
 
-#: src/pages/settings.jsx:1142
+#: src/pages/settings.jsx:1141
 msgid "Failed to remove subscription. Please try again."
 msgstr "Nepavyko pašalinti prenumeratos. Bandykite dar kartą."
 
-#: src/pages/settings.jsx:1149
+#: src/pages/settings.jsx:1148
 msgid "Push Notifications (beta)"
 msgstr "Tiesioginiai pranešimai (beta versija)"
 
-#: src/pages/settings.jsx:1171
+#: src/pages/settings.jsx:1170
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "Tiesioginiai pranešimai yra užblokuoti. Įjunkite juos naršyklės nustatymuose."
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1180
+#: src/pages/settings.jsx:1179
 msgid "Allow from <0>{0}</0>"
 msgstr "Leisti iš <0>{0}</0>"
 
-#: src/pages/settings.jsx:1189
+#: src/pages/settings.jsx:1188
 msgid "anyone"
 msgstr "bet kieno"
 
-#: src/pages/settings.jsx:1193
+#: src/pages/settings.jsx:1192
 msgid "people I follow"
 msgstr "žmonių, kuriuos seku"
 
-#: src/pages/settings.jsx:1197
+#: src/pages/settings.jsx:1196
 msgid "followers"
 msgstr "sekėjų"
 
-#: src/pages/settings.jsx:1230
+#: src/pages/settings.jsx:1229
 msgid "Follows"
 msgstr "Sekimai"
 
-#: src/pages/settings.jsx:1238
+#: src/pages/settings.jsx:1237
 msgid "Polls"
 msgstr "Apklausos"
 
-#: src/pages/settings.jsx:1242
+#: src/pages/settings.jsx:1241
 msgid "Post edits"
 msgstr "Įrašų redagavimai"
 
-#: src/pages/settings.jsx:1263
+#: src/pages/settings.jsx:1262
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "Nuo paskutinio prisijungimo nebuvo suteiktas tiesioginis leidimas. Turėsite <0><1>prisijungti</1> dar kartą, kad suteiktumėte tiesioginį leidimą</0>."
 
-#: src/pages/settings.jsx:1279
+#: src/pages/settings.jsx:1278
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "Pastaba: tiesioginiai pranešimai veikia tik <0>vienai paskyrai</0>."
 

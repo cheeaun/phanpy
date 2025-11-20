@@ -336,9 +336,7 @@ function Settings({ onClose }) {
                       id="posting-quote-policy-field"
                       value={
                         prefs['posting:default:quote_policy'] ||
-                        disableQuotePolicy
-                          ? 'nobody'
-                          : 'public'
+                        (disableQuotePolicy ? 'nobody' : 'public')
                       }
                       disabled={disableQuotePolicy}
                       onChange={(e) => {
@@ -350,14 +348,12 @@ function Settings({ onClose }) {
                                 quote_policy: value,
                               },
                             });
-                            setPrefs({
+                            const newPrefs = {
                               ...prefs,
                               'posting:default:quote_policy': value,
-                            });
-                            setPreferences({
-                              ...prefs,
-                              'posting:default:quote_policy': value,
-                            });
+                            };
+                            setPrefs(newPrefs);
+                            setPreferences(newPrefs);
                           } catch (e) {
                             alert(t`Failed to update quote settings`);
                             console.error(e);

@@ -5,7 +5,6 @@ import { useEffect, useState } from 'preact/hooks';
 import { useParams } from 'react-router-dom';
 
 import Link from '../components/link';
-import Loader from '../components/loader';
 import NameText from '../components/name-text';
 import Status from '../components/status';
 import { api } from '../utils/api';
@@ -41,10 +40,8 @@ export default function AnnualReport() {
 
   return (
     <div id="annual-report-page" class="deck-container" tabIndex="-1">
-      <div class="report">
-        <h1>
-          {year} #Wrapstodon <Loader abrupt hidden={uiState !== 'loading'} />
-        </h1>
+      <div class={`report ${uiState === 'loading' ? 'loading-mask' : ''}`}>
+        <h1>{year} #Wrapstodon</h1>
         {!!report && (
           <dl>
             {Object.entries(report).map(([key, value]) => {

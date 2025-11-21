@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-20 06:17\n"
+"PO-Revision-Date: 2025-11-21 12:06\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -130,7 +130,7 @@ msgstr "嘟文"
 #: src/components/status.jsx:2930
 #: src/components/status.jsx:2933
 #: src/pages/account-statuses.jsx:544
-#: src/pages/accounts.jsx:118
+#: src/pages/accounts.jsx:127
 #: src/pages/hashtag.jsx:203
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
@@ -289,6 +289,8 @@ msgstr "查看嘟文统计"
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
 #: src/components/gif-picker-modal.jsx:71
+#: src/components/import-accounts-selection.jsx:81
+#: src/components/import-export-accounts.jsx:108
 #: src/components/keyboard-shortcuts-help.jsx:52
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
@@ -535,6 +537,7 @@ msgstr "内容警告"
 #: src/components/compose.jsx:1453
 #: src/components/compose.jsx:1599
 #: src/components/edit-profile-sheet.jsx:323
+#: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
 #: src/components/private-note-sheet.jsx:94
 #: src/components/quote-suggestion.jsx:35
@@ -889,6 +892,53 @@ msgstr "输入以搜索 GIF"
 #: src/components/gif-picker-modal.jsx:242
 msgid "Error loading GIFs"
 msgstr "加载 GIF 时出错"
+
+#: src/components/import-accounts-selection.jsx:86
+msgid "Select accounts to import"
+msgstr ""
+
+#: src/components/import-accounts-selection.jsx:117
+msgid "Select all"
+msgstr ""
+
+#: src/components/import-accounts-selection.jsx:158
+msgid "Existing"
+msgstr ""
+
+#: src/components/import-accounts-selection.jsx:183
+msgid "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:52
+msgid "Export failed"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:72
+msgid "Import failed"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:113
+msgid "Import/Export <0>Accounts</0>"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:128
+#: src/components/shortcuts-settings.jsx:800
+msgid "Import"
+msgstr "导入"
+
+#: src/components/import-export-accounts.jsx:149
+#: src/components/shortcuts-settings.jsx:1050
+msgid "Export"
+msgstr "导出"
+
+#. placeholder {0}: accounts.length
+#: src/components/import-export-accounts.jsx:153
+msgid "{0, plural, one {# account} other {# accounts}}"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:165
+msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
@@ -1272,23 +1322,23 @@ msgstr "打开文件"
 msgid "Search accounts"
 msgstr "搜索账户"
 
-#: src/components/modals.jsx:88
+#: src/components/modals.jsx:89
 msgid "Post scheduled"
 msgstr "已设置定时发送"
 
-#: src/components/modals.jsx:89
+#: src/components/modals.jsx:90
 msgid "Post published. Check it out."
 msgstr "嘟文已发布。点击查看。"
 
-#: src/components/modals.jsx:91
+#: src/components/modals.jsx:92
 msgid "Reply scheduled"
 msgstr "已设置定时回复"
 
-#: src/components/modals.jsx:92
+#: src/components/modals.jsx:93
 msgid "Reply posted. Check it out."
 msgstr "回复已发送。点击查看。"
 
-#: src/components/modals.jsx:93
+#: src/components/modals.jsx:94
 msgid "Post updated. Check it out."
 msgstr "嘟文已更新。点击查看。"
 
@@ -2279,12 +2329,12 @@ msgid "Not available in current view mode"
 msgstr "在当前视图模式下不可用"
 
 #: src/components/shortcuts-settings.jsx:352
-#: src/pages/accounts.jsx:188
+#: src/pages/accounts.jsx:197
 msgid "Move up"
 msgstr "向上移动"
 
 #: src/components/shortcuts-settings.jsx:368
-#: src/pages/accounts.jsx:203
+#: src/pages/accounts.jsx:212
 msgid "Move down"
 msgstr "向下移动"
 
@@ -2319,6 +2369,7 @@ msgid "Max {SHORTCUTS_LIMIT} shortcuts"
 msgstr "最多 {SHORTCUTS_LIMIT} 个快捷方式"
 
 #: src/components/shortcuts-settings.jsx:459
+#: src/pages/accounts.jsx:306
 msgid "Import/export"
 msgstr "导入/导出"
 
@@ -2361,10 +2412,6 @@ msgstr "列表"
 #: src/components/shortcuts-settings.jsx:790
 msgid "Import/Export <0>Shortcuts</0>"
 msgstr "导入/导出 <0>快捷方式</0>"
-
-#: src/components/shortcuts-settings.jsx:800
-msgid "Import"
-msgstr "导入"
 
 #: src/components/shortcuts-settings.jsx:808
 msgid "Paste shortcuts here"
@@ -2434,10 +2481,6 @@ msgstr "或覆盖…"
 #: src/components/shortcuts-settings.jsx:1041
 msgid "Import…"
 msgstr "导入…"
-
-#: src/components/shortcuts-settings.jsx:1050
-msgid "Export"
-msgstr "导出"
 
 #: src/components/shortcuts-settings.jsx:1065
 msgid "Shortcuts copied"
@@ -3044,49 +3087,53 @@ msgstr "切换到我的实例 (<0>{currentInstance}</0>)"
 msgid "Month"
 msgstr "月"
 
-#: src/pages/accounts.jsx:64
+#: src/pages/accounts.jsx:65
 msgid "Current"
 msgstr "当前账号"
 
-#: src/pages/accounts.jsx:110
+#: src/pages/accounts.jsx:113
+msgid "Logged out"
+msgstr ""
+
+#: src/pages/accounts.jsx:119
 msgid "Default"
 msgstr "默认"
 
-#: src/pages/accounts.jsx:132
+#: src/pages/accounts.jsx:141
 msgid "Switch to this account"
 msgstr "切换到此账户"
 
-#: src/pages/accounts.jsx:141
+#: src/pages/accounts.jsx:150
 msgid "Switch in new tab/window"
 msgstr "在新标签页/窗口中切换"
 
-#: src/pages/accounts.jsx:155
+#: src/pages/accounts.jsx:164
 msgid "View profile…"
 msgstr "查看个人资料…"
 
-#: src/pages/accounts.jsx:173
+#: src/pages/accounts.jsx:182
 msgid "Set as default"
 msgstr "设为默认账号"
 
 #. placeholder {0}: account.info.acct
-#: src/pages/accounts.jsx:215
+#: src/pages/accounts.jsx:224
 msgid "Log out <0>@{0}</0>?"
 msgstr "是否退出 <0>@{0}</0>？"
 
-#: src/pages/accounts.jsx:253
+#: src/pages/accounts.jsx:262
 msgid "Log out…"
 msgstr "登出…"
 
 #. placeholder {0}: niceDateTime(account.createdAt)
-#: src/pages/accounts.jsx:260
+#: src/pages/accounts.jsx:269
 msgid "Connected on {0} (<0/>)"
 msgstr "在 {0} (<0/>) 建立连接"
 
-#: src/pages/accounts.jsx:277
+#: src/pages/accounts.jsx:286
 msgid "Add an existing account"
 msgstr "添加现有账号"
 
-#: src/pages/accounts.jsx:284
+#: src/pages/accounts.jsx:293
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr "注意: 首次加载时始终使用<0>默认</0>帐户。当前帐户被切换后将在会话期间保持有效。"
 

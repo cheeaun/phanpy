@@ -14,6 +14,7 @@ import ComposeSuspense, { preload } from './compose-suspense';
 import Drafts from './drafts';
 import EmbedModal from './embed-modal';
 import GenericAccounts from './generic-accounts';
+import ImportExportAccounts from './import-export-accounts';
 import MediaAltModal from './media-alt-modal';
 import MediaModal from './media-modal';
 import Modal from './modal';
@@ -315,6 +316,24 @@ export default function Modals() {
               }
               states.showQrScannerModal = false;
             }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showImportExportAccounts && (
+        <Modal
+          onClose={() => {
+            states.showImportExportAccounts = false;
+          }}
+        >
+          <ImportExportAccounts
+            onClose={() => {
+              states.showImportExportAccounts = false;
+            }}
+            exportDisabled={
+              typeof snapStates.showImportExportAccounts === 'object'
+                ? snapStates.showImportExportAccounts.exportDisabled
+                : false
+            }
           />
         </Modal>
       )}

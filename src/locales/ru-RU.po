@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-21 12:06\n"
+"PO-Revision-Date: 2025-11-21 13:38\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -895,31 +895,31 @@ msgstr "Ошибка поиска GIF-анимаций"
 
 #: src/components/import-accounts-selection.jsx:86
 msgid "Select accounts to import"
-msgstr ""
+msgstr "Выберите аккаунты для импорта"
 
 #: src/components/import-accounts-selection.jsx:117
 msgid "Select all"
-msgstr ""
+msgstr "Выбрать все"
 
 #: src/components/import-accounts-selection.jsx:158
 msgid "Existing"
-msgstr ""
+msgstr "Существующие"
 
 #: src/components/import-accounts-selection.jsx:183
 msgid "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
-msgstr ""
+msgstr "{selectedCount, plural, one {Импортировать # аккаунт} other {Импортировать # аккаунты}}"
 
 #: src/components/import-export-accounts.jsx:52
 msgid "Export failed"
-msgstr ""
+msgstr "Экспорт не удался"
 
 #: src/components/import-export-accounts.jsx:72
 msgid "Import failed"
-msgstr ""
+msgstr "Импорт не удался"
 
 #: src/components/import-export-accounts.jsx:113
 msgid "Import/Export <0>Accounts</0>"
-msgstr ""
+msgstr "Импорт/Экспорт <0>Аккаунтов</0>"
 
 #: src/components/import-export-accounts.jsx:128
 #: src/components/shortcuts-settings.jsx:800
@@ -934,11 +934,11 @@ msgstr "Экспорт"
 #. placeholder {0}: accounts.length
 #: src/components/import-export-accounts.jsx:153
 msgid "{0, plural, one {# account} other {# accounts}}"
-msgstr ""
+msgstr "{0, plural, one {# аккаунт} other {# аккаунты}}"
 
 #: src/components/import-export-accounts.jsx:165
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
-msgstr ""
+msgstr "Вход в систему или доступ к аккаунтам не хранится в экспортированных файлах. Вам нужно будет снова войти в систему для каждого аккаунта после импорта."
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
@@ -3093,7 +3093,7 @@ msgstr "Текущий"
 
 #: src/pages/accounts.jsx:113
 msgid "Logged out"
-msgstr ""
+msgstr "Вы вышли"
 
 #: src/pages/accounts.jsx:119
 msgid "Default"
@@ -4058,11 +4058,11 @@ msgstr "Синхронизировано"
 
 #: src/pages/settings.jsx:311
 msgid "Default visibility updated"
-msgstr ""
+msgstr "Видимость по умолчанию обновлена"
 
 #: src/pages/settings.jsx:313
 msgid "Failed to update default visibility"
-msgstr ""
+msgstr "Не удалось обновить видимость по умолчанию"
 
 #: src/pages/settings.jsx:384
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-20 06:17\n"
+"PO-Revision-Date: 2025-11-21 12:05\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -130,7 +130,7 @@ msgstr "Įrašai"
 #: src/components/status.jsx:2930
 #: src/components/status.jsx:2933
 #: src/pages/account-statuses.jsx:544
-#: src/pages/accounts.jsx:118
+#: src/pages/accounts.jsx:127
 #: src/pages/hashtag.jsx:203
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
@@ -289,6 +289,8 @@ msgstr "Peržiūrėti įrašų statistiką"
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
 #: src/components/gif-picker-modal.jsx:71
+#: src/components/import-accounts-selection.jsx:81
+#: src/components/import-export-accounts.jsx:108
 #: src/components/keyboard-shortcuts-help.jsx:52
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
@@ -535,6 +537,7 @@ msgstr "Turinio įspėjimas"
 #: src/components/compose.jsx:1453
 #: src/components/compose.jsx:1599
 #: src/components/edit-profile-sheet.jsx:323
+#: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
 #: src/components/private-note-sheet.jsx:94
 #: src/components/quote-suggestion.jsx:35
@@ -889,6 +892,53 @@ msgstr "Rašyk, kad ieškotum GIF"
 #: src/components/gif-picker-modal.jsx:242
 msgid "Error loading GIFs"
 msgstr "Klaida įkeliant GIF."
+
+#: src/components/import-accounts-selection.jsx:86
+msgid "Select accounts to import"
+msgstr ""
+
+#: src/components/import-accounts-selection.jsx:117
+msgid "Select all"
+msgstr ""
+
+#: src/components/import-accounts-selection.jsx:158
+msgid "Existing"
+msgstr ""
+
+#: src/components/import-accounts-selection.jsx:183
+msgid "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:52
+msgid "Export failed"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:72
+msgid "Import failed"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:113
+msgid "Import/Export <0>Accounts</0>"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:128
+#: src/components/shortcuts-settings.jsx:800
+msgid "Import"
+msgstr "Importuoti"
+
+#: src/components/import-export-accounts.jsx:149
+#: src/components/shortcuts-settings.jsx:1050
+msgid "Export"
+msgstr "Eksportuoti"
+
+#. placeholder {0}: accounts.length
+#: src/components/import-export-accounts.jsx:153
+msgid "{0, plural, one {# account} other {# accounts}}"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:165
+msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
@@ -1272,23 +1322,23 @@ msgstr "Atverti failą"
 msgid "Search accounts"
 msgstr "Ieškoti paskyrų"
 
-#: src/components/modals.jsx:88
+#: src/components/modals.jsx:89
 msgid "Post scheduled"
 msgstr "Įrašas suplanuotas"
 
-#: src/components/modals.jsx:89
+#: src/components/modals.jsx:90
 msgid "Post published. Check it out."
 msgstr "Įrašas paskelbtas. Peržiūrėk."
 
-#: src/components/modals.jsx:91
+#: src/components/modals.jsx:92
 msgid "Reply scheduled"
 msgstr "Atsakymas suplanuotas"
 
-#: src/components/modals.jsx:92
+#: src/components/modals.jsx:93
 msgid "Reply posted. Check it out."
 msgstr "Atsakymas paskelbtas. Peržiūrėk."
 
-#: src/components/modals.jsx:93
+#: src/components/modals.jsx:94
 msgid "Post updated. Check it out."
 msgstr "Įrašas atnaujintas. Peržiūrėk."
 
@@ -2279,12 +2329,12 @@ msgid "Not available in current view mode"
 msgstr "Nepasiekiama dabartiniame rodinio režime."
 
 #: src/components/shortcuts-settings.jsx:352
-#: src/pages/accounts.jsx:188
+#: src/pages/accounts.jsx:197
 msgid "Move up"
 msgstr "Perkelti aukštyn"
 
 #: src/components/shortcuts-settings.jsx:368
-#: src/pages/accounts.jsx:203
+#: src/pages/accounts.jsx:212
 msgid "Move down"
 msgstr "Perkelti žemyn"
 
@@ -2319,6 +2369,7 @@ msgid "Max {SHORTCUTS_LIMIT} shortcuts"
 msgstr "Didžiausias {SHORTCUTS_LIMIT} trumpųjų nuorodų skaičius"
 
 #: src/components/shortcuts-settings.jsx:459
+#: src/pages/accounts.jsx:306
 msgid "Import/export"
 msgstr "Importuoti / eksportuoti"
 
@@ -2361,10 +2412,6 @@ msgstr "Sąrašas"
 #: src/components/shortcuts-settings.jsx:790
 msgid "Import/Export <0>Shortcuts</0>"
 msgstr "Importuoti / eksportuoti <0>trumposios nuorodos</0>"
-
-#: src/components/shortcuts-settings.jsx:800
-msgid "Import"
-msgstr "Importuoti"
 
 #: src/components/shortcuts-settings.jsx:808
 msgid "Paste shortcuts here"
@@ -2434,10 +2481,6 @@ msgstr "arba perrašyti…"
 #: src/components/shortcuts-settings.jsx:1041
 msgid "Import…"
 msgstr "Importuoti…"
-
-#: src/components/shortcuts-settings.jsx:1050
-msgid "Export"
-msgstr "Eksportuoti"
 
 #: src/components/shortcuts-settings.jsx:1065
 msgid "Shortcuts copied"
@@ -3044,49 +3087,53 @@ msgstr "Perjungti į mano serverį (<0>{currentInstance}</0>)"
 msgid "Month"
 msgstr "Mėnuo"
 
-#: src/pages/accounts.jsx:64
+#: src/pages/accounts.jsx:65
 msgid "Current"
 msgstr "Dabartinė"
 
-#: src/pages/accounts.jsx:110
+#: src/pages/accounts.jsx:113
+msgid "Logged out"
+msgstr ""
+
+#: src/pages/accounts.jsx:119
 msgid "Default"
 msgstr "Numatyta"
 
-#: src/pages/accounts.jsx:132
+#: src/pages/accounts.jsx:141
 msgid "Switch to this account"
 msgstr "Perjungti į šią paskyrą"
 
-#: src/pages/accounts.jsx:141
+#: src/pages/accounts.jsx:150
 msgid "Switch in new tab/window"
 msgstr "Perjungti naujame skirtuke / lange"
 
-#: src/pages/accounts.jsx:155
+#: src/pages/accounts.jsx:164
 msgid "View profile…"
 msgstr "Peržiūrėti profilį…"
 
-#: src/pages/accounts.jsx:173
+#: src/pages/accounts.jsx:182
 msgid "Set as default"
 msgstr "Nustatyti kaip numatytąjį"
 
 #. placeholder {0}: account.info.acct
-#: src/pages/accounts.jsx:215
+#: src/pages/accounts.jsx:224
 msgid "Log out <0>@{0}</0>?"
 msgstr "Atsijungti iš <0>@{0}</0>?"
 
-#: src/pages/accounts.jsx:253
+#: src/pages/accounts.jsx:262
 msgid "Log out…"
 msgstr "Atsijungti…"
 
 #. placeholder {0}: niceDateTime(account.createdAt)
-#: src/pages/accounts.jsx:260
+#: src/pages/accounts.jsx:269
 msgid "Connected on {0} (<0/>)"
 msgstr "Prijungta prie {0} (<0/>)"
 
-#: src/pages/accounts.jsx:277
+#: src/pages/accounts.jsx:286
 msgid "Add an existing account"
 msgstr "Pridėti esančią paskyrą"
 
-#: src/pages/accounts.jsx:284
+#: src/pages/accounts.jsx:293
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr "Pastaba: <0>Numatytoji</0> paskyra visada bus naudojama pirmajam įkėlimui. Perjungtos paskyros išliks seanso metu."
 

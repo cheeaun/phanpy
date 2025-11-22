@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-22 02:37\n"
+"PO-Revision-Date: 2025-11-22 04:41\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -64,7 +64,7 @@ msgstr "フォローされています"
 
 #: src/components/account-block.jsx:207
 msgid "{followersCount, plural, one {# follower} other {# followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {# フォロワー} other {# フォロワー}}"
 
 #: src/components/account-block.jsx:216
 #: src/components/account-info.jsx:765
@@ -142,7 +142,7 @@ msgstr "その他"
 
 #: src/components/account-info.jsx:463
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
-msgstr ""
+msgstr "<0>{displayName}</0>の新しいアカウント:"
 
 #: src/components/account-info.jsx:608
 #: src/components/related-actions.jsx:491
@@ -197,18 +197,18 @@ msgstr "このユーザーはこの情報を利用できないように選択し
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info.jsx:814
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> フォロワー} other {<1>{1}</1> フォロワー}}"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:858
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr ""
+msgstr "{followingCount, plural, other {<0>{0}</0> フォロー}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info.jsx:882
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr ""
+msgstr "{statusesCount, plural, one {<0>{0}</0> 投稿} other {<1>{1}</1> 投稿}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -216,14 +216,14 @@ msgstr ""
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:939
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
-msgstr ""
+msgstr "{0} 投稿、 {1} 返信、 {2} 引用、 {3} ブースト"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:956
 msgid "{0} original posts, {1} replies, {2} boosts"
-msgstr ""
+msgstr "{0} 投稿、 {1} 返信、 {2} ブースト"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.daysSinceLastPost
@@ -397,7 +397,7 @@ msgstr "スレッドに追加する"
 #. placeholder {0}: i + 1
 #: src/components/compose-poll.jsx:43
 msgid "Choice {0}"
-msgstr ""
+msgstr "選択肢 {0}"
 
 #: src/components/compose-poll.jsx:64
 #: src/components/media-attachment.jsx:318
@@ -449,7 +449,7 @@ msgstr "投票を追加"
 
 #: src/components/compose.jsx:115
 msgid "Add content warning"
-msgstr ""
+msgstr "CWを追加"
 
 #: src/components/compose.jsx:116
 msgid "Schedule post"
@@ -483,15 +483,15 @@ msgstr "最小化"
 
 #: src/components/compose.jsx:1076
 msgid "Looks like you closed the parent window."
-msgstr ""
+msgstr "親ウィンドウを閉じたようです。"
 
 #: src/components/compose.jsx:1083
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
-msgstr ""
+msgstr "親ウィンドウで編集画面が開いており、現在公開中のようです。 完了するまで待ってからもう一度やり直してください。"
 
 #: src/components/compose.jsx:1088
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr ""
+msgstr "すでに親ウィンドウで編集画面が開いているようです。 このウィンドウを開くと、親ウィンドウで行った変更が破棄されます。続けますか？"
 
 #: src/components/compose.jsx:1134
 msgid "Pop in"
@@ -501,20 +501,20 @@ msgstr "ポップイン"
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
 #: src/components/compose.jsx:1144
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr ""
+msgstr "@{0}の投稿に返信します (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #: src/components/compose.jsx:1154
 msgid "Replying to @{0}’s post"
-msgstr ""
+msgstr "@{0}の投稿に返信します"
 
 #: src/components/compose.jsx:1167
 msgid "Editing source post"
-msgstr ""
+msgstr "元の投稿を編集しています"
 
 #: src/components/compose.jsx:1236
 msgid "Poll must have at least 2 options"
-msgstr ""
+msgstr "投票には少なくとも2つの選択肢が必要です"
 
 #: src/components/compose.jsx:1240
 msgid "Some poll choices are empty"
@@ -526,7 +526,7 @@ msgstr "一部のメディアには説明がありません。続行しますか
 
 #: src/components/compose.jsx:1305
 msgid "Attachment #{i} failed"
-msgstr ""
+msgstr "ファイル #{i} の添付に失敗しました"
 
 #: src/components/compose.jsx:1432
 #: src/components/status.jsx:2426
@@ -554,7 +554,7 @@ msgstr "投稿を編集する"
 
 #: src/components/compose.jsx:1465
 msgid "Ask a question"
-msgstr ""
+msgstr "質問する"
 
 #: src/components/compose.jsx:1466
 msgid "What are you doing?"
@@ -566,7 +566,7 @@ msgstr "メディアを閲覧注意にする"
 
 #: src/components/compose.jsx:1579
 msgid "Posting on <0/>"
-msgstr ""
+msgstr "投稿日時"
 
 #: src/components/compose.jsx:1881
 #: src/components/quote-settings-sheet.jsx:82
@@ -580,18 +580,18 @@ msgstr "誰でも引用可能"
 #: src/components/status.jsx:298
 #: src/pages/settings.jsx:371
 msgid "Your followers can quote"
-msgstr ""
+msgstr "あなたのフォロワーが引用可能"
 
 #: src/components/compose.jsx:1887
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:299
 #: src/pages/settings.jsx:374
 msgid "Only you can quote"
-msgstr ""
+msgstr "あなただけが引用可能"
 
 #: src/components/compose.jsx:1927
 msgid "Quotes can't be embedded in private mentions."
-msgstr ""
+msgstr "引用を非公開メンションに含めることはできません。"
 
 #: src/components/compose.jsx:1949
 #: src/pages/settings.jsx:320
@@ -610,7 +610,7 @@ msgstr "ローカル"
 #: src/pages/settings.jsx:323
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
-msgstr ""
+msgstr "ひかえめな公開"
 
 #: src/components/compose.jsx:1964
 #: src/components/status.jsx:2306
@@ -620,7 +620,7 @@ msgstr "非公開の返信"
 
 #: src/components/compose.jsx:2016
 msgid "Schedule"
-msgstr ""
+msgstr "予約する"
 
 #: src/components/compose.jsx:2018
 #: src/components/keyboard-shortcuts-help.jsx:164
@@ -653,7 +653,7 @@ msgstr "GIF のダウンロードに失敗しました"
 #. placeholder {0}: i18n.number(emojis.length - max)
 #: src/components/custom-emojis-modal.jsx:103
 msgid "{0} more…"
-msgstr ""
+msgstr "{0} more…"
 
 #: src/components/custom-emojis-modal.jsx:276
 msgid "Custom emojis"
@@ -690,7 +690,7 @@ msgstr "未送信の下書き"
 
 #: src/components/drafts.jsx:67
 msgid "Looks like you have unsent drafts. Let's continue where you left off."
-msgstr ""
+msgstr "未送信の下書きがあります。中断したところから再開しましょう。"
 
 #: src/components/drafts.jsx:101
 msgid "Delete this draft?"
@@ -714,7 +714,7 @@ msgstr "返信の取得中にエラーが発生しました！"
 
 #: src/components/drafts.jsx:159
 msgid "Error fetching quoted status!"
-msgstr ""
+msgstr "引用の取得中にエラーが発生しました"
 
 #: src/components/drafts.jsx:187
 msgid "Delete all drafts?"
@@ -750,7 +750,7 @@ msgstr "引用"
 
 #: src/components/edit-history-controls.jsx:21
 msgid "Edit History Snapshots"
-msgstr ""
+msgstr "履歴スナップショットの編集"
 
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:207
@@ -887,7 +887,7 @@ msgstr "Powered by GIPHY"
 
 #: src/components/gif-picker-modal.jsx:109
 msgid "Type to search GIFs"
-msgstr ""
+msgstr "入力して検索"
 
 #: src/components/gif-picker-modal.jsx:242
 msgid "Error loading GIFs"
@@ -903,11 +903,11 @@ msgstr "すべて選択"
 
 #: src/components/import-accounts-selection.jsx:158
 msgid "Existing"
-msgstr ""
+msgstr "既存"
 
 #: src/components/import-accounts-selection.jsx:183
 msgid "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
-msgstr ""
+msgstr "{selectedCount, plural, other {#アカウントをインポート}}"
 
 #: src/components/import-export-accounts.jsx:52
 msgid "Export failed"
@@ -919,7 +919,7 @@ msgstr "インポートに失敗しました"
 
 #: src/components/import-export-accounts.jsx:113
 msgid "Import/Export <0>Accounts</0>"
-msgstr ""
+msgstr "<0>アカウント</0> のインポート/エクスポート "
 
 #: src/components/import-export-accounts.jsx:128
 #: src/components/shortcuts-settings.jsx:800
@@ -934,15 +934,15 @@ msgstr "エクスポート"
 #. placeholder {0}: accounts.length
 #: src/components/import-export-accounts.jsx:153
 msgid "{0, plural, one {# account} other {# accounts}}"
-msgstr ""
+msgstr "{0, plural, other {# アカウント}}"
 
 #: src/components/import-export-accounts.jsx:165
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
-msgstr ""
+msgstr "エクスポートされたファイルにはログイン情報やアカウントへのアクセス情報は保存されません。インポート後、各アカウントに再度ログインする必要があります。"
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
-msgstr ""
+msgstr "<0>{key1}</0> の後に <1>{key2}</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:56
 #: src/components/nav-menu.jsx:368
@@ -1015,11 +1015,11 @@ msgstr "<0>1</0> から <1>9</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:130
 msgid "Focus next column in multi-column mode"
-msgstr ""
+msgstr "マルチカラムモードで次の列にフォーカス"
 
 #: src/components/keyboard-shortcuts-help.jsx:134
 msgid "Focus previous column in multi-column mode"
-msgstr ""
+msgstr "マルチカラムモードで前の列にフォーカス"
 
 #: src/components/keyboard-shortcuts-help.jsx:138
 msgid "Compose new post"
@@ -1146,7 +1146,7 @@ msgstr "リストを削除できません。"
 #: src/pages/list.jsx:179
 #: src/pages/lists.jsx:107
 msgid "Posts on this list are hidden from Home/Following"
-msgstr ""
+msgstr "このリストの投稿はホーム/フォロー中カラムから非表示になります"
 
 #: src/components/math-block.jsx:132
 msgid "Unable to format math"
@@ -1159,7 +1159,7 @@ msgstr "数式が見つかりました。"
 #. Action to switch from rendered math back to raw (LaTeX) markup
 #: src/components/math-block.jsx:149
 msgid "Show markup"
-msgstr ""
+msgstr "マークアップを表示"
 
 #. Action to render math expressions from raw (LaTeX) markup
 #: src/components/math-block.jsx:154
@@ -1181,7 +1181,7 @@ msgstr "翻訳"
 #: src/components/media-alt-modal.jsx:78
 #: src/components/status.jsx:1313
 msgid "Speak"
-msgstr ""
+msgstr "読み上げ"
 
 #: src/components/media-attachment.jsx:168
 msgid "Uploaded"
@@ -1206,7 +1206,7 @@ msgstr "音声の説明"
 #: src/components/media-attachment.jsx:218
 #: src/components/media-attachment.jsx:238
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
-msgstr ""
+msgstr "容量が大きすぎます。アップロード時に問題が発生する可能性があります。 {0} から {1} 以下に減らしてみてください。"
 
 #. placeholder {0}: i18n.number( width, )
 #. placeholder {1}: i18n.number(height)
@@ -1282,15 +1282,15 @@ msgstr "元のメディアを開く"
 
 #: src/components/media-modal.jsx:394
 msgid "Attempting to describe image. Please wait…"
-msgstr ""
+msgstr "画像を説明しています。お待ちください…"
 
 #: src/components/media-modal.jsx:409
 msgid "Failed to describe image"
-msgstr ""
+msgstr "画像の説明に失敗しました"
 
 #: src/components/media-modal.jsx:419
 msgid "Describe image…"
-msgstr ""
+msgstr "画像を説明する"
 
 #: src/components/media-modal.jsx:443
 msgid "View post"
@@ -1302,7 +1302,7 @@ msgstr "センシティブなメディア"
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
-msgstr ""
+msgstr "フィルターされました: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
@@ -1324,23 +1324,23 @@ msgstr "アカウントを検索"
 
 #: src/components/modals.jsx:89
 msgid "Post scheduled"
-msgstr ""
+msgstr "投稿を予約しました"
 
 #: src/components/modals.jsx:90
 msgid "Post published. Check it out."
-msgstr ""
+msgstr "公開しました。チェックしてみてください。"
 
 #: src/components/modals.jsx:92
 msgid "Reply scheduled"
-msgstr ""
+msgstr "返信を予約しました"
 
 #: src/components/modals.jsx:93
 msgid "Reply posted. Check it out."
-msgstr ""
+msgstr "返信を予約しました。チェックしてみてください。"
 
 #: src/components/modals.jsx:94
 msgid "Post updated. Check it out."
-msgstr ""
+msgstr "投稿を更新しました。チェックしてみてください。"
 
 #: src/components/nav-menu.jsx:123
 msgid "Menu"
@@ -1525,12 +1525,12 @@ msgstr "{account} が投稿を公開しました。"
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:90
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} が返信をブーストしました。} other {{account} が投稿をブーストしました。}}} other {{account} が {postsCount}件ブーストしました。}}} other {{postType, select, reply {<0><1>{0}</1>人が</0> 返信をブーストしました。} other {<2><3>{1}</3> 人が</2> 投稿をブーストしました。}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:133
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
-msgstr ""
+msgstr "{count, plural, =1 {{account} があなたをフォローしました。} other {<0><1>{0}</1> 人</0>があなたをフォローしました。}}"
 
 #: src/components/notification.jsx:147
 msgid "{account} requested to follow you."
@@ -1566,11 +1566,11 @@ msgstr "あなたが交流した投稿が編集されました。"
 #. placeholder {1}: shortenNumber(count)
 #: src/components/notification.jsx:214
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} から返信をお気に入りされました。} other {{account} から投稿をお気に入りされました。}}} other {{account} から {postsCount} 件の投稿にお気に入りされました。}}} other {{postType, select, reply {<0><1>{0}</1> 人</0>から返信にお気に入りされました。} other {<2><3>{1}</3> 人</2> から投稿にお気に入りされました。}}}}"
 
 #: src/components/notification.jsx:257
 msgid "{account} edited a post you have quoted."
-msgstr ""
+msgstr "{account} があなたが引用した投稿を編集しました。"
 
 #: src/components/notification.jsx:259
 msgid "{account} signed up."
@@ -1590,7 +1590,7 @@ msgstr "モデレーション警告"
 
 #: src/components/notification.jsx:277
 msgid "Your {year} #Wrapstodon is here!"
-msgstr ""
+msgstr "Your {year} #Wrapstodon is here!"
 
 #: src/components/notification.jsx:283
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
@@ -1602,7 +1602,7 @@ msgstr "<0>{from}</0>の管理者が<1>{targetName}</1>をブロックしまし�
 
 #: src/components/notification.jsx:295
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
-msgstr ""
+msgstr "<0>{targetName}</0>をブロックしました。削除されたフォロワー: {followersCount}, フォロー: {followingCount}."
 
 #: src/components/notification.jsx:303
 msgid "Your account has received a moderation warning."
@@ -1614,15 +1614,15 @@ msgstr "あなたのアカウントは無効になっています。"
 
 #: src/components/notification.jsx:305
 msgid "Some of your posts have been marked as sensitive."
-msgstr ""
+msgstr "あなたの投稿の一部がセンシティブとして判定されています。"
 
 #: src/components/notification.jsx:306
 msgid "Some of your posts have been deleted."
-msgstr ""
+msgstr "あなたの投稿の一部が削除されました。"
 
 #: src/components/notification.jsx:307
 msgid "Your posts will be marked as sensitive from now on."
-msgstr ""
+msgstr "今後あなたの投稿はセンシティブとしてマークされます。"
 
 #: src/components/notification.jsx:308
 msgid "Your account has been limited."
@@ -1630,7 +1630,7 @@ msgstr "あなたのアカウントは制限されています。"
 
 #: src/components/notification.jsx:309
 msgid "Your account has been suspended."
-msgstr ""
+msgstr "あなたのアカウントはサスペンドされました。"
 
 #: src/components/notification.jsx:386
 msgid "[Unknown notification type: {type}]"
@@ -1640,28 +1640,28 @@ msgstr "[不明な通知タイプ: {type}]"
 #: src/components/status.jsx:1242
 #: src/components/status.jsx:1252
 msgid "Boosted/Liked by…"
-msgstr ""
+msgstr "ブースト/お気に入りしたユーザー"
 
 #: src/components/notification.jsx:464
 msgid "Liked by…"
-msgstr ""
+msgstr "お気に入りしたユーザー"
 
 #: src/components/notification.jsx:465
 msgid "Boosted by…"
-msgstr ""
+msgstr "ブーストしたユーザー"
 
 #: src/components/notification.jsx:466
 msgid "Followed by…"
-msgstr ""
+msgstr "フォローされています"
 
 #: src/components/notification.jsx:547
 #: src/components/notification.jsx:563
 msgid "Learn more <0/>"
-msgstr ""
+msgstr "詳細 <0/>"
 
 #: src/components/notification.jsx:572
 msgid "View #Wrapstodon"
-msgstr ""
+msgstr "#Wrapstodon を表示"
 
 #: src/components/notification.jsx:813
 #: src/components/status.jsx:260
@@ -1682,7 +1682,7 @@ msgstr "リンクをコピーできません"
 
 #: src/components/open-link-sheet.jsx:56
 msgid "Open link?"
-msgstr ""
+msgstr "リンクを開く"
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
@@ -1708,7 +1708,7 @@ msgstr "投票済み"
 
 #: src/components/poll.jsx:119
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
-msgstr ""
+msgstr "{optionVotesCount, plural, other {#投票}}"
 
 #: src/components/poll.jsx:139
 #: src/components/poll.jsx:222
@@ -1776,52 +1776,52 @@ msgstr "HTMLコードをコピーしました"
 
 #: src/components/post-embed-modal.jsx:226
 msgid "Unable to copy HTML code"
-msgstr ""
+msgstr "HTMLコードをコピーできません"
 
 #: src/components/post-embed-modal.jsx:238
 msgid "Media attachments:"
-msgstr ""
+msgstr "メディアの添付"
 
 #: src/components/post-embed-modal.jsx:260
 msgid "Account Emojis:"
-msgstr ""
+msgstr "アカウントの絵文字"
 
 #: src/components/post-embed-modal.jsx:291
 #: src/components/post-embed-modal.jsx:336
 msgid "static URL"
-msgstr ""
+msgstr "静的 URL"
 
 #: src/components/post-embed-modal.jsx:305
 msgid "Emojis:"
-msgstr ""
+msgstr "絵文字"
 
 #: src/components/post-embed-modal.jsx:350
 msgid "Notes:"
-msgstr ""
+msgstr "注"
 
 #: src/components/post-embed-modal.jsx:354
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
-msgstr ""
+msgstr "これは静的でスタイルやスクリプトもありません。必要に応じて独自のスタイルを適用して編集する必要があります。"
 
 #: src/components/post-embed-modal.jsx:360
 msgid "Polls are not interactive, becomes a list with vote counts."
-msgstr ""
+msgstr "投票はインタラクティブではなく、投票数のリストになります。"
 
 #: src/components/post-embed-modal.jsx:365
 msgid "Media attachments can be images, videos, audios or any file types."
-msgstr ""
+msgstr "メディアは、画像、動画、音声、または任意のファイルを添付することができます。"
 
 #: src/components/post-embed-modal.jsx:371
 msgid "Post could be edited or deleted later."
-msgstr ""
+msgstr "投稿は後で編集または削除できます。"
 
 #: src/components/post-embed-modal.jsx:377
 msgid "Preview"
-msgstr ""
+msgstr "プレビュー"
 
 #: src/components/post-embed-modal.jsx:386
 msgid "Note: This preview is lightly styled."
-msgstr ""
+msgstr "注: このプレビューは軽くスタイル付けされています。"
 
 #. placeholder {0}: account?.username || account?.acct
 #: src/components/private-note-sheet.jsx:41
@@ -1830,7 +1830,7 @@ msgstr "<0>@{0}</0> に関するプライベートメモ"
 
 #: src/components/private-note-sheet.jsx:71
 msgid "Unable to update private note."
-msgstr ""
+msgstr "プライベートメモを更新できませんでした。"
 
 #: src/components/private-note-sheet.jsx:99
 msgid "Save & close"
@@ -1839,71 +1839,71 @@ msgstr "保存して終了"
 #: src/components/qr-code-modal.jsx:26
 #: src/components/shortcuts-settings.jsx:833
 msgid "Scan QR code"
-msgstr ""
+msgstr "QRコードをスキャン"
 
 #: src/components/qr-scanner-modal.jsx:263
 msgid "Unable to access camera. Please check permissions."
-msgstr ""
+msgstr "カメラにアクセスできません。権限を確認してください。"
 
 #: src/components/quote-settings-sheet.jsx:37
 #: src/pages/settings.jsx:359
 msgid "Quote settings updated"
-msgstr ""
+msgstr "引用設定が更新されました"
 
 #: src/components/quote-settings-sheet.jsx:47
 #: src/pages/settings.jsx:361
 msgid "Failed to update quote settings"
-msgstr ""
+msgstr "引用設定の更新に失敗しました"
 
 #: src/components/quote-settings-sheet.jsx:66
 msgid "Quote settings for this post"
-msgstr ""
+msgstr "この投稿の引用設定"
 
 #: src/components/quote-suggestion.jsx:19
 msgid "Turn link into a quote?"
-msgstr ""
+msgstr "リンクを引用に変えますか？"
 
 #: src/components/quote-suggestion.jsx:37
 msgid "Keep as link"
-msgstr ""
+msgstr "リンクのままにする"
 
 #: src/components/quote-suggestion.jsx:42
 msgid "Replace current quote"
-msgstr ""
+msgstr "現在の引用を置換"
 
 #: src/components/quote-suggestion.jsx:44
 msgid "Turn into quote"
-msgstr ""
+msgstr "引用に変更する"
 
 #: src/components/quotes-modal.jsx:149
 msgid "Error loading quotes"
-msgstr ""
+msgstr "引用の読み込みエラー"
 
 #: src/components/quotes-modal.jsx:153
 msgid "No quotes yet"
-msgstr ""
+msgstr "まだ引用がありません"
 
 #: src/components/recent-searches.jsx:27
 msgid "Cleared recent searches"
-msgstr ""
+msgstr "最近の検索を消去しました"
 
 #: src/components/recent-searches.jsx:49
 #: src/components/search-form.jsx:332
 msgid "Recent searches"
-msgstr ""
+msgstr "最近の検索"
 
 #: src/components/recent-searches.jsx:59
 msgid "Clear all"
-msgstr ""
+msgstr "すべて削除"
 
 #: src/components/recent-searches.jsx:94
 #: src/pages/account-statuses.jsx:335
 msgid "Clear"
-msgstr ""
+msgstr "削除"
 
 #: src/components/related-actions.jsx:39
 msgid "Forever"
-msgstr ""
+msgstr "無期限"
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
 #: src/components/related-actions.jsx:194
@@ -1920,11 +1920,11 @@ msgstr "ブロック済み"
 
 #: src/components/related-actions.jsx:222
 msgid "Private note"
-msgstr ""
+msgstr "プライベートメモ"
 
 #: src/components/related-actions.jsx:296
 msgid "Mention <0>@{username}</0>"
-msgstr ""
+msgstr "<0>@{username}</0>にメンション"
 
 #: src/components/related-actions.jsx:308
 msgid "Translate bio"
@@ -1932,31 +1932,31 @@ msgstr "プロフィールを翻訳"
 
 #: src/components/related-actions.jsx:319
 msgid "Edit private note"
-msgstr ""
+msgstr "プライベートメモを編集"
 
 #: src/components/related-actions.jsx:319
 msgid "Add private note"
-msgstr ""
+msgstr "プライベートメモを追加"
 
 #: src/components/related-actions.jsx:339
 msgid "Notifications enabled for @{username}'s posts."
-msgstr ""
+msgstr "@{username} の投稿の通知を有効にしました。"
 
 #: src/components/related-actions.jsx:340
 msgid " Notifications disabled for @{username}'s posts."
-msgstr ""
+msgstr "@{username} の投稿の通知を無効にしました。"
 
 #: src/components/related-actions.jsx:352
 msgid "Disable notifications"
-msgstr ""
+msgstr "通知を無効化"
 
 #: src/components/related-actions.jsx:353
 msgid "Enable notifications"
-msgstr ""
+msgstr "通知を有効化"
 
 #: src/components/related-actions.jsx:370
 msgid "Boosts from @{username} enabled."
-msgstr ""
+msgstr "@{username} からのブーストを有効にしました。"
 
 #: src/components/related-actions.jsx:371
 msgid "Boosts from @{username} disabled."
@@ -1964,41 +1964,41 @@ msgstr ""
 
 #: src/components/related-actions.jsx:382
 msgid "Disable boosts"
-msgstr ""
+msgstr "ブーストを無効化"
 
 #: src/components/related-actions.jsx:382
 msgid "Enable boosts"
-msgstr ""
+msgstr "ブーストを有効化"
 
 #: src/components/related-actions.jsx:401
 msgid "@{username} is no longer featured on your profile."
-msgstr ""
+msgstr "@{username} はあなたのプロフィールには表示されなくなりました。"
 
 #: src/components/related-actions.jsx:411
 msgid "@{username} is now featured on your profile."
-msgstr ""
+msgstr "@{username} があなたのプロフィールで紹介されるようになりました。"
 
 #: src/components/related-actions.jsx:419
 msgid "Unable to unfeature @{username} on your profile."
-msgstr ""
+msgstr "@{username} の紹介を解除できません。"
 
 #: src/components/related-actions.jsx:423
 msgid "Unable to feature @{username} on your profile."
-msgstr ""
+msgstr "@{username} を紹介できません。"
 
 #: src/components/related-actions.jsx:432
 msgid "Don't feature on profile"
-msgstr ""
+msgstr "プロフィールから外す"
 
 #: src/components/related-actions.jsx:433
 #: src/pages/hashtag.jsx:333
 msgid "Feature on profile"
-msgstr ""
+msgstr "プロフィールで紹介"
 
 #: src/components/related-actions.jsx:442
 #: src/components/related-actions.jsx:480
 msgid "Show featured profiles"
-msgstr ""
+msgstr "紹介されたプロフィールを表示"
 
 #: src/components/related-actions.jsx:541
 #: src/components/shortcuts-settings.jsx:1177
@@ -2008,11 +2008,11 @@ msgstr "共有は機能しないようです。"
 
 #: src/components/related-actions.jsx:583
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "@{username} のミュートを解除しました"
 
 #: src/components/related-actions.jsx:595
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "<0>@{username}</0> をミュート解除"
 
 #: src/components/related-actions.jsx:611
 msgid "Mute <0>@{username}</0>…"
@@ -2021,11 +2021,11 @@ msgstr "<0>@{username}</0> をミュート…"
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
 #: src/components/related-actions.jsx:643
 msgid "Muted @{username} for {0}"
-msgstr ""
+msgstr "@{username} を {0} ミュートしました"
 
 #: src/components/related-actions.jsx:655
 msgid "Unable to mute @{username}"
-msgstr ""
+msgstr "@{username} をミュートできません"
 
 #: src/components/related-actions.jsx:676
 msgid "Remove <0>@{username}</0> from followers?"
@@ -2033,7 +2033,7 @@ msgstr "<0>@{username}</0> をフォロワーから削除しますか？"
 
 #: src/components/related-actions.jsx:696
 msgid "@{username} removed from followers"
-msgstr ""
+msgstr "@{username} がフォロワーから削除されました"
 
 #: src/components/related-actions.jsx:708
 msgid "Remove follower…"
@@ -2045,19 +2045,19 @@ msgstr "<0>@{username}</0> をブロックしますか？"
 
 #: src/components/related-actions.jsx:743
 msgid "Unblocked @{username}"
-msgstr ""
+msgstr "@{username} のブロックを解除しました"
 
 #: src/components/related-actions.jsx:751
 msgid "Blocked @{username}"
-msgstr ""
+msgstr "@{username} をブロックしました"
 
 #: src/components/related-actions.jsx:759
 msgid "Unable to unblock @{username}"
-msgstr ""
+msgstr "@{username} のブロックを解除できません"
 
 #: src/components/related-actions.jsx:761
 msgid "Unable to block @{username}"
-msgstr ""
+msgstr "@{username} をブロックできません"
 
 #: src/components/related-actions.jsx:771
 msgid "Unblock <0>@{username}</0>"
@@ -2073,12 +2073,12 @@ msgstr "<0>@{username}</0> を報告…"
 
 #: src/components/related-actions.jsx:853
 msgid "Withdraw follow request?"
-msgstr ""
+msgstr "フォローリクエストを取り消しますか？"
 
 #. placeholder {0}: info.acct || info.username
 #: src/components/related-actions.jsx:854
 msgid "Unfollow @{0}?"
-msgstr ""
+msgstr "@{0} のフォローを解除しますか？"
 
 #: src/components/related-actions.jsx:917
 msgid "Unfollow…"
@@ -2114,39 +2114,39 @@ msgstr "{0} 時間"
 
 #: src/components/report-modal.jsx:30
 msgid "Spam"
-msgstr ""
+msgstr "スパム"
 
 #: src/components/report-modal.jsx:31
 msgid "Malicious links, fake engagement, or repetitive replies"
-msgstr ""
+msgstr "悪意のあるリンクや虚偽の情報、執拗な返信など"
 
 #: src/components/report-modal.jsx:34
 msgid "Illegal"
-msgstr ""
+msgstr "違法"
 
 #: src/components/report-modal.jsx:35
 msgid "Violates the law of your or the server's country"
-msgstr ""
+msgstr "あなたまたはサーバーの国の法律に違反します"
 
 #: src/components/report-modal.jsx:38
 msgid "Server rule violation"
-msgstr ""
+msgstr "サーバールール違反"
 
 #: src/components/report-modal.jsx:39
 msgid "Breaks specific server rules"
-msgstr ""
+msgstr "特定のサーバールールを破ります"
 
 #: src/components/report-modal.jsx:40
 msgid "Violation"
-msgstr ""
+msgstr "違反"
 
 #: src/components/report-modal.jsx:43
 msgid "Other"
-msgstr ""
+msgstr "その他"
 
 #: src/components/report-modal.jsx:44
 msgid "Issue doesn't fit other categories"
-msgstr ""
+msgstr "他のカテゴリに該当しない問題"
 
 #: src/components/report-modal.jsx:111
 msgid "Report Post"
@@ -2158,7 +2158,7 @@ msgstr "@{username} を報告"
 
 #: src/components/report-modal.jsx:147
 msgid "Pending review"
-msgstr ""
+msgstr "審査待ち"
 
 #: src/components/report-modal.jsx:189
 msgid "Post reported"
@@ -2178,19 +2178,19 @@ msgstr "プロフィールを報告できません"
 
 #: src/components/report-modal.jsx:206
 msgid "What's the issue with this post?"
-msgstr ""
+msgstr "この投稿の問題点は何ですか？"
 
 #: src/components/report-modal.jsx:207
 msgid "What's the issue with this profile?"
-msgstr ""
+msgstr "このプロフィールの問題点は何ですか？"
 
 #: src/components/report-modal.jsx:276
 msgid "Additional info"
-msgstr ""
+msgstr "追加情報"
 
 #: src/components/report-modal.jsx:299
 msgid "Forward to <0>{domain}</0>"
-msgstr ""
+msgstr "<0>{domain}</0>に転送"
 
 #: src/components/report-modal.jsx:309
 msgid "Send Report"
@@ -2206,44 +2206,44 @@ msgstr "{username} をミュートできません"
 
 #: src/components/report-modal.jsx:326
 msgid "Send Report <0>+ Mute profile</0>"
-msgstr ""
+msgstr "レポートを送信 <0>+ プロフィールをミュート</0>"
 
 #: src/components/report-modal.jsx:337
 msgid "Blocked {username}"
-msgstr ""
+msgstr "@{username} をブロックしました"
 
 #: src/components/report-modal.jsx:340
 msgid "Unable to block {username}"
-msgstr ""
+msgstr "@{username} をブロックできません"
 
 #: src/components/report-modal.jsx:345
 msgid "Send Report <0>+ Block profile</0>"
-msgstr ""
+msgstr "レポートを送信 <0>+ プロフィールをブロック</0>"
 
 #: src/components/search-form.jsx:18
 msgid "Posts with <0>{query}</0>"
-msgstr ""
+msgstr "<0>{query}</0>を含む投稿"
 
 #: src/components/search-form.jsx:26
 msgid "Accounts with <0>{query}</0>"
-msgstr ""
+msgstr "<0>{query}</0>を含むアカウント"
 
 #: src/components/search-form.jsx:37
 msgid "Posts tagged with <0>{hashtag}</0>"
-msgstr ""
+msgstr "<0>{hashtag}</0> を含む投稿"
 
 #: src/components/search-form.jsx:46
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
-msgstr ""
+msgstr "{query} <0> アカウント、ハッシュタグ、投稿</0>"
 
 #: src/components/search-form.jsx:139
 msgid "Look up <0>{query}</0>"
-msgstr ""
+msgstr "<0>{query}</0> で検索"
 
 #: src/components/search-form.jsx:365
 #: src/pages/home.jsx:251
 msgid "See all"
-msgstr ""
+msgstr "すべて表示"
 
 #: src/components/shortcuts-settings.jsx:49
 msgid "Home / Following"
@@ -2310,7 +2310,7 @@ msgstr "ベータ"
 
 #: src/components/shortcuts-settings.jsx:250
 msgid "Specify a list of shortcuts that'll appear as:"
-msgstr ""
+msgstr "ショートカットの表示を指定"
 
 #: src/components/shortcuts-settings.jsx:256
 msgid "Floating button"
@@ -2346,19 +2346,19 @@ msgstr "編集"
 
 #: src/components/shortcuts-settings.jsx:401
 msgid "Add more than one shortcut/column to make this work."
-msgstr ""
+msgstr "1つ以上のショートカットかカラムを指定してください。"
 
 #: src/components/shortcuts-settings.jsx:412
 msgid "No columns yet. Tap on the Add column button."
-msgstr ""
+msgstr "カラムがありません。カラムの追加ボタンをタップしてください。"
 
 #: src/components/shortcuts-settings.jsx:413
 msgid "No shortcuts yet. Tap on the Add shortcut button."
-msgstr ""
+msgstr "ショートカットがありません。ショートカットの追加ボタンをタップしてください。"
 
 #: src/components/shortcuts-settings.jsx:416
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
-msgstr ""
+msgstr "何を追加したらいいかわかりませんか?<0/>まずは<1>ホーム /フォロー中と通知</1>を追加してみてください。"
 
 #: src/components/shortcuts-settings.jsx:444
 msgid "Max {SHORTCUTS_LIMIT} columns"
@@ -2383,7 +2383,7 @@ msgstr "ショートカットを追加…"
 
 #: src/components/shortcuts-settings.jsx:517
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
-msgstr ""
+msgstr "リストは任意です。マルチカラムモードの場合はリストを追加しないと表示されません。"
 
 #: src/components/shortcuts-settings.jsx:518
 msgid "For multi-column mode, search term is required, else the column will not be shown."
@@ -2391,7 +2391,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:519
 msgid "Multiple hashtags are supported. Space-separated."
-msgstr ""
+msgstr "複数のハッシュタグがサポートされています。スペース区切りです。"
 
 #: src/components/shortcuts-settings.jsx:588
 msgid "Edit shortcut"
@@ -2419,64 +2419,64 @@ msgstr "ここにショートカットを貼り付け"
 
 #: src/components/shortcuts-settings.jsx:845
 msgid "Downloading saved shortcuts from instance server…"
-msgstr ""
+msgstr "サーバーから保存したショートカットをダウンロード"
 
 #: src/components/shortcuts-settings.jsx:874
 msgid "Unable to download shortcuts"
-msgstr ""
+msgstr "ショートカットをダウンロードできません"
 
 #: src/components/shortcuts-settings.jsx:877
 msgid "Download shortcuts from instance server"
-msgstr ""
+msgstr "サーバーからショートカットをダウンロード"
 
 #: src/components/shortcuts-settings.jsx:944
 msgid "* Exists in current shortcuts"
-msgstr ""
+msgstr "* 現在のショートカットに存在します"
 
 #: src/components/shortcuts-settings.jsx:949
 msgid "List may not work if it's from a different account."
-msgstr ""
+msgstr "別のアカウントのリストは動作しない場合があります。"
 
 #: src/components/shortcuts-settings.jsx:959
 msgid "Invalid settings format"
-msgstr ""
+msgstr "無効な設定フォーマット"
 
 #: src/components/shortcuts-settings.jsx:967
 msgid "Append to current shortcuts?"
-msgstr ""
+msgstr "現在のショートカットに追加しますか？"
 
 #: src/components/shortcuts-settings.jsx:970
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
-msgstr ""
+msgstr "現在のショートカットに存在しないもののみが追加されます。"
 
 #: src/components/shortcuts-settings.jsx:992
 msgid "No new shortcuts to import"
-msgstr ""
+msgstr "インポートする新しいショートカットはありません"
 
 #: src/components/shortcuts-settings.jsx:1007
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
-msgstr ""
+msgstr "ショートカットがインポートされました。 {SHORTCUTS_LIMIT}を超えたため、残りはインポートされません。"
 
 #: src/components/shortcuts-settings.jsx:1008
 #: src/components/shortcuts-settings.jsx:1032
 msgid "Shortcuts imported"
-msgstr ""
+msgstr "ショートカットをインポートしました"
 
 #: src/components/shortcuts-settings.jsx:1018
 msgid "Import & append…"
-msgstr ""
+msgstr "インポートと追加…"
 
 #: src/components/shortcuts-settings.jsx:1026
 msgid "Override current shortcuts?"
-msgstr ""
+msgstr "現在のショートカットを上書きしますか？"
 
 #: src/components/shortcuts-settings.jsx:1027
 msgid "Import shortcuts?"
-msgstr ""
+msgstr "ショートカットをインポートしますか？"
 
 #: src/components/shortcuts-settings.jsx:1041
 msgid "or override…"
-msgstr ""
+msgstr "または上書きする…"
 
 #: src/components/shortcuts-settings.jsx:1041
 msgid "Import…"
@@ -2492,19 +2492,19 @@ msgstr "ショートカットをコピーできません"
 
 #: src/components/shortcuts-settings.jsx:1120
 msgid "Saving shortcuts to instance server…"
-msgstr ""
+msgstr "サーバーにショートカットを保存する…"
 
 #: src/components/shortcuts-settings.jsx:1127
 msgid "Shortcuts saved"
-msgstr ""
+msgstr "ショートカットを保存しました"
 
 #: src/components/shortcuts-settings.jsx:1132
 msgid "Unable to save shortcuts"
-msgstr ""
+msgstr "ショートカットを保存できません"
 
 #: src/components/shortcuts-settings.jsx:1135
 msgid "Sync to instance server"
-msgstr ""
+msgstr "インスタンスサーバーに同期"
 
 #: src/components/shortcuts-settings.jsx:1150
 msgid "Shortcut settings copied"
@@ -2525,11 +2525,11 @@ msgstr "{0, plural, one {# 文字} other {# 文字}}"
 
 #: src/components/shortcuts-settings.jsx:1201
 msgid "Raw Shortcuts JSON"
-msgstr ""
+msgstr "ショートカットのRaw JSON"
 
 #: src/components/shortcuts-settings.jsx:1214
 msgid "Import/export settings from/to instance server (Very experimental)"
-msgstr ""
+msgstr "インスタンスサーバーへの設定のインポート/エクスポート (非常に実験的)"
 
 #: src/components/status.jsx:289
 msgid "Private posts cannot be quoted"

@@ -1,3 +1,4 @@
+import { pageCache } from 'workbox-recipes';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
 import * as navigationPreload from 'workbox-navigation-preload';
@@ -11,6 +12,11 @@ import {
 navigationPreload.enable();
 
 self.__WB_DISABLE_DEV_LOGS = true;
+
+// Cache HTML pages
+pageCache({
+  warmCache: ['./compose/'],
+});
 
 // Custom plugin to manage hashed assets
 class AssetHashPlugin {

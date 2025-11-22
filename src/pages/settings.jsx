@@ -259,8 +259,7 @@ function Settings({ onClose }) {
               <span>
                 <label>
                   <Trans>Display language</Trans>
-                </label>
-                <br />
+                </label>{' '}
                 <small>
                   <a
                     href="https://crowdin.com/project/phanpy"
@@ -308,8 +307,9 @@ function Settings({ onClose }) {
                           }
                           setPrefs(newPrefs);
                           setPreferences(newPrefs);
+                          showToast(t`Default visibility updated`);
                         } catch (e) {
-                          alert(t`Failed to update posting privacy`);
+                          alert(t`Failed to update default visibility`);
                           console.error(e);
                         }
                       })();
@@ -335,10 +335,9 @@ function Settings({ onClose }) {
                     <select
                       id="posting-quote-policy-field"
                       value={
-                        prefs['posting:default:quote_policy'] ||
                         disableQuotePolicy
                           ? 'nobody'
-                          : 'public'
+                          : prefs['posting:default:quote_policy'] || 'public'
                       }
                       disabled={disableQuotePolicy}
                       onChange={(e) => {
@@ -350,14 +349,13 @@ function Settings({ onClose }) {
                                 quote_policy: value,
                               },
                             });
-                            setPrefs({
+                            const newPrefs = {
                               ...prefs,
                               'posting:default:quote_policy': value,
-                            });
-                            setPreferences({
-                              ...prefs,
-                              'posting:default:quote_policy': value,
-                            });
+                            };
+                            setPrefs(newPrefs);
+                            setPreferences(newPrefs);
+                            showToast(t`Quote settings updated`);
                           } catch (e) {
                             alert(t`Failed to update quote settings`);
                             console.error(e);
@@ -655,29 +653,6 @@ function Settings({ onClose }) {
                 </div>
               </li>
             )}
-            {authenticated && getAPIVersions()?.mastodon >= 2 && (
-              <li class="block">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={snapStates.settings.groupedNotificationsAlpha}
-                    onChange={(e) => {
-                      states.settings.groupedNotificationsAlpha =
-                        e.target.checked;
-                    }}
-                  />{' '}
-                  <Trans>Server-side grouped notifications</Trans>
-                </label>
-                <div class="sub-section insignificant">
-                  <small>
-                    <Trans>
-                      Alpha-stage feature. Potentially improved grouping window
-                      but basic grouping logic.
-                    </Trans>
-                  </small>
-                </div>
-              </li>
-            )}
             {authenticated && (
               <li class="block">
                 <label>
@@ -857,7 +832,7 @@ function Settings({ onClose }) {
               <Trans>Privacy Policy</Trans>
             </a>
           </p>
-          {__BUILD_TIME__ && (
+          {__COMMIT_TIME__ && (
             <p>
               {WEBSITE && (
                 <>
@@ -875,7 +850,7 @@ function Settings({ onClose }) {
                   class="version-string"
                   readOnly
                   size="18" // Manually calculated here
-                  value={`${__BUILD_TIME__.slice(0, 10).replace(/-/g, '.')}${
+                  value={`${__COMMIT_TIME__.slice(0, 10).replace(/-/g, '.')}${
                     __COMMIT_HASH__ ? `.${__COMMIT_HASH__}` : ''
                   }`}
                   onClick={(e) => {

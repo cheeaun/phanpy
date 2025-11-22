@@ -1,0 +1,28 @@
+svg.qr-code {
+  width: min(320px, fit-content);
+  max-width: min(100%, 320px);
+  /* Hard-coded colors because QR code need to be legible */
+  color: #000;
+  background-color: #fff;
+  vertical-align: top;
+
+  * {
+    pointer-events: none;
+    shape-rendering: optimizeSpeed;
+    user-select: none;
+  }
+
+  image {
+    image-rendering: pixelated;
+  }
+
+  .qr-code-caption {
+    font-size: 2px !important;
+    letter-spacing: -0.08px;
+    font-weight: bold;
+    color: currentColor;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}

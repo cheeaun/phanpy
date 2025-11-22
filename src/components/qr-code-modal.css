@@ -1,0 +1,181 @@
+.qr-code-modal-container {
+  --sunray-color: var(--bg-color);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  gap: 16px;
+  /* pointer-events: none; */
+  overflow: hidden;
+  position: relative;
+
+  > * {
+    pointer-events: auto;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100vmax;
+    height: 100vmax;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      var(--sunray-color) 0deg,
+      var(--sunray-color) 10deg,
+      transparent 10deg,
+      transparent 20deg,
+      var(--sunray-color) 20deg,
+      var(--sunray-color) 30deg,
+      transparent 30deg,
+      transparent 40deg,
+      var(--sunray-color) 40deg,
+      var(--sunray-color) 50deg,
+      transparent 50deg,
+      transparent 60deg,
+      var(--sunray-color) 60deg,
+      var(--sunray-color) 70deg,
+      transparent 70deg,
+      transparent 80deg,
+      var(--sunray-color) 80deg,
+      var(--sunray-color) 90deg,
+      transparent 90deg,
+      transparent 100deg,
+      var(--sunray-color) 100deg,
+      var(--sunray-color) 110deg,
+      transparent 110deg,
+      transparent 120deg,
+      var(--sunray-color) 120deg,
+      var(--sunray-color) 130deg,
+      transparent 130deg,
+      transparent 140deg,
+      var(--sunray-color) 140deg,
+      var(--sunray-color) 150deg,
+      transparent 150deg,
+      transparent 160deg,
+      var(--sunray-color) 160deg,
+      var(--sunray-color) 170deg,
+      transparent 170deg,
+      transparent 180deg,
+      var(--sunray-color) 180deg,
+      var(--sunray-color) 190deg,
+      transparent 190deg,
+      transparent 200deg,
+      var(--sunray-color) 200deg,
+      var(--sunray-color) 210deg,
+      transparent 210deg,
+      transparent 220deg,
+      var(--sunray-color) 220deg,
+      var(--sunray-color) 230deg,
+      transparent 230deg,
+      transparent 240deg,
+      var(--sunray-color) 240deg,
+      var(--sunray-color) 250deg,
+      transparent 250deg,
+      transparent 260deg,
+      var(--sunray-color) 260deg,
+      var(--sunray-color) 270deg,
+      transparent 270deg,
+      transparent 280deg,
+      var(--sunray-color) 280deg,
+      var(--sunray-color) 290deg,
+      transparent 290deg,
+      transparent 300deg,
+      var(--sunray-color) 300deg,
+      var(--sunray-color) 310deg,
+      transparent 310deg,
+      transparent 320deg,
+      var(--sunray-color) 320deg,
+      var(--sunray-color) 330deg,
+      transparent 330deg,
+      transparent 340deg,
+      var(--sunray-color) 340deg,
+      var(--sunray-color) 350deg,
+      transparent 350deg,
+      transparent 360deg
+    );
+    mask-image: radial-gradient(closest-side, black 50%, transparent);
+    animation:
+      rotate-sunray 360s linear infinite,
+      fade-in-sunray 1s var(--timing-function) 0.4s both;
+    pointer-events: none;
+    z-index: -1;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  .qr-code-modal-controls {
+    display: flex;
+    gap: 8px;
+    align-self: stretch;
+    justify-content: space-between;
+  }
+
+  .qr-code {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--outline-color);
+    animation: dynamic-entrance var(--spring-timing-duration) both
+      var(--spring-timing-function) 0.5s;
+  }
+
+  .qr-code-text {
+    word-break: break-all;
+    text-align: center;
+    font-size: 0.8em;
+    color: var(--text-insignificant-color);
+    text-shadow: 0 1px var(--bg-color);
+  }
+
+  @media (max-height: 480px) {
+    overflow-y: auto;
+    &::after {
+      display: none;
+    }
+    .qr-code {
+      min-height: 160px;
+    }
+  }
+}
+
+@keyframes dynamic-entrance {
+  0% {
+    scale: 0.75;
+    opacity: 0;
+    rotate: 10deg;
+    translate: 0 100px;
+  }
+  100% {
+    rotate: 0deg;
+    scale: 1;
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes rotate-sunray {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+@keyframes fade-in-sunray {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}

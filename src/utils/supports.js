@@ -31,6 +31,7 @@ const platformFeatures = {
 const supportsCache = {};
 
 const semverExtract = /^\d+\.\d+(\.\d+)?/;
+const atSoftwareSlashMatch = /^@([a-z]+)\//i;
 
 function supports(feature) {
   try {
@@ -49,11 +50,18 @@ function supports(feature) {
       return (supportsCache[key] = platformFeatures[feature].test(version));
     }
 
+    const featureMatch = feature.match(atSoftwareSlashMatch);
+    if (!featureMatch) {
+      // Only software match, e.g. supports('@mastodon')
+      const software = feature.replace(/^@/, '');
+      return (supportsCache[key] = softwareName === software);
+    }
+
     const range = features[feature];
     if (!range) return false;
 
     // '@mastodon/blah' => 'mastodon'
-    const featureSoftware = feature.match(/^@([a-z]+)\//)[1];
+    const featureSoftware = featureMatch[1];
 
     const doesSoftwareMatch = featureSoftware === softwareName.toLowerCase();
     let satisfiesRange = satisfies(version, range, {

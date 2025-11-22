@@ -1,0 +1,57 @@
+#import-accounts-selection-container {
+  background-color: var(--bg-faded-color);
+
+  .import-selection {
+    padding: 8px 0 0;
+
+    footer {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  .accounts-list-header {
+    padding: 0 8px 8px;
+  }
+
+  .accounts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    gap: 1px;
+
+    li {
+      background-color: var(--bg-color);
+      padding: 8px;
+
+      &:has(:disabled) {
+        background-color: var(--bg-blur-color);
+      }
+    }
+  }
+
+  .account-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    cursor: pointer;
+
+    &:has(:disabled) {
+      opacity: 0.85;
+      cursor: not-allowed;
+    }
+
+    .account-info {
+      flex-grow: 1;
+      pointer-events: none;
+      font-size: calc(var(--text-size) * 0.8);
+    }
+  }
+}

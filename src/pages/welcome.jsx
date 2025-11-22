@@ -3,7 +3,7 @@ import './welcome.css';
 import { Trans, useLingui } from '@lingui/react/macro';
 
 import boostsCarouselUrl from '../assets/features/boosts-carousel.jpg';
-import groupedNotificationsUrl from '../assets/features/grouped-notifications.jpg';
+import catchupUrl from '../assets/features/catch-up.png';
 import multiColumnUrl from '../assets/features/multi-column.jpg';
 import multiHashtagTimelineUrl from '../assets/features/multi-hashtag-timeline.jpg';
 import nestedCommentsThreadUrl from '../assets/features/nested-comments-thread.jpg';
@@ -24,8 +24,8 @@ const {
 const appSite = WEBSITE
   ? WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
   : null;
-const appVersion = __BUILD_TIME__
-  ? `${__BUILD_TIME__.slice(0, 10).replace(/-/g, '.')}${
+const appVersion = __COMMIT_TIME__
+  ? `${__COMMIT_TIME__.slice(0, 10).replace(/-/g, '.')}${
       __COMMIT_HASH__ ? `.${__COMMIT_HASH__}` : ''
     }`
   : null;
@@ -138,6 +138,22 @@ function Welcome() {
           </section>
           <section>
             <img
+              src={catchupUrl}
+              alt={t`Screenshot of Catch-up`}
+              loading="lazy"
+            />
+            <h4>
+              <Trans>Catch-up</Trans>
+            </h4>
+            <p>
+              <Trans>
+                A separate timeline for followings. Email-inspired interface to
+                sort and filter posts.
+              </Trans>
+            </p>
+          </section>
+          <section>
+            <img
               src={nestedCommentsThreadUrl}
               alt={t`Screenshot of nested comments thread`}
               loading="lazy"
@@ -148,22 +164,6 @@ function Welcome() {
             <p>
               <Trans>
                 Effortlessly follow conversations. Semi-collapsible replies.
-              </Trans>
-            </p>
-          </section>
-          <section>
-            <img
-              src={groupedNotificationsUrl}
-              alt={t`Screenshot of grouped notifications`}
-              loading="lazy"
-            />
-            <h4>
-              <Trans>Grouped notifications</Trans>
-            </h4>
-            <p>
-              <Trans>
-                Similar notifications are grouped and collapsed to reduce
-                clutter.
               </Trans>
             </p>
           </section>

@@ -9,15 +9,17 @@ Phanpy
 
 ![Fancy screenshot](readme-assets/fancy-screenshot.jpg)
 
-**🗣️ Pronunciation**: [`/fænpi/`](https://ythi.net/how-do-you-pronounce/phanpy/english/) ([`FAN-pee`](https://www.smogon.com/forums/threads/the-official-name-pronunciation-guide.3474941/)) [🔊 Listen](https://www.youtube.com/watch?v=DIUbWe-ysJI)
+**🗣️ Pronunciation**: `/fænpi/` ([`FAN-pee`](https://www.smogon.com/forums/threads/the-official-name-pronunciation-guide.3474941/)) [🔊 Listen](https://www.youtube.com/watch?v=DIUbWe-ysJI)
 
 This is an alternative web client for [Mastodon](https://joinmastodon.org/).
 
-- 🏢 **Production**: https://phanpy.social
+- 🏢 **Production**: https://phanpy.social [![Uptime Robot status](https://img.shields.io/uptimerobot/status/m795572454-df4518f96a3784401b550a6c)](https://stats.uptimerobot.com/rVO1RkbwMB)
+  - ![GitHub Release](https://img.shields.io/github/v/release/cheeaun/phanpy)
   - `production` branch
   - break less often
   - slower fixes unless critical
-- 🏗️ **Development**: https://dev.phanpy.social
+- 🏗️ **Development**: https://dev.phanpy.social [![Uptime Robot status](https://img.shields.io/uptimerobot/status/m801824077-77302887dc81a5ac4a45e231)](https://stats.uptimerobot.com/rVO1RkbwMB)
+  - ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/cheeaun/phanpy/main)
   - `main` branch
   - may see new cool stuff sooner
   - may break more often
@@ -318,6 +320,7 @@ These are self-hosted by other wonderful folks.
 - [phanpy.tilde.zone](https://phanpy.tilde.zone) by [@ben@tilde.zone](https://tilde.zone/@ben)
 - [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)
 - [phanpy.linuxusers.in](https://phanpy.linuxusers.in) by [@dharmik@linuxusers.in](https://linuxusers.in/dharmik)
+- [phanpy.blablalinux.be](https://phanpy.blablalinux.be) by [@blablalinux@mastodon.blablalinux.be](https://mastodon.blablalinux.be/@blablalinux)
 
 > Note: Add yours by creating a pull request.
 

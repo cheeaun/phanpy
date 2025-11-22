@@ -5,7 +5,6 @@ import { useEffect, useState } from 'preact/hooks';
 import { useParams } from 'react-router-dom';
 
 import Link from '../components/link';
-import Loader from '../components/loader';
 import NameText from '../components/name-text';
 import Status from '../components/status';
 import { api } from '../utils/api';
@@ -14,7 +13,10 @@ import useTitle from '../utils/useTitle';
 export default function AnnualReport() {
   const params = useParams();
   const { year } = params;
-  useTitle(year ? `Annual Report: ${year}` : 'Annual Report');
+  useTitle(
+    year ? `${year} #Wrapstodon` : '#Wrapstodon',
+    '/annual_report/:year',
+  );
   const { masto, instance } = api();
   const [results, setResults] = useState(null);
   const [uiState, setUIState] = useState('default');
@@ -38,123 +40,143 @@ export default function AnnualReport() {
 
   return (
     <div id="annual-report-page" class="deck-container" tabIndex="-1">
-      <div class="report">
+      <div class={`report ${uiState === 'loading' ? 'loading-mask' : ''}`}>
         <h1>{year} #Wrapstodon</h1>
-        {uiState === 'loading' && (
-          <p>
-            <Loader abrupt /> <Trans>Loading…</Trans>
-          </p>
-        )}
         {!!report && (
           <dl>
-            {Object.entries(report).map(([key, value]) => (
-              <>
-                <dt>{key}</dt>
-                <dd class={`report-${key}`}>
-                  {Array.isArray(value) ? (
-                    <table>
-                      <thead>
-                        <tr>
-                          {Object.entries(value[0]).map(([key, value]) => (
-                            <th
-                              class={
-                                key !== 'month' && typeof value === 'number'
-                                  ? 'number'
-                                  : ''
-                              }
-                            >
-                              {key}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {value.map((item) => (
+            {Object.entries(report).map(([key, value]) => {
+              console.log('value', value);
+              const totals = {};
+              if (Array.isArray(value)) {
+                value.forEach((item) => {
+                  Object.entries(item).forEach(([k, v]) => {
+                    if (typeof v === 'number') {
+                      totals[k] = (totals[k] || 0) + v;
+                    }
+                  });
+                });
+              }
+
+              return (
+                <>
+                  <dt>{key}</dt>
+                  <dd class={`report-${key}`}>
+                    {Array.isArray(value) ? (
+                      <table>
+                        <thead>
                           <tr>
-                            {Object.entries(item).map(([k, value]) => (
-                              <td
+                            {Object.entries(value[0]).map(([key, value]) => (
+                              <th
                                 class={
-                                  k !== 'month' && typeof value === 'number'
+                                  key !== 'month' && typeof value === 'number'
                                     ? 'number'
                                     : ''
                                 }
                               >
-                                {value &&
-                                /(accountId)/i.test(k) &&
-                                /^(mostRebloggedAccounts|commonlyInteractedWithAccounts)$/i.test(
-                                  key,
-                                ) ? (
-                                  <NameText
-                                    account={accounts?.find(
-                                      (a) => a.id === value,
-                                    )}
-                                    showAvatar
-                                  />
-                                ) : k === 'month' ? (
-                                  datePlaceholder.setMonth(value - 1) &&
-                                  datePlaceholder.toLocaleString(undefined, {
-                                    month: 'long',
-                                  })
-                                ) : typeof value === 'number' ? (
-                                  value.toLocaleString()
-                                ) : (
-                                  value
-                                )}
-                              </td>
+                                {key}
+                              </th>
                             ))}
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  ) : typeof value === 'object' ? (
-                    /^(topStatuses)$/i.test(key) ? (
-                      <dl>
-                        {Object.entries(value).map(([k, value]) => (
-                          <>
-                            <dt>{k}</dt>
-                            <dd>
-                              {value && (
-                                <Link to={`/${instance}/s/${value}`}>
-                                  <Status
-                                    status={statuses?.find(
-                                      (s) => s.id === value,
-                                    )}
-                                    size="s"
-                                    readOnly
-                                  />
-                                </Link>
-                              )}
-                            </dd>
-                          </>
-                        ))}
-                      </dl>
-                    ) : (
-                      <table>
+                        </thead>
                         <tbody>
-                          {Object.entries(value).map(([k, value]) => (
+                          {value.map((item) => (
                             <tr>
-                              <th>{k}</th>
-                              <td
-                                class={
-                                  typeof value === 'number' ? 'number' : ''
-                                }
-                              >
-                                {value}
-                              </td>
+                              {Object.entries(item).map(([k, value]) => (
+                                <td
+                                  class={
+                                    k !== 'month' && typeof value === 'number'
+                                      ? 'number'
+                                      : ''
+                                  }
+                                  style={{
+                                    '--percentage':
+                                      typeof value === 'number'
+                                        ? `${(value / totals[k]) * 100}%`
+                                        : 0,
+                                  }}
+                                >
+                                  {value &&
+                                  /(accountId)/i.test(k) &&
+                                  /^(mostRebloggedAccounts|commonlyInteractedWithAccounts)$/i.test(
+                                    key,
+                                  ) ? (
+                                    accounts?.find((a) => a.id === value) ? (
+                                      <NameText
+                                        account={accounts?.find(
+                                          (a) => a.id === value,
+                                        )}
+                                        showAvatar
+                                      />
+                                    ) : (
+                                      '👻'
+                                    )
+                                  ) : k === 'month' ? (
+                                    datePlaceholder.setMonth(value - 1) &&
+                                    datePlaceholder.toLocaleString(undefined, {
+                                      month: 'long',
+                                    })
+                                  ) : typeof value === 'number' ? (
+                                    value.toLocaleString()
+                                  ) : (
+                                    value
+                                  )}
+                                </td>
+                              ))}
                             </tr>
                           ))}
                         </tbody>
                       </table>
-                    )
-                  ) : typeof value === 'string' ? (
-                    value
-                  ) : (
-                    // Last resort
-                    JSON.stringify(value, null, 2)
-                  )}
-                </dd>
-              </>
-            ))}
+                    ) : typeof value === 'object' ? (
+                      /^(topStatuses)$/i.test(key) ? (
+                        <dl>
+                          {Object.entries(value).map(([k, value]) => (
+                            <>
+                              <dt>{k}</dt>
+                              <dd>
+                                {value && (
+                                  <Link to={`/${instance}/s/${value}`}>
+                                    <Status
+                                      status={statuses?.find(
+                                        (s) => s.id === value,
+                                      )}
+                                      size="s"
+                                      readOnly
+                                      showCommentCount
+                                    />
+                                  </Link>
+                                )}
+                              </dd>
+                            </>
+                          ))}
+                        </dl>
+                      ) : (
+                        <table>
+                          <tbody>
+                            {Object.entries(value).map(([k, value]) => (
+                              <tr>
+                                <th>{k}</th>
+                                <td
+                                  class={
+                                    typeof value === 'number' ? 'number' : ''
+                                  }
+                                >
+                                  {value}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      )
+                    ) : typeof value === 'string' ? (
+                      value
+                    ) : (
+                      // Last resort
+                      JSON.stringify(value, null, 2)
+                    )}
+                  </dd>
+                </>
+              );
+            })}
           </dl>
         )}
       </div>

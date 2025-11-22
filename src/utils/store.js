@@ -4,6 +4,21 @@ import { getCurrentAccountNS } from './store-utils';
 
 const cookies = Cookies.withAttributes({ sameSite: 'strict', secure: true });
 
+const canSetSecureCookie =
+  navigator.cookieEnabled &&
+  (() => {
+    try {
+      const key = '__phanpy_can_set_secure_cookie__';
+      const value = '1';
+      cookies.set(key, value);
+      const result = cookies.get(key) === value;
+      cookies.remove(key);
+      return result;
+    } catch (e) {
+      return false;
+    }
+  })();
+
 const local = {
   get: (key) => {
     try {
@@ -100,21 +115,21 @@ const cookie = {
 // Cookie with sessionStorage fallback
 const sessionCookie = {
   get: (key) => {
-    if (navigator.cookieEnabled) {
+    if (canSetSecureCookie) {
       return cookie.get(key);
     } else {
       return session.get(key);
     }
   },
   set: (key, value) => {
-    if (navigator.cookieEnabled) {
+    if (canSetSecureCookie) {
       return cookie.set(key, value);
     } else {
       return session.set(key, value);
     }
   },
   del: (key) => {
-    if (navigator.cookieEnabled) {
+    if (canSetSecureCookie) {
       return cookie.del(key);
     } else {
       return session.del(key);

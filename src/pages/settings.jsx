@@ -259,8 +259,7 @@ function Settings({ onClose }) {
               <span>
                 <label>
                   <Trans>Display language</Trans>
-                </label>
-                <br />
+                </label>{' '}
                 <small>
                   <a
                     href="https://crowdin.com/project/phanpy"

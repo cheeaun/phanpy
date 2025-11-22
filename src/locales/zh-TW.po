@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-21 12:06\n"
+"PO-Revision-Date: 2025-11-22 15:57\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -88,7 +88,7 @@ msgstr "伺服器域名"
 
 #: src/components/account-info.jsx:124
 msgid "View profile"
-msgstr ""
+msgstr "查看個人資訊"
 
 #: src/components/account-info.jsx:392
 msgid "Unable to load account."
@@ -100,8 +100,8 @@ msgstr "前往帳號頁"
 
 #: src/components/account-info.jsx:436
 #: src/components/account-info.jsx:787
-#: src/components/compose.jsx:1961
-#: src/pages/settings.jsx:326
+#: src/components/compose.jsx:1974
+#: src/pages/settings.jsx:325
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
 msgstr "粉絲"
@@ -164,7 +164,7 @@ msgstr "複製用戶名"
 #: src/components/related-actions.jsx:565
 #: src/components/shortcuts-settings.jsx:1083
 msgid "QR code"
-msgstr ""
+msgstr "QR 碼"
 
 #: src/components/account-info.jsx:641
 msgid "Go to original profile page"
@@ -197,12 +197,12 @@ msgstr "此用戶選擇不提供資訊。"
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info.jsx:814
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> 跟隨者} other {<1>{1}</1> 跟隨者}}"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:858
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr ""
+msgstr "{followingCount, plural, other {<0>{0}</0> 正在跟隨}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
@@ -262,13 +262,13 @@ msgstr "回覆"
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1567
 msgid "Quotes"
-msgstr ""
+msgstr "引用"
 
 #: src/components/account-info.jsx:1061
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1566
 #: src/pages/catchup.jsx:2231
-#: src/pages/settings.jsx:1225
+#: src/pages/settings.jsx:1224
 msgid "Boosts"
 msgstr "轉嘟"
 
@@ -282,7 +282,7 @@ msgstr "查看貼文統計"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:1052
+#: src/components/compose.jsx:1065
 #: src/components/custom-emojis-modal.jsx:270
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:87
@@ -397,7 +397,7 @@ msgstr ""
 #. placeholder {0}: i + 1
 #: src/components/compose-poll.jsx:43
 msgid "Choice {0}"
-msgstr ""
+msgstr "選擇 {0}"
 
 #: src/components/compose-poll.jsx:64
 #: src/components/media-attachment.jsx:318
@@ -408,7 +408,7 @@ msgid "Remove"
 msgstr "刪除"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1665
+#: src/components/compose.jsx:1678
 #: src/components/mention-modal.jsx:220
 #: src/components/shortcuts-settings.jsx:716
 #: src/pages/list.jsx:388
@@ -417,7 +417,7 @@ msgstr "新增"
 
 #: src/components/compose-poll.jsx:96
 msgid "Multiple choice"
-msgstr ""
+msgstr "多選"
 
 #: src/components/compose-poll.jsx:99
 msgid "Duration"
@@ -449,93 +449,93 @@ msgstr "新增投票"
 
 #: src/components/compose.jsx:115
 msgid "Add content warning"
-msgstr ""
+msgstr "新增內容警告"
 
 #: src/components/compose.jsx:116
 msgid "Schedule post"
 msgstr "排程貼文"
 
-#: src/components/compose.jsx:534
+#: src/components/compose.jsx:550
 msgid "You have unsaved changes. Discard this post?"
 msgstr "您尚未儲存變更，是否丟棄這則貼文？"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:783
+#: src/components/compose.jsx:796
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr ""
 
-#: src/components/compose.jsx:793
-#: src/components/compose.jsx:811
-#: src/components/compose.jsx:2092
+#: src/components/compose.jsx:806
+#: src/components/compose.jsx:824
+#: src/components/compose.jsx:2105
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr ""
 
-#: src/components/compose.jsx:1033
+#: src/components/compose.jsx:1046
 msgid "Pop out"
 msgstr "彈出"
 
-#: src/components/compose.jsx:1040
+#: src/components/compose.jsx:1053
 msgid "Minimize"
 msgstr "最小化"
 
-#: src/components/compose.jsx:1076
+#: src/components/compose.jsx:1089
 msgid "Looks like you closed the parent window."
 msgstr ""
 
-#: src/components/compose.jsx:1083
+#: src/components/compose.jsx:1096
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr ""
 
-#: src/components/compose.jsx:1088
+#: src/components/compose.jsx:1101
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr ""
 
-#: src/components/compose.jsx:1134
+#: src/components/compose.jsx:1147
 msgid "Pop in"
 msgstr ""
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1144
+#: src/components/compose.jsx:1157
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "正在回覆 @{0} 的文章 (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1154
+#: src/components/compose.jsx:1167
 msgid "Replying to @{0}’s post"
 msgstr "正在回覆 @{0} 的文章"
 
-#: src/components/compose.jsx:1167
+#: src/components/compose.jsx:1180
 msgid "Editing source post"
-msgstr ""
+msgstr "編輯來源嘟文"
 
-#: src/components/compose.jsx:1236
+#: src/components/compose.jsx:1249
 msgid "Poll must have at least 2 options"
 msgstr "投票必須至少含有兩個選項"
 
-#: src/components/compose.jsx:1240
+#: src/components/compose.jsx:1253
 msgid "Some poll choices are empty"
 msgstr "部份投票選項空白"
 
-#: src/components/compose.jsx:1253
+#: src/components/compose.jsx:1266
 msgid "Some media have no descriptions. Continue?"
-msgstr ""
+msgstr "有些媒體檔沒有描述。要繼續嗎？"
 
-#: src/components/compose.jsx:1305
+#: src/components/compose.jsx:1318
 msgid "Attachment #{i} failed"
 msgstr ""
 
-#: src/components/compose.jsx:1432
+#: src/components/compose.jsx:1445
 #: src/components/status.jsx:2426
 #: src/components/timeline.jsx:990
 msgid "Content warning"
 msgstr "內容警告"
 
-#: src/components/compose.jsx:1453
-#: src/components/compose.jsx:1599
+#: src/components/compose.jsx:1466
+#: src/components/compose.jsx:1612
 #: src/components/edit-profile-sheet.jsx:323
 #: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
@@ -544,85 +544,85 @@ msgstr "內容警告"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/components/compose.jsx:1461
+#: src/components/compose.jsx:1474
 msgid "Post your reply"
 msgstr "張貼你的回覆"
 
-#: src/components/compose.jsx:1463
+#: src/components/compose.jsx:1476
 msgid "Edit your post"
 msgstr "編輯您的貼文"
 
-#: src/components/compose.jsx:1465
+#: src/components/compose.jsx:1478
 msgid "Ask a question"
 msgstr ""
 
-#: src/components/compose.jsx:1466
+#: src/components/compose.jsx:1479
 msgid "What are you doing?"
 msgstr "你在做什麼？"
 
-#: src/components/compose.jsx:1539
+#: src/components/compose.jsx:1552
 msgid "Mark media as sensitive"
 msgstr "標記媒體為敏感內容"
 
-#: src/components/compose.jsx:1579
+#: src/components/compose.jsx:1592
 msgid "Posting on <0/>"
 msgstr ""
 
-#: src/components/compose.jsx:1881
+#: src/components/compose.jsx:1894
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:297
-#: src/pages/settings.jsx:368
+#: src/pages/settings.jsx:367
 msgid "Anyone can quote"
-msgstr ""
+msgstr "任何人都能引用"
 
-#: src/components/compose.jsx:1884
+#: src/components/compose.jsx:1897
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:298
-#: src/pages/settings.jsx:371
+#: src/pages/settings.jsx:370
 msgid "Your followers can quote"
-msgstr ""
+msgstr "你的追蹤者可以引用"
 
-#: src/components/compose.jsx:1887
+#: src/components/compose.jsx:1900
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:299
-#: src/pages/settings.jsx:374
+#: src/pages/settings.jsx:373
 msgid "Only you can quote"
-msgstr ""
+msgstr "只有你可以引用"
 
-#: src/components/compose.jsx:1927
+#: src/components/compose.jsx:1940
 msgid "Quotes can't be embedded in private mentions."
-msgstr ""
+msgstr "引用嘟文無法被內嵌於私訊中。"
 
-#: src/components/compose.jsx:1949
-#: src/pages/settings.jsx:320
+#: src/components/compose.jsx:1962
+#: src/pages/settings.jsx:319
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "公開"
 
-#: src/components/compose.jsx:1954
+#: src/components/compose.jsx:1967
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:166
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "本地"
 
-#: src/components/compose.jsx:1958
-#: src/pages/settings.jsx:323
+#: src/components/compose.jsx:1971
+#: src/pages/settings.jsx:322
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
-msgstr ""
+msgstr "不於公開時間軸顯示"
 
-#: src/components/compose.jsx:1964
+#: src/components/compose.jsx:1977
 #: src/components/status.jsx:2306
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "私人訊息"
 
-#: src/components/compose.jsx:2016
+#: src/components/compose.jsx:2029
 msgid "Schedule"
-msgstr ""
+msgstr "排程"
 
-#: src/components/compose.jsx:2018
+#: src/components/compose.jsx:2031
 #: src/components/keyboard-shortcuts-help.jsx:164
 #: src/components/status.jsx:1056
 #: src/components/status.jsx:1090
@@ -633,20 +633,20 @@ msgstr ""
 msgid "Reply"
 msgstr "回覆"
 
-#: src/components/compose.jsx:2020
+#: src/components/compose.jsx:2033
 msgid "Update"
 msgstr "更新"
 
-#: src/components/compose.jsx:2021
+#: src/components/compose.jsx:2034
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "貼文"
 
-#: src/components/compose.jsx:2104
+#: src/components/compose.jsx:2117
 msgid "Downloading GIF…"
 msgstr "GIF下載中…"
 
-#: src/components/compose.jsx:2132
+#: src/components/compose.jsx:2145
 msgid "Failed to download GIF"
 msgstr "GIF 下載失敗"
 
@@ -661,7 +661,7 @@ msgstr "自訂 emoji 表情符號"
 
 #: src/components/custom-emojis-modal.jsx:296
 msgid "Search emoji"
-msgstr ""
+msgstr "搜尋表情符號"
 
 #: src/components/custom-emojis-modal.jsx:327
 msgid "Error loading custom emojis"
@@ -669,22 +669,22 @@ msgstr ""
 
 #: src/components/custom-emojis-modal.jsx:338
 msgid "Recently used"
-msgstr ""
+msgstr "最近使用"
 
 #: src/components/custom-emojis-modal.jsx:339
 msgid "Others"
-msgstr ""
+msgstr "其他"
 
 #: src/components/custom-emojis-modal.jsx:358
 msgid "Zoom out"
-msgstr ""
+msgstr "縮小"
 
 #: src/components/custom-emojis-modal.jsx:366
 msgid "Zoom in"
-msgstr ""
+msgstr "放大"
 
 #: src/components/drafts.jsx:62
-#: src/pages/settings.jsx:729
+#: src/pages/settings.jsx:728
 msgid "Unsent drafts"
 msgstr ""
 
@@ -768,7 +768,7 @@ msgstr "下一個"
 
 #: src/components/edit-history-controls.jsx:57
 msgid "Exit"
-msgstr ""
+msgstr "退出"
 
 #: src/components/edit-profile-sheet.jsx:147
 msgid "Unable to update profile."
@@ -879,7 +879,7 @@ msgstr "沒有可顯示的內容"
 
 #: src/components/gif-picker-modal.jsx:86
 msgid "Search GIFs"
-msgstr ""
+msgstr "搜尋 GIF"
 
 #: src/components/gif-picker-modal.jsx:101
 msgid "Powered by GIPHY"
@@ -1023,11 +1023,11 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:138
 msgid "Compose new post"
-msgstr ""
+msgstr "撰寫新貼文"
 
 #: src/components/keyboard-shortcuts-help.jsx:142
 msgid "Compose new post (new window)"
-msgstr ""
+msgstr "撰寫新貼文（於新視窗）"
 
 #: src/components/keyboard-shortcuts-help.jsx:145
 msgid "<0>Shift</0> + <1>c</1>"
@@ -1095,11 +1095,11 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:209
 msgid "Go to Home"
-msgstr ""
+msgstr "回到首頁"
 
 #: src/components/keyboard-shortcuts-help.jsx:213
 msgid "Go to Notifications"
-msgstr ""
+msgstr "前往通知"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1159,12 +1159,12 @@ msgstr ""
 #. Action to switch from rendered math back to raw (LaTeX) markup
 #: src/components/math-block.jsx:149
 msgid "Show markup"
-msgstr ""
+msgstr "顯示標記"
 
 #. Action to render math expressions from raw (LaTeX) markup
 #: src/components/math-block.jsx:154
 msgid "Format math"
-msgstr ""
+msgstr "格式化數學標記"
 
 #: src/components/media-alt-modal.jsx:48
 #: src/components/media.jsx:51
@@ -1197,7 +1197,7 @@ msgstr "影片說明"
 
 #: src/components/media-attachment.jsx:183
 msgid "Audio description"
-msgstr ""
+msgstr "聲音說明"
 
 #. placeholder {0}: prettyBytes( imageSize, )
 #. placeholder {0}: prettyBytes( videoSize, )
@@ -1215,7 +1215,7 @@ msgstr "檔案大小太大，上載可能會遇到問題。請嘗試把檔案大
 #: src/components/media-attachment.jsx:230
 #: src/components/media-attachment.jsx:250
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "檔案大小過大，上傳可能會遇到問題。請嘗試把檔案大小從 {0}x{1}px 縮小到 {2}x{3}px。"
 
 #: src/components/media-attachment.jsx:258
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -1236,37 +1236,37 @@ msgstr "編輯影像說明"
 
 #: src/components/media-attachment.jsx:362
 msgid "Edit audio description"
-msgstr ""
+msgstr "編輯音訊描述"
 
 #: src/components/media-attachment.jsx:407
 #: src/components/media-attachment.jsx:456
 msgid "Generating description. Please wait…"
-msgstr ""
+msgstr "產生描述中，請稍後…"
 
 #. placeholder {0}: e.message
 #: src/components/media-attachment.jsx:427
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "產生描述失敗：{0}"
 
 #: src/components/media-attachment.jsx:428
 msgid "Failed to generate description"
-msgstr ""
+msgstr "無法產生描述"
 
 #: src/components/media-attachment.jsx:440
 #: src/components/media-attachment.jsx:446
 #: src/components/media-attachment.jsx:492
 msgid "Generate description…"
-msgstr ""
+msgstr "產生描述中…"
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/media-attachment.jsx:479
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "產生描述失敗：{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/media-attachment.jsx:494
 msgid "({0}) <0>— experimental</0>"
-msgstr ""
+msgstr "({0}) <0>— 實驗性</0>"
 
 #: src/components/media-attachment.jsx:513
 msgid "Done"
@@ -1274,19 +1274,19 @@ msgstr "完成"
 
 #: src/components/media-modal.jsx:374
 msgid "Open original media in new window"
-msgstr ""
+msgstr "在新視窗打開原始媒體檔"
 
 #: src/components/media-modal.jsx:378
 msgid "Open original media"
-msgstr ""
+msgstr "打開原始媒體檔"
 
 #: src/components/media-modal.jsx:394
 msgid "Attempting to describe image. Please wait…"
-msgstr ""
+msgstr "嘗試描述圖片中，請稍等…"
 
 #: src/components/media-modal.jsx:409
 msgid "Failed to describe image"
-msgstr ""
+msgstr "描述圖片失敗"
 
 #: src/components/media-modal.jsx:419
 msgid "Describe image…"
@@ -1320,7 +1320,7 @@ msgstr ""
 
 #: src/components/mention-modal.jsx:179
 msgid "Search accounts"
-msgstr ""
+msgstr "搜索帳號"
 
 #: src/components/modals.jsx:89
 msgid "Post scheduled"
@@ -1374,7 +1374,7 @@ msgstr ""
 #: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
-#: src/pages/settings.jsx:1217
+#: src/pages/settings.jsx:1216
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr ""
@@ -1418,7 +1418,7 @@ msgstr "更多…"
 #: src/pages/catchup.jsx:2225
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1221
+#: src/pages/settings.jsx:1220
 msgid "Likes"
 msgstr "喜歡"
 
@@ -1846,12 +1846,12 @@ msgid "Unable to access camera. Please check permissions."
 msgstr ""
 
 #: src/components/quote-settings-sheet.jsx:37
-#: src/pages/settings.jsx:359
+#: src/pages/settings.jsx:358
 msgid "Quote settings updated"
 msgstr ""
 
 #: src/components/quote-settings-sheet.jsx:47
-#: src/pages/settings.jsx:361
+#: src/pages/settings.jsx:360
 msgid "Failed to update quote settings"
 msgstr ""
 
@@ -2743,7 +2743,7 @@ msgid "Pin to profile"
 msgstr "釘選至個人檔案"
 
 #: src/components/status.jsx:1538
-#: src/pages/settings.jsx:333
+#: src/pages/settings.jsx:332
 msgid "Quote settings"
 msgstr ""
 
@@ -2918,7 +2918,7 @@ msgid "{index}/X"
 msgstr ""
 
 #: src/components/timeline.jsx:480
-#: src/pages/settings.jsx:1245
+#: src/pages/settings.jsx:1244
 msgid "New posts"
 msgstr ""
 
@@ -2995,7 +2995,7 @@ msgid "Login required."
 msgstr "需要登入"
 
 #: src/compose.jsx:95
-#: src/pages/annual-report.jsx:189
+#: src/pages/annual-report.jsx:186
 #: src/pages/http-route.jsx:91
 #: src/pages/login.jsx:280
 msgid "Go home"
@@ -3786,7 +3786,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
 #: src/pages/notifications.jsx:676
-#: src/pages/settings.jsx:1233
+#: src/pages/settings.jsx:1232
 msgid "Follow requests"
 msgstr ""
 
@@ -4038,210 +4038,210 @@ msgstr ""
 msgid "Display language"
 msgstr ""
 
-#: src/pages/settings.jsx:270
+#: src/pages/settings.jsx:269
 msgid "Volunteer translations"
 msgstr ""
 
-#: src/pages/settings.jsx:281
+#: src/pages/settings.jsx:280
 msgid "Posting"
 msgstr ""
 
-#: src/pages/settings.jsx:287
+#: src/pages/settings.jsx:286
 msgid "Default visibility"
 msgstr ""
 
-#: src/pages/settings.jsx:288
-#: src/pages/settings.jsx:334
-#: src/pages/settings.jsx:382
+#: src/pages/settings.jsx:287
+#: src/pages/settings.jsx:333
+#: src/pages/settings.jsx:381
 msgid "Synced"
 msgstr ""
 
-#: src/pages/settings.jsx:311
+#: src/pages/settings.jsx:310
 msgid "Default visibility updated"
 msgstr ""
 
-#: src/pages/settings.jsx:313
+#: src/pages/settings.jsx:312
 msgid "Failed to update default visibility"
 msgstr ""
 
-#: src/pages/settings.jsx:384
+#: src/pages/settings.jsx:383
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:399
+#: src/pages/settings.jsx:398
 msgid "Experiments"
 msgstr ""
 
-#: src/pages/settings.jsx:412
+#: src/pages/settings.jsx:411
 msgid "Auto refresh timeline posts"
 msgstr "自動更新時間軸"
 
-#: src/pages/settings.jsx:424
+#: src/pages/settings.jsx:423
 msgid "Boosts carousel"
 msgstr ""
 
-#: src/pages/settings.jsx:441
+#: src/pages/settings.jsx:440
 msgid "Post translation"
 msgstr ""
 
-#: src/pages/settings.jsx:452
+#: src/pages/settings.jsx:451
 msgid "Translate to "
 msgstr ""
 
-#: src/pages/settings.jsx:463
+#: src/pages/settings.jsx:462
 msgid "System language ({systemTargetLanguageText})"
 msgstr ""
 
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
-#: src/pages/settings.jsx:489
+#: src/pages/settings.jsx:488
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr ""
 
-#: src/pages/settings.jsx:544
+#: src/pages/settings.jsx:543
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:572
+#: src/pages/settings.jsx:571
 msgid "Auto inline translation"
 msgstr ""
 
-#: src/pages/settings.jsx:576
+#: src/pages/settings.jsx:575
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr ""
 
-#: src/pages/settings.jsx:597
+#: src/pages/settings.jsx:596
 msgid "GIF Picker for composer"
 msgstr ""
 
-#: src/pages/settings.jsx:601
+#: src/pages/settings.jsx:600
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr ""
 
-#: src/pages/settings.jsx:630
+#: src/pages/settings.jsx:629
 msgid "Image description generator"
 msgstr ""
 
-#: src/pages/settings.jsx:635
+#: src/pages/settings.jsx:634
 msgid "Only for new images while composing new posts."
 msgstr ""
 
-#: src/pages/settings.jsx:642
+#: src/pages/settings.jsx:641
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr ""
 
-#: src/pages/settings.jsx:670
+#: src/pages/settings.jsx:669
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr ""
 
-#: src/pages/settings.jsx:675
+#: src/pages/settings.jsx:674
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr ""
 
-#: src/pages/settings.jsx:686
+#: src/pages/settings.jsx:685
 msgid "Note: This feature uses currently-logged-in instance server API."
 msgstr ""
 
-#: src/pages/settings.jsx:703
+#: src/pages/settings.jsx:702
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "隱藏模式 <0>(<1>文字</1> → <2>██</2>)</0>"
 
-#: src/pages/settings.jsx:712
+#: src/pages/settings.jsx:711
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr ""
 
-#: src/pages/settings.jsx:737
+#: src/pages/settings.jsx:736
 msgid "About"
 msgstr ""
 
-#: src/pages/settings.jsx:776
+#: src/pages/settings.jsx:775
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr ""
 
-#: src/pages/settings.jsx:805
+#: src/pages/settings.jsx:804
 msgid "Sponsor"
 msgstr ""
 
-#: src/pages/settings.jsx:813
+#: src/pages/settings.jsx:812
 msgid "Donate"
 msgstr ""
 
-#: src/pages/settings.jsx:829
+#: src/pages/settings.jsx:828
 msgid "What's new"
 msgstr ""
 
-#: src/pages/settings.jsx:833
+#: src/pages/settings.jsx:832
 msgid "Privacy Policy"
 msgstr ""
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:840
+#: src/pages/settings.jsx:839
 msgid "<0>Site:</0> {0}"
 msgstr ""
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:847
+#: src/pages/settings.jsx:846
 msgid "<0>Version:</0> <1/> {0}"
 msgstr ""
 
-#: src/pages/settings.jsx:862
+#: src/pages/settings.jsx:861
 msgid "Version string copied"
 msgstr ""
 
-#: src/pages/settings.jsx:865
+#: src/pages/settings.jsx:864
 msgid "Unable to copy version string"
 msgstr ""
 
-#: src/pages/settings.jsx:1130
-#: src/pages/settings.jsx:1135
+#: src/pages/settings.jsx:1129
+#: src/pages/settings.jsx:1134
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1141
+#: src/pages/settings.jsx:1140
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1148
+#: src/pages/settings.jsx:1147
 msgid "Push Notifications (beta)"
 msgstr ""
 
-#: src/pages/settings.jsx:1170
+#: src/pages/settings.jsx:1169
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1179
+#: src/pages/settings.jsx:1178
 msgid "Allow from <0>{0}</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:1188
+#: src/pages/settings.jsx:1187
 msgid "anyone"
 msgstr ""
 
-#: src/pages/settings.jsx:1192
+#: src/pages/settings.jsx:1191
 msgid "people I follow"
 msgstr ""
 
-#: src/pages/settings.jsx:1196
+#: src/pages/settings.jsx:1195
 msgid "followers"
 msgstr ""
 
-#: src/pages/settings.jsx:1229
+#: src/pages/settings.jsx:1228
 msgid "Follows"
 msgstr ""
 
-#: src/pages/settings.jsx:1237
+#: src/pages/settings.jsx:1236
 msgid "Polls"
 msgstr ""
 
-#: src/pages/settings.jsx:1241
+#: src/pages/settings.jsx:1240
 msgid "Post edits"
 msgstr ""
 
-#: src/pages/settings.jsx:1262
+#: src/pages/settings.jsx:1261
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1278
+#: src/pages/settings.jsx:1277
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 

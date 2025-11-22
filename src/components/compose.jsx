@@ -118,6 +118,22 @@ const ADD_LABELS = {
 
 const DEFAULT_SCHEDULED_AT = Math.max(10 * 60 * 1000, MIN_SCHEDULED_AT); // 10 mins
 
+function isMimeTypeSupported(fileType, supportedMimeTypes) {
+  if (!supportedMimeTypes) return true;
+  if (supportedMimeTypes.includes(fileType)) return true;
+
+  // If type is not supported, try to find a supported type with the same subtype
+  // E.g. application/ogg -> audio/ogg
+  const [suffixType, subtype] = fileType.split('/');
+  const subTypeMap = {};
+  supportedMimeTypes.forEach((mimeType) => {
+    const [t, st] = mimeType.split('/');
+    subTypeMap[st] = t;
+  });
+
+  return !!subTypeMap[subtype];
+}
+
 function Compose({
   onClose,
   replyToStatus,
@@ -768,10 +784,7 @@ function Compose({
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (
-            supportedMimeTypes !== undefined &&
-            !supportedMimeTypes.includes(file.type)
-          ) {
+          if (!isMimeTypeSupported(file.type, supportedMimeTypes)) {
             unsupportedFiles.push(file);
           } else {
             files.push(file);

@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-21 12:05\n"
+"PO-Revision-Date: 2025-11-22 02:37\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -35,7 +35,7 @@ msgstr "最終投稿: {0}"
 #: src/components/account-block.jsx:170
 #: src/components/account-info.jsx:717
 msgid "Automated"
-msgstr ""
+msgstr "BOTアカウント"
 
 #: src/components/account-block.jsx:177
 #: src/components/account-info.jsx:722
@@ -88,7 +88,7 @@ msgstr "サーバーのドメイン名"
 
 #: src/components/account-info.jsx:124
 msgid "View profile"
-msgstr ""
+msgstr "プロフィールを見る"
 
 #: src/components/account-info.jsx:392
 msgid "Unable to load account."
@@ -164,7 +164,7 @@ msgstr "ハンドルをコピー"
 #: src/components/related-actions.jsx:565
 #: src/components/shortcuts-settings.jsx:1083
 msgid "QR code"
-msgstr ""
+msgstr "QRコード"
 
 #: src/components/account-info.jsx:641
 msgid "Go to original profile page"
@@ -262,7 +262,7 @@ msgstr "返信"
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1567
 msgid "Quotes"
-msgstr ""
+msgstr "引用"
 
 #: src/components/account-info.jsx:1061
 #: src/pages/catchup.jsx:75
@@ -331,16 +331,16 @@ msgstr "リストから追加/削除"
 
 #: src/components/add-remove-lists-sheet.jsx:90
 msgid "Unable to remove from list."
-msgstr ""
+msgstr "リストから削除できません。"
 
 #: src/components/add-remove-lists-sheet.jsx:91
 msgid "Unable to add to list."
-msgstr ""
+msgstr "リストに追加できません。"
 
 #: src/components/add-remove-lists-sheet.jsx:110
 #: src/pages/lists.jsx:131
 msgid "Unable to load lists."
-msgstr ""
+msgstr "リストを読み込めませんでした"
 
 #: src/components/add-remove-lists-sheet.jsx:114
 msgid "No lists."
@@ -388,11 +388,11 @@ msgstr "投稿"
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
-msgstr ""
+msgstr "予約投稿"
 
 #: src/components/compose-button.jsx:190
 msgid "Add to thread"
-msgstr ""
+msgstr "スレッドに追加する"
 
 #. placeholder {0}: i + 1
 #: src/components/compose-poll.jsx:43
@@ -417,23 +417,23 @@ msgstr "追加"
 
 #: src/components/compose-poll.jsx:96
 msgid "Multiple choice"
-msgstr ""
+msgstr "複数選択"
 
 #: src/components/compose-poll.jsx:99
 msgid "Duration"
-msgstr ""
+msgstr "期間"
 
 #: src/components/compose-poll.jsx:129
 msgid "Remove poll"
-msgstr ""
+msgstr "投票を削除"
 
 #: src/components/compose.jsx:110
 msgid "Take photo or video"
-msgstr ""
+msgstr "写真や動画を撮る"
 
 #: src/components/compose.jsx:111
 msgid "Add media"
-msgstr ""
+msgstr "メディアを追加"
 
 #: src/components/compose.jsx:112
 msgid "Add custom emoji"
@@ -441,7 +441,7 @@ msgstr "カスタム絵文字を追加"
 
 #: src/components/compose.jsx:113
 msgid "Add GIF"
-msgstr ""
+msgstr "GIFを追加"
 
 #: src/components/compose.jsx:114
 msgid "Add poll"
@@ -453,25 +453,25 @@ msgstr ""
 
 #: src/components/compose.jsx:116
 msgid "Schedule post"
-msgstr ""
+msgstr "投稿を予約"
 
 #: src/components/compose.jsx:534
 msgid "You have unsaved changes. Discard this post?"
-msgstr ""
+msgstr "保存されていない変更があります。この投稿を破棄しますか？"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
 #: src/components/compose.jsx:783
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
-msgstr ""
+msgstr "{0, plural, other {ファイル {2} はサポートされていません。}}"
 
 #: src/components/compose.jsx:793
 #: src/components/compose.jsx:811
 #: src/components/compose.jsx:2092
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
-msgstr ""
+msgstr "{maxMediaAttachments, plural, other {添付できるファイルは最大#個までです。}}"
 
 #: src/components/compose.jsx:1033
 msgid "Pop out"
@@ -518,11 +518,11 @@ msgstr ""
 
 #: src/components/compose.jsx:1240
 msgid "Some poll choices are empty"
-msgstr ""
+msgstr "一部のアンケートの選択肢が空です"
 
 #: src/components/compose.jsx:1253
 msgid "Some media have no descriptions. Continue?"
-msgstr ""
+msgstr "一部のメディアには説明がありません。続行しますか？"
 
 #: src/components/compose.jsx:1305
 msgid "Attachment #{i} failed"
@@ -546,11 +546,11 @@ msgstr "キャンセル"
 
 #: src/components/compose.jsx:1461
 msgid "Post your reply"
-msgstr ""
+msgstr "返信を投稿"
 
 #: src/components/compose.jsx:1463
 msgid "Edit your post"
-msgstr ""
+msgstr "投稿を編集する"
 
 #: src/components/compose.jsx:1465
 msgid "Ask a question"
@@ -558,11 +558,11 @@ msgstr ""
 
 #: src/components/compose.jsx:1466
 msgid "What are you doing?"
-msgstr ""
+msgstr "なにしてる？"
 
 #: src/components/compose.jsx:1539
 msgid "Mark media as sensitive"
-msgstr ""
+msgstr "メディアを閲覧注意にする"
 
 #: src/components/compose.jsx:1579
 msgid "Posting on <0/>"
@@ -573,7 +573,7 @@ msgstr ""
 #: src/components/status.jsx:297
 #: src/pages/settings.jsx:368
 msgid "Anyone can quote"
-msgstr ""
+msgstr "誰でも引用可能"
 
 #: src/components/compose.jsx:1884
 #: src/components/quote-settings-sheet.jsx:85
@@ -657,31 +657,31 @@ msgstr ""
 
 #: src/components/custom-emojis-modal.jsx:276
 msgid "Custom emojis"
-msgstr ""
+msgstr "カスタム絵文字"
 
 #: src/components/custom-emojis-modal.jsx:296
 msgid "Search emoji"
-msgstr ""
+msgstr "絵文字を検索"
 
 #: src/components/custom-emojis-modal.jsx:327
 msgid "Error loading custom emojis"
-msgstr ""
+msgstr "カスタム絵文字の読み込みに失敗しました"
 
 #: src/components/custom-emojis-modal.jsx:338
 msgid "Recently used"
-msgstr ""
+msgstr "最近使用した項目"
 
 #: src/components/custom-emojis-modal.jsx:339
 msgid "Others"
-msgstr ""
+msgstr "その他"
 
 #: src/components/custom-emojis-modal.jsx:358
 msgid "Zoom out"
-msgstr ""
+msgstr "縮小"
 
 #: src/components/custom-emojis-modal.jsx:366
 msgid "Zoom in"
-msgstr ""
+msgstr "拡大"
 
 #: src/components/drafts.jsx:62
 #: src/pages/settings.jsx:729
@@ -694,7 +694,7 @@ msgstr ""
 
 #: src/components/drafts.jsx:101
 msgid "Delete this draft?"
-msgstr ""
+msgstr "この下書きを削除しますか？"
 
 #: src/components/drafts.jsx:116
 msgid "Error deleting draft! Please try again."
@@ -768,19 +768,19 @@ msgstr "次へ"
 
 #: src/components/edit-history-controls.jsx:57
 msgid "Exit"
-msgstr ""
+msgstr "終了"
 
 #: src/components/edit-profile-sheet.jsx:147
 msgid "Unable to update profile."
-msgstr ""
+msgstr "プロフィールを更新できませんでした"
 
 #: src/components/edit-profile-sheet.jsx:154
 msgid "Header picture"
-msgstr ""
+msgstr "ヘッダー画像"
 
 #: src/components/edit-profile-sheet.jsx:206
 msgid "Profile picture"
-msgstr ""
+msgstr "プロフィール画像"
 
 #: src/components/edit-profile-sheet.jsx:258
 #: src/components/list-add-edit.jsx:106
@@ -871,7 +871,7 @@ msgstr "終わりです。"
 #: src/components/generic-accounts.jsx:236
 #: src/components/mention-modal.jsx:233
 msgid "Error loading accounts"
-msgstr ""
+msgstr "アカウントの読み込みエラー"
 
 #: src/components/generic-accounts.jsx:240
 msgid "Nothing to show"
@@ -879,11 +879,11 @@ msgstr "表示するものがありません"
 
 #: src/components/gif-picker-modal.jsx:86
 msgid "Search GIFs"
-msgstr ""
+msgstr "GIFを検索"
 
 #: src/components/gif-picker-modal.jsx:101
 msgid "Powered by GIPHY"
-msgstr ""
+msgstr "Powered by GIPHY"
 
 #: src/components/gif-picker-modal.jsx:109
 msgid "Type to search GIFs"
@@ -895,11 +895,11 @@ msgstr "GIF の読み込みに失敗しました"
 
 #: src/components/import-accounts-selection.jsx:86
 msgid "Select accounts to import"
-msgstr ""
+msgstr "インポートするアカウントを選択"
 
 #: src/components/import-accounts-selection.jsx:117
 msgid "Select all"
-msgstr ""
+msgstr "すべて選択"
 
 #: src/components/import-accounts-selection.jsx:158
 msgid "Existing"
@@ -911,11 +911,11 @@ msgstr ""
 
 #: src/components/import-export-accounts.jsx:52
 msgid "Export failed"
-msgstr ""
+msgstr "エクスポートに失敗しました"
 
 #: src/components/import-export-accounts.jsx:72
 msgid "Import failed"
-msgstr ""
+msgstr "インポートに失敗しました"
 
 #: src/components/import-export-accounts.jsx:113
 msgid "Import/Export <0>Accounts</0>"
@@ -1095,11 +1095,11 @@ msgstr "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 
 #: src/components/keyboard-shortcuts-help.jsx:209
 msgid "Go to Home"
-msgstr ""
+msgstr "ホームに移動"
 
 #: src/components/keyboard-shortcuts-help.jsx:213
 msgid "Go to Notifications"
-msgstr ""
+msgstr "通知に移動"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1150,11 +1150,11 @@ msgstr ""
 
 #: src/components/math-block.jsx:132
 msgid "Unable to format math"
-msgstr ""
+msgstr "数式をフォーマットできません"
 
 #: src/components/math-block.jsx:146
 msgid "Math expressions found."
-msgstr ""
+msgstr "数式が見つかりました。"
 
 #. Action to switch from rendered math back to raw (LaTeX) markup
 #: src/components/math-block.jsx:149
@@ -1164,7 +1164,7 @@ msgstr ""
 #. Action to render math expressions from raw (LaTeX) markup
 #: src/components/math-block.jsx:154
 msgid "Format math"
-msgstr ""
+msgstr "数式をフォーマット"
 
 #: src/components/media-alt-modal.jsx:48
 #: src/components/media.jsx:51
@@ -1185,19 +1185,19 @@ msgstr ""
 
 #: src/components/media-attachment.jsx:168
 msgid "Uploaded"
-msgstr ""
+msgstr "アップロード済"
 
 #: src/components/media-attachment.jsx:181
 msgid "Image description"
-msgstr ""
+msgstr "画像の説明"
 
 #: src/components/media-attachment.jsx:182
 msgid "Video description"
-msgstr ""
+msgstr "動画の説明"
 
 #: src/components/media-attachment.jsx:183
 msgid "Audio description"
-msgstr ""
+msgstr "音声の説明"
 
 #. placeholder {0}: prettyBytes( imageSize, )
 #. placeholder {0}: prettyBytes( videoSize, )
@@ -1215,7 +1215,7 @@ msgstr ""
 #: src/components/media-attachment.jsx:230
 #: src/components/media-attachment.jsx:250
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "サイズが大きすぎます。アップロード時に問題が発生する可能性があります。 {0} × {1} px から {2} × {3} px に減らしてみてください。"
 
 #: src/components/media-attachment.jsx:258
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -1224,7 +1224,7 @@ msgstr "フレームレートが高すぎます。アップロード時に問題
 #: src/components/media-attachment.jsx:335
 #: src/compose.jsx:88
 msgid "Error"
-msgstr ""
+msgstr "エラー"
 
 #: src/components/media-attachment.jsx:360
 msgid "Edit image description"
@@ -1246,7 +1246,7 @@ msgstr "説明を生成しています。しばらくお待ちください…"
 #. placeholder {0}: e.message
 #: src/components/media-attachment.jsx:427
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "説明の生成に失敗しました: {0}"
 
 #: src/components/media-attachment.jsx:428
 msgid "Failed to generate description"
@@ -1261,7 +1261,7 @@ msgstr "説明の生成…"
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/media-attachment.jsx:479
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "説明の生成に失敗しました: {0}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/media-attachment.jsx:494
@@ -1274,11 +1274,11 @@ msgstr "完了"
 
 #: src/components/media-modal.jsx:374
 msgid "Open original media in new window"
-msgstr ""
+msgstr "元のメディアを新しいウィンドウで開く"
 
 #: src/components/media-modal.jsx:378
 msgid "Open original media"
-msgstr ""
+msgstr "元のメディアを開く"
 
 #: src/components/media-modal.jsx:394
 msgid "Attempting to describe image. Please wait…"
@@ -1294,11 +1294,11 @@ msgstr ""
 
 #: src/components/media-modal.jsx:443
 msgid "View post"
-msgstr ""
+msgstr "投稿を表示"
 
 #: src/components/media-post.jsx:127
 msgid "Sensitive media"
-msgstr ""
+msgstr "センシティブなメディア"
 
 #: src/components/media-post.jsx:132
 msgid "Filtered: {filterTitleStr}"
@@ -1316,11 +1316,11 @@ msgstr "フィルター済み"
 
 #: src/components/media.jsx:486
 msgid "Open file"
-msgstr ""
+msgstr "ファイルを開く"
 
 #: src/components/mention-modal.jsx:179
 msgid "Search accounts"
-msgstr ""
+msgstr "アカウントを検索"
 
 #: src/components/modals.jsx:89
 msgid "Post scheduled"
@@ -1556,7 +1556,7 @@ msgstr "投票したアンケートが終了しました。"
 
 #: src/components/notification.jsx:203
 msgid "{account} edited a post."
-msgstr ""
+msgstr "{account} が投稿を編集しました。"
 
 #: src/components/notification.jsx:205
 msgid "A post you interacted with has been edited."
@@ -1610,7 +1610,7 @@ msgstr "あなたのアカウントはモデレーション警告を受けまし
 
 #: src/components/notification.jsx:304
 msgid "Your account has been disabled."
-msgstr ""
+msgstr "あなたのアカウントは無効になっています。"
 
 #: src/components/notification.jsx:305
 msgid "Some of your posts have been marked as sensitive."
@@ -1626,7 +1626,7 @@ msgstr ""
 
 #: src/components/notification.jsx:308
 msgid "Your account has been limited."
-msgstr ""
+msgstr "あなたのアカウントは制限されています。"
 
 #: src/components/notification.jsx:309
 msgid "Your account has been suspended."
@@ -1634,7 +1634,7 @@ msgstr ""
 
 #: src/components/notification.jsx:386
 msgid "[Unknown notification type: {type}]"
-msgstr ""
+msgstr "[不明な通知タイプ: {type}]"
 
 #: src/components/notification.jsx:463
 #: src/components/status.jsx:1242
@@ -1700,11 +1700,11 @@ msgstr "共有…"
 
 #: src/components/open-link-sheet.jsx:92
 msgid "Open"
-msgstr ""
+msgstr "開く"
 
 #: src/components/poll.jsx:113
 msgid "Voted"
-msgstr ""
+msgstr "投票済み"
 
 #: src/components/poll.jsx:119
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
@@ -1718,7 +1718,7 @@ msgstr "結果を隠す"
 
 #: src/components/poll.jsx:188
 msgid "Vote"
-msgstr ""
+msgstr "投票する"
 
 #: src/components/poll.jsx:208
 #: src/components/poll.jsx:210
@@ -1747,19 +1747,19 @@ msgstr ""
 
 #: src/components/poll.jsx:268
 msgid "Ended <0/>"
-msgstr ""
+msgstr "終了済み <0/>"
 
 #: src/components/poll.jsx:272
 msgid "Ended"
-msgstr ""
+msgstr "終了済み"
 
 #: src/components/poll.jsx:275
 msgid "Ending <0/>"
-msgstr ""
+msgstr "終了 <0/>"
 
 #: src/components/poll.jsx:279
 msgid "Ending"
-msgstr ""
+msgstr "終了中"
 
 #: src/components/post-embed-modal.jsx:201
 #: src/components/status.jsx:1448

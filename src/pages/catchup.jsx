@@ -72,8 +72,8 @@ const RANGES = [
 const FILTER_KEYS = {
   original: msg`Original`,
   replies: msg`Replies`,
-  boosts: msg`Boosts`,
   quotes: msg`Quotes`,
+  boosts: msg`Boosts`,
   followedTags: msg`Followed tags`,
   groups: msg`Groups`,
   filtered: msg`Filtered`,

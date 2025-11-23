@@ -116,7 +116,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:451
 #: src/components/media-alt-modal.jsx:55
-#: src/components/media-attachment.jsx:398
+#: src/components/media-attachment.jsx:428
 #: src/components/media-modal.jsx:363
 #: src/components/related-actions.jsx:263
 #: src/components/status.jsx:2089
@@ -289,7 +289,7 @@ msgstr "View post stats"
 #: src/components/keyboard-shortcuts-help.jsx:52
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
-#: src/components/media-attachment.jsx:354
+#: src/components/media-attachment.jsx:384
 #: src/components/media-modal.jsx:327
 #: src/components/mention-modal.jsx:162
 #: src/components/notification-service.jsx:157
@@ -395,7 +395,7 @@ msgid "Choice {0}"
 msgstr "Choice {0}"
 
 #: src/components/compose-poll.jsx:64
-#: src/components/media-attachment.jsx:318
+#: src/components/media-attachment.jsx:348
 #: src/components/shortcuts-settings.jsx:727
 #: src/pages/catchup.jsx:1198
 #: src/pages/filters.jsx:413
@@ -1178,19 +1178,19 @@ msgstr ""
 msgid "Speak"
 msgstr ""
 
-#: src/components/media-attachment.jsx:168
+#: src/components/media-attachment.jsx:198
 msgid "Uploaded"
 msgstr ""
 
-#: src/components/media-attachment.jsx:181
+#: src/components/media-attachment.jsx:211
 msgid "Image description"
 msgstr "Image description"
 
-#: src/components/media-attachment.jsx:182
+#: src/components/media-attachment.jsx:212
 msgid "Video description"
 msgstr "Video description"
 
-#: src/components/media-attachment.jsx:183
+#: src/components/media-attachment.jsx:213
 msgid "Audio description"
 msgstr "Audio description"
 
@@ -1198,8 +1198,8 @@ msgstr "Audio description"
 #. placeholder {0}: prettyBytes( videoSize, )
 #. placeholder {1}: prettyBytes(imageSizeLimit)
 #. placeholder {1}: prettyBytes(videoSizeLimit)
-#: src/components/media-attachment.jsx:218
-#: src/components/media-attachment.jsx:238
+#: src/components/media-attachment.jsx:248
+#: src/components/media-attachment.jsx:268
 msgid "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 msgstr "File size too large. Uploading might encounter issues. Try reduce the file size from {0} to {1} or lower."
 
@@ -1207,63 +1207,63 @@ msgstr "File size too large. Uploading might encounter issues. Try reduce the fi
 #. placeholder {1}: i18n.number(height)
 #. placeholder {2}: i18n.number(newWidth)
 #. placeholder {3}: i18n.number( newHeight, )
-#: src/components/media-attachment.jsx:230
-#: src/components/media-attachment.jsx:250
+#: src/components/media-attachment.jsx:260
+#: src/components/media-attachment.jsx:280
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 msgstr "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
 
-#: src/components/media-attachment.jsx:258
+#: src/components/media-attachment.jsx:288
 msgid "Frame rate too high. Uploading might encounter issues."
 msgstr "Frame rate too high. Uploading might encounter issues."
 
-#: src/components/media-attachment.jsx:335
+#: src/components/media-attachment.jsx:365
 #: src/compose.jsx:88
 msgid "Error"
 msgstr ""
 
-#: src/components/media-attachment.jsx:360
+#: src/components/media-attachment.jsx:390
 msgid "Edit image description"
 msgstr "Edit image description"
 
-#: src/components/media-attachment.jsx:361
+#: src/components/media-attachment.jsx:391
 msgid "Edit video description"
 msgstr "Edit video description"
 
-#: src/components/media-attachment.jsx:362
+#: src/components/media-attachment.jsx:392
 msgid "Edit audio description"
 msgstr "Edit audio description"
 
-#: src/components/media-attachment.jsx:407
-#: src/components/media-attachment.jsx:456
+#: src/components/media-attachment.jsx:437
+#: src/components/media-attachment.jsx:486
 msgid "Generating description. Please wait…"
 msgstr "Generating description. Please wait…"
 
 #. placeholder {0}: e.message
-#: src/components/media-attachment.jsx:427
+#: src/components/media-attachment.jsx:457
 msgid "Failed to generate description: {0}"
 msgstr "Failed to generate description: {0}"
 
-#: src/components/media-attachment.jsx:428
+#: src/components/media-attachment.jsx:458
 msgid "Failed to generate description"
 msgstr "Failed to generate description"
 
-#: src/components/media-attachment.jsx:440
-#: src/components/media-attachment.jsx:446
-#: src/components/media-attachment.jsx:492
+#: src/components/media-attachment.jsx:470
+#: src/components/media-attachment.jsx:476
+#: src/components/media-attachment.jsx:522
 msgid "Generate description…"
 msgstr ""
 
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
-#: src/components/media-attachment.jsx:479
+#: src/components/media-attachment.jsx:509
 msgid "Failed to generate description{0}"
 msgstr "Failed to generate description{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
-#: src/components/media-attachment.jsx:494
+#: src/components/media-attachment.jsx:524
 msgid "({0}) <0>— experimental</0>"
 msgstr ""
 
-#: src/components/media-attachment.jsx:513
+#: src/components/media-attachment.jsx:543
 msgid "Done"
 msgstr ""
 

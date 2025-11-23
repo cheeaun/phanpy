@@ -3,6 +3,7 @@ import { MenuItem } from '@szhsin/react-menu';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useDebouncedCallback } from 'use-debounce';
 
+import extractImageDescription from '../utils/extract-image-desc';
 import localeCode2Text from '../utils/localeCode2Text';
 import prettyBytes from '../utils/pretty-bytes';
 import showToast from '../utils/show-toast';
@@ -121,6 +122,35 @@ function MediaAttachment({
   }, [videoMatrix, videoMatrixLimit, checkMaxError]);
 
   const [description, setDescription] = useState(attachment.description);
+
+  // Extract description from images that's not uploaded yet
+  useEffect(() => {
+    if (!file || !type.startsWith('image/') || id || attachment.description) {
+      return;
+    }
+
+    let cancelled = false;
+
+    (async () => {
+      setUIState('loading');
+      try {
+        const extractedDescription = await extractImageDescription(file);
+        if (!cancelled && extractedDescription) {
+          setDescription(extractedDescription);
+        }
+      } catch (error) {
+        console.debug('Failed to extract image metadata:', error);
+      } finally {
+        if (!cancelled) {
+          setUIState('default');
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   let [suffixType, subtype] = type.split('/');
   // If type is not supported, try to find a supported type with the same subtype

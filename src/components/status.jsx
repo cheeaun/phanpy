@@ -2219,9 +2219,6 @@ function Status({
                       <Icon
                         icon="comment2"
                         size="s"
-                        // alt={`${repliesCount} ${
-                        //   repliesCount === 1 ? 'reply' : 'replies'
-                        // }`}
                         alt={plural(repliesCount, {
                           one: '# reply',
                           other: '# replies',
@@ -2286,15 +2283,25 @@ function Status({
                   //   {StatusMenuItems}
                   // </Menu>
                   <span class="time">
-                    {visibility !== 'public' && visibility !== 'direct' && (
-                      <>
+                    {showCommentHint && !showCommentCount ? (
+                      <Icon
+                        icon="comment2"
+                        size="s"
+                        alt={plural(repliesCount, {
+                          one: '# reply',
+                          other: '# replies',
+                        })}
+                      />
+                    ) : (
+                      visibility !== 'public' &&
+                      visibility !== 'direct' && (
                         <Icon
                           icon={visibilityIconsMap[visibility]}
                           alt={_(visibilityText[visibility])}
                           size="s"
-                        />{' '}
-                      </>
-                    )}
+                        />
+                      )
+                    )}{' '}
                     <RelativeTime datetime={createdAtDate} format="micro" />
                   </span>
                 ))}

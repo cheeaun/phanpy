@@ -6,7 +6,6 @@ import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
-import stringLength from 'string-length';
 import { uid } from 'uid/single';
 import { useSnapshot } from 'valtio';
 
@@ -32,6 +31,7 @@ import {
   getCurrentAccountNS,
   getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
+import stringLength from '../utils/string-length';
 import supports from '../utils/supports';
 import unfurlMastodonLink from '../utils/unfurl-link';
 import urlRegexObj from '../utils/url-regex';

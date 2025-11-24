@@ -164,7 +164,7 @@ function MediaAttachment({
       suffixTypes.add(t);
     });
   }
-  if (!suffixTypes.has(suffixType)) {
+  if (subtype && !suffixTypes.has(suffixType) && subTypeMap[subtype]) {
     suffixType = subTypeMap[subtype];
   }
 
@@ -210,6 +210,7 @@ function MediaAttachment({
             {
               image: t`Image description`,
               video: t`Video description`,
+              gifv: t`Video description`,
               audio: t`Audio description`,
             }[suffixType]
           }
@@ -389,6 +390,7 @@ function MediaAttachment({
                   {
                     image: t`Edit image description`,
                     video: t`Edit video description`,
+                    gifv: t`Edit video description`,
                     audio: t`Edit audio description`,
                   }[suffixType]
                 }

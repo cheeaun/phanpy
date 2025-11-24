@@ -230,6 +230,7 @@ export default defineConfig({
     cssCodeSplit: false,
     rollupOptions: {
       treeshake: false,
+      external: ['@xmldom/xmldom'], // exifreader's optional dependency, not needed
       input: {
         main: resolve(__dirname, 'index.html'),
         compose: resolve(__dirname, 'compose/index.html'),

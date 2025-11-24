@@ -405,6 +405,28 @@ function App() {
 
     if (code) {
       console.log({ code });
+
+      const isPopup = window.opener && !window.opener.closed;
+
+      if (isPopup) {
+        try {
+          window.opener.postMessage(
+            {
+              type: 'oauth-callback',
+              code: code,
+            },
+            window.location.origin,
+          );
+          setTimeout(() => {
+            window.close();
+          }, 100);
+        } catch (e) {
+          console.error('Failed to send message to parent window:', e);
+          window.close();
+        }
+        return;
+      }
+
       // Clear the code from the URL
       window.history.replaceState(
         {},

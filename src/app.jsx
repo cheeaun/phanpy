@@ -546,7 +546,7 @@ function App() {
       if (isRootPath(location.pathname)) {
         store.local.del(lastPathKey);
       } else {
-        store.local.set(lastPathKey, {
+        store.local.setJSON(lastPathKey, {
           path: location.pathname,
           lastAccessed: Date.now(),
         });
@@ -560,14 +560,14 @@ function App() {
     const isRootPath = !location.pathname || location.pathname === '/';
     if (!isRootPath) return;
     if (isPWA && isLoggedIn && uiState === 'default') {
-      const lastPath = store.local.get(lastPathKey);
+      const lastPath = store.local.getJSON(lastPathKey);
       if (lastPath) {
         setTimeout(() => {
           if (lastPath?.path) {
             window.location.hash = lastPath.path;
           }
           store.local.del(lastPathKey);
-        }, 1000);
+        }, 300);
       }
       restoredRef.current = true;
     }

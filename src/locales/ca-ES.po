@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-24 15:47\n"
+"PO-Revision-Date: 2025-11-25 00:09\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -926,17 +926,21 @@ msgstr "Importa/Exporta <0>Comptes</0>"
 msgid "Import"
 msgstr "Importa"
 
-#: src/components/import-export-accounts.jsx:149
+#: src/components/import-export-accounts.jsx:139
+msgid "Select file…"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:151
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Export"
 msgstr "Exporta"
 
 #. placeholder {0}: accounts.length
-#: src/components/import-export-accounts.jsx:153
+#: src/components/import-export-accounts.jsx:155
 msgid "{0, plural, one {# account} other {# accounts}}"
 msgstr "{0, plural, one {# compte} other {# comptes}}"
 
-#: src/components/import-export-accounts.jsx:165
+#: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
 msgstr "No s'emmagatzemen dades d'inici de sessió ni detalls d'accés al compte als fitxers exportats. Haureu de tornar a iniciar la sessió per a cada compte després de la importació."
 

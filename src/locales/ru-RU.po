@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-24 15:47\n"
+"PO-Revision-Date: 2025-11-25 00:09\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -926,17 +926,21 @@ msgstr "Импорт/Экспорт <0>Аккаунтов</0>"
 msgid "Import"
 msgstr "Импорт"
 
-#: src/components/import-export-accounts.jsx:149
+#: src/components/import-export-accounts.jsx:139
+msgid "Select file…"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:151
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Export"
 msgstr "Экспорт"
 
 #. placeholder {0}: accounts.length
-#: src/components/import-export-accounts.jsx:153
+#: src/components/import-export-accounts.jsx:155
 msgid "{0, plural, one {# account} other {# accounts}}"
 msgstr "{0, plural, one {# аккаунт} other {# аккаунты}}"
 
-#: src/components/import-export-accounts.jsx:165
+#: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
 msgstr "Вход в систему или доступ к аккаунтам не хранится в экспортированных файлах. Вам нужно будет снова войти в систему для каждого аккаунта после импорта."
 

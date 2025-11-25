@@ -433,22 +433,21 @@ function AccountInfo({
                 </div>
                 <div class="stats">
                   <div>
-                    <span>██</span> <Trans>Followers</Trans>
+                    <span>██</span> ██████
                   </div>
                   <div>
-                    <span>██</span>{' '}
-                    <Trans id="following.stats">Following</Trans>
+                    <span>██</span> ██████
                   </div>
                   <div>
-                    <span>██</span> <Trans>Posts</Trans>
+                    <span>██</span> █████
                   </div>
                 </div>
               </div>
               <div class="actions">
                 <span />
                 <span class="buttons">
-                  <button type="button" class="plain" disabled>
-                    <Icon icon="more" size="l" alt={t`More`} />
+                  <button type="button" class="plain4" disabled>
+                    <Icon icon="more2" size="l" />
                   </button>
                 </span>
               </div>

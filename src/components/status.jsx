@@ -2951,7 +2951,7 @@ function Status({
                         title={t`More`}
                         class="plain more-button"
                       >
-                        <Icon icon="more" size="l" alt={t`More`} />
+                        <Icon icon="more2" size="l" alt={t`More`} />
                       </button>
                     </div>
                   }

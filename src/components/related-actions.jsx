@@ -259,8 +259,8 @@ function RelatedActions({
             position="anchor"
             overflow="auto"
             menuButton={
-              <button type="button" class="plain" disabled={loading}>
-                <Icon icon="more" size="l" alt={t`More`} />
+              <button type="button" class="plain4" disabled={loading}>
+                <Icon icon="more2" size="l" alt={t`More`} />
               </button>
             }
             onMenuChange={(e) => {

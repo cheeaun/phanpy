@@ -567,7 +567,7 @@ function App() {
             window.location.hash = lastPath.path;
           }
           store.local.del(lastPathKey);
-        }, 300);
+        }, 1000);
       }
       restoredRef.current = true;
     }

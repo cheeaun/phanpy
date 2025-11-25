@@ -28,6 +28,7 @@ function FieldsAttributesRow({ name, value, disabled, index: i }) {
           maxLength={255}
           required={hasValue}
           dir="auto"
+          enterKeyHint="done"
         />
       </td>
       <td>
@@ -39,6 +40,7 @@ function FieldsAttributesRow({ name, value, disabled, index: i }) {
           maxLength={255}
           onChange={(e) => setHasValue(!!e.currentTarget.value)}
           dir="auto"
+          enterKeyHint="done"
         />
       </td>
     </tr>
@@ -263,6 +265,7 @@ function EditProfileSheet({ onClose = () => {} }) {
                   maxLength={30}
                   disabled={uiState === 'loading'}
                   dir="auto"
+                  enterKeyHint="done"
                 />
               </label>
             </p>

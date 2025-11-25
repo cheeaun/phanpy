@@ -90,6 +90,7 @@ function GIFPickerModal({ onClose = () => {}, onSelect = () => {} }) {
             autocapitalize="off"
             spellCheck="false"
             dir="auto"
+            enterKeyHint="search"
             onInput={debouncedOnInput}
           />
           <input

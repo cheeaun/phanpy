@@ -211,6 +211,7 @@ const SearchForm = forwardRef((props, ref) => {
         autocorrect="off"
         autocapitalize="off"
         spellCheck="false"
+        enterKeyHint="search"
         onSearch={(e) => {
           if (!e.target.value) {
             setSearchParams({});

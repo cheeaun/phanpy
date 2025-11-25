@@ -244,6 +244,7 @@ function Login() {
             autocomplete="off"
             spellCheck={false}
             placeholder={t`instance domain`}
+            enterKeyHint="go"
             onInput={(e) => {
               setInstanceText(e.target.value);
             }}

@@ -548,12 +548,12 @@ function App() {
         store.local.del(lastPathKey);
       } else {
         store.local.setJSON(lastPathKey, {
-          path: location.pathname,
+          path: location.pathname + location.search,
           lastAccessed: Date.now(),
         });
       }
     }
-  }, [location.pathname, isLoggedIn]);
+  }, [location.pathname, location.search, isLoggedIn]);
 
   // Restore last page on PWA reopen
   useEffect(() => {

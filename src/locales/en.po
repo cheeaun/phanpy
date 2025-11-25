@@ -1702,8 +1702,8 @@ msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
 msgstr "{optionVotesCount, plural, one {# vote} other {# votes}}"
 
 #: src/components/poll.jsx:139
-#: src/components/poll.jsx:222
-#: src/components/poll.jsx:226
+#: src/components/poll.jsx:269
+#: src/components/poll.jsx:273
 msgid "Hide results"
 msgstr "Hide results"
 
@@ -1711,46 +1711,46 @@ msgstr "Hide results"
 msgid "Vote"
 msgstr "Vote"
 
-#: src/components/poll.jsx:208
-#: src/components/poll.jsx:210
-#: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1453
-#: src/pages/status.jsx:1476
-msgid "Refresh"
-msgstr ""
-
-#: src/components/poll.jsx:222
-#: src/components/poll.jsx:226
-msgid "Show results"
-msgstr "Show results"
-
 #. placeholder {0}: shortenNumber(votesCount)
 #. placeholder {1}: shortenNumber(votesCount)
-#: src/components/poll.jsx:231
+#: src/components/poll.jsx:196
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 
 #. placeholder {0}: shortenNumber(votersCount)
 #. placeholder {1}: shortenNumber(votersCount)
-#: src/components/poll.jsx:248
+#: src/components/poll.jsx:217
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 
-#: src/components/poll.jsx:268
+#: src/components/poll.jsx:243
 msgid "Ended <0/>"
 msgstr "Ended <0/>"
 
-#: src/components/poll.jsx:272
+#: src/components/poll.jsx:248
 msgid "Ended"
 msgstr "Ended"
 
-#: src/components/poll.jsx:275
+#: src/components/poll.jsx:252
 msgid "Ending <0/>"
 msgstr "Ending <0/>"
 
-#: src/components/poll.jsx:279
+#: src/components/poll.jsx:257
 msgid "Ending"
 msgstr "Ending"
+
+#: src/components/poll.jsx:269
+#: src/components/poll.jsx:273
+msgid "Show results"
+msgstr "Show results"
+
+#: src/components/poll.jsx:291
+#: src/components/poll.jsx:293
+#: src/pages/scheduled-posts.jsx:100
+#: src/pages/status.jsx:1453
+#: src/pages/status.jsx:1476
+msgid "Refresh"
+msgstr ""
 
 #: src/components/post-embed-modal.jsx:201
 #: src/components/status.jsx:1462

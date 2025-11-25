@@ -387,6 +387,7 @@ if (import.meta.env.DEV) {
 const isPWA =
   window.matchMedia('(display-mode: standalone)').matches ||
   window.navigator.standalone === true;
+const PATH_RESTORE_TIME_LIMIT = 2 * 60 * 60 * 1000; // 2 hours, should be good enough
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -564,7 +565,11 @@ function App() {
       if (lastPath) {
         setTimeout(() => {
           if (lastPath?.path) {
-            window.location.hash = lastPath.path;
+            const timeSinceLastAccess =
+              Date.now() - (lastPath.lastAccessed || 0);
+            if (timeSinceLastAccess < PATH_RESTORE_TIME_LIMIT) {
+              window.location.hash = lastPath.path;
+            }
           }
           store.local.del(lastPathKey);
         }, 300);

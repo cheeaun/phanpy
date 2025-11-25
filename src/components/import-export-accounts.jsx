@@ -135,7 +135,9 @@ export default function ImportExportAccounts({ onClose }) {
               style={{ display: 'none' }}
             />
             <div>
-              <small class="insignificant">Select file…</small>
+              <small class="insignificant">
+                <Trans>Select file…</Trans>
+              </small>
             </div>
           </label>{' '}
           <button

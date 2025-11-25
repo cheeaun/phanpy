@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-24 15:47\n"
+"PO-Revision-Date: 2025-11-25 00:09\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -926,17 +926,21 @@ msgstr "Tuo/vie <0>tilejä</0>"
 msgid "Import"
 msgstr "Tuo"
 
-#: src/components/import-export-accounts.jsx:149
+#: src/components/import-export-accounts.jsx:139
+msgid "Select file…"
+msgstr ""
+
+#: src/components/import-export-accounts.jsx:151
 #: src/components/shortcuts-settings.jsx:1050
 msgid "Export"
 msgstr "Vie"
 
 #. placeholder {0}: accounts.length
-#: src/components/import-export-accounts.jsx:153
+#: src/components/import-export-accounts.jsx:155
 msgid "{0, plural, one {# account} other {# accounts}}"
 msgstr "{0, plural, one {# tili} other {# tiliä}}"
 
-#: src/components/import-export-accounts.jsx:165
+#: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
 msgstr "Vietäviin tiedostoihin ei tallenneta kirjautusmis- eikä tilinkäyttötietoja. Viennin jälkeen sinun tulee kirjautua uudelleen sisään jokaiselle tilille."
 
@@ -2698,7 +2702,7 @@ msgstr "Muokattu: {editedDateText}"
 
 #: src/components/status.jsx:1410
 msgid "Open link"
-msgstr ""
+msgstr "Avaa linkki"
 
 #: src/components/status.jsx:1478
 msgid "Conversation unmuted"

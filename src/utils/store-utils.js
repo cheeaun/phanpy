@@ -110,6 +110,7 @@ export function saveAccount(account) {
     acc.instanceURL = account.instanceURL;
     acc.accessToken = account.accessToken;
     acc.vapidKey = account.vapidKey;
+    acc.updatedAt = Date.now();
   } else {
     accounts.push(account);
   }

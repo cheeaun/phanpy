@@ -2272,8 +2272,12 @@ a.card:is(:hover, :focus):visited {
 .poll-meta {
   color: var(--text-insignificant-color);
   margin: 8px 16px;
+  margin-inline-end: 8px;
   font-size: 90%;
+  display: flex;
+  gap: 4px;
   user-select: none;
+  line-height: 1.3;
 
   > button:first-child {
     margin-inline-start: -8px;

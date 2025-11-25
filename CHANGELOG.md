@@ -354,6 +354,8 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 
 ## September 17, 2025
 
+📢 https://mastodon.social/@cheeaun/115219986749353363
+
 - 📝 Composer relayout
 - 🔍 Recent searches
 - 🏛️ Edit History Snapshots
@@ -366,15 +368,26 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 
 ## October 9, 2025
 
+📢 https://mastodon.social/@cheeaun/115344535219522826
+
 - 💬 More support for (upcoming) Mastodon v4.5's native quote posts
 - 🐛 Bug fixes
 
 ## November 8, 2025
 
+📢 https://mastodon.social/@cheeaun/115514729408923191
+
 - 🗣️ Reply/Reply all
 - ⌨️ Sequential hotkeys, only g>h and g>n for now
 - 💈 Decal patterns for posting stats
 - 💬 Slightly more support for Mastodon v4.5's native quote posts
+- 🐛 Bug fixes
+
+## Next
+
+- 🤳 QR code for profiles and shortcuts settings
+- 🔃 Import/export accounts
+- 📸 Extract description from attached images
 - 🐛 Bug fixes
 
 <!--

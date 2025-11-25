@@ -2,7 +2,7 @@ import './accounts.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useReducer } from 'preact/hooks';
 
 import Avatar from '../components/avatar';
@@ -56,6 +56,7 @@ function Accounts({ onClose }) {
             {accounts.map((account, i) => {
               const isCurrent = account.info.id === currentAccount;
               const isDefault = i === 0; // first account is always default
+              const isLoggedOut = !account.accessToken;
               return (
                 <li key={account.info.id}>
                   <div>
@@ -94,7 +95,10 @@ function Accounts({ onClose }) {
                       }
                       showAcct
                       onClick={() => {
-                        if (isCurrent) {
+                        if (isLoggedOut) {
+                          location.href = `/#/login?instance=${account.instanceURL}`;
+                          onClose();
+                        } else if (isCurrent) {
                           states.showAccount = `${account.info.username}@${account.instanceURL}`;
                         } else {
                           setCurrentAccountID(account.info.id);
@@ -104,6 +108,11 @@ function Accounts({ onClose }) {
                     />
                   </div>
                   <div class="actions">
+                    {isLoggedOut && (
+                      <span class="tag">
+                        <Trans>Logged out</Trans>
+                      </span>
+                    )}
                     {isDefault && moreThanOneAccount && (
                       <>
                         <span class="tag">
@@ -122,7 +131,7 @@ function Accounts({ onClose }) {
                       {moreThanOneAccount && (
                         <>
                           <MenuItem
-                            disabled={isCurrent}
+                            disabled={isCurrent || isLoggedOut}
                             onClick={() => {
                               setCurrentAccountID(account.info.id);
                               location.reload();
@@ -131,7 +140,7 @@ function Accounts({ onClose }) {
                             <Icon icon="transfer" />{' '}
                             <Trans>Switch to this account</Trans>
                           </MenuItem>
-                          {!isStandalone && !isCurrent && (
+                          {!isStandalone && !isCurrent && !isLoggedOut && (
                             <MenuLink
                               href={`./?account=${account.info.id}`}
                               target="_blank"
@@ -159,7 +168,7 @@ function Accounts({ onClose }) {
                       {moreThanOneAccount && (
                         <>
                           <MenuItem
-                            disabled={isDefault}
+                            disabled={isDefault || isLoggedOut}
                             onClick={() => {
                               // Move account to the top of the list
                               accounts.splice(i, 1);
@@ -222,7 +231,7 @@ function Accounts({ onClose }) {
                             </span>
                           </>
                         }
-                        disabled={!isCurrent}
+                        disabled={!isCurrent || isLoggedOut}
                         menuItemClassName="danger"
                         onClick={async () => {
                           // const yes = confirm('Log out?');
@@ -288,6 +297,15 @@ function Accounts({ onClose }) {
               </small>
             </p>
           )}
+          <p>
+            <button
+              type="button"
+              class="light"
+              onClick={() => (states.showImportExportAccounts = true)}
+            >
+              <Trans>Import/export</Trans>
+            </button>
+          </p>
         </section>
       </main>
     </div>

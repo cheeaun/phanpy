@@ -186,6 +186,7 @@ function MentionModal({
             autocapitalize="off"
             spellCheck="false"
             dir="auto"
+            enterKeyHint="search"
             defaultValue={defaultSearchTerm || ''}
           />
         </form>

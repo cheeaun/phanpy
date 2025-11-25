@@ -408,6 +408,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
                     pattern="[^#＃][^\s#＃]+[^#＃]"
                     disabled={reachLimit}
                     dir="auto"
+                    enterKeyHint="go"
                   />
                 </form>
               )}

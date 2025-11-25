@@ -111,8 +111,11 @@
     }
   }
 
-  .qr-code-modal-close {
-    align-self: flex-end;
+  .qr-code-modal-controls {
+    display: flex;
+    gap: 8px;
+    align-self: stretch;
+    justify-content: space-between;
   }
 
   .qr-code {

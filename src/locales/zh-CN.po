@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-25 00:09\n"
+"PO-Revision-Date: 2025-11-25 01:16\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -88,7 +88,7 @@ msgstr "实例域名"
 
 #: src/components/account-info.jsx:124
 msgid "View profile"
-msgstr ""
+msgstr "查看个人资料"
 
 #: src/components/account-info.jsx:392
 msgid "Unable to load account."
@@ -164,7 +164,7 @@ msgstr "复制用户名"
 #: src/components/related-actions.jsx:565
 #: src/components/shortcuts-settings.jsx:1083
 msgid "QR code"
-msgstr ""
+msgstr "二维码"
 
 #: src/components/account-info.jsx:641
 msgid "Go to original profile page"
@@ -591,7 +591,7 @@ msgstr "只有你才能引用"
 
 #: src/components/compose.jsx:1940
 msgid "Quotes can't be embedded in private mentions."
-msgstr ""
+msgstr "引用嘟文无法嵌入到私下提及中。"
 
 #: src/components/compose.jsx:1962
 #: src/pages/settings.jsx:319
@@ -895,31 +895,31 @@ msgstr "加载 GIF 时出错"
 
 #: src/components/import-accounts-selection.jsx:86
 msgid "Select accounts to import"
-msgstr ""
+msgstr "选择要导入的账户"
 
 #: src/components/import-accounts-selection.jsx:117
 msgid "Select all"
-msgstr ""
+msgstr "全选"
 
 #: src/components/import-accounts-selection.jsx:158
 msgid "Existing"
-msgstr ""
+msgstr "已有"
 
 #: src/components/import-accounts-selection.jsx:183
 msgid "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
-msgstr ""
+msgstr "{selectedCount, plural, other {导入 # 个账户}}"
 
 #: src/components/import-export-accounts.jsx:52
 msgid "Export failed"
-msgstr ""
+msgstr "导出失败"
 
 #: src/components/import-export-accounts.jsx:72
 msgid "Import failed"
-msgstr ""
+msgstr "导入失败"
 
 #: src/components/import-export-accounts.jsx:113
 msgid "Import/Export <0>Accounts</0>"
-msgstr ""
+msgstr "导入/导出 <0>帐户</0>"
 
 #: src/components/import-export-accounts.jsx:128
 #: src/components/shortcuts-settings.jsx:800
@@ -928,7 +928,7 @@ msgstr "导入"
 
 #: src/components/import-export-accounts.jsx:139
 msgid "Select file…"
-msgstr ""
+msgstr "选择文件…"
 
 #: src/components/import-export-accounts.jsx:151
 #: src/components/shortcuts-settings.jsx:1050
@@ -938,11 +938,11 @@ msgstr "导出"
 #. placeholder {0}: accounts.length
 #: src/components/import-export-accounts.jsx:155
 msgid "{0, plural, one {# account} other {# accounts}}"
-msgstr ""
+msgstr "{0, plural,other {# 个账户}}"
 
 #: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
-msgstr ""
+msgstr "导出的文件中不存储任何登录信息或账户访问详细信息。导入后，你需要重新登录每个账户。"
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
@@ -1845,11 +1845,11 @@ msgstr "保存并关闭"
 #: src/components/qr-code-modal.jsx:26
 #: src/components/shortcuts-settings.jsx:833
 msgid "Scan QR code"
-msgstr ""
+msgstr "扫描二维码"
 
 #: src/components/qr-scanner-modal.jsx:263
 msgid "Unable to access camera. Please check permissions."
-msgstr ""
+msgstr "无法访问摄像头。请检查权限。"
 
 #: src/components/quote-settings-sheet.jsx:37
 #: src/pages/settings.jsx:358
@@ -2702,7 +2702,7 @@ msgstr "编辑于: {editedDateText}"
 
 #: src/components/status.jsx:1410
 msgid "Open link"
-msgstr ""
+msgstr "打开链接"
 
 #: src/components/status.jsx:1478
 msgid "Conversation unmuted"
@@ -3104,7 +3104,7 @@ msgstr "当前账号"
 
 #: src/pages/accounts.jsx:113
 msgid "Logged out"
-msgstr ""
+msgstr "已登出"
 
 #: src/pages/accounts.jsx:119
 msgid "Default"
@@ -4069,11 +4069,11 @@ msgstr "已同步"
 
 #: src/pages/settings.jsx:310
 msgid "Default visibility updated"
-msgstr ""
+msgstr "默认可见性已修改"
 
 #: src/pages/settings.jsx:312
 msgid "Failed to update default visibility"
-msgstr ""
+msgstr "默认可见性修改失败"
 
 #: src/pages/settings.jsx:383
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
@@ -4421,11 +4421,11 @@ msgstr "在视觉上区分原创嘟文和被再次分享的嘟文 (转嘟)。"
 
 #: src/pages/welcome.jsx:142
 msgid "Screenshot of Catch-up"
-msgstr ""
+msgstr "补看模式的截图"
 
 #: src/pages/welcome.jsx:149
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
-msgstr ""
+msgstr "由你关注的账户的内容组成的一条单独的时间线。使用类似电子邮件的界面排序和筛选嘟文。"
 
 #: src/pages/welcome.jsx:158
 msgid "Screenshot of nested comments thread"

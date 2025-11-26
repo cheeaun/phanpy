@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-25 00:09\n"
+"PO-Revision-Date: 2025-11-26 18:00\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -33,12 +33,12 @@ msgid "Last posted: {0}"
 msgstr "Последний пост: {0}"
 
 #: src/components/account-block.jsx:170
-#: src/components/account-info.jsx:717
+#: src/components/account-info.jsx:716
 msgid "Automated"
 msgstr "Бот"
 
 #: src/components/account-block.jsx:177
-#: src/components/account-info.jsx:722
+#: src/components/account-info.jsx:721
 #: src/components/status.jsx:564
 msgid "Group"
 msgstr "Группа"
@@ -67,14 +67,14 @@ msgid "{followersCount, plural, one {# follower} other {# followers}}"
 msgstr "{followersCount, plural, one {# подписчик} many {# подписчиков} other {# подписчика}}"
 
 #: src/components/account-block.jsx:216
-#: src/components/account-info.jsx:765
+#: src/components/account-info.jsx:764
 msgid "Verified"
 msgstr "Подтверждено"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:231
-#: src/components/account-info.jsx:904
+#: src/components/account-info.jsx:903
 msgid "Joined <0>{0}</0>"
 msgstr "Присоединил(ся/ась) <0>{0}</0>"
 
@@ -98,115 +98,85 @@ msgstr "Не удалось загрузить учётную запись."
 msgid "Go to account page"
 msgstr "Перейти на страницу учётной записи"
 
-#: src/components/account-info.jsx:436
-#: src/components/account-info.jsx:787
-#: src/components/compose.jsx:1974
-#: src/pages/settings.jsx:325
-#: src/utils/visibility-text.jsx:7
-msgid "Followers"
-msgstr "Подписчик(а/ов)"
-
-#. js-lingui-explicit-id
-#: src/components/account-info.jsx:440
-#: src/components/account-info.jsx:842
-msgid "following.stats"
-msgstr "Подпис(ки/ок)"
-
-#: src/components/account-info.jsx:443
-#: src/pages/account-statuses.jsx:496
-#: src/pages/search.jsx:345
-#: src/pages/search.jsx:492
-msgid "Posts"
-msgstr "Посты"
-
-#: src/components/account-info.jsx:451
-#: src/components/media-alt-modal.jsx:55
-#: src/components/media-attachment.jsx:430
-#: src/components/media-modal.jsx:363
-#: src/components/related-actions.jsx:263
-#: src/components/status.jsx:2103
-#: src/components/status.jsx:2120
-#: src/components/status.jsx:2253
-#: src/components/status.jsx:2951
-#: src/components/status.jsx:2954
-#: src/pages/account-statuses.jsx:544
-#: src/pages/accounts.jsx:127
-#: src/pages/hashtag.jsx:203
-#: src/pages/list.jsx:171
-#: src/pages/public.jsx:116
-#: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1464
-#: src/pages/trending.jsx:474
-msgid "More"
-msgstr "Ещё"
-
-#: src/components/account-info.jsx:463
+#: src/components/account-info.jsx:462
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> указал(а), что теперь использует новую учётную запись:"
 
-#: src/components/account-info.jsx:608
+#: src/components/account-info.jsx:607
 #: src/components/related-actions.jsx:491
 msgid "Handle copied"
 msgstr "Имя пользователя скопировано"
 
-#: src/components/account-info.jsx:611
+#: src/components/account-info.jsx:610
 #: src/components/related-actions.jsx:494
 msgid "Unable to copy handle"
 msgstr "Не удалось скопировать имя пользователя"
 
-#: src/components/account-info.jsx:617
+#: src/components/account-info.jsx:616
 #: src/components/related-actions.jsx:500
 msgid "Copy handle"
 msgstr "Копировать имя пользователя"
 
-#: src/components/account-info.jsx:635
+#: src/components/account-info.jsx:634
 #: src/components/related-actions.jsx:245
 #: src/components/related-actions.jsx:565
 #: src/components/shortcuts-settings.jsx:1083
 msgid "QR code"
 msgstr "QR-код"
 
-#: src/components/account-info.jsx:641
+#: src/components/account-info.jsx:640
 msgid "Go to original profile page"
 msgstr "Перейти на страницу оригинального профиля"
 
-#: src/components/account-info.jsx:659
+#: src/components/account-info.jsx:658
 msgid "View profile image"
 msgstr "Просмотр изображения профиля"
 
-#: src/components/account-info.jsx:677
+#: src/components/account-info.jsx:676
 msgid "View profile header"
 msgstr "Открыть изображение-шапку"
 
-#: src/components/account-info.jsx:693
-#: src/components/edit-profile-sheet.jsx:92
+#: src/components/account-info.jsx:692
+#: src/components/edit-profile-sheet.jsx:94
 #: src/components/related-actions.jsx:817
 msgid "Edit profile"
 msgstr "Редактировать профиль"
 
-#: src/components/account-info.jsx:712
+#: src/components/account-info.jsx:711
 msgid "In Memoriam"
 msgstr "Вечная память"
 
-#: src/components/account-info.jsx:794
-#: src/components/account-info.jsx:852
+#: src/components/account-info.jsx:786
+#: src/components/compose.jsx:1974
+#: src/pages/settings.jsx:325
+#: src/utils/visibility-text.jsx:7
+msgid "Followers"
+msgstr "Подписчик(а/ов)"
+
+#: src/components/account-info.jsx:793
+#: src/components/account-info.jsx:851
 msgid "This user has chosen to not make this information available."
 msgstr "Этот пользователь предпочёл не раскрывать эту информацию."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-info.jsx:814
+#: src/components/account-info.jsx:813
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> Подписчик} other {<1>{1}</1> Подписчиков}}"
 
+#. js-lingui-explicit-id
+#: src/components/account-info.jsx:841
+msgid "following.stats"
+msgstr "Подпис(ки/ок)"
+
 #. placeholder {0}: shortenNumber(followingCount)
-#: src/components/account-info.jsx:858
+#: src/components/account-info.jsx:857
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, other {<0>{0}</0> Подписок}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
-#: src/components/account-info.jsx:882
+#: src/components/account-info.jsx:881
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> Пост} other {<1>{1}</1> Постов}}"
 
@@ -214,14 +184,14 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> Пост} other {<1>{1}</1> По
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:939
+#: src/components/account-info.jsx:938
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} оригинальных постов, {1} ответов, {2} цитат, {3} продвижений"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:956
+#: src/components/account-info.jsx:955
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "Оригинальные посты: {0}. Ответы: {1}. Продвижения: {2}"
 
@@ -232,22 +202,22 @@ msgstr "Оригинальные посты: {0}. Ответы: {1}. Продв�
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:973
+#: src/components/account-info.jsx:972
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {1 последний пост за 1 последний день} other {1 последний пост за {2} последних ден(я/ей)}}} other {{3, plural, one {Последние {4} пост(а/ов) за 1 последний день} other {Последние {5} пост(а/ов) за {6} последних ден(я/ей)}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:989
+#: src/components/account-info.jsx:988
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {{1} пост} few {{1} поста} many {{1} постов} other {{1} поста}} за последний год или годы"
 
-#: src/components/account-info.jsx:1047
+#: src/components/account-info.jsx:1046
 #: src/pages/catchup.jsx:73
 msgid "Original"
 msgstr "Оригинальные"
 
-#: src/components/account-info.jsx:1051
+#: src/components/account-info.jsx:1050
 #: src/components/status.jsx:2680
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1564
@@ -257,14 +227,14 @@ msgstr "Оригинальные"
 msgid "Replies"
 msgstr "Ответы"
 
-#: src/components/account-info.jsx:1056
+#: src/components/account-info.jsx:1055
 #: src/components/quotes-modal.jsx:81
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1567
 msgid "Quotes"
 msgstr "Цитаты"
 
-#: src/components/account-info.jsx:1061
+#: src/components/account-info.jsx:1060
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1566
 #: src/pages/catchup.jsx:2231
@@ -272,11 +242,11 @@ msgstr "Цитаты"
 msgid "Boosts"
 msgstr "Продвижения"
 
-#: src/components/account-info.jsx:1067
+#: src/components/account-info.jsx:1066
 msgid "Post stats unavailable."
 msgstr "Статистика публикации постов недоступна."
 
-#: src/components/account-info.jsx:1094
+#: src/components/account-info.jsx:1093
 msgid "View post stats"
 msgstr "Показать статистику публикации постов"
 
@@ -285,7 +255,7 @@ msgstr "Показать статистику публикации постов"
 #: src/components/compose.jsx:1065
 #: src/components/custom-emojis-modal.jsx:270
 #: src/components/drafts.jsx:57
-#: src/components/edit-profile-sheet.jsx:87
+#: src/components/edit-profile-sheet.jsx:89
 #: src/components/embed-modal.jsx:13
 #: src/components/generic-accounts.jsx:151
 #: src/components/gif-picker-modal.jsx:71
@@ -403,13 +373,13 @@ msgstr "Выбор {0}"
 #: src/components/media-attachment.jsx:349
 #: src/components/shortcuts-settings.jsx:727
 #: src/pages/catchup.jsx:1198
-#: src/pages/filters.jsx:413
+#: src/pages/filters.jsx:415
 msgid "Remove"
 msgstr "Убрать"
 
 #: src/components/compose-poll.jsx:80
 #: src/components/compose.jsx:1678
-#: src/components/mention-modal.jsx:220
+#: src/components/mention-modal.jsx:221
 #: src/components/shortcuts-settings.jsx:716
 #: src/pages/list.jsx:388
 msgid "Add"
@@ -536,7 +506,7 @@ msgstr "Предупреждение о содержании"
 
 #: src/components/compose.jsx:1466
 #: src/components/compose.jsx:1612
-#: src/components/edit-profile-sheet.jsx:323
+#: src/components/edit-profile-sheet.jsx:326
 #: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
 #: src/components/private-note-sheet.jsx:94
@@ -663,23 +633,23 @@ msgstr "Пользовательские эмодзи"
 msgid "Search emoji"
 msgstr "Поиск эмодзи"
 
-#: src/components/custom-emojis-modal.jsx:327
+#: src/components/custom-emojis-modal.jsx:328
 msgid "Error loading custom emojis"
 msgstr "Ошибка загрузки пользовательских эмодзи"
 
-#: src/components/custom-emojis-modal.jsx:338
+#: src/components/custom-emojis-modal.jsx:339
 msgid "Recently used"
 msgstr "Недавно использованные"
 
-#: src/components/custom-emojis-modal.jsx:339
+#: src/components/custom-emojis-modal.jsx:340
 msgid "Others"
 msgstr "Прочие"
 
-#: src/components/custom-emojis-modal.jsx:358
+#: src/components/custom-emojis-modal.jsx:359
 msgid "Zoom out"
 msgstr "Отдалить"
 
-#: src/components/custom-emojis-modal.jsx:366
+#: src/components/custom-emojis-modal.jsx:367
 msgid "Zoom in"
 msgstr "Приблизить"
 
@@ -703,7 +673,7 @@ msgstr "Не удалось удалить черновик. Попробуйт�
 #: src/components/drafts.jsx:126
 #: src/components/list-add-edit.jsx:188
 #: src/components/status.jsx:1612
-#: src/pages/filters.jsx:603
+#: src/pages/filters.jsx:605
 #: src/pages/scheduled-posts.jsx:398
 msgid "Delete…"
 msgstr "Удалить…"
@@ -753,14 +723,14 @@ msgid "Edit History Snapshots"
 msgstr "Редактировать исторические снимки"
 
 #: src/components/edit-history-controls.jsx:35
-#: src/components/gif-picker-modal.jsx:207
+#: src/components/gif-picker-modal.jsx:208
 #: src/components/media-modal.jsx:469
 #: src/components/timeline.jsx:903
 msgid "Previous"
 msgstr "Назад"
 
 #: src/components/edit-history-controls.jsx:47
-#: src/components/gif-picker-modal.jsx:225
+#: src/components/gif-picker-modal.jsx:226
 #: src/components/media-modal.jsx:488
 #: src/components/timeline.jsx:920
 msgid "Next"
@@ -770,44 +740,44 @@ msgstr "Вперёд"
 msgid "Exit"
 msgstr "Закрыть"
 
-#: src/components/edit-profile-sheet.jsx:147
+#: src/components/edit-profile-sheet.jsx:149
 msgid "Unable to update profile."
 msgstr "Не удалось обновить профиль."
 
-#: src/components/edit-profile-sheet.jsx:154
+#: src/components/edit-profile-sheet.jsx:156
 msgid "Header picture"
 msgstr "Изображение заголовка"
 
-#: src/components/edit-profile-sheet.jsx:206
+#: src/components/edit-profile-sheet.jsx:208
 msgid "Profile picture"
 msgstr "Изображение профиля"
 
-#: src/components/edit-profile-sheet.jsx:258
+#: src/components/edit-profile-sheet.jsx:260
 #: src/components/list-add-edit.jsx:106
 msgid "Name"
 msgstr "Название"
 
-#: src/components/edit-profile-sheet.jsx:271
+#: src/components/edit-profile-sheet.jsx:274
 msgid "Bio"
 msgstr "О себе"
 
-#: src/components/edit-profile-sheet.jsx:284
+#: src/components/edit-profile-sheet.jsx:287
 msgid "Extra fields"
 msgstr "Дополнительные поля"
 
-#: src/components/edit-profile-sheet.jsx:290
+#: src/components/edit-profile-sheet.jsx:293
 msgid "Label"
 msgstr "Заголовок"
 
-#: src/components/edit-profile-sheet.jsx:293
+#: src/components/edit-profile-sheet.jsx:296
 msgid "Content"
 msgstr "Содержание"
 
-#: src/components/edit-profile-sheet.jsx:326
+#: src/components/edit-profile-sheet.jsx:329
 #: src/components/list-add-edit.jsx:152
 #: src/components/quote-settings-sheet.jsx:92
 #: src/components/shortcuts-settings.jsx:716
-#: src/pages/filters.jsx:570
+#: src/pages/filters.jsx:572
 #: src/pages/notifications.jsx:1003
 msgid "Save"
 msgstr "Сохранить"
@@ -869,7 +839,7 @@ msgid "The end."
 msgstr "Конец."
 
 #: src/components/generic-accounts.jsx:236
-#: src/components/mention-modal.jsx:233
+#: src/components/mention-modal.jsx:234
 msgid "Error loading accounts"
 msgstr "Ошибка поиска пользователей"
 
@@ -881,15 +851,15 @@ msgstr "Нечего отображать"
 msgid "Search GIFs"
 msgstr "Поиск GIF"
 
-#: src/components/gif-picker-modal.jsx:101
+#: src/components/gif-picker-modal.jsx:102
 msgid "Powered by GIPHY"
 msgstr "На основе GIPHY"
 
-#: src/components/gif-picker-modal.jsx:109
+#: src/components/gif-picker-modal.jsx:110
 msgid "Type to search GIFs"
 msgstr "Начните набирать для поиска GIF-анимаций"
 
-#: src/components/gif-picker-modal.jsx:242
+#: src/components/gif-picker-modal.jsx:243
 msgid "Error loading GIFs"
 msgstr "Ошибка поиска GIF-анимаций"
 
@@ -928,7 +898,7 @@ msgstr "Импорт"
 
 #: src/components/import-export-accounts.jsx:139
 msgid "Select file…"
-msgstr ""
+msgstr "Выбрать файл…"
 
 #: src/components/import-export-accounts.jsx:151
 #: src/components/shortcuts-settings.jsx:1050
@@ -1134,7 +1104,7 @@ msgid "Hide posts on this list from Home/Following"
 msgstr "Скрыть посты этого списка из Домашней ленты/Подписок"
 
 #: src/components/list-add-edit.jsx:152
-#: src/pages/filters.jsx:570
+#: src/pages/filters.jsx:572
 msgid "Create"
 msgstr "Создать"
 
@@ -1174,6 +1144,26 @@ msgstr "Формат математики"
 #: src/components/media.jsx:51
 msgid "Media description"
 msgstr "Описание медиа"
+
+#: src/components/media-alt-modal.jsx:55
+#: src/components/media-attachment.jsx:430
+#: src/components/media-modal.jsx:363
+#: src/components/related-actions.jsx:263
+#: src/components/status.jsx:2103
+#: src/components/status.jsx:2120
+#: src/components/status.jsx:2253
+#: src/components/status.jsx:2951
+#: src/components/status.jsx:2954
+#: src/pages/account-statuses.jsx:544
+#: src/pages/accounts.jsx:127
+#: src/pages/hashtag.jsx:203
+#: src/pages/list.jsx:171
+#: src/pages/public.jsx:116
+#: src/pages/scheduled-posts.jsx:89
+#: src/pages/status.jsx:1464
+#: src/pages/trending.jsx:474
+msgid "More"
+msgstr "Ещё"
 
 #: src/components/media-alt-modal.jsx:67
 #: src/components/status.jsx:1284
@@ -1717,8 +1707,8 @@ msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
 msgstr "{optionVotesCount, plural, one {# голос} other {# голос(а/ов)}}"
 
 #: src/components/poll.jsx:139
-#: src/components/poll.jsx:222
-#: src/components/poll.jsx:226
+#: src/components/poll.jsx:269
+#: src/components/poll.jsx:273
 msgid "Hide results"
 msgstr "Скрыть результаты"
 
@@ -1726,46 +1716,46 @@ msgstr "Скрыть результаты"
 msgid "Vote"
 msgstr "Голосовать"
 
-#: src/components/poll.jsx:208
-#: src/components/poll.jsx:210
-#: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1453
-#: src/pages/status.jsx:1476
-msgid "Refresh"
-msgstr "Обновить"
-
-#: src/components/poll.jsx:222
-#: src/components/poll.jsx:226
-msgid "Show results"
-msgstr "Показать результаты"
-
 #. placeholder {0}: shortenNumber(votesCount)
 #. placeholder {1}: shortenNumber(votesCount)
-#: src/components/poll.jsx:231
+#: src/components/poll.jsx:196
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr "{votesCount, plural, one {<0>{0}</0> проголосовал(а)} other {<1>{1}</1> проголосовали}}"
 
 #. placeholder {0}: shortenNumber(votersCount)
 #. placeholder {1}: shortenNumber(votersCount)
-#: src/components/poll.jsx:248
+#: src/components/poll.jsx:217
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr "{votersCount, plural, one {<0>{0}</0> голосующ(ий/ая)} other {<1>{1}</1> голосующих}}"
 
-#: src/components/poll.jsx:268
+#: src/components/poll.jsx:243
 msgid "Ended <0/>"
 msgstr "Завершено <0/>"
 
-#: src/components/poll.jsx:272
+#: src/components/poll.jsx:248
 msgid "Ended"
 msgstr "Завершено"
 
-#: src/components/poll.jsx:275
+#: src/components/poll.jsx:252
 msgid "Ending <0/>"
 msgstr "Завершение <0/>"
 
-#: src/components/poll.jsx:279
+#: src/components/poll.jsx:257
 msgid "Ending"
 msgstr "Завершение"
+
+#: src/components/poll.jsx:269
+#: src/components/poll.jsx:273
+msgid "Show results"
+msgstr "Показать результаты"
+
+#: src/components/poll.jsx:291
+#: src/components/poll.jsx:293
+#: src/pages/scheduled-posts.jsx:100
+#: src/pages/status.jsx:1453
+#: src/pages/status.jsx:1476
+msgid "Refresh"
+msgstr "Обновить"
 
 #: src/components/post-embed-modal.jsx:201
 #: src/components/status.jsx:1462
@@ -1894,7 +1884,7 @@ msgid "Cleared recent searches"
 msgstr "Недавние запросы удалены"
 
 #: src/components/recent-searches.jsx:49
-#: src/components/search-form.jsx:332
+#: src/components/search-form.jsx:333
 msgid "Recent searches"
 msgstr "Недавние запросы"
 
@@ -2246,7 +2236,7 @@ msgstr "{query} <0>- аккаунтов, хэштегов и постов</0>"
 msgid "Look up <0>{query}</0>"
 msgstr "Посмотреть <0>{query}</0>"
 
-#: src/components/search-form.jsx:365
+#: src/components/search-form.jsx:366
 #: src/pages/home.jsx:251
 msgid "See all"
 msgstr "Показать все"
@@ -2702,7 +2692,7 @@ msgstr "Отредактировано: {editedDateText}"
 
 #: src/components/status.jsx:1410
 msgid "Open link"
-msgstr ""
+msgstr "Открыть ссылку"
 
 #: src/components/status.jsx:1478
 msgid "Conversation unmuted"
@@ -3008,7 +2998,7 @@ msgstr "Требуется авторизация."
 #: src/compose.jsx:95
 #: src/pages/annual-report.jsx:186
 #: src/pages/http-route.jsx:91
-#: src/pages/login.jsx:308
+#: src/pages/login.jsx:309
 msgid "Go home"
 msgstr "Вернуться на главную"
 
@@ -3069,6 +3059,12 @@ msgstr "Посты, помеченные #{0}"
 #: src/pages/account-statuses.jsx:427
 msgid "Showing posts in {0}"
 msgstr "Посты от {0}"
+
+#: src/pages/account-statuses.jsx:496
+#: src/pages/search.jsx:345
+#: src/pages/search.jsx:492
+msgid "Posts"
+msgstr "Посты"
 
 #: src/pages/account-statuses.jsx:521
 msgid "Nothing to see here yet."
@@ -3474,76 +3470,76 @@ msgstr "Не удалось создать фильтр"
 msgid "Title"
 msgstr "Заголовок"
 
-#: src/pages/filters.jsx:397
+#: src/pages/filters.jsx:399
 msgid "Whole word"
 msgstr "Слово целиком"
 
-#: src/pages/filters.jsx:423
+#: src/pages/filters.jsx:425
 msgid "No keywords. Add one."
 msgstr "Нет ключевых слов. Добавьте их."
 
-#: src/pages/filters.jsx:450
+#: src/pages/filters.jsx:452
 msgid "Add keyword"
 msgstr "Добавить ключевое слово"
 
 #. placeholder {0}: filteredEditKeywords.length
-#: src/pages/filters.jsx:454
+#: src/pages/filters.jsx:456
 msgid "{0, plural, one {# keyword} other {# keywords}}"
 msgstr "{0, plural, one {# ключевое слово} other {# ключевых слов(а)}}"
 
-#: src/pages/filters.jsx:467
+#: src/pages/filters.jsx:469
 msgid "Filter from…"
 msgstr "Фильтр от…"
 
-#: src/pages/filters.jsx:493
+#: src/pages/filters.jsx:495
 msgid "* Not implemented yet"
 msgstr "* Ещё не реализовано"
 
-#: src/pages/filters.jsx:499
+#: src/pages/filters.jsx:501
 msgid "Status: <0><1/></0>"
 msgstr "Состояние: <0><1/></0>"
 
-#: src/pages/filters.jsx:508
+#: src/pages/filters.jsx:510
 msgid "Change expiry"
 msgstr "Изменить срок действия"
 
-#: src/pages/filters.jsx:508
+#: src/pages/filters.jsx:510
 msgid "Expiry"
 msgstr "Срок действия"
 
-#: src/pages/filters.jsx:527
+#: src/pages/filters.jsx:529
 msgid "Filtered post will be…"
 msgstr "Отфильтрованный пост будет…"
 
-#: src/pages/filters.jsx:538
+#: src/pages/filters.jsx:540
 msgid "obscured (media only)"
 msgstr "скрытый (только для медиа)"
 
-#: src/pages/filters.jsx:552
+#: src/pages/filters.jsx:554
 msgid "minimized"
 msgstr "свернуто"
 
-#: src/pages/filters.jsx:562
+#: src/pages/filters.jsx:564
 msgid "hidden"
 msgstr "скрыто"
 
-#: src/pages/filters.jsx:579
+#: src/pages/filters.jsx:581
 msgid "Delete this filter?"
 msgstr "Удалить этот фильтр?"
 
-#: src/pages/filters.jsx:592
+#: src/pages/filters.jsx:594
 msgid "Unable to delete filter."
 msgstr "Не удалось удалить фильтр."
 
-#: src/pages/filters.jsx:625
+#: src/pages/filters.jsx:627
 msgid "Expired"
 msgstr "Срок действия истёк"
 
-#: src/pages/filters.jsx:627
+#: src/pages/filters.jsx:629
 msgid "Expiring <0/>"
 msgstr "Истекает <0/>"
 
-#: src/pages/filters.jsx:631
+#: src/pages/filters.jsx:633
 msgid "Never expires"
 msgstr "Никогда не истекает"
 
@@ -3630,45 +3626,45 @@ msgstr "{TOTAL_TAGS_LIMIT, plural, other {Предел - # тэг(а/ов)}}"
 msgid "Add hashtag"
 msgstr "Добавить хэштег"
 
-#: src/pages/hashtag.jsx:433
+#: src/pages/hashtag.jsx:434
 msgid "Remove hashtag"
 msgstr "Удалить хэштег"
 
-#: src/pages/hashtag.jsx:447
+#: src/pages/hashtag.jsx:448
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
 msgstr "{SHORTCUTS_LIMIT, plural, one {Достигнут предел в # ярлык. Не удалось добавить ярлык.} other {Достигнут предел в # ярлык(а/ов). Не удалось добавить ярлык.}}"
 
-#: src/pages/hashtag.jsx:476
+#: src/pages/hashtag.jsx:477
 msgid "This shortcut already exists"
 msgstr "Ярлык уже существует"
 
-#: src/pages/hashtag.jsx:479
+#: src/pages/hashtag.jsx:480
 msgid "Hashtag shortcut added"
 msgstr "Ярлык для хэштега добавлен"
 
-#: src/pages/hashtag.jsx:485
+#: src/pages/hashtag.jsx:486
 msgid "Add to Shortcuts"
 msgstr "Добавить в ярлыки"
 
-#: src/pages/hashtag.jsx:491
+#: src/pages/hashtag.jsx:492
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new instance e.g. \"mastodon.social\""
 msgstr "Введите новый инстанс, например \"mastodon.social\""
 
-#: src/pages/hashtag.jsx:494
+#: src/pages/hashtag.jsx:495
 #: src/pages/public.jsx:144
 #: src/pages/trending.jsx:484
 msgid "Invalid instance"
 msgstr "Некорректный инстанс"
 
-#: src/pages/hashtag.jsx:508
+#: src/pages/hashtag.jsx:509
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another instance…"
 msgstr "Перейти к другому инстансу…"
 
-#: src/pages/hashtag.jsx:521
+#: src/pages/hashtag.jsx:522
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my instance (<0>{currentInstance}</0>)"
@@ -3726,23 +3722,23 @@ msgstr "Не удалось зарегистрировать приложени�
 msgid "instance domain"
 msgstr "домен инстанса"
 
-#: src/pages/login.jsx:270
+#: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
 msgstr "например “mastodon.social”"
 
-#: src/pages/login.jsx:281
+#: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another instance."
 msgstr "Не удалось войти. Пожалуйста, попробуйте еще раз или попробуйте другой инстанс."
 
-#: src/pages/login.jsx:293
+#: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
 msgstr "Продолжить на {selectedInstanceText}"
 
-#: src/pages/login.jsx:294
+#: src/pages/login.jsx:295
 msgid "Continue"
 msgstr "Продолжить"
 
-#: src/pages/login.jsx:302
+#: src/pages/login.jsx:303
 msgid "Don't have an account? Create one!"
 msgstr "Нет учетной записи? Создайте её!"
 

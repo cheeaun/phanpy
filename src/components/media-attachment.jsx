@@ -3,6 +3,7 @@ import { MenuItem } from '@szhsin/react-menu';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useDebouncedCallback } from 'use-debounce';
 
+import extractImageDescription from '../utils/extract-image-desc';
 import localeCode2Text from '../utils/localeCode2Text';
 import prettyBytes from '../utils/pretty-bytes';
 import showToast from '../utils/show-toast';
@@ -38,8 +39,7 @@ function MediaAttachment({
   const { i18n, t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const supportsEdit =
-    supports('@mastodon/edit-media-attributes') ||
-    supports('@gotosocial/edit-media-attributes');
+    supports('@mastodon') || supports('@gotosocial/edit-media-attributes');
   const { type, id, file } = attachment;
   const url = useMemo(
     () => (file ? URL.createObjectURL(file) : attachment.url),
@@ -123,6 +123,35 @@ function MediaAttachment({
 
   const [description, setDescription] = useState(attachment.description);
 
+  // Extract description from images that's not uploaded yet
+  useEffect(() => {
+    if (!file || !type.startsWith('image/') || id || attachment.description) {
+      return;
+    }
+
+    let cancelled = false;
+
+    (async () => {
+      setUIState('loading');
+      try {
+        const extractedDescription = await extractImageDescription(file);
+        if (!cancelled && extractedDescription) {
+          setDescription(extractedDescription);
+        }
+      } catch (error) {
+        console.debug('Failed to extract image metadata:', error);
+      } finally {
+        if (!cancelled) {
+          setUIState('default');
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   let [suffixType, subtype] = type.split('/');
   // If type is not supported, try to find a supported type with the same subtype
   // E.g. application/ogg -> audio/ogg
@@ -135,7 +164,7 @@ function MediaAttachment({
       suffixTypes.add(t);
     });
   }
-  if (!suffixTypes.has(suffixType)) {
+  if (subtype && !suffixTypes.has(suffixType) && subTypeMap[subtype]) {
     suffixType = subTypeMap[subtype];
   }
 
@@ -181,6 +210,7 @@ function MediaAttachment({
             {
               image: t`Image description`,
               video: t`Video description`,
+              gifv: t`Video description`,
               audio: t`Audio description`,
             }[suffixType]
           }
@@ -360,6 +390,7 @@ function MediaAttachment({
                   {
                     image: t`Edit image description`,
                     video: t`Edit video description`,
+                    gifv: t`Edit video description`,
                     audio: t`Edit audio description`,
                   }[suffixType]
                 }

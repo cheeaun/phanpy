@@ -6,7 +6,7 @@ import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
 import Sonda from 'sonda/vite';
 import { uid } from 'uid/single';
-import { defineConfig, loadEnv } from 'vite';
+import { createLogger, defineConfig, loadEnv } from 'vite';
 import generateFile from 'vite-plugin-generate-file';
 import htmlPlugin from 'vite-plugin-html-config';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -28,13 +28,18 @@ const {
 
 const now = new Date();
 let commitHash;
+let commitTime;
 let fakeCommitHash = false;
 try {
-  commitHash = execSync('git rev-parse --short HEAD').toString().trim();
+  const gitResult = execSync('git log -1 --format="%h %cI"').toString().trim();
+  const [hash, time] = gitResult.split(' ');
+  commitHash = hash;
+  commitTime = new Date(time);
 } catch (error) {
   // If error, means git is not installed or not a git repo (could be downloaded instead of git cloned)
   // Fallback to random hash which should be different on every build run 🤞
   commitHash = uid();
+  commitTime = now;
   fakeCommitHash = true;
 }
 
@@ -43,8 +48,26 @@ const rollbarCode = fs.readFileSync(
   'utf-8',
 );
 
+// https://github.com/vitejs/vite/issues/9597#issuecomment-1209305107
+const excludedPostCSSWarnings = [
+  ':is()', // This IS fine
+  'display: box;', // Browsers are kinda late for the ellipsis support
+];
+const logger = createLogger();
+const originalWarn = logger.warn;
+logger.warn = (msg, options) => {
+  if (
+    msg.includes('vite:css') &&
+    excludedPostCSSWarnings.some((str) => msg.includes(str))
+  ) {
+    return;
+  }
+  originalWarn(msg, options);
+};
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  customLogger: logger,
   base: './',
   envPrefix: allowedEnvPrefixes,
   appType: 'mpa',
@@ -52,6 +75,7 @@ export default defineConfig({
   define: {
     __BUILD_TIME__: JSON.stringify(now),
     __COMMIT_HASH__: JSON.stringify(commitHash),
+    __COMMIT_TIME__: JSON.stringify(commitTime),
     __FAKE_COMMIT_HASH__: fakeCommitHash,
   },
   server: {
@@ -224,6 +248,7 @@ export default defineConfig({
     cssCodeSplit: false,
     rollupOptions: {
       treeshake: false,
+      external: ['@xmldom/xmldom'], // exifreader's optional dependency, not needed
       input: {
         main: resolve(__dirname, 'index.html'),
         compose: resolve(__dirname, 'compose/index.html'),

@@ -6,7 +6,6 @@ import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
-import stringLength from 'string-length';
 import { uid } from 'uid/single';
 import { useSnapshot } from 'valtio';
 
@@ -32,6 +31,7 @@ import {
   getCurrentAccountNS,
   getCurrentInstanceConfiguration,
 } from '../utils/store-utils';
+import stringLength from '../utils/string-length';
 import supports from '../utils/supports';
 import unfurlMastodonLink from '../utils/unfurl-link';
 import urlRegexObj from '../utils/url-regex';
@@ -117,6 +117,22 @@ const ADD_LABELS = {
 };
 
 const DEFAULT_SCHEDULED_AT = Math.max(10 * 60 * 1000, MIN_SCHEDULED_AT); // 10 mins
+
+function isMimeTypeSupported(fileType, supportedMimeTypes) {
+  if (!supportedMimeTypes) return true;
+  if (supportedMimeTypes.includes(fileType)) return true;
+
+  // If type is not supported, try to find a supported type with the same subtype
+  // E.g. application/ogg -> audio/ogg
+  const [suffixType, subtype] = fileType.split('/');
+  const subTypeMap = {};
+  supportedMimeTypes.forEach((mimeType) => {
+    const [t, st] = mimeType.split('/');
+    subTypeMap[st] = t;
+  });
+
+  return !!subTypeMap[subtype];
+}
 
 function Compose({
   onClose,
@@ -768,10 +784,7 @@ function Compose({
         const item = items[i];
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          if (
-            supportedMimeTypes !== undefined &&
-            !supportedMimeTypes.includes(file.type)
-          ) {
+          if (!isMimeTypeSupported(file.type, supportedMimeTypes)) {
             unsupportedFiles.push(file);
           } else {
             files.push(file);
@@ -1334,7 +1347,7 @@ function Compose({
                     params.quote_approval_policy = quoteApprovalPolicy;
                   }
                   if (
-                    supports('@mastodon/edit-media-attributes') ||
+                    supports('@mastodon') ||
                     supports('@gotosocial/edit-media-attributes')
                   ) {
                     params.media_attributes = mediaAttachments.map(

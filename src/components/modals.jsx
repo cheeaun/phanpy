@@ -14,10 +14,13 @@ import ComposeSuspense, { preload } from './compose-suspense';
 import Drafts from './drafts';
 import EmbedModal from './embed-modal';
 import GenericAccounts from './generic-accounts';
+import ImportExportAccounts from './import-export-accounts';
 import MediaAltModal from './media-alt-modal';
 import MediaModal from './media-modal';
 import Modal from './modal';
 import OpenLinkSheet from './open-link-sheet';
+import QrCodeModal from './qr-code-modal';
+import QrScannerModal from './qr-scanner-modal';
 import ReportModal from './report-modal';
 import ShortcutsSettings from './shortcuts-settings';
 
@@ -275,6 +278,62 @@ export default function Modals() {
             onClose={() => {
               states.showReportModal = false;
             }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showQrCodeModal && (
+        <Modal
+          class="solid"
+          onClose={() => {
+            states.showQrCodeModal = false;
+          }}
+        >
+          <QrCodeModal
+            text={snapStates.showQrCodeModal.text}
+            arena={snapStates.showQrCodeModal.arena}
+            backgroundMask={snapStates.showQrCodeModal.backgroundMask}
+            caption={snapStates.showQrCodeModal.caption}
+            onClose={() => {
+              states.showQrCodeModal = false;
+            }}
+            onScannerClick={snapStates.showQrCodeModal.onScannerClick}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showQrScannerModal && (
+        <Modal
+          class="solid"
+          onClose={() => {
+            states.showQrScannerModal = false;
+          }}
+        >
+          <QrScannerModal
+            checkValidity={snapStates.showQrScannerModal.checkValidity}
+            actionableText={snapStates.showQrScannerModal.actionableText}
+            onClose={(...args) => {
+              if (snapStates.showQrScannerModal.onClose) {
+                snapStates.showQrScannerModal.onClose(...args);
+              }
+              states.showQrScannerModal = false;
+            }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showImportExportAccounts && (
+        <Modal
+          onClose={() => {
+            states.showImportExportAccounts = false;
+          }}
+        >
+          <ImportExportAccounts
+            onClose={() => {
+              states.showImportExportAccounts = false;
+            }}
+            exportDisabled={
+              typeof snapStates.showImportExportAccounts === 'object'
+                ? snapStates.showImportExportAccounts.exportDisabled
+                : false
+            }
           />
         </Modal>
       )}

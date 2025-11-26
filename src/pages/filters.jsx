@@ -361,6 +361,7 @@ function FiltersAddEdit({ filter, onClose }) {
                 defaultValue={title}
                 disabled={uiState === 'loading'}
                 dir="auto"
+                enterKeyHint="done"
                 required
               />
             </label>
@@ -384,6 +385,7 @@ function FiltersAddEdit({ filter, onClose }) {
                         disabled={uiState === 'loading'}
                         required
                         dir="auto"
+                        enterKeyHint="done"
                       />
                       <div class="filter-keyword-actions">
                         <label>

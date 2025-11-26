@@ -29,6 +29,7 @@ import { isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import htmlContentLength from '../utils/html-content-length';
+import isRTL from '../utils/is-rtl';
 import localeMatch from '../utils/locale-match';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
@@ -1384,18 +1385,31 @@ function Status({
           </MenuItem>
         </>
       )}
-      <MenuItem href={url} target="_blank">
-        <Icon icon="external" />
-        <small
-          class="menu-double-lines should-cloak"
-          style={{
-            maxWidth: '16em',
-          }}
-        >
-          {nicePostURL(url)}
-        </small>
-      </MenuItem>
-      <div class="menu-horizontal">
+      <SubMenu2
+        direction={isRTL() ? 'left' : 'right'}
+        overflow="auto"
+        gap={-8}
+        label={
+          <>
+            <Icon icon="link" />
+            <small
+              class="menu-double-lines should-cloak"
+              style={{
+                maxWidth: '16em',
+              }}
+            >
+              {nicePostURL(url)}
+            </small>
+            <Icon icon="chevron-right" />
+          </>
+        }
+      >
+        <MenuItem href={url} target="_blank">
+          <Icon icon="external" />
+          <span>
+            <Trans>Open link</Trans>
+          </span>
+        </MenuItem>
         <MenuItem
           onClick={() => {
             // Copy url to clipboard
@@ -1408,7 +1422,7 @@ function Status({
             }
           }}
         >
-          <Icon icon="link" />
+          <Icon icon="copy" />
           <span>
             <Trans>Copy</Trans>
           </span>
@@ -1436,7 +1450,7 @@ function Status({
               </span>
             </MenuItem>
           )}
-      </div>
+      </SubMenu2>
       {isPublic && isSizeLarge && (
         <MenuItem
           onClick={() => {
@@ -2219,9 +2233,6 @@ function Status({
                       <Icon
                         icon="comment2"
                         size="s"
-                        // alt={`${repliesCount} ${
-                        //   repliesCount === 1 ? 'reply' : 'replies'
-                        // }`}
                         alt={plural(repliesCount, {
                           one: '# reply',
                           other: '# replies',
@@ -2286,15 +2297,25 @@ function Status({
                   //   {StatusMenuItems}
                   // </Menu>
                   <span class="time">
-                    {visibility !== 'public' && visibility !== 'direct' && (
-                      <>
+                    {showCommentHint && !showCommentCount ? (
+                      <Icon
+                        icon="comment2"
+                        size="s"
+                        alt={plural(repliesCount, {
+                          one: '# reply',
+                          other: '# replies',
+                        })}
+                      />
+                    ) : (
+                      visibility !== 'public' &&
+                      visibility !== 'direct' && (
                         <Icon
                           icon={visibilityIconsMap[visibility]}
                           alt={_(visibilityText[visibility])}
                           size="s"
-                        />{' '}
-                      </>
-                    )}
+                        />
+                      )
+                    )}{' '}
                     <RelativeTime datetime={createdAtDate} format="micro" />
                   </span>
                 ))}
@@ -2930,7 +2951,7 @@ function Status({
                         title={t`More`}
                         class="plain more-button"
                       >
-                        <Icon icon="more" size="l" alt={t`More`} />
+                        <Icon icon="more2" size="l" alt={t`More`} />
                       </button>
                     </div>
                   }

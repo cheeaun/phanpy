@@ -60,7 +60,7 @@ import {
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
 import focusDeck from './utils/focus-deck';
-import states, { initStates, statusKey } from './utils/states';
+import states, { hideAllModals, initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import {
   getAccount,
@@ -77,6 +77,20 @@ const Sandbox =
   import.meta.env.DEV || import.meta.env.PHANPY_DEV
     ? lazy(() => import('./pages/sandbox'))
     : () => null;
+
+// QR Scan Test component for development
+function QrScanTest() {
+  useEffect(() => {
+    states.showQrScannerModal = {
+      onClose: ({ text } = {}) => {
+        hideAllModals();
+        location.hash = text ? `/${text}` : '/';
+      },
+    };
+  }, []);
+
+  return null;
+}
 
 window.__STATES__ = states;
 window.__STATES_STATS__ = () => {
@@ -369,6 +383,12 @@ if (import.meta.env.DEV) {
   );
 }
 
+// const isPWA = true; // testing
+const isPWA =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  window.navigator.standalone === true;
+const PATH_RESTORE_TIME_LIMIT = 2 * 60 * 60 * 1000; // 2 hours, should be good enough
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
@@ -386,6 +406,28 @@ function App() {
 
     if (code) {
       console.log({ code });
+
+      const isPopup = window.opener && !window.opener.closed;
+
+      if (isPopup) {
+        try {
+          window.opener.postMessage(
+            {
+              type: 'oauth-callback',
+              code: code,
+            },
+            window.location.origin,
+          );
+          setTimeout(() => {
+            window.close();
+          }, 100);
+        } catch (e) {
+          console.error('Failed to send message to parent window:', e);
+          window.close();
+        }
+        return;
+      }
+
       // Clear the code from the URL
       window.history.replaceState(
         {},
@@ -495,6 +537,47 @@ function App() {
 
   useEffect(focusDeck, [location, isLoggedIn]);
 
+  // Save last page for PWA restoration
+  const restoredRef = useRef(false);
+  const lastPathKey = 'pwaLastPath';
+  useEffect(() => {
+    if (!restoredRef.current) return;
+    // console.log('location.pathname', location.pathname);
+    if (isPWA && isLoggedIn) {
+      if (isRootPath(location.pathname)) {
+        store.local.del(lastPathKey);
+      } else {
+        store.local.setJSON(lastPathKey, {
+          path: location.pathname + location.search,
+          lastAccessed: Date.now(),
+        });
+      }
+    }
+  }, [location.pathname, location.search, isLoggedIn]);
+
+  // Restore last page on PWA reopen
+  useEffect(() => {
+    if (restoredRef.current) return;
+    const isRootPath = !location.pathname || location.pathname === '/';
+    if (!isRootPath) return;
+    if (isPWA && isLoggedIn && uiState === 'default') {
+      const lastPath = store.local.getJSON(lastPathKey);
+      if (lastPath) {
+        setTimeout(() => {
+          if (lastPath?.path) {
+            const timeSinceLastAccess =
+              Date.now() - (lastPath.lastAccessed || 0);
+            if (timeSinceLastAccess < PATH_RESTORE_TIME_LIMIT) {
+              window.location.hash = lastPath.path;
+            }
+          }
+          store.local.del(lastPathKey);
+        }, 300);
+      }
+      restoredRef.current = true;
+    }
+  }, [uiState, isLoggedIn]);
+
   if (/\/https?:/.test(location.pathname)) {
     return <HttpRoute />;
   }
@@ -529,11 +612,15 @@ function Root({ isLoggedIn }) {
   return isLoggedIn ? <Home /> : <Welcome />;
 }
 
+function isRootPath(pathname) {
+  return /^\/(login|welcome|_sandbox|_qr-scan)/i.test(pathname);
+}
+
 const PrimaryRoutes = memo(({ isLoggedIn }) => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/^\/(login|welcome|_sandbox)/i.test(pathname);
+    return !isRootPath(pathname);
   }, [location]);
 
   return (
@@ -542,14 +629,17 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
       {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
-        <Route
-          path="/_sandbox"
-          element={
-            <Suspense fallback={<Loader id="loader-sandbox" />}>
-              <Sandbox />
-            </Suspense>
-          }
-        />
+        <>
+          <Route
+            path="/_sandbox"
+            element={
+              <Suspense fallback={<Loader id="loader-sandbox" />}>
+                <Sandbox />
+              </Suspense>
+            }
+          />
+          <Route path="/_qr-scan" element={<QrScanTest />} />
+        </>
       )}
     </Routes>
   );

@@ -30,8 +30,8 @@ export const generateSearchItemData = (query, queryType, instance) => {
     to = `/search?q=${encodeURIComponent(query)}&type=accounts`;
     icon = 'group';
   } else if (queryType === 'hashtags') {
-    const hashSymbol = query[0]; // Preserve original # or ＃
-    const hashtagText = query.replace(/^[#＃]/, '');
+    const [, hashSymbol = '#', hashtagText = query] =
+      query.match(/^([#＃])?(.*)$/);
     const hashtag = `${hashSymbol}${hashtagText}`;
     label = (
       <Trans>
@@ -211,6 +211,7 @@ const SearchForm = forwardRef((props, ref) => {
         autocorrect="off"
         autocapitalize="off"
         spellCheck="false"
+        enterKeyHint="search"
         onSearch={(e) => {
           if (!e.target.value) {
             setSearchParams({});

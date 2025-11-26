@@ -58,7 +58,7 @@
 
   .sheet {
     transition: transform 0.3s var(--timing-function);
-    transform-origin: 80% 80%;
+    transform-origin: center bottom;
   }
 
   &:has(~ div) .sheet {

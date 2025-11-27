@@ -5,7 +5,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--bg-color);
+  background-color: var(--meta-theme-color, --bg-color);
   color: var(--text-color);
   overflow-x: hidden;
 }

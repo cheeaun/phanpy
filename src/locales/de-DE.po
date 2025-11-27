@@ -8,7 +8,7 @@ msgstr ""
 "Language: de\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-26 19:16\n"
+"PO-Revision-Date: 2025-11-26 20:16\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -172,7 +172,7 @@ msgstr ""
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:857
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr ""
+msgstr "{followingCount, plural, other {<0>{0}</0> Gefolgt}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
@@ -186,7 +186,7 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> Beitrag} other {<1>{1}</1> Beitr
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:938
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
-msgstr "{0} Beiträge, {1} Antworten, {2} Quotes, {3} Boosts"
+msgstr "{0} eigene Beiträge, {1} Antworten, {2} Quotes, {3} Boosts"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -536,7 +536,7 @@ msgstr "Medien als sensibel markieren"
 
 #: src/components/compose.jsx:1592
 msgid "Posting on <0/>"
-msgstr ""
+msgstr "Gepostet auf <0/>"
 
 #: src/components/compose.jsx:1894
 #: src/components/quote-settings-sheet.jsx:82
@@ -590,7 +590,7 @@ msgstr "Private Erwähnung"
 
 #: src/components/compose.jsx:2029
 msgid "Schedule"
-msgstr ""
+msgstr "Einplanen"
 
 #: src/components/compose.jsx:2031
 #: src/components/keyboard-shortcuts-help.jsx:164
@@ -1069,11 +1069,11 @@ msgstr "<0>Umschalt</0> + <1>Alt</1> + <2>k</2>"
 
 #: src/components/keyboard-shortcuts-help.jsx:209
 msgid "Go to Home"
-msgstr ""
+msgstr "Zur Startseite"
 
 #: src/components/keyboard-shortcuts-help.jsx:213
 msgid "Go to Notifications"
-msgstr ""
+msgstr "Zu den Benachrichtigungen"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1678,7 +1678,7 @@ msgstr "Link konnte nicht kopiert werden"
 
 #: src/components/open-link-sheet.jsx:56
 msgid "Open link?"
-msgstr ""
+msgstr "Link öffnen?"
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
@@ -1696,7 +1696,7 @@ msgstr "Teilen…"
 
 #: src/components/open-link-sheet.jsx:92
 msgid "Open"
-msgstr ""
+msgstr "Offen"
 
 #: src/components/poll.jsx:113
 msgid "Voted"
@@ -1835,11 +1835,11 @@ msgstr "Speichern & schließen"
 #: src/components/qr-code-modal.jsx:26
 #: src/components/shortcuts-settings.jsx:833
 msgid "Scan QR code"
-msgstr ""
+msgstr "QR-Code scannen"
 
 #: src/components/qr-scanner-modal.jsx:263
 msgid "Unable to access camera. Please check permissions."
-msgstr ""
+msgstr "Zugriff auf Kamera nicht möglich. Bitte überprüfen Sie die Berechtigungen."
 
 #: src/components/quote-settings-sheet.jsx:37
 #: src/pages/settings.jsx:358
@@ -1853,7 +1853,7 @@ msgstr "Fehler beim Aktualisieren der Zitiereinstellungen"
 
 #: src/components/quote-settings-sheet.jsx:66
 msgid "Quote settings for this post"
-msgstr ""
+msgstr "Quote-Einstellungen für diesen Beitrag"
 
 #: src/components/quote-suggestion.jsx:19
 msgid "Turn link into a quote?"
@@ -1865,7 +1865,7 @@ msgstr "Als Link beibehalten"
 
 #: src/components/quote-suggestion.jsx:42
 msgid "Replace current quote"
-msgstr ""
+msgstr "Aktuelle Quote ersetzen"
 
 #: src/components/quote-suggestion.jsx:44
 msgid "Turn into quote"
@@ -1873,7 +1873,7 @@ msgstr "In Quote umwandeln"
 
 #: src/components/quotes-modal.jsx:149
 msgid "Error loading quotes"
-msgstr ""
+msgstr "Fehler beim Laden der Quotes"
 
 #: src/components/quotes-modal.jsx:153
 msgid "No quotes yet"
@@ -1881,16 +1881,16 @@ msgstr ""
 
 #: src/components/recent-searches.jsx:27
 msgid "Cleared recent searches"
-msgstr ""
+msgstr "Letzte Suchanfragen löschen"
 
 #: src/components/recent-searches.jsx:49
 #: src/components/search-form.jsx:333
 msgid "Recent searches"
-msgstr ""
+msgstr "Zuletzt gesucht"
 
 #: src/components/recent-searches.jsx:59
 msgid "Clear all"
-msgstr ""
+msgstr "Alle löschen"
 
 #: src/components/recent-searches.jsx:94
 #: src/pages/account-statuses.jsx:335
@@ -1972,19 +1972,19 @@ msgstr ""
 
 #: src/components/related-actions.jsx:411
 msgid "@{username} is now featured on your profile."
-msgstr ""
+msgstr "@{username} wird nun auf deinem Profil empfohlen."
 
 #: src/components/related-actions.jsx:419
 msgid "Unable to unfeature @{username} on your profile."
-msgstr ""
+msgstr "Empfehlen von @{username} in deinem Profil konnte nicht aufgehoben werden."
 
 #: src/components/related-actions.jsx:423
 msgid "Unable to feature @{username} on your profile."
-msgstr ""
+msgstr "@{username} konnte nicht in deinem Profil empfohlen werden."
 
 #: src/components/related-actions.jsx:432
 msgid "Don't feature on profile"
-msgstr ""
+msgstr "Nicht im Profil empfehlen"
 
 #: src/components/related-actions.jsx:433
 #: src/pages/hashtag.jsx:333
@@ -2226,7 +2226,7 @@ msgstr "Konten mit <0>{query}</0>"
 
 #: src/components/search-form.jsx:37
 msgid "Posts tagged with <0>{hashtag}</0>"
-msgstr ""
+msgstr "Beiträge mit <0>{hashtag}</0> markiert"
 
 #: src/components/search-form.jsx:46
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
@@ -2537,7 +2537,7 @@ msgstr "Zitieren anfragen"
 
 #: src/components/status.jsx:292
 msgid "Author will manually review"
-msgstr ""
+msgstr "AutorIn wird manuell überprüfen"
 
 #: src/components/status.jsx:293
 msgid "Only followers can quote this post"
@@ -2573,7 +2573,7 @@ msgstr ""
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:924
 msgid "Bookmarked @{0}'s post"
-msgstr ""
+msgstr "@{0}'s Beitrag gespeichert"
 
 #: src/components/status.jsx:1028
 msgid "Some media have no descriptions."

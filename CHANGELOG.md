@@ -383,11 +383,13 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - 💬 Slightly more support for Mastodon v4.5's native quote posts
 - 🐛 Bug fixes
 
-## Next
+## November 26, 2025
+
+📢 https://mastodon.social/@cheeaun/115616195859103739
 
 - 🤳 QR code for profiles and shortcuts settings
 - 🔃 Import/export accounts
-- 📸 Extract description from attached images
+- 📸 Extract description from attached image metadata
 - 🐛 Bug fixes
 
 <!--

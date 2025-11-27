@@ -38,13 +38,11 @@ function PrivateNoteSheet({
       )}
       <header>
         <b>
-          <Trans>
-            Private note about{' '}
-            <span class="bidi-isolate">
-              @{account?.username || account?.acct}
-            </span>
-          </Trans>
-        </b>
+          <Trans>Notes</Trans>
+        </b>{' '}
+        <small class="insignificant">
+          <Trans>Only visible to you</Trans>
+        </small>
       </header>
       <main>
         <form

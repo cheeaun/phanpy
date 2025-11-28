@@ -246,9 +246,9 @@ function AccountStatuses() {
       ? `${account.displayName} (${acctDisplay})`
       : `${acctDisplay}`;
     if (!excludeReplies) {
-      title = t`${accountDisplay} (+ Replies)`;
+      title = t`${accountDisplay} (+\u00A0Replies)`;
     } else if (excludeBoosts) {
-      title = t`${accountDisplay} (- Boosts)`;
+      title = t`${accountDisplay} (\u2212\u00A0Boosts)`;
     } else if (tagged) {
       title = t`${accountDisplay} (#${tagged})`;
     } else if (media) {
@@ -362,7 +362,7 @@ function AccountStatuses() {
               }}
               class={!excludeBoosts ? '' : 'is-active'}
             >
-              <Trans>- Boosts</Trans>
+              <Trans>&minus; Boosts</Trans>
             </Link>
             <Link
               to={`/${instance}/a/${id}${media ? '' : '?media=1'}`}

@@ -246,7 +246,7 @@ Available variables:
   - App title, when installed as PWA, shown in the Home screen, macOS dock, Windows taskbar, etc
   - OpenGraph card title, when shared on social networks
   - Client name, when [registering the app for authentication](https://docs.joinmastodon.org/client/token/#app) and shown as client used on posts in some apps/clients
-- `PHANPY_WEBSITE` (optional but recommended, default: `https://phanpy.social`) affects:
+- `PHANPY_WEBSITE` (optional but recommended, no defaults) affects:
   - Canonical URL of the website
   - OpenGraph card URL, when shared on social networks
   - Root path for the OpenGraph card image

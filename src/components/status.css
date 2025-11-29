@@ -346,6 +346,31 @@
   background-color: var(--outline-color);
 }
 
+.status.ghost {
+  user-select: none;
+  pointer-events: none;
+  contain: layout;
+  text-rendering: optimizeSpeed;
+  /* Old-school TV stripes */
+  mask-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.5) 0 1px,
+    black 1px 3px
+  );
+
+  > .container {
+    align-self: center;
+
+    > .content-container {
+      font-style: italic;
+    }
+
+    > .meta {
+      opacity: 0.75;
+    }
+  }
+}
+
 .status.filtered {
   padding-block: 12px;
   display: flex;

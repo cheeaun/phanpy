@@ -1287,7 +1287,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: 100%;
   z-index: 1000;
   display: flex;
-  background-color: var(--backdrop-color);
+  background-color: var(--meta-theme-color, --backdrop-color);
   animation: appear 0.1s ease-out;
 }
 .deck-backdrop > a {
@@ -1431,7 +1431,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   position: relative;
   width: 70%;
   flex-grow: 1;
-  background-color: var(--backdrop-solid-color);
+  background-color: var(--meta-theme-color, --backdrop-solid-color);
   animation: appear 0.1s var(--timing-function) both;
   transition: width 0.3s var(--timing-function);
 
@@ -1480,9 +1480,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  background-color: var(--accent-light-color);
+  background-color: var(--meta-theme-color, --accent-light-color);
   @media (prefers-color-scheme: dark) {
-    background-color: var(--accent-dark-color);
+    background-color: var(--meta-theme-color, --accent-dark-color);
   }
   /* background-image: radial-gradient(
     closest-side,

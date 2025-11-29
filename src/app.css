@@ -3070,7 +3070,7 @@ ul.link-list li a .icon {
 @media (min-width: 40em) {
   html,
   body {
-    background-color: var(--bg-faded-color);
+    background-color: var(--meta-theme-color, --bg-faded-color);
   }
   .deck-container {
     background-color: var(--bg-faded-color);

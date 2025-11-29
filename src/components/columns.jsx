@@ -19,7 +19,7 @@ import useTitle from '../utils/useTitle';
 const scrollIntoViewOptions = {
   block: 'nearest',
   inline: 'nearest',
-  behavior: 'smooth',
+  behavior: 'instant',
 };
 
 function Columns() {

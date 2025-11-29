@@ -67,7 +67,7 @@ function resetScrollPosition(id) {
 const scrollIntoViewOptions = {
   block: 'nearest',
   inline: 'center',
-  behavior: 'smooth',
+  behavior: 'instant',
 };
 
 // Select all statuses except those inside collapsed details/summary

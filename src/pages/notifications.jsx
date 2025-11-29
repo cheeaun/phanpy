@@ -52,9 +52,9 @@ const NOTIFICATIONS_GROUPED_LIMIT = 20;
 const emptySearchParams = new URLSearchParams();
 
 const scrollIntoViewOptions = {
-  block: 'center',
+  block: 'start',
   inline: 'center',
-  behavior: 'smooth',
+  behavior: 'instant',
 };
 
 const memSupportsGroupedNotifications = mem(

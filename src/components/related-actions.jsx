@@ -219,7 +219,7 @@ function RelatedActions({
             <button
               type="button"
               class="private-note-tag"
-              title={t`Private note`}
+              title={t`Notes`}
               onClick={() => {
                 setShowPrivateNoteModal(true);
               }}
@@ -314,10 +314,8 @@ function RelatedActions({
                       setShowPrivateNoteModal(true);
                     }}
                   >
-                    <Icon icon="pencil" />
-                    <span>
-                      {privateNote ? t`Edit private note` : t`Add private note`}
-                    </span>
+                    <Icon icon="note" />
+                    <span>{privateNote ? t`Edit notes` : t`Add notes`}</span>
                   </MenuItem>
                 )}
                 {following && !!relationship && (

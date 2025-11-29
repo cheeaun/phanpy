@@ -328,9 +328,52 @@ function Status({
   showReplyParent,
   mediaFirst,
   showCommentCount: forceShowCommentCount,
+  ghost,
 }) {
   const { _, t, i18n } = useLingui();
   const rtf = RTF(i18n.locale);
+
+  if (ghost) {
+    const { inReplyToAccountId } = ghost;
+    const ghostAccount = inReplyToAccountId
+      ? states.accounts[inReplyToAccountId]
+      : null;
+    return (
+      <article
+        class={`status ghost ${mediaFirst ? 'status-media-first small' : ''}`}
+      >
+        {!mediaFirst && (
+          <Avatar
+            size="xxl"
+            url={ghostAccount?.avatarStatic || ghostAccount?.avatar}
+            squircle={ghostAccount?.bot}
+          />
+        )}
+        <div class="container">
+          <div class="meta">
+            {(size === 's' || mediaFirst) && (
+              <Avatar
+                size="m"
+                url={ghostAccount?.avatarStatic || ghostAccount?.avatar}
+                squircle={ghostAccount?.bot}
+              />
+            )}
+            {ghostAccount && (
+              <NameText account={ghostAccount} showAvatar={false} />
+            )}
+          </div>
+          <div class="content-container">
+            {mediaFirst && <div class="media-first-container" />}
+            <div class={`content ${mediaFirst ? 'media-first-content' : ''}`}>
+              <p class="insignificant">
+                <Trans>Post unavailable</Trans>
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+    );
+  }
 
   if (skeleton) {
     return (

@@ -300,6 +300,17 @@ Try online search for "how to self-host static sites" as there are many ways to 
 
 See documentation for [translang-api](https://github.com/cheeaun/translang-api).
 
+### Keeping up with releases
+
+1. 👀 Watch this repo for releases.
+2. 🛜 Subscribe to the feed: https://github.com/cheeaun/phanpy/releases.atom
+3. 👉 Follow [Phanpy](https://hachyderm.io/@phanpy) on Mastodon.
+4. ➡️ Query JSON:
+   - Production: https://phanpy.social/version.json
+   - Development: https://dev.phanpy.social/version.json
+
+Changelog available here: [CHANGELOG.md](CHANGELOG.md)
+
 ## Community deployments
 
 These are self-hosted by other wonderful folks.

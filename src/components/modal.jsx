@@ -92,6 +92,10 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
           metaColor.current = $meta.current.content;
           $meta.current.content = backdropColor;
         }
+        document.documentElement.style.setProperty(
+          '--meta-theme-color',
+          backdropColor,
+        );
       } else {
         const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
           .matches
@@ -106,18 +110,24 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
           metaColor.current = $meta.current.content;
           $meta.current.content = backdropColor;
         }
+        document.documentElement.style.setProperty(
+          '--meta-theme-color',
+          backdropColor,
+        );
       }
     } else {
       // Reset meta color
       if ($meta.current && metaColor.current) {
         $meta.current.content = metaColor.current;
       }
+      document.documentElement.style.removeProperty('--meta-theme-color');
     }
     return () => {
       // Reset meta color
       if ($meta.current && metaColor.current) {
         $meta.current.content = metaColor.current;
       }
+      document.documentElement.style.removeProperty('--meta-theme-color');
     };
   }, [children, minimized]);
 

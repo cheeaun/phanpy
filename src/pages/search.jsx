@@ -26,9 +26,9 @@ const LIMIT = 40;
 const emptySearchParams = new URLSearchParams();
 
 const scrollIntoViewOptions = {
-  block: 'nearest',
+  block: 'start',
   inline: 'center',
-  behavior: 'smooth',
+  behavior: 'instant',
 };
 
 function Search({ columnMode, ...props }) {

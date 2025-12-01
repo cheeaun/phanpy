@@ -24,6 +24,9 @@ const {
 const appSite = WEBSITE
   ? WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
   : null;
+const sameSite = WEBSITE
+  ? WEBSITE.toLowerCase().includes(location.hostname)
+  : false;
 const appVersion = __COMMIT_TIME__
   ? `${__COMMIT_TIME__.slice(0, 10).replace(/-/g, '.')}${
       __COMMIT_HASH__ ? `.${__COMMIT_HASH__}` : ''
@@ -87,7 +90,7 @@ function Welcome() {
         {(appSite || appVersion) && (
           <p class="app-site-version">
             <small>
-              {appSite} {appVersion}
+              {sameSite ? appSite : ''} {appVersion}
             </small>
           </p>
         )}

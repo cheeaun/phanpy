@@ -387,7 +387,7 @@ if (import.meta.env.DEV) {
 const isPWA =
   window.matchMedia('(display-mode: standalone)').matches ||
   window.navigator.standalone === true;
-const PATH_RESTORE_TIME_LIMIT = 2 * 60 * 60 * 1000; // 2 hours, should be good enough
+const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -123,22 +123,53 @@ export default defineConfig({
           name: 'referrer',
           content: REFERRER_POLICY || 'origin',
         },
+        // Metacrap https://broken-links.com/2015/12/01/little-less-metacrap/
+        ...(WEBSITE
+          ? [
+              {
+                property: 'twitter:card',
+                content: 'summary_large_image',
+              },
+              {
+                property: 'og:url',
+                content: WEBSITE,
+              },
+              {
+                property: 'og:title',
+                content: CLIENT_NAME,
+              },
+              {
+                property: 'og:description',
+                content: 'Minimalistic opinionated Mastodon web client',
+              },
+              {
+                property: 'og:image',
+                content: `${WEBSITE}/og-image-2.jpg`,
+              },
+            ]
+          : []),
       ],
       headScripts: ERROR_LOGGING ? [rollbarCode] : [],
-      links: [
-        ...ALL_LOCALES.map((lang) => ({
-          rel: 'alternate',
-          hreflang: lang,
-          // *Fully-qualified* URLs
-          href: `${WEBSITE}/?lang=${lang}`,
-        })),
-        // https://developers.google.com/search/docs/specialty/international/localized-versions#xdefault
-        {
-          rel: 'alternate',
-          hreflang: 'x-default',
-          href: `${WEBSITE}`,
-        },
-      ],
+      links: !!WEBSITE
+        ? [
+            {
+              rel: 'canonical',
+              href: WEBSITE,
+            },
+            ...ALL_LOCALES.map((lang) => ({
+              rel: 'alternate',
+              hreflang: lang,
+              // *Fully-qualified* URLs
+              href: `${WEBSITE}/?lang=${lang}`,
+            })),
+            // https://developers.google.com/search/docs/specialty/international/localized-versions#xdefault
+            {
+              rel: 'alternate',
+              hreflang: 'x-default',
+              href: `${WEBSITE}`,
+            },
+          ]
+        : [],
     }),
     generateFile([
       {

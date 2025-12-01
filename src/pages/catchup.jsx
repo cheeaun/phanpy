@@ -814,7 +814,7 @@ function Catchup() {
           nextItem.scrollIntoView({
             block: 'center',
             inline: 'center',
-            behavior: 'smooth',
+            behavior: 'instant',
           });
         }
       } else {
@@ -827,7 +827,7 @@ function Catchup() {
           topmostItem.scrollIntoView({
             block: 'nearest',
             inline: 'center',
-            behavior: 'smooth',
+            behavior: 'instant',
           });
         }
       }
@@ -859,7 +859,7 @@ function Catchup() {
           prevItem.scrollIntoView({
             block: 'center',
             inline: 'center',
-            behavior: 'smooth',
+            behavior: 'instant',
           });
         }
       } else {
@@ -872,7 +872,7 @@ function Catchup() {
           topmostItem.scrollIntoView({
             block: 'nearest',
             inline: 'center',
-            behavior: 'smooth',
+            behavior: 'instant',
           });
         }
       }

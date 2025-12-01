@@ -67,7 +67,7 @@ function resetScrollPosition(id) {
 const scrollIntoViewOptions = {
   block: 'nearest',
   inline: 'center',
-  behavior: 'smooth',
+  behavior: 'instant',
 };
 
 // Select all statuses except those inside collapsed details/summary
@@ -376,7 +376,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
 
     totalDescendants.current = descendants?.length || 0;
 
-    const missingStatuses = new Set();
+    // Ghost posts - detect missing ancestors
+    const missingAncestorIds = new Set();
     ancestors.forEach((status) => {
       saveStatus(status, instance, {
         skipThreading: true,
@@ -385,11 +386,40 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         status.inReplyToId &&
         !ancestors.find((s) => s.id === status.inReplyToId)
       ) {
-        missingStatuses.add(status.inReplyToId);
+        missingAncestorIds.add(status.inReplyToId);
       }
     });
+    if (
+      heroStatus.inReplyToId &&
+      !ancestors.find((s) => s.id === heroStatus.inReplyToId)
+    ) {
+      missingAncestorIds.add(heroStatus.inReplyToId);
+    }
+
+    // Insert ghost statuses
+    missingAncestorIds.forEach((missingId) => {
+      const referencingStatus =
+        ancestors.find((s) => s.inReplyToId === missingId) ||
+        (heroStatus.inReplyToId === missingId ? heroStatus : null);
+      if (referencingStatus) {
+        const ghostStatus = {
+          id: missingId,
+          ghost: {
+            inReplyToAccountId: referencingStatus.inReplyToAccountId,
+          },
+        };
+        if (referencingStatus === heroStatus) {
+          ancestors.push(ghostStatus);
+        } else {
+          const insertIndex = ancestors.indexOf(referencingStatus);
+          ancestors.splice(insertIndex, 0, ghostStatus);
+        }
+      }
+    });
+
+    const missingStatuses = new Set();
     const ancestorsIsThread = ancestors.every(
-      (s) => s.account.id === heroStatus.account.id,
+      (s) => s.ghost || s.account.id === heroStatus.account.id,
     );
     const nestedDescendants = [];
     descendants.forEach((status) => {
@@ -484,11 +514,12 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       ...ancestors.map((s) => ({
         id: s.id,
         ancestor: true,
-        isThread: ancestorsIsThread,
-        accountID: s.account.id,
+        ghost: s.ghost,
+        isThread: ancestorsIsThread && !s.ghost,
+        accountID: s.account?.id,
         account: s.account,
         repliesCount: s.repliesCount,
-        weight: calcStatusWeight(s),
+        weight: s.ghost ? 0 : calcStatusWeight(s),
         createdAt: s.createdAt,
       })),
       {
@@ -939,6 +970,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       const {
         id: statusID,
         ancestor,
+        ghost,
         isThread,
         descendant,
         thread,
@@ -948,7 +980,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         level,
       } = status;
       const isHero = statusID === id;
-      const isLinkable = isThread || ancestor;
+      const isLinkable = !ghost && (isThread || ancestor);
 
       return (
         <li
@@ -1062,7 +1094,15 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 resetScrollPosition(statusID);
               }}
             > */}
-              {i === 0 && ancestor ? (
+              {ghost ? (
+                <Status
+                  statusID={statusID}
+                  instance={instance}
+                  withinContext
+                  size="m"
+                  ghost={ghost}
+                />
+              ) : i === 0 && ancestor ? (
                 <InView
                   threshold={0.5}
                   onChange={(inView) => {
@@ -1393,6 +1433,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   >
                     <Icon icon="arrow-up" />
                     {ancestors
+                      .filter((a) => !a.ghost)
                       .filter(
                         (a, i, arr) =>
                           arr.findIndex((b) => b.accountID === a.accountID) ===

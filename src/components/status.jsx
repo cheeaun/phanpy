@@ -1432,6 +1432,18 @@ function Status({
         direction={isRTL() ? 'left' : 'right'}
         overflow="auto"
         gap={-8}
+        itemProps={{
+          onClick: (e) => {
+            // Copy url to clipboard on click
+            try {
+              navigator.clipboard.writeText(url);
+              showToast(t`Link copied`);
+            } catch (e) {
+              console.error(e);
+              showToast(t`Unable to copy link`);
+            }
+          },
+        }}
         label={
           <>
             <Icon icon="link" />

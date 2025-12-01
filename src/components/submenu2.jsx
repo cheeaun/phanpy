@@ -8,19 +8,19 @@ export default function SubMenu2(props) {
       {...props}
       instanceRef={menuRef}
       // Test fix for bug; submenus not opening on Android
-      itemProps={{
-        onPointerMove: (e) => {
-          if (e.pointerType === 'touch') {
-            menuRef.current?.openMenu?.();
-          }
-        },
-        onPointerLeave: (e) => {
-          if (e.pointerType === 'touch') {
-            menuRef.current?.openMenu?.();
-          }
-        },
-        ...props.itemProps,
-      }}
+      // itemProps={{
+      //   onPointerMove: (e) => {
+      //     if (e.pointerType === 'touch') {
+      //       menuRef.current?.openMenu?.();
+      //     }
+      //   },
+      //   onPointerLeave: (e) => {
+      //     if (e.pointerType === 'touch') {
+      //       menuRef.current?.openMenu?.();
+      //     }
+      //   },
+      //   ...props.itemProps,
+      // }}
     />
   );
 }

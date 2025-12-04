@@ -5,7 +5,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--meta-theme-color, --bg-color);
+  background-color: var(--meta-theme-color, var(--bg-color));
   color: var(--text-color);
   overflow-x: hidden;
 }
@@ -3070,7 +3070,7 @@ ul.link-list li a .icon {
 @media (min-width: 40em) {
   html,
   body {
-    background-color: var(--meta-theme-color, --bg-faded-color);
+    background-color: var(--meta-theme-color, var(--bg-faded-color));
   }
   .deck-container {
     background-color: var(--bg-faded-color);

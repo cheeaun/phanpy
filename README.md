@@ -246,7 +246,7 @@ Available variables:
   - App title, when installed as PWA, shown in the Home screen, macOS dock, Windows taskbar, etc
   - OpenGraph card title, when shared on social networks
   - Client name, when [registering the app for authentication](https://docs.joinmastodon.org/client/token/#app) and shown as client used on posts in some apps/clients
-- `PHANPY_WEBSITE` (optional but recommended, default: `https://phanpy.social`) affects:
+- `PHANPY_WEBSITE` (optional but recommended, no defaults) affects:
   - Canonical URL of the website
   - OpenGraph card URL, when shared on social networks
   - Root path for the OpenGraph card image
@@ -299,6 +299,17 @@ Try online search for "how to self-host static sites" as there are many ways to 
 #### Translang API hosting
 
 See documentation for [translang-api](https://github.com/cheeaun/translang-api).
+
+### Keeping up with releases
+
+1. 👀 Watch this repo for releases.
+2. 🛜 Subscribe to the feed: https://github.com/cheeaun/phanpy/releases.atom
+3. 👉 Follow [Phanpy](https://hachyderm.io/@phanpy) on Mastodon.
+4. ➡️ Query JSON:
+   - Production: https://phanpy.social/version.json
+   - Development: https://dev.phanpy.social/version.json
+
+Changelog available here: [CHANGELOG.md](CHANGELOG.md)
 
 ## Community deployments
 
@@ -389,6 +400,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13613969/medium/c7834ddc0ada84a79671697a944bb274.png" alt="" width="16" height="16" /> moreal (Korean)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14158861/medium/ba1ff31dc5743b067ea6685f735229a5_default.png" alt="" width="16" height="16" /> MrWillCom (Chinese Simplified)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15652333/medium/7f36f289f9e2fe41d89ad534a1047f0e.png" alt="" width="16" height="16" /> nclm (French)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17450186/medium/6f5768f64963379c7ddfdccd53572c60.jpeg" alt="" width="16" height="16" /> NiklasA95 (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15000639/medium/ebbf0bb7d5027a1903d11b7f5f34f65b.jpeg" alt="" width="16" height="16" /> nycterent (Lithuanian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539461/medium/2f41b9f0b802c1d200a6ab62167a7229_default.png" alt="" width="16" height="16" /> pazpi (Italian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13954917/medium/56a2cba267eb1b5d122bf62ddc0dd732_default.png" alt="" width="16" height="16" /> PPNplus (Thai)

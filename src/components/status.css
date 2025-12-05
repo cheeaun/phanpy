@@ -177,6 +177,13 @@
     max-height: max(160px, 33vh);
     overflow: clip;
 
+    &:has(.quote-post-native) {
+      max-height: max(200px, 40vh);
+    }
+    &:has(.quote-post-native :is(.quote-post-native, .poll, .media-container)) {
+      max-height: max(240px, 50vh);
+    }
+
     &.truncated {
       mask-image: linear-gradient(
         to top,

@@ -297,6 +297,11 @@
   content: none !important;
 }
 
+.status-shallow-card {
+  mask-image: linear-gradient(to bottom, #000, transparent);
+  padding-bottom: 0;
+}
+
 .status-card-unfulfilled {
   display: flex;
   flex-direction: row;

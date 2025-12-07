@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-12-03 04:25\n"
+"PO-Revision-Date: 2025-12-07 09:33\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -222,8 +222,8 @@ msgstr "Alkuperäiset"
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1564
 #: src/pages/catchup.jsx:2219
-#: src/pages/status.jsx:1140
-#: src/pages/status.jsx:1865
+#: src/pages/status.jsx:1167
+#: src/pages/status.jsx:1892
 msgid "Replies"
 msgstr "Vastaukset"
 
@@ -289,7 +289,7 @@ msgstr "Näytä julkaisutilastot"
 #: src/pages/notifications.jsx:941
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:93
-#: src/pages/status.jsx:1604
+#: src/pages/status.jsx:1631
 msgid "Close"
 msgstr "Sulje"
 
@@ -680,11 +680,11 @@ msgstr "Poista…"
 
 #: src/components/drafts.jsx:147
 msgid "Error fetching reply-to status!"
-msgstr "Virhe haettaessa vastauksellisuuden tilaa!"
+msgstr "Virhe noudettaessa vastauksellisuuden tilaa!"
 
 #: src/components/drafts.jsx:159
 msgid "Error fetching quoted status!"
-msgstr "Virhe haettaessa lainattua julkaisua!"
+msgstr "Virhe noudettaessa lainattua julkaisua!"
 
 #: src/components/drafts.jsx:187
 msgid "Delete all drafts?"
@@ -827,7 +827,7 @@ msgstr "Tilit"
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:921
 #: src/pages/search.jsx:562
-#: src/pages/status.jsx:1638
+#: src/pages/status.jsx:1665
 msgid "Show more…"
 msgstr "Näytä lisää…"
 
@@ -1160,7 +1160,7 @@ msgstr "Median kuvaus"
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1505
+#: src/pages/status.jsx:1532
 #: src/pages/trending.jsx:474
 msgid "More"
 msgstr "Lisää"
@@ -1455,7 +1455,7 @@ msgstr "Tilit…"
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:33
 #: src/pages/login.jsx:227
-#: src/pages/status.jsx:1032
+#: src/pages/status.jsx:1059
 #: src/pages/welcome.jsx:68
 msgid "Log in"
 msgstr "Kirjaudu sisään"
@@ -1754,8 +1754,8 @@ msgstr "Näytä tulokset"
 #: src/components/poll.jsx:291
 #: src/components/poll.jsx:293
 #: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1494
-#: src/pages/status.jsx:1517
+#: src/pages/status.jsx:1521
+#: src/pages/status.jsx:1544
 msgid "Refresh"
 msgstr "Päivitä"
 
@@ -2236,7 +2236,7 @@ msgstr "{query} <0>‒ tilit, aihetunnisteet ja julkaisut</0>"
 
 #: src/components/search-form.jsx:139
 msgid "Look up <0>{query}</0>"
-msgstr "Hae <0>{query}</0>"
+msgstr "Etsi <0>{query}</0>"
 
 #: src/components/search-form.jsx:366
 #: src/pages/home.jsx:251
@@ -2929,8 +2929,8 @@ msgstr "Uudet julkaisut"
 #: src/components/timeline.jsx:581
 #: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:897
-#: src/pages/status.jsx:1193
-#: src/pages/status.jsx:1667
+#: src/pages/status.jsx:1220
+#: src/pages/status.jsx:1694
 msgid "Try again"
 msgstr "Yritä uudelleen"
 
@@ -3082,7 +3082,7 @@ msgstr "Julkaisua ei voitu ladata"
 #: src/pages/account-statuses.jsx:563
 #: src/pages/account-statuses.jsx:593
 msgid "Unable to fetch account info"
-msgstr "Tilitietoja ei voitu hakea"
+msgstr "Tilitietoja ei voitu noutaa"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:570
@@ -3303,7 +3303,7 @@ msgstr "Huomaa: Vain enintään 3 tallennetaan. Loput poistetaan automaattisesti
 
 #: src/pages/catchup.jsx:1222
 msgid "Fetching posts…"
-msgstr "Haetaan julkaisuja…"
+msgstr "Noudetaan julkaisuja…"
 
 #: src/pages/catchup.jsx:1225
 msgid "This might take a while."
@@ -3675,7 +3675,7 @@ msgstr "Siirry omalle instanssille (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
-msgstr "Ilmoituksia ei voitu hakea."
+msgstr "Ilmoituksia ei voitu noutaa."
 
 #: src/pages/home.jsx:245
 msgid "<0>New</0> <1>Follow Requests</1>"
@@ -4256,102 +4256,102 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "HUOMAA: Puskuilmoitukset toimivat vain <0>yhdellä tilillä</0>."
 
 #. js-lingui-explicit-id
-#: src/pages/status.jsx:764
-#: src/pages/status.jsx:1418
+#: src/pages/status.jsx:791
+#: src/pages/status.jsx:1445
 msgid "post.title"
 msgstr "Julkaisu"
 
-#: src/pages/status.jsx:1019
+#: src/pages/status.jsx:1046
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr "Et ole kirjautuneena sisään. Vuorovaikutus (vastaaminen, tehostaminen jne.) ei ole mahdollista."
 
-#: src/pages/status.jsx:1039
+#: src/pages/status.jsx:1066
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr "Tämä julkaisu on toisesta instanssista (<0>{instance}</0>). Vuorovaikutus (vastaaminen, tehostaminen jne.) ei ole mahdollista."
 
-#: src/pages/status.jsx:1067
+#: src/pages/status.jsx:1094
 msgid "Error: {e}"
 msgstr "Virhe: {e}"
 
-#: src/pages/status.jsx:1074
+#: src/pages/status.jsx:1101
 msgid "Switch to my instance to enable interactions"
 msgstr "Vaihda omaan instanssiin, niin saat vuorovaikutuksen käyttöön"
 
-#: src/pages/status.jsx:1184
+#: src/pages/status.jsx:1211
 msgid "Unable to load replies."
 msgstr "Vastauksia ei voitu ladata."
 
-#: src/pages/status.jsx:1240
+#: src/pages/status.jsx:1267
 msgid "{months, plural, one {# month later} other {# months later}}"
 msgstr "{months, plural, one {# kuukausi myöhemmin} other {# kuukautta myöhemmin}}"
 
-#: src/pages/status.jsx:1246
+#: src/pages/status.jsx:1273
 msgid "{years, plural, one {# year later} other {# years later}}"
 msgstr "{years, plural, one {# vuosi myöhemmin} other {# vuotta myöhemmin}}"
 
-#: src/pages/status.jsx:1378
+#: src/pages/status.jsx:1405
 msgid "Back"
 msgstr "Takaisin"
 
-#: src/pages/status.jsx:1409
+#: src/pages/status.jsx:1436
 msgid "Go to main post"
 msgstr "Siirry pääjulkaisuun"
 
 #. placeholder {0}: ancestors.length
-#: src/pages/status.jsx:1432
+#: src/pages/status.jsx:1459
 msgid "{0} posts above ‒ Go to top"
 msgstr "{0} julkaisua yläpuolella – Siitty ylös"
 
-#: src/pages/status.jsx:1481
-#: src/pages/status.jsx:1544
+#: src/pages/status.jsx:1508
+#: src/pages/status.jsx:1571
 msgid "Switch to Side Peek view"
 msgstr "Vaihda sivupaneelinäkymään"
 
-#: src/pages/status.jsx:1545
+#: src/pages/status.jsx:1572
 msgid "Switch to Full view"
 msgstr "Vaihda täyteen näkymään"
 
-#: src/pages/status.jsx:1563
+#: src/pages/status.jsx:1590
 msgid "Show all sensitive content"
 msgstr "Näytä kaikki arkaluonteinen sisältö"
 
-#: src/pages/status.jsx:1568
+#: src/pages/status.jsx:1595
 msgid "Experimental"
 msgstr "Kokeellinen"
 
-#: src/pages/status.jsx:1577
+#: src/pages/status.jsx:1604
 msgid "Unable to switch"
 msgstr "Ei voitu vaihtaa"
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
-#: src/pages/status.jsx:1584
+#: src/pages/status.jsx:1611
 msgid "Switch to post's instance ({0})"
 msgstr "Vaihda julkaisun instanssiin ({0})"
 
-#: src/pages/status.jsx:1587
+#: src/pages/status.jsx:1614
 msgid "Switch to post's instance"
 msgstr "Vaihda julkaisun instanssiin"
 
-#: src/pages/status.jsx:1600
+#: src/pages/status.jsx:1627
 msgid "View Edit History Snapshots"
 msgstr "Näytä muokkaushistorian tilannevedokset"
 
-#: src/pages/status.jsx:1658
+#: src/pages/status.jsx:1685
 msgid "Unable to load post"
 msgstr "Julkaisua ei voitu ladata"
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
-#: src/pages/status.jsx:1795
+#: src/pages/status.jsx:1822
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr "{0, plural, one {# vastaus} other {<0>{1}</0> vastausta}}"
 
 #. placeholder {0}: shortenNumber(totalComments)
-#: src/pages/status.jsx:1813
+#: src/pages/status.jsx:1840
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr "{totalComments, plural, one {# kommentti} other {<0>{0}</0> kommenttia}}"
 
-#: src/pages/status.jsx:1835
+#: src/pages/status.jsx:1862
 msgid "View post with its replies"
 msgstr "Näytä julkaisu vastauksineen"
 

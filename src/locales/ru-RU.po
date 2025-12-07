@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-29 08:33\n"
+"PO-Revision-Date: 2025-12-07 12:15\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -39,7 +39,7 @@ msgstr "Бот"
 
 #: src/components/account-block.jsx:177
 #: src/components/account-info.jsx:721
-#: src/components/status.jsx:607
+#: src/components/status.jsx:609
 msgid "Group"
 msgstr "Группа"
 
@@ -218,17 +218,18 @@ msgid "Original"
 msgstr "Оригинальные"
 
 #: src/components/account-info.jsx:1050
-#: src/components/status.jsx:2723
+#: src/components/status.jsx:2758
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1564
 #: src/pages/catchup.jsx:2219
-#: src/pages/status.jsx:1140
-#: src/pages/status.jsx:1865
+#: src/pages/status.jsx:1167
+#: src/pages/status.jsx:1892
 msgid "Replies"
 msgstr "Ответы"
 
 #: src/components/account-info.jsx:1055
 #: src/components/quotes-modal.jsx:81
+#: src/components/status.jsx:2763
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1567
 msgid "Quotes"
@@ -273,23 +274,24 @@ msgstr "Показать статистику публикации постов"
 #: src/components/private-note-sheet.jsx:36
 #: src/components/qr-code-modal.jsx:33
 #: src/components/qr-scanner-modal.jsx:257
+#: src/components/quote-chain-modal.jsx:102
 #: src/components/quote-settings-sheet.jsx:61
 #: src/components/quotes-modal.jsx:76
 #: src/components/report-modal.jsx:118
 #: src/components/shortcuts-settings.jsx:231
 #: src/components/shortcuts-settings.jsx:584
 #: src/components/shortcuts-settings.jsx:785
-#: src/components/status.jsx:3296
-#: src/components/status.jsx:3508
+#: src/components/status.jsx:3370
+#: src/components/status.jsx:3582
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1701
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
-#: src/pages/notifications.jsx:937
+#: src/pages/notifications.jsx:941
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:93
-#: src/pages/status.jsx:1604
+#: src/pages/status.jsx:1631
 msgid "Close"
 msgstr "Закрыть"
 
@@ -343,7 +345,7 @@ msgstr "Больше от <0/>"
 #: src/pages/filters.jsx:90
 #: src/pages/followed-hashtags.jsx:41
 #: src/pages/home.jsx:54
-#: src/pages/notifications.jsx:582
+#: src/pages/notifications.jsx:586
 #: src/pages/scheduled-posts.jsx:74
 msgid "Home"
 msgstr "Домашняя"
@@ -499,7 +501,7 @@ msgid "Attachment #{i} failed"
 msgstr "Не удалось прикрепить вложение №{i}"
 
 #: src/components/compose.jsx:1445
-#: src/components/status.jsx:2490
+#: src/components/status.jsx:2523
 #: src/components/timeline.jsx:990
 msgid "Content warning"
 msgstr "Предупреждение о содержании"
@@ -540,21 +542,21 @@ msgstr "Публикация в <0/>"
 
 #: src/components/compose.jsx:1894
 #: src/components/quote-settings-sheet.jsx:82
-#: src/components/status.jsx:298
+#: src/components/status.jsx:299
 #: src/pages/settings.jsx:367
 msgid "Anyone can quote"
 msgstr "Любой может цитировать"
 
 #: src/components/compose.jsx:1897
 #: src/components/quote-settings-sheet.jsx:85
-#: src/components/status.jsx:299
+#: src/components/status.jsx:300
 #: src/pages/settings.jsx:370
 msgid "Your followers can quote"
 msgstr "Ваши подписчики могут цитировать"
 
 #: src/components/compose.jsx:1900
 #: src/components/quote-settings-sheet.jsx:88
-#: src/components/status.jsx:300
+#: src/components/status.jsx:301
 #: src/pages/settings.jsx:373
 msgid "Only you can quote"
 msgstr "Только вы можете цитировать"
@@ -583,7 +585,7 @@ msgid "Quiet public"
 msgstr "Тихий публичный"
 
 #: src/components/compose.jsx:1977
-#: src/components/status.jsx:2370
+#: src/components/status.jsx:2403
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Личное упоминание"
@@ -594,12 +596,12 @@ msgstr "Запланировать"
 
 #: src/components/compose.jsx:2031
 #: src/components/keyboard-shortcuts-help.jsx:164
-#: src/components/status.jsx:1100
-#: src/components/status.jsx:1134
-#: src/components/status.jsx:2122
-#: src/components/status.jsx:2123
-#: src/components/status.jsx:2851
-#: src/components/status.jsx:2863
+#: src/components/status.jsx:1103
+#: src/components/status.jsx:1137
+#: src/components/status.jsx:2155
+#: src/components/status.jsx:2156
+#: src/components/status.jsx:2893
+#: src/components/status.jsx:2905
 msgid "Reply"
 msgstr "Ответить"
 
@@ -672,7 +674,7 @@ msgstr "Не удалось удалить черновик. Попробуйт�
 
 #: src/components/drafts.jsx:126
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1655
+#: src/components/status.jsx:1682
 #: src/pages/filters.jsx:605
 #: src/pages/scheduled-posts.jsx:398
 msgid "Delete…"
@@ -714,7 +716,7 @@ msgstr "Медиафайлы"
 
 #: src/components/drafts.jsx:270
 #: src/components/keyboard-shortcuts-help.jsx:193
-#: src/components/status.jsx:763
+#: src/components/status.jsx:766
 msgid "Quote"
 msgstr "Цитировать"
 
@@ -778,7 +780,7 @@ msgstr "Содержание"
 #: src/components/quote-settings-sheet.jsx:92
 #: src/components/shortcuts-settings.jsx:716
 #: src/pages/filters.jsx:572
-#: src/pages/notifications.jsx:1003
+#: src/pages/notifications.jsx:1007
 msgid "Save"
 msgstr "Сохранить"
 
@@ -796,7 +798,7 @@ msgid "No featured profiles."
 msgstr "Нет рекомендуемых профилей."
 
 #: src/components/follow-request-buttons.jsx:43
-#: src/pages/notifications.jsx:987
+#: src/pages/notifications.jsx:991
 msgid "Accept"
 msgstr "Принять"
 
@@ -805,7 +807,7 @@ msgid "Reject"
 msgstr "Отклонить"
 
 #: src/components/follow-request-buttons.jsx:76
-#: src/pages/notifications.jsx:1271
+#: src/pages/notifications.jsx:1275
 msgid "Accepted"
 msgstr "Принят"
 
@@ -822,17 +824,18 @@ msgid "Accounts"
 msgstr "Учётные записи"
 
 #: src/components/generic-accounts.jsx:214
-#: src/components/quotes-modal.jsx:128
+#: src/components/quotes-modal.jsx:129
 #: src/components/timeline.jsx:546
 #: src/pages/list.jsx:321
-#: src/pages/notifications.jsx:917
+#: src/pages/notifications.jsx:921
 #: src/pages/search.jsx:562
-#: src/pages/status.jsx:1638
+#: src/pages/status.jsx:1665
 msgid "Show more…"
 msgstr "Показать ещё…"
 
 #: src/components/generic-accounts.jsx:219
-#: src/components/quotes-modal.jsx:132
+#: src/components/quote-chain-modal.jsx:169
+#: src/components/quotes-modal.jsx:133
 #: src/components/timeline.jsx:551
 #: src/pages/search.jsx:567
 msgid "The end."
@@ -1042,9 +1045,9 @@ msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> или <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:185
-#: src/components/status.jsx:1170
-#: src/components/status.jsx:2893
-#: src/components/status.jsx:2948
+#: src/components/status.jsx:1173
+#: src/components/status.jsx:2935
+#: src/components/status.jsx:2990
 msgid "Boost"
 msgstr "Продвинуть"
 
@@ -1053,9 +1056,9 @@ msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Shift</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:197
-#: src/components/status.jsx:1272
-#: src/components/status.jsx:2973
-#: src/components/status.jsx:2974
+#: src/components/status.jsx:1275
+#: src/components/status.jsx:3015
+#: src/components/status.jsx:3016
 msgid "Bookmark"
 msgstr "Закладка"
 
@@ -1149,31 +1152,31 @@ msgstr "Описание медиа"
 #: src/components/media-attachment.jsx:430
 #: src/components/media-modal.jsx:372
 #: src/components/related-actions.jsx:263
-#: src/components/status.jsx:2146
-#: src/components/status.jsx:2163
-#: src/components/status.jsx:2296
-#: src/components/status.jsx:2994
-#: src/components/status.jsx:2997
+#: src/components/status.jsx:2179
+#: src/components/status.jsx:2196
+#: src/components/status.jsx:2329
+#: src/components/status.jsx:3036
+#: src/components/status.jsx:3039
 #: src/pages/account-statuses.jsx:544
 #: src/pages/accounts.jsx:127
 #: src/pages/hashtag.jsx:203
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1505
+#: src/pages/status.jsx:1532
 #: src/pages/trending.jsx:474
 msgid "More"
 msgstr "Ещё"
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1327
-#: src/components/status.jsx:1336
+#: src/components/status.jsx:1342
+#: src/components/status.jsx:1351
 #: src/components/translation-block.jsx:270
 msgid "Translate"
 msgstr "Перевести"
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1357
+#: src/components/status.jsx:1372
 msgid "Speak"
 msgstr "Произнести"
 
@@ -1302,8 +1305,8 @@ msgstr "Отфильтровано: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:3434
-#: src/components/status.jsx:3512
+#: src/components/status.jsx:3508
+#: src/components/status.jsx:3586
 #: src/components/timeline.jsx:979
 #: src/pages/catchup.jsx:79
 #: src/pages/catchup.jsx:2022
@@ -1382,7 +1385,7 @@ msgstr "Упоминания"
 #: src/pages/home.jsx:86
 #: src/pages/home.jsx:198
 #: src/pages/notifications.jsx:111
-#: src/pages/notifications.jsx:586
+#: src/pages/notifications.jsx:590
 msgid "Notifications"
 msgstr "Уведомления"
 
@@ -1455,7 +1458,7 @@ msgstr "Учётные записи…"
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:33
 #: src/pages/login.jsx:227
-#: src/pages/status.jsx:1032
+#: src/pages/status.jsx:1059
 #: src/pages/welcome.jsx:68
 msgid "Log in"
 msgstr "Войти"
@@ -1633,8 +1636,8 @@ msgid "[Unknown notification type: {type}]"
 msgstr "[Неизвестный тип уведомления: {type}]"
 
 #: src/components/notification.jsx:463
-#: src/components/status.jsx:1286
-#: src/components/status.jsx:1296
+#: src/components/status.jsx:1289
+#: src/components/status.jsx:1299
 msgid "Boosted/Liked by…"
 msgstr "Продвинули/Отметили как \"нравится\"…"
 
@@ -1659,20 +1662,23 @@ msgstr "Подробнее <0/>"
 msgid "View #Wrapstodon"
 msgstr "Посмотреть #Wrapstodon"
 
-#: src/components/notification.jsx:813
-#: src/components/status.jsx:261
+#: src/components/notification.jsx:814
+#: src/components/quote-chain-modal.jsx:18
+#: src/components/status.jsx:262
 msgid "Read more →"
 msgstr "Читать далее →"
 
 #: src/components/open-link-sheet.jsx:30
 #: src/components/related-actions.jsx:515
-#: src/components/status.jsx:1461
+#: src/components/status.jsx:1455
+#: src/components/status.jsx:1488
 msgid "Link copied"
 msgstr "Ссылка скопирована"
 
 #: src/components/open-link-sheet.jsx:33
 #: src/components/related-actions.jsx:518
-#: src/components/status.jsx:1464
+#: src/components/status.jsx:1458
+#: src/components/status.jsx:1491
 msgid "Unable to copy link"
 msgstr "Не удалось скопировать ссылку"
 
@@ -1684,13 +1690,13 @@ msgstr "Открыть ссылку?"
 #: src/components/post-embed-modal.jsx:232
 #: src/components/related-actions.jsx:524
 #: src/components/shortcuts-settings.jsx:1159
-#: src/components/status.jsx:1470
+#: src/components/status.jsx:1497
 msgid "Copy"
 msgstr "Копировать"
 
 #: src/components/open-link-sheet.jsx:82
 #: src/components/related-actions.jsx:545
-#: src/components/status.jsx:1492
+#: src/components/status.jsx:1519
 msgid "Share…"
 msgstr "Поделиться…"
 
@@ -1752,13 +1758,13 @@ msgstr "Показать результаты"
 #: src/components/poll.jsx:291
 #: src/components/poll.jsx:293
 #: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1494
-#: src/pages/status.jsx:1517
+#: src/pages/status.jsx:1521
+#: src/pages/status.jsx:1544
 msgid "Refresh"
 msgstr "Обновить"
 
 #: src/components/post-embed-modal.jsx:201
-#: src/components/status.jsx:1505
+#: src/components/status.jsx:1532
 msgid "Embed post"
 msgstr "Встроить пост"
 
@@ -1845,6 +1851,18 @@ msgstr "Сканировать QR-код"
 msgid "Unable to access camera. Please check permissions."
 msgstr "Не удается получить доступ к камере. Пожалуйста, проверьте разрешения."
 
+#: src/components/quote-chain-modal.jsx:107
+msgid "Quote chain"
+msgstr ""
+
+#: src/components/quote-chain-modal.jsx:151
+msgid "Failed to unwrap quote chain"
+msgstr ""
+
+#: src/components/quote-chain-modal.jsx:165
+msgid "Continue unwrapping…"
+msgstr ""
+
 #: src/components/quote-settings-sheet.jsx:37
 #: src/pages/settings.jsx:358
 msgid "Quote settings updated"
@@ -1875,11 +1893,11 @@ msgstr "Заменить текущую цитату"
 msgid "Turn into quote"
 msgstr "Преобразовать в цитату"
 
-#: src/components/quotes-modal.jsx:149
+#: src/components/quotes-modal.jsx:150
 msgid "Error loading quotes"
 msgstr "Ошибка загрузки цитат"
 
-#: src/components/quotes-modal.jsx:153
+#: src/components/quotes-modal.jsx:154
 msgid "No quotes yet"
 msgstr "Пока нет цитирований"
 
@@ -1998,7 +2016,7 @@ msgstr "Показать рекомендуемые профили"
 
 #: src/components/related-actions.jsx:539
 #: src/components/shortcuts-settings.jsx:1177
-#: src/components/status.jsx:1486
+#: src/components/status.jsx:1513
 msgid "Sharing doesn't seem to work."
 msgstr "Кажется, функция «Поделиться» не работает."
 
@@ -2335,7 +2353,7 @@ msgid "Move down"
 msgstr "Переместить вниз"
 
 #: src/components/shortcuts-settings.jsx:380
-#: src/components/status.jsx:1617
+#: src/components/status.jsx:1644
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "Редактировать"
@@ -2527,369 +2545,373 @@ msgstr "Исходный JSON ярлыков"
 msgid "Import/export settings from/to instance server (Very experimental)"
 msgstr "Импорт/экспорт настроек с сервера инстанса (Очень экспериментально)"
 
-#: src/components/status.jsx:290
+#: src/components/status.jsx:291
 msgid "Private posts cannot be quoted"
 msgstr "Приватные посты не могут быть процитированы"
 
-#: src/components/status.jsx:291
+#: src/components/status.jsx:292
 msgid "Request to quote"
 msgstr "Запрос на цитирование"
 
-#: src/components/status.jsx:292
+#: src/components/status.jsx:293
 msgid "Author will manually review"
 msgstr "Автор проверит вручную"
 
-#: src/components/status.jsx:293
+#: src/components/status.jsx:294
 msgid "Only followers can quote this post"
 msgstr "Только подписчики могут цитировать этот пост"
 
-#: src/components/status.jsx:294
+#: src/components/status.jsx:295
 msgid "You are not allowed to quote this post"
 msgstr "Вам не разрешено цитировать этот пост"
 
-#: src/components/status.jsx:369
-#: src/components/status.jsx:3124
-#: src/components/status.jsx:3125
-#: src/components/status.jsx:3126
+#: src/components/status.jsx:371
+#: src/components/status.jsx:3181
+#: src/components/status.jsx:3182
+#: src/components/status.jsx:3183
 msgid "Post unavailable"
 msgstr "Пост недоступен"
 
-#: src/components/status.jsx:631
+#: src/components/status.jsx:633
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>продвинул(а)</1>"
 
-#: src/components/status.jsx:737
+#: src/components/status.jsx:740
 msgid "Sorry, your current logged-in instance can't interact with this post from another instance."
 msgstr "К сожалению, ваша текущая учетная запись не может взаимодействовать с этим постом из другого инстанса."
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:926
+#: src/components/status.jsx:929
 msgid "Unliked @{0}'s post"
 msgstr "Удалена отметка \"нравится\" у поста от @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:927
+#: src/components/status.jsx:930
 msgid "Liked @{0}'s post"
 msgstr "Понравился пост от @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:966
+#: src/components/status.jsx:969
 msgid "Unbookmarked @{0}'s post"
 msgstr "Удалена закладка поста от @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:967
+#: src/components/status.jsx:970
 msgid "Bookmarked @{0}'s post"
 msgstr "Добавлена закладка поста от @{0}"
 
-#: src/components/status.jsx:1071
+#: src/components/status.jsx:1074
 msgid "Some media have no descriptions."
 msgstr "Некоторые медиа не имеют описаний."
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
-#: src/components/status.jsx:1078
+#: src/components/status.jsx:1081
 msgid "Old post (<0>{0}</0>)"
 msgstr "Старый пост (<0>{0}</0>)"
 
-#: src/components/status.jsx:1099
+#: src/components/status.jsx:1102
 msgid "Reply…"
 msgstr "Ответить…"
 
-#: src/components/status.jsx:1108
-#: src/components/status.jsx:1117
+#: src/components/status.jsx:1111
+#: src/components/status.jsx:1120
 msgid "Reply all"
 msgstr "Ответить на все"
 
-#: src/components/status.jsx:1111
+#: src/components/status.jsx:1114
 msgid "{mentionsCount, plural, other {# mentions}}"
 msgstr "{mentionsCount, plural, other {# упоминаний}}"
 
 #. placeholder {0}: mentionsCount - 1
 #. placeholder {1}: username || acct
-#: src/components/status.jsx:1120
+#: src/components/status.jsx:1123
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
 msgstr "{0, plural, other {сначала <0>@{1}</0>, # другие ниже}}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1137
+#: src/components/status.jsx:1140
 msgid "Only <0>@{0}</0>"
 msgstr "Только <0>@{0}</0>"
 
-#: src/components/status.jsx:1170
-#: src/components/status.jsx:1247
-#: src/components/status.jsx:2893
-#: src/components/status.jsx:2946
+#: src/components/status.jsx:1173
+#: src/components/status.jsx:1250
+#: src/components/status.jsx:2935
+#: src/components/status.jsx:2988
 msgid "Unboost"
 msgstr "Прекратить продвигать"
 
-#: src/components/status.jsx:1209
-#: src/components/status.jsx:2931
+#: src/components/status.jsx:1212
+#: src/components/status.jsx:2973
 msgid "Quote with link"
 msgstr "Цитата со ссылкой"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1226
-#: src/components/status.jsx:1806
+#: src/components/status.jsx:1229
+#: src/components/status.jsx:1833
 msgid "Unboosted @{0}'s post"
 msgstr "Прекратил(а) продвигать пост @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1227
-#: src/components/status.jsx:1807
+#: src/components/status.jsx:1230
+#: src/components/status.jsx:1834
 msgid "Boosted @{0}'s post"
 msgstr "Продвинул(а) пост @{0}"
 
-#: src/components/status.jsx:1249
-#: src/components/status.jsx:2945
+#: src/components/status.jsx:1252
+#: src/components/status.jsx:2987
 msgid "Boost/Quote…"
 msgstr "Продвинуть/Процитировать…"
 
-#: src/components/status.jsx:1250
-#: src/components/status.jsx:2945
+#: src/components/status.jsx:1253
+#: src/components/status.jsx:2987
 msgid "Boost…"
 msgstr "Продвинуть…"
 
-#: src/components/status.jsx:1262
-#: src/components/status.jsx:2136
-#: src/components/status.jsx:2961
+#: src/components/status.jsx:1265
+#: src/components/status.jsx:2169
+#: src/components/status.jsx:3003
 msgid "Unlike"
 msgstr "Не нравится"
 
-#: src/components/status.jsx:1263
-#: src/components/status.jsx:2136
-#: src/components/status.jsx:2137
-#: src/components/status.jsx:2961
-#: src/components/status.jsx:2962
+#: src/components/status.jsx:1266
+#: src/components/status.jsx:2169
+#: src/components/status.jsx:2170
+#: src/components/status.jsx:3003
+#: src/components/status.jsx:3004
 msgid "Like"
 msgstr "Нравится"
 
-#: src/components/status.jsx:1272
-#: src/components/status.jsx:2973
+#: src/components/status.jsx:1275
+#: src/components/status.jsx:3015
 msgid "Unbookmark"
 msgstr "Удалить закладку"
 
-#: src/components/status.jsx:1307
+#: src/components/status.jsx:1310
 msgid "View Quotes"
 msgstr "Просмотр цитирований"
 
-#: src/components/status.jsx:1374
+#: src/components/status.jsx:1322
+msgid "Unwrap quote chain"
+msgstr ""
+
+#: src/components/status.jsx:1389
 msgid "Post text copied"
 msgstr "Текст поста скопирован"
 
-#: src/components/status.jsx:1377
+#: src/components/status.jsx:1392
 msgid "Unable to copy post text"
 msgstr "Не удалось скопировать текст поста"
 
-#: src/components/status.jsx:1383
+#: src/components/status.jsx:1398
 msgid "Copy post text"
 msgstr "Копировать текст поста"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1401
+#: src/components/status.jsx:1416
 msgid "View post by <0>@{0}</0>"
 msgstr "Посмотреть пост <0>@{0}</0>"
 
-#: src/components/status.jsx:1422
+#: src/components/status.jsx:1437
 msgid "Show Edit History"
 msgstr "Показать историю редактирования"
 
-#: src/components/status.jsx:1425
+#: src/components/status.jsx:1440
 msgid "Edited: {editedDateText}"
 msgstr "Отредактировано: {editedDateText}"
 
-#: src/components/status.jsx:1453
+#: src/components/status.jsx:1480
 msgid "Open link"
 msgstr "Открыть ссылку"
 
-#: src/components/status.jsx:1521
+#: src/components/status.jsx:1548
 msgid "Conversation unmuted"
 msgstr "Обсуждение не игнорируется"
 
-#: src/components/status.jsx:1521
+#: src/components/status.jsx:1548
 msgid "Conversation muted"
 msgstr "Обсуждение игнорируется"
 
-#: src/components/status.jsx:1527
+#: src/components/status.jsx:1554
 msgid "Unable to unmute conversation"
 msgstr "Не удалось прекратить игнорировать обсуждение"
 
-#: src/components/status.jsx:1528
+#: src/components/status.jsx:1555
 msgid "Unable to mute conversation"
 msgstr "Не удалось игнорировать обсуждение"
 
-#: src/components/status.jsx:1537
+#: src/components/status.jsx:1564
 msgid "Unmute conversation"
 msgstr "Не игнорировать обсуждение"
 
-#: src/components/status.jsx:1544
+#: src/components/status.jsx:1571
 msgid "Mute conversation"
 msgstr "Игнорировать обсуждение"
 
-#: src/components/status.jsx:1560
+#: src/components/status.jsx:1587
 msgid "Post unpinned from profile"
 msgstr "Пост откреплён из профиля"
 
-#: src/components/status.jsx:1561
+#: src/components/status.jsx:1588
 msgid "Post pinned to profile"
 msgstr "Пост прикреплён к профилю"
 
-#: src/components/status.jsx:1566
+#: src/components/status.jsx:1593
 msgid "Unable to unpin post"
 msgstr "Не удалось открепить пост"
 
-#: src/components/status.jsx:1566
+#: src/components/status.jsx:1593
 msgid "Unable to pin post"
 msgstr "Не удалось закрепить пост"
 
-#: src/components/status.jsx:1575
+#: src/components/status.jsx:1602
 msgid "Unpin from profile"
 msgstr "Открепить от профиля"
 
-#: src/components/status.jsx:1582
+#: src/components/status.jsx:1609
 msgid "Pin to profile"
 msgstr "Закрепить в профиле"
 
-#: src/components/status.jsx:1595
+#: src/components/status.jsx:1622
 #: src/pages/settings.jsx:332
 msgid "Quote settings"
 msgstr "Настройки цитирования"
 
-#: src/components/status.jsx:1628
+#: src/components/status.jsx:1655
 msgid "Delete this post?"
 msgstr "Удалить этот пост?"
 
-#: src/components/status.jsx:1644
+#: src/components/status.jsx:1671
 msgid "Post deleted"
 msgstr "Пост удален"
 
-#: src/components/status.jsx:1647
+#: src/components/status.jsx:1674
 msgid "Unable to delete post"
 msgstr "Не удалось удалить пост"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1672
+#: src/components/status.jsx:1699
 msgid "Remove my post from <0>@{0}</0>'s post?"
 msgstr "Удалить мой пост с поста <0>@{0}</0>?"
 
-#: src/components/status.jsx:1693
+#: src/components/status.jsx:1720
 msgid "Quote removed"
 msgstr "Цитата удалена"
 
-#: src/components/status.jsx:1697
+#: src/components/status.jsx:1724
 msgid "Unable to remove quote"
 msgstr "Не удалось удалить цитату"
 
-#: src/components/status.jsx:1703
+#: src/components/status.jsx:1730
 msgid "Remove quote…"
 msgstr "Удалить цитату…"
 
-#: src/components/status.jsx:1717
+#: src/components/status.jsx:1744
 msgid "Report post…"
 msgstr "Пожаловаться на пост…"
 
-#: src/components/status.jsx:2137
-#: src/components/status.jsx:2173
-#: src/components/status.jsx:2962
+#: src/components/status.jsx:2170
+#: src/components/status.jsx:2206
+#: src/components/status.jsx:3004
 msgid "Liked"
 msgstr "Нравится"
 
-#: src/components/status.jsx:2170
-#: src/components/status.jsx:2948
+#: src/components/status.jsx:2203
+#: src/components/status.jsx:2990
 msgid "Boosted"
 msgstr "Продвинут"
 
-#: src/components/status.jsx:2180
-#: src/components/status.jsx:2974
+#: src/components/status.jsx:2213
+#: src/components/status.jsx:3016
 msgid "Bookmarked"
 msgstr "Добавлен в закладки"
 
-#: src/components/status.jsx:2184
+#: src/components/status.jsx:2217
 msgid "Pinned"
 msgstr "Закреплён"
 
-#: src/components/status.jsx:2241
-#: src/components/status.jsx:2731
+#: src/components/status.jsx:2274
+#: src/components/status.jsx:2773
 msgid "Deleted"
 msgstr "Удалён"
 
-#: src/components/status.jsx:2279
-#: src/components/status.jsx:2347
+#: src/components/status.jsx:2312
+#: src/components/status.jsx:2380
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, one {# ответ} other {# ответ(а/ов)}}"
 
-#: src/components/status.jsx:2453
-#: src/components/status.jsx:2515
-#: src/components/status.jsx:2621
+#: src/components/status.jsx:2486
+#: src/components/status.jsx:2548
+#: src/components/status.jsx:2654
 msgid "Show less"
 msgstr "Свернуть/скрыть"
 
-#: src/components/status.jsx:2453
-#: src/components/status.jsx:2515
+#: src/components/status.jsx:2486
+#: src/components/status.jsx:2548
 msgid "Show content"
 msgstr "Показать содержимое"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2617
+#: src/components/status.jsx:2650
 #: src/pages/catchup.jsx:2021
 msgid "Filtered: {0}"
 msgstr "Отфильтровано: {0}"
 
-#: src/components/status.jsx:2621
+#: src/components/status.jsx:2654
 msgid "Show media"
 msgstr "Показать медиа"
 
-#: src/components/status.jsx:2766
+#: src/components/status.jsx:2808
 msgid "Edited"
 msgstr "Отредактировано"
 
-#: src/components/status.jsx:2852
-#: src/components/status.jsx:2864
+#: src/components/status.jsx:2894
+#: src/components/status.jsx:2906
 msgid "Comments"
 msgstr "Комментарии"
 
-#: src/components/status.jsx:3122
+#: src/components/status.jsx:3179
 msgid "Post hidden by your filters"
 msgstr "Пост скрыт вашими фильтрами"
 
-#: src/components/status.jsx:3123
+#: src/components/status.jsx:3180
 msgid "Post pending"
 msgstr "Пост ожидает подтверждения"
 
-#: src/components/status.jsx:3127
+#: src/components/status.jsx:3184
 msgid "Post removed by author"
 msgstr "Пост удален автором"
 
-#: src/components/status.jsx:3128
+#: src/components/status.jsx:3185
 msgid "Post hidden because you've blocked @{name}."
 msgstr "Пост скрыт, потому что вы заблокировали @{name}."
 
-#: src/components/status.jsx:3130
+#: src/components/status.jsx:3187
 msgid "Post hidden because you've blocked {domain}."
 msgstr "Пост скрыт, потому что вы заблокировали {domain}."
 
-#: src/components/status.jsx:3131
+#: src/components/status.jsx:3188
 msgid "Post hidden because you've muted @{name}."
 msgstr "Пост скрыт, потому что вы заглушали @{name}."
 
-#: src/components/status.jsx:3202
+#: src/components/status.jsx:3259
 msgid "Show anyway"
 msgstr "Всё равно показать"
 
-#: src/components/status.jsx:3301
+#: src/components/status.jsx:3375
 msgid "Edit History"
 msgstr "История изменений"
 
-#: src/components/status.jsx:3305
+#: src/components/status.jsx:3379
 msgid "Failed to load history"
 msgstr "Не удалось загрузить историю"
 
-#: src/components/status.jsx:3310
+#: src/components/status.jsx:3384
 msgid "Loading…"
 msgstr "Загрузка…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3442
+#: src/components/status.jsx:3516
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> продвинули"
 
@@ -2926,9 +2948,9 @@ msgstr "Новые посты"
 
 #: src/components/timeline.jsx:581
 #: src/pages/home.jsx:228
-#: src/pages/notifications.jsx:893
-#: src/pages/status.jsx:1193
-#: src/pages/status.jsx:1667
+#: src/pages/notifications.jsx:897
+#: src/pages/status.jsx:1220
+#: src/pages/status.jsx:1694
 msgid "Try again"
 msgstr "Повторите попытку"
 
@@ -3779,113 +3801,113 @@ msgstr "Кому нежелательно лично упоминать вас"
 msgid "Who are limited by server moderators"
 msgstr "Кто ограничен модераторами сервера"
 
-#: src/pages/notifications.jsx:600
-#: src/pages/notifications.jsx:941
+#: src/pages/notifications.jsx:604
+#: src/pages/notifications.jsx:945
 msgid "Notifications settings"
 msgstr "Параметры уведомлений"
 
-#: src/pages/notifications.jsx:618
+#: src/pages/notifications.jsx:622
 msgid "New notifications"
 msgstr "Новые уведомления"
 
 #. placeholder {0}: announcements.length
-#: src/pages/notifications.jsx:629
+#: src/pages/notifications.jsx:633
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Оповещение} other {Оповещени(я/й)}}"
 
-#: src/pages/notifications.jsx:676
+#: src/pages/notifications.jsx:680
 #: src/pages/settings.jsx:1232
 msgid "Follow requests"
 msgstr "Запросы на подписку"
 
 #. placeholder {0}: followRequests.length
-#: src/pages/notifications.jsx:681
+#: src/pages/notifications.jsx:685
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr "{0, plural, one {# запрос на подписку} other {# запрос(а/ов) на подписку}}"
 
 #. placeholder {0}: notificationsPolicy.summary.pendingRequestsCount
-#: src/pages/notifications.jsx:736
+#: src/pages/notifications.jsx:740
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr "{0, plural, one {Отфильтрованные уведомления от # человека} other {Отфильтрованные уведомления от # человек}}"
 
-#: src/pages/notifications.jsx:809
+#: src/pages/notifications.jsx:813
 msgid "Only mentions"
 msgstr "Только упоминания"
 
-#: src/pages/notifications.jsx:813
+#: src/pages/notifications.jsx:817
 msgid "Today"
 msgstr "Сегодня"
 
-#: src/pages/notifications.jsx:818
+#: src/pages/notifications.jsx:822
 msgid "You're all caught up."
 msgstr "Вы уловили всё."
 
-#: src/pages/notifications.jsx:841
+#: src/pages/notifications.jsx:845
 msgid "Yesterday"
 msgstr "Вчера"
 
-#: src/pages/notifications.jsx:889
+#: src/pages/notifications.jsx:893
 msgid "Unable to load notifications"
 msgstr "Не удалось загрузить уведомления"
 
-#: src/pages/notifications.jsx:968
+#: src/pages/notifications.jsx:972
 msgid "Notifications settings updated"
 msgstr "Параметры уведомлений обновлены"
 
-#: src/pages/notifications.jsx:976
+#: src/pages/notifications.jsx:980
 msgid "Filter out notifications from people:"
 msgstr "Отфильтровать уведомления от людей:"
 
-#: src/pages/notifications.jsx:990
+#: src/pages/notifications.jsx:994
 msgid "Filter"
 msgstr "Фильтр"
 
-#: src/pages/notifications.jsx:993
+#: src/pages/notifications.jsx:997
 msgid "Ignore"
 msgstr "Игнорировать"
 
 #. placeholder {0}: niceDateTime(updatedAtDate)
-#: src/pages/notifications.jsx:1066
+#: src/pages/notifications.jsx:1070
 msgid "Updated <0>{0}</0>"
 msgstr "Обновлено <0>{0}</0>"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1134
+#: src/pages/notifications.jsx:1138
 msgid "View notifications from <0>@{0}</0>"
 msgstr "Просмотр уведомлений от <0>@{0}</0>"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1155
+#: src/pages/notifications.jsx:1159
 msgid "Notifications from <0>@{0}</0>"
 msgstr "Уведомления от <0>@{0}</0>"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1223
+#: src/pages/notifications.jsx:1227
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr "Уведомления от @{0} теперь не будут отфильтрованы."
 
-#: src/pages/notifications.jsx:1228
+#: src/pages/notifications.jsx:1232
 msgid "Unable to accept notification request"
 msgstr "Не удалось принять запрос на уведомление"
 
-#: src/pages/notifications.jsx:1233
+#: src/pages/notifications.jsx:1237
 msgid "Allow"
 msgstr "Разрешить"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1253
+#: src/pages/notifications.jsx:1257
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "Уведомления от @{0} теперь не будут отображаться в отфильтрованных уведомлениях."
 
-#: src/pages/notifications.jsx:1258
+#: src/pages/notifications.jsx:1262
 msgid "Unable to dismiss notification request"
 msgstr "Не удалось отклонить запрос на уведомление"
 
-#: src/pages/notifications.jsx:1263
+#: src/pages/notifications.jsx:1267
 msgid "Dismiss"
 msgstr "Отклонить"
 
-#: src/pages/notifications.jsx:1278
+#: src/pages/notifications.jsx:1282
 msgid "Dismissed"
 msgstr "Отклонено"
 
@@ -4254,102 +4276,102 @@ msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "ПРИМЕЧАНИЕ: Push-уведомления работают только для <0>одного аккаунта</0>."
 
 #. js-lingui-explicit-id
-#: src/pages/status.jsx:764
-#: src/pages/status.jsx:1418
+#: src/pages/status.jsx:791
+#: src/pages/status.jsx:1445
 msgid "post.title"
 msgstr "Пост"
 
-#: src/pages/status.jsx:1019
+#: src/pages/status.jsx:1046
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr "Вы не вошли в систему. Взаимодействия (ответы, продвижения и т. п.) невозможны."
 
-#: src/pages/status.jsx:1039
+#: src/pages/status.jsx:1066
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr "Это сообщение с другого инстанса (<0>{instance}</0>). Взаимодействия (ответ, продвижение и т. д.) невозможны."
 
-#: src/pages/status.jsx:1067
+#: src/pages/status.jsx:1094
 msgid "Error: {e}"
 msgstr "Ошибка: {e}"
 
-#: src/pages/status.jsx:1074
+#: src/pages/status.jsx:1101
 msgid "Switch to my instance to enable interactions"
 msgstr "Переключиться на мой инстанс для включения взаимодействий"
 
-#: src/pages/status.jsx:1184
+#: src/pages/status.jsx:1211
 msgid "Unable to load replies."
 msgstr "Не удалось загрузить ответы."
 
-#: src/pages/status.jsx:1240
+#: src/pages/status.jsx:1267
 msgid "{months, plural, one {# month later} other {# months later}}"
 msgstr "{months, plural, one {# месяц спустя} other {# месяц(а/ев) спустя}}"
 
-#: src/pages/status.jsx:1246
+#: src/pages/status.jsx:1273
 msgid "{years, plural, one {# year later} other {# years later}}"
 msgstr "{years, plural, one {# год спустя} other {# года спустя}}"
 
-#: src/pages/status.jsx:1378
+#: src/pages/status.jsx:1405
 msgid "Back"
 msgstr "Назад"
 
-#: src/pages/status.jsx:1409
+#: src/pages/status.jsx:1436
 msgid "Go to main post"
 msgstr "Перейти к главному посту"
 
 #. placeholder {0}: ancestors.length
-#: src/pages/status.jsx:1432
+#: src/pages/status.jsx:1459
 msgid "{0} posts above ‒ Go to top"
 msgstr "{0} постов выше - Перейти к началу"
 
-#: src/pages/status.jsx:1481
-#: src/pages/status.jsx:1544
+#: src/pages/status.jsx:1508
+#: src/pages/status.jsx:1571
 msgid "Switch to Side Peek view"
 msgstr "Переключиться на боковую панель"
 
-#: src/pages/status.jsx:1545
+#: src/pages/status.jsx:1572
 msgid "Switch to Full view"
 msgstr "Переключиться на полный вид"
 
-#: src/pages/status.jsx:1563
+#: src/pages/status.jsx:1590
 msgid "Show all sensitive content"
 msgstr "Показать весь деликатный контент"
 
-#: src/pages/status.jsx:1568
+#: src/pages/status.jsx:1595
 msgid "Experimental"
 msgstr "Экспериментальные"
 
-#: src/pages/status.jsx:1577
+#: src/pages/status.jsx:1604
 msgid "Unable to switch"
 msgstr "Не удалось переключиться"
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
-#: src/pages/status.jsx:1584
+#: src/pages/status.jsx:1611
 msgid "Switch to post's instance ({0})"
 msgstr "Переключиться на инстанс поста ({0})"
 
-#: src/pages/status.jsx:1587
+#: src/pages/status.jsx:1614
 msgid "Switch to post's instance"
 msgstr "Переключиться на инстанс поста"
 
-#: src/pages/status.jsx:1600
+#: src/pages/status.jsx:1627
 msgid "View Edit History Snapshots"
 msgstr "Просмотреть редактирование исторических снимков"
 
-#: src/pages/status.jsx:1658
+#: src/pages/status.jsx:1685
 msgid "Unable to load post"
 msgstr "Не удалось загрузить пост"
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
-#: src/pages/status.jsx:1795
+#: src/pages/status.jsx:1822
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr "{0, plural, one {# ответ} other {<0>{1}</0> ответ(а/ов)}}"
 
 #. placeholder {0}: shortenNumber(totalComments)
-#: src/pages/status.jsx:1813
+#: src/pages/status.jsx:1840
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr "{totalComments, plural, one {# комментарий} other {<0>{0}</0> комментари(я/ев)}}"
 
-#: src/pages/status.jsx:1835
+#: src/pages/status.jsx:1862
 msgid "View post with its replies"
 msgstr "Просмотреть пост и ответы на него"
 

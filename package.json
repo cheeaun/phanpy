@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:sizes": "vite build 2>&1 | grep '^dist/' | node scripts/bundle-sizes-to-md.js",
+    "build:sizes": "NO_COLOR=true vite build 2>&1 | grep '^dist/' | node scripts/bundle-sizes-to-md.js",
     "preview": "vite preview",
     "fetch-instances": "node scripts/fetch-instances-list.js",
     "sourcemap": "npx source-map-explorer dist/assets/*.js",

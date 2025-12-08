@@ -43,6 +43,7 @@ rl.on('line', (line) => {
 });
 
 rl.on('close', () => {
+  console.log('## 📦 Bundle Size Report\n');
   console.log('| File | Size | Gzip | Map |');
   console.log('|------|------|------|-----|');
   for (const row of rows) {

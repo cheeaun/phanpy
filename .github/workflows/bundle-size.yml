@@ -18,17 +18,9 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - name: Build and extract bundle sizes
-        id: build
-        run: |
-          {
-            echo 'SIZES<<EOF'
-            npm run build:sizes --silent
-            echo 'EOF'
-          } >> $GITHUB_OUTPUT
+        run: npm run build:sizes --silent > bundle-sizes.md
       - name: Comment on PR
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: bundle-size
-          message: |
-            ## 📦 Bundle Size Report
-            ${{ steps.build.outputs.SIZES }}
+          path: bundle-sizes.md

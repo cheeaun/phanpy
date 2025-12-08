@@ -1287,7 +1287,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: 100%;
   z-index: 1000;
   display: flex;
-  background-color: var(--backdrop-color);
+  background-color: var(--meta-theme-color, var(--backdrop-color));
   animation: appear 0.1s ease-out;
 }
 .deck-backdrop > a {

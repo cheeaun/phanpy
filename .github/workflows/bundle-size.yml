@@ -19,6 +19,12 @@ jobs:
       - run: npm ci
       - name: Build and extract bundle sizes
         run: npm run build:sizes --silent > bundle-sizes.md
+      - name: Debug - show file content
+        run: |
+          echo "File size:"
+          wc -l bundle-sizes.md
+          echo "First 20 lines:"
+          head -20 bundle-sizes.md
       - name: Comment on PR
         uses: marocchino/sticky-pull-request-comment@v2
         with:

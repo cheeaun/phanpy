@@ -60,7 +60,7 @@ const scrollIntoViewOptions = {
 const memSupportsGroupedNotifications = mem(
   () => getAPIVersions()?.mastodon >= 2,
   {
-    maxAge: 1000 * 60 * 5, // 5 minutes
+    expires: 1000 * 60 * 5, // 5 minutes
   },
 );
 

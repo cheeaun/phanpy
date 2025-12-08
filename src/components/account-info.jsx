@@ -50,7 +50,7 @@ function fetchFamiliarFollowers(currentID, masto) {
   });
 }
 const memFetchFamiliarFollowers = pmem(fetchFamiliarFollowers, {
-  maxAge: ACCOUNT_INFO_MAX_AGE,
+  expires: ACCOUNT_INFO_MAX_AGE,
 });
 
 async function fetchPostingStats(accountID, masto) {
@@ -107,7 +107,7 @@ async function fetchPostingStats(accountID, masto) {
   return stats;
 }
 const memFetchPostingStats = pmem(fetchPostingStats, {
-  maxAge: ACCOUNT_INFO_MAX_AGE,
+  expires: ACCOUNT_INFO_MAX_AGE,
 });
 
 const isValidUrl = (string) => {

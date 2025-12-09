@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useRef } from 'preact/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -16,6 +16,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Public({ local, columnMode, ...props }) {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const isLocal = !!local;
   const params = columnMode ? {} : useParams();
@@ -40,7 +41,7 @@ function Public({ local, columnMode, ...props }) {
       if (!isLocal && supports('@pixelfed/global-feed')) {
         opts.remote = true;
       }
-      publicIterator.current = masto.v1.timelines.public.list(opts);
+      publicIterator.current = masto.v1.timelines.public.list(opts).values();
     }
     const results = await publicIterator.current.next();
     let { value } = results;
@@ -68,6 +69,7 @@ function Public({ local, columnMode, ...props }) {
           local: isLocal,
           since_id: latestItem.current,
         })
+        .values()
         .next();
       let { value } = results;
       const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported

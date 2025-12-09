@@ -1,11 +1,15 @@
 import './translation-block.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
+import PQueue from 'p-queue';
 import pRetry from 'p-retry';
-import pThrottle from 'p-throttle';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
-import sourceLanguages from '../data/lingva-source-languages';
+import languages from '../data/translang-languages';
+import {
+  translate as browserTranslate,
+  supportsBrowserTranslator,
+} from '../utils/browser-translator';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
 import pmem from '../utils/pmem';
@@ -14,63 +18,102 @@ import Icon from './icon';
 import LazyShazam from './lazy-shazam';
 import Loader from './loader';
 
-const { PHANPY_LINGVA_INSTANCES } = import.meta.env;
-const LINGVA_INSTANCES = PHANPY_LINGVA_INSTANCES
-  ? PHANPY_LINGVA_INSTANCES.split(/\s+/)
+const sourceLanguages = Object.entries(languages.sl).map(([code, name]) => ({
+  code,
+  name,
+}));
+
+const { PHANPY_TRANSLANG_INSTANCES } = import.meta.env;
+const TRANSLANG_INSTANCES = PHANPY_TRANSLANG_INSTANCES
+  ? PHANPY_TRANSLANG_INSTANCES.split(/\s+/)
   : [];
 
-const throttle = pThrottle({
-  limit: 1,
+const translationQueue = new PQueue({
+  concurrency: 1,
   interval: 2000,
+  intervalCap: 1,
 });
 
-let currentLingvaInstance = 0;
+const TRANSLATED_MAX_AGE = 1000 * 60 * 60; // 1 hour
+let currentTranslangInstance = 0;
 
-function _lingvaTranslate(text, source, target) {
+function _translangTranslate(text, source, target) {
   console.log('TRANSLATE', text, source, target);
   const fetchCall = () => {
-    let instance = LINGVA_INSTANCES[currentLingvaInstance];
-    return fetch(
-      `https://${instance}/api/v1/${source}/${target}/${encodeURIComponent(
-        text,
-      )}`,
-    )
+    let instance = TRANSLANG_INSTANCES[currentTranslangInstance];
+    const tooLong = text.length > 2000;
+    let fetchPromise;
+    if (tooLong) {
+      // POST
+      fetchPromise = fetch(`https://${instance}/api/v1/translate`, {
+        method: 'POST',
+        priority: 'low',
+        referrerPolicy: 'no-referrer',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sl: source,
+          tl: target,
+          text,
+        }),
+      });
+    } else {
+      // GET
+      fetchPromise = fetch(
+        `https://${instance}/api/v1/translate?sl=${encodeURIComponent(
+          source,
+        )}&tl=${encodeURIComponent(target)}&text=${encodeURIComponent(text)}`,
+        {
+          priority: 'low',
+          referrerPolicy: 'no-referrer',
+        },
+      );
+    }
+    return fetchPromise
       .then((res) => {
         if (!res.ok) throw new Error(res.statusText);
         return res.json();
       })
       .then((res) => {
         return {
-          provider: 'lingva',
-          content: res.translation,
-          detectedSourceLanguage: res.info?.detectedSource,
-          info: res.info,
+          provider: 'translang',
+          content: res.translated_text,
+          detectedSourceLanguage: res.detected_language,
+          pronunciation: res.pronunciation,
         };
       });
   };
   return pRetry(fetchCall, {
     retries: 3,
     onFailedAttempt: (e) => {
-      currentLingvaInstance =
-        (currentLingvaInstance + 1) % LINGVA_INSTANCES.length;
+      currentTranslangInstance =
+        (currentTranslangInstance + 1) % TRANSLANG_INSTANCES.length;
       console.log(
         'Retrying translation with another instance',
-        currentLingvaInstance,
+        currentTranslangInstance,
       );
     },
   });
-  // return masto.v1.statuses.$select(id).translate({
-  //   lang: DEFAULT_LANG,
-  // });
 }
-const TRANSLATED_MAX_AGE = 1000 * 60 * 60; // 1 hour
-const lingvaTranslate = pmem(_lingvaTranslate, {
+const translangTranslate = pmem(_translangTranslate, {
   maxAge: TRANSLATED_MAX_AGE,
 });
-const throttledLingvaTranslate = pmem(throttle(lingvaTranslate), {
-  // I know, this is double-layered memoization
-  maxAge: TRANSLATED_MAX_AGE,
-});
+const throttledTranslangTranslate = pmem(
+  ({ signal, text, source, target }) =>
+    translationQueue.add(() => translangTranslate(text, source, target), {
+      signal,
+    }),
+  {
+    // I know, this is double-layered memoization
+    maxAge: TRANSLATED_MAX_AGE,
+  },
+);
+
+const throttledBrowserTranslate = ({ text, source, target, signal }) =>
+  translationQueue.add(() => browserTranslate(text, source, target), {
+    signal,
+  });
 
 function TranslationBlock({
   forceTranslate,
@@ -80,12 +123,14 @@ function TranslationBlock({
   mini,
   autoDetected,
 }) {
+  const { t } = useLingui();
   const targetLang = getTranslateTargetLanguage(true);
   const [uiState, setUIState] = useState('default');
   const [pronunciationContent, setPronunciationContent] = useState(null);
   const [translatedContent, setTranslatedContent] = useState(null);
   const [detectedLang, setDetectedLang] = useState(null);
   const detailsRef = useRef();
+  const abortControllerRef = useRef();
 
   const sourceLangText = sourceLanguage
     ? localeCode2Text(sourceLanguage)
@@ -94,28 +139,48 @@ function TranslationBlock({
   const apiSourceLang = useRef('auto');
 
   if (!onTranslate) {
-    onTranslate = mini ? throttledLingvaTranslate : lingvaTranslate;
+    onTranslate = async ({ text, source, target, signal }) => {
+      if (supportsBrowserTranslator) {
+        const result = await throttledBrowserTranslate({
+          text,
+          source,
+          target,
+          signal,
+        });
+        if (result && !result.error) {
+          return result;
+        }
+      }
+      return mini
+        ? await throttledTranslangTranslate({ signal, text, source, target })
+        : await translangTranslate(text, source, target);
+    };
   }
 
   const translate = async () => {
     setUIState('loading');
     try {
       const { content, detectedSourceLanguage, provider, error, ...props } =
-        await onTranslate(text, apiSourceLang.current, targetLang);
+        await onTranslate({
+          text,
+          source: apiSourceLang.current,
+          target: targetLang,
+          signal: abortControllerRef.current?.signal,
+        });
       if (content) {
         if (detectedSourceLanguage) {
           const detectedLangText = localeCode2Text(detectedSourceLanguage);
           setDetectedLang(detectedLangText);
         }
-        if (provider === 'lingva') {
-          const pronunciation = props?.info?.pronunciation?.query;
+        if (provider === 'translang') {
+          const pronunciation = props?.pronunciation;
           if (pronunciation) {
             setPronunciationContent(pronunciation);
           }
         }
         setTranslatedContent(content);
         setUIState('default');
-        if (!mini && content.trim() !== text.trim()) {
+        if (!mini && content.trim() !== text.trim() && detailsRef.current) {
           detailsRef.current.open = true;
           detailsRef.current.scrollIntoView({
             behavior: 'smooth',
@@ -127,8 +192,10 @@ function TranslationBlock({
         setUIState('error');
       }
     } catch (e) {
-      console.error(e);
-      setUIState('error');
+      if (e.name !== 'AbortError') {
+        console.error(e);
+        setUIState('error');
+      }
     }
   };
 
@@ -137,6 +204,13 @@ function TranslationBlock({
       translate();
     }
   }, [forceTranslate]);
+
+  useEffect(() => {
+    abortControllerRef.current = new AbortController();
+    return () => {
+      abortControllerRef.current.abort();
+    };
+  }, []);
 
   if (mini) {
     if (
@@ -176,6 +250,7 @@ function TranslationBlock({
         <summary>
           <button
             type="button"
+            class={uiState === 'loading' ? 'loading-mask' : ''}
             onClick={async (e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -215,14 +290,14 @@ function TranslationBlock({
                   code: l.code,
                   locale: l.code,
                 });
-                const showCommon = common !== native;
+                const showCommon = native && common !== native;
                 return (
                   <option value={l.code}>
                     {l.code === 'auto'
                       ? t`Auto (${detectedLang ?? '…'})`
                       : showCommon
                         ? `${native} - ${common}`
-                        : native}
+                        : common}
                   </option>
                 );
               })}
@@ -260,4 +335,4 @@ function TranslationBlock({
   );
 }
 
-export default LINGVA_INSTANCES?.length ? TranslationBlock : () => null;
+export default TRANSLANG_INSTANCES?.length ? TranslationBlock : () => null;

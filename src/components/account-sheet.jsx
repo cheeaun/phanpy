@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useEffect } from 'preact/hooks';
 
 import { api } from '../utils/api';
@@ -9,6 +9,7 @@ import AccountInfo from './account-info';
 import Icon from './icon';
 
 function AccountSheet({ account, instance: propInstance, onClose }) {
+  const { t } = useLingui();
   const { masto, instance, authenticated } = api({ instance: propInstance });
   const isString = typeof account === 'string';
 
@@ -50,29 +51,37 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
               });
               return info;
             } catch (e) {
-              const result = await masto.v2.search.fetch({
+              const result = await masto.v2.search.list({
                 q: account,
                 type: 'accounts',
-                limit: 1,
+                limit: authenticated ? 1 : 11, // Magic number
                 resolve: authenticated,
               });
               if (result.accounts.length) {
-                return result.accounts[0];
-              } else if (/https?:\/\/[^/]+\/@/.test(account)) {
+                const accountWithSameString = result.accounts.find(
+                  (a) => a.url === account || account.startsWith(a.url),
+                );
+                if (accountWithSameString) {
+                  return accountWithSameString;
+                }
+              }
+              if (/^https?:\/\/[^/]+\/@[^/]+$/.test(account)) {
                 const accountURL = URL.parse(account);
-                const { hostname, pathname } = accountURL;
-                const acct =
-                  pathname.replace(/^\//, '').replace(/\/$/, '') +
-                  '@' +
-                  hostname;
-                const result = await masto.v2.search.fetch({
-                  q: acct,
-                  type: 'accounts',
-                  limit: 1,
-                  resolve: authenticated,
-                });
-                if (result.accounts.length) {
-                  return result.accounts[0];
+                if (accountURL) {
+                  const { hostname, pathname } = accountURL;
+                  const acct =
+                    pathname.replace(/^\//, '').replace(/\/$/, '') +
+                    '@' +
+                    hostname;
+                  const result = await masto.v2.search.list({
+                    q: acct,
+                    type: 'accounts',
+                    limit: 1,
+                    resolve: authenticated,
+                  });
+                  if (result.accounts.length) {
+                    return result.accounts[0];
+                  }
                 }
               }
             }

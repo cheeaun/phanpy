@@ -11,13 +11,17 @@
       name="description"
       content="Minimalistic opinionated Mastodon web client"
     />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="light dark" />
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+    </style>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="%PHANPY_CLIENT_NAME%" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="canonical" href="%PHANPY_WEBSITE%" />
     <meta
       name=""
       data-theme-setting="manual"
@@ -45,16 +49,6 @@
     />
     <meta name="google" content="notranslate" />
     <link rel="me" href="https://hachyderm.io/@phanpy" />
-
-    <!-- Metacrap https://broken-links.com/2015/12/01/little-less-metacrap/ -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="og:url" content="%PHANPY_WEBSITE%" />
-    <meta property="og:title" content="%PHANPY_CLIENT_NAME%" />
-    <meta
-      property="og:description"
-      content="Minimalistic opinionated Mastodon web client"
-    />
-    <meta property="og:image" content="%PHANPY_WEBSITE%/og-image-2.jpg" />
   </head>
   <body>
     <div id="app"></div>

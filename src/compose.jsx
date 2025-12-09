@@ -3,29 +3,34 @@ import './app.css';
 import './polyfills';
 
 import { i18n } from '@lingui/core';
-import { t, Trans } from '@lingui/macro';
 import { I18nProvider } from '@lingui/react';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { render } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import ComposeSuspense from './components/compose-suspense';
+import { IconSpriteProvider } from './components/icon-sprite-manager';
 import Loader from './components/loader';
 import { initActivateLang } from './utils/lang';
+import { initPWAViewport } from './utils/pwa-viewport';
 import { initStates } from './utils/states';
-import { getCurrentAccount, setCurrentAccountID } from './utils/store-utils';
+import { getCurrentAccount } from './utils/store-utils';
 import useTitle from './utils/useTitle';
 
 initActivateLang();
+initPWAViewport();
 
 if (window.opener) {
   console = window.opener.console;
 }
 
 function App() {
+  const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
-  const { editStatus, replyToStatus, draftStatus } = window.__COMPOSE__ || {};
+  const { editStatus, replyToStatus, replyMode, draftStatus, quoteStatus } =
+    window.__COMPOSE__ || {};
 
   useTitle(
     editStatus
@@ -99,7 +104,9 @@ function App() {
       <ComposeSuspense
         editStatus={editStatus}
         replyToStatus={replyToStatus}
+        replyMode={replyMode || 'all'}
         draftStatus={draftStatus}
+        quoteStatus={quoteStatus}
         standalone
         hasOpener={window.opener}
         onClose={(results) => {
@@ -125,7 +132,9 @@ function App() {
 
 render(
   <I18nProvider i18n={i18n}>
-    <App />
+    <IconSpriteProvider>
+      <App />
+    </IconSpriteProvider>
   </I18nProvider>,
   document.getElementById('app-standalone'),
 );

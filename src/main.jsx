@@ -11,9 +11,12 @@ import { render } from 'preact';
 import { HashRouter } from 'react-router-dom';
 
 import { App } from './app';
+import { IconSpriteProvider } from './components/icon-sprite-manager';
 import { initActivateLang } from './utils/lang';
+import { initPWAViewport } from './utils/pwa-viewport';
 
 initActivateLang();
+initPWAViewport();
 
 if (import.meta.env.DEV) {
   import('preact/debug');
@@ -22,7 +25,9 @@ if (import.meta.env.DEV) {
 render(
   <I18nProvider i18n={i18n}>
     <HashRouter>
-      <App />
+      <IconSpriteProvider>
+        <App />
+      </IconSpriteProvider>
     </HashRouter>
   </I18nProvider>,
   document.getElementById('app'),
@@ -31,20 +36,8 @@ render(
 // Storage cleanup
 setTimeout(() => {
   try {
-    // Clean up iconify localStorage
-    Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith('iconify')) {
-        localStorage.removeItem(key);
-      }
-    });
-    Object.keys(sessionStorage).forEach((key) => {
-      if (key.startsWith('iconify')) {
-        sessionStorage.removeItem(key);
-      }
-    });
-
     // Clean up old settings key
-    localStorage.removeItem('settings:boostsCarousel');
+    localStorage.removeItem('settings-groupedNotificationsAlpha');
   } catch (e) {}
 }, 5000);
 

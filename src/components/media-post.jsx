@@ -1,10 +1,11 @@
 import './media-post.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { memo } from 'preact/compat';
 import { useContext, useMemo } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
+import { getPreferences } from '../utils/api';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
 import states, { statusKey } from '../utils/states';
@@ -22,6 +23,7 @@ function MediaPost({
   // allowFilters,
   onMediaClick,
 }) {
+  const { t } = useLingui();
   let sKey = statusKey(statusID, instance);
   const snapStates = useSnapshot(states);
   if (!status) {
@@ -106,11 +108,9 @@ function MediaPost({
   console.debug('RENDER Media post', id, status?.account.displayName);
 
   const hasSpoiler = sensitive;
-  const readingExpandMedia = useMemo(() => {
-    // default | show_all | hide_all
-    const prefs = store.account.get('preferences') || {};
-    return prefs['reading:expand:media']?.toLowerCase() || 'default';
-  }, []);
+  const prefs = getPreferences();
+  const readingExpandMedia =
+    prefs['reading:expand:media']?.toLowerCase() || 'default';
   const showSpoilerMedia = readingExpandMedia === 'show_all';
 
   const Parent = parent || 'div';

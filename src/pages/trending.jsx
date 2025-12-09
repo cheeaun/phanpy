@@ -1,7 +1,7 @@
 import '../components/links-bar.css';
 import './trending.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import { getBlurHashAverageColor } from 'fast-blurhash';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
@@ -19,6 +19,7 @@ import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import { filteredItems } from '../utils/filters';
+import getDomain from '../utils/get-domain';
 import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
@@ -30,7 +31,7 @@ const TREND_CACHE_TIME = 10 * 60 * 1000; // 10 minutes
 
 const fetchLinks = pmem(
   (masto) => {
-    return masto.v1.trends.links.list().next();
+    return masto.v1.trends.links.list().values().next();
   },
   {
     maxAge: TREND_CACHE_TIME,
@@ -39,7 +40,7 @@ const fetchLinks = pmem(
 
 const fetchHashtags = pmem(
   (masto) => {
-    return masto.v1.trends.tags.list().next();
+    return masto.v1.trends.tags.list().values().next();
   },
   {
     maxAge: TREND_CACHE_TIME,
@@ -48,20 +49,25 @@ const fetchHashtags = pmem(
 
 function fetchTrendsStatuses(masto) {
   if (supports('@pixelfed/trending')) {
-    return masto.pixelfed.v2.discover.posts.trending.list({
-      range: 'daily',
-    });
+    return masto.pixelfed.v2.discover.posts.trending
+      .list({
+        range: 'daily',
+      })
+      .values();
   }
-  return masto.v1.trends.statuses.list({
-    limit: LIMIT,
-  });
+  return masto.v1.trends.statuses
+    .list({
+      limit: LIMIT,
+    })
+    .values();
 }
 
 function fetchLinkList(masto, params) {
-  return masto.v1.timelines.link.list(params);
+  return masto.v1.timelines.link.list(params).values();
 }
 
 function Trending({ columnMode, ...props }) {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const params = columnMode ? {} : useParams();
   const { masto, instance } = api({
@@ -187,6 +193,7 @@ function Trending({ columnMode, ...props }) {
           // NOT SUPPORTED
           // since_id: latestItem.current,
         })
+        .values()
         .next();
       let { value } = results;
       value = filteredItems(value, 'public');
@@ -251,11 +258,7 @@ function Trending({ columnMode, ...props }) {
                 : null;
               const isShortTitle = title.length < 30;
               const hasAuthor = !!(authorName || author);
-              const domain = punycode.toUnicode(
-                URL.parse(url)
-                  .hostname.replace(/^www\./, '')
-                  .replace(/\/$/, ''),
-              );
+              const domain = getDomain(url);
               let accentColor;
               if (blurhash) {
                 const averageColor = getBlurHashAverageColor(blurhash);
@@ -273,7 +276,7 @@ function Trending({ columnMode, ...props }) {
                     ref={currentLink === url ? currentLinkRef : null}
                     href={url}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener"
                     class={`link-block ${
                       hasCurrentLink
                         ? currentLink === url
@@ -352,7 +355,7 @@ function Trending({ columnMode, ...props }) {
                                     <a
                                       href={authorUrl}
                                       target="_blank"
-                                      rel="noopener noreferrer"
+                                      rel="noopener"
                                     >
                                       {authorName}
                                     </a>

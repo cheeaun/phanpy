@@ -1,6 +1,6 @@
 import './account-block.css';
 
-import { Plural, t, Trans } from '@lingui/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 
 // import { useNavigate } from 'react-router-dom';
 import enhanceContent from '../utils/enhance-content';
@@ -11,6 +11,7 @@ import states from '../utils/states';
 import Avatar from './avatar';
 import EmojiText from './emoji-text';
 import Icon from './icon';
+import RolesTags from './roles-tags';
 
 function AccountBlock({
   skeleton,
@@ -28,6 +29,7 @@ function AccountBlock({
   relationship = {},
   excludeRelationshipAttrs = [],
 }) {
+  const { t } = useLingui();
   if (skeleton) {
     return (
       <div class="account-block skeleton">
@@ -65,6 +67,7 @@ function AccountBlock({
     followersCount,
     createdAt,
     locked,
+    roles,
   } = account;
   let [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
   if (accountInstance) {
@@ -108,6 +111,7 @@ function AccountBlock({
       <div class="avatar-container">
         <Avatar
           url={useAvatarStatic ? avatarStatic : avatar || avatarStatic}
+          staticUrl={useAvatarStatic ? undefined : avatarStatic}
           size={avatarSize}
           squircle={bot}
         />
@@ -117,7 +121,11 @@ function AccountBlock({
           <>
             {displayName ? (
               <b>
-                <EmojiText text={displayName} emojis={emojis} />
+                <EmojiText
+                  text={displayName}
+                  emojis={emojis}
+                  resolverURL={url}
+                />
               </b>
             ) : (
               <b>{username}</b>
@@ -136,6 +144,7 @@ function AccountBlock({
             </>
           )}
         </span>
+        <RolesTags roles={roles} accountUrl={url} />
         {showActivity && (
           <div class="account-block-stats">
             <Trans>Posts: {shortenNumber(statusesCount)}</Trans>

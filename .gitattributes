@@ -1,2 +1,5 @@
 *.po linguist-generated
 readme-assets/** linguist-documentation
+
+# Diff PO file, ignore line number changes, reduce diff noise
+src/locales/en.po diff=po-filter

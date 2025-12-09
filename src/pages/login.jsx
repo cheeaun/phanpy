@@ -1,6 +1,6 @@
 import './login.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import Fuse from 'fuse.js';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
@@ -16,14 +16,21 @@ import {
   getPKCEAuthorizationURL,
   registerApplication,
 } from '../utils/auth';
+import { openAuthPopup, watchAuthPopup } from '../utils/auth-popup';
 import { supportsPKCE } from '../utils/oauth-pkce';
 import store from '../utils/store';
+import {
+  getCredentialApplication,
+  hasAccountInInstance,
+  storeCredentialApplication,
+} from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
 const { PHANPY_DEFAULT_INSTANCE: DEFAULT_INSTANCE } = import.meta.env;
 
 function Login() {
-  useTitle('Log in');
+  const { t } = useLingui();
+  useTitle(t`Log in`, '/login');
   const instanceURLRef = useRef();
   const cachedInstanceURL = store.local.get('instanceURL');
   const [uiState, setUIState] = useState('default');
@@ -86,42 +93,73 @@ function Login() {
 
       setUIState('loading');
       try {
-        const { client_id, client_secret, vapid_key } =
-          await registerApplication({
+        let credentialApplication = getCredentialApplication(instanceURL);
+        if (
+          !credentialApplication ||
+          !credentialApplication.client_id ||
+          !credentialApplication.client_secret
+        ) {
+          credentialApplication = await registerApplication({
             instanceURL,
           });
+          storeCredentialApplication(instanceURL, credentialApplication);
+        }
+
+        const { client_id, client_secret } = credentialApplication;
 
         const authPKCE = await supportsPKCE({ instanceURL });
         console.log({ authPKCE });
-        if (authPKCE) {
-          if (client_id && client_secret) {
-            store.sessionCookie.set('clientID', client_id);
-            store.sessionCookie.set('clientSecret', client_secret);
-            store.sessionCookie.set('vapidKey', vapid_key);
+        const forceLogin = hasAccountInInstance(instanceURL);
 
+        let authUrl;
+        if (authPKCE && window.isSecureContext) {
+          if (client_id && client_secret) {
             const [url, verifier] = await getPKCEAuthorizationURL({
               instanceURL,
               client_id,
+              forceLogin,
             });
             store.sessionCookie.set('codeVerifier', verifier);
-            location.href = url;
+            authUrl = url;
           } else {
             alert(t`Failed to register application`);
+            setUIState('default');
+            return;
           }
         } else {
           if (client_id && client_secret) {
-            store.sessionCookie.set('clientID', client_id);
-            store.sessionCookie.set('clientSecret', client_secret);
-            store.sessionCookie.set('vapidKey', vapid_key);
-
-            location.href = await getAuthorizationURL({
+            authUrl = await getAuthorizationURL({
               instanceURL,
               client_id,
+              forceLogin,
             });
           } else {
             alert(t`Failed to register application`);
+            setUIState('default');
+            return;
           }
         }
+
+        const popup = openAuthPopup(authUrl);
+
+        if (popup) {
+          watchAuthPopup(
+            popup,
+            (code) => {
+              const callbackUrl = `${window.location.origin}${window.location.pathname}?code=${encodeURIComponent(code)}`;
+              window.location.href = callbackUrl;
+            },
+            (error) => {
+              console.error('Popup auth error:', error);
+              setUIState('error');
+            },
+          );
+        } else {
+          // Popup blocked, fallback to redirect
+          console.log('Popup blocked, falling back to redirect');
+          location.href = authUrl;
+        }
+
         setUIState('default');
       } catch (e) {
         console.error(e);
@@ -206,6 +244,7 @@ function Login() {
             autocomplete="off"
             spellCheck={false}
             placeholder={t`instance domain`}
+            enterKeyHint="go"
             onInput={(e) => {
               setInstanceText(e.target.value);
             }}

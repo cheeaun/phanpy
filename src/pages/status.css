@@ -43,7 +43,8 @@
   }
 }
 .ancestors-indicator:not([hidden]) {
-  animation: slide-up-smooth 0.3s both var(--spring-timing-funtion) 0.3s;
+  animation: slide-up-smooth var(--spring-timing-duration) both
+    var(--spring-timing-function) 0.3s;
 }
 .ancestors-indicator[hidden] {
   opacity: 0;
@@ -67,4 +68,181 @@
 .post-status-banner > p:first-of-type {
   margin-top: 0;
   padding-top: 0;
+}
+
+.status-deck.edit-history-mode {
+  --deg: calc(180deg * var(--edit-history-percentage));
+  border: 2px solid transparent;
+  border-image: linear-gradient(
+      var(--deg),
+      var(--orange-color),
+      var(--orange-bg-color),
+      var(--orange-color),
+      var(--orange-fg-color)
+    )
+    1;
+  --shadow-distance: calc(320px * (var(--edit-history-percentage) + 0.1));
+  box-shadow: inset 0 0 var(--shadow-distance) var(--orange-light-bg-color);
+  transition: 0.3s var(--timing-function);
+  transition-property: border, box-shadow, border-image;
+
+  .deck-backdrop > a:has(+ &) {
+    background-color: var(--orange-bg-color);
+    pointer-events: none;
+  }
+  .status-link {
+    pointer-events: none;
+  }
+  .status {
+    pointer-events: none;
+
+    .avatar,
+    .content-container {
+      filter: sepia(1) hue-rotate(-30deg);
+      mask-image: repeating-linear-gradient(
+        0deg,
+        black 0px,
+        black 3px,
+        rgba(0, 0, 0, 0.7) 3px,
+        rgba(0, 0, 0, 0.7) 4px
+      );
+    }
+
+    .extra-meta .created {
+      color: var(--text-color);
+      font-weight: bold;
+      background-color: var(--orange-bg-color);
+      border-radius: 999px;
+      outline: 8px solid var(--orange-bg-color);
+    }
+  }
+
+  .status .edited-container,
+  header {
+    display: none;
+  }
+
+  .edit-history-controls {
+    max-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--orange-bg-color);
+    color: var(--orange-fg-color);
+    border-top: var(--hairline-width) solid var(--outline-color);
+    backdrop-filter: blur(16px) saturate(2);
+    padding: 8px 8px 12px 16px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 1px var(--bg-color);
+    mask-image: linear-gradient(to top, transparent, black 8px);
+    transition: 0.3s var(--timing-function);
+    transition-property: opacity, transform;
+
+    .icon {
+      filter: drop-shadow(0 1px var(--bg-color));
+    }
+
+    @starting-style {
+      opacity: 0;
+      transform: scale(1.05) translateY(-25%);
+    }
+
+    &:before {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      content: '';
+      /* background-color: var(--orange-bg-color); */
+      background-image: linear-gradient(
+        var(--to-forward),
+        transparent,
+        var(--orange-bg-color) calc(100% - 2px),
+        transparent
+      );
+      transition: transform 0.3s var(--timing-function);
+      transform: translateX(calc(-1 * var(--edit-history-percentage) * 100%));
+      z-index: -1;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    .edit-history-heading {
+      font-weight: 500;
+    }
+
+    .edit-history-pagination {
+      box-shadow: inset 0 0 0 2px var(--orange-color);
+      background-color: var(--bg-color);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+
+      &:is(:hover, :focus-within) {
+        box-shadow: inset 0 0 0 2px var(--orange-fg-color);
+      }
+    }
+  }
+
+  .timeline {
+    view-transition-name: edit-history-timeline;
+
+    > .hero > .status-focus > .status {
+      view-transition-name: status;
+      mask-image: linear-gradient(
+        var(--to-forward),
+        transparent,
+        black 12px,
+        black calc(100% - 12px),
+        transparent
+      );
+
+      > .container > .meta {
+        view-transition-name: status-meta;
+      }
+
+      > a > .avatar {
+        view-transition-name: status-avatar;
+      }
+
+      .content-container {
+        /* Not using status-content-container */
+        view-transition-name: status-content-container-1;
+      }
+
+      .media-container {
+        view-transition-name: status-media;
+      }
+
+      .poll {
+        view-transition-name: status-poll;
+      }
+
+      .status-badge {
+        view-transition-name: status-badge;
+      }
+
+      .actions {
+        view-transition-name: status-actions;
+      }
+
+      .card-byline {
+        view-transition-name: status-card-byline;
+      }
+      .card {
+        view-transition-name: status-card;
+      }
+
+      .status-card-link {
+        * {
+          view-transition-name: none !important;
+        }
+      }
+    }
+  }
 }

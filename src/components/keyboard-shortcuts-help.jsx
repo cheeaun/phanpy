@@ -1,6 +1,6 @@
 import './keyboard-shortcuts-help.css';
 
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { memo } from 'preact/compat';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
@@ -10,7 +10,17 @@ import states from '../utils/states';
 import Icon from './icon';
 import Modal from './modal';
 
+// Helper component for sequential key shortcuts
+function SequentialKeys({ key1, key2 }) {
+  return (
+    <Trans>
+      <kbd>{key1}</kbd> then <kbd>{key2}</kbd>
+    </Trans>
+  );
+}
+
 export default memo(function KeyboardShortcutsHelp() {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
 
   function onClose() {
@@ -18,15 +28,18 @@ export default memo(function KeyboardShortcutsHelp() {
   }
 
   useHotkeys(
-    '?, shift+?, shift+slash',
-    (e) => {
+    '?',
+    () => {
       console.log('help');
       states.showKeyboardShortcutsHelp = true;
     },
     {
+      useKey: true,
       ignoreEventWhen: (e) => {
-        const hasModal = !!document.querySelector('#modal-container > *');
-        return hasModal;
+        const isCatchUpPage = /\/catchup/i.test(location.hash);
+        return isCatchUpPage || e.metaKey || e.ctrlKey || e.altKey;
+        // const hasModal = !!document.querySelector('#modal-container > *');
+        // return hasModal;
       },
     },
   );
@@ -177,6 +190,10 @@ export default memo(function KeyboardShortcutsHelp() {
                     ),
                   },
                   {
+                    action: t`Quote`,
+                    keys: <kbd>q</kbd>,
+                  },
+                  {
                     action: t`Bookmark`,
                     keys: <kbd>d</kbd>,
                   },
@@ -187,6 +204,14 @@ export default memo(function KeyboardShortcutsHelp() {
                         <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>k</kbd>
                       </Trans>
                     ),
+                  },
+                  {
+                    action: t`Go to Home`,
+                    keys: <SequentialKeys key1="g" key2="h" />,
+                  },
+                  {
+                    action: t`Go to Notifications`,
+                    keys: <SequentialKeys key1="g" key2="n" />,
                   },
                 ].map(({ action, className, keys }) => (
                   <tr key={action}>

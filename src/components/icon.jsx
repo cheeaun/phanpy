@@ -1,9 +1,11 @@
-import moize from 'moize';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { memo } from 'preact/compat';
+import { useEffect } from 'preact/hooks';
 
 import { ICONS } from './ICONS';
+import { ICON_NAMESPACE, useIconSprite } from './icon-sprite-manager';
 
 const SIZES = {
+  xs: 8,
   s: 12,
   m: 16,
   l: 20,
@@ -11,30 +13,7 @@ const SIZES = {
   xxl: 32,
 };
 
-const ICONDATA = {};
-
-// Memoize the dangerouslySetInnerHTML of the SVGs
-const SVGICon = moize(
-  function ({ width, height, body, rotate, flip }) {
-    return (
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        dangerouslySetInnerHTML={{ __html: body }}
-        style={{
-          transform: `${rotate ? `rotate(${rotate})` : ''} ${
-            flip ? `scaleX(-1)` : ''
-          }`,
-        }}
-      />
-    );
-  },
-  {
-    isShallowEqual: true,
-    maxSize: Object.keys(ICONS).length,
-    matchesArg: (cacheKeyArg, keyArg) =>
-      cacheKeyArg.icon === keyArg.icon && cacheKeyArg.body === keyArg.body,
-  },
-);
+const INVALID_ID_CHARS_REGEX = /[^a-zA-Z0-9]/g;
 
 function Icon({
   icon,
@@ -44,6 +23,9 @@ function Icon({
   class: className = '',
   style = {},
 }) {
+  title = title || alt;
+  const { loadIcon, isIconLoaded } = useIconSprite();
+
   if (!icon) return null;
 
   const iconSize = SIZES[size];
@@ -63,52 +45,52 @@ function Icon({
     iconBlock = iconBlock.module;
   }
 
-  const [iconData, setIconData] = useState(ICONDATA[icon]);
-  const currentIcon = useRef(icon);
+  const sanitizedTitle = title?.replace(INVALID_ID_CHARS_REGEX, '-');
+  const titleID = `${ICON_NAMESPACE}-title-${icon}-${sanitizedTitle}`;
+
   useEffect(() => {
-    if (iconData && currentIcon.current === icon) return;
-    (async () => {
-      const iconB = await iconBlock();
-      setIconData(iconB.default);
-      ICONDATA[icon] = iconB.default;
-    })();
-    currentIcon.current = icon;
+    if (!isIconLoaded(icon)) {
+      loadIcon(icon);
+    }
   }, [icon]);
+
+  const loaded = isIconLoaded(icon);
 
   return (
     <span
       class={`icon ${className} ${rtl ? 'rtl-flip' : ''}`}
-      title={title || alt}
       style={{
         width: `${iconSize}px`,
         height: `${iconSize}px`,
         ...style,
       }}
       data-icon={icon}
+      title={loaded ? undefined : title || undefined}
     >
-      {iconData && (
-        // <svg
-        //   width={iconSize}
-        //   height={iconSize}
-        //   viewBox={`0 0 ${iconData.width} ${iconData.height}`}
-        //   dangerouslySetInnerHTML={{ __html: iconData.body }}
-        //   style={{
-        //     transform: `${rotate ? `rotate(${rotate})` : ''} ${
-        //       flip ? `scaleX(-1)` : ''
-        //     }`,
-        //   }}
-        // />
-        <SVGICon
-          icon={icon}
-          width={iconData.width}
-          height={iconData.height}
-          body={iconData.body}
-          rotate={rotate}
-          flip={flip}
-        />
+      {loaded && (
+        <svg
+          width={iconSize}
+          height={iconSize}
+          role={title ? 'img' : 'presentation'}
+          aria-labelledby={titleID}
+          style={{
+            transform: `${rotate ? `rotate(${rotate})` : ''} ${
+              flip ? `scaleX(-1)` : ''
+            }`,
+          }}
+        >
+          {title ? <title id={titleID}>{title}</title> : null}
+          <use href={`#${ICON_NAMESPACE}-${icon}`} />
+        </svg>
       )}
     </span>
   );
 }
 
-export default Icon;
+export default memo(Icon, (prevProps, nextProps) => {
+  return (
+    prevProps.icon === nextProps.icon &&
+    prevProps.title === nextProps.title &&
+    prevProps.alt === nextProps.alt
+  );
+});

@@ -76,6 +76,16 @@
   padding: 4px;
 }
 
+#settings-container section label {
+  display: block;
+  max-width: 100%;
+
+  select {
+    flex-shrink: 1;
+    max-width: 100%;
+  }
+}
+
 #settings-container .radio-group {
   display: inline-flex;
   align-items: center;

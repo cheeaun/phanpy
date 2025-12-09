@@ -1,0 +1,79 @@
+name: Custom Build
+permissions:
+  contents: read
+
+on:
+  repository_dispatch:
+    types: [custom-build]
+  workflow_dispatch:
+    inputs:
+      config:
+        description: 'Environment variables (one per line, KEY=VALUE format). See README.md for available variables.'
+        required: true
+        type: string
+
+concurrency:
+  group: custom-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: production
+        fetch-depth: 1
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Prepare build
+      id: prepare
+      run: |
+        if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+          CONFIG="${{ github.event.client_payload.config }}"
+        else
+          CONFIG="${{ github.event.inputs.config }}"
+        fi
+
+        echo "$CONFIG" > .env.local
+        echo "✅ Created .env.local"
+
+        TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+        ARTIFACT_NAME="phanpy-dist-${{ github.sha }}-${TIMESTAMP}"
+        echo "name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
+        echo "📦 Artifact name: $ARTIFACT_NAME"
+
+    - name: Build project
+      run: npm run build
+
+    - name: Upload build artifacts
+      id: artifact-upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.prepare.outputs.name }}
+        path: dist/
+        retention-days: 7
+
+    - name: Build completed
+      run: |
+        echo "✅ Build completed successfully!"
+        echo "📦 Artifact: ${{ steps.prepare.outputs.name }}"
+
+        cat >> $GITHUB_STEP_SUMMARY <<EOF
+        ## ✅ Build Completed
+
+        **Artifact:** \`${{ steps.prepare.outputs.name }}\`
+
+        **Download:** [${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+        EOF

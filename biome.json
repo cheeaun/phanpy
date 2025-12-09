@@ -1,0 +1,63 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "src/**/*.{js,jsx,ts,tsx,css}",
+      "*.{js,jsx,ts,tsx,json,jsonc}",
+      "scripts/**/*.js",
+      "!wrangler.jsonc",
+      "!i18n-volunteers.json",
+      "!src/components/quote-chain-modal.css",
+      "!!**/.git",
+      "!!**/dist",
+      "!!**/node_modules"
+    ]
+  },
+  "formatter": {
+    "indentStyle": "space"
+  },
+  "linter": {
+    "enabled": false
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "css": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              "**/*.css",
+              ":BLANK_LINE:",
+              "./polyfills",
+              ":BLANK_LINE:",
+              [":NODE:", ":BUN:"],
+              ":BLANK_LINE:",
+              [":PACKAGE:", ":PACKAGE_WITH_PROTOCOL:"],
+              ":BLANK_LINE:",
+              "**/assets/**",
+              ":BLANK_LINE:",
+              "../**",
+              ":BLANK_LINE:",
+              ["./**", "./"]
+            ]
+          }
+        }
+      }
+    }
+  }
+}

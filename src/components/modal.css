@@ -41,20 +41,24 @@
       env(safe-area-inset-bottom)
     );
     --origin-end: calc(
-      100% - var(--compose-button-dimension-half) - var(--end)
+      100% -
+      var(--compose-button-dimension-half) -
+      var(--end)
     );
     :dir(rtl) & {
       --origin-end: calc(var(--compose-button-dimension-half) + var(--end));
     }
     --origin-bottom: calc(
-      100% - var(--compose-button-dimension-half) - var(--bottom)
+      100% -
+      var(--compose-button-dimension-half) -
+      var(--bottom)
     );
     transform-origin: var(--origin-end) var(--origin-bottom);
   }
 
   .sheet {
     transition: transform 0.3s var(--timing-function);
-    transform-origin: 80% 80%;
+    transform-origin: center bottom;
   }
 
   &:has(~ div) .sheet {
@@ -67,8 +71,9 @@
     border: 2px solid red;
 
     --bottom: calc(
-      var(--compose-button-dimension-margin) + env(safe-area-inset-bottom) +
-        52px
+      var(--compose-button-dimension-margin) +
+      env(safe-area-inset-bottom) +
+      52px
     );
   }
 }

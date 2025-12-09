@@ -1,10 +1,10 @@
 import { useRef } from 'preact/hooks';
-import { useThrottledCallback } from 'use-debounce';
-import useResizeObserver from 'use-resize-observer';
+
+import useThrottledResizeObserver from './useThrottledResizeObserver';
 
 export default function useTruncated({ className = 'truncated' } = {}) {
   const ref = useRef();
-  const onResize = useThrottledCallback(({ height }) => {
+  const onResize = ({ height }) => {
     if (ref.current) {
       const { scrollHeight } = ref.current;
       let truncated = scrollHeight > height;
@@ -15,8 +15,8 @@ export default function useTruncated({ className = 'truncated' } = {}) {
       }
       ref.current.classList.toggle(className, truncated);
     }
-  }, 300);
-  useResizeObserver({
+  };
+  useThrottledResizeObserver({
     ref,
     box: 'border-box',
     onResize,

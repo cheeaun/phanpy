@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react/macro';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -13,6 +13,8 @@ const STREAMING_TIMEOUT = 1000 * 3; // 3 seconds
 const POLL_INTERVAL = 20_000; // 20 seconds
 
 export default memo(function BackgroundService({ isLoggedIn }) {
+  const { t } = useLingui();
+
   // Notifications service
   // - WebSocket to receive notifications when page is visible
   const [visible, setVisible] = useState(true);
@@ -30,10 +32,12 @@ export default memo(function BackgroundService({ isLoggedIn }) {
 
   const checkLatestNotification = async (masto, instance, skipCheckMarkers) => {
     if (states.notificationsLast) {
-      const notificationsIterator = masto.v1.notifications.list({
-        limit: 1,
-        sinceId: states.notificationsLast.id,
-      });
+      const notificationsIterator = masto.v1.notifications
+        .list({
+          limit: 1,
+          sinceId: states.notificationsLast.id,
+        })
+        .values();
       const { value: notifications } = await notificationsIterator.next();
       if (notifications?.length) {
         if (skipCheckMarkers) {
@@ -142,13 +146,23 @@ export default memo(function BackgroundService({ isLoggedIn }) {
   });
 
   // Global keyboard shortcuts "service"
-  useHotkeys('shift+alt+k', () => {
-    const currentCloakMode = states.settings.cloakMode;
-    states.settings.cloakMode = !currentCloakMode;
-    showToast({
-      text: currentCloakMode ? t`Cloak mode disabled` : t`Cloak mode enabled`,
-    });
-  });
+  useHotkeys(
+    'shift+alt+k',
+    (e) => {
+      // Need modifers check due to useKey: true
+      if (!e.shiftKey || !e.altKey) return;
+
+      const currentCloakMode = states.settings.cloakMode;
+      states.settings.cloakMode = !currentCloakMode;
+      showToast({
+        text: currentCloakMode ? t`Cloak mode disabled` : t`Cloak mode enabled`,
+      });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey,
+    },
+  );
 
   return null;
 });

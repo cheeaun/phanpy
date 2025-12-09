@@ -1,5 +1,5 @@
-import { t, Trans } from '@lingui/macro';
-import { useEffect, useRef } from 'preact/hooks';
+import { useLingui } from '@lingui/react/macro';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import Timeline from '../components/timeline';
@@ -17,6 +17,7 @@ import useTitle from '../utils/useTitle';
 const LIMIT = 20;
 
 function Following({ title, path, id, ...props }) {
+  const { t } = useLingui();
   useTitle(
     title ||
       t({
@@ -25,10 +26,22 @@ function Following({ title, path, id, ...props }) {
       }),
     path || '/following',
   );
-  const { masto, streaming, instance } = api();
+  const { masto, streaming, instance, client } = api();
+  const [streamingClient, setStreamingClient] = useState(streaming);
+
   const snapStates = useSnapshot(states);
+  const homeIterable = useRef();
   const homeIterator = useRef();
   const latestItem = useRef();
+
+  // Streaming only happens after instance is initialized
+  useEffect(() => {
+    if (!streaming && client?.onStreamingReady) {
+      client.onStreamingReady((streamingClient) => {
+        setStreamingClient(streamingClient);
+      });
+    }
+  }, [client]);
   __BENCHMARK.end('time-to-following');
 
   console.debug('RENDER Following', title, id);
@@ -37,13 +50,14 @@ function Following({ title, path, id, ...props }) {
   async function fetchHome(firstLoad) {
     if (firstLoad || !homeIterator.current) {
       __BENCHMARK.start('fetch-home-first');
-      homeIterator.current = masto.v1.timelines.home.list({ limit: LIMIT });
+      homeIterable.current = masto.v1.timelines.home.list({ limit: LIMIT });
+      homeIterator.current = homeIterable.current.values();
     }
-    if (supportsPixelfed && homeIterator.current?.nextParams) {
-      if (typeof homeIterator.current.nextParams === 'string') {
-        homeIterator.current.nextParams += '&include_reblogs=true';
+    if (supportsPixelfed && homeIterable.current?.params) {
+      if (typeof homeIterable.current.params === 'string') {
+        homeIterable.current.params += '&include_reblogs=true';
       } else {
-        homeIterator.current.nextParams.include_reblogs = true;
+        homeIterable.current.params.include_reblogs = true;
       }
     }
     const results = await homeIterator.current.next();
@@ -64,13 +78,13 @@ function Following({ title, path, id, ...props }) {
       });
       value = dedupeBoosts(value, instance);
       if (firstLoad && latestItemChanged) clearFollowedTagsState();
-      assignFollowedTags(value, instance);
+      setTimeout(() => {
+        assignFollowedTags(value, instance);
+      }, 100);
 
       // ENFORCE sort by datetime (Latest first)
       value.sort((a, b) => {
-        const aDate = new Date(a.createdAt);
-        const bDate = new Date(b.createdAt);
-        return bDate - aDate;
+        return Date.parse(b.createdAt) - Date.parse(a.createdAt);
       });
     }
     __BENCHMARK.end('fetch-home-first');
@@ -89,7 +103,7 @@ function Following({ title, path, id, ...props }) {
       if (supports('@pixelfed/home-include-reblogs')) {
         opts.include_reblogs = true;
       }
-      const results = await masto.v1.timelines.home.list(opts).next();
+      const results = await masto.v1.timelines.home.list(opts).values().next();
       let { value } = results;
       console.log('checkForUpdates', latestItem.current, value);
       const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
@@ -103,6 +117,7 @@ function Following({ title, path, id, ...props }) {
       }
       return false;
     } catch (e) {
+      console.error(e);
       return false;
     }
   }
@@ -110,8 +125,8 @@ function Following({ title, path, id, ...props }) {
   useEffect(() => {
     let sub;
     (async () => {
-      if (streaming) {
-        sub = streaming.user.subscribe();
+      if (streamingClient) {
+        sub = streamingClient.user.subscribe();
         console.log('🎏 Streaming user', sub);
         for await (const entry of sub) {
           if (!sub) break;
@@ -134,7 +149,7 @@ function Following({ title, path, id, ...props }) {
       sub?.unsubscribe?.();
       sub = null;
     };
-  }, [streaming]);
+  }, [streamingClient]);
 
   return (
     <Timeline

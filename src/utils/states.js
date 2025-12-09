@@ -31,8 +31,10 @@ const states = proxy({
     id: null,
     counter: 0,
   },
+  reloadScheduledPosts: 0,
   spoilers: {},
   spoilersMedia: {},
+  revealedQuotes: {},
   scrollPositions: {},
   unfurledLinks: {},
   statusQuotes: {},
@@ -54,6 +56,9 @@ const states = proxy({
   showMediaAlt: false,
   showEmbedModal: false,
   showReportModal: false,
+  showQrCodeModal: false,
+  showQrScannerModal: false,
+  showImportExportAccounts: false,
   // Shortcuts
   shortcuts: [],
   // Settings
@@ -70,7 +75,6 @@ const states = proxy({
     mediaAltGenerator: false,
     composerGIFPicker: false,
     cloakMode: false,
-    groupedNotificationsAlpha: false,
   },
 });
 
@@ -105,8 +109,6 @@ export function initStates() {
   states.settings.composerGIFPicker =
     store.account.get('settings-composerGIFPicker') ?? false;
   states.settings.cloakMode = store.account.get('settings-cloakMode') ?? false;
-  states.settings.groupedNotificationsAlpha =
-    store.account.get('settings-groupedNotificationsAlpha') ?? false;
 }
 
 subscribeKey(states, 'notificationsLast', (v) => {
@@ -156,9 +158,6 @@ subscribe(states, (changes) => {
     if (path.join('.') === 'settings.cloakMode') {
       store.account.set('settings-cloakMode', !!value);
     }
-    if (path.join('.') === 'settings.groupedNotificationsAlpha') {
-      store.account.set('settings-groupedNotificationsAlpha', !!value);
-    }
   }
 });
 
@@ -174,6 +173,10 @@ export function hideAllModals() {
   states.showGenericAccounts = false;
   states.showMediaAlt = false;
   states.showEmbedModal = false;
+  states.showReportModal = false;
+  states.showQrCodeModal = false;
+  states.showQrScannerModal = false;
+  states.showImportExportAccounts = false;
 }
 
 export function statusKey(id, instance) {
@@ -204,38 +207,74 @@ export function saveStatus(status, instance, opts) {
   if (!override && oldStatus) return;
   if (deepEqual(status, oldStatus)) return;
   queueMicrotask(() => {
-    const key = statusKey(status.id, instance);
+    let key = statusKey(status.id, instance);
     if (oldStatus?._pinned) status._pinned = oldStatus._pinned;
     // if (oldStatus?._filtered) status._filtered = oldStatus._filtered;
     states.statuses[key] = status;
     if (status.reblog?.id) {
       const srKey = statusKey(status.reblog.id, instance);
       states.statuses[srKey] = status.reblog;
+      // Re-assign key to the actual status
+      key = srKey;
     }
-    if (status.quote?.id) {
-      const sKey = statusKey(status.quote.id, instance);
-      states.statuses[sKey] = status.quote;
+    const theQuote = status.reblog?.quote || status.quote;
+    if (theQuote?.id) {
+      const { id } = theQuote;
+      const sKey = statusKey(id, instance);
+      states.statuses[sKey] = theQuote;
+      const selfURL = `/${instance}/s/${id}`;
       states.statusQuotes[key] = [
         {
-          id: status.quote.id,
+          id,
           instance,
+          url: selfURL,
+          native: true,
         },
       ];
+    }
+    // Mastodon native quotes
+    if (theQuote?.state) {
+      const { quotedStatus, state } = theQuote;
+      if (quotedStatus?.id) {
+        const { id, account } = quotedStatus;
+        const selfURL = `/${instance}/s/${id}`;
+        const sKey = statusKey(id, instance);
+        states.statuses[sKey] = quotedStatus;
+        states.statusQuotes[key] = [
+          {
+            id,
+            instance,
+            url: selfURL,
+            state,
+            account,
+            native: true,
+          },
+        ];
+      } else {
+        // Possibly "revoked"
+        states.statusQuotes[key] = [
+          {
+            // There's not much info here
+            state,
+            native: true,
+          },
+        ];
+      }
     }
   });
 
   // THREAD TRAVERSER
   if (!skipThreading) {
-    queueMicrotask(() => {
+    setTimeout(() => {
       threadifyStatus(status.reblog || status, instance);
-    });
+    }, 100);
   }
 
   // UNFURLER
   if (!skipUnfurling) {
-    queueMicrotask(() => {
+    setTimeout(() => {
       unfurlStatus(status.reblog || status, instance);
-    });
+    }, 100);
   }
 }
 

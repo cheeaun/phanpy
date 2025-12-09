@@ -1,7 +1,11 @@
-name: Pull Request to `main` from `production`
+name: Pull Request into `production` from `main`
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
     branches:
       - main
 

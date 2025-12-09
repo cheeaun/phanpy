@@ -25,7 +25,8 @@ i18n.on('change', () => {
     document.documentElement.lang = lang;
     // LTR or RTL
     try {
-      const { direction } = new Locale(lang).textInfo;
+      const loc = new Locale(lang);
+      const { direction } = loc.getTextInfo?.() || loc.textInfo;
       document.documentElement.dir = direction;
     } catch (e) {
       console.error(e);

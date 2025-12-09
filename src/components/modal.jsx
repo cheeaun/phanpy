@@ -43,6 +43,8 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
       // This will run "later" to prevent clash with esc handlers from other components
       keydown: false,
       keyup: true,
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
     [onClose],
   );
@@ -90,6 +92,10 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
           metaColor.current = $meta.current.content;
           $meta.current.content = backdropColor;
         }
+        document.documentElement.style.setProperty(
+          '--meta-theme-color',
+          backdropColor,
+        );
       } else {
         const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
           .matches
@@ -104,18 +110,24 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
           metaColor.current = $meta.current.content;
           $meta.current.content = backdropColor;
         }
+        document.documentElement.style.setProperty(
+          '--meta-theme-color',
+          backdropColor,
+        );
       }
     } else {
       // Reset meta color
       if ($meta.current && metaColor.current) {
         $meta.current.content = metaColor.current;
       }
+      document.documentElement.style.removeProperty('--meta-theme-color');
     }
     return () => {
       // Reset meta color
       if ($meta.current && metaColor.current) {
         $meta.current.content = metaColor.current;
       }
+      document.documentElement.style.removeProperty('--meta-theme-color');
     };
   }, [children, minimized]);
 
@@ -123,7 +135,7 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
     <div
       ref={(node) => {
         modalRef.current = node;
-        escRef(node?.querySelector?.('[tabindex="-1"]') || node);
+        escRef.current = node?.querySelector?.('[tabindex="-1"]') || node;
       }}
       className={className}
       onClick={(e) => {

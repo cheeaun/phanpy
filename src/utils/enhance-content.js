@@ -1,26 +1,14 @@
 import emojifyText from './emojify-text';
+import escapeHTML from './escape-html';
 import mem from './mem';
 
 const fauxDiv = document.createElement('div');
 const whitelistLinkClasses = ['u-url', 'mention', 'hashtag'];
 
-const HTML_CHARS_REGEX = /[&<>]/g;
-function escapeHTML(html) {
-  return html.replace(
-    HTML_CHARS_REGEX,
-    (c) =>
-      ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-      })[c],
-  );
-}
-
 const LINK_REGEX = /<a/i;
 const HTTP_LINK_REGEX = /^https?:\/\//i;
-const MENTION_REGEX = /^@[^@]+(@[^@]+)?$/;
-const HASHTAG_REGEX = /^#[^#]+$/;
+const MENTION_REGEX = /^[@＠][^@＠]+(@[^@＠]+)?$/;
+const HASHTAG_REGEX = /^[#＃][^#＃]+$/;
 const CODE_BLOCK_REGEX = /^```[^]+```$/;
 const CODE_BLOCK_START_REGEX = /^```/;
 const CODE_BLOCK_END_REGEX = /```$/;
@@ -43,6 +31,7 @@ function createDOM(html, isDocumentFragment) {
 }
 
 function _enhanceContent(content, opts = {}) {
+  if (!content) return '';
   const { emojis, returnDOM, postEnhanceDOM = () => {} } = opts;
   let enhancedContent = content;
   // const dom = document.createElement('div');
@@ -91,23 +80,26 @@ function _enhanceContent(content, opts = {}) {
       // If text looks like @username@domain, then it's a mention
       if (MENTION_REGEX.test(text)) {
         // Only show @username
-        const [_, username, domain] = text.split('@');
+        const atSymbol = text[0]; // Preserve the original @ or ＠
+        const [_, username, domain] = text.split(/[@＠]/);
         if (!hasChildren) {
           if (
             !usernames.some(([u]) => u === username) ||
             usernames.some(([u, d]) => u === username && d === domain)
           ) {
-            link.innerHTML = `@<span>${username}</span>`;
+            link.innerHTML = `${atSymbol}<span>${username}</span>`;
             usernames.push([username, domain]);
           } else {
-            link.innerHTML = `@<span>${username}@${domain}</span>`;
+            link.innerHTML = `${atSymbol}<span>${username}@${domain}</span>`;
           }
         }
         link.classList.add('mention');
       }
       // If text looks like #hashtag, then it's a hashtag
       if (HASHTAG_REGEX.test(text)) {
-        if (!hasChildren) link.innerHTML = `#<span>${text.slice(1)}</span>`;
+        const hashSymbol = text[0]; // Preserve the original # or ＃
+        if (!hasChildren)
+          link.innerHTML = `${hashSymbol}<span>${text.slice(1)}</span>`;
         link.classList.add('mention', 'hashtag');
       }
     }
@@ -218,7 +210,7 @@ function _enhanceContent(content, opts = {}) {
       if (TWITTER_MENTION_REGEX.test(html)) {
         html = html.replaceAll(
           TWITTER_MENTION_CAPTURE_REGEX,
-          '<a href="https://twitter.com/$2" rel="nofollow noopener noreferrer" target="_blank">$1</a>',
+          '<a href="https://twitter.com/$2" rel="nofollow noopener" target="_blank">$1</a>',
         );
       }
       fauxDiv.innerHTML = html;
@@ -230,7 +222,7 @@ function _enhanceContent(content, opts = {}) {
   // HASHTAG STUFFING
   // ================
   // Get the <p> that contains a lot of hashtags, add a class to it
-  if (enhancedContent.includes('#')) {
+  if (enhancedContent.includes('#') || enhancedContent.includes('＃')) {
     let prevIndex = null;
     const hashtagStuffedParagraphs = [...dom.querySelectorAll('p')].filter(
       (p, index) => {
@@ -247,7 +239,10 @@ function _enhanceContent(content, opts = {}) {
             // Ignore <br />
           } else if (node.tagName === 'A') {
             const linkText = node.textContent.trim();
-            if (!linkText || !linkText.startsWith('#')) {
+            if (
+              !linkText ||
+              !(linkText.startsWith('#') || linkText.startsWith('＃'))
+            ) {
               return false;
             } else {
               hashtagCount++;
@@ -294,7 +289,7 @@ function _enhanceContent(content, opts = {}) {
   // Workaround for Safari so that `text-decoration-thickness` works
   // Wrap child text nodes in spans
   for (const node of dom.childNodes) {
-    if (node.nodeType === Node.TEXT_NODE) {
+    if (node.nodeType === Node.TEXT_NODE && node.textContent.trim?.()) {
       const span = document.createElement('span');
       span.textContent = node.textContent;
       dom.replaceChild(span, node);

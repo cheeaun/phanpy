@@ -2,7 +2,7 @@ import './app.css';
 
 import { useLingui } from '@lingui/react';
 import debounce from 'just-debounce-it';
-import { memo } from 'preact/compat';
+import { lazy, memo, Suspense } from 'preact/compat';
 import {
   useEffect,
   useLayoutEffect,
@@ -22,6 +22,7 @@ import { ICONS } from './components/ICONS';
 import KeyboardShortcutsHelp from './components/keyboard-shortcuts-help';
 import Loader from './components/loader';
 import Modals from './components/modals';
+import NavigationCommand from './components/navigation-command';
 import NotificationService from './components/notification-service';
 import SearchCommand from './components/search-command';
 import Shortcuts from './components/shortcuts';
@@ -43,6 +44,7 @@ import Login from './pages/login';
 import Mentions from './pages/mentions';
 import Notifications from './pages/notifications';
 import Public from './pages/public';
+import ScheduledPosts from './pages/scheduled-posts';
 import Search from './pages/search';
 import StatusRoute from './pages/status-route';
 import Trending from './pages/trending';
@@ -58,15 +60,37 @@ import {
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
 import focusDeck from './utils/focus-deck';
-import states, { initStates, statusKey } from './utils/states';
+import states, { hideAllModals, initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import {
   getAccount,
+  getCredentialApplication,
   getCurrentAccount,
+  getVapidKey,
   setCurrentAccountID,
 } from './utils/store-utils';
 
 import './utils/toast-alert';
+
+// Lazy load Sandbox component only in development
+const Sandbox =
+  import.meta.env.DEV || import.meta.env.PHANPY_DEV
+    ? lazy(() => import('./pages/sandbox'))
+    : () => null;
+
+// QR Scan Test component for development
+function QrScanTest() {
+  useEffect(() => {
+    states.showQrScannerModal = {
+      onClose: ({ text } = {}) => {
+        hideAllModals();
+        location.hash = text ? `/${text}` : '/';
+      },
+    };
+  }, []);
+
+  return null;
+}
 
 window.__STATES__ = states;
 window.__STATES_STATS__ = () => {
@@ -269,7 +293,7 @@ if (isIOS) {
     document.documentElement.classList.add(`is-${theme}`);
     document
       .querySelector('meta[name="color-scheme"]')
-      .setAttribute('content', theme || 'dark light');
+      .setAttribute('content', theme || 'light dark');
 
     // Enable manual theme <meta>
     const $manualMeta = document.querySelector(
@@ -336,6 +360,35 @@ window.__BENCHMARK = {
   },
 };
 
+if (import.meta.env.DEV) {
+  // If press shift down, set --time-scale to 10 in root
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Shift') {
+      document.documentElement.classList.add('slow-mo');
+    }
+  });
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'Shift') {
+      document.documentElement.classList.remove('slow-mo');
+    }
+  });
+}
+
+{
+  // Temporary Experiments
+  // May be removed in the future
+  document.body.classList.toggle(
+    'exp-tab-bar-v2',
+    store.local.get('experiments-tabBarV2') ?? false,
+  );
+}
+
+// const isPWA = true; // testing
+const isPWA =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  window.navigator.standalone === true;
+const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [uiState, setUIState] = useState('loading');
@@ -353,6 +406,28 @@ function App() {
 
     if (code) {
       console.log({ code });
+
+      const isPopup = window.opener && !window.opener.closed;
+
+      if (isPopup) {
+        try {
+          window.opener.postMessage(
+            {
+              type: 'oauth-callback',
+              code: code,
+            },
+            window.location.origin,
+          );
+          setTimeout(() => {
+            window.close();
+          }, 100);
+        } catch (e) {
+          console.error('Failed to send message to parent window:', e);
+          window.close();
+        }
+        return;
+      }
+
       // Clear the code from the URL
       window.history.replaceState(
         {},
@@ -360,9 +435,12 @@ function App() {
         window.location.pathname || '/',
       );
 
-      const clientID = store.sessionCookie.get('clientID');
-      const clientSecret = store.sessionCookie.get('clientSecret');
-      const vapidKey = store.sessionCookie.get('vapidKey');
+      const {
+        client_id: clientID,
+        client_secret: clientSecret,
+        vapid_key,
+      } = getCredentialApplication(instanceURL) || {};
+      const vapidKey = getVapidKey(instanceURL) || vapid_key;
       const verifier = store.sessionCookie.get('codeVerifier');
 
       (async () => {
@@ -459,6 +537,47 @@ function App() {
 
   useEffect(focusDeck, [location, isLoggedIn]);
 
+  // Save last page for PWA restoration
+  const restoredRef = useRef(false);
+  const lastPathKey = 'pwaLastPath';
+  useEffect(() => {
+    if (!restoredRef.current) return;
+    // console.log('location.pathname', location.pathname);
+    if (isPWA && isLoggedIn) {
+      if (isRootPath(location.pathname)) {
+        store.local.del(lastPathKey);
+      } else {
+        store.local.setJSON(lastPathKey, {
+          path: location.pathname + location.search,
+          lastAccessed: Date.now(),
+        });
+      }
+    }
+  }, [location.pathname, location.search, isLoggedIn]);
+
+  // Restore last page on PWA reopen
+  useEffect(() => {
+    if (restoredRef.current) return;
+    const isRootPath = !location.pathname || location.pathname === '/';
+    if (!isRootPath) return;
+    if (isPWA && isLoggedIn && uiState === 'default') {
+      const lastPath = store.local.getJSON(lastPathKey);
+      if (lastPath) {
+        setTimeout(() => {
+          if (lastPath?.path) {
+            const timeSinceLastAccess =
+              Date.now() - (lastPath.lastAccessed || 0);
+            if (timeSinceLastAccess < PATH_RESTORE_TIME_LIMIT) {
+              window.location.hash = lastPath.path;
+            }
+          }
+          store.local.del(lastPathKey);
+        }, 300);
+      }
+      restoredRef.current = true;
+    }
+  }, [uiState, isLoggedIn]);
+
   if (/\/https?:/.test(location.pathname)) {
     return <HttpRoute />;
   }
@@ -479,6 +598,7 @@ function App() {
       <Modals />
       {isLoggedIn && <NotificationService />}
       <BackgroundService isLoggedIn={isLoggedIn} />
+      {isLoggedIn && <NavigationCommand />}
       <SearchCommand onClose={focusDeck} />
       <KeyboardShortcutsHelp />
     </>
@@ -492,11 +612,15 @@ function Root({ isLoggedIn }) {
   return isLoggedIn ? <Home /> : <Welcome />;
 }
 
+function isRootPath(pathname) {
+  return /^\/(login|welcome|_sandbox|_qr-scan)/i.test(pathname);
+}
+
 const PrimaryRoutes = memo(({ isLoggedIn }) => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
-    return !/^\/(login|welcome)/i.test(pathname);
+    return !isRootPath(pathname);
   }, [location]);
 
   return (
@@ -504,6 +628,19 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
       <Route path="/" element={<Root isLoggedIn={isLoggedIn} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
+      {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
+        <>
+          <Route
+            path="/_sandbox"
+            element={
+              <Suspense fallback={<Loader id="loader-sandbox" />}>
+                <Sandbox />
+              </Suspense>
+            }
+          />
+          <Route path="/_qr-scan" element={<QrScanTest />} />
+        </>
+      )}
     </Routes>
   );
 });
@@ -548,6 +685,7 @@ function SecondaryRoutes({ isLoggedIn }) {
             <Route path=":id" element={<List />} />
           </Route>
           <Route path="/fh" element={<FollowedHashtags />} />
+          <Route path="/sp" element={<ScheduledPosts />} />
           <Route path="/ft" element={<Filters />} />
           <Route path="/catchup" element={<Catchup />} />
           <Route path="/annual_report/:year" element={<AnnualReport />} />

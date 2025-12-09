@@ -1,4 +1,6 @@
-import { Plural, plural, t, Trans } from '@lingui/macro';
+import { i18n } from '@lingui/core';
+import { plural } from '@lingui/core/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useState } from 'preact/hooks';
 
 import shortenNumber from '../utils/shorten-number';
@@ -14,6 +16,7 @@ export default function Poll({
   refresh = () => {},
   votePoll = () => {},
 }) {
+  const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
   const {
     expired,
@@ -24,7 +27,7 @@ export default function Poll({
     ownVotes,
     voted,
     votersCount,
-    votesCount,
+    votesCount = 0,
     emojis,
   } = poll;
   const expiresAtDate = !!expiresAt && new Date(expiresAt); // Update poll at point of expiry
@@ -49,7 +52,7 @@ export default function Poll({
   //   };
   // }, [expired, expiresAtDate]);
 
-  const pollVotesCount = multiple ? votersCount : votesCount;
+  const pollVotesCount = multiple ? votersCount || votesCount : votesCount;
   let roundPrecision = 0;
 
   if (pollVotesCount <= 1000) {
@@ -188,6 +191,89 @@ export default function Poll({
         </form>
       )}
       <p class="poll-meta">
+        <span class="spacer">
+          <span class="ib">
+            <Plural
+              value={votesCount}
+              one={
+                <Trans>
+                  <span title={votesCount}>{shortenNumber(votesCount)}</span>{' '}
+                  vote
+                </Trans>
+              }
+              other={
+                <Trans>
+                  <span title={votesCount}>{shortenNumber(votesCount)}</span>{' '}
+                  votes
+                </Trans>
+              }
+            />
+          </span>
+          {!!votersCount && votersCount !== votesCount && (
+            <>
+              {' '}
+              &bull;{' '}
+              <span class="ib">
+                <Plural
+                  value={votersCount}
+                  one={
+                    <Trans>
+                      <span title={votersCount}>
+                        {shortenNumber(votersCount)}
+                      </span>{' '}
+                      voter
+                    </Trans>
+                  }
+                  other={
+                    <Trans>
+                      <span title={votersCount}>
+                        {shortenNumber(votersCount)}
+                      </span>{' '}
+                      voters
+                    </Trans>
+                  }
+                />
+              </span>
+            </>
+          )}{' '}
+          &bull;{' '}
+          {expired ? (
+            !!expiresAtDate ? (
+              <span class="ib">
+                <Trans>
+                  Ended <RelativeTime datetime={expiresAtDate} />
+                </Trans>
+              </span>
+            ) : (
+              t`Ended`
+            )
+          ) : !!expiresAtDate ? (
+            <span class="ib">
+              <Trans>
+                Ending <RelativeTime datetime={expiresAtDate} />
+              </Trans>
+            </span>
+          ) : (
+            t`Ending`
+          )}
+        </span>
+        {!voted && !expired && !readOnly && optionsHaveVoteCounts && (
+          <button
+            type="button"
+            class="plain small"
+            disabled={uiState === 'loading'}
+            onClick={(e) => {
+              e.preventDefault();
+              setShowResults(!showResults);
+            }}
+            title={showResults ? t`Hide results` : t`Show results`}
+          >
+            <Icon
+              icon={showResults ? 'eye-open' : 'eye-close'}
+              alt={showResults ? t`Hide results` : t`Show results`}
+            />{' '}
+          </button>
+        )}
         {!expired && !readOnly && (
           <button
             type="button"
@@ -206,74 +292,6 @@ export default function Poll({
           >
             <Icon icon="refresh" alt={t`Refresh`} />
           </button>
-        )}
-        {!voted && !expired && !readOnly && optionsHaveVoteCounts && (
-          <button
-            type="button"
-            class="plain small"
-            disabled={uiState === 'loading'}
-            onClick={(e) => {
-              e.preventDefault();
-              setShowResults(!showResults);
-            }}
-            title={showResults ? t`Hide results` : t`Show results`}
-          >
-            <Icon
-              icon={showResults ? 'eye-open' : 'eye-close'}
-              alt={showResults ? t`Hide results` : t`Show results`}
-            />{' '}
-          </button>
-        )}
-        {!expired && !readOnly && ' '}
-        <Plural
-          value={votesCount}
-          one={
-            <Trans>
-              <span title={votesCount}>{shortenNumber(votesCount)}</span> vote
-            </Trans>
-          }
-          other={
-            <Trans>
-              <span title={votesCount}>{shortenNumber(votesCount)}</span> votes
-            </Trans>
-          }
-        />
-        {!!votersCount && votersCount !== votesCount && (
-          <>
-            {' '}
-            &bull;{' '}
-            <Plural
-              value={votersCount}
-              one={
-                <Trans>
-                  <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
-                  voter
-                </Trans>
-              }
-              other={
-                <Trans>
-                  <span title={votersCount}>{shortenNumber(votersCount)}</span>{' '}
-                  voters
-                </Trans>
-              }
-            />
-          </>
-        )}{' '}
-        &bull;{' '}
-        {expired ? (
-          !!expiresAtDate ? (
-            <Trans>
-              Ended <RelativeTime datetime={expiresAtDate} />
-            </Trans>
-          ) : (
-            t`Ended`
-          )
-        ) : !!expiresAtDate ? (
-          <Trans>
-            Ending <RelativeTime datetime={expiresAtDate} />
-          </Trans>
-        ) : (
-          t`Ending`
         )}
       </p>
     </div>

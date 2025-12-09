@@ -1,11 +1,14 @@
+import { compareVersions, satisfies, validate } from 'compare-versions';
 import { createRestAPIClient, createStreamingAPIClient } from 'masto';
+
+import mem from '../utils/mem';
 
 import store from './store';
 import {
   getAccount,
   getAccountByAccessToken,
   getAccountByInstance,
-  getCurrentAccount,
+  getCurrentAcc,
   saveAccount,
   setCurrentAccountID,
 } from './store-utils';
@@ -42,13 +45,17 @@ export function initClient({ instance, accessToken }) {
   const masto = createRestAPIClient({
     url,
     accessToken, // Can be null
-    timeout: 30_000, // Unfortunatly this is global instead of per-request
+    timeout: 2 * 60_000, // Unfortunately this is global instead of per-request
+    mediaTimeout: 10 * 60_000,
   });
 
   const client = {
     masto,
     instance,
     accessToken,
+    onStreamingReady: function (callback) {
+      this._streamingCallback = callback;
+    },
   };
   apis[instance] = client;
   if (!accountApis[instance]) accountApis[instance] = {};
@@ -114,12 +121,24 @@ export async function initInstance(client, instance) {
         await fetch(`${urlBase}/.well-known/nodeinfo`)
       ).json();
       if (Array.isArray(wellKnown?.links)) {
-        const nodeInfoUrl = wellKnown.links.find(
-          (link) =>
-            typeof link.rel === 'string' &&
-            link.rel.startsWith('http://nodeinfo.diaspora.software/ns/schema/'),
-        )?.href;
-        if (nodeInfoUrl && nodeInfoUrl.startsWith(urlBase)) {
+        const schema = 'http://nodeinfo.diaspora.software/ns/schema/';
+        const nodeInfoUrl = wellKnown.links
+          .filter(
+            (link) =>
+              typeof link.rel === 'string' &&
+              link.rel.startsWith(schema) &&
+              validate(link.rel.slice(schema.length)),
+          )
+          .map((link) => {
+            let version = link.rel.slice(schema.length);
+            return {
+              version,
+              href: link.href,
+            };
+          })
+          .sort((a, b) => -compareVersions(a.version, b.version))
+          .find((x) => satisfies(x.version, '<=2'))?.href;
+        if (nodeInfoUrl) {
           nodeInfo = await (await fetch(nodeInfoUrl)).json();
         }
       }
@@ -146,6 +165,15 @@ export async function initInstance(client, instance) {
     client.streaming = streamClient;
     // masto.ws = streamClient;
     console.log('🎏 Streaming API client:', client);
+
+    if (client._streamingCallback) {
+      try {
+        client._streamingCallback(streamClient);
+      } catch (e) {
+        console.error('Error in streaming callback:', e);
+      }
+      client._streamingCallback = null;
+    }
   }
   __BENCHMARK.end('init-instance');
 }
@@ -163,11 +191,24 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
     instanceURL: instance.toLowerCase(),
     accessToken,
     vapidKey,
+    createdAt: Date.now(),
   });
 }
 
+export const getPreferences = mem(
+  () => store.account.get('preferences') || {},
+  {
+    maxAge: 60 * 1000, // 1 minute
+  },
+);
+
+export function setPreferences(preferences) {
+  getPreferences.clear(); // clear memo cache
+  store.account.set('preferences', preferences);
+}
+
 export function hasPreferences() {
-  return !!store.account.get('preferences');
+  return !!getPreferences();
 }
 
 // Get preferences
@@ -177,7 +218,7 @@ export async function initPreferences(client) {
     __BENCHMARK.start('fetch-preferences');
     const preferences = await masto.v1.preferences.fetch();
     __BENCHMARK.end('fetch-preferences');
-    store.account.set('preferences', preferences);
+    setPreferences(preferences);
   } catch (e) {
     // silently fail
     console.error(e);
@@ -266,7 +307,7 @@ export function api({ instance, accessToken, accountID, account } = {}) {
     }
   }
 
-  const currentAccount = getCurrentAccount();
+  const currentAccount = getCurrentAcc();
 
   // If only instance is provided, get the masto instance for that instance
   if (instance) {

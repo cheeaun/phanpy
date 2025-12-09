@@ -1,5 +1,5 @@
-import { msg, Plural, Select, t, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { msg, t } from '@lingui/core/macro';
+import { Plural, Select, Trans, useLingui } from '@lingui/react/macro';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 
@@ -34,6 +34,8 @@ const NOTIFICATION_ICONS = {
   emoji_reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
   annual_report: 'celebrate',
+  quote: 'quote',
+  quoted_update: 'pencil',
 };
 
 /*
@@ -51,6 +53,8 @@ admin.sign_up = Someone signed up (optionally sent to admins)
 admin.report = A new report has been filed
 severed_relationships = Severed relationships
 moderation_warning = Moderation warning
+quote = Someone quoted one of your statuses
+quoted_update = A status you have quoted has been edited
 */
 
 function emojiText({ account, emoji, emoji_url }) {
@@ -194,7 +198,12 @@ const contentText = {
   poll: () => t`A poll you have voted in or created has ended.`,
   'poll-self': () => t`A poll you have created has ended.`,
   'poll-voted': () => t`A poll you have voted in has ended.`,
-  update: () => t`A post you interacted with has been edited.`,
+  update: ({ account }) =>
+    account ? (
+      <Trans>{account} edited a post.</Trans>
+    ) : (
+      t`A post you interacted with has been edited.`
+    ),
   'favourite+reblog': ({
     count,
     account,
@@ -243,6 +252,9 @@ const contentText = {
         />
       }
     />
+  ),
+  quoted_update: ({ account }) => (
+    <Trans>{account} edited a post you have quoted.</Trans>
   ),
   'admin.sign_up': ({ account }) => <Trans>{account} signed up.</Trans>,
   'admin.report': ({ account, targetAccount }) => (
@@ -324,10 +336,12 @@ function Notification({
     sampleAccounts,
     notificationsCount,
     groupKey,
+    _notificationsCount,
+    _sampleAccountsCount,
   } = notification;
   let { type } = notification;
 
-  if (type === 'mention' && !status) {
+  if ((type === 'mention' || type === 'quote') && !status) {
     // Could be deleted
     return null;
   }
@@ -379,9 +393,17 @@ function Notification({
       <b {...props} />
     );
 
+  const diffCount =
+    notificationsCount > 0 && notificationsCount > sampleAccounts?.length;
+  const expandAccounts = diffCount ? 'remote' : 'local';
+
   if (typeof text === 'function') {
     const count =
-      _accounts?.length || sampleAccounts?.length || (account ? 1 : 0);
+      (type === 'favourite' || type === 'reblog') && notificationsCount
+        ? diffCount
+          ? notificationsCount
+          : sampleAccounts?.length
+        : _accounts?.length || sampleAccounts?.length || (account ? 1 : 0);
     const postsCount = _statuses?.length || (status ? 1 : 0);
     if (type === 'admin.report') {
       const targetAccount = report?.targetAccount;
@@ -455,12 +477,7 @@ function Notification({
 
   console.debug('RENDER Notification', notification.id);
 
-  const diffCount =
-    notificationsCount > 0 && notificationsCount > sampleAccounts?.length;
-  const expandAccounts = diffCount ? 'remote' : 'local';
-
   // If there's a status and filter action is 'hide', then the notification is hidden
-  // TODO: Handle 'warn' action one day
   if (!!status?.filtered) {
     const isOwnPost = status?.account?.id === currentAccount;
     const filterInfo = isFiltered(status.filtered, 'notifications');
@@ -494,7 +511,22 @@ function Notification({
         )}
       </div>
       <div class="notification-content">
-        {type !== 'mention' && (
+        {/* {(type === 'favourite+reblog' ||
+          type === 'favourite' ||
+          type === 'reblog') && (
+          <>
+            💥 {type} {expandAccounts}{' '}
+            <mark>
+              N{_notificationsCount?.join(',')} + A
+              {_sampleAccountsCount?.join(',')}
+            </mark>{' '}
+            ‒{' '}
+            <mark>
+              N{notificationsCount} + A{sampleAccounts?.length}
+            </mark>
+          </>
+        )} */}
+        {type !== 'mention' && type !== 'quote' && (
           <>
             <p>{text}</p>
             {type === 'follow_request' && (
@@ -510,7 +542,7 @@ function Notification({
                 <a
                   href={`https://${instance}/severed_relationships`}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                 >
                   <Trans>
                     Learn more <Icon icon="external" size="s" />
@@ -526,7 +558,7 @@ function Notification({
                 <a
                   href={`/disputes/strikes/${moderation_warning.id}`}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                 >
                   <Trans>
                     Learn more <Icon icon="external" size="s" />
@@ -550,7 +582,7 @@ function Notification({
                 <a
                   key={account.id}
                   href={account.url}
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   class="account-avatar-stack"
                   onClick={(e) => {
                     e.preventDefault();
@@ -584,7 +616,10 @@ function Notification({
                 </a>{' '}
               </Fragment>
             ))}
-            {type === 'favourite+reblog' && expandAccounts === 'remote' ? (
+            {(type === 'favourite+reblog' ||
+              type === 'favourite' ||
+              type === 'reblog') &&
+            expandAccounts === 'remote' ? (
               <button
                 type="button"
                 class="small plain"
@@ -592,12 +627,14 @@ function Notification({
                 onClick={() => {
                   states.showGenericAccounts = {
                     heading: genericAccountsHeading,
+                    accounts: _accounts,
                     fetchAccounts: async () => {
                       const keyAccounts = await Promise.allSettled(
                         _groupKeys.map(async (gKey) => {
                           const iterator = masto.v2.notifications
                             .$select(gKey)
-                            .accounts.list();
+                            .accounts.list()
+                            .values();
                           return [gKey, (await iterator.next()).value];
                         }),
                       );
@@ -627,11 +664,14 @@ function Notification({
                         value: accounts,
                       };
                     },
-                    showReactions: true,
+                    showReactions: type === 'favourite+reblog',
                     postID: statusKey(actualStatusID, instance),
                   };
                 }}
               >
+                +
+                {(type === 'favourite' || type === 'reblog') &&
+                  notificationsCount - _accounts.length}
                 <Icon icon="chevron-down" />
               </button>
             ) : (
@@ -654,7 +694,7 @@ function Notification({
                 <a
                   key={account.id}
                   href={account.url}
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   class="account-avatar-stack"
                   onClick={(e) => {
                     e.preventDefault();
@@ -710,6 +750,7 @@ function Notification({
                     size="s"
                     previewMode
                     allowContextMenu
+                    allowFilters
                   />
                 </TruncatedLink>
               </li>
@@ -749,6 +790,7 @@ function Notification({
                 size="s"
                 readOnly
                 allowContextMenu
+                allowFilters
               />
             ) : (
               <Status
@@ -756,6 +798,7 @@ function Notification({
                 size="s"
                 readOnly
                 allowContextMenu
+                allowFilters
               />
             )}
           </TruncatedLink>
@@ -766,6 +809,7 @@ function Notification({
 }
 
 function TruncatedLink(props) {
+  const { t } = useLingui();
   const ref = useTruncated();
   return <Link {...props} data-read-more={t`Read more →`} ref={ref} />;
 }

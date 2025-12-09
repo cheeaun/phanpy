@@ -1,7 +1,7 @@
 import './search.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
-import { t, Trans } from '@lingui/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
@@ -12,6 +12,7 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import NavMenu from '../components/nav-menu';
+import RecentSearches from '../components/recent-searches';
 import SearchForm from '../components/search-form';
 import Status from '../components/status';
 import { api } from '../utils/api';
@@ -25,12 +26,13 @@ const LIMIT = 40;
 const emptySearchParams = new URLSearchParams();
 
 const scrollIntoViewOptions = {
-  block: 'nearest',
+  block: 'start',
   inline: 'center',
-  behavior: 'smooth',
+  behavior: 'instant',
 };
 
 function Search({ columnMode, ...props }) {
+  const { t } = useLingui();
   const params = columnMode ? {} : useParams();
   const { masto, instance, authenticated } = api({
     instance: params.instance,
@@ -132,7 +134,7 @@ function Search({ columnMode, ...props }) {
       }
 
       try {
-        const results = await masto.v2.search.fetch(params);
+        const results = await masto.v2.search.list(params);
         console.log(results);
         if (type) {
           if (firstLoad) {
@@ -197,75 +199,91 @@ function Search({ columnMode, ...props }) {
   }, [q, type, instance]);
 
   useHotkeys(
-    ['/', 'Slash'],
+    ['Slash', '/'],
     (e) => {
       searchFormRef.current?.focus?.();
       searchFormRef.current?.select?.();
     },
     {
+      useKey: true,
       preventDefault: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
   );
 
   const itemsSelector = '.timeline > li > a, .hashtag-list > li > a';
-  const jRef = useHotkeys('j', () => {
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const activeItemRect = activeItem?.getBoundingClientRect();
-    const allItems = Array.from(
-      scrollableRef.current.querySelectorAll(itemsSelector),
-    );
-    if (
-      activeItem &&
-      activeItemRect.top < scrollableRef.current.clientHeight &&
-      activeItemRect.bottom > 0
-    ) {
-      const activeItemIndex = allItems.indexOf(activeItem);
-      let nextItem = allItems[activeItemIndex + 1];
-      if (nextItem) {
-        nextItem.focus();
-        nextItem.scrollIntoView(scrollIntoViewOptions);
+  const jRef = useHotkeys(
+    'j',
+    () => {
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let nextItem = allItems[activeItemIndex + 1];
+        if (nextItem) {
+          nextItem.focus();
+          nextItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      const topmostItem = allItems.find((item) => {
-        const itemRect = item.getBoundingClientRect();
-        return itemRect.top >= 44 && itemRect.left >= 0;
-      });
-      if (topmostItem) {
-        topmostItem.focus();
-        topmostItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
-  const kRef = useHotkeys('k', () => {
-    // focus on previous status after active item
-    const activeItem = document.activeElement.closest(itemsSelector);
-    const activeItemRect = activeItem?.getBoundingClientRect();
-    const allItems = Array.from(
-      scrollableRef.current.querySelectorAll(itemsSelector),
-    );
-    if (
-      activeItem &&
-      activeItemRect.top < scrollableRef.current.clientHeight &&
-      activeItemRect.bottom > 0
-    ) {
-      const activeItemIndex = allItems.indexOf(activeItem);
-      let prevItem = allItems[activeItemIndex - 1];
-      if (prevItem) {
-        prevItem.focus();
-        prevItem.scrollIntoView(scrollIntoViewOptions);
+  const kRef = useHotkeys(
+    'k',
+    () => {
+      // focus on previous status after active item
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current.querySelectorAll(itemsSelector),
+      );
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let prevItem = allItems[activeItemIndex - 1];
+        if (prevItem) {
+          prevItem.focus();
+          prevItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      } else {
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
       }
-    } else {
-      const topmostItem = allItems.find((item) => {
-        const itemRect = item.getBoundingClientRect();
-        return itemRect.top >= 44 && itemRect.left >= 0;
-      });
-      if (topmostItem) {
-        topmostItem.focus();
-        topmostItem.scrollIntoView(scrollIntoViewOptions);
-      }
-    }
-  });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
 
   const [filterBarParent] = useAutoAnimate();
 
@@ -276,8 +294,8 @@ function Search({ columnMode, ...props }) {
       tabIndex="-1"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef(node);
-        kRef(node);
+        jRef.current = node;
+        kRef.current = node;
       }}
     >
       <div class="timeline-deck deck">
@@ -562,11 +580,14 @@ function Search({ columnMode, ...props }) {
               <Loader abrupt />
             </p>
           ) : (
-            <p class="ui-state">
-              <Trans>
-                Enter your search term or paste a URL above to get started.
-              </Trans>
-            </p>
+            <>
+              <p class="ui-state insignificant">
+                <Trans>
+                  Enter your search term or paste a URL above to get started.
+                </Trans>
+              </p>
+              <RecentSearches />
+            </>
           )}
         </main>
       </div>

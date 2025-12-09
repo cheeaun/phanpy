@@ -1,6 +1,6 @@
 import './settings.css';
 
-import { Plural, t, Trans } from '@lingui/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
@@ -10,8 +10,8 @@ import Icon from '../components/icon';
 import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
 import RelativeTime from '../components/relative-time';
-import targetLanguages from '../data/lingva-target-languages';
-import { api } from '../utils/api';
+import languages from '../data/translang-languages';
+import { api, getPreferences, setPreferences } from '../utils/api';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
 import prettyBytes from '../utils/pretty-bytes';
@@ -21,21 +21,31 @@ import {
   removeSubscription,
   updateSubscription,
 } from '../utils/push-notifications';
+import { supportsNativeQuote } from '../utils/quote-utils';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
-import supports from '../utils/supports';
+import { getAPIVersions, getVapidKey } from '../utils/store-utils';
 
 const DEFAULT_TEXT_SIZE = 16;
 const TEXT_SIZES = [14, 15, 16, 17, 18, 19, 20];
 const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_PRIVACY_POLICY_URL: PRIVACY_POLICY_URL,
+  PHANPY_TRANSLANG_INSTANCES: TRANSLANG_INSTANCES,
   PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL,
   PHANPY_GIPHY_API_KEY: GIPHY_API_KEY,
 } = import.meta.env;
 
+const targetLanguages = Object.entries(languages.tl).map(([code, name]) => ({
+  code,
+  name,
+}));
+
+const TRANSLATION_API_NAME = 'TransLang API';
+
 function Settings({ onClose }) {
+  const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const currentTheme = store.local.get('theme') || 'auto';
   const themeFormRef = useRef();
@@ -45,7 +55,7 @@ function Settings({ onClose }) {
   const systemTargetLanguageText = localeCode2Text(systemTargetLanguage);
   const currentTextSize = store.local.get('textSize') || DEFAULT_TEXT_SIZE;
 
-  const [prefs, setPrefs] = useState(store.account.get('preferences') || {});
+  const [prefs, setPrefs] = useState(getPreferences());
   const { masto, authenticated, instance } = api();
   // Get preferences every time Settings is opened
   // NOTE: Disabled for now because I don't expect this to change often. Also for some reason, the /api/v1/preferences endpoint is cached for a while and return old prefs if refresh immediately after changing them.
@@ -62,6 +72,12 @@ function Settings({ onClose }) {
   //     }
   //   })();
   // }, []);
+
+  const [expTabBarV2, setExpTabBarV2] = useState(
+    store.local.get('experiments-tabBarV2') ?? false,
+  );
+
+  const disableQuotePolicy = prefs['posting:default:visibility'] === 'private';
 
   return (
     <div
@@ -145,7 +161,7 @@ function Settings({ onClose }) {
                       .querySelector('meta[name="color-scheme"]')
                       .setAttribute(
                         'content',
-                        theme === 'auto' ? 'dark light' : theme,
+                        theme === 'auto' ? 'light dark' : theme,
                       );
 
                     if (theme === 'auto') {
@@ -243,13 +259,12 @@ function Settings({ onClose }) {
               <span>
                 <label>
                   <Trans>Display language</Trans>
-                </label>
-                <br />
+                </label>{' '}
                 <small>
                   <a
                     href="https://crowdin.com/project/phanpy"
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener"
                   >
                     <Trans>Volunteer translations</Trans>
                   </a>
@@ -267,52 +282,99 @@ function Settings({ onClose }) {
             <section>
               <ul>
                 <li>
-                  <div>
-                    <label for="posting-privacy-field">
-                      <Trans>Default visibility</Trans>{' '}
+                  <label for="posting-privacy-field">
+                    <Trans>Default visibility</Trans>{' '}
+                    <Icon icon="cloud" alt={t`Synced`} class="synced-icon" />
+                  </label>
+                  <select
+                    id="posting-privacy-field"
+                    value={prefs['posting:default:visibility'] || 'public'}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      (async () => {
+                        try {
+                          await masto.v1.accounts.updateCredentials({
+                            source: {
+                              privacy: value,
+                            },
+                          });
+                          const newPrefs = {
+                            ...prefs,
+                            'posting:default:visibility': value,
+                          };
+                          if (value === 'private') {
+                            newPrefs['posting:default:quote_policy'] = 'nobody';
+                          }
+                          setPrefs(newPrefs);
+                          setPreferences(newPrefs);
+                          showToast(t`Default visibility updated`);
+                        } catch (e) {
+                          alert(t`Failed to update default visibility`);
+                          console.error(e);
+                        }
+                      })();
+                    }}
+                  >
+                    <option value="public">
+                      <Trans>Public</Trans>
+                    </option>
+                    <option value="unlisted">
+                      <Trans>Quiet public</Trans>
+                    </option>
+                    <option value="private">
+                      <Trans>Followers</Trans>
+                    </option>
+                  </select>
+                </li>
+                {supportsNativeQuote() && (
+                  <li>
+                    <label for="posting-quote-policy-field">
+                      <Trans>Quote settings</Trans>{' '}
                       <Icon icon="cloud" alt={t`Synced`} class="synced-icon" />
                     </label>
-                  </div>
-                  <div>
                     <select
-                      id="posting-privacy-field"
-                      value={prefs['posting:default:visibility'] || 'public'}
+                      id="posting-quote-policy-field"
+                      value={
+                        disableQuotePolicy
+                          ? 'nobody'
+                          : prefs['posting:default:quote_policy'] || 'public'
+                      }
+                      disabled={disableQuotePolicy}
                       onChange={(e) => {
                         const { value } = e.target;
                         (async () => {
                           try {
                             await masto.v1.accounts.updateCredentials({
                               source: {
-                                privacy: value,
+                                quote_policy: value,
                               },
                             });
-                            setPrefs({
+                            const newPrefs = {
                               ...prefs,
-                              'posting:default:visibility': value,
-                            });
-                            store.account.set('preferences', {
-                              ...prefs,
-                              'posting:default:visibility': value,
-                            });
+                              'posting:default:quote_policy': value,
+                            };
+                            setPrefs(newPrefs);
+                            setPreferences(newPrefs);
+                            showToast(t`Quote settings updated`);
                           } catch (e) {
-                            alert(t`Failed to update posting privacy`);
+                            alert(t`Failed to update quote settings`);
                             console.error(e);
                           }
                         })();
                       }}
                     >
-                      <option value="public">
-                        <Trans>Public</Trans>
+                      <option value="public" disabled={disableQuotePolicy}>
+                        <Trans>Anyone can quote</Trans>
                       </option>
-                      <option value="unlisted">
-                        <Trans>Unlisted</Trans>
+                      <option value="followers" disabled={disableQuotePolicy}>
+                        <Trans>Your followers can quote</Trans>
                       </option>
-                      <option value="private">
-                        <Trans>Followers only</Trans>
+                      <option value="nobody">
+                        <Trans>Only you can quote</Trans>
                       </option>
                     </select>
-                  </div>
-                </li>
+                  </li>
+                )}
               </ul>
             </section>
             <p class="section-postnote">
@@ -323,7 +385,7 @@ function Settings({ onClose }) {
                   <a
                     href={`https://${instance}/`}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener"
                   >
                     Go to your instance ({instance}) for more settings.
                   </a>
@@ -361,46 +423,77 @@ function Settings({ onClose }) {
                 <Trans>Boosts carousel</Trans>
               </label>
             </li>
-            <li class="block">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={snapStates.settings.contentTranslation}
-                  onChange={(e) => {
-                    const { checked } = e.target;
-                    states.settings.contentTranslation = checked;
-                    if (!checked) {
-                      states.settings.contentTranslationTargetLanguage = null;
-                    }
-                  }}
-                />{' '}
-                <Trans>Post translation</Trans>
-              </label>
-              <div
-                class={`sub-section ${
-                  !snapStates.settings.contentTranslation
-                    ? 'more-insignificant'
-                    : ''
-                }`}
-              >
-                <div>
-                  <label>
-                    <Trans>Translate to </Trans>{' '}
-                    <select
-                      value={targetLanguage || ''}
-                      disabled={!snapStates.settings.contentTranslation}
-                      style={{ width: '10em' }}
-                      onChange={(e) => {
-                        states.settings.contentTranslationTargetLanguage =
-                          e.target.value || null;
-                      }}
-                    >
-                      <option value="">
-                        <Trans>
-                          System language ({systemTargetLanguageText})
-                        </Trans>
-                      </option>
-                      <option disabled>──────────</option>
+            {!!TRANSLANG_INSTANCES && (
+              <li class="block">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={snapStates.settings.contentTranslation}
+                    onChange={(e) => {
+                      const { checked } = e.target;
+                      states.settings.contentTranslation = checked;
+                      if (!checked) {
+                        states.settings.contentTranslationTargetLanguage = null;
+                      }
+                    }}
+                  />{' '}
+                  <Trans>Post translation</Trans>
+                </label>
+                <div
+                  class={`sub-section ${
+                    !snapStates.settings.contentTranslation
+                      ? 'more-insignificant'
+                      : ''
+                  }`}
+                >
+                  <div>
+                    <label>
+                      <Trans>Translate to </Trans>{' '}
+                      <select
+                        value={targetLanguage || ''}
+                        disabled={!snapStates.settings.contentTranslation}
+                        style={{ width: '10em' }}
+                        onChange={(e) => {
+                          states.settings.contentTranslationTargetLanguage =
+                            e.target.value || null;
+                        }}
+                      >
+                        <option value="">
+                          <Trans>
+                            System language ({systemTargetLanguageText})
+                          </Trans>
+                        </option>
+                        <option disabled>──────────</option>
+                        {targetLanguages.map((lang) => {
+                          const common = localeCode2Text({
+                            code: lang.code,
+                            fallback: lang.name,
+                          });
+                          const native = localeCode2Text({
+                            code: lang.code,
+                            locale: lang.code,
+                          });
+                          const showCommon = native && common !== native;
+                          return (
+                            <option value={lang.code}>
+                              {showCommon ? `${native} - ${common}` : common}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </label>
+                  </div>
+                  <hr />
+                  <div class="checkbox-fieldset">
+                    <Plural
+                      value={
+                        snapStates.settings.contentTranslationHideLanguages
+                          .length
+                      }
+                      _0={`Hide "Translate" button for:`}
+                      other={`Hide "Translate" button for (#):`}
+                    />
+                    <div class="checkbox-fields">
                       {targetLanguages.map((lang) => {
                         const common = localeCode2Text({
                           code: lang.code,
@@ -410,120 +503,86 @@ function Settings({ onClose }) {
                           code: lang.code,
                           locale: lang.code,
                         });
-                        const showCommon = common !== native;
+                        const showCommon = native && common !== native;
                         return (
-                          <option value={lang.code}>
-                            {showCommon ? `${native} - ${common}` : common}
-                          </option>
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={snapStates.settings.contentTranslationHideLanguages.includes(
+                                lang.code,
+                              )}
+                              onChange={(e) => {
+                                const { checked } = e.target;
+                                if (checked) {
+                                  states.settings.contentTranslationHideLanguages.push(
+                                    lang.code,
+                                  );
+                                } else {
+                                  states.settings.contentTranslationHideLanguages =
+                                    snapStates.settings.contentTranslationHideLanguages.filter(
+                                      (code) => code !== lang.code,
+                                    );
+                                }
+                              }}
+                            />{' '}
+                            {showCommon ? (
+                              <span>
+                                {native}{' '}
+                                <span class="insignificant ib">- {common}</span>
+                              </span>
+                            ) : (
+                              common
+                            )}
+                          </label>
                         );
                       })}
-                    </select>
-                  </label>
-                </div>
-                <hr />
-                <div class="checkbox-fieldset">
-                  <Plural
-                    value={
-                      snapStates.settings.contentTranslationHideLanguages.length
-                    }
-                    _0={`Hide "Translate" button for:`}
-                    other={`Hide "Translate" button for (#):`}
-                  />
-                  <div class="checkbox-fields">
-                    {targetLanguages.map((lang) => {
-                      const common = localeCode2Text({
-                        code: lang.code,
-                        fallback: lang.name,
-                      });
-                      const native = localeCode2Text({
-                        code: lang.code,
-                        locale: lang.code,
-                      });
-                      const showCommon = common !== native;
-                      return (
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={snapStates.settings.contentTranslationHideLanguages.includes(
-                              lang.code,
-                            )}
-                            onChange={(e) => {
-                              const { checked } = e.target;
-                              if (checked) {
-                                states.settings.contentTranslationHideLanguages.push(
-                                  lang.code,
-                                );
-                              } else {
-                                states.settings.contentTranslationHideLanguages =
-                                  snapStates.settings.contentTranslationHideLanguages.filter(
-                                    (code) => code !== lang.code,
-                                  );
-                              }
-                            }}
-                          />{' '}
-                          {showCommon ? (
-                            <span>
-                              {native}{' '}
-                              <span class="insignificant">- {common}</span>
-                            </span>
-                          ) : (
-                            common
-                          )}
-                        </label>
-                      );
-                    })}
+                    </div>
                   </div>
-                </div>
-                <p class="insignificant">
-                  <small>
-                    <Trans>
-                      Note: This feature uses external translation services,
-                      powered by{' '}
-                      <a
-                        href="https://github.com/cheeaun/lingva-api"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Lingva API
-                      </a>{' '}
-                      &amp;{' '}
-                      <a
-                        href="https://github.com/thedaviddelta/lingva-translate"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Lingva Translate
-                      </a>
-                      .
-                    </Trans>
-                  </small>
-                </p>
-                <hr />
-                <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={snapStates.settings.contentTranslationAutoInline}
-                      disabled={!snapStates.settings.contentTranslation}
-                      onChange={(e) => {
-                        states.settings.contentTranslationAutoInline =
-                          e.target.checked;
-                      }}
-                    />{' '}
-                    <Trans>Auto inline translation</Trans>
-                  </label>
                   <p class="insignificant">
                     <small>
                       <Trans>
-                        Automatically show translation for posts in timeline.
-                        Only works for <b>short</b> posts without content
-                        warning, media and poll.
+                        Note: This feature uses external translation services,
+                        powered by{' '}
+                        <a
+                          href="https://github.com/cheeaun/translang-api"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          {TRANSLATION_API_NAME}
+                        </a>
+                        .
                       </Trans>
                     </small>
                   </p>
+                  <hr />
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={
+                          snapStates.settings.contentTranslationAutoInline
+                        }
+                        disabled={!snapStates.settings.contentTranslation}
+                        onChange={(e) => {
+                          states.settings.contentTranslationAutoInline =
+                            e.target.checked;
+                        }}
+                      />{' '}
+                      <Trans>Auto inline translation</Trans>
+                    </label>
+                    <p class="insignificant">
+                      <small>
+                        <Trans>
+                          Automatically show translation for posts in timeline.
+                          Only works for <b>short</b> posts without content
+                          warning, media and poll.
+                        </Trans>
+                      </small>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            )}
             {!!GIPHY_API_KEY && authenticated && (
               <li class="block">
                 <label>
@@ -544,7 +603,7 @@ function Settings({ onClose }) {
                       <a
                         href="https://developers.giphy.com/"
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener"
                       >
                         GIPHY
                       </a>
@@ -584,34 +643,11 @@ function Settings({ onClose }) {
                       <a
                         href="https://github.com/cheeaun/img-alt-api"
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener"
                       >
                         img-alt-api
                       </a>
                       . May not work well. Only for images and in English.
-                    </Trans>
-                  </small>
-                </div>
-              </li>
-            )}
-            {authenticated && supports('@mastodon/grouped-notifications') && (
-              <li class="block">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={snapStates.settings.groupedNotificationsAlpha}
-                    onChange={(e) => {
-                      states.settings.groupedNotificationsAlpha =
-                        e.target.checked;
-                    }}
-                  />{' '}
-                  <Trans>Server-side grouped notifications</Trans>
-                </label>
-                <div class="sub-section insignificant">
-                  <small>
-                    <Trans>
-                      Alpha-stage feature. Potentially improved grouping window
-                      but basic grouping logic.
                     </Trans>
                   </small>
                 </div>
@@ -727,7 +763,7 @@ function Settings({ onClose }) {
               <a
                 href="https://hachyderm.io/@phanpy"
                 // target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
                 onClick={(e) => {
                   e.preventDefault();
                   states.showAccount = 'phanpy@hachyderm.io';
@@ -740,7 +776,7 @@ function Settings({ onClose }) {
                 <a
                   href="https://github.com/cheeaun/phanpy"
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                 >
                   Built
                 </a>{' '}
@@ -748,7 +784,7 @@ function Settings({ onClose }) {
                 <a
                   href="https://mastodon.social/@cheeaun"
                   // target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   onClick={(e) => {
                     e.preventDefault();
                     states.showAccount = 'cheeaun@mastodon.social';
@@ -763,7 +799,7 @@ function Settings({ onClose }) {
             <a
               href="https://github.com/sponsors/cheeaun"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
             >
               <Trans>Sponsor</Trans>
             </a>{' '}
@@ -771,7 +807,7 @@ function Settings({ onClose }) {
             <a
               href="https://www.buymeacoffee.com/cheeaun"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
             >
               <Trans>Donate</Trans>
             </a>{' '}
@@ -779,20 +815,24 @@ function Settings({ onClose }) {
             <a
               href="https://patreon.com/cheeaun"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
             >
               Patreon
             </a>{' '}
             &middot;{' '}
             <a
-              href={PRIVACY_POLICY_URL}
+              href="https://github.com/cheeaun/phanpy/blob/main/CHANGELOG.md"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
             >
+              <Trans>What's new</Trans>
+            </a>{' '}
+            &middot;{' '}
+            <a href={PRIVACY_POLICY_URL} target="_blank" rel="noopener">
               <Trans>Privacy Policy</Trans>
             </a>
           </p>
-          {__BUILD_TIME__ && (
+          {__COMMIT_TIME__ && (
             <p>
               {WEBSITE && (
                 <>
@@ -810,7 +850,7 @@ function Settings({ onClose }) {
                   class="version-string"
                   readOnly
                   size="18" // Manually calculated here
-                  value={`${__BUILD_TIME__.slice(0, 10).replace(/-/g, '.')}${
+                  value={`${__COMMIT_TIME__.slice(0, 10).replace(/-/g, '.')}${
                     __COMMIT_HASH__ ? `.${__COMMIT_HASH__}` : ''
                   }`}
                   onClick={(e) => {
@@ -831,7 +871,7 @@ function Settings({ onClose }) {
                     <a
                       href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noopener"
                     >
                       <RelativeTime datetime={new Date(__BUILD_TIME__)} />
                     </a>
@@ -845,7 +885,19 @@ function Settings({ onClose }) {
         {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
           <details class="debug-info">
             <summary></summary>
+            <p class="side">
+              <Link
+                to="/_sandbox"
+                onClick={onClose}
+                class="button plain6 small"
+              >
+                Sandbox
+              </Link>
+            </p>
             <p>Debugging</p>
+            <p>
+              <b>Vapid key</b>: {getVapidKey()}
+            </p>
             {__BENCH_RESULTS?.size > 0 && (
               <ul>
                 {Array.from(__BENCH_RESULTS.entries()).map(
@@ -900,6 +952,24 @@ function Settings({ onClose }) {
             >
               Clear all caches
             </button>
+            <p>Temporary Experiments</p>
+            <label>
+              <input
+                type="checkbox"
+                checked={expTabBarV2}
+                onChange={(e) => {
+                  const { checked } = e.target;
+                  document.body.classList.toggle('exp-tab-bar-v2', checked);
+                  setExpTabBarV2(checked);
+                  if (checked) {
+                    store.local.set('experiments-tabBarV2', true);
+                  } else {
+                    store.local.del('experiments-tabBarV2');
+                  }
+                }}
+              />{' '}
+              Tab bar v2
+            </label>
           </details>
         )}
       </main>
@@ -957,6 +1027,7 @@ async function clearCaches() {
 }
 
 function PushNotificationsSection({ onClose }) {
+  const { t } = useLingui();
   if (!isPushSupported()) return null;
 
   const { instance } = api();
@@ -982,10 +1053,10 @@ function PushNotificationsSection({ onClose }) {
           const policyEl = elements.namedItem('policy');
           if (policyEl) policyEl.value = policy;
           // alerts is {}, iterate it
-          Object.keys(alerts).forEach((alert) => {
+          Object.entries(alerts).forEach(([alert, value]) => {
             const el = elements.namedItem(alert);
             if (el?.type === 'checkbox') {
-              el.checked = true;
+              el.checked = !!value;
             }
           });
         }

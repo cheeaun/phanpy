@@ -2,17 +2,29 @@
 @custom-media --viewport-medium (min-width: 40em);
 
 :root {
+  interpolate-size: allow-keywords;
+
   --sai-top: env(safe-area-inset-top);
   --sai-right: env(safe-area-inset-right);
   --sai-bottom: env(safe-area-inset-bottom);
   --sai-left: env(safe-area-inset-left);
 
+  --sai-inline-start: var(--sai-left);
+  &:dir(rtl) {
+    --sai-inline-start: var(--sai-right);
+  }
+  --sai-inline-end: var(--sai-right);
+  &:dir(rtl) {
+    --sai-inline-end: var(--sai-left);
+  }
+
   --text-size: 16px;
   --main-width: 40em;
   text-size-adjust: none;
   --hairline-width: 1px;
-  --monospace-font: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono',
-    Menlo, Courier, monospace;
+  --monospace-font:
+    ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
+    monospace;
 
   --blue-color: royalblue;
   --purple-color: blueviolet;
@@ -42,6 +54,7 @@
     var(--text-color) 40%
   );
   --red-bg-color: color-mix(in lch, var(--red-color) 40%, transparent);
+  --violet-red-color: MediumVioletRed;
   --bg-color: #fff;
   --bg-faded-color: #f0f2f5;
   --bg-blur-color: #fff9;
@@ -66,6 +79,8 @@
   --button-plain-bg-hover-color: rgba(128, 128, 128, 0.1);
   --reblog-color: var(--purple-color);
   --reblog-faded-color: #892be220;
+  --quote-color: var(--violet-red-color);
+  --quote-faded-color: #c7158520;
   --group-color: var(--green-color);
   --group-faded-color: #00640020;
   --reply-to-color: var(--orange-color);
@@ -88,7 +103,7 @@
   --outline-hover-color: rgba(128, 128, 128, 0.7);
   --divider-color: rgba(0, 0, 0, 0.1);
   --backdrop-color: rgba(0, 0, 0, 0.1);
-  --backdrop-solid-color: color-mix(in srgb, var(--bg-color) 90%, #000 10%);
+  --backdrop-solid-color: var(--bg-faded-color);
   --backdrop-theme-color: #e5e5e5;
   --backdrop-darker-color: rgba(0, 0, 0, 0.25);
   --img-bg-color: rgba(128, 128, 128, 0.2);
@@ -109,7 +124,115 @@
   --media-outline-color: color-mix(in lch, var(--media-fg-color), transparent);
 
   --timing-function: cubic-bezier(0.3, 0.5, 0, 1);
-  --spring-timing-funtion: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /*
+    From https://animejs.com/easing-editor/spring/default
+    Duration: 300
+  */
+  --spring-timing-duration: 0.94s;
+  --spring-timing-function: linear(
+    0,
+    0.0146,
+    0.0548,
+    0.1153,
+    0.1911,
+    0.2776,
+    0.3706,
+    0.4665,
+    0.562,
+    0.6545,
+    0.7419,
+    0.8225,
+    0.8951,
+    0.9589,
+    1.0137,
+    1.0591,
+    1.0956,
+    1.1235,
+    1.1434,
+    1.156,
+    1.1621,
+    1.1626,
+    1.1585,
+    1.1505,
+    1.1396,
+    1.1264,
+    1.1118,
+    1.0964,
+    1.0807,
+    1.0653,
+    1.0505,
+    1.0367,
+    1.0241,
+    1.0128,
+    1.003,
+    0.9946,
+    0.9878,
+    0.9824,
+    0.9784,
+    0.9757,
+    0.9741,
+    0.9734,
+    0.9737,
+    0.9746,
+    0.9761,
+    0.9781,
+    0.9803,
+    0.9828,
+    0.9853,
+    0.9878,
+    0.9903,
+    0.9927,
+    0.9949,
+    0.9968,
+    0.9986,
+    1.0001,
+    1.0013,
+    1.0024,
+    1.0032,
+    1.0037,
+    1.0041,
+    1.0043,
+    1.0043,
+    1.0042,
+    1.0041,
+    1.0038,
+    1.0034,
+    1.0031,
+    1.0026,
+    1.0022,
+    1.0018,
+    1.0014,
+    1.001,
+    1.0007,
+    1.0004,
+    1.0001,
+    0.9999,
+    0.9997,
+    0.9996,
+    0.9994,
+    0.9994,
+    0.9993,
+    0.9993,
+    0.9993,
+    0.9993,
+    0.9994,
+    0.9994,
+    0.9995,
+    0.9995,
+    0.9996,
+    0.9997,
+    0.9997,
+    0.9998,
+    0.9999,
+    0.9999,
+    1,
+    1,
+    1,
+    1.0001,
+    1.0001,
+    1
+  );
 
   --min-dimension: 88px;
 
@@ -137,6 +260,7 @@
     --purple-color: #b190f1;
     --green-color: lightgreen;
     --orange-color: orange;
+    --violet-red-color: PaleVioletRed;
     --bg-color: #242526;
     --bg-faded-color: #18191a;
     --bg-blur-color: #0009;
@@ -190,8 +314,16 @@ html {
 }
 
 body {
-  font-family: ui-rounded, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Ubuntu, Cantarell, Noto Sans, sans-serif;
+  font-family:
+    ui-rounded,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    Noto Sans,
+    sans-serif;
   font-size: var(--text-size);
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -365,8 +497,37 @@ button[hidden] {
   opacity: 0;
 }
 
+@keyframes loading-mask {
+  0% {
+    mask-position: 100%;
+  }
+  100% {
+    mask-position: 0%;
+  }
+}
+.loading-mask > * {
+  display: inline-block;
+  mask-image: linear-gradient(
+    100deg,
+    black 33%,
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.4),
+    black 66%
+  );
+  mask-size: 300% 100%;
+  mask-clip: content-box;
+  mask-repeat: no-repeat;
+  animation: loading-mask 1.5s ease-in-out infinite alternate;
+
+  :dir(rtl) & {
+    animation-direction: alternate-reverse;
+  }
+}
+
 input[type='text'],
 input[type='search'],
+input[type='datetime-local'],
 textarea,
 select {
   color: var(--text-color);
@@ -377,6 +538,7 @@ select {
 }
 input[type='text']:focus,
 input[type='search']:focus,
+input[type='datetime-local']:focus,
 textarea:focus,
 select:focus {
   border-color: var(--outline-color);
@@ -578,8 +740,46 @@ kbd {
   grid-template-columns: 0fr;
 }
 
+.shazam {
+  transition: all 0.3s ease-out allow-discrete;
+  @starting-style {
+    display: none;
+    opacity: 0;
+    height: 0;
+    overflow: clip;
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* VIEW TRANSITIONS */
+
+::view-transition-old(status),
+::view-transition-new(status) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-media),
+::view-transition-new(status-media) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-poll),
+::view-transition-new(status-poll) {
+  width: 100%;
+  height: 100%;
+}
+
+::view-transition-old(status-card-byline),
+::view-transition-new(status-card-byline),
+::view-transition-old(status-card),
+::view-transition-new(status-card) {
+  width: 100%;
+  height: 100%;
 }

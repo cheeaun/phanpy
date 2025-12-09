@@ -1289,6 +1289,10 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   display: flex;
   background-color: var(--meta-theme-color, var(--backdrop-color));
   animation: appear 0.1s ease-out;
+
+  @media (min-width: 40em) {
+    background-color: var(--backdrop-color);
+  }
 }
 .deck-backdrop > a {
   flex-grow: 1;

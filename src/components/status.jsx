@@ -2932,7 +2932,14 @@ function Status({
                     confirmLabel={
                       <>
                         <Icon icon="rocket" />
-                        <span>{reblogged ? t`Unboost` : t`Boost`}</span>
+                        <span class="menu-grow">
+                          {reblogged ? t`Unboost` : t`Boost`}
+                        </span>
+                        {reblogsCount > 0 && (
+                          <small class="more-insignificant">
+                            {shortenNumber(reblogsCount)}
+                          </small>
+                        )}
                       </>
                     }
                     menuExtras={
@@ -2954,7 +2961,12 @@ function Status({
                                 {quoteMetaText}
                               </small>
                             ) : (
-                              <span>{quoteText}</span>
+                              <span class="menu-grow">{quoteText}</span>
+                            )}
+                            {quotesCount > 0 && (
+                              <small class="more-insignificant">
+                                {shortenNumber(quotesCount)}
+                              </small>
                             )}
                           </MenuItem>
                         )}
@@ -2989,7 +3001,11 @@ function Status({
                       ]}
                       alt={[t`Boost`, t`Boosted`]}
                       class="reblog-button"
-                      icon="rocket"
+                      icon={
+                        reblogsCount <= 0 && quotesCount > 0
+                          ? 'quote'
+                          : 'rocket'
+                      }
                       count={reblogsCount}
                       extraCount={quotesCount}
                       // onClick={boostStatus}

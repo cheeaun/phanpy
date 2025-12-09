@@ -15,7 +15,8 @@ async function _getCustomEmojis(instance, masto) {
 const getCustomEmojis = pmem(_getCustomEmojis, {
   // Limit by time to reduce memory usage
   // Cached by instance
-  isKeyItemEqual: (cacheKeyArg, keyArg) => cacheKeyArg.instance === keyArg.instance,
+  isKeyItemEqual: (cacheKeyArg, keyArg) =>
+    cacheKeyArg.instance === keyArg.instance,
   expires: 30 * 60 * 1000, // 30 minutes
 });
 

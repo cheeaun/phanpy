@@ -2450,21 +2450,12 @@ function Status({
               <>
                 {(!!spoilerText || !!sensitive) && !readingExpandSpoilers && (
                   <>
-                    {!!spoilerText && (
-                      <span
-                        class="spoiler-content media-first-spoiler-content"
-                        lang={language}
-                        dir="auto"
-                        ref={spoilerContentRef}
-                        data-read-more={_(readMoreText)}
-                      >
-                        <EmojiText text={spoilerText} emojis={emojis} />{' '}
-                      </span>
-                    )}
                     <button
-                      class={`light spoiler-button media-first-spoiler-button ${
+                      class={`plain spoiler-button media-first-spoiler-button ${
                         showSpoiler ? 'spoiling' : ''
                       }`}
+                      lang={language}
+                      dir="auto"
                       type="button"
                       onClick={(e) => {
                         e.preventDefault();
@@ -2483,7 +2474,15 @@ function Status({
                       }}
                     >
                       <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                      {showSpoiler ? t`Show less` : t`Show content`}
+                      <span class={'spoiler-text'}>
+                        {spoilerText ? (
+                          <EmojiText text={spoilerText} emojis={emojis} />
+                        ) : showSpoiler ? (
+                          t`Show less`
+                        ) : (
+                          t`Show content`
+                        )}
+                      </span>
                     </button>
                   </>
                 )}
@@ -2507,24 +2506,13 @@ function Status({
               <>
                 {!!spoilerText && (
                   <>
-                    <div
-                      class="content spoiler-content"
-                      lang={language}
-                      dir="auto"
-                      ref={spoilerContentRef}
-                      data-read-more={_(readMoreText)}
-                    >
-                      <p>
-                        <EmojiText text={spoilerText} emojis={emojis} />
-                      </p>
-                    </div>
                     {readingExpandSpoilers || previewMode ? (
                       <div class="spoiler-divider">
                         <Icon icon="eye-open" /> <Trans>Content warning</Trans>
                       </div>
                     ) : (
                       <button
-                        class={`light spoiler-button ${
+                        class={`plain spoiler-button ${
                           showSpoiler ? 'spoiling' : ''
                         }`}
                         type="button"
@@ -2545,7 +2533,15 @@ function Status({
                         }}
                       >
                         <Icon icon={showSpoiler ? 'eye-open' : 'eye-close'} />{' '}
-                        {showSpoiler ? t`Show less` : t`Show content`}
+                        <span class={'spoiler-text'}>
+                          {!!spoilerText ? (
+                            <EmojiText text={spoilerText} emojis={emojis} />
+                          ) : showSpoiler ? (
+                            t`Show less`
+                          ) : (
+                            t`Show content`
+                          )}
+                        </span>
                       </button>
                     )}
                   </>

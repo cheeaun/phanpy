@@ -769,6 +769,10 @@
   padding-bottom: 10px;
 }
 
+:is(.spoiler-button, .spoiler-media-button) .spoiler-text {
+  word-wrap: anywhere;
+}
+
 .status
   .content-container.has-spoiler
   :is(.spoiler-button, .spoiler-media-button):not([hidden]) {

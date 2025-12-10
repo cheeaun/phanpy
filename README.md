@@ -332,6 +332,7 @@ These are self-hosted by other wonderful folks.
 - [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)
 - [phanpy.linuxusers.in](https://phanpy.linuxusers.in) by [@dharmik@linuxusers.in](https://linuxusers.in/dharmik)
 - [phanpy.blablalinux.be](https://phanpy.blablalinux.be) by [@blablalinux@mastodon.blablalinux.be](https://mastodon.blablalinux.be/@blablalinux)
+- [fedi.woodpeckersnest.space](https://fedi.woodpeckersnest.space) by [@roughnecks@social.woodpeckersnest.space](https://social.woodpeckersnest.space/@roughnecks)
 
 > Note: Add yours by creating a pull request.
 

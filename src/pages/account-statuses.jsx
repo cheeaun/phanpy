@@ -725,7 +725,7 @@ function fetchAccount(id, masto) {
   return masto.v1.accounts.$select(id).fetch();
 }
 const memFetchAccount = pmem(fetchAccount, {
-  maxAge: 30 * 60 * 1000, // 30 minutes
+  expires: 30 * 60 * 1000, // 30 minutes
 });
 
 export default AccountStatuses;

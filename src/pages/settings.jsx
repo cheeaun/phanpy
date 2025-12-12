@@ -6,6 +6,8 @@ import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
 
+import '../components/button-install';
+
 import Icon from '../components/icon';
 import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
@@ -35,6 +37,7 @@ const {
   PHANPY_TRANSLANG_INSTANCES: TRANSLANG_INSTANCES,
   PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL,
   PHANPY_GIPHY_API_KEY: GIPHY_API_KEY,
+  PHANPY_CLIENT_NAME: CLIENT_NAME,
 } = import.meta.env;
 
 const targetLanguages = Object.entries(languages.tl).map(([code, name]) => ({
@@ -729,6 +732,13 @@ function Settings({ onClose }) {
                 </button>
               </li>
             )}
+            <li>
+              <button-install>
+                <button type="button" class="light">
+                  <Trans>Install {CLIENT_NAME}</Trans>
+                </button>
+              </button-install>
+            </li>
           </ul>
         </section>
         {authenticated && <PushNotificationsSection onClose={onClose} />}

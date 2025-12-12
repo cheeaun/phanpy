@@ -1,14 +1,14 @@
-import moize from 'moize';
+import { memoize } from 'micro-memoize';
 
 // Only assign to window if in browser environment
 if (typeof window !== 'undefined') {
-  window._moize = moize;
+  window._memoize = memoize;
 }
 
 export default function mem(fn, opts = {}) {
-  return moize(fn, {
+  return memoize(fn, {
     ...opts,
     maxSize: 30,
-    isDeepEqual: true,
+    isKeyItemEqual: 'deep',
   });
 }

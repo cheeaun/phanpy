@@ -72,6 +72,7 @@ import NameText from './name-text';
 import Poll from './poll';
 import PostContent from './post-content';
 import PostEmbedModal from './post-embed-modal';
+import QuoteChainModal from './quote-chain-modal';
 import QuoteSettingsSheet from './quote-settings-sheet';
 import QuotesModal from './quotes-modal';
 import RelativeTime from './relative-time';
@@ -328,9 +329,53 @@ function Status({
   showReplyParent,
   mediaFirst,
   showCommentCount: forceShowCommentCount,
+  showQuoteCount: forceShowQuoteCount,
+  ghost,
 }) {
   const { _, t, i18n } = useLingui();
   const rtf = RTF(i18n.locale);
+
+  if (ghost) {
+    const { inReplyToAccountId } = ghost;
+    const ghostAccount = inReplyToAccountId
+      ? states.accounts[inReplyToAccountId]
+      : null;
+    return (
+      <article
+        class={`status ghost ${mediaFirst ? 'status-media-first small' : ''}`}
+      >
+        {!mediaFirst && (
+          <Avatar
+            size="xxl"
+            url={ghostAccount?.avatarStatic || ghostAccount?.avatar}
+            squircle={ghostAccount?.bot}
+          />
+        )}
+        <div class="container">
+          <div class="meta">
+            {(size === 's' || mediaFirst) && (
+              <Avatar
+                size="m"
+                url={ghostAccount?.avatarStatic || ghostAccount?.avatar}
+                squircle={ghostAccount?.bot}
+              />
+            )}
+            {ghostAccount && (
+              <NameText account={ghostAccount} showAvatar={false} />
+            )}
+          </div>
+          <div class="content-container">
+            {mediaFirst && <div class="media-first-container" />}
+            <div class={`content ${mediaFirst ? 'media-first-content' : ''}`}>
+              <p class="insignificant">
+                <Trans>Post unavailable</Trans>
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+    );
+  }
 
   if (skeleton) {
     return (
@@ -680,6 +725,7 @@ function Status({
   const [showEmbed, setShowEmbed] = useState(false);
   const [showQuoteSettings, setShowQuoteSettings] = useState(false);
   const [showQuotes, setShowQuotes] = useState(false);
+  const [showQuoteChain, setShowQuoteChain] = useState(false);
 
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
@@ -1262,6 +1308,18 @@ function Status({
               <Icon icon="quote" />
               <span>
                 <Trans>View Quotes</Trans>
+              </span>
+            </MenuItem>
+          )}
+          {quote?.quotedStatus?.quote && (
+            <MenuItem
+              onClick={() => {
+                setShowQuoteChain(true);
+              }}
+            >
+              <Icon icon="quote" />
+              <span>
+                <Trans>Unwrap quote chain</Trans>
               </span>
             </MenuItem>
           )}
@@ -1963,6 +2021,12 @@ function Status({
     content,
     contentLength,
   ]);
+
+  // Keep this simple for now, unlike showCommentCount
+  const showQuoteCount =
+    typeof forceShowQuoteCount === 'function'
+      ? forceShowQuoteCount(quotesCount)
+      : forceShowQuoteCount && quotesCount > 0;
 
   return (
     <StatusParent>
@@ -2675,9 +2739,18 @@ function Status({
               </>
             )}
           </div>
-          {!isSizeLarge && showCommentCount && (
+          {!isSizeLarge && (showCommentCount || showQuoteCount) && (
             <div class="content-comment-hint insignificant">
-              <Icon icon="comment2" alt={t`Replies`} /> {repliesCount}
+              {showCommentCount && (
+                <>
+                  <Icon icon="comment2" alt={t`Replies`} /> {repliesCount}
+                </>
+              )}{' '}
+              {showQuoteCount && (
+                <>
+                  <Icon icon="quote" alt={t`Quotes`} /> {quotesCount}
+                </>
+              )}
             </div>
           )}
           {isSizeLarge && (
@@ -2847,7 +2920,14 @@ function Status({
                     confirmLabel={
                       <>
                         <Icon icon="rocket" />
-                        <span>{reblogged ? t`Unboost` : t`Boost`}</span>
+                        <span class="menu-grow">
+                          {reblogged ? t`Unboost` : t`Boost`}
+                        </span>
+                        {reblogsCount > 0 && (
+                          <small class="more-insignificant">
+                            {shortenNumber(reblogsCount)}
+                          </small>
+                        )}
                       </>
                     }
                     menuExtras={
@@ -2869,7 +2949,12 @@ function Status({
                                 {quoteMetaText}
                               </small>
                             ) : (
-                              <span>{quoteText}</span>
+                              <span class="menu-grow">{quoteText}</span>
+                            )}
+                            {quotesCount > 0 && (
+                              <small class="more-insignificant">
+                                {shortenNumber(quotesCount)}
+                              </small>
                             )}
                           </MenuItem>
                         )}
@@ -2904,7 +2989,11 @@ function Status({
                       ]}
                       alt={[t`Boost`, t`Boosted`]}
                       class="reblog-button"
-                      icon="rocket"
+                      icon={
+                        reblogsCount <= 0 && quotesCount > 0
+                          ? 'quote'
+                          : 'rocket'
+                      }
                       count={reblogsCount}
                       extraCount={quotesCount}
                       // onClick={boostStatus}
@@ -3027,6 +3116,21 @@ function Status({
               instance={instance}
               onClose={() => {
                 setShowQuotes(false);
+              }}
+            />
+          </Modal>
+        )}
+        {!!showQuoteChain && (
+          <Modal
+            onClose={() => {
+              setShowQuoteChain(false);
+            }}
+          >
+            <QuoteChainModal
+              statusId={id}
+              instance={instance}
+              onClose={() => {
+                setShowQuoteChain(false);
               }}
             />
           </Modal>
@@ -3185,6 +3289,21 @@ const QuoteStatus = memo(({ quote, level = 0 }) => {
   );
 });
 
+const ShallowQuote = ({ quote } = {}) => {
+  const { account, native, instance } = quote || {};
+  if (!account) return null;
+  return (
+    <div class="status-card-container">
+      <div class={native ? 'quote-post-native' : ''}>
+        <div class="status-card status-shallow-card">
+          <NameText account={account} instance={instance} showAvatar />{' '}
+          <span class="insignificant">…</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const QuoteStatuses = memo(({ id, instance, level = 0, collapsed = false }) => {
   if (!id || !instance) return;
   const { _ } = useLingui();
@@ -3196,7 +3315,9 @@ const QuoteStatuses = memo(({ id, instance, level = 0, collapsed = false }) => {
   );
 
   if (!uniqueQuotes?.length) return;
-  if (level > 2) return;
+  if (level > 2) {
+    return <ShallowQuote quote={uniqueQuotes[0]} />;
+  }
 
   if (collapsed) {
     // Only show the first quote if "collapsed"

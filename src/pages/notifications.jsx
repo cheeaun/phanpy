@@ -52,15 +52,15 @@ const NOTIFICATIONS_GROUPED_LIMIT = 20;
 const emptySearchParams = new URLSearchParams();
 
 const scrollIntoViewOptions = {
-  block: 'center',
+  block: 'start',
   inline: 'center',
-  behavior: 'smooth',
+  behavior: 'instant',
 };
 
 const memSupportsGroupedNotifications = mem(
   () => getAPIVersions()?.mastodon >= 2,
   {
-    maxAge: 1000 * 60 * 5, // 5 minutes
+    expires: 1000 * 60 * 5, // 5 minutes
   },
 );
 
@@ -417,6 +417,7 @@ function Notifications({ columnMode }) {
     // Skip this if not in December
     const date = new Date();
     if (date.getMonth() !== 11) return;
+    const dateYear = date.getFullYear();
 
     // Skip if doesn't support annual report
     if (!supports('@mastodon/annual-report')) return;
@@ -425,8 +426,11 @@ function Notifications({ columnMode }) {
       'annualReportNotification',
     );
     if (annualReportNotification) {
-      setAnnualReportNotification(annualReportNotification);
-      return;
+      const annualReportYear = annualReportNotification?.annualReport?.year;
+      if (annualReportYear == dateYear) {
+        setAnnualReportNotification(annualReportNotification);
+        return;
+      }
     }
     const notificationIterator = mastoFetchNotifications({
       types: ['annual_report'],
@@ -436,7 +440,7 @@ function Notifications({ columnMode }) {
       annualReportNotification = notification?.value?.notificationGroups?.[0];
       const annualReportYear = annualReportNotification?.annualReport?.year;
       // If same year, show the annual report
-      if (annualReportYear == date.getFullYear()) {
+      if (annualReportYear == dateYear) {
         console.log(
           'ANNUAL REPORT',
           annualReportYear,

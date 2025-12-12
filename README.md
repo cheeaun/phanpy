@@ -246,7 +246,7 @@ Available variables:
   - App title, when installed as PWA, shown in the Home screen, macOS dock, Windows taskbar, etc
   - OpenGraph card title, when shared on social networks
   - Client name, when [registering the app for authentication](https://docs.joinmastodon.org/client/token/#app) and shown as client used on posts in some apps/clients
-- `PHANPY_WEBSITE` (optional but recommended, default: `https://phanpy.social`) affects:
+- `PHANPY_WEBSITE` (optional but recommended, no defaults) affects:
   - Canonical URL of the website
   - OpenGraph card URL, when shared on social networks
   - Root path for the OpenGraph card image
@@ -300,6 +300,17 @@ Try online search for "how to self-host static sites" as there are many ways to 
 
 See documentation for [translang-api](https://github.com/cheeaun/translang-api).
 
+### Keeping up with releases
+
+1. 👀 Watch this repo for releases.
+2. 🛜 Subscribe to the feed: https://github.com/cheeaun/phanpy/releases.atom
+3. 👉 Follow [Phanpy](https://hachyderm.io/@phanpy) on Mastodon.
+4. ➡️ Query JSON:
+   - Production: https://phanpy.social/version.json
+   - Development: https://dev.phanpy.social/version.json
+
+Changelog available here: [CHANGELOG.md](CHANGELOG.md)
+
 ## Community deployments
 
 These are self-hosted by other wonderful folks.
@@ -321,6 +332,7 @@ These are self-hosted by other wonderful folks.
 - [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)
 - [phanpy.linuxusers.in](https://phanpy.linuxusers.in) by [@dharmik@linuxusers.in](https://linuxusers.in/dharmik)
 - [phanpy.blablalinux.be](https://phanpy.blablalinux.be) by [@blablalinux@mastodon.blablalinux.be](https://mastodon.blablalinux.be/@blablalinux)
+- [fedi.woodpeckersnest.space](https://fedi.woodpeckersnest.space) by [@roughnecks@social.woodpeckersnest.space](https://social.woodpeckersnest.space/@roughnecks)
 
 > Note: Add yours by creating a pull request.
 
@@ -389,6 +401,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13613969/medium/c7834ddc0ada84a79671697a944bb274.png" alt="" width="16" height="16" /> moreal (Korean)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14158861/medium/ba1ff31dc5743b067ea6685f735229a5_default.png" alt="" width="16" height="16" /> MrWillCom (Chinese Simplified)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15652333/medium/7f36f289f9e2fe41d89ad534a1047f0e.png" alt="" width="16" height="16" /> nclm (French)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17450186/medium/6f5768f64963379c7ddfdccd53572c60.jpeg" alt="" width="16" height="16" /> NiklasA95 (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15000639/medium/ebbf0bb7d5027a1903d11b7f5f34f65b.jpeg" alt="" width="16" height="16" /> nycterent (Lithuanian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539461/medium/2f41b9f0b802c1d200a6ab62167a7229_default.png" alt="" width="16" height="16" /> pazpi (Italian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13954917/medium/56a2cba267eb1b5d122bf62ddc0dd732_default.png" alt="" width="16" height="16" /> PPNplus (Thai)
@@ -414,7 +427,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16236470/medium/315b1ebbd38e0f7e41d44bee752afa33.jpg" alt="" width="16" height="16" /> Usia (Ukrainian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16791511/medium/13af704ac9b4ce8350cd2dc6b823d050.jpg" alt="" width="16" height="16" /> uzaylul (Turkish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14427566/medium/ab733b5044c21867fc5a9d1b22cd2c03.png" alt="" width="16" height="16" /> Vac31. (Lithuanian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16026914/medium/4f2a96210b76cbc330584cfdd01fabc4_default.png" alt="" width="16" height="16" /> valtlai (Finnish)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16026914/medium/35f400b0799c35e8e5f4556a7fa63544.jpg" alt="" width="16" height="16" /> valtlai (Finnish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16608515/medium/85506c21dce8df07843ca11908ee3951.jpeg" alt="" width="16" height="16" /> vasiriri (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16355626/medium/a10a29f0016c6beb94e8219d50e8b8d7.jpeg" alt="" width="16" height="16" /> voitech (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16563757/medium/af4556c13862d1fd593b51084a159b75_default.png" alt="" width="16" height="16" /> voyagercy (Chinese Traditional)

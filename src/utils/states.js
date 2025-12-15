@@ -59,6 +59,7 @@ const states = proxy({
   showQrCodeModal: false,
   showQrScannerModal: false,
   showImportExportAccounts: false,
+  showSearchCommand: false,
   // Shortcuts
   shortcuts: [],
   // Settings

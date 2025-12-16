@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-12-10 02:45\n"
+"PO-Revision-Date: 2025-12-16 00:33\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -48,17 +48,17 @@ msgid "Mutual"
 msgstr "相互フォロー"
 
 #: src/components/account-block.jsx:191
-#: src/components/related-actions.jsx:921
+#: src/components/related-actions.jsx:962
 msgid "Requested"
 msgstr "リクエスト済み"
 
 #: src/components/account-block.jsx:195
-#: src/components/related-actions.jsx:912
+#: src/components/related-actions.jsx:953
 msgid "Following"
 msgstr "フォロー中"
 
 #: src/components/account-block.jsx:199
-#: src/components/related-actions.jsx:190
+#: src/components/related-actions.jsx:200
 msgid "Follows you"
 msgstr "フォローされています"
 
@@ -103,23 +103,23 @@ msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0>の新しいアカウント:"
 
 #: src/components/account-info.jsx:607
-#: src/components/related-actions.jsx:489
+#: src/components/related-actions.jsx:530
 msgid "Handle copied"
 msgstr "ハンドルをコピーしました"
 
 #: src/components/account-info.jsx:610
-#: src/components/related-actions.jsx:492
+#: src/components/related-actions.jsx:533
 msgid "Unable to copy handle"
 msgstr "ハンドルをコピーできません"
 
 #: src/components/account-info.jsx:616
-#: src/components/related-actions.jsx:498
+#: src/components/related-actions.jsx:539
 msgid "Copy handle"
 msgstr "ハンドルをコピー"
 
 #: src/components/account-info.jsx:634
-#: src/components/related-actions.jsx:245
-#: src/components/related-actions.jsx:563
+#: src/components/related-actions.jsx:255
+#: src/components/related-actions.jsx:604
 #: src/components/shortcuts-settings.jsx:1083
 msgid "QR code"
 msgstr "QRコード"
@@ -138,7 +138,7 @@ msgstr "プロフィールヘッダーを表示"
 
 #: src/components/account-info.jsx:692
 #: src/components/edit-profile-sheet.jsx:94
-#: src/components/related-actions.jsx:815
+#: src/components/related-actions.jsx:856
 msgid "Edit profile"
 msgstr "プロフィールを編集"
 
@@ -218,7 +218,7 @@ msgid "Original"
 msgstr "オリジナル"
 
 #: src/components/account-info.jsx:1050
-#: src/components/status.jsx:2758
+#: src/components/status.jsx:2746
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1564
 #: src/pages/catchup.jsx:2219
@@ -229,7 +229,7 @@ msgstr "返信"
 
 #: src/components/account-info.jsx:1055
 #: src/components/quotes-modal.jsx:81
-#: src/components/status.jsx:2763
+#: src/components/status.jsx:2751
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1567
 msgid "Quotes"
@@ -281,8 +281,8 @@ msgstr "投稿の統計を見る"
 #: src/components/shortcuts-settings.jsx:231
 #: src/components/shortcuts-settings.jsx:584
 #: src/components/shortcuts-settings.jsx:785
-#: src/components/status.jsx:3386
-#: src/components/status.jsx:3598
+#: src/components/status.jsx:3374
+#: src/components/status.jsx:3586
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1701
@@ -296,8 +296,8 @@ msgid "Close"
 msgstr "閉じる"
 
 #: src/components/add-remove-lists-sheet.jsx:50
-#: src/components/related-actions.jsx:455
-#: src/components/related-actions.jsx:465
+#: src/components/related-actions.jsx:480
+#: src/components/related-actions.jsx:490
 msgid "Add/Remove from Lists"
 msgstr "リストから追加/削除"
 
@@ -501,7 +501,7 @@ msgid "Attachment #{i} failed"
 msgstr "ファイル #{i} の添付に失敗しました"
 
 #: src/components/compose.jsx:1445
-#: src/components/status.jsx:2523
+#: src/components/status.jsx:2511
 #: src/components/timeline.jsx:990
 msgid "Content warning"
 msgstr "コンテンツに関する警告"
@@ -585,7 +585,7 @@ msgid "Quiet public"
 msgstr "ひかえめな公開"
 
 #: src/components/compose.jsx:1977
-#: src/components/status.jsx:2403
+#: src/components/status.jsx:2391
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "非公開の返信"
@@ -598,10 +598,10 @@ msgstr "予約する"
 #: src/components/keyboard-shortcuts-help.jsx:164
 #: src/components/status.jsx:1103
 #: src/components/status.jsx:1137
-#: src/components/status.jsx:2155
-#: src/components/status.jsx:2156
+#: src/components/status.jsx:2143
+#: src/components/status.jsx:2144
+#: src/components/status.jsx:2881
 #: src/components/status.jsx:2893
-#: src/components/status.jsx:2905
 msgid "Reply"
 msgstr "返信"
 
@@ -678,7 +678,7 @@ msgstr "下書きの削除中にエラーが発生しました！もう一度や
 
 #: src/components/drafts.jsx:126
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1682
+#: src/components/status.jsx:1670
 #: src/pages/filters.jsx:605
 #: src/pages/scheduled-posts.jsx:398
 msgid "Delete…"
@@ -714,7 +714,7 @@ msgid "Poll"
 msgstr "アンケート"
 
 #: src/components/drafts.jsx:266
-#: src/pages/account-statuses.jsx:376
+#: src/pages/account-statuses.jsx:366
 msgid "Media"
 msgstr "メディア"
 
@@ -1050,8 +1050,8 @@ msgstr "<0>l</0> または <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:185
 #: src/components/status.jsx:1173
-#: src/components/status.jsx:2936
-#: src/components/status.jsx:3002
+#: src/components/status.jsx:2924
+#: src/components/status.jsx:2990
 msgid "Boost"
 msgstr "ブースト"
 
@@ -1061,8 +1061,8 @@ msgstr "<0>Shift</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:197
 #: src/components/status.jsx:1275
-#: src/components/status.jsx:3031
-#: src/components/status.jsx:3032
+#: src/components/status.jsx:3019
+#: src/components/status.jsx:3020
 msgid "Bookmark"
 msgstr "ブックマーク"
 
@@ -1155,13 +1155,13 @@ msgstr "メディアの説明"
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-attachment.jsx:430
 #: src/components/media-modal.jsx:372
-#: src/components/related-actions.jsx:263
-#: src/components/status.jsx:2179
-#: src/components/status.jsx:2196
-#: src/components/status.jsx:2329
-#: src/components/status.jsx:3052
-#: src/components/status.jsx:3055
-#: src/pages/account-statuses.jsx:544
+#: src/components/related-actions.jsx:273
+#: src/components/status.jsx:2167
+#: src/components/status.jsx:2184
+#: src/components/status.jsx:2317
+#: src/components/status.jsx:3040
+#: src/components/status.jsx:3043
+#: src/pages/account-statuses.jsx:559
 #: src/pages/accounts.jsx:127
 #: src/pages/hashtag.jsx:203
 #: src/pages/list.jsx:171
@@ -1309,8 +1309,8 @@ msgstr "フィルターされました: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:3524
-#: src/components/status.jsx:3602
+#: src/components/status.jsx:3512
+#: src/components/status.jsx:3590
 #: src/components/timeline.jsx:979
 #: src/pages/catchup.jsx:79
 #: src/pages/catchup.jsx:2022
@@ -1432,7 +1432,7 @@ msgid "Followed Hashtags"
 msgstr "フォロー中のハッシュタグ"
 
 #: src/components/nav-menu.jsx:273
-#: src/pages/account-statuses.jsx:342
+#: src/pages/account-statuses.jsx:332
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
 #: src/pages/hashtag.jsx:344
@@ -1673,16 +1673,14 @@ msgid "Read more →"
 msgstr "続きを見る →"
 
 #: src/components/open-link-sheet.jsx:30
-#: src/components/related-actions.jsx:515
-#: src/components/status.jsx:1455
-#: src/components/status.jsx:1488
+#: src/components/related-actions.jsx:556
+#: src/components/status.jsx:1476
 msgid "Link copied"
 msgstr "リンクをコピーしました"
 
 #: src/components/open-link-sheet.jsx:33
-#: src/components/related-actions.jsx:518
-#: src/components/status.jsx:1458
-#: src/components/status.jsx:1491
+#: src/components/related-actions.jsx:559
+#: src/components/status.jsx:1479
 msgid "Unable to copy link"
 msgstr "リンクをコピーできません"
 
@@ -1692,15 +1690,15 @@ msgstr "リンクを開く"
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
-#: src/components/related-actions.jsx:524
+#: src/components/related-actions.jsx:565
 #: src/components/shortcuts-settings.jsx:1159
-#: src/components/status.jsx:1497
+#: src/components/status.jsx:1485
 msgid "Copy"
 msgstr "コピー"
 
 #: src/components/open-link-sheet.jsx:82
-#: src/components/related-actions.jsx:545
-#: src/components/status.jsx:1519
+#: src/components/related-actions.jsx:586
+#: src/components/status.jsx:1507
 msgid "Share…"
 msgstr "共有…"
 
@@ -1768,7 +1766,7 @@ msgid "Refresh"
 msgstr "更新"
 
 #: src/components/post-embed-modal.jsx:201
-#: src/components/status.jsx:1532
+#: src/components/status.jsx:1520
 msgid "Embed post"
 msgstr "ポストを埋め込む"
 
@@ -1830,7 +1828,7 @@ msgid "Note: This preview is lightly styled."
 msgstr "注: このプレビューは軽くスタイル付けされています。"
 
 #: src/components/private-note-sheet.jsx:41
-#: src/components/related-actions.jsx:222
+#: src/components/related-actions.jsx:232
 msgid "Notes"
 msgstr ""
 
@@ -1919,195 +1917,204 @@ msgid "Clear all"
 msgstr "すべて削除"
 
 #: src/components/recent-searches.jsx:94
-#: src/pages/account-statuses.jsx:335
+#: src/pages/account-statuses.jsx:325
 msgid "Clear"
 msgstr "削除"
 
-#: src/components/related-actions.jsx:39
+#: src/components/related-actions.jsx:40
 msgid "Forever"
 msgstr "無期限"
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
-#: src/components/related-actions.jsx:194
+#: src/components/related-actions.jsx:204
 msgid "Last post: <0>{0}</0>"
 msgstr "最終投稿: <0>{0}</0>"
 
-#: src/components/related-actions.jsx:208
+#: src/components/related-actions.jsx:218
 msgid "Muted"
 msgstr "ミュート済み"
 
-#: src/components/related-actions.jsx:213
+#: src/components/related-actions.jsx:223
 msgid "Blocked"
 msgstr "ブロック済み"
 
-#: src/components/related-actions.jsx:296
+#: src/components/related-actions.jsx:306
 msgid "Mention <0>@{username}</0>"
 msgstr "<0>@{username}</0>にメンション"
 
-#: src/components/related-actions.jsx:308
+#: src/components/related-actions.jsx:319
+msgid "Search <0>@{username}</0>'s posts"
+msgstr ""
+
+#: src/components/related-actions.jsx:333
 msgid "Translate bio"
 msgstr "プロフィールを翻訳"
 
-#: src/components/related-actions.jsx:318
+#: src/components/related-actions.jsx:343
 msgid "Edit notes"
 msgstr ""
 
-#: src/components/related-actions.jsx:318
+#: src/components/related-actions.jsx:343
 msgid "Add notes"
 msgstr ""
 
-#: src/components/related-actions.jsx:337
+#: src/components/related-actions.jsx:362
 msgid "Notifications enabled for @{username}'s posts."
 msgstr "@{username} の投稿の通知を有効にしました。"
 
-#: src/components/related-actions.jsx:338
+#: src/components/related-actions.jsx:363
 msgid " Notifications disabled for @{username}'s posts."
 msgstr "@{username} の投稿の通知を無効にしました。"
 
-#: src/components/related-actions.jsx:350
+#: src/components/related-actions.jsx:375
 msgid "Disable notifications"
 msgstr "通知を無効化"
 
-#: src/components/related-actions.jsx:351
+#: src/components/related-actions.jsx:376
 msgid "Enable notifications"
 msgstr "通知を有効化"
 
-#: src/components/related-actions.jsx:368
+#: src/components/related-actions.jsx:393
 msgid "Boosts from @{username} enabled."
 msgstr "@{username} からのブーストを有効にしました。"
 
-#: src/components/related-actions.jsx:369
+#: src/components/related-actions.jsx:394
 msgid "Boosts from @{username} disabled."
 msgstr ""
 
-#: src/components/related-actions.jsx:380
+#: src/components/related-actions.jsx:405
 msgid "Disable boosts"
 msgstr "ブーストを無効化"
 
-#: src/components/related-actions.jsx:380
+#: src/components/related-actions.jsx:405
 msgid "Enable boosts"
 msgstr "ブーストを有効化"
 
-#: src/components/related-actions.jsx:399
+#: src/components/related-actions.jsx:424
 msgid "@{username} is no longer featured on your profile."
 msgstr "@{username} はあなたのプロフィールには表示されなくなりました。"
 
-#: src/components/related-actions.jsx:409
+#: src/components/related-actions.jsx:434
 msgid "@{username} is now featured on your profile."
 msgstr "@{username} があなたのプロフィールで紹介されるようになりました。"
 
-#: src/components/related-actions.jsx:417
+#: src/components/related-actions.jsx:442
 msgid "Unable to unfeature @{username} on your profile."
 msgstr "@{username} の紹介を解除できません。"
 
-#: src/components/related-actions.jsx:421
+#: src/components/related-actions.jsx:446
 msgid "Unable to feature @{username} on your profile."
 msgstr "@{username} を紹介できません。"
 
-#: src/components/related-actions.jsx:430
+#: src/components/related-actions.jsx:455
 msgid "Don't feature on profile"
 msgstr "プロフィールから外す"
 
-#: src/components/related-actions.jsx:431
+#: src/components/related-actions.jsx:456
 #: src/pages/hashtag.jsx:333
 msgid "Feature on profile"
 msgstr "プロフィールで紹介"
 
-#: src/components/related-actions.jsx:440
-#: src/components/related-actions.jsx:478
+#: src/components/related-actions.jsx:465
+#: src/components/related-actions.jsx:515
 msgid "Show featured profiles"
 msgstr "紹介されたプロフィールを表示"
 
-#: src/components/related-actions.jsx:539
+#: src/components/related-actions.jsx:507
+#: src/pages/account-statuses.jsx:464
+msgid "Search my posts"
+msgstr ""
+
+#: src/components/related-actions.jsx:580
 #: src/components/shortcuts-settings.jsx:1177
-#: src/components/status.jsx:1513
+#: src/components/status.jsx:1501
 msgid "Sharing doesn't seem to work."
 msgstr "共有は機能しないようです。"
 
-#: src/components/related-actions.jsx:581
+#: src/components/related-actions.jsx:622
 msgid "Unmuted @{username}"
 msgstr "@{username} のミュートを解除しました"
 
-#: src/components/related-actions.jsx:593
+#: src/components/related-actions.jsx:634
 msgid "Unmute <0>@{username}</0>"
 msgstr "<0>@{username}</0> をミュート解除"
 
-#: src/components/related-actions.jsx:609
+#: src/components/related-actions.jsx:650
 msgid "Mute <0>@{username}</0>…"
 msgstr "<0>@{username}</0> をミュート…"
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:641
+#: src/components/related-actions.jsx:682
 msgid "Muted @{username} for {0}"
 msgstr "@{username} を {0} ミュートしました"
 
-#: src/components/related-actions.jsx:653
+#: src/components/related-actions.jsx:694
 msgid "Unable to mute @{username}"
 msgstr "@{username} をミュートできません"
 
-#: src/components/related-actions.jsx:674
+#: src/components/related-actions.jsx:715
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "<0>@{username}</0> をフォロワーから削除しますか？"
 
-#: src/components/related-actions.jsx:694
+#: src/components/related-actions.jsx:735
 msgid "@{username} removed from followers"
 msgstr "@{username} がフォロワーから削除されました"
 
-#: src/components/related-actions.jsx:706
+#: src/components/related-actions.jsx:747
 msgid "Remove follower…"
 msgstr "フォロワーを削除…"
 
-#: src/components/related-actions.jsx:717
+#: src/components/related-actions.jsx:758
 msgid "Block <0>@{username}</0>?"
 msgstr "<0>@{username}</0> をブロックしますか？"
 
-#: src/components/related-actions.jsx:741
+#: src/components/related-actions.jsx:782
 msgid "Unblocked @{username}"
 msgstr "@{username} のブロックを解除しました"
 
-#: src/components/related-actions.jsx:749
+#: src/components/related-actions.jsx:790
 msgid "Blocked @{username}"
 msgstr "@{username} をブロックしました"
 
-#: src/components/related-actions.jsx:757
+#: src/components/related-actions.jsx:798
 msgid "Unable to unblock @{username}"
 msgstr "@{username} のブロックを解除できません"
 
-#: src/components/related-actions.jsx:759
+#: src/components/related-actions.jsx:800
 msgid "Unable to block @{username}"
 msgstr "@{username} をブロックできません"
 
-#: src/components/related-actions.jsx:769
+#: src/components/related-actions.jsx:810
 msgid "Unblock <0>@{username}</0>"
 msgstr "<0>@{username}</0> のブロックを解除"
 
-#: src/components/related-actions.jsx:778
+#: src/components/related-actions.jsx:819
 msgid "Block <0>@{username}</0>…"
 msgstr "<0>@{username}</0> をブロック…"
 
-#: src/components/related-actions.jsx:795
+#: src/components/related-actions.jsx:836
 msgid "Report <0>@{username}</0>…"
 msgstr "<0>@{username}</0> を報告…"
 
-#: src/components/related-actions.jsx:851
+#: src/components/related-actions.jsx:892
 msgid "Withdraw follow request?"
 msgstr "フォローリクエストを取り消しますか？"
 
 #. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:852
+#: src/components/related-actions.jsx:893
 msgid "Unfollow @{0}?"
 msgstr "@{0} のフォローを解除しますか？"
 
-#: src/components/related-actions.jsx:915
+#: src/components/related-actions.jsx:956
 msgid "Unfollow…"
 msgstr "フォロー解除…"
 
-#: src/components/related-actions.jsx:924
+#: src/components/related-actions.jsx:965
 msgid "Withdraw…"
 msgstr "取り消し…"
 
-#: src/components/related-actions.jsx:931
-#: src/components/related-actions.jsx:935
+#: src/components/related-actions.jsx:972
+#: src/components/related-actions.jsx:976
 #: src/pages/hashtag.jsx:265
 msgid "Follow"
 msgstr "フォロー"
@@ -2357,7 +2364,7 @@ msgid "Move down"
 msgstr "下へ移動"
 
 #: src/components/shortcuts-settings.jsx:380
-#: src/components/status.jsx:1644
+#: src/components/status.jsx:1632
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "編集"
@@ -2570,9 +2577,9 @@ msgid "You are not allowed to quote this post"
 msgstr ""
 
 #: src/components/status.jsx:371
-#: src/components/status.jsx:3197
-#: src/components/status.jsx:3198
-#: src/components/status.jsx:3199
+#: src/components/status.jsx:3185
+#: src/components/status.jsx:3186
+#: src/components/status.jsx:3187
 msgid "Post unavailable"
 msgstr ""
 
@@ -2639,54 +2646,54 @@ msgstr ""
 
 #: src/components/status.jsx:1173
 #: src/components/status.jsx:1250
-#: src/components/status.jsx:2936
-#: src/components/status.jsx:3000
+#: src/components/status.jsx:2924
+#: src/components/status.jsx:2988
 msgid "Unboost"
 msgstr ""
 
 #: src/components/status.jsx:1212
-#: src/components/status.jsx:2985
+#: src/components/status.jsx:2973
 msgid "Quote with link"
 msgstr ""
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1229
-#: src/components/status.jsx:1833
+#: src/components/status.jsx:1821
 msgid "Unboosted @{0}'s post"
 msgstr ""
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1230
-#: src/components/status.jsx:1834
+#: src/components/status.jsx:1822
 msgid "Boosted @{0}'s post"
 msgstr ""
 
 #: src/components/status.jsx:1252
-#: src/components/status.jsx:2999
+#: src/components/status.jsx:2987
 msgid "Boost/Quote…"
 msgstr ""
 
 #: src/components/status.jsx:1253
-#: src/components/status.jsx:2999
+#: src/components/status.jsx:2987
 msgid "Boost…"
 msgstr "ブースト…"
 
 #: src/components/status.jsx:1265
-#: src/components/status.jsx:2169
-#: src/components/status.jsx:3019
+#: src/components/status.jsx:2157
+#: src/components/status.jsx:3007
 msgid "Unlike"
 msgstr ""
 
 #: src/components/status.jsx:1266
-#: src/components/status.jsx:2169
-#: src/components/status.jsx:2170
-#: src/components/status.jsx:3019
-#: src/components/status.jsx:3020
+#: src/components/status.jsx:2157
+#: src/components/status.jsx:2158
+#: src/components/status.jsx:3007
+#: src/components/status.jsx:3008
 msgid "Like"
 msgstr ""
 
 #: src/components/status.jsx:1275
-#: src/components/status.jsx:3031
+#: src/components/status.jsx:3019
 msgid "Unbookmark"
 msgstr "ブックマーク解除"
 
@@ -2723,199 +2730,199 @@ msgstr "編集履歴を表示"
 msgid "Edited: {editedDateText}"
 msgstr "編集済み： {editedDateText}"
 
-#: src/components/status.jsx:1480
+#: src/components/status.jsx:1468
 msgid "Open link"
 msgstr ""
 
-#: src/components/status.jsx:1548
+#: src/components/status.jsx:1536
 msgid "Conversation unmuted"
 msgstr ""
 
-#: src/components/status.jsx:1548
+#: src/components/status.jsx:1536
 msgid "Conversation muted"
 msgstr ""
 
-#: src/components/status.jsx:1554
+#: src/components/status.jsx:1542
 msgid "Unable to unmute conversation"
 msgstr ""
 
-#: src/components/status.jsx:1555
+#: src/components/status.jsx:1543
 msgid "Unable to mute conversation"
 msgstr ""
 
-#: src/components/status.jsx:1564
+#: src/components/status.jsx:1552
 msgid "Unmute conversation"
 msgstr "会話のミュートを解除"
 
-#: src/components/status.jsx:1571
+#: src/components/status.jsx:1559
 msgid "Mute conversation"
 msgstr "会話をミュート"
 
-#: src/components/status.jsx:1587
+#: src/components/status.jsx:1575
 msgid "Post unpinned from profile"
 msgstr ""
 
-#: src/components/status.jsx:1588
+#: src/components/status.jsx:1576
 msgid "Post pinned to profile"
 msgstr ""
 
-#: src/components/status.jsx:1593
+#: src/components/status.jsx:1581
 msgid "Unable to unpin post"
 msgstr ""
 
-#: src/components/status.jsx:1593
+#: src/components/status.jsx:1581
 msgid "Unable to pin post"
 msgstr ""
 
-#: src/components/status.jsx:1602
+#: src/components/status.jsx:1590
 msgid "Unpin from profile"
 msgstr ""
 
-#: src/components/status.jsx:1609
+#: src/components/status.jsx:1597
 msgid "Pin to profile"
 msgstr ""
 
-#: src/components/status.jsx:1622
+#: src/components/status.jsx:1610
 #: src/pages/settings.jsx:335
 msgid "Quote settings"
 msgstr ""
 
-#: src/components/status.jsx:1655
+#: src/components/status.jsx:1643
 msgid "Delete this post?"
 msgstr ""
 
-#: src/components/status.jsx:1671
+#: src/components/status.jsx:1659
 msgid "Post deleted"
 msgstr "ポストを削除しました"
 
-#: src/components/status.jsx:1674
+#: src/components/status.jsx:1662
 msgid "Unable to delete post"
 msgstr "ポストを削除できません"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1699
+#: src/components/status.jsx:1687
 msgid "Remove my post from <0>@{0}</0>'s post?"
 msgstr ""
 
-#: src/components/status.jsx:1720
+#: src/components/status.jsx:1708
 msgid "Quote removed"
 msgstr ""
 
-#: src/components/status.jsx:1724
+#: src/components/status.jsx:1712
 msgid "Unable to remove quote"
 msgstr ""
 
-#: src/components/status.jsx:1730
+#: src/components/status.jsx:1718
 msgid "Remove quote…"
 msgstr ""
 
-#: src/components/status.jsx:1744
+#: src/components/status.jsx:1732
 msgid "Report post…"
 msgstr ""
 
-#: src/components/status.jsx:2170
-#: src/components/status.jsx:2206
-#: src/components/status.jsx:3020
+#: src/components/status.jsx:2158
+#: src/components/status.jsx:2194
+#: src/components/status.jsx:3008
 msgid "Liked"
 msgstr "いいね！しました"
 
-#: src/components/status.jsx:2203
-#: src/components/status.jsx:3002
+#: src/components/status.jsx:2191
+#: src/components/status.jsx:2990
 msgid "Boosted"
 msgstr "ブーストしました"
 
-#: src/components/status.jsx:2213
-#: src/components/status.jsx:3032
+#: src/components/status.jsx:2201
+#: src/components/status.jsx:3020
 msgid "Bookmarked"
 msgstr "ブックマークしました"
 
-#: src/components/status.jsx:2217
+#: src/components/status.jsx:2205
 msgid "Pinned"
 msgstr "ピン留めしました"
 
-#: src/components/status.jsx:2274
-#: src/components/status.jsx:2773
+#: src/components/status.jsx:2262
+#: src/components/status.jsx:2761
 msgid "Deleted"
 msgstr "削除しました"
 
-#: src/components/status.jsx:2312
-#: src/components/status.jsx:2380
+#: src/components/status.jsx:2300
+#: src/components/status.jsx:2368
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, one {# 件の返信} other {# 件の返信}}"
 
-#: src/components/status.jsx:2486
-#: src/components/status.jsx:2548
-#: src/components/status.jsx:2654
+#: src/components/status.jsx:2474
+#: src/components/status.jsx:2536
+#: src/components/status.jsx:2642
 msgid "Show less"
 msgstr ""
 
-#: src/components/status.jsx:2486
-#: src/components/status.jsx:2548
+#: src/components/status.jsx:2474
+#: src/components/status.jsx:2536
 msgid "Show content"
 msgstr "コンテンツを表示"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2650
+#: src/components/status.jsx:2638
 #: src/pages/catchup.jsx:2021
 msgid "Filtered: {0}"
 msgstr "フィルター: {0}"
 
-#: src/components/status.jsx:2654
+#: src/components/status.jsx:2642
 msgid "Show media"
 msgstr "メディアを表示"
 
-#: src/components/status.jsx:2808
+#: src/components/status.jsx:2796
 msgid "Edited"
 msgstr ""
 
+#: src/components/status.jsx:2882
 #: src/components/status.jsx:2894
-#: src/components/status.jsx:2906
 msgid "Comments"
 msgstr ""
 
-#: src/components/status.jsx:3195
+#: src/components/status.jsx:3183
 msgid "Post hidden by your filters"
 msgstr ""
 
-#: src/components/status.jsx:3196
+#: src/components/status.jsx:3184
 msgid "Post pending"
 msgstr ""
 
-#: src/components/status.jsx:3200
+#: src/components/status.jsx:3188
 msgid "Post removed by author"
 msgstr ""
 
-#: src/components/status.jsx:3201
+#: src/components/status.jsx:3189
 msgid "Post hidden because you've blocked @{name}."
 msgstr ""
 
-#: src/components/status.jsx:3203
+#: src/components/status.jsx:3191
 msgid "Post hidden because you've blocked {domain}."
 msgstr ""
 
-#: src/components/status.jsx:3204
+#: src/components/status.jsx:3192
 msgid "Post hidden because you've muted @{name}."
 msgstr ""
 
-#: src/components/status.jsx:3275
+#: src/components/status.jsx:3263
 msgid "Show anyway"
 msgstr ""
 
-#: src/components/status.jsx:3391
+#: src/components/status.jsx:3379
 msgid "Edit History"
 msgstr ""
 
-#: src/components/status.jsx:3395
+#: src/components/status.jsx:3383
 msgid "Failed to load history"
 msgstr ""
 
-#: src/components/status.jsx:3400
+#: src/components/status.jsx:3388
 msgid "Loading…"
 msgstr ""
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3532
+#: src/components/status.jsx:3520
 msgid "<0/> <1/> boosted"
 msgstr ""
 
@@ -3029,95 +3036,100 @@ msgstr ""
 msgid "Go home"
 msgstr "ホームに戻る"
 
-#: src/pages/account-statuses.jsx:242
+#: src/pages/account-statuses.jsx:232
 msgid "Account posts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:249
+#: src/pages/account-statuses.jsx:239
 msgid "{accountDisplay} (+ Replies)"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:251
+#: src/pages/account-statuses.jsx:241
 msgid "{accountDisplay} (- Boosts)"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:253
+#: src/pages/account-statuses.jsx:243
 msgid "{accountDisplay} (#{tagged})"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:255
+#: src/pages/account-statuses.jsx:245
 msgid "{accountDisplay} (Media)"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:261
+#: src/pages/account-statuses.jsx:251
 msgid "{accountDisplay} ({monthYear})"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:332
+#: src/pages/account-statuses.jsx:322
 msgid "Clear filters"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:349
+#: src/pages/account-statuses.jsx:339
 msgid "Showing post with replies"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:354
+#: src/pages/account-statuses.jsx:344
 msgid "+ Replies"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:360
+#: src/pages/account-statuses.jsx:350
 msgid "Showing posts without boosts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:365
+#: src/pages/account-statuses.jsx:355
 msgid "- Boosts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:371
+#: src/pages/account-statuses.jsx:361
 msgid "Showing posts with media"
 msgstr ""
 
 #. placeholder {0}: tag.name
-#: src/pages/account-statuses.jsx:388
+#: src/pages/account-statuses.jsx:378
 msgid "Showing posts tagged with #{0}"
 msgstr ""
 
-#. placeholder {0}: date.toLocaleString(i18n.locale, { month: 'long', year: 'numeric', })
-#: src/pages/account-statuses.jsx:427
+#. placeholder {0}: date.toLocaleString( i18n.locale, { month: 'long', year: 'numeric', }, )
+#: src/pages/account-statuses.jsx:418
 msgid "Showing posts in {0}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:496
+#. placeholder {0}: account?.username
+#: src/pages/account-statuses.jsx:465
+msgid "Search @{0}'s posts"
+msgstr ""
+
+#: src/pages/account-statuses.jsx:511
 #: src/pages/search.jsx:345
 #: src/pages/search.jsx:492
 msgid "Posts"
 msgstr "投稿"
 
-#: src/pages/account-statuses.jsx:521
+#: src/pages/account-statuses.jsx:536
 msgid "Nothing to see here yet."
 msgstr "ここに表示するものはまだありません。"
 
-#: src/pages/account-statuses.jsx:522
+#: src/pages/account-statuses.jsx:537
 #: src/pages/public.jsx:99
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr "ポストを読み込むことができません"
 
-#: src/pages/account-statuses.jsx:563
-#: src/pages/account-statuses.jsx:593
+#: src/pages/account-statuses.jsx:578
+#: src/pages/account-statuses.jsx:608
 msgid "Unable to fetch account info"
 msgstr "アカウント情報を取得できませんでした"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:570
+#: src/pages/account-statuses.jsx:585
 msgid "Switch to account's instance {0}"
 msgstr "このアカウントのインスタンス {0} の表示に切り替える"
 
-#: src/pages/account-statuses.jsx:600
+#: src/pages/account-statuses.jsx:615
 msgid "Switch to my instance (<0>{currentInstance}</0>)"
 msgstr "自分のインスタンス (<0>{currentInstance}</0>) の表示に切り替える"
 
-#: src/pages/account-statuses.jsx:673
+#: src/pages/account-statuses.jsx:688
 msgid "Month"
 msgstr ""
 

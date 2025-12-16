@@ -203,7 +203,7 @@ export const getPreferences = mem(
 );
 
 export function setPreferences(preferences) {
-  getPreferences.clear(); // clear memo cache
+  getPreferences.cache.clear(); // clear memo cache
   store.account.set('preferences', preferences);
 }
 

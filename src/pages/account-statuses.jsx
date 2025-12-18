@@ -238,7 +238,10 @@ function AccountStatuses() {
     if (!excludeReplies) {
       title = t`${accountDisplay} (+ Replies)`;
     } else if (excludeBoosts) {
-      title = t`${accountDisplay} (- Boosts)`;
+      title = t({
+        comment: 'Real minus sign (−) is used here',
+        message: `${accountDisplay} (− Boosts)`,
+      });
     } else if (tagged) {
       title = t`${accountDisplay} (#${tagged})`;
     } else if (media) {
@@ -352,7 +355,7 @@ function AccountStatuses() {
               }}
               class={!excludeBoosts ? '' : 'is-active'}
             >
-              <Trans>- Boosts</Trans>
+              <Trans comment="Real minus sign (−) is used here">− Boosts</Trans>
             </Link>
             <Link
               to={`/${instance}/a/${id}${media ? '' : '?media=1'}`}

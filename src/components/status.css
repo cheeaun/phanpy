@@ -1396,7 +1396,6 @@
   height: 100%;
   object-fit: cover;
   vertical-align: middle;
-  dynamic-range-limit: standard; /* Disable HDR */
 }
 :is(.status, .media-post) .media {
   cursor: pointer;
@@ -2752,7 +2751,6 @@ a.card:is(:hover, :focus):visited {
   vertical-align: text-bottom;
   object-fit: contain;
   /* object-position: left; */
-  dynamic-range-limit: standard; /* Disable HDR */
   content-visibility: auto;
   contain-intrinsic-size: auto 1.2em;
 

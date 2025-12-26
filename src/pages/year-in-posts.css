@@ -593,13 +593,13 @@
 
     background-image:
       linear-gradient(
-        var(--grid-color) var(--grid-border-width),
-        transparent 1px
+        var(--grid-color) calc(var(--grid-border-width) + 1px),
+        transparent calc(var(--grid-border-width) + 1.5px)
       ),
       linear-gradient(
         90deg,
         var(--grid-color) var(--grid-border-width),
-        transparent 1px
+        transparent var(--grid-border-width)
       );
     background-size: var(--grid-size) var(--grid-size);
     transition: translate 1s var(--timing-function);

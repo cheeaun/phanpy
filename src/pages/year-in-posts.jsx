@@ -1,6 +1,6 @@
 import './year-in-posts.css';
 
-import { Plural, Trans, useLingui } from '@lingui/react/macro';
+import { Plural, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import FlexSearch from 'flexsearch';
 import { forwardRef } from 'preact/compat';
@@ -13,6 +13,8 @@ import {
 } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 import { useThrottledCallback } from 'use-debounce';
+
+import yearInPostsUrl from '../assets/features/year-in-posts.png';
 
 import Icon from '../components/icon';
 import Link from '../components/link';
@@ -85,7 +87,7 @@ function getMonth(month) {
 const SEARCH_RESULT_PAGE_SIZE = 30;
 
 function YearInPosts() {
-  const { i18n, t } = useLingui();
+  const { i18n } = useLingui();
   const [searchParams, setSearchParams] = useSearchParams();
   const yearParam = searchParams.get('year');
   const monthParam = searchParams.get('month');
@@ -687,6 +689,31 @@ function YearInPosts() {
                     Year in Posts <sup>beta</sup>
                   </h1>
                   <p>A year-at-a-glance view of your posts.</p>
+                  <details>
+                    <summary>What is this?</summary>
+                    <p>
+                      Year in Posts is a simple, searchable archive of your
+                      posts, offering a year-at-a-glance view with calendar
+                      visualizations and straight-forward interface to sort and
+                      filter through posts.
+                    </p>
+                    <img
+                      src={yearInPostsUrl}
+                      width="1200"
+                      height="900"
+                      alt="Preview of Year in Posts UI"
+                    />
+                    <p>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.target.closest('details').open = false;
+                        }}
+                      >
+                        Let's explore my posts
+                      </button>
+                    </p>
+                  </details>
 
                   <form class="year-generate" onSubmit={handleGenerate}>
                     <label>
@@ -838,9 +865,7 @@ function YearInPosts() {
 
               {(month !== null || searchQuery) && filteredPosts.length > 1 && (
                 <div class="sort-controls">
-                  <span class="filter-label">
-                    <Trans>Sort</Trans>
-                  </span>{' '}
+                  <span class="filter-label">Sort</span>{' '}
                   <fieldset class="radio-field-group">
                     {SORT_OPTIONS.filter((o) => {
                       if (o.key === 'relevance') return !!searchQuery;
@@ -875,10 +900,10 @@ function YearInPosts() {
                         {
                           {
                             relevance: `Relevance`,
-                            createdAt: t`Date`,
-                            repliesCount: t`Replies`,
-                            favouritesCount: t`Likes`,
-                            reblogsCount: t`Boosts`,
+                            createdAt: `Date`,
+                            repliesCount: `Replies`,
+                            favouritesCount: `Likes`,
+                            reblogsCount: `Boosts`,
                           }[key]
                         }
                         {sortBy === key &&

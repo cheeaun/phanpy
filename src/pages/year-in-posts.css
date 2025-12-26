@@ -2,6 +2,7 @@
   /* via https://modernfontstacks.com/ */
   --serif-font: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
 
+  padding-bottom: 0 !important;
   background-color: var(--bg-faded-color);
   background-image: radial-gradient(
     closest-side,
@@ -15,6 +16,13 @@
   .timeline-deck {
     background-color: transparent;
     margin-top: 0 !important;
+    transition: 1s ease-out 0.3s;
+    transition-property: opacity;
+    will-change: opacity;
+
+    @starting-style {
+      opacity: 0;
+    }
   }
   header {
     --margin-top: 0 !important;
@@ -78,6 +86,58 @@
       text-transform: uppercase;
       font-weight: 500;
       color: var(--text-insignificant-color);
+    }
+
+    details {
+      border-radius: 16px;
+      text-wrap: balance;
+      color: var(--text-insignificant-color);
+      padding: 1em;
+      margin: -1em 0 0;
+      transition: all 0.3s var(--timing-function);
+      line-height: 1.4;
+
+      &[open] {
+        transform: translateY(-20vh);
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        background-image:
+          radial-gradient(
+            farthest-corner at 25% 0,
+            transparent 80%,
+            var(--bg-faded-color) 95%,
+            var(--bg-color)
+          ),
+          radial-gradient(
+            farthest-corner at 100% 100%,
+            transparent 80%,
+            var(--bg-faded-blur-color)
+          );
+        outline: 1px solid var(--bg-color);
+        box-shadow: 0 16px 32px -16px var(--drop-shadow-color);
+
+        ~ * {
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        img {
+          width: 480px;
+          height: auto;
+          border-radius: 8px;
+          border: 1px solid var(--outline-color);
+        }
+      }
+
+      summary {
+        font-size: 0.9em;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+          color: var(--text-color);
+        }
+      }
     }
   }
 
@@ -568,6 +628,9 @@
   --grid-size: 100px;
   --grid-angle: 90deg;
   --grid-duration: 25s; /* .25s per px */
+  /* Offset the space taken by sticky positioning */
+  margin-top: -100vh;
+  margin-top: -100dvh;
   position: sticky;
   inset: 0;
   width: 100%;
@@ -575,12 +638,13 @@
   perspective: 1000px;
   pointer-events: none;
   z-index: -1;
-  transition: 3s ease-out;
+  transition: 3s ease-out 0.3s;
   transition-property: opacity, perspective;
+  will-change: opacity, perspective;
 
   @starting-style {
     opacity: 0;
-    perspective: 10px;
+    perspective: 600px;
   }
 
   &::before,

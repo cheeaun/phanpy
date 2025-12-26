@@ -694,7 +694,18 @@ function SecondaryRoutes({ isLoggedIn }) {
           <Route
             path="/yip"
             element={
-              <Suspense fallback={<Loader />}>
+              <Suspense
+                fallback={
+                  <div
+                    id="year-in-posts-page"
+                    class="deck-container"
+                    tabIndex="-1"
+                  >
+                    {/* Prevent flash of no background as this is lazy-loaded */}
+                    <Loader />
+                  </div>
+                }
+              >
                 <YearInPosts />
               </Suspense>
             }

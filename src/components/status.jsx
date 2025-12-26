@@ -2703,6 +2703,7 @@ function Status({
                   instance={instance}
                   level={quoted}
                   collapsed={!isSizeLarge && !withinContext}
+                  fallbackQuote={quote}
                 />
                 {!!card &&
                   /^https/i.test(card?.url) &&
@@ -3187,7 +3188,11 @@ const QuoteStatus = memo(({ quote, level = 0 }) => {
   const q = quote;
   let unfulfilledState;
 
-  const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
+  // Static as in there's no live update (edited, liked, etc.)
+  const isStaticQuote = !!q.quoteStatus;
+
+  const quoteStatus =
+    snapStates.statuses[statusKey(q.id, q.instance)] || q.quoteStatus;
   if (quoteStatus) {
     const isSelf = currentAccount && currentAccount === quoteStatus.account?.id;
     const filterInfo =
@@ -3264,6 +3269,7 @@ const QuoteStatus = memo(({ quote, level = 0 }) => {
       >
         <Status
           statusID={q.id}
+          status={isStaticQuote ? quoteStatus : undefined}
           instance={q.instance}
           size="s"
           quoted={level + 1}
@@ -3290,43 +3296,71 @@ const ShallowQuote = ({ quote } = {}) => {
   );
 };
 
-const QuoteStatuses = memo(({ id, instance, level = 0, collapsed = false }) => {
-  if (!id || !instance) return;
-  const { _ } = useLingui();
-  const snapStates = useSnapshot(states);
-  const sKey = statusKey(id, instance);
-  const quotes = snapStates.statusQuotes[sKey];
-  let uniqueQuotes = quotes?.filter(
-    (q, i, arr) => q.native || arr.findIndex((q2) => q2.url === q.url) === i,
-  );
+const QuoteStatuses = memo(
+  ({ id, instance, level = 0, collapsed = false, fallbackQuote }) => {
+    if (!id || !instance) return;
+    const { _ } = useLingui();
+    const snapStates = useSnapshot(states);
+    const sKey = statusKey(id, instance);
+    const quotes = snapStates.statusQuotes[sKey];
+    let uniqueQuotes = quotes?.filter(
+      (q, i, arr) => q.native || arr.findIndex((q2) => q2.url === q.url) === i,
+    );
 
-  if (!uniqueQuotes?.length) return;
-  if (level > 2) {
-    return <ShallowQuote quote={uniqueQuotes[0]} />;
-  }
+    const containerRef = useTruncated();
 
-  if (collapsed) {
-    // Only show the first quote if "collapsed"
-    uniqueQuotes = [uniqueQuotes[0]];
-  }
+    if (!uniqueQuotes?.length && fallbackQuote?.quotedStatus) {
+      // Just render it
+      return (
+        <div
+          class="status-card-container"
+          ref={containerRef}
+          data-read-more={_(readMoreText)}
+          data-quote-container-static={true}
+        >
+          <QuoteStatus
+            quote={{
+              // Same structure as the one in saveStatus (utils/states)
+              id,
+              instance,
+              // url
+              state: fallbackQuote.state,
+              // account
+              native: true,
+              // Inject whole quoteStatus instead of reading from states
+              quoteStatus: fallbackQuote.quotedStatus,
+            }}
+          />
+        </div>
+      );
+    }
 
-  const containerRef = useTruncated();
+    if (!uniqueQuotes?.length) return;
+    if (level > 2) {
+      return <ShallowQuote quote={uniqueQuotes[0]} />;
+    }
 
-  return (
-    <div
-      class="status-card-container"
-      ref={containerRef}
-      data-read-more={_(readMoreText)}
-    >
-      {uniqueQuotes.map((q) => {
-        const quoteKey = q.id
-          ? statusKey(q.id, q.instance)
-          : `${q.instance || ''}-${q.state}`;
-        return <QuoteStatus key={quoteKey} quote={q} level={level} />;
-      })}
-    </div>
-  );
-});
+    if (collapsed) {
+      // Only show the first quote if "collapsed"
+      uniqueQuotes = [uniqueQuotes[0]];
+    }
+
+    return (
+      <div
+        class="status-card-container"
+        ref={containerRef}
+        data-read-more={_(readMoreText)}
+      >
+        {uniqueQuotes.map((q) => {
+          const quoteKey = q.id
+            ? statusKey(q.id, q.instance)
+            : `${q.instance || ''}-${q.state}`;
+          return <QuoteStatus key={quoteKey} quote={q} level={level} />;
+        })}
+      </div>
+    );
+  },
+);
 
 function EditedAtModal({
   statusID,

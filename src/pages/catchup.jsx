@@ -1102,7 +1102,7 @@ function Catchup() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (range < RANGES[RANGES.length - 1].value) {
+                    if (range <= RANGES[RANGES.length - 1].value) {
                       let duration;
                       if (
                         range === RANGES[RANGES.length - 1].value &&

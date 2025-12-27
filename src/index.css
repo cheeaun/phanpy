@@ -352,6 +352,11 @@ img {
   max-width: 100%;
 }
 
+img,
+video {
+  dynamic-range-limit: standard; /* Disable HDR */
+}
+
 hr {
   height: 2px;
   border: 0;

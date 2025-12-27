@@ -113,6 +113,7 @@ export default function QuotesModal({
                       size="s"
                       readOnly
                       showCommentCount
+                      showQuoteCount
                     />
                   </Link>
                 </li>

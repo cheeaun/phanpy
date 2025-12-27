@@ -1,0 +1,32 @@
+name: Bundle Size Report
+
+on:
+  pull_request:
+    branches: [production]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  bundle-size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "npm"
+      - run: npm ci
+      - name: Build and extract bundle sizes
+        run: npm run build:sizes --silent > bundle-sizes.md
+      - name: Debug - show file content
+        run: |
+          echo "File size:"
+          wc -l bundle-sizes.md
+          echo "First 20 lines:"
+          head -20 bundle-sizes.md
+      - name: Comment on PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: bundle-size
+          path: bundle-sizes.md

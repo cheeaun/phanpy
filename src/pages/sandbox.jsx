@@ -374,12 +374,12 @@ export default function Sandbox() {
     };
 
     // Clear the getPreferences cache to ensure our new preferences are used
-    getPreferences.clear();
+    getPreferences.cache.clear();
 
     // Restore the original method when the component unmounts
     return () => {
       store.account.get = originalGet;
-      getPreferences.clear();
+      getPreferences.cache.clear();
     };
   }, [toggleState.mediaPreference, toggleState.expandWarnings]);
 

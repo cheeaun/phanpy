@@ -97,7 +97,7 @@ function _translangTranslate(text, source, target) {
   });
 }
 const translangTranslate = pmem(_translangTranslate, {
-  maxAge: TRANSLATED_MAX_AGE,
+  expires: TRANSLATED_MAX_AGE,
 });
 const throttledTranslangTranslate = pmem(
   ({ signal, text, source, target }) =>
@@ -106,7 +106,7 @@ const throttledTranslangTranslate = pmem(
     }),
   {
     // I know, this is double-layered memoization
-    maxAge: TRANSLATED_MAX_AGE,
+    expires: TRANSLATED_MAX_AGE,
   },
 );
 

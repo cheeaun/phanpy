@@ -395,15 +395,22 @@
     align-items: center;
     gap: 8px;
     padding: 12px;
-    background-color: var(--link-bg-color);
-    background-image: radial-gradient(
-      ellipse at top var(--backward),
-      var(--bg-faded-color) 10%,
-      var(--link-bg-color) 30% 85%,
-      var(--link-light-color)
-    );
     border-radius: 9999px;
     flex-wrap: wrap;
+    background-color: var(--link-bg-color);
+    --top-glare-color: var(--link-light-color);
+    --bottom-glare-color: var(--bg-faded-color);
+    background-image: radial-gradient(
+      ellipse at top var(--backward),
+      var(--bottom-glare-color) 10%,
+      var(--link-bg-color) 30% 85%,
+      var(--top-glare-color)
+    );
+
+    @media (prefers-color-scheme: dark) {
+      --top-glare-color: var(--bg-faded-color);
+      --bottom-glare-color: var(--link-light-color);
+    }
 
     input[type='number'] {
       font-weight: bold;

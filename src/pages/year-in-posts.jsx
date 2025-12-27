@@ -746,7 +746,7 @@ function YearInPosts() {
                 </div>
               )}
 
-              {availableYears.length > 0 && (
+              {availableYears.length > 0 && uiState !== 'generating' && (
                 <div class="year-selection">
                   <p>Generated years in posts:</p>
                   <ul>

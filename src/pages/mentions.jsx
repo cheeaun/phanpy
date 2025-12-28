@@ -50,7 +50,10 @@ function Mentions({ columnMode, ...props }) {
       });
 
       const statuses = value?.map((item) => item.status);
-      const filteredStatuses = applyTimelineFilters(statuses, snapStates.settings);
+      const filteredStatuses = applyTimelineFilters(
+        statuses, 
+        snapStates.settings
+      );
 
       return {
         ...results,

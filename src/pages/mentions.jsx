@@ -1,12 +1,14 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useMemo, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 
 import Link from '../components/link';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { fixNotifications } from '../utils/group-notifications';
-import { saveStatus } from '../utils/states';
+import states, { saveStatus } from '../utils/states';
+import { applyTimelineFilters } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -14,6 +16,7 @@ const emptySearchParams = new URLSearchParams();
 
 function Mentions({ columnMode, ...props }) {
   const { t } = useLingui();
+  const snapStates = useSnapshot(states);
   const { masto, instance } = api();
   const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
   const [stateType, setStateType] = useState(null);
@@ -45,6 +48,14 @@ function Mentions({ columnMode, ...props }) {
       value.forEach(({ status: item }) => {
         saveStatus(item, instance);
       });
+
+      const statuses = value?.map((item) => item.status);
+      const filteredStatuses = applyTimelineFilters(statuses, snapStates.settings);
+
+      return {
+        ...results,
+        value: filteredStatuses,
+      };
     }
     return {
       ...results,
@@ -74,6 +85,14 @@ function Mentions({ columnMode, ...props }) {
       value.forEach(({ lastStatus: item }) => {
         saveStatus(item, instance);
       });
+
+      const statuses = value?.map((item) => item.lastStatus);
+      const filteredStatuses = applyTimelineFilters(statuses, snapStates.settings);
+
+      return {
+        ...results,
+        value: filteredStatuses,
+      };
     }
     console.log('results', results);
     return {

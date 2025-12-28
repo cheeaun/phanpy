@@ -28,6 +28,7 @@ import {
   isMediaFirstInstance,
 } from '../utils/store-utils';
 import supports from '../utils/supports';
+import { applyTimelineFilters } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -160,13 +161,14 @@ function AccountStatuses() {
         .values()
         .next();
       if (value?.length && !tagged && !media) {
-        const pinnedStatuses = value.map((status) => {
+        let pinnedStatuses = value.map((status) => {
           saveStatus(status, instance);
           return {
             ...status,
             _pinned: true,
           };
         });
+        pinnedStatuses = applyTimelineFilters(pinnedStatuses, snapStates.settings);
         if (pinnedStatuses.length >= 3) {
           const pinnedStatusesIds = pinnedStatuses.map((status) => status.id);
           results.push({
@@ -216,9 +218,10 @@ function AccountStatuses() {
         }
       }
 
-      results.push(...value);
+      const filteredValue = applyTimelineFilters(value, snapStates.settings);
+      results.push(...filteredValue);
 
-      value.forEach((item) => {
+      filteredValue.forEach((item) => {
         saveStatus(item, instance);
       });
     }

@@ -437,6 +437,47 @@ function Settings({ onClose }) {
                 <Trans>Boosts carousel</Trans>
               </label>
             </li>
+            <li class="block">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={snapStates.settings.hideBoosts}
+                  onChange={(e) => {
+                    states.settings.hideBoosts = e.target.checked;
+                  }}
+                />{' '}
+                <Trans>Hide boosts in timelines</Trans>
+              </label>
+              <div class="sub-section insignificant">
+                <small>
+                  <Trans>
+                    Hides all boosted posts from timelines. Individual status
+                    pages still show boosts in threads.
+                  </Trans>
+                </small>
+              </div>
+            </li>
+            <li class="block">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={snapStates.settings.hideReplies}
+                  onChange={(e) => {
+                    states.settings.hideReplies = e.target.checked;
+                  }}
+                />{' '}
+                <Trans>Hide replies in timelines</Trans>
+              </label>
+              <div class="sub-section insignificant">
+                <small>
+                  <Trans>
+                    Hides all reply posts from timelines, including
+                    self-replies. Individual status pages still show replies in
+                    threads.
+                  </Trans>
+                </small>
+              </div>
+            </li>
             {!!TRANSLANG_INSTANCES && (
               <li class="block">
                 <label>

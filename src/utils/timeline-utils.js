@@ -84,6 +84,24 @@ export function dedupeBoosts(items, instance) {
   return filteredItems;
 }
 
+export function applyTimelineFilters(items, settings) {
+  if (!settings) return items;
+
+  return items.filter((item) => {
+    // Filter boosts
+    if (settings.hideBoosts && item.reblog) {
+      return false;
+    }
+
+    // Filter replies (any post with inReplyToId)
+    if (settings.hideReplies && item.inReplyToId) {
+      return false;
+    }
+
+    return true;
+  });
+}
+
 export function groupContext(items, instance) {
   const contexts = [];
   let contextIndex = 0;

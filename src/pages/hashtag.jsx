@@ -9,6 +9,7 @@ import {
 } from '@szhsin/react-menu';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
 import MenuConfirm from '../components/menu-confirm';
@@ -20,6 +21,7 @@ import { filteredItems } from '../utils/filters';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import { isMediaFirstInstance } from '../utils/store-utils';
+import { applyTimelineFilters } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -32,6 +34,7 @@ const TOTAL_TAGS_LIMIT = TAGS_LIMIT_PER_MODE + 1;
 
 function Hashtags({ media: mediaView, columnMode, ...props }) {
   const { t } = useLingui();
+  const snapStates = useSnapshot(states);
   // const navigate = useNavigate();
   let { hashtag, ...params } = columnMode ? {} : useParams();
   if (props.hashtag) hashtag = props.hashtag;
@@ -97,6 +100,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           skipThreading: media || mediaFirst, // If media view, no need to form threads
         });
       });
+      value = applyTimelineFilters(value, snapStates.settings);
 
       maxID.current = value[value.length - 1].id;
     }
@@ -121,6 +125,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
       let { value } = results;
       const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
       if (value?.length && !valueContainsLatestItem) {
+        value = applyTimelineFilters(value, snapStates.settings);
         value = filteredItems(value, 'public');
         return true;
       }

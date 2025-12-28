@@ -169,8 +169,8 @@ function AccountStatuses() {
           };
         });
         pinnedStatuses = applyTimelineFilters(
-          pinnedStatuses, 
-          snapStates.settings
+          pinnedStatuses,
+          snapStates.settings,
         );
         if (pinnedStatuses.length >= 3) {
           const pinnedStatusesIds = pinnedStatuses.map((status) => status.id);

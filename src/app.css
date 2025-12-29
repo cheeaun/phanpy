@@ -281,13 +281,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
         --grid-gap: 16px;
         grid-template-columns: 1fr 1fr 1fr;
 
-        @media (min-width: 40em) {
-          width: 95vw;
-          max-width: calc(320px * 3.3);
-          transform: translateX(calc(-50% + var(--main-width) / 2));
-          &:dir(rtl) {
-            transform: translateX(calc(50% - var(--main-width) / 2));
-          }
+        width: 95vw;
+        max-width: calc(320px * 3.3);
+        transform: translateX(calc(-50% + var(--main-width) / 2));
+        &:dir(rtl) {
+          transform: translateX(calc(50% - var(--main-width) / 2));
         }
       }
 

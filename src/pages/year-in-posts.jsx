@@ -1,6 +1,6 @@
 import './year-in-posts.css';
 
-import { Plural, useLingui } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import FlexSearch from 'flexsearch';
 import { forwardRef } from 'preact/compat';
@@ -59,6 +59,7 @@ const FILTER_KEYS = {
   replies: 'Replies',
   quotes: 'Quotes',
   boosts: 'Boosts',
+  media: 'Media',
 };
 
 const SORT_OPTIONS = [
@@ -281,6 +282,73 @@ function YearInPosts() {
     return result;
   }, [posts, year]);
 
+  const monthMediaGrids = useMemo(() => {
+    if (postType !== 'media') return {};
+    const grids = {};
+    posts.forEach((post) => {
+      const date = new Date(post.createdAt);
+      const m = date.getMonth();
+      const d = date.getDate();
+      if (!grids[m]) grids[m] = {};
+      if (!grids[m][d]) grids[m][d] = [];
+      grids[m][d].push(post);
+    });
+
+    Object.keys(grids).forEach((month) => {
+      const days = grids[month];
+      const firstDayOfMonth = new Date(year, parseInt(month), 1);
+      const firstDayOfWeek = firstDayOfMonth.getDay();
+
+      const calendar = [];
+
+      for (let i = 0; i < firstDayOfWeek; i++) {
+        calendar.push(null);
+      }
+
+      for (let day = 1; day <= 31; day++) {
+        const dayPosts = days[day] || [];
+        let bestPost = null;
+        let hasMedia = false;
+        if (dayPosts.length > 0) {
+          const postsWithMedia = dayPosts.filter((post) => {
+            const actualPost = post.reblog || post;
+            return actualPost.mediaAttachments?.some(media => 
+              media.previewUrl || media.url || media.previewRemoteUrl || media.remoteUrl
+            );
+          });
+          
+          if (postsWithMedia.length > 0) {
+            bestPost = postsWithMedia.reduce((currentBest, post) => {
+              const actualPost = post.reblog || post;
+              const engagementScore =
+                (actualPost.favouritesCount || 0) +
+                (actualPost.reblogsCount || 0) +
+                (actualPost.repliesCount || 0) +
+                (actualPost.quotesCount || 0);
+              
+              const bestEngagementScore = currentBest
+                ? ((currentBest.reblog || currentBest).favouritesCount || 0) +
+                  ((currentBest.reblog || currentBest).reblogsCount || 0) +
+                  ((currentBest.reblog || currentBest).repliesCount || 0) +
+                  ((currentBest.reblog || currentBest).quotesCount || 0)
+                : -1;
+              
+              if (engagementScore > bestEngagementScore) return post;
+              if (engagementScore === bestEngagementScore) return currentBest || post;
+              return currentBest;
+            }, null);
+            hasMedia = true;
+          }
+        }
+        calendar.push(bestPost ? { post: bestPost, hasMedia } : { hasMedia });
+      }
+
+      grids[month] = calendar;
+    });
+
+    return grids;
+  }, [posts, year, postType]);
+
   const monthsWithPosts = useMemo(() => {
     const monthCounts = {};
     const monthTypes = {};
@@ -317,6 +385,7 @@ function YearInPosts() {
           month: parseInt(month),
           count,
           heatmap: monthHeatmaps[month] || [],
+          mediaGrid: monthMediaGrids[month] || [],
           original: types.original,
           reply: types.reply,
           quote: types.quote,
@@ -324,9 +393,9 @@ function YearInPosts() {
         };
       })
       .sort((a, b) => a.month - b.month);
-  }, [posts, monthHeatmaps]);
+  }, [posts, monthHeatmaps, monthMediaGrids]);
 
-  const [searchIndex, setSearchIndex] = useState(null);
+  const searchIndexRef = useRef(null);
   useEffect(() => {
     if (totalPosts > 0) {
       const index = new FlexSearch.Document({
@@ -354,32 +423,15 @@ function YearInPosts() {
           card: cardText,
         });
       });
-      setSearchIndex(index);
-    } else {
-      setSearchIndex(null);
+      searchIndexRef.current = index;
     }
   }, [posts]);
 
   const searchedPosts = useMemo(() => {
     if (!searchQuery) return posts;
-    if (!searchIndex) {
-      const q = searchQuery.toLowerCase();
-      return posts.filter((p) => {
-        const s = p.reblog || p;
-        return (
-          s.content?.toLowerCase().includes(q) ||
-          s.spoilerText?.toLowerCase().includes(q) ||
-          s.poll?.options?.some((o) => o.title.toLowerCase().includes(q)) ||
-          s.mediaAttachments?.some((m) =>
-            m.description?.toLowerCase().includes(q),
-          ) ||
-          s.card?.title?.toLowerCase().includes(q) ||
-          s.card?.description?.toLowerCase().includes(q)
-        );
-      });
-    }
+    if (!searchIndexRef.current) return [];
     console.time(`search: '${searchQuery}'`);
-    const allResults = searchIndex.search(searchQuery, {
+    const allResults = searchIndexRef.current.search(searchQuery, {
       limit: totalPosts,
     });
     console.timeEnd(`search: '${searchQuery}'`);
@@ -391,7 +443,7 @@ function YearInPosts() {
       .map((id) => postsMap.get(id))
       .filter(Boolean);
     return postResults;
-  }, [posts, searchQuery, searchIndex]);
+  }, [posts, searchQuery]);
 
   useEffect(() => {
     setSearchLimit(SEARCH_RESULT_PAGE_SIZE);
@@ -419,6 +471,7 @@ function YearInPosts() {
       replies: 0,
       quotes: 0,
       boosts: 0,
+      media: 0,
     };
 
     monthPosts.forEach((post) => {
@@ -434,6 +487,11 @@ function YearInPosts() {
       } else {
         counts.original++;
       }
+
+      const status = post.reblog || post;
+      if (status.mediaAttachments?.length > 0) {
+        counts.media++;
+      }
     });
 
     return [counts, monthPosts];
@@ -443,6 +501,9 @@ function YearInPosts() {
     const filtered = monthPosts.filter((post) => {
       if (postType === 'boosts') {
         return !!post.reblog;
+      } else if (postType === 'media') {
+        const status = post.reblog || post;
+        return status.mediaAttachments?.length > 0;
       } else if (postType === 'quotes') {
         return (
           supportsNativeQuote() &&
@@ -617,6 +678,12 @@ function YearInPosts() {
                       setSearchQuery(val);
                       setSearchLimit(SEARCH_RESULT_PAGE_SIZE);
                     }}
+                    onEscape={() => {
+                      if (!searchQuery.trim()) {
+                        setShowSearchField(false);
+                        setSearchQuery('');
+                      }
+                    }}
                   />
                 ) : (
                   <h1 class="header-double-lines">
@@ -672,6 +739,16 @@ function YearInPosts() {
                     >
                       <Icon icon="refresh" />
                       <span>Regenerate</span>
+                    </MenuItem>
+                    <MenuItem
+                      type="checkbox"
+                      checked={postType === 'media'}
+                      onClick={() => {
+                        setPostType(postType === 'media' ? 'all' : 'media');
+                      }}
+                    >
+                      <Icon icon="check-circle" alt="☑️" />{' '}
+                      <span class="menu-grow">Media only</span>
                     </MenuItem>
                   </Menu2>
                 </>
@@ -1070,9 +1147,20 @@ const IntersectionPostItem = ({ root, post, instance }) => {
 function CalendarBar({ year, month, monthsWithPosts, postType }) {
   const { i18n } = useLingui();
   return (
-    <div class={`calendar-bar ${month === null ? 'grid' : 'horizontal'}`}>
+    <div
+      class={`calendar-bar ${month === null ? 'grid' : 'horizontal'} ${postType === 'media' ? 'media-grid' : ''}`}
+    >
       {monthsWithPosts.map(
-        ({ month: m, count, heatmap, original, reply, quote, boost }) => {
+        ({
+          month: m,
+          count,
+          heatmap,
+          mediaGrid,
+          original,
+          reply,
+          quote,
+          boost,
+        }) => {
           const originalRatio = count > 0 ? original / count : 0;
           const replyRatio = count > 0 ? reply / count : 0;
           const quoteRatio = count > 0 ? quote / count : 0;
@@ -1094,33 +1182,72 @@ function CalendarBar({ year, month, monthsWithPosts, postType }) {
               data-month={m}
             >
               <div class="month-name">{getMonthName(m, i18n.locale)}</div>
-              {heatmap.length > 0 && (
-                <div class="month-heatmap">
-                  {heatmap.map((dayData, i) => {
-                    const total = dayData.count || 0;
-                    const originalRatio =
-                      total > 0 ? dayData.original / total : 0;
-                    const replyRatio = total > 0 ? dayData.reply / total : 0;
-                    const quoteRatio = total > 0 ? dayData.quote / total : 0;
-                    const boostRatio = total > 0 ? dayData.boost / total : 0;
+              {postType === 'media'
+                ? mediaGrid.length > 0 && (
+                    <div class="month-media-grid">
+                      {mediaGrid.map((item, i) => {
+                        if (!item)
+                          return <span key={i} class="media-day empty" />;
+                        if (!item.hasMedia)
+                          return <span key={i} class="media-day no-media" />;
+                        const post = item.post;
+                        const status = post.reblog || post;
+                        const media = status.mediaAttachments?.[0];
+                        return (
+                          <span key={i} class="media-day">
+                            <img
+                              src={media.previewUrl || media.url}
+                              loading="lazy"
+                              decoding="async"
+                              onError={(e) => {
+                                const { src } = e.target;
+                                if (
+                                  src === media.previewUrl ||
+                                  src === media.url
+                                ) {
+                                  e.target.src =
+                                    media.previewRemoteUrl || media.remoteUrl;
+                                } else {
+                                  e.target.remove();
+                                }
+                              }}
+                              alt=""
+                            />
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )
+                : heatmap.length > 0 && (
+                    <div class="month-heatmap">
+                      {heatmap.map((dayData, i) => {
+                        const total = dayData.count || 0;
+                        const originalRatio =
+                          total > 0 ? dayData.original / total : 0;
+                        const replyRatio =
+                          total > 0 ? dayData.reply / total : 0;
+                        const quoteRatio =
+                          total > 0 ? dayData.quote / total : 0;
+                        const boostRatio =
+                          total > 0 ? dayData.boost / total : 0;
 
-                    return (
-                      <span
-                        key={i}
-                        class={`heatmap-day ${dayData.day === null ? 'empty' : ''} ${i % 7 === 0 || i % 7 === 6 ? 'weekend' : ''}`}
-                        data-ratio={dayData.ratio}
-                        style={{
-                          '--ratio': dayData.ratio,
-                          '--original-ratio': originalRatio,
-                          '--reply-ratio': replyRatio,
-                          '--quote-ratio': quoteRatio,
-                          '--boost-ratio': boostRatio,
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-              )}
+                        return (
+                          <span
+                            key={i}
+                            class={`heatmap-day ${dayData.day === null ? 'empty' : ''} ${i % 7 === 0 || i % 7 === 6 ? 'weekend' : ''}`}
+                            data-ratio={dayData.ratio}
+                            style={{
+                              '--ratio': dayData.ratio,
+                              '--original-ratio': originalRatio,
+                              '--reply-ratio': replyRatio,
+                              '--quote-ratio': quoteRatio,
+                              '--boost-ratio': boostRatio,
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
+                  )}
               <div class="month-metadata">
                 {/* <Plural value={count} one="# post" other="# posts" /> */}
                 {count} posts {/* TODO: Use Plural above when finalized */}
@@ -1134,7 +1261,7 @@ function CalendarBar({ year, month, monthsWithPosts, postType }) {
 }
 
 const SearchField = forwardRef(
-  ({ searchQuery, onSearch, placeholder }, ref) => {
+  ({ searchQuery, onSearch, placeholder, onEscape }, ref) => {
     const searchInputRef = useRef(null);
 
     useImperativeHandle(ref, () => ({
@@ -1177,6 +1304,11 @@ const SearchField = forwardRef(
           onInput={(e) => {
             const val = e.target.value;
             throttledSearch(val);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' && !e.target.value.trim()) {
+              onEscape?.();
+            }
           }}
         />
       </form>

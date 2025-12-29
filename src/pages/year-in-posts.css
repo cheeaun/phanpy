@@ -264,6 +264,7 @@
         box-shadow:
           0 2px 4px var(--drop-shadow-color),
           0 4px 8px var(--drop-shadow-color);
+        filter: none;
       }
 
       &:active {
@@ -282,6 +283,19 @@
 
         &:not(.is-active, :hover, :focus) .month-heatmap {
           opacity: 0.75;
+        }
+      }
+
+      .media-grid & {
+        background-color: var(--bg-faded-blur-color);
+
+        &::before {
+          background-image: none;
+          background-color: var(--outline-hover-color);
+        }
+
+        &.is-active {
+          background-color: var(--bg-color);
         }
       }
 
@@ -314,6 +328,7 @@
   .month-heatmap {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
     gap: var(--hairline-width);
     transition: opacity 0.3s ease;
 
@@ -375,6 +390,47 @@
             var(--ratio)
           )
         );
+      }
+    }
+  }
+
+  .month-media-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: var(--hairline-width);
+
+    .media-day {
+      --cell-size: 24px;
+      .calendar-bar.horizontal & {
+        --cell-size: 16px;
+      }
+
+      width: var(--cell-size);
+      height: var(--cell-size);
+
+      &:not(.empty) {
+        border-radius: 4px;
+        outline: 1px solid var(--outline-hover-color);
+        outline-offset: -1px;
+        overflow: hidden;
+      }
+
+      &.empty {
+        opacity: 0;
+      }
+
+      &.no-media {
+        background-color: var(--bg-blur-color);
+        outline-color: var(--outline-color);
+        scale: 0.8;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        image-rendering: crisp-edges;
       }
     }
   }

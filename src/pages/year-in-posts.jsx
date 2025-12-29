@@ -1,7 +1,7 @@
 import './year-in-posts.css';
 
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import { MenuItem } from '@szhsin/react-menu';
+import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import FlexSearch from 'flexsearch';
 import { forwardRef } from 'preact/compat';
 import {
@@ -739,15 +739,6 @@ function YearInPosts() {
                     }
                   >
                     <MenuItem
-                      onClick={() => {
-                        handleFetchYearPosts();
-                      }}
-                      disabled={uiState === 'loading' || !!searchQuery}
-                    >
-                      <Icon icon="refresh" />
-                      <span>Regenerate</span>
-                    </MenuItem>
-                    <MenuItem
                       type="checkbox"
                       checked={postType === 'media'}
                       onClick={() => {
@@ -756,6 +747,16 @@ function YearInPosts() {
                     >
                       <Icon icon="check-circle" alt="☑️" />{' '}
                       <span class="menu-grow">Media only</span>
+                    </MenuItem>
+                    <MenuDivider />
+                    <MenuItem
+                      onClick={() => {
+                        handleFetchYearPosts();
+                      }}
+                      disabled={uiState === 'loading' || !!searchQuery}
+                    >
+                      <Icon icon="refresh" />
+                      <span>Regenerate</span>
                     </MenuItem>
                   </Menu2>
                 </>
@@ -1041,7 +1042,7 @@ function YearInPosts() {
                     <div class="ui-state">
                       <button
                         type="button"
-                        class="plain button"
+                        class="plain6 block"
                         onClick={() =>
                           setSearchLimit((l) => l + SEARCH_RESULT_PAGE_SIZE)
                         }

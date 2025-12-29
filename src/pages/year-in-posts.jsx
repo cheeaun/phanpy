@@ -312,11 +312,15 @@ function YearInPosts() {
         if (dayPosts.length > 0) {
           const postsWithMedia = dayPosts.filter((post) => {
             const actualPost = post.reblog || post;
-            return actualPost.mediaAttachments?.some(media => 
-              media.previewUrl || media.url || media.previewRemoteUrl || media.remoteUrl
+            return actualPost.mediaAttachments?.some(
+              (media) =>
+                media.previewUrl ||
+                media.url ||
+                media.previewRemoteUrl ||
+                media.remoteUrl,
             );
           });
-          
+
           if (postsWithMedia.length > 0) {
             bestPost = postsWithMedia.reduce((currentBest, post) => {
               const actualPost = post.reblog || post;
@@ -325,16 +329,17 @@ function YearInPosts() {
                 (actualPost.reblogsCount || 0) +
                 (actualPost.repliesCount || 0) +
                 (actualPost.quotesCount || 0);
-              
+
               const bestEngagementScore = currentBest
                 ? ((currentBest.reblog || currentBest).favouritesCount || 0) +
                   ((currentBest.reblog || currentBest).reblogsCount || 0) +
                   ((currentBest.reblog || currentBest).repliesCount || 0) +
                   ((currentBest.reblog || currentBest).quotesCount || 0)
                 : -1;
-              
+
               if (engagementScore > bestEngagementScore) return post;
-              if (engagementScore === bestEngagementScore) return currentBest || post;
+              if (engagementScore === bestEngagementScore)
+                return currentBest || post;
               return currentBest;
             }, null);
             hasMedia = true;

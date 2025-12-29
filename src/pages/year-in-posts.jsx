@@ -312,35 +312,37 @@ function YearInPosts() {
         if (dayPosts.length > 0) {
           const postsWithMedia = dayPosts.filter((post) => {
             const actualPost = post.reblog || post;
-            return actualPost.mediaAttachments?.some(
-              (media) =>
-                media.previewUrl ||
-                media.url ||
-                media.previewRemoteUrl ||
-                media.remoteUrl,
+            return (
+              !post.reblog &&
+              actualPost.mediaAttachments?.some(
+                (media) =>
+                  media.previewUrl ||
+                  media.url ||
+                  media.previewRemoteUrl ||
+                  media.remoteUrl,
+              )
             );
           });
 
           if (postsWithMedia.length > 0) {
-            bestPost = postsWithMedia.reduce((currentBest, post) => {
-              const actualPost = post.reblog || post;
-              const engagementScore =
+            bestPost = postsWithMedia.reduce((topPost, post) => {
+              const actualPost = post;
+              const totalCount =
                 (actualPost.favouritesCount || 0) +
                 (actualPost.reblogsCount || 0) +
                 (actualPost.repliesCount || 0) +
                 (actualPost.quotesCount || 0);
 
-              const bestEngagementScore = currentBest
-                ? ((currentBest.reblog || currentBest).favouritesCount || 0) +
-                  ((currentBest.reblog || currentBest).reblogsCount || 0) +
-                  ((currentBest.reblog || currentBest).repliesCount || 0) +
-                  ((currentBest.reblog || currentBest).quotesCount || 0)
+              const topTotalCount = topPost
+                ? (topPost.favouritesCount || 0) +
+                  (topPost.reblogsCount || 0) +
+                  (topPost.repliesCount || 0) +
+                  (topPost.quotesCount || 0)
                 : -1;
 
-              if (engagementScore > bestEngagementScore) return post;
-              if (engagementScore === bestEngagementScore)
-                return currentBest || post;
-              return currentBest;
+              if (totalCount > topTotalCount) return post;
+              if (totalCount === topTotalCount) return topPost || post;
+              return topPost;
             }, null);
             hasMedia = true;
           }
@@ -494,7 +496,7 @@ function YearInPosts() {
       }
 
       const status = post.reblog || post;
-      if (status.mediaAttachments?.length > 0) {
+      if (!post.reblog && status.mediaAttachments?.length > 0) {
         counts.media++;
       }
     });
@@ -508,7 +510,7 @@ function YearInPosts() {
         return !!post.reblog;
       } else if (postType === 'media') {
         const status = post.reblog || post;
-        return status.mediaAttachments?.length > 0;
+        return !post.reblog && status.mediaAttachments?.length > 0;
       } else if (postType === 'quotes') {
         return (
           supportsNativeQuote() &&
@@ -1001,7 +1003,7 @@ function YearInPosts() {
                 <>
                   <ul class="timeline">
                     {filteredPosts.length === 0 ? (
-                      <>{/* Nada */}</>
+                      <p class="ui-state insignificant">…</p>
                     ) : totalPosts > 20 ? (
                       filteredPosts.map((post) => (
                         <IntersectionPostItem
@@ -1195,8 +1197,7 @@ function CalendarBar({ year, month, monthsWithPosts, postType }) {
                           return <span key={i} class="media-day empty" />;
                         if (!item.hasMedia)
                           return <span key={i} class="media-day no-media" />;
-                        const post = item.post;
-                        const status = post.reblog || post;
+                        const status = item.post;
                         const media = status.mediaAttachments?.[0];
                         return (
                           <span key={i} class="media-day">

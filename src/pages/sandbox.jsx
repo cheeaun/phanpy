@@ -1665,7 +1665,7 @@ export default function Sandbox() {
                         }
                       />
                       <span>Always hide media</span>
-                      <sup>2</sup>
+                      {/* <sup>2</sup> */}
                     </label>
                   </li>
                 </ul>
@@ -1693,7 +1693,7 @@ export default function Sandbox() {
               Link preview card conditionally renders based on presence of other
               elements like media, etc.
             </li>
-            <li>"Always hide media" is not supported yet.</li>
+            {/* <li>"Always hide media" is not supported yet.</li> */}
           </ul>
           <p>
             Images are from{' '}

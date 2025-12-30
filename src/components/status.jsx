@@ -580,7 +580,6 @@ function Status({
   const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
 
   // default | show_all | hide_all
-  // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
   const readingExpandMedia =
     prefs['reading:expand:media']?.toLowerCase() || 'default';
 
@@ -2407,7 +2406,10 @@ function Status({
           )}
           <div
             class={`content-container ${
-              spoilerText || sensitive || filterInfo?.action === 'blur'
+              spoilerText ||
+              sensitive ||
+              filterInfo?.action === 'blur' ||
+              readingExpandMedia === 'hide_all'
                 ? 'has-spoiler'
                 : ''
             } ${showSpoiler ? 'show-spoiler' : ''} ${
@@ -2595,7 +2597,9 @@ function Status({
                   />
                 )}
                 {!previewMode &&
-                  (sensitive || filterInfo?.action === 'blur') &&
+                  (sensitive ||
+                    filterInfo?.action === 'blur' ||
+                    readingExpandMedia === 'hide_all') &&
                   !!mediaAttachments.length &&
                   (readingExpandMedia !== 'show_all' ||
                     filterInfo?.action === 'blur') && (

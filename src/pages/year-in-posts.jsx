@@ -702,7 +702,9 @@ function YearInPosts() {
                           one="# post"
                           other="# posts"
                         /> */}
-                        {posts.length} posts{' '}
+                        {month !== null
+                          ? `${getMonthName(month)} – ${monthsWithPosts[month].count} posts`
+                          : `${posts.length} posts`}
                         {/* TODO: Use Plural above when finalized */}
                       </div>
                     )}

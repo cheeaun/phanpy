@@ -817,9 +817,9 @@ function YearInPosts() {
                   </form>
                   <p class="insignificant">
                     <small>
-                      This downloads your posts from the server and saves them
-                      locally. It may take a longer time and require more disk
-                      space.
+                      This downloads your posts (excluding media files) from the
+                      server and saves them locally. It may take a longer time
+                      and require more disk space.
                     </small>
                   </p>
                 </>

@@ -37,7 +37,7 @@ const fetchLatestPostsMemoized = pmem(
     const { value } = await statusesIterator.next();
     return value || [];
   },
-  { maxAge: 60000 },
+  { expires: 60000 },
 ); // 1 minute cache
 
 export default function ComposeButton() {

@@ -207,6 +207,9 @@ export default defineConfig({
     },
     VitePWA({
       manifest: {
+        id: './', // Cannot be empty string for Web Install API to work
+        start_url: './',
+        scope: './',
         name: CLIENT_NAME,
         short_name: CLIENT_NAME,
         description: 'Minimalistic opinionated Mastodon web client',

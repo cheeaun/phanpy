@@ -34,7 +34,7 @@ const fetchLinks = pmem(
     return masto.v1.trends.links.list().values().next();
   },
   {
-    maxAge: TREND_CACHE_TIME,
+    expires: TREND_CACHE_TIME,
   },
 );
 
@@ -43,7 +43,7 @@ const fetchHashtags = pmem(
     return masto.v1.trends.tags.list().values().next();
   },
   {
-    maxAge: TREND_CACHE_TIME,
+    expires: TREND_CACHE_TIME,
   },
 );
 

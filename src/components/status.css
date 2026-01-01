@@ -177,6 +177,13 @@
     max-height: max(160px, 33vh);
     overflow: clip;
 
+    &:has(.quote-post-native) {
+      max-height: max(200px, 40vh);
+    }
+    &:has(.quote-post-native :is(.quote-post-native, .poll, .media-container)) {
+      max-height: max(240px, 50vh);
+    }
+
     &.truncated {
       mask-image: linear-gradient(
         to top,
@@ -288,6 +295,11 @@
 .timeline-deck .status-card .content.truncated:after {
   /* Don't show "Read more" in status cards */
   content: none !important;
+}
+
+.status-shallow-card {
+  mask-image: linear-gradient(to bottom, #000, transparent);
+  padding-bottom: 0;
 }
 
 .status-card-unfulfilled {
@@ -1384,7 +1396,6 @@
   height: 100%;
   object-fit: cover;
   vertical-align: middle;
-  dynamic-range-limit: standard; /* Disable HDR */
 }
 :is(.status, .media-post) .media {
   cursor: pointer;
@@ -2740,7 +2751,6 @@ a.card:is(:hover, :focus):visited {
   vertical-align: text-bottom;
   object-fit: contain;
   /* object-position: left; */
-  dynamic-range-limit: standard; /* Disable HDR */
   content-visibility: auto;
   contain-intrinsic-size: auto 1.2em;
 

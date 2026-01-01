@@ -66,7 +66,7 @@ const RANGES = [
   { label: msg`last 10 hours`, value: 10 },
   { label: msg`last 11 hours`, value: 11 },
   { label: msg`last 12 hours`, value: 12 },
-  { label: msg`beyond 12 hours`, value: 13 },
+  { label: msg`beyond 12 hours`, value: 13, beyond: true },
 ];
 
 const FILTER_KEYS = {
@@ -212,6 +212,14 @@ function Catchup() {
   const handleCatchupClick = useCallback(async ({ duration } = {}) => {
     const now = Date.now();
     const maxCreatedAt = duration ? now - duration : null;
+    console.log('CATCHUP', {
+      duration,
+      durationHuman: duration ? `${duration / 1000 / 60 / 60}h` : null,
+      maxCreatedAt,
+      maxCreatedAtHuman: maxCreatedAt
+        ? dtf.format(new Date(maxCreatedAt))
+        : null,
+    });
     setUIState('loading');
     const results = await fetchHome({ maxCreatedAt });
     // Namespaced by account ID
@@ -1102,20 +1110,23 @@ function Catchup() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (range < RANGES[RANGES.length - 1].value) {
-                      let duration;
-                      if (
-                        range === RANGES[RANGES.length - 1].value &&
-                        catchupLastRef.current?.checked
-                      ) {
+                    let duration;
+                    const beyondRange = RANGES.find((r) => r.beyond);
+                    if (range < beyondRange.value) {
+                      // Within range
+                      duration = range * 60 * 60 * 1000;
+                    } else {
+                      // Beyond range
+                      const untilLastCatchup = catchupLastRef.current?.checked;
+                      if (untilLastCatchup) {
+                        // Until last catch-up's end time
                         duration = Date.now() - lastCatchupEndAt;
                       } else {
-                        duration = range * 60 * 60 * 1000;
+                        // Go beyond range until max, even after last catch-up's end time
+                        // Don't need to set duration
                       }
-                      handleCatchupClick({ duration });
-                    } else {
-                      handleCatchupClick();
                     }
+                    handleCatchupClick({ duration });
                   }}
                 >
                   <Trans>Catch up</Trans>

@@ -78,6 +78,9 @@ const Sandbox =
     ? lazy(() => import('./pages/sandbox'))
     : () => null;
 
+// Lazy load YearInPosts component
+const YearInPosts = lazy(() => import('./pages/year-in-posts'));
+
 // QR Scan Test component for development
 function QrScanTest() {
   useEffect(() => {
@@ -688,6 +691,25 @@ function SecondaryRoutes({ isLoggedIn }) {
           <Route path="/sp" element={<ScheduledPosts />} />
           <Route path="/ft" element={<Filters />} />
           <Route path="/catchup" element={<Catchup />} />
+          <Route
+            path="/yip"
+            element={
+              <Suspense
+                fallback={
+                  <div
+                    id="year-in-posts-page"
+                    class="deck-container"
+                    tabIndex="-1"
+                  >
+                    {/* Prevent flash of no background as this is lazy-loaded */}
+                    <Loader />
+                  </div>
+                }
+              >
+                <YearInPosts />
+              </Suspense>
+            }
+          />
           <Route path="/annual_report/:year" element={<AnnualReport />} />
         </>
       )}

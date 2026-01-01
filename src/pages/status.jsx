@@ -104,6 +104,33 @@ function StatusPage(params) {
     }
   }, [sKey]);
 
+  // Set canonical link, not for SEO, but for sharing
+  useEffect(() => {
+    if (!heroStatus || !heroStatus.url) return;
+
+    const existingCanonical = document.querySelector('link[rel="canonical"]');
+    let originalHref = null;
+    let canonicalLink;
+
+    if (existingCanonical) {
+      originalHref = existingCanonical.href;
+      existingCanonical.href = heroStatus.url;
+    } else {
+      canonicalLink = document.createElement('link');
+      canonicalLink.rel = 'canonical';
+      canonicalLink.href = heroStatus.url;
+      document.head.appendChild(canonicalLink);
+    }
+
+    return () => {
+      if (existingCanonical && originalHref) {
+        existingCanonical.href = originalHref;
+      } else if (canonicalLink) {
+        document.head.removeChild(canonicalLink);
+      }
+    };
+  }, [heroStatus?.url]);
+
   const closeLink = useMemo(() => {
     const { prevLocation } = states;
     const pathname =

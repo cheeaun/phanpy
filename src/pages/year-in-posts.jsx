@@ -40,6 +40,20 @@ import {
 
 const MIN_YEAR = 2005; // https://en.wikipedia.org/wiki/Microblogging#Origin
 
+function getDefaultYear() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth();
+  const currentDay = now.getDate();
+
+  // Buffer 30 days before default showing current year
+  if (currentMonth === 0 && currentDay <= 30) {
+    return currentYear - 1;
+  }
+
+  return currentYear;
+}
+
 function formatTimezoneOffset(offset) {
   // offset is in minutes, negative for east of UTC
   const sign = offset <= 0 ? '+' : '-';
@@ -809,7 +823,7 @@ function YearInPosts() {
                         min={MIN_YEAR}
                         max={new Date().getFullYear()}
                         name="year"
-                        defaultValue={new Date().getFullYear()}
+                        defaultValue={getDefaultYear()}
                         disabled={uiState === 'generating'}
                       />
                     </label>

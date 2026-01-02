@@ -126,6 +126,7 @@ function YearInPosts() {
   const [uiState, setUIState] = useState('default');
   const [posts, setPosts] = useState([]);
   const [availableYears, setAvailableYears] = useState([]);
+  const [searchEnabled, setSearchEnabled] = useState(true);
   const [showSearchField, setShowSearchField] = useState(!!searchQuery);
   const [searchLimit, setSearchLimit] = useState(SEARCH_RESULT_PAGE_SIZE);
   const [sortBy, setSortBy] = useState(searchQuery ? 'relevance' : 'createdAt');
@@ -190,8 +191,9 @@ function YearInPosts() {
   async function handleFetchYearPosts(yearParam = year) {
     setUIState('loading');
     try {
-      const allResults = await fetchYearPosts(yearParam);
-      setPosts(allResults);
+      const { posts, searchEnabled } = await fetchYearPosts(yearParam);
+      setPosts(posts);
+      setSearchEnabled(searchEnabled !== false);
       setUIState('results');
       loadYears();
       // Inform user about timezone context
@@ -838,6 +840,15 @@ function YearInPosts() {
                       and require more disk space.
                     </small>
                   </p>
+                  {!searchEnabled && (
+                    <p class="insignificant">
+                      <small>
+                        ⚠️ Your server doesn't support advanced search, this will
+                        make more requests to the server and take much longer
+                        time.
+                      </small>
+                    </p>
+                  )}
                 </>
               ) : (
                 <div class="ui-state year-in-posts-start">

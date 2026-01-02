@@ -1,5 +1,6 @@
 import { api } from './api';
 import db from './db';
+import isSearchEnabled from './is-search-enabled';
 import store from './store';
 import { getCurrentAccount, getCurrentAccountNS } from './store-utils';
 
@@ -35,9 +36,17 @@ export async function removeYear(yearToRemove) {
   }
 }
 
+function isPostInYear(createdAt, year) {
+  const postDate = new Date(createdAt);
+  const startOfYear = new Date(year, 0, 1);
+  const endOfYear = new Date(year, 11, 31, 23, 59, 59, 999);
+  return postDate >= startOfYear && postDate <= endOfYear;
+}
+
 export async function fetchYearPosts(year) {
-  const { masto } = api();
+  const { masto, instance } = api();
   const allResults = [];
+  let gapsFilled = false;
 
   const account = getCurrentAccount();
   if (!account) {
@@ -49,23 +58,45 @@ export async function fetchYearPosts(year) {
   const startOfYear = new Date(year, 0, 1);
   const endOfYear = new Date(year, 11, 31, 23, 59, 59, 999);
 
-  // Calculate beforeStr: use 2nd Jan for safety margin (server timezone may differ)
-  const nextYear = year + 1;
-  const beforeStr = `${nextYear}-01-02`;
+  const searchEnabled = await isSearchEnabled(instance);
 
-  // Search for the latest status before the year ends
+  // Use search strategies if available
   let maxId = null;
-  try {
-    const searchResults = await masto.v2.search.list({
-      q: `from:${accountAcct} before:${beforeStr}`,
-      type: 'statuses',
-      limit: 1,
-    });
-    if (searchResults?.statuses?.length) {
-      maxId = searchResults.statuses[0].id;
+  if (searchEnabled) {
+    try {
+      const latestPostIterator = masto.v1.accounts
+        .$select(accountId)
+        .statuses.list({
+          limit: 1,
+          exclude_replies: false,
+          exclude_reblogs: false,
+        })
+        .values();
+      const latestResult = await latestPostIterator.next();
+
+      if (latestResult?.value?.length) {
+        const latestPost = latestResult.value[0];
+        if (!isPostInYear(latestPost.createdAt, year)) {
+          // Use "before" search to find last post before year ends
+          const beforeStr = `${year + 1}-01-02`;
+          try {
+            const beforeResults = await masto.v2.search.list({
+              q: `from:${accountAcct} before:${beforeStr}`,
+              type: 'statuses',
+              limit: 1,
+            });
+
+            if (beforeResults?.statuses?.length) {
+              maxId = beforeResults.statuses[0].id;
+            }
+          } catch (e) {
+            console.error('Before search failed', e);
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Failed to fetch latest post', e);
     }
-  } catch (e) {
-    console.error('Search failed', e);
   }
 
   const statusIterator = masto.v1.accounts
@@ -85,6 +116,7 @@ export async function fetchYearPosts(year) {
 
       if (done || !value?.length) break fetchLoop;
 
+      let foundInYear = false;
       for (const status of value) {
         const createdAt = new Date(status.createdAt);
         if (createdAt > endOfYear) {
@@ -92,12 +124,14 @@ export async function fetchYearPosts(year) {
         }
         if (createdAt >= startOfYear) {
           allResults.push(status);
-        } else {
-          break fetchLoop;
+          foundInYear = true;
         }
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      // Only break if we didn't find any posts in the year in this batch
+      if (!foundInYear) break fetchLoop;
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
     } catch (e) {
       console.error(e);
       break fetchLoop;
@@ -106,7 +140,65 @@ export async function fetchYearPosts(year) {
 
   allResults.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 
-  // Calculate total size of all posts in bytes
+  // Forward verification to check for gaps
+  if (allResults.length > 0) {
+    try {
+      const earliestFetched = allResults[0];
+      const earliestId = earliestFetched.id;
+
+      // Loop to fetch all posts forward from earliest within the year
+      const gapCheckIterator = masto.v1.accounts
+        .$select(accountId)
+        .statuses.list({
+          limit: 40,
+          min_id: earliestId,
+          exclude_replies: false,
+          exclude_reblogs: false,
+        })
+        .values();
+
+      gapFillLoop: while (true) {
+        try {
+          const result = await gapCheckIterator.next();
+          const { value, done } = result;
+
+          if (done || !value?.length) break gapFillLoop;
+
+          let foundInYear = false;
+          for (const status of value) {
+            const createdAt = new Date(status.createdAt);
+            if (createdAt < startOfYear) {
+              continue;
+            }
+            if (createdAt <= endOfYear) {
+              if (!allResults.find((s) => s.id === status.id)) {
+                allResults.push(status);
+                gapsFilled = true;
+              }
+              foundInYear = true;
+            }
+          }
+
+          // Only break if we didn't find any posts in the year in this batch
+          if (!foundInYear) break gapFillLoop;
+
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        } catch (e) {
+          console.error(e);
+          break gapFillLoop;
+        }
+      }
+
+      if (gapsFilled) {
+        allResults.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+        );
+      }
+    } catch (e) {
+      console.error('Gap check failed', e);
+    }
+  }
+
   let totalSize = 0;
   try {
     totalSize = new TextEncoder().encode(JSON.stringify(allResults)).length;
@@ -137,5 +229,9 @@ export async function fetchYearPosts(year) {
   };
   store.account.set(YEAR_IN_POSTS_LIST_KEY, list);
 
-  return allResults;
+  return {
+    posts: allResults,
+    searchEnabled,
+    gapsFilled,
+  };
 }

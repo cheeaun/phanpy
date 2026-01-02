@@ -194,4 +194,6 @@ export const ICONS = {
   'cursor-hand': () => import('@iconify-icons/mingcute/hand-finger-2-line'),
   qrcode: () => import('@iconify-icons/mingcute/qrcode-2-line'),
   scan: () => import('@iconify-icons/mingcute/scan-line'),
+  note: () => import('@iconify-icons/mingcute/document-3-line'),
+  grid: () => import('@iconify-icons/mingcute/grid-line'),
 };

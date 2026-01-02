@@ -6,6 +6,8 @@ import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
 
+import '../components/button-install';
+
 import Icon from '../components/icon';
 import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
@@ -35,6 +37,7 @@ const {
   PHANPY_TRANSLANG_INSTANCES: TRANSLANG_INSTANCES,
   PHANPY_IMG_ALT_API_URL: IMG_ALT_API_URL,
   PHANPY_GIPHY_API_KEY: GIPHY_API_KEY,
+  PHANPY_CLIENT_NAME: CLIENT_NAME,
 } = import.meta.env;
 
 const targetLanguages = Object.entries(languages.tl).map(([code, name]) => ({
@@ -57,6 +60,7 @@ function Settings({ onClose }) {
 
   const [prefs, setPrefs] = useState(getPreferences());
   const { masto, authenticated, instance } = api();
+
   // Get preferences every time Settings is opened
   // NOTE: Disabled for now because I don't expect this to change often. Also for some reason, the /api/v1/preferences endpoint is cached for a while and return old prefs if refresh immediately after changing them.
   // useEffect(() => {
@@ -729,6 +733,18 @@ function Settings({ onClose }) {
                 </button>
               </li>
             )}
+            <li>
+              <Link to="/yip" onClick={onClose} class="button light">
+                Year in Posts
+              </Link>
+            </li>
+            <li>
+              <button-install>
+                <button type="button" class="light">
+                  <Trans>Install {CLIENT_NAME}</Trans>
+                </button>
+              </button-install>
+            </li>
           </ul>
         </section>
         {authenticated && <PushNotificationsSection onClose={onClose} />}

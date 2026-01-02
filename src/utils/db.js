@@ -25,4 +25,5 @@ function initDB(dbName, storeName) {
 export default {
   drafts: initDB('drafts-db', 'drafts-store'),
   catchup: initDB('catchup-db', 'catchup-store'),
+  yearInPosts: initDB('year-in-posts-db', 'year-in-posts-store'),
 };

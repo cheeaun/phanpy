@@ -1,0 +1,139 @@
+/*
+  This file is excluded from Biome in biome.json due to
+  https://github.com/biomejs/biome/issues/7760
+*/
+#quote-chain-modal {
+  background-color: var(--bg-faded-color);
+
+  @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+    header {
+      animation-timeline: none;
+    }
+  }
+
+  .quoted-posts-list {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+      @media (prefers-reduced-motion: no-preference) {
+        & > li {
+          z-index: 1;
+          animation: scroll-quotes linear both;
+          animation-timeline: view();
+          /* animation-range: entry 0% entry 100%; */
+        }
+      }
+    }
+  }
+
+  .quoted-post-item {
+    margin: 0;
+    padding: 0;
+
+    .status-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--outline-color);
+      border-radius: 8px;
+      background-color: var(--bg-color);
+      box-shadow: 0 0 4px 4px var(--bg-faded-color);
+      max-height: 50svh;
+      overflow: hidden;
+
+      &:hover {
+        border-color: var(--outline-hover-color);
+      }
+
+      &.truncated {
+        position: relative;
+
+        &:after {
+          content: attr(data-read-more);
+          line-height: 1;
+          display: inline-block;
+          position: absolute;
+          --inset-offset: 16px;
+          inset-block-end: var(--inset-offset);
+          inset-inline-end: var(--inset-offset);
+          color: var(--text-color);
+          background-color: var(--bg-faded-color);
+          border: 1px dashed var(--link-color);
+          box-shadow:
+            0 0 0 1px var(--bg-color),
+            0 -5px 10px var(--bg-color),
+            0 -5px 15px var(--bg-color),
+            0 -5px 20px var(--bg-color);
+          padding: 0.5em 0.75em;
+          border-radius: 10em;
+          font-size: 90%;
+          white-space: nowrap;
+          text-shadow: 0 -1px var(--bg-color);
+          transition: transform 0.2s ease-out;
+        }
+      }
+
+      &:is(:hover, :focus).truncated:after {
+        color: var(--link-color);
+        transform: translate(2px, 0);
+      }
+
+      > * {
+        pointer-events: none;
+      }
+    }
+
+    .status {
+      font-size: calc(var(--text-size) * 0.9);
+
+      .meta-name {
+        pointer-events: auto;
+      }
+
+      .status-card-container {
+        display: none;
+      }
+
+      .quote-inline {
+        display: none;
+
+        &:is(p:first-child) + p {
+          margin-block-start: 0;
+        }
+      }
+    }
+  }
+}
+
+@keyframes scroll-quotes {
+  entry 0% {
+    transform-origin: top;
+    transform: scale(0.9) translateY(-100%);
+    opacity: 0;
+    z-index: 0;
+  }
+  entry 99% {
+    z-index: 0;
+  }
+  entry 102.5% {
+    transform-origin: top;
+    transform: scale(1) translateY(0%);
+    opacity: 1;
+    z-index: 1;
+  }
+  exit 0% {
+    transform-origin: bottom;
+    transform: scale(1) translateY(0%);
+    opacity: 1;
+  }
+  exit 100% {
+    transform-origin: bottom;
+    transform: scale(0.9) translateY(100%);
+    opacity: 0;
+  }
+}

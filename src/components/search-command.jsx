@@ -1,14 +1,32 @@
 import './search-command.css';
 
 import { memo } from 'preact/compat';
-import { useRef, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { useSnapshot } from 'valtio';
+
+import states from '../utils/states';
 
 import SearchForm from './search-form';
 
 export default memo(function SearchCommand({ onClose = () => {} }) {
+  const snapStates = useSnapshot(states);
   const [showSearch, setShowSearch] = useState(false);
   const searchFormRef = useRef(null);
+
+  useEffect(() => {
+    if (snapStates.showSearchCommand) {
+      const { query } = snapStates.showSearchCommand;
+      setShowSearch(true);
+      setTimeout(() => {
+        if (query) {
+          searchFormRef.current?.setValue?.(query);
+        }
+        searchFormRef.current?.focus?.();
+      }, 150);
+      states.showSearchCommand = false;
+    }
+  }, [snapStates.showSearchCommand]);
 
   useHotkeys(
     ['Slash', '/'],

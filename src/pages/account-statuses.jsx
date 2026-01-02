@@ -18,6 +18,7 @@ import Link from '../components/link';
 import Menu2 from '../components/menu2';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import isSearchEnabled from '../utils/is-search-enabled';
 import mem from '../utils/mem';
 import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
@@ -42,17 +43,6 @@ const supportsInputMonth = mem(() => {
     return false;
   }
 });
-
-async function _isSearchEnabled(instance) {
-  const { masto } = api({ instance });
-  const results = await masto.v2.search.list({
-    q: 'from:me',
-    type: 'statuses',
-    limit: 1,
-  });
-  return !!results?.statuses?.length;
-}
-const isSearchEnabled = pmem(_isSearchEnabled);
 
 function AccountStatuses() {
   const { i18n, t } = useLingui();
@@ -400,18 +390,52 @@ function AccountStatuses() {
                 {/* <span class="filter-count">{tag.statusesCount}</span> */}
               </Link>
             ))}
-            {searchEnabled &&
-              (supportsInputMonth() ? (
-                <label class={`filter-field ${month ? 'is-active' : ''}`}>
-                  <Icon icon="month" size="l" />
-                  <input
-                    type="month"
+            {searchEnabled && (
+              <>
+                {supportsInputMonth() ? (
+                  <label class={`filter-field ${month ? 'is-active' : ''}`}>
+                    <Icon icon="month" size="l" />
+                    <input
+                      type="month"
+                      disabled={!account?.acct}
+                      value={month || ''}
+                      min={MIN_YEAR_MONTH}
+                      max={new Date().toISOString().slice(0, 7)}
+                      onInput={(e) => {
+                        const { value, validity } = e.currentTarget;
+                        if (!validity.valid) return;
+                        setSearchParams(
+                          value
+                            ? {
+                                month: value,
+                              }
+                            : {},
+                        );
+                        const [year, month] = value.split('-');
+                        const monthIndex = parseInt(month, 10) - 1;
+                        const date = new Date(year, monthIndex);
+                        showToast(
+                          t`Showing posts in ${date.toLocaleString(
+                            i18n.locale,
+                            {
+                              month: 'long',
+                              year: 'numeric',
+                            },
+                          )}`,
+                        );
+                      }}
+                    />
+                  </label>
+                ) : (
+                  // Fallback to <select> for month and <input type="number"> for year
+                  <MonthPicker
+                    class={`filter-field ${month ? 'is-active' : ''}`}
                     disabled={!account?.acct}
                     value={month || ''}
                     min={MIN_YEAR_MONTH}
                     max={new Date().toISOString().slice(0, 7)}
                     onInput={(e) => {
-                      const { value, validity } = e.currentTarget;
+                      const { value, validity } = e;
                       if (!validity.valid) return;
                       setSearchParams(
                         value
@@ -420,39 +444,30 @@ function AccountStatuses() {
                             }
                           : {},
                       );
-                      const [year, month] = value.split('-');
-                      const monthIndex = parseInt(month, 10) - 1;
-                      const date = new Date(year, monthIndex);
-                      showToast(
-                        t`Showing posts in ${date.toLocaleString(i18n.locale, {
-                          month: 'long',
-                          year: 'numeric',
-                        })}`,
-                      );
                     }}
                   />
-                </label>
-              ) : (
-                // Fallback to <select> for month and <input type="number"> for year
-                <MonthPicker
-                  class={`filter-field ${month ? 'is-active' : ''}`}
-                  disabled={!account?.acct}
-                  value={month || ''}
-                  min={MIN_YEAR_MONTH}
-                  max={new Date().toISOString().slice(0, 7)}
-                  onInput={(e) => {
-                    const { value, validity } = e;
-                    if (!validity.valid) return;
-                    setSearchParams(
-                      value
-                        ? {
-                            month: value,
-                          }
-                        : {},
-                    );
+                )}
+                <button
+                  type="button"
+                  class="filter-field"
+                  onClick={() => {
+                    states.showSearchCommand = {
+                      query: isSelf ? 'from:me ' : `from:${account?.acct} `,
+                    };
                   }}
-                />
-              ))}
+                >
+                  <Icon
+                    icon="search"
+                    size="l"
+                    alt={
+                      isSelf
+                        ? t`Search my posts`
+                        : t`Search @${account?.username}'s posts`
+                    }
+                  />
+                </button>
+              </>
+            )}
           </div>
         )}
       </>
@@ -725,7 +740,7 @@ function fetchAccount(id, masto) {
   return masto.v1.accounts.$select(id).fetch();
 }
 const memFetchAccount = pmem(fetchAccount, {
-  maxAge: 30 * 60 * 1000, // 30 minutes
+  expires: 30 * 60 * 1000, // 30 minutes
 });
 
 export default AccountStatuses;

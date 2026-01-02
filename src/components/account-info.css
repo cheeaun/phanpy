@@ -376,19 +376,18 @@
   font-size: smaller;
   border-radius: 0;
   align-self: center !important;
-  /* clip a dog ear on top right */
-  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 0 100%);
-  &:dir(rtl) {
-    /* top left */
-    clip-path: polygon(4px 0, 100% 0, 100% 100%, 0 100%, 0 4px);
-  }
+  /* clip a dog ear on bottom right */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    0 100%
+  );
   /* 4x4px square on top right */
   background-size: 4px 4px;
   background-repeat: no-repeat;
-  background-position: top right;
-  &:dir(rtl) {
-    background-position: top left;
-  }
+  background-position: bottom right;
   background-image: linear-gradient(
     to bottom,
     var(--private-note-border-color),

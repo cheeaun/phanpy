@@ -198,12 +198,12 @@ export async function initAccount(client, instance, accessToken, vapidKey) {
 export const getPreferences = mem(
   () => store.account.get('preferences') || {},
   {
-    maxAge: 60 * 1000, // 1 minute
+    expires: 60 * 1000, // 1 minute
   },
 );
 
 export function setPreferences(preferences) {
-  getPreferences.clear(); // clear memo cache
+  getPreferences.cache.clear(); // clear memo cache
   store.account.set('preferences', preferences);
 }
 

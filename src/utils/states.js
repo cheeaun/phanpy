@@ -59,6 +59,7 @@ const states = proxy({
   showQrCodeModal: false,
   showQrScannerModal: false,
   showImportExportAccounts: false,
+  showSearchCommand: false,
   // Shortcuts
   shortcuts: [],
   // Settings
@@ -236,7 +237,7 @@ export function saveStatus(status, instance, opts) {
     if (theQuote?.state) {
       const { quotedStatus, state } = theQuote;
       if (quotedStatus?.id) {
-        const { id } = quotedStatus;
+        const { id, account } = quotedStatus;
         const selfURL = `/${instance}/s/${id}`;
         const sKey = statusKey(id, instance);
         states.statuses[sKey] = quotedStatus;
@@ -246,6 +247,7 @@ export function saveStatus(status, instance, opts) {
             instance,
             url: selfURL,
             state,
+            account,
             native: true,
           },
         ];

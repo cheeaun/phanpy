@@ -24,7 +24,7 @@ export const fetchLists = pmem(
     return lists;
   },
   {
-    maxAge: FETCH_MAX_AGE,
+    expires: FETCH_MAX_AGE,
   },
 );
 
@@ -49,7 +49,7 @@ export const fetchList = pmem(
     return masto.v1.lists.$select(id).fetch();
   },
   {
-    maxAge: FETCH_MAX_AGE,
+    expires: FETCH_MAX_AGE,
   },
 );
 

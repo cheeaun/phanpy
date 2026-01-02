@@ -1,4 +1,4 @@
-import { shouldPolyfill } from '@formatjs/intl-segmenter/should-polyfill';
+import { shouldPolyfill } from '@formatjs/intl-segmenter/should-polyfill.js';
 import { Suspense } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 
@@ -10,7 +10,7 @@ const supportsIntlSegmenter = !shouldPolyfill();
 setTimeout(() => {
   queueMicrotask(() => {
     if (!supportsIntlSegmenter) {
-      import('@formatjs/intl-segmenter/polyfill-force').catch(() => {});
+      import('@formatjs/intl-segmenter/polyfill-force.js').catch(() => {});
     }
   });
 }, 1000);
@@ -23,7 +23,7 @@ export default function IntlSegmenterSuspense({ children }) {
   const [polyfillLoaded, setPolyfillLoaded] = useState(false);
   useEffect(() => {
     (async () => {
-      await import('@formatjs/intl-segmenter/polyfill-force');
+      await import('@formatjs/intl-segmenter/polyfill-force.js');
       setPolyfillLoaded(true);
     })();
   }, []);

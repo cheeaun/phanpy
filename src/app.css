@@ -5,7 +5,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--bg-color);
+  background-color: var(--meta-theme-color, var(--bg-color));
   color: var(--text-color);
   overflow-x: hidden;
 }
@@ -281,13 +281,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
         --grid-gap: 16px;
         grid-template-columns: 1fr 1fr 1fr;
 
-        @media (min-width: 40em) {
-          width: 95vw;
-          max-width: calc(320px * 3.3);
-          transform: translateX(calc(-50% + var(--main-width) / 2));
-          &:dir(rtl) {
-            transform: translateX(calc(50% - var(--main-width) / 2));
-          }
+        width: 95vw;
+        max-width: calc(320px * 3.3);
+        transform: translateX(calc(-50% + var(--main-width) / 2));
+        &:dir(rtl) {
+          transform: translateX(calc(50% - var(--main-width) / 2));
         }
       }
 
@@ -1287,8 +1285,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: 100%;
   z-index: 1000;
   display: flex;
-  background-color: var(--backdrop-color);
+  background-color: var(--meta-theme-color, var(--backdrop-color));
   animation: appear 0.1s ease-out;
+
+  @media (min-width: 40em) {
+    background-color: var(--backdrop-color);
+  }
 }
 .deck-backdrop > a {
   flex-grow: 1;
@@ -3070,7 +3072,7 @@ ul.link-list li a .icon {
 @media (min-width: 40em) {
   html,
   body {
-    background-color: var(--bg-faded-color);
+    background-color: var(--meta-theme-color, var(--bg-faded-color));
   }
   .deck-container {
     background-color: var(--bg-faded-color);

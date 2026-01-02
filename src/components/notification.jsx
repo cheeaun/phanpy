@@ -809,6 +809,7 @@ function Notification({
 }
 
 function TruncatedLink(props) {
+  const { t } = useLingui();
   const ref = useTruncated();
   return <Link {...props} data-read-more={t`Read more →`} ref={ref} />;
 }

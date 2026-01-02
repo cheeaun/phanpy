@@ -22,7 +22,7 @@ export async function removeYear(yearToRemove) {
   try {
     const NS = getCurrentAccountNS();
     const dataId = `${NS}-${yearToRemove}`;
-    await db.yearInPosts.delete(dataId);
+    await db.yearInPosts.del(dataId);
 
     const list = store.account.get(YEAR_IN_POSTS_LIST_KEY) || {};
     delete list[yearToRemove];

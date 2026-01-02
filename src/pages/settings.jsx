@@ -15,7 +15,6 @@ import RelativeTime from '../components/relative-time';
 import languages from '../data/translang-languages';
 import { api, getPreferences, setPreferences } from '../utils/api';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
-import isSearchEnabled from '../utils/is-search-enabled';
 import localeCode2Text from '../utils/localeCode2Text';
 import prettyBytes from '../utils/pretty-bytes';
 import {
@@ -61,15 +60,6 @@ function Settings({ onClose }) {
 
   const [prefs, setPrefs] = useState(getPreferences());
   const { masto, authenticated, instance } = api();
-  const [searchEnabled, setSearchEnabled] = useState(false);
-
-  useEffect(() => {
-    if (!authenticated) return;
-    (async () => {
-      const enabled = await isSearchEnabled(instance);
-      setSearchEnabled(enabled);
-    })();
-  }, [instance, authenticated]);
 
   // Get preferences every time Settings is opened
   // NOTE: Disabled for now because I don't expect this to change often. Also for some reason, the /api/v1/preferences endpoint is cached for a while and return old prefs if refresh immediately after changing them.
@@ -743,13 +733,11 @@ function Settings({ onClose }) {
                 </button>
               </li>
             )}
-            {searchEnabled && (
-              <li>
-                <Link to="/yip" onClick={onClose} class="button light">
-                  Year in Posts
-                </Link>
-              </li>
-            )}
+            <li>
+              <Link to="/yip" onClick={onClose} class="button light">
+                Year in Posts
+              </Link>
+            </li>
             <li>
               <button-install>
                 <button type="button" class="light">

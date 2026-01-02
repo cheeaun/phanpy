@@ -833,13 +833,19 @@ function YearInPosts() {
                       <Icon icon="arrow-right" alt="Generate" size="l" />
                     </button>
                   </form>
-                  <p class="insignificant">
+                  <div class="insignificant">
                     <small>
-                      This downloads your posts (excluding media files) from the
-                      server and saves them locally. It may take a longer time
-                      and require more disk space.
+                      <p>
+                        This downloads your posts (excluding media files) from
+                        the server and saves them locally. It may take a longer
+                        time and require more disk space.
+                      </p>
+                      <p>
+                        Once archived, updated or deleted posts are not
+                        reflected in the archive until regenerated.
+                      </p>
                     </small>
-                  </p>
+                  </div>
                   {!searchEnabled && (
                     <p class="insignificant">
                       <small>
@@ -860,7 +866,7 @@ function YearInPosts() {
 
               {availableYears.length > 0 && uiState !== 'generating' && (
                 <div class="year-selection">
-                  <p>Generated years in posts:</p>
+                  <p>Archived Year in Posts:</p>
                   <ul>
                     {availableYears.map(
                       ({ year, count, fetchedAt, size, timezoneOffset }) => {

@@ -13,6 +13,7 @@ import {
 } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
 import { useThrottledCallback } from 'use-debounce';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import yearInPostsUrl from '../assets/features/year-in-posts.png';
 
@@ -135,6 +136,38 @@ function YearInPosts() {
   const searchFieldRef = useRef(null);
   const scrollableRef = useRef(null);
   const NS = useMemo(() => getCurrentAccountNS(), []);
+
+  // Intercept slash key to focus search field on this page
+  useHotkeys(
+    ['Slash', '/'],
+    (e) => {
+      if (!showSearchField) {
+        setShowSearchField(true);
+        setTimeout(() => {
+          searchFieldRef.current?.focus();
+        }, 100);
+      } else {
+        // If search field is already shown, just focus it
+        searchFieldRef.current?.focus();
+      }
+    },
+    {
+      useKey: true,
+      preventDefault: true,
+      ignoreEventWhen: (e) => {
+        const hasModal = !!document.querySelector('#modal-container > *');
+        const isInput = ['INPUT', 'TEXTAREA'].includes(e.target.tagName);
+        return (
+          hasModal ||
+          isInput ||
+          e.metaKey ||
+          e.ctrlKey ||
+          e.altKey ||
+          e.shiftKey
+        );
+      },
+    },
+  );
 
   const totalPosts = posts.length;
 

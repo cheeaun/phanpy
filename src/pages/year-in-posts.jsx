@@ -19,6 +19,7 @@ import yearInPostsUrl from '../assets/features/year-in-posts.png';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
+import MenuConfirm from '../components/menu-confirm';
 import Menu2 from '../components/menu2';
 import NavMenu from '../components/nav-menu';
 import Status from '../components/status';
@@ -188,20 +189,19 @@ function YearInPosts() {
     }
   };
 
-  async function handleFetchYearPosts(yearParam = year) {
-    setUIState('loading');
+  async function handleRegenerate(year) {
     try {
-      const { posts, searchEnabled } = await fetchYearPosts(yearParam);
-      setPosts(posts);
-      setSearchEnabled(searchEnabled !== false);
-      setUIState('results');
-      loadYears();
-      // Inform user about timezone context
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      showToast(`Archive generated in ${tz}`);
+      setUIState('generating');
+      await fetchYearPosts(year);
+      setSearchParams({ year });
     } catch (e) {
-      console.error(e);
       setUIState('error');
+      console.error('Failed to regenerate year posts:', error);
+      showToast('Unable to regenerate year posts. Please try again.');
+    } finally {
+      if (uiState === 'generating') {
+        setUIState('default');
+      }
     }
   }
 
@@ -766,16 +766,6 @@ function YearInPosts() {
                       <Icon icon="check-circle" alt="☑️" />{' '}
                       <span class="menu-grow">Media only</span>
                     </MenuItem>
-                    <MenuDivider />
-                    <MenuItem
-                      onClick={() => {
-                        handleFetchYearPosts();
-                      }}
-                      disabled={uiState === 'loading' || !!searchQuery}
-                    >
-                      <Icon icon="refresh" />
-                      <span>Regenerate</span>
-                    </MenuItem>
                   </Menu2>
                 </>
               )}
@@ -896,12 +886,27 @@ function YearInPosts() {
                                 ~{prettyBytes(size)}
                               </small>
                             )}{' '}
-                            {fetchedAt && (
-                              <small class="tag insignificant collapsed">
-                                <Icon icon="refresh" />{' '}
-                                <time
-                                  datetime={new Date(fetchedAt).toISOString()}
-                                >
+                            <MenuConfirm
+                              align="end"
+                              confirmLabel={
+                                <span>Regenerate {year} posts?</span>
+                              }
+                              onClick={() => {
+                                handleRegenerate(year);
+                              }}
+                            >
+                              <button
+                                type="button"
+                                class="light small"
+                                disabled={uiState === 'loading'}
+                                title={fetchedAt}
+                              >
+                                <Icon
+                                  icon="refresh"
+                                  size="s"
+                                  class="insignificant"
+                                />{' '}
+                                <span class="insignificant">
                                   {new Date(fetchedAt).toLocaleDateString(
                                     i18n.locale,
                                     {
@@ -910,22 +915,22 @@ function YearInPosts() {
                                       day: 'numeric',
                                     },
                                   )}
-                                </time>
-                              </small>
-                            )}{' '}
-                            {timezoneOffset !== undefined && (
-                              <small
-                                class={`tag insignificant collapsed ${tzMismatch ? 'warn' : ''}`}
-                                title={
-                                  tzMismatch
-                                    ? `Generated in ${formatTimezoneOffset(timezoneOffset)}, current timezone is ${formatTimezoneOffset(currentOffset)}`
-                                    : formatTimezoneOffset(timezoneOffset)
-                                }
-                              >
-                                {tzMismatch && <Icon icon="time" />}
-                                {formatTimezoneOffset(timezoneOffset)}
-                              </small>
-                            )}
+                                </span>{' '}
+                                {timezoneOffset !== undefined && (
+                                  <small
+                                    class={`tag insignificant collapsed ${tzMismatch ? 'warn' : ''}`}
+                                    title={
+                                      tzMismatch
+                                        ? `Generated in ${formatTimezoneOffset(timezoneOffset)}, current timezone is ${formatTimezoneOffset(currentOffset)}`
+                                        : formatTimezoneOffset(timezoneOffset)
+                                    }
+                                  >
+                                    {tzMismatch && <Icon icon="time" />}
+                                    {formatTimezoneOffset(timezoneOffset)}
+                                  </small>
+                                )}
+                              </button>
+                            </MenuConfirm>
                             <button
                               type="button"
                               class="light danger small"

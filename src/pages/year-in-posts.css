@@ -526,7 +526,7 @@
     .date-header {
       position: sticky;
       --mask-padding: 8px;
-      top: calc(var(--sai-top, 0) - var(--mask-padding) / 2);
+      top: calc(var(--sai-top, 0) - var(--mask-padding));
       z-index: 1;
       padding: var(--mask-padding);
       margin: 0;
@@ -544,7 +544,7 @@
         linear-gradient(
           var(--to-forward),
           transparent,
-          #000 var(--mask-padding) 50%,
+          #000 var(--mask-padding) 33%,
           transparent
         ),
         linear-gradient(
@@ -553,6 +553,16 @@
           #000 var(--mask-padding) calc(100% - var(--mask-padding)),
           transparent
         );
+
+      @supports (
+          (animation-timeline: scroll()) and
+          (animation-range: 0% 100%)
+        ) {
+        background-color: transparent;
+        animation: show-bg 1s linear both;
+        animation-timeline: view(block);
+        animation-range: contain 50% exit 0%;
+      }
 
       h2 {
         margin: 0;
@@ -566,6 +576,31 @@
 
       @media (max-height: 600px) {
         font-size: 0.8em;
+      }
+
+      @media (min-width: calc(40em + 10em)) {
+        width: 10em;
+        text-align: end;
+        mask-image:
+          linear-gradient(
+            var(--to-forward),
+            transparent,
+            black 50% calc(100% - var(--mask-padding)),
+            transparent
+          ),
+          linear-gradient(
+            to bottom,
+            transparent,
+            black var(--mask-padding) calc(100% - var(--mask-padding)),
+            transparent
+          );
+        transform: translate(-100%, 1em);
+        height: 6em;
+        margin-bottom: -6em;
+
+        small {
+          display: block;
+        }
       }
     }
   }
@@ -814,5 +849,11 @@
   to {
     backdrop-filter: blur(16px);
     background-color: var(--bg-faded-blur-color);
+  }
+}
+
+@keyframes show-bg {
+  to {
+    background-color: var(--bg-faded-color);
   }
 }

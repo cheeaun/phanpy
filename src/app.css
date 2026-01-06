@@ -1116,7 +1116,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
       ellipse 50% 32px at bottom center,
       var(--carousel-faded-color),
       transparent
-    ), linear-gradient(to top, var(--bg-color) 8px, transparent 64px);
+    ),
+    linear-gradient(to top, var(--bg-color) 8px, transparent 64px);
   background-repeat: no-repeat;
   background-position: bottom center;
 }

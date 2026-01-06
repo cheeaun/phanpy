@@ -27,20 +27,10 @@
   header {
     --margin-top: 0 !important;
     margin-inline: auto;
+    position: static;
 
     > .header-grid {
       backdrop-filter: none;
-
-      @supports (
-          (animation-timeline: scroll()) and
-          (animation-range: 0% 100%)
-        ) {
-        background-color: transparent;
-        grid-template-columns: 1fr 99fr 1fr;
-        animation: blur-scroll linear both;
-        animation-timeline: scroll();
-        animation-range: 0px 100px;
-      }
     }
 
     .search-field {
@@ -531,6 +521,52 @@
 
     > li {
       background-color: var(--bg-color);
+    }
+
+    .date-header {
+      position: sticky;
+      --mask-padding: 8px;
+      top: calc(var(--sai-top, 0) - var(--mask-padding) / 2);
+      z-index: 1;
+      padding: var(--mask-padding);
+      margin: 0;
+      background-color: inherit;
+      border: 0;
+      border-radius: 0;
+      background-color: var(--bg-faded-blur-color);
+      backdrop-filter: blur(24px);
+      text-shadow:
+        0 0 8px var(--bg-color),
+        0 0 8px var(--bg-color),
+        0 0 16px var(--bg-color);
+      mask-composite: intersect;
+      mask-image:
+        linear-gradient(
+          var(--to-forward),
+          transparent,
+          #000 var(--mask-padding) 50%,
+          transparent
+        ),
+        linear-gradient(
+          to bottom,
+          transparent,
+          #000 var(--mask-padding) calc(100% - var(--mask-padding)),
+          transparent
+        );
+
+      h2 {
+        margin: 0;
+        padding: 0;
+      }
+
+      small {
+        font-weight: normal;
+        font-size: var(--text-size);
+      }
+
+      @media (max-height: 600px) {
+        font-size: 0.8em;
+      }
     }
   }
 

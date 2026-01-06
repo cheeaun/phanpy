@@ -11,9 +11,9 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { useThrottledCallback } from 'use-debounce';
-import { useHotkeys } from 'react-hotkeys-hook';
 
 import yearInPostsUrl from '../assets/features/year-in-posts.png';
 
@@ -28,6 +28,7 @@ import { api } from '../utils/api';
 import DateTimeFormat from '../utils/date-time-format';
 import db from '../utils/db';
 import getHTMLText from '../utils/getHTMLText';
+import niceDateTime from '../utils/nice-date-time';
 import prettyBytes from '../utils/pretty-bytes';
 import { supportsNativeQuote } from '../utils/quote-utils';
 import showToast from '../utils/show-toast';
@@ -1076,36 +1077,72 @@ function YearInPosts() {
                   <ul class="timeline">
                     {filteredPosts.length === 0 ? (
                       <p class="ui-state insignificant">…</p>
-                    ) : totalPosts > 20 ? (
-                      filteredPosts.map((post) => (
-                        <IntersectionPostItem
-                          key={post.id}
-                          root={scrollableRef.current}
-                          post={post}
-                          instance={instance}
-                        />
-                      ))
                     ) : (
-                      filteredPosts.map((post) => (
-                        <li key={post.id}>
-                          <Link
-                            class="status-link timeline-item"
-                            to={
-                              post.reblog
-                                ? `/${instance}/s/${post.reblog.id}`
-                                : `/${instance}/s/${post.id}`
-                            }
-                          >
-                            <Status
-                              status={post}
-                              instance={instance}
-                              size="m"
-                              showCommentCount
-                              showQuoteCount
-                            />
-                          </Link>
-                        </li>
-                      ))
+                      filteredPosts.map((post, index) => {
+                        const currentDate = new Date(post.createdAt);
+                        const previousPost = filteredPosts[index - 1];
+                        const previousDate = previousPost
+                          ? new Date(previousPost.createdAt)
+                          : null;
+                        const showDateHeader =
+                          sortBy === 'createdAt' &&
+                          (!previousDate ||
+                            currentDate.toDateString() !==
+                              previousDate.toDateString());
+
+                        return (
+                          <>
+                            {showDateHeader && (
+                              <li class="date-header" key={post.createdAt}>
+                                <h2>
+                                  <span>
+                                    {niceDateTime(post.createdAt, {
+                                      hideTime: true,
+                                      formatOpts: {
+                                        year: undefined,
+                                      },
+                                    })}
+                                  </span>{' '}
+                                  <small class="insignificant bidi-isolate">
+                                    {niceDateTime(post.createdAt, {
+                                      forceOpts: {
+                                        weekday: 'long',
+                                      },
+                                    })}
+                                  </small>
+                                </h2>
+                              </li>
+                            )}
+                            <li key={post.id}>
+                              {totalPosts > 20 ? (
+                                <IntersectionPostItem
+                                  key={post.id}
+                                  root={scrollableRef.current}
+                                  post={post}
+                                  instance={instance}
+                                />
+                              ) : (
+                                <Link
+                                  class="status-link timeline-item"
+                                  to={
+                                    post.reblog
+                                      ? `/${instance}/s/${post.reblog.id}`
+                                      : `/${instance}/s/${post.id}`
+                                  }
+                                >
+                                  <Status
+                                    status={post}
+                                    instance={instance}
+                                    size="m"
+                                    showCommentCount
+                                    showQuoteCount
+                                  />
+                                </Link>
+                              )}
+                            </li>
+                          </>
+                        );
+                      })
                     )}
                   </ul>
 

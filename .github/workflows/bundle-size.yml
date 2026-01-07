@@ -28,5 +28,6 @@ jobs:
       - name: Comment on PR
         uses: marocchino/sticky-pull-request-comment@v2
         with:
+          hide_and_recreate: true
           header: bundle-size
           path: bundle-sizes.md

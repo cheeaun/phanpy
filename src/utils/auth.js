@@ -28,7 +28,7 @@ export async function registerApplication({ instanceURL }) {
     client_name: CLIENT_NAME,
     redirect_uris: REDIRECT_URI,
     scopes: SCOPES,
-    website: WEBSITE,
+    website: WEBSITE || REDIRECT_URI,
   });
   const registrationResponse = await fetch(
     `https://${instanceURL}/api/v1/apps`,
@@ -41,7 +41,7 @@ export async function registerApplication({ instanceURL }) {
     },
   );
   const registrationJSON = await registrationResponse.json();
-  console.log({ registrationJSON });
+  if (DEV) console.log({ registrationJSON });
   return registrationJSON;
 }
 
@@ -112,7 +112,7 @@ export async function getAccessToken({
     body: params.toString(),
   });
   const tokenJSON = await tokenResponse.json();
-  console.log({ tokenJSON });
+  if (DEV) console.log({ tokenJSON });
   return tokenJSON;
 }
 
@@ -140,7 +140,7 @@ export async function revokeAccessToken({
 
     return revokeResponse.ok;
   } catch (error) {
-    console.erro('Error revoking token', error);
+    console.error('Error revoking token', error);
     return false;
   }
 }

@@ -78,6 +78,9 @@ const Sandbox =
     ? lazy(() => import('./pages/sandbox'))
     : () => null;
 
+// Lazy load YearInPosts component
+const YearInPosts = lazy(() => import('./pages/year-in-posts'));
+
 // QR Scan Test component for development
 function QrScanTest() {
   useEffect(() => {
@@ -387,7 +390,7 @@ if (import.meta.env.DEV) {
 const isPWA =
   window.matchMedia('(display-mode: standalone)').matches ||
   window.navigator.standalone === true;
-const PATH_RESTORE_TIME_LIMIT = 2 * 60 * 60 * 1000; // 2 hours, should be good enough
+const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -688,6 +691,25 @@ function SecondaryRoutes({ isLoggedIn }) {
           <Route path="/sp" element={<ScheduledPosts />} />
           <Route path="/ft" element={<Filters />} />
           <Route path="/catchup" element={<Catchup />} />
+          <Route
+            path="/yip"
+            element={
+              <Suspense
+                fallback={
+                  <div
+                    id="year-in-posts-page"
+                    class="deck-container"
+                    tabIndex="-1"
+                  >
+                    {/* Prevent flash of no background as this is lazy-loaded */}
+                    <Loader />
+                  </div>
+                }
+              >
+                <YearInPosts />
+              </Suspense>
+            }
+          />
           <Route path="/annual_report/:year" element={<AnnualReport />} />
         </>
       )}

@@ -6,6 +6,7 @@ import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import i18nDuration from '../utils/i18n-duration';
+import isSearchEnabled from '../utils/is-search-enabled';
 import niceDateTime from '../utils/nice-date-time';
 import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
@@ -173,6 +174,15 @@ function RelatedActions({
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
   const [showPrivateNoteModal, setShowPrivateNoteModal] = useState(false);
   const [lists, setLists] = useState([]);
+  const [searchEnabled, setSearchEnabled] = useState(false);
+
+  useEffect(() => {
+    if (!currentAuthenticated) return;
+    (async () => {
+      const enabled = await isSearchEnabled(currentInstance);
+      setSearchEnabled(enabled);
+    })();
+  }, [currentInstance, currentAuthenticated]);
 
   let { headerStatic, avatarStatic } = info;
   if (!headerStatic || /missing\.png$/.test(headerStatic)) {
@@ -219,7 +229,7 @@ function RelatedActions({
             <button
               type="button"
               class="private-note-tag"
-              title={t`Private note`}
+              title={t`Notes`}
               onClick={() => {
                 setShowPrivateNoteModal(true);
               }}
@@ -298,6 +308,21 @@ function RelatedActions({
                     </Trans>
                   </span>
                 </MenuItem>
+                {searchEnabled && (
+                  <MenuItem
+                    onClick={() => {
+                      states.showSearchCommand = { query: `from:${acct} ` };
+                    }}
+                  >
+                    <Icon icon="search" />
+                    <span>
+                      <Trans>
+                        Search <span class="bidi-isolate">@{username}</span>'s
+                        posts
+                      </Trans>
+                    </span>
+                  </MenuItem>
+                )}
                 <MenuItem
                   onClick={() => {
                     setShowTranslatedBio(true);
@@ -314,10 +339,8 @@ function RelatedActions({
                       setShowPrivateNoteModal(true);
                     }}
                   >
-                    <Icon icon="pencil" />
-                    <span>
-                      {privateNote ? t`Edit private note` : t`Add private note`}
-                    </span>
+                    <Icon icon="note" />
+                    <span>{privateNote ? t`Edit notes` : t`Add notes`}</span>
                   </MenuItem>
                 )}
                 {following && !!relationship && (
@@ -472,16 +495,32 @@ function RelatedActions({
                 <MenuDivider />
               </>
             ) : (
-              supportsEndorsements &&
-              !renderEndorsements && (
-                <>
-                  <MenuItem onClick={() => setRenderEndorsements(true)}>
-                    <Icon icon="endorsement" />
-                    <Trans>Show featured profiles</Trans>
+              <>
+                {searchEnabled && isSelf && (
+                  <MenuItem
+                    onClick={() => {
+                      states.showSearchCommand = { query: 'from:me ' };
+                    }}
+                  >
+                    <Icon icon="search" />
+                    <span>
+                      <Trans>Search my posts</Trans>
+                    </span>
                   </MenuItem>
+                )}
+                {supportsEndorsements && !renderEndorsements && (
+                  <>
+                    <MenuItem onClick={() => setRenderEndorsements(true)}>
+                      <Icon icon="endorsement" />
+                      <Trans>Show featured profiles</Trans>
+                    </MenuItem>
+                  </>
+                )}
+                {((searchEnabled && isSelf) ||
+                  (supportsEndorsements && !renderEndorsements)) && (
                   <MenuDivider />
-                </>
-              )
+                )}
+              </>
             )}
             <MenuItem
               onClick={() => {

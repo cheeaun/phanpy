@@ -11,7 +11,7 @@ const notificationTypeKeys = {
   update: ['status'],
 };
 
-const GROUP_TYPES = ['favourite', 'reblog', 'follow'];
+const GROUP_TYPES = ['favourite', 'reblog', 'follow', 'mention', 'quote'];
 const groupable = (type) => GROUP_TYPES.includes(type);
 
 export function fixNotifications(notifications) {
@@ -101,6 +101,9 @@ export function groupNotifications2(groupNotifications) {
       (type === 'favourite' || type === 'reblog')
     ) {
       virtualType = 'favourite+reblog';
+    }
+    if (type === 'mention' || type === 'quote') {
+      virtualType = 'mention+quote';
     }
     // const key = `${status?.id}-${virtualType}-${date}-${sameCount ? 1 : 0}`;
     const key = `${status?.id}-${virtualType}-${date}`;

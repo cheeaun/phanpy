@@ -1,4 +1,4 @@
-import { shouldPolyfill } from '@formatjs/intl-segmenter/should-polyfill';
+import { shouldPolyfill } from '@formatjs/intl-segmenter/should-polyfill.js';
 import { useEffect, useState } from 'preact/hooks';
 
 import Loader from './loader';
@@ -7,7 +7,7 @@ const supportsIntlSegmenter = !shouldPolyfill();
 
 function importIntlSegmenter() {
   if (!supportsIntlSegmenter) {
-    return import('@formatjs/intl-segmenter/polyfill-force').catch(() => {});
+    return import('@formatjs/intl-segmenter/polyfill-force.js').catch(() => {});
   }
 }
 

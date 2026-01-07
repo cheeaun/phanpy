@@ -203,6 +203,10 @@ function MediaModal({
           metaColor = $meta.content;
           $meta.content = mediaColor;
         }
+        document.documentElement.style.setProperty(
+          '--meta-theme-color',
+          mediaColor,
+        );
       } else {
         const colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
           .matches
@@ -217,6 +221,10 @@ function MediaModal({
           metaColor = $meta.content;
           $meta.content = mediaColor;
         }
+        document.documentElement.style.setProperty(
+          '--meta-theme-color',
+          mediaColor,
+        );
       }
     }
     return () => {
@@ -224,6 +232,7 @@ function MediaModal({
       if ($meta && metaColor) {
         $meta.content = metaColor;
       }
+      document.documentElement.style.removeProperty('--meta-theme-color');
     };
   }, [currentIndex, mediaAccentColors]);
 

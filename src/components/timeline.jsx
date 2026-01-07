@@ -36,7 +36,7 @@ import ThreadBadge from './thread-badge';
 const scrollIntoViewOptions = {
   block: 'start',
   inline: 'center',
-  behavior: 'smooth',
+  behavior: 'instant',
 };
 
 function Timeline({

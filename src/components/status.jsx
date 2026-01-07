@@ -29,7 +29,6 @@ import { isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import htmlContentLength from '../utils/html-content-length';
-import isRTL from '../utils/is-rtl';
 import localeMatch from '../utils/locale-match';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
@@ -72,6 +71,7 @@ import NameText from './name-text';
 import Poll from './poll';
 import PostContent from './post-content';
 import PostEmbedModal from './post-embed-modal';
+import QuoteChainModal from './quote-chain-modal';
 import QuoteSettingsSheet from './quote-settings-sheet';
 import QuotesModal from './quotes-modal';
 import RelativeTime from './relative-time';
@@ -105,15 +105,9 @@ const REACTIONS_LIMIT = 80;
 
 function getPollText(poll) {
   if (!poll?.options?.length) return '';
-  return `📊:\n${poll.options
-    .map(
-      (option) =>
-        `- ${option.title}${
-          option.votesCount >= 0 ? ` (${option.votesCount})` : ''
-        }`,
-    )
-    .join('\n')}`;
+  return `📊:\n${poll.options.map((option) => `- ${option.title}`).join('\n')}`;
 }
+
 function getPostText(status, opts) {
   const {
     maskCustomEmojis,
@@ -130,8 +124,8 @@ function getPostText(status, opts) {
     );
     content = content.replace(emojisRegex, '⬚');
   }
-  return (
-    (spoilerText ? `${spoilerText}\n\n` : '') +
+  const fullText = [
+    spoilerText || '',
     getHTMLText(content, {
       ...htmlTextOpts,
       preProcess:
@@ -154,9 +148,12 @@ function getPostText(status, opts) {
             }
           }
         }),
-    }) +
-    getPollText(poll)
-  );
+    }),
+    getPollText(poll),
+  ]
+    .join('\n\n')
+    .trim();
+  return fullText;
 }
 
 function forgivingQSA(selectors = [], dom = document) {
@@ -328,9 +325,53 @@ function Status({
   showReplyParent,
   mediaFirst,
   showCommentCount: forceShowCommentCount,
+  showQuoteCount: forceShowQuoteCount,
+  ghost,
 }) {
   const { _, t, i18n } = useLingui();
   const rtf = RTF(i18n.locale);
+
+  if (ghost) {
+    const { inReplyToAccountId } = ghost;
+    const ghostAccount = inReplyToAccountId
+      ? states.accounts[inReplyToAccountId]
+      : null;
+    return (
+      <article
+        class={`status ghost ${mediaFirst ? 'status-media-first small' : ''}`}
+      >
+        {!mediaFirst && (
+          <Avatar
+            size="xxl"
+            url={ghostAccount?.avatarStatic || ghostAccount?.avatar}
+            squircle={ghostAccount?.bot}
+          />
+        )}
+        <div class="container">
+          <div class="meta">
+            {(size === 's' || mediaFirst) && (
+              <Avatar
+                size="m"
+                url={ghostAccount?.avatarStatic || ghostAccount?.avatar}
+                squircle={ghostAccount?.bot}
+              />
+            )}
+            {ghostAccount && (
+              <NameText account={ghostAccount} showAvatar={false} />
+            )}
+          </div>
+          <div class="content-container">
+            {mediaFirst && <div class="media-first-container" />}
+            <div class={`content ${mediaFirst ? 'media-first-content' : ''}`}>
+              <p class="insignificant">
+                <Trans>Post unavailable</Trans>
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+    );
+  }
 
   if (skeleton) {
     return (
@@ -536,7 +577,6 @@ function Status({
   const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
 
   // default | show_all | hide_all
-  // Ignore hide_all because it means hide *ALL* media including non-sensitive ones
   const readingExpandMedia =
     prefs['reading:expand:media']?.toLowerCase() || 'default';
 
@@ -680,6 +720,7 @@ function Status({
   const [showEmbed, setShowEmbed] = useState(false);
   const [showQuoteSettings, setShowQuoteSettings] = useState(false);
   const [showQuotes, setShowQuotes] = useState(false);
+  const [showQuoteChain, setShowQuoteChain] = useState(false);
 
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
@@ -1265,6 +1306,18 @@ function Status({
               </span>
             </MenuItem>
           )}
+          {quote?.quotedStatus?.quote && (
+            <MenuItem
+              onClick={() => {
+                setShowQuoteChain(true);
+              }}
+            >
+              <Icon icon="quote" />
+              <span>
+                <Trans>Unwrap quote chain</Trans>
+              </span>
+            </MenuItem>
+          )}
         </>
       )}
       {(isSizeLarge ||
@@ -1385,31 +1438,18 @@ function Status({
           </MenuItem>
         </>
       )}
-      <SubMenu2
-        direction={isRTL() ? 'left' : 'right'}
-        overflow="auto"
-        gap={-8}
-        label={
-          <>
-            <Icon icon="link" />
-            <small
-              class="menu-double-lines should-cloak"
-              style={{
-                maxWidth: '16em',
-              }}
-            >
-              {nicePostURL(url)}
-            </small>
-            <Icon icon="chevron-right" />
-          </>
-        }
-      >
-        <MenuItem href={url} target="_blank">
-          <Icon icon="external" />
-          <span>
-            <Trans>Open link</Trans>
-          </span>
-        </MenuItem>
+      <MenuItem href={url} target="_blank">
+        <Icon icon="external" />
+        <small
+          class="menu-double-lines should-cloak"
+          style={{
+            maxWidth: '16em',
+          }}
+        >
+          {nicePostURL(url)}
+        </small>
+      </MenuItem>
+      <div class="menu-horizontal">
         <MenuItem
           onClick={() => {
             // Copy url to clipboard
@@ -1422,7 +1462,7 @@ function Status({
             }
           }}
         >
-          <Icon icon="copy" />
+          <Icon icon="link" />
           <span>
             <Trans>Copy</Trans>
           </span>
@@ -1450,7 +1490,7 @@ function Status({
               </span>
             </MenuItem>
           )}
-      </SubMenu2>
+      </div>
       {isPublic && isSizeLarge && (
         <MenuItem
           onClick={() => {
@@ -1964,6 +2004,12 @@ function Status({
     contentLength,
   ]);
 
+  // Keep this simple for now, unlike showCommentCount
+  const showQuoteCount =
+    typeof forceShowQuoteCount === 'function'
+      ? forceShowQuoteCount(quotesCount)
+      : forceShowQuoteCount && quotesCount > 0;
+
   return (
     <StatusParent>
       {showReplyParent && !!(inReplyToId && inReplyToAccountId) && (
@@ -2357,7 +2403,10 @@ function Status({
           )}
           <div
             class={`content-container ${
-              spoilerText || sensitive || filterInfo?.action === 'blur'
+              spoilerText ||
+              sensitive ||
+              filterInfo?.action === 'blur' ||
+              readingExpandMedia === 'hide_all'
                 ? 'has-spoiler'
                 : ''
             } ${showSpoiler ? 'show-spoiler' : ''} ${
@@ -2545,7 +2594,9 @@ function Status({
                   />
                 )}
                 {!previewMode &&
-                  (sensitive || filterInfo?.action === 'blur') &&
+                  (sensitive ||
+                    filterInfo?.action === 'blur' ||
+                    readingExpandMedia === 'hide_all') &&
                   !!mediaAttachments.length &&
                   (readingExpandMedia !== 'show_all' ||
                     filterInfo?.action === 'blur') && (
@@ -2653,6 +2704,7 @@ function Status({
                   instance={instance}
                   level={quoted}
                   collapsed={!isSizeLarge && !withinContext}
+                  fallbackQuote={quote}
                 />
                 {!!card &&
                   /^https/i.test(card?.url) &&
@@ -2675,9 +2727,18 @@ function Status({
               </>
             )}
           </div>
-          {!isSizeLarge && showCommentCount && (
+          {!isSizeLarge && (showCommentCount || showQuoteCount) && (
             <div class="content-comment-hint insignificant">
-              <Icon icon="comment2" alt={t`Replies`} /> {repliesCount}
+              {showCommentCount && (
+                <>
+                  <Icon icon="comment2" alt={t`Replies`} /> {repliesCount}
+                </>
+              )}{' '}
+              {showQuoteCount && (
+                <>
+                  <Icon icon="quote" alt={t`Quotes`} /> {quotesCount}
+                </>
+              )}
             </div>
           )}
           {isSizeLarge && (
@@ -2847,7 +2908,14 @@ function Status({
                     confirmLabel={
                       <>
                         <Icon icon="rocket" />
-                        <span>{reblogged ? t`Unboost` : t`Boost`}</span>
+                        <span class="menu-grow">
+                          {reblogged ? t`Unboost` : t`Boost`}
+                        </span>
+                        {reblogsCount > 0 && (
+                          <small class="more-insignificant">
+                            {shortenNumber(reblogsCount)}
+                          </small>
+                        )}
                       </>
                     }
                     menuExtras={
@@ -2869,7 +2937,12 @@ function Status({
                                 {quoteMetaText}
                               </small>
                             ) : (
-                              <span>{quoteText}</span>
+                              <span class="menu-grow">{quoteText}</span>
+                            )}
+                            {quotesCount > 0 && (
+                              <small class="more-insignificant">
+                                {shortenNumber(quotesCount)}
+                              </small>
                             )}
                           </MenuItem>
                         )}
@@ -2904,7 +2977,11 @@ function Status({
                       ]}
                       alt={[t`Boost`, t`Boosted`]}
                       class="reblog-button"
-                      icon="rocket"
+                      icon={
+                        reblogsCount <= 0 && quotesCount > 0
+                          ? 'quote'
+                          : 'rocket'
+                      }
                       count={reblogsCount}
                       extraCount={quotesCount}
                       // onClick={boostStatus}
@@ -3031,6 +3108,21 @@ function Status({
             />
           </Modal>
         )}
+        {!!showQuoteChain && (
+          <Modal
+            onClose={() => {
+              setShowQuoteChain(false);
+            }}
+          >
+            <QuoteChainModal
+              statusId={id}
+              instance={instance}
+              onClose={() => {
+                setShowQuoteChain(false);
+              }}
+            />
+          </Modal>
+        )}
       </article>
     </StatusParent>
   );
@@ -3097,7 +3189,11 @@ const QuoteStatus = memo(({ quote, level = 0 }) => {
   const q = quote;
   let unfulfilledState;
 
-  const quoteStatus = snapStates.statuses[statusKey(q.id, q.instance)];
+  // Static as in there's no live update (edited, liked, etc.)
+  const isStaticQuote = !!q.quoteStatus;
+
+  const quoteStatus =
+    snapStates.statuses[statusKey(q.id, q.instance)] || q.quoteStatus;
   if (quoteStatus) {
     const isSelf = currentAccount && currentAccount === quoteStatus.account?.id;
     const filterInfo =
@@ -3174,6 +3270,7 @@ const QuoteStatus = memo(({ quote, level = 0 }) => {
       >
         <Status
           statusID={q.id}
+          status={isStaticQuote ? quoteStatus : undefined}
           instance={q.instance}
           size="s"
           quoted={level + 1}
@@ -3185,41 +3282,86 @@ const QuoteStatus = memo(({ quote, level = 0 }) => {
   );
 });
 
-const QuoteStatuses = memo(({ id, instance, level = 0, collapsed = false }) => {
-  if (!id || !instance) return;
-  const { _ } = useLingui();
-  const snapStates = useSnapshot(states);
-  const sKey = statusKey(id, instance);
-  const quotes = snapStates.statusQuotes[sKey];
-  let uniqueQuotes = quotes?.filter(
-    (q, i, arr) => q.native || arr.findIndex((q2) => q2.url === q.url) === i,
-  );
-
-  if (!uniqueQuotes?.length) return;
-  if (level > 2) return;
-
-  if (collapsed) {
-    // Only show the first quote if "collapsed"
-    uniqueQuotes = [uniqueQuotes[0]];
-  }
-
-  const containerRef = useTruncated();
-
+const ShallowQuote = ({ quote } = {}) => {
+  const { account, native, instance } = quote || {};
+  if (!account) return null;
   return (
-    <div
-      class="status-card-container"
-      ref={containerRef}
-      data-read-more={_(readMoreText)}
-    >
-      {uniqueQuotes.map((q) => {
-        const quoteKey = q.id
-          ? statusKey(q.id, q.instance)
-          : `${q.instance || ''}-${q.state}`;
-        return <QuoteStatus key={quoteKey} quote={q} level={level} />;
-      })}
+    <div class="status-card-container">
+      <div class={native ? 'quote-post-native' : ''}>
+        <div class="status-card status-shallow-card">
+          <NameText account={account} instance={instance} showAvatar />{' '}
+          <span class="insignificant">…</span>
+        </div>
+      </div>
     </div>
   );
-});
+};
+
+const QuoteStatuses = memo(
+  ({ id, instance, level = 0, collapsed = false, fallbackQuote }) => {
+    if (!id || !instance) return;
+    const { _ } = useLingui();
+    const snapStates = useSnapshot(states);
+    const sKey = statusKey(id, instance);
+    const quotes = snapStates.statusQuotes[sKey];
+    let uniqueQuotes = quotes?.filter(
+      (q, i, arr) => q.native || arr.findIndex((q2) => q2.url === q.url) === i,
+    );
+
+    const containerRef = useTruncated();
+
+    if (!uniqueQuotes?.length && fallbackQuote?.quotedStatus) {
+      // Just render it
+      return (
+        <div
+          class="status-card-container"
+          ref={containerRef}
+          data-read-more={_(readMoreText)}
+          data-quote-container-static={true}
+        >
+          <QuoteStatus
+            quote={{
+              // Same structure as the one in saveStatus (utils/states)
+              id,
+              instance,
+              // url
+              state: fallbackQuote.state,
+              // account
+              native: true,
+              // Inject whole quoteStatus instead of reading from states
+              quoteStatus: fallbackQuote.quotedStatus,
+            }}
+          />
+        </div>
+      );
+    }
+
+    if (!uniqueQuotes?.length) return;
+    if (level > 2) {
+      return <ShallowQuote quote={uniqueQuotes[0]} />;
+    }
+
+    if (collapsed) {
+      // Only show the first quote if "collapsed"
+      uniqueQuotes = [uniqueQuotes[0]];
+    }
+
+    return (
+      <div
+        class="status-card-container"
+        ref={containerRef}
+        data-read-more={_(readMoreText)}
+      >
+        {uniqueQuotes.map((q) => {
+          const quoteKey = q.id
+            ? statusKey(q.id, q.instance)
+            : `${q.instance || ''}-${q.state}`;
+          return <QuoteStatus key={quoteKey} quote={q} level={level} />;
+        })}
+      </div>
+    );
+  },
+);
 
 function EditedAtModal({
   statusID,

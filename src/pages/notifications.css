@@ -51,7 +51,11 @@
     cursor: pointer;
   }
 }
-.notification-type:is(.notification-mention, .notification-quote) {
+.notification-type:is(
+    .notification-mention,
+    .notification-quote,
+    .notification-mention\+quote
+  ) {
   padding-top: 16px;
 }
 .only-mentions .notification:not(.notification-mention),
@@ -90,6 +94,12 @@
 }
 .notification .favourite-icon {
   color: var(--favourite-color);
+}
+.notification .mention-icon {
+  color: var(--reply-to-color);
+}
+.notification .quote-icon {
+  color: var(--quote-color);
 }
 
 .notification .account-avatar-stack {
@@ -142,12 +152,20 @@
   filter: saturate(0.25);
 }
 .notification
-  .status-link:not(.status-type-mention, .status-type-quote)
+  .status-link:not(
+    .status-type-mention,
+    .status-type-quote,
+    .status-type-mention\+quote
+  )
   > .status {
   font-size: calc(var(--text-size) * 0.9);
 }
 .notification
-  .status-link.truncated:not(.status-type-mention, .status-type-quote)
+  .status-link.truncated:not(
+    .status-type-mention,
+    .status-type-quote,
+    .status-type-mention\+quote
+  )
   > .status {
   /* fade out mask gradient bottom */
   mask-image: linear-gradient(
@@ -200,6 +218,20 @@
   border-color: var(--quote-color);
   box-shadow: 0 0 0 3px var(--quote-faded-color);
 }
+.notification .status-link.status-type-mention\+quote {
+  max-height: 320px;
+  filter: none;
+  background-color: var(--bg-color);
+  border-color: transparent;
+  background-image:
+    linear-gradient(var(--bg-color), var(--bg-color)),
+    linear-gradient(135deg, var(--reply-to-color), var(--quote-color));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    1.5px 1.5px 0 1.5px var(--quote-faded-color),
+    -1.5px -1.5px 0 1.5px var(--reply-to-faded-color);
+}
 .notification:focus-visible .status-link,
 .notification .status-link:is(:hover, :focus) {
   background-color: var(--bg-blur-color);
@@ -213,6 +245,11 @@
 .notification .status-link.status-type-quote:is(:hover, :focus) {
   border-color: var(--quote-color);
   box-shadow: 0 0 5px var(--quote-color);
+}
+.notification .status-link.status-type-mention\+quote:is(:hover, :focus) {
+  box-shadow:
+    2.5px 2.5px 5px -2.5px var(--quote-color),
+    -2.5px -2.5px 5px -2.5px var(--reply-to-color);
 }
 .notification .status-link:active {
   filter: brightness(0.95);

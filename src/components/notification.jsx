@@ -502,11 +502,6 @@ function Notification({
             <Icon icon="rocket" size="xl" alt={type} class="reblog-icon" />
             <Icon icon="heart" size="xl" alt={type} class="favourite-icon" />
           </>
-        ) : type === 'mention+quote' ? (
-          <>
-            <Icon icon="comment" size="xl" alt={type} class="mention-icon" />
-            <Icon icon="quote" size="xl" alt={type} class="quote-icon" />
-          </>
         ) : (
           <Icon
             icon={NOTIFICATION_ICONS[type] || 'notification'}
@@ -531,7 +526,7 @@ function Notification({
             </mark>
           </>
         )} */}
-        {type !== 'mention' && type !== 'quote' && type !== 'mention+quote' && (
+        {type !== 'mention' && type !== 'quote' && (
           <>
             <p>{text}</p>
             {type === 'follow_request' && (

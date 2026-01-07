@@ -392,6 +392,13 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - 📸 Extract description from attached image metadata
 - 🐛 Bug fixes
 
+## January 7, 2026
+
+📢 https://mastodon.social/@cheeaun/115853890477340137
+
+- 🗓️ Experimental "Year In Posts"
+- 🐛 Bug fixes
+
 <!--
 
 ## Next

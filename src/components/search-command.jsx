@@ -42,9 +42,11 @@ export default memo(function SearchCommand({ onClose = () => {} }) {
       preventDefault: true,
       ignoreEventWhen: (e) => {
         const isSearchPage = /\/search/.test(location.hash);
+        const isYearInPostsPage = /\/yip/.test(location.hash);
         const hasModal = !!document.querySelector('#modal-container > *');
         return (
           isSearchPage ||
+          isYearInPostsPage ||
           hasModal ||
           e.metaKey ||
           e.ctrlKey ||

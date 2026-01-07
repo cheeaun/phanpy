@@ -105,15 +105,9 @@ const REACTIONS_LIMIT = 80;
 
 function getPollText(poll) {
   if (!poll?.options?.length) return '';
-  return `📊:\n${poll.options
-    .map(
-      (option) =>
-        `- ${option.title}${
-          option.votesCount >= 0 ? ` (${option.votesCount})` : ''
-        }`,
-    )
-    .join('\n')}`;
+  return `📊:\n${poll.options.map((option) => `- ${option.title}`).join('\n')}`;
 }
+
 function getPostText(status, opts) {
   const {
     maskCustomEmojis,
@@ -130,8 +124,8 @@ function getPostText(status, opts) {
     );
     content = content.replace(emojisRegex, '⬚');
   }
-  return (
-    (spoilerText ? `${spoilerText}\n\n` : '') +
+  const fullText = [
+    spoilerText || '',
     getHTMLText(content, {
       ...htmlTextOpts,
       preProcess:
@@ -154,9 +148,12 @@ function getPostText(status, opts) {
             }
           }
         }),
-    }) +
-    getPollText(poll)
-  );
+    }),
+    getPollText(poll),
+  ]
+    .join('\n\n')
+    .trim();
+  return fullText;
 }
 
 function forgivingQSA(selectors = [], dom = document) {

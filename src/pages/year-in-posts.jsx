@@ -11,6 +11,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useSearchParams } from 'react-router-dom';
 import { useThrottledCallback } from 'use-debounce';
 
@@ -19,6 +20,7 @@ import yearInPostsUrl from '../assets/features/year-in-posts.png';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
+import MenuConfirm from '../components/menu-confirm';
 import Menu2 from '../components/menu2';
 import NavMenu from '../components/nav-menu';
 import Status from '../components/status';
@@ -26,6 +28,7 @@ import { api } from '../utils/api';
 import DateTimeFormat from '../utils/date-time-format';
 import db from '../utils/db';
 import getHTMLText from '../utils/getHTMLText';
+import niceDateTime from '../utils/nice-date-time';
 import prettyBytes from '../utils/pretty-bytes';
 import { supportsNativeQuote } from '../utils/quote-utils';
 import showToast from '../utils/show-toast';
@@ -126,6 +129,7 @@ function YearInPosts() {
   const [uiState, setUIState] = useState('default');
   const [posts, setPosts] = useState([]);
   const [availableYears, setAvailableYears] = useState([]);
+  const [searchEnabled, setSearchEnabled] = useState(true);
   const [showSearchField, setShowSearchField] = useState(!!searchQuery);
   const [searchLimit, setSearchLimit] = useState(SEARCH_RESULT_PAGE_SIZE);
   const [sortBy, setSortBy] = useState(searchQuery ? 'relevance' : 'createdAt');
@@ -133,6 +137,38 @@ function YearInPosts() {
   const searchFieldRef = useRef(null);
   const scrollableRef = useRef(null);
   const NS = useMemo(() => getCurrentAccountNS(), []);
+
+  // Intercept slash key to focus search field on this page
+  useHotkeys(
+    ['Slash', '/'],
+    (e) => {
+      if (!showSearchField) {
+        setShowSearchField(true);
+        setTimeout(() => {
+          searchFieldRef.current?.focus();
+        }, 100);
+      } else {
+        // If search field is already shown, just focus it
+        searchFieldRef.current?.focus();
+      }
+    },
+    {
+      useKey: true,
+      preventDefault: true,
+      ignoreEventWhen: (e) => {
+        const hasModal = !!document.querySelector('#modal-container > *');
+        const isInput = ['INPUT', 'TEXTAREA'].includes(e.target.tagName);
+        return (
+          hasModal ||
+          isInput ||
+          e.metaKey ||
+          e.ctrlKey ||
+          e.altKey ||
+          e.shiftKey
+        );
+      },
+    },
+  );
 
   const totalPosts = posts.length;
 
@@ -187,19 +223,19 @@ function YearInPosts() {
     }
   };
 
-  async function handleFetchYearPosts(yearParam = year) {
-    setUIState('loading');
+  async function handleRegenerate(year) {
     try {
-      const allResults = await fetchYearPosts(yearParam);
-      setPosts(allResults);
-      setUIState('results');
-      loadYears();
-      // Inform user about timezone context
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      showToast(`Archive generated in ${tz}`);
+      setUIState('generating');
+      await fetchYearPosts(year);
+      setSearchParams({ year });
     } catch (e) {
-      console.error(e);
       setUIState('error');
+      console.error('Failed to regenerate year posts:', error);
+      showToast('Unable to regenerate year posts. Please try again.');
+    } finally {
+      if (uiState === 'generating') {
+        setUIState('default');
+      }
     }
   }
 
@@ -764,16 +800,6 @@ function YearInPosts() {
                       <Icon icon="check-circle" alt="☑️" />{' '}
                       <span class="menu-grow">Media only</span>
                     </MenuItem>
-                    <MenuDivider />
-                    <MenuItem
-                      onClick={() => {
-                        handleFetchYearPosts();
-                      }}
-                      disabled={uiState === 'loading' || !!searchQuery}
-                    >
-                      <Icon icon="refresh" />
-                      <span>Regenerate</span>
-                    </MenuItem>
                   </Menu2>
                 </>
               )}
@@ -831,13 +857,28 @@ function YearInPosts() {
                       <Icon icon="arrow-right" alt="Generate" size="l" />
                     </button>
                   </form>
-                  <p class="insignificant">
+                  <div class="insignificant">
                     <small>
-                      This downloads your posts (excluding media files) from the
-                      server and saves them locally. It may take a longer time
-                      and require more disk space.
+                      <p>
+                        This downloads your posts (excluding media files) from
+                        the server and saves them locally. It may take a longer
+                        time and require more disk space.
+                      </p>
+                      <p>
+                        Once archived, updated or deleted posts are not
+                        reflected in the archive until regenerated.
+                      </p>
                     </small>
-                  </p>
+                  </div>
+                  {!searchEnabled && (
+                    <p class="insignificant">
+                      <small>
+                        ⚠️ Your server doesn't support advanced search, this will
+                        make more requests to the server and take much longer
+                        time.
+                      </small>
+                    </p>
+                  )}
                 </>
               ) : (
                 <div class="ui-state year-in-posts-start">
@@ -849,7 +890,7 @@ function YearInPosts() {
 
               {availableYears.length > 0 && uiState !== 'generating' && (
                 <div class="year-selection">
-                  <p>Generated years in posts:</p>
+                  <p>Archived Year in Posts:</p>
                   <ul>
                     {availableYears.map(
                       ({ year, count, fetchedAt, size, timezoneOffset }) => {
@@ -879,12 +920,27 @@ function YearInPosts() {
                                 ~{prettyBytes(size)}
                               </small>
                             )}{' '}
-                            {fetchedAt && (
-                              <small class="tag insignificant collapsed">
-                                <Icon icon="refresh" />{' '}
-                                <time
-                                  datetime={new Date(fetchedAt).toISOString()}
-                                >
+                            <MenuConfirm
+                              align="end"
+                              confirmLabel={
+                                <span>Regenerate {year} posts?</span>
+                              }
+                              onClick={() => {
+                                handleRegenerate(year);
+                              }}
+                            >
+                              <button
+                                type="button"
+                                class="light small"
+                                disabled={uiState === 'loading'}
+                                title={fetchedAt}
+                              >
+                                <Icon
+                                  icon="refresh"
+                                  size="s"
+                                  class="insignificant"
+                                />{' '}
+                                <span class="insignificant">
                                   {new Date(fetchedAt).toLocaleDateString(
                                     i18n.locale,
                                     {
@@ -893,22 +949,22 @@ function YearInPosts() {
                                       day: 'numeric',
                                     },
                                   )}
-                                </time>
-                              </small>
-                            )}{' '}
-                            {timezoneOffset !== undefined && (
-                              <small
-                                class={`tag insignificant collapsed ${tzMismatch ? 'warn' : ''}`}
-                                title={
-                                  tzMismatch
-                                    ? `Generated in ${formatTimezoneOffset(timezoneOffset)}, current timezone is ${formatTimezoneOffset(currentOffset)}`
-                                    : formatTimezoneOffset(timezoneOffset)
-                                }
-                              >
-                                {tzMismatch && <Icon icon="time" />}
-                                {formatTimezoneOffset(timezoneOffset)}
-                              </small>
-                            )}
+                                </span>{' '}
+                                {timezoneOffset !== undefined && (
+                                  <small
+                                    class={`tag insignificant collapsed ${tzMismatch ? 'warn' : ''}`}
+                                    title={
+                                      tzMismatch
+                                        ? `Generated in ${formatTimezoneOffset(timezoneOffset)}, current timezone is ${formatTimezoneOffset(currentOffset)}`
+                                        : formatTimezoneOffset(timezoneOffset)
+                                    }
+                                  >
+                                    {tzMismatch && <Icon icon="time" />}
+                                    {formatTimezoneOffset(timezoneOffset)}
+                                  </small>
+                                )}
+                              </button>
+                            </MenuConfirm>
                             <button
                               type="button"
                               class="light danger small"
@@ -1021,36 +1077,72 @@ function YearInPosts() {
                   <ul class="timeline">
                     {filteredPosts.length === 0 ? (
                       <p class="ui-state insignificant">…</p>
-                    ) : totalPosts > 20 ? (
-                      filteredPosts.map((post) => (
-                        <IntersectionPostItem
-                          key={post.id}
-                          root={scrollableRef.current}
-                          post={post}
-                          instance={instance}
-                        />
-                      ))
                     ) : (
-                      filteredPosts.map((post) => (
-                        <li key={post.id}>
-                          <Link
-                            class="status-link timeline-item"
-                            to={
-                              post.reblog
-                                ? `/${instance}/s/${post.reblog.id}`
-                                : `/${instance}/s/${post.id}`
-                            }
-                          >
-                            <Status
-                              status={post}
-                              instance={instance}
-                              size="m"
-                              showCommentCount
-                              showQuoteCount
-                            />
-                          </Link>
-                        </li>
-                      ))
+                      filteredPosts.map((post, index) => {
+                        const currentDate = new Date(post.createdAt);
+                        const previousPost = filteredPosts[index - 1];
+                        const previousDate = previousPost
+                          ? new Date(previousPost.createdAt)
+                          : null;
+                        const showDateHeader =
+                          sortBy === 'createdAt' &&
+                          (!previousDate ||
+                            currentDate.toDateString() !==
+                              previousDate.toDateString());
+
+                        return (
+                          <>
+                            {showDateHeader && (
+                              <li class="date-header" key={post.createdAt}>
+                                <h2>
+                                  <span>
+                                    {niceDateTime(post.createdAt, {
+                                      hideTime: true,
+                                      formatOpts: {
+                                        year: undefined,
+                                      },
+                                    })}
+                                  </span>{' '}
+                                  <small class="insignificant bidi-isolate">
+                                    {niceDateTime(post.createdAt, {
+                                      forceOpts: {
+                                        weekday: 'long',
+                                      },
+                                    })}
+                                  </small>
+                                </h2>
+                              </li>
+                            )}
+                            <li key={post.id}>
+                              {totalPosts > 20 ? (
+                                <IntersectionPostItem
+                                  key={post.id}
+                                  root={scrollableRef.current}
+                                  post={post}
+                                  instance={instance}
+                                />
+                              ) : (
+                                <Link
+                                  class="status-link timeline-item"
+                                  to={
+                                    post.reblog
+                                      ? `/${instance}/s/${post.reblog.id}`
+                                      : `/${instance}/s/${post.id}`
+                                  }
+                                >
+                                  <Status
+                                    status={post}
+                                    instance={instance}
+                                    size="m"
+                                    showCommentCount
+                                    showQuoteCount
+                                  />
+                                </Link>
+                              )}
+                            </li>
+                          </>
+                        );
+                      })
                     )}
                   </ul>
 

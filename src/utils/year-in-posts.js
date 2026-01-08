@@ -109,6 +109,7 @@ export async function fetchYearPosts(year) {
     })
     .values();
 
+  let stillAfterYear = true;
   fetchLoop: while (true) {
     try {
       const result = await statusIterator.next();
@@ -121,6 +122,8 @@ export async function fetchYearPosts(year) {
         const createdAt = new Date(status.createdAt);
         if (createdAt > endOfYear) {
           continue;
+        } else {
+          stillAfterYear = false;
         }
         if (createdAt >= startOfYear) {
           allResults.push(status);
@@ -129,7 +132,7 @@ export async function fetchYearPosts(year) {
       }
 
       // Only break if we didn't find any posts in the year in this batch
-      if (!foundInYear) break fetchLoop;
+      if (!foundInYear && !stillAfterYear) break fetchLoop;
 
       await new Promise((resolve) => setTimeout(resolve, 500));
     } catch (e) {

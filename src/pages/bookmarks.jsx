@@ -1,14 +1,18 @@
 import { useLingui } from '@lingui/react/macro';
 import { useRef } from 'preact/hooks';
+import { useSnapshot } from 'valtio';
 
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import states from '../utils/states';
+import { applyTimelineFilters } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
 function Bookmarks() {
   const { t } = useLingui();
+  const snapStates = useSnapshot(states);
   useTitle(t`Bookmarks`, '/b');
   const { masto, instance } = api();
   const bookmarksIterator = useRef();
@@ -18,7 +22,15 @@ function Bookmarks() {
         .list({ limit: LIMIT })
         .values();
     }
-    return await bookmarksIterator.current.next();
+    const results = await bookmarksIterator.current.next();
+    let { value } = results;
+    if (value?.length) {
+      value = applyTimelineFilters(value, snapStates.settings);
+    }
+    return {
+      ...results,
+      value,
+    };
   }
 
   return (

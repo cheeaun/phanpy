@@ -11,6 +11,7 @@ import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
 import states, { saveStatus } from '../utils/states';
 import supports from '../utils/supports';
+import { applyTimelineFilters } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -54,6 +55,7 @@ function Public({ local, columnMode, ...props }) {
       value.forEach((item) => {
         saveStatus(item, instance);
       });
+      value = applyTimelineFilters(value, snapStates.settings);
     }
     return {
       ...results,
@@ -74,6 +76,7 @@ function Public({ local, columnMode, ...props }) {
       let { value } = results;
       const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
       if (value?.length && !valueContainsLatestItem) {
+        value = applyTimelineFilters(value, snapStates.settings);
         value = filteredItems(value, 'public');
         return true;
       }

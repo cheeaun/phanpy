@@ -1120,6 +1120,7 @@ function YearInPosts() {
                                   root={scrollableRef.current}
                                   post={post}
                                   instance={instance}
+                                  defaultShow={index < 3}
                                 />
                               ) : (
                                 <Link
@@ -1207,11 +1208,12 @@ function YearInPosts() {
   );
 }
 
-const IntersectionPostItem = ({ root, post, instance }) => {
+const IntersectionPostItem = ({ root, post, instance, defaultShow }) => {
   const ref = useRef();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(defaultShow);
 
   useEffect(() => {
+    if (defaultShow) return;
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
@@ -1229,7 +1231,7 @@ const IntersectionPostItem = ({ root, post, instance }) => {
     return () => {
       if (ref.current) observer.unobserve(ref.current);
     };
-  }, []);
+  }, [defaultShow]);
 
   const statusId = post.reblog?.id || post.id;
 

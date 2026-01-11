@@ -8,7 +8,7 @@ msgstr ""
 "Language: de\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-09 09:28\n"
+"PO-Revision-Date: 2026-01-09 11:10\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -657,7 +657,7 @@ msgstr "Vergrößern"
 
 #: src/components/custom-emojis-modal.jsx:380
 msgid "Custom emojis are not available on this server."
-msgstr ""
+msgstr "Benutzerdefinierte Emojis sind auf diesem Server nicht verfügbar."
 
 #: src/components/drafts.jsx:62
 #: src/pages/settings.jsx:732
@@ -919,7 +919,7 @@ msgstr ""
 
 #: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
-msgstr ""
+msgstr "In den exportierten Dateien werden keine Login-Informationen oder Zugangsdaten gespeichert. Du musst Dich nach dem Import erneut für jedes Konto anmelden."
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
@@ -1108,7 +1108,7 @@ msgstr "Antworten nicht anzeigen"
 
 #: src/components/list-add-edit.jsx:146
 msgid "Hide posts on this list from Home/Following"
-msgstr ""
+msgstr "Verstecke Beiträge auf dieser Liste von Home/Folgen"
 
 #: src/components/list-add-edit.jsx:152
 #: src/pages/filters.jsx:572
@@ -1127,7 +1127,7 @@ msgstr "Liste konnte nicht gelöscht werden."
 #: src/pages/list.jsx:179
 #: src/pages/lists.jsx:107
 msgid "Posts on this list are hidden from Home/Following"
-msgstr ""
+msgstr "Beiträge auf dieser Liste sind ausgeblendet Home/Folgen"
 
 #: src/components/math-block.jsx:132
 msgid "Unable to format math"
@@ -1901,7 +1901,7 @@ msgstr "Fehler beim Laden der Quotes"
 
 #: src/components/quotes-modal.jsx:154
 msgid "No quotes yet"
-msgstr ""
+msgstr "Noch keine Zitate"
 
 #: src/components/recent-searches.jsx:27
 msgid "Cleared recent searches"
@@ -1992,7 +1992,7 @@ msgstr "Boosts aktivieren"
 
 #: src/components/related-actions.jsx:424
 msgid "@{username} is no longer featured on your profile."
-msgstr ""
+msgstr "@{username} wird nicht mehr auf deinem Profil empfohlen."
 
 #: src/components/related-actions.jsx:434
 msgid "@{username} is now featured on your profile."
@@ -3254,7 +3254,7 @@ msgstr ""
 #: src/pages/catchup.jsx:1014
 #: src/pages/catchup.jsx:1038
 msgid "Catch-up <0>beta</0>"
-msgstr ""
+msgstr "Catch-up <0>beta</0>"
 
 #: src/pages/catchup.jsx:1028
 #: src/pages/catchup.jsx:1716
@@ -3733,7 +3733,7 @@ msgstr "Mitglieder verwalten"
 #. placeholder {0}: account.username
 #: src/pages/list.jsx:342
 msgid "Remove <0>@{0}</0> from list?"
-msgstr ""
+msgstr "Entferne <0>@{0}</0> von der Liste?"
 
 #: src/pages/list.jsx:388
 msgid "Remove…"
@@ -3751,7 +3751,7 @@ msgstr "Noch keine Listen."
 #: src/pages/login.jsx:125
 #: src/pages/login.jsx:137
 msgid "Failed to register application"
-msgstr ""
+msgstr "Registrierung der Anwendung fehlgeschlagen"
 
 #: src/pages/login.jsx:246
 msgid "instance domain"
@@ -3909,7 +3909,7 @@ msgstr "Zulassen"
 #. placeholder {0}: request.account.username
 #: src/pages/notifications.jsx:1257
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
-msgstr ""
+msgstr "Benachrichtigungen von @{0} werden ab jetzt nicht mehr in gefilterten Benachrichtigungen angezeigt."
 
 #: src/pages/notifications.jsx:1262
 msgid "Unable to dismiss notification request"
@@ -3959,12 +3959,12 @@ msgstr "Keine geplanten Posts."
 #. placeholder {0}: niceDateTime(scheduledAt, { formatOpts: { weekday: 'short', second: 'numeric', }, })
 #: src/pages/scheduled-posts.jsx:210
 msgid "Scheduled <0><1/></0> <2>({0})</2>"
-msgstr ""
+msgstr "Geplant <0><1/></0> <2>({0})</2>"
 
 #. Scheduled [in 1 day]
 #: src/pages/scheduled-posts.jsx:292
 msgid "Scheduled <0><1/></0>"
-msgstr ""
+msgstr "Geplant <0><1/></0>"
 
 #: src/pages/scheduled-posts.jsx:337
 msgid "Scheduled post rescheduled"
@@ -4100,11 +4100,11 @@ msgstr "Synchronisiert"
 
 #: src/pages/settings.jsx:314
 msgid "Default visibility updated"
-msgstr ""
+msgstr "Standardsichtbarkeit aktualisiert"
 
 #: src/pages/settings.jsx:316
 msgid "Failed to update default visibility"
-msgstr ""
+msgstr "Fehler beim Aktualisieren der Standardsichtbarkeit"
 
 #: src/pages/settings.jsx:387
 msgid "Synced to your instance server's settings. <0>Go to your instance ({instance}) for more settings.</0>"
@@ -4128,7 +4128,7 @@ msgstr "Post-Übersetzung"
 
 #: src/pages/settings.jsx:455
 msgid "Translate to "
-msgstr ""
+msgstr "Übersetzen ins"
 
 #: src/pages/settings.jsx:466
 msgid "System language ({systemTargetLanguageText})"
@@ -4193,7 +4193,7 @@ msgstr "Text durch Blöcke ersetzen, nützlich für Screenshots, aus Datenschutz
 
 #: src/pages/settings.jsx:744
 msgid "Install {CLIENT_NAME}"
-msgstr ""
+msgstr "{CLIENT_NAME} installieren"
 
 #: src/pages/settings.jsx:752
 msgid "About"
@@ -4295,7 +4295,7 @@ msgstr "HINWEIS: Push-Benachrichtigungen funktionieren nur für <0>ein Konto</0>
 #: src/pages/status.jsx:791
 #: src/pages/status.jsx:1445
 msgid "post.title"
-msgstr ""
+msgstr "post.title"
 
 #: src/pages/status.jsx:1046
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
@@ -4403,7 +4403,7 @@ msgstr "Angesagte Nachrichten"
 #. placeholder {0}: author ? ( <NameText account={author} showAvatar /> ) : authorUrl ? ( <a href={authorUrl} target="_blank" rel="noopener" > {authorName} </a> ) : ( authorName )
 #: src/pages/trending.jsx:350
 msgid "By {0}"
-msgstr ""
+msgstr "Von {0}"
 
 #: src/pages/trending.jsx:411
 msgid "Back to showing trending posts"
@@ -4456,11 +4456,11 @@ msgstr "Originelle Posts und erneut geteilte (geboostete) Posts visuell trennen.
 
 #: src/pages/welcome.jsx:145
 msgid "Screenshot of Catch-up"
-msgstr ""
+msgstr "Screenshot von Catch-up"
 
 #: src/pages/welcome.jsx:152
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
-msgstr ""
+msgstr "Eine separate Zeitleiste für Folgen. E-Mail-inspirierte Schnittstelle zum Sortieren und Filtern von Beiträgen."
 
 #: src/pages/welcome.jsx:161
 msgid "Screenshot of nested comments thread"

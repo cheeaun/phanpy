@@ -2750,10 +2750,7 @@ function Status({
                   </span>
                 ) : (
                   <>
-                    {/* <Icon
-                      icon={visibilityIconsMap[visibility]}
-                      alt={visibilityText[visibility]}
-                    /> */}
+                    <Icon icon={visibilityIconsMap[visibility]} alt="" />{' '}
                     <span>{_(visibilityText[visibility])}</span> &bull;{' '}
                     <a href={url} target="_blank" rel="noopener">
                       {

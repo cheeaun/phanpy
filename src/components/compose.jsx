@@ -1715,8 +1715,7 @@ function Compose({
                     disabled={cwButtonDisabled}
                     onClick={onCWButtonClick}
                   >
-                    <Icon icon={`eye-${sensitive ? 'close' : 'open'}`} />{' '}
-                    <span>{_(ADD_LABELS.sensitive)}</span>
+                    <Icon icon="alert" /> <span>{_(ADD_LABELS.sensitive)}</span>
                   </MenuItem>
                   {showPollButton && (
                     <MenuItem
@@ -1794,10 +1793,7 @@ function Compose({
                   disabled={cwButtonDisabled}
                   onClick={onCWButtonClick}
                 >
-                  <Icon
-                    icon={`eye-${sensitive ? 'close' : 'open'}`}
-                    alt={_(ADD_LABELS.sensitive)}
-                  />
+                  <Icon icon="alert" alt={_(ADD_LABELS.sensitive)} />
                 </button>
                 {showPollButton && (
                   <button

@@ -2284,16 +2284,15 @@ function Status({
                           other: '# replies',
                         })}
                       />
-                    ) : (
-                      visibility !== 'public' &&
-                      visibility !== 'direct' && (
-                        <Icon
-                          icon={visibilityIconsMap[visibility]}
-                          alt={_(visibilityText[visibility])}
-                          size="s"
-                        />
-                      )
-                    )}{' '}
+                    ) : visibility !== 'public' && visibility !== 'direct' ? (
+                      <Icon
+                        icon={visibilityIconsMap[visibility]}
+                        alt={_(visibilityText[visibility])}
+                        size="s"
+                      />
+                    ) : editedAt && size === 's' ? (
+                      <Icon icon="pencil" size="s" alt={t`Edited`} />
+                    ) : null}{' '}
                     <RelativeTime datetime={createdAtDate} format="micro" />
                     {!previewMode && !readOnly && (
                       <Icon icon="more2" class="more" alt={t`More`} />
@@ -2352,16 +2351,15 @@ function Status({
                           other: '# replies',
                         })}
                       />
-                    ) : (
-                      visibility !== 'public' &&
-                      visibility !== 'direct' && (
-                        <Icon
-                          icon={visibilityIconsMap[visibility]}
-                          alt={_(visibilityText[visibility])}
-                          size="s"
-                        />
-                      )
-                    )}{' '}
+                    ) : visibility !== 'public' && visibility !== 'direct' ? (
+                      <Icon
+                        icon={visibilityIconsMap[visibility]}
+                        alt={_(visibilityText[visibility])}
+                        size="s"
+                      />
+                    ) : editedAt && size === 's' ? (
+                      <Icon icon="pencil" size="s" alt={t`Edited`} />
+                    ) : null}{' '}
                     <RelativeTime datetime={createdAtDate} format="micro" />
                   </span>
                 ))}

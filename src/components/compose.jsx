@@ -1453,6 +1453,12 @@ function Compose({
                   onInput={() => {
                     updateCharCount();
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.ctrlKey && !e.metaKey && !e.isComposing) {
+                      e.preventDefault();
+                      focusTextarea();
+                    }
+                  }}
                 />
               </TextExpander>
               <button

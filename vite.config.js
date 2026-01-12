@@ -43,10 +43,11 @@ try {
   fakeCommitHash = true;
 }
 
-const rollbarCode = fs.readFileSync(
+let rollbarCode = fs.readFileSync(
   resolve(__dirname, './rollbar.js'),
   'utf-8',
 );
+rollbarCode = rollbarCode.replace('__PHANPY_COMMIT_HASH__', `'${commitHash}'`);
 
 // https://github.com/vitejs/vite/issues/9597#issuecomment-1209305107
 const excludedPostCSSWarnings = [

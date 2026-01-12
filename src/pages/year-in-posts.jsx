@@ -994,12 +994,15 @@ function YearInPosts() {
           {year && uiState === 'results' && (
             <>
               {!searchQuery && monthsWithPosts.length > 0 && (
-                <CalendarBar
-                  year={year}
-                  month={month}
-                  monthsWithPosts={monthsWithPosts}
-                  postType={postType}
-                />
+                <>
+                  <CalendarBar
+                    year={year}
+                    month={month}
+                    monthsWithPosts={monthsWithPosts}
+                    postType={postType}
+                  />
+                  {month === null && <CalendarLegend />}
+                </>
               )}
 
               {(month !== null || searchQuery) && (
@@ -1373,6 +1376,33 @@ function CalendarBar({ year, month, monthsWithPosts, postType }) {
           );
         },
       )}
+    </div>
+  );
+}
+
+function CalendarLegend() {
+  return (
+    <div class="calendar-bar-legends">
+      <span class="ib">
+        <span class="calendar-bar-legend-item calendar-bar-original" />{' '}
+        <Trans>Original</Trans>
+      </span>{' '}
+      <span class="ib">
+        <span class="calendar-bar-legend-item calendar-bar-reply" />{' '}
+        <Trans>Replies</Trans>
+      </span>{' '}
+      {supportsNativeQuote() && (
+        <>
+          <span class="ib">
+            <span class="calendar-bar-legend-item calendar-bar-quote" />{' '}
+            <Trans>Quotes</Trans>
+          </span>{' '}
+        </>
+      )}
+      <span class="ib">
+        <span class="calendar-bar-legend-item calendar-bar-boost" />{' '}
+        <Trans>Boosts</Trans>
+      </span>
     </div>
   );
 }

@@ -36,30 +36,30 @@ jobs:
         id: maps
         run: |
           set -e
-          # Find all .js.map files under dist and join with newlines
-          # produce space-separated list of map paths
-          MAPS=$(find dist -type f -name '*.js.map' -print | tr '\n' ' ' | sed -E 's/ $//' || true)
-          if [ -z "$MAPS" ]; then
+          # Find all .js.map files under dist and produce a space-separated list
+          SOURCE_MAPS=$(find dist -type f -name '*.js.map' -print | tr '\n' ' ' | sed -E 's/ $//' || true)
+          if [ -z "$SOURCE_MAPS" ]; then
             echo "No source maps found under dist"
             echo "source_maps=" >> $GITHUB_OUTPUT
             echo "minified_urls=" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          # Derive minified URLs from map filenames. Adjust host/path as needed.
-          HOST="https://dev.phanpy.social/assets"
-          MINIFIED=""
-          for m in $MAPS; do
-            jsfile=$(basename "$m" .map)
-            if [ -z "$MINIFIED" ]; then
-              MINIFIED="$HOST/$jsfile"
+          # Derive minified URLs from each map file. Preserve path under `dist`.
+          HOST_BASE="https://dev.phanpy.social"
+          MINIFIED_URLS=""
+          for map_path in $SOURCE_MAPS; do
+            rel_path=${map_path#dist/}
+            minified_rel_path=${rel_path%.map}
+            if [ -z "$MINIFIED_URLS" ]; then
+              MINIFIED_URLS="$HOST_BASE/$minified_rel_path"
             else
-              MINIFIED="$MINIFIED $HOST/$jsfile"
+              MINIFIED_URLS="$MINIFIED_URLS $HOST_BASE/$minified_rel_path"
             fi
           done
 
-          echo "source_maps=$MAPS" >> $GITHUB_OUTPUT
-          echo "minified_urls=$MINIFIED" >> $GITHUB_OUTPUT
+          echo "source_maps=$SOURCE_MAPS" >> $GITHUB_OUTPUT
+          echo "minified_urls=$MINIFIED_URLS" >> $GITHUB_OUTPUT
 
       - name: Deploy to Rollbar
         uses: rollbar/github-deploy-action@2.1.2

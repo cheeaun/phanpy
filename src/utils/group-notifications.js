@@ -11,7 +11,7 @@ const notificationTypeKeys = {
   update: ['status'],
 };
 
-const GROUP_TYPES = ['favourite', 'reblog', 'follow'];
+const GROUP_TYPES = ['favourite', 'reblog', 'follow', 'admin.sign_up'];
 const groupable = (type) => GROUP_TYPES.includes(type);
 
 export function fixNotifications(notifications) {

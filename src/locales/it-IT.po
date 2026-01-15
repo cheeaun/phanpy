@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-15 05:50\n"
+"PO-Revision-Date: 2026-01-15 16:43\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1582,7 +1582,7 @@ msgstr "{account} ha modificato un post che hai citato."
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:260
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
-msgstr ""
+msgstr "{count, plural, one {}=1 {Nuova iscrizione: {account}.} other {<0><1>{0}</1> persone</0> si sono iscritte.}}"
 
 #: src/components/notification.jsx:274
 msgid "{account} reported {targetAccount}"

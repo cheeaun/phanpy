@@ -47,6 +47,8 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     filters,
     quoteFilters,
     userPreferences,
+    showTags,
+    tagsCount,
   } = toggles;
 
   const shortContent = 'This is a test status with short text content.';
@@ -215,29 +217,26 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     ];
   }
 
-  if (contentType === 'hashtags') {
-    base.tags = [
-      {
-        name: 'coding',
-        url: 'https://example.social/tags/coding',
-      },
-      {
-        name: 'webdev',
-        url: 'https://example.social/tags/webdev',
-      },
-      {
-        name: 'javascript',
-        url: 'https://example.social/tags/javascript',
-      },
-      {
-        name: 'reactjs',
-        url: 'https://example.social/tags/reactjs',
-      },
-      {
-        name: 'preact',
-        url: 'https://example.social/tags/preact',
-      },
+  // Add tags if selected or if contentType is hashtags
+  if (showTags || contentType === 'hashtags') {
+    const allTags = [
+      'coding',
+      'webdev',
+      'javascript',
+      'reactjs',
+      'preact',
+      'programming',
+      'development',
+      'frontend',
+      'backend',
+      'veryveryveryveryveryveryloooooooooooooooooooonnnnnnghashtag',
     ];
+
+    const count = tagsCount === 'many' ? 10 : 3;
+    base.tags = allTags.slice(0, count).map((name) => ({
+      name,
+      url: `https://example.social/tags/${name}`,
+    }));
   }
 
   // Add any relevant filtered flags based on filter settings
@@ -322,6 +321,8 @@ const INITIAL_STATE = {
   expandWarnings: false,
   contextType: 'none', // Default context type
   displayStyle: 'adaptive', // Display style for preview
+  showTags: false, // New toggle for showing status tags
+  tagsCount: 'few', // New option for tags count: 'few' (3) or 'many' (10)
 };
 
 export default function Sandbox() {
@@ -406,6 +407,8 @@ export default function Sandbox() {
       size: toggleState.size,
       filters: toggleState.filters,
       quoteFilters: toggleState.quoteFilters,
+      showTags: toggleState.showTags, // Add showTags toggle
+      tagsCount: toggleState.tagsCount, // Add tagsCount option
     },
   });
 
@@ -1236,6 +1239,44 @@ export default function Sandbox() {
                   <span>Link preview card</span>
                   <sup>1</sup>
                 </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.showTags}
+                    onChange={() =>
+                      updateToggles({ showTags: !toggleState.showTags })
+                    }
+                  />
+                  <span>Out-of-bound tags</span>
+                </label>
+                {toggleState.showTags && (
+                  <ul>
+                    <li>
+                      <label>
+                        <input
+                          type="radio"
+                          name="tagsCount"
+                          checked={toggleState.tagsCount === 'few'}
+                          onChange={() => updateToggles({ tagsCount: 'few' })}
+                        />
+                        <span>Few</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label>
+                        <input
+                          type="radio"
+                          name="tagsCount"
+                          checked={toggleState.tagsCount === 'many'}
+                          onChange={() => updateToggles({ tagsCount: 'many' })}
+                        />
+                        <span>Many</span>
+                      </label>
+                    </li>
+                  </ul>
+                )}
               </li>
               <li>
                 <label>

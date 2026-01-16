@@ -3166,3 +3166,63 @@ a.card:is(:hover, :focus):visited {
     animation: appear 1s ease-out;
   }
 }
+
+/* STATUS TAGS */
+
+.status-tags {
+  --fade-size: 8px;
+  margin: 8px calc(var(--fade-size) * -1) 0;
+  padding: 0 var(--fade-size);
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  font-size: 90%;
+  overflow: auto;
+  mask-image: linear-gradient(
+    var(--to-forward),
+    transparent,
+    black var(--fade-size) calc(100% - var(--fade-size)),
+    transparent
+  );
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  > li {
+    flex-shrink: 0;
+  }
+
+  .status.large & {
+    flex-wrap: wrap;
+    margin-inline: 0;
+    padding-inline: 0;
+    mask-image: none;
+
+    > li {
+      flex-shrink: 1;
+    }
+  }
+
+  a {
+    display: inline-block;
+    color: var(--text-insignificant-color);
+    border: 1px solid var(--link-bg-color);
+    border-radius: 4px;
+    padding: 2px 4px;
+    text-decoration-line: none;
+    unicode-bidi: isolate;
+
+    span {
+      color: var(--link-color);
+    }
+
+    &:focus,
+    &:hover {
+      color: var(--link-text-color);
+      border-color: var(--link-light-color);
+    }
+  }
+}

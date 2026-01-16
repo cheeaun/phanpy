@@ -605,6 +605,51 @@
     }
   }
 
+  .calendar-bar-legends {
+    padding: 8px 16px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-insignificant-color);
+    background-color: var(--bg-blur-color);
+    margin: 16px auto;
+    border-radius: 999px;
+    width: fit-content;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      margin-inline: 2px;
+    }
+  }
+
+  .calendar-bar-legend-item {
+    display: inline-block;
+    width: 12px;
+    height: 6px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-inline-end: 2px;
+    outline: 1px solid var(--bg-color);
+    text-shadow: 0 -1px var(--bg-color);
+  }
+
+  .calendar-bar-original {
+    background-color: var(--link-color);
+  }
+
+  .calendar-bar-reply {
+    background-color: var(--reply-to-color);
+  }
+
+  .calendar-bar-quote {
+    background-color: var(--quote-color);
+  }
+
+  .calendar-bar-boost {
+    background-color: var(--reblog-color);
+  }
+
   .post-type-filters {
     padding: 8px;
     display: flex;

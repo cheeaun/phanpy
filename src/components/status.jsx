@@ -78,6 +78,7 @@ import RelativeTime from './relative-time';
 import StatusButton from './status-button';
 import StatusCard from './status-card';
 import StatusCompact from './status-compact';
+import StatusTags from './status-tags';
 import SubMenu2 from './submenu2';
 import ThreadBadge from './thread-badge';
 import TranslationBlock from './translation-block';
@@ -2722,6 +2723,7 @@ function Status({
                       instance={currentInstance}
                     />
                   )}
+                {size !== 's' && <StatusTags tags={tags} content={content} />}
               </>
             )}
           </div>

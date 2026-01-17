@@ -11,7 +11,7 @@ const notificationTypeKeys = {
   update: ['status'],
 };
 
-const GROUP_TYPES = ['favourite', 'reblog', 'follow'];
+const GROUP_TYPES = ['favourite', 'reblog', 'follow', 'admin.sign_up'];
 const groupable = (type) => GROUP_TYPES.includes(type);
 
 export function fixNotifications(notifications) {
@@ -106,6 +106,23 @@ export function groupNotifications2(groupNotifications) {
     const key = `${status?.id}-${virtualType}-${date}`;
     const mappedNotification = notificationsMap[key];
     if (!groupable(type)) {
+      // Merge mention and quote if same status
+      // NOTES:
+      // - status.id is definitely the same
+      // - account is definitely the same too and will only be one
+      if ((type === 'mention' || type === 'quote') && status?.id) {
+        const otherGN = newGroupNotifications1.find(
+          (o) =>
+            ((type === 'quote' && o.type === 'mention') ||
+              (type === 'mention' && o.type === 'quote')) &&
+            o.status?.id === status.id,
+        );
+        if (otherGN) {
+          otherGN.type = 'mention+quote';
+          continue; // Skip below logic
+        }
+      }
+
       newGroupNotifications1.push(gn);
     } else if (mappedNotification) {
       // Merge sampleAccounts + merge _types
@@ -132,7 +149,7 @@ export function groupNotifications2(groupNotifications) {
       mappedNotification._notificationsCount.push(notificationsCount);
       mappedNotification._sampleAccountsCount.push(sampleAccounts?.length);
       mappedNotification._accounts = mappedNotification.sampleAccounts;
-      mappedNotification._groupKeys.push(groupKey);
+      if (groupKey) mappedNotification._groupKeys.push(groupKey);
     } else {
       const accounts = sampleAccounts.map((a) => ({
         ...a,

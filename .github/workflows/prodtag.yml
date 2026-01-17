@@ -12,14 +12,15 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: production
       # - run: git tag "`date +%Y.%m.%d`.`git rev-parse --short HEAD`" $(git rev-parse HEAD)
       # - run: git push --tags
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
+          cache: "npm"
       - run: npm ci && npm run build
       - run: cd dist && zip -r ../phanpy-dist.zip . && tar -czf ../phanpy-dist.tar.gz . && cd ..
       - id: tag_name

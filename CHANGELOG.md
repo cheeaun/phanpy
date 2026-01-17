@@ -294,7 +294,7 @@ For non-Mastodon servers:
 
 📢 https://mastodon.social/@cheeaun/113272683452140213
 
-- 💬 5 new languages: Dutch, Esperanto, Galician, Italian, Japanese
+- 💬 4 new languages: Dutch, Esperanto, Italian, Japanese
 - 🐛 Bug fixes
 
 Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag/v4.3.0) already supported on Phanpy:

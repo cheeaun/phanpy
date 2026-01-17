@@ -65,6 +65,7 @@ function _unfurlMastodonLink(instance, url) {
   if (!urlObj) return;
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
+  if (!domain) return; // No domain, something is wrong
   // Regex /:username/:id, where username = @username or @username@domain, id = post ID
   let statusMatchID = getStatusID(path);
 

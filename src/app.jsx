@@ -15,6 +15,11 @@ import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import 'swiped-events';
 
 import { subscribe } from 'valtio';
+import { unstable_enableOp } from 'valtio/vanilla';
+
+// https://github.com/pmndrs/valtio/releases/tag/v2.3.0
+// Necessary for subscribe() to work properly
+unstable_enableOp(true);
 
 import BackgroundService from './components/background-service';
 import ComposeButton from './components/compose-button';

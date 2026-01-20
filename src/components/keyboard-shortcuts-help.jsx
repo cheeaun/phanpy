@@ -214,7 +214,19 @@ export default memo(function KeyboardShortcutsHelp() {
                     action: t`Go to Notifications`,
                     keys: <SequentialKeys key1="g" key2="n" />,
                   },
-                ].map(({ action, className, keys }) => (
+                  {
+                    action: t`Go to Settings`,
+                    keys: <SequentialKeys key1="g" key2="s" />,
+                  },
+                  {
+                    action: t`Go to Profile`,
+                    keys: <SequentialKeys key1="g" key2="p" />,
+                  },
+                  {
+                    action: t`Go to Bookmarks`,
+                    keys: <SequentialKeys key1="g" key2="b" />,
+                  },
+                  ].map(({ action, className, keys }) => (
                   <tr key={action}>
                     <th class={className}>{action}</th>
                     <td>{keys}</td>

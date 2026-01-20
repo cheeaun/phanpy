@@ -226,7 +226,7 @@ export default memo(function KeyboardShortcutsHelp() {
                     action: t`Go to Bookmarks`,
                     keys: <SequentialKeys key1="g" key2="b" />,
                   },
-                  ].map(({ action, className, keys }) => (
+                ].map(({ action, className, keys }) => (
                   <tr key={action}>
                     <th class={className}>{action}</th>
                     <td>{keys}</td>

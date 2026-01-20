@@ -7,13 +7,17 @@ import { getCurrentAccount } from '../utils/store-utils';
 
 // ignoreEventWhen doesn't work with sequence shortcuts, so we wrap callbacks instead
 const useGoHotkeys = (key, callback) => {
-  useHotkeys(`g>${key}`, (e) => {
-    const hasModal = !!document.querySelector('#modal-container > *');
-    const shouldIgnore = hasModal || e.metaKey || e.ctrlKey || e.altKey;
-    if (!shouldIgnore) {
-      callback(e);
-    }
-  }, { useKey: true });
+  useHotkeys(
+    `g>${key}`,
+    (e) => {
+      const hasModal = !!document.querySelector('#modal-container > *');
+      const shouldIgnore = hasModal || e.metaKey || e.ctrlKey || e.altKey;
+      if (!shouldIgnore) {
+        callback(e);
+      }
+    },
+    { useKey: true },
+  );
 };
 
 export default memo(function NavigationCommand() {

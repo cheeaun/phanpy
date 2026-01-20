@@ -1972,7 +1972,6 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   scroll-timeline: --sheet-scroll;
   overflow: auto;
   overflow-x: hidden;
-  overscroll-behavior: contain;
   padding: 16px 16px;
   padding-left: max(16px, env(safe-area-inset-left));
   padding-right: max(16px, env(safe-area-inset-right));

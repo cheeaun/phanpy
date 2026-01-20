@@ -35,6 +35,7 @@ export default memo(function KeyboardShortcutsHelp() {
     },
     {
       useKey: true,
+      ignoreModifiers: true,
       ignoreEventWhen: (e) => {
         const isCatchUpPage = /\/catchup/i.test(location.hash);
         return isCatchUpPage || e.metaKey || e.ctrlKey || e.altKey;

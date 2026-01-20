@@ -95,11 +95,11 @@ export default memo(function KeyboardShortcutsHelp() {
                   },
                   {
                     action: t`Open post details`,
-                    keys: (
-                      <Trans>
-                        <kbd>Enter</kbd> or <kbd>o</kbd>
-                      </Trans>
-                    ),
+                    keys: <kbd>Enter</kbd>,
+                  },
+                  {
+                    action: t`Open media or post details`,
+                    keys: <kbd>o</kbd>,
                   },
                   {
                     action: (

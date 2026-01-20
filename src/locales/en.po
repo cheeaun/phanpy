@@ -218,8 +218,8 @@ msgstr ""
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1575
 #: src/pages/catchup.jsx:2230
-#: src/pages/status.jsx:1167
-#: src/pages/status.jsx:1892
+#: src/pages/status.jsx:1189
+#: src/pages/status.jsx:1914
 #: src/pages/year-in-posts.jsx:1392
 msgid "Replies"
 msgstr ""
@@ -290,7 +290,7 @@ msgstr "View post stats"
 #: src/pages/notifications.jsx:941
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:100
-#: src/pages/status.jsx:1631
+#: src/pages/status.jsx:1653
 msgid "Close"
 msgstr ""
 
@@ -339,7 +339,7 @@ msgstr "More from <0/>"
 #: src/components/columns.jsx:27
 #: src/components/nav-menu.jsx:181
 #: src/components/shortcuts-settings.jsx:140
-#: src/components/timeline.jsx:464
+#: src/components/timeline.jsx:479
 #: src/pages/catchup.jsx:1008
 #: src/pages/filters.jsx:90
 #: src/pages/followed-hashtags.jsx:41
@@ -501,7 +501,7 @@ msgstr "Attachment #{i} failed"
 
 #: src/components/compose.jsx:1445
 #: src/components/status.jsx:2495
-#: src/components/timeline.jsx:990
+#: src/components/timeline.jsx:1005
 msgid "Content warning"
 msgstr ""
 
@@ -730,14 +730,14 @@ msgstr "Edit History Snapshots"
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:208
 #: src/components/media-modal.jsx:478
-#: src/components/timeline.jsx:903
+#: src/components/timeline.jsx:918
 msgid "Previous"
 msgstr ""
 
 #: src/components/edit-history-controls.jsx:47
 #: src/components/gif-picker-modal.jsx:226
 #: src/components/media-modal.jsx:497
-#: src/components/timeline.jsx:920
+#: src/components/timeline.jsx:935
 msgid "Next"
 msgstr ""
 
@@ -828,18 +828,18 @@ msgstr ""
 
 #: src/components/generic-accounts.jsx:214
 #: src/components/quotes-modal.jsx:129
-#: src/components/timeline.jsx:546
+#: src/components/timeline.jsx:561
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:921
 #: src/pages/search.jsx:562
-#: src/pages/status.jsx:1665
+#: src/pages/status.jsx:1687
 msgid "Show more…"
 msgstr ""
 
 #: src/components/generic-accounts.jsx:219
 #: src/components/quote-chain-modal.jsx:169
 #: src/components/quotes-modal.jsx:133
-#: src/components/timeline.jsx:551
+#: src/components/timeline.jsx:566
 #: src/pages/search.jsx:567
 msgid "The end."
 msgstr ""
@@ -969,9 +969,9 @@ msgstr ""
 msgid "Open post details"
 msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:99
-msgid "<0>Enter</0> or <1>o</1>"
-msgstr ""
+#: src/components/keyboard-shortcuts-help.jsx:101
+msgid "Open media or post details"
+msgstr "Open media or post details"
 
 #: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
@@ -1166,7 +1166,7 @@ msgstr ""
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1532
+#: src/pages/status.jsx:1554
 #: src/pages/trending.jsx:474
 msgid "More"
 msgstr ""
@@ -1310,7 +1310,7 @@ msgstr ""
 #: src/components/status-compact.jsx:70
 #: src/components/status.jsx:3530
 #: src/components/status.jsx:3608
-#: src/components/timeline.jsx:979
+#: src/components/timeline.jsx:994
 #: src/pages/catchup.jsx:79
 #: src/pages/catchup.jsx:2033
 msgid "Filtered"
@@ -1461,7 +1461,7 @@ msgstr ""
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:33
 #: src/pages/login.jsx:227
-#: src/pages/status.jsx:1059
+#: src/pages/status.jsx:1081
 #: src/pages/welcome.jsx:68
 msgid "Log in"
 msgstr ""
@@ -1760,8 +1760,8 @@ msgstr "Show results"
 #: src/components/poll.jsx:291
 #: src/components/poll.jsx:293
 #: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1521
-#: src/pages/status.jsx:1544
+#: src/pages/status.jsx:1543
+#: src/pages/status.jsx:1566
 msgid "Refresh"
 msgstr ""
 
@@ -2950,30 +2950,30 @@ msgstr "{index}/{total}"
 msgid "{index}/X"
 msgstr "{index}/X"
 
-#: src/components/timeline.jsx:480
+#: src/components/timeline.jsx:495
 #: src/pages/settings.jsx:1290
 msgid "New posts"
 msgstr ""
 
-#: src/components/timeline.jsx:581
+#: src/components/timeline.jsx:596
 #: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:897
-#: src/pages/status.jsx:1220
-#: src/pages/status.jsx:1694
+#: src/pages/status.jsx:1242
+#: src/pages/status.jsx:1716
 msgid "Try again"
 msgstr ""
 
 #. placeholder {0}: fItems.length
-#: src/components/timeline.jsx:616
+#: src/components/timeline.jsx:631
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
 msgstr "{0, plural, one {# Boost} other {# Boosts}}"
 
-#: src/components/timeline.jsx:621
+#: src/components/timeline.jsx:636
 msgid "Pinned posts"
 msgstr "Pinned posts"
 
 #. placeholder {0}: filterInfo.titlesStr
-#: src/components/timeline.jsx:974
+#: src/components/timeline.jsx:989
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr ""
 
@@ -4295,101 +4295,101 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/pages/status.jsx:791
-#: src/pages/status.jsx:1445
+#: src/pages/status.jsx:1467
 msgid "post.title"
 msgstr "Post"
 
-#: src/pages/status.jsx:1046
+#: src/pages/status.jsx:1068
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:1066
+#: src/pages/status.jsx:1088
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:1094
+#: src/pages/status.jsx:1116
 msgid "Error: {e}"
 msgstr ""
 
-#: src/pages/status.jsx:1101
+#: src/pages/status.jsx:1123
 msgid "Switch to my instance to enable interactions"
 msgstr ""
 
-#: src/pages/status.jsx:1211
+#: src/pages/status.jsx:1233
 msgid "Unable to load replies."
 msgstr ""
 
-#: src/pages/status.jsx:1267
+#: src/pages/status.jsx:1289
 msgid "{months, plural, one {# month later} other {# months later}}"
 msgstr "{months, plural, one {# month later} other {# months later}}"
 
-#: src/pages/status.jsx:1273
+#: src/pages/status.jsx:1295
 msgid "{years, plural, one {# year later} other {# years later}}"
 msgstr "{years, plural, one {# year later} other {# years later}}"
 
-#: src/pages/status.jsx:1405
+#: src/pages/status.jsx:1427
 msgid "Back"
 msgstr ""
 
-#: src/pages/status.jsx:1436
+#: src/pages/status.jsx:1458
 msgid "Go to main post"
 msgstr ""
 
 #. placeholder {0}: ancestors.length
-#: src/pages/status.jsx:1459
+#: src/pages/status.jsx:1481
 msgid "{0} posts above ‒ Go to top"
 msgstr ""
 
-#: src/pages/status.jsx:1508
-#: src/pages/status.jsx:1571
+#: src/pages/status.jsx:1530
+#: src/pages/status.jsx:1593
 msgid "Switch to Side Peek view"
 msgstr ""
 
-#: src/pages/status.jsx:1572
+#: src/pages/status.jsx:1594
 msgid "Switch to Full view"
 msgstr ""
 
-#: src/pages/status.jsx:1590
+#: src/pages/status.jsx:1612
 msgid "Show all sensitive content"
 msgstr ""
 
-#: src/pages/status.jsx:1595
+#: src/pages/status.jsx:1617
 msgid "Experimental"
 msgstr ""
 
-#: src/pages/status.jsx:1604
+#: src/pages/status.jsx:1626
 msgid "Unable to switch"
 msgstr ""
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
-#: src/pages/status.jsx:1611
+#: src/pages/status.jsx:1633
 msgid "Switch to post's instance ({0})"
 msgstr "Switch to post's instance ({0})"
 
-#: src/pages/status.jsx:1614
+#: src/pages/status.jsx:1636
 msgid "Switch to post's instance"
 msgstr ""
 
-#: src/pages/status.jsx:1627
+#: src/pages/status.jsx:1649
 msgid "View Edit History Snapshots"
 msgstr "View Edit History Snapshots"
 
-#: src/pages/status.jsx:1685
+#: src/pages/status.jsx:1707
 msgid "Unable to load post"
 msgstr ""
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
-#: src/pages/status.jsx:1822
+#: src/pages/status.jsx:1844
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(totalComments)
-#: src/pages/status.jsx:1840
+#: src/pages/status.jsx:1862
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr ""
 
-#: src/pages/status.jsx:1862
+#: src/pages/status.jsx:1884
 msgid "View post with its replies"
 msgstr ""
 

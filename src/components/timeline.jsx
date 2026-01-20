@@ -248,6 +248,21 @@ function Timeline({
       // open active status
       const activeItem = document.activeElement;
       if (activeItem?.matches(itemsSelector)) {
+        // find first media link and click it (not inside status-card)
+        const mediaLink = activeItem.querySelector(
+          'a.media:not(.status-card a.media)',
+        );
+        if (mediaLink) {
+          // if link is ?media-only=1, change to media=1 and go to it
+          const url = mediaLink.getAttribute('href');
+          if (/media-only=1/i.test(url)) {
+            const newURL = url.replace(/media-only=/i, 'media=');
+            location.hash = newURL;
+            return;
+          }
+          mediaLink.click();
+          return;
+        }
         activeItem.click();
       }
     },

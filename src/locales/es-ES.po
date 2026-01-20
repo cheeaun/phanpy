@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-16 18:52\n"
+"PO-Revision-Date: 2026-01-20 13:24\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -223,8 +223,8 @@ msgstr "Originales"
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1575
 #: src/pages/catchup.jsx:2230
-#: src/pages/status.jsx:1167
-#: src/pages/status.jsx:1892
+#: src/pages/status.jsx:1189
+#: src/pages/status.jsx:1914
 #: src/pages/year-in-posts.jsx:1392
 msgid "Replies"
 msgstr "Respuestas"
@@ -266,7 +266,7 @@ msgstr "Ver las estadísticas de las publicaciones"
 #: src/components/gif-picker-modal.jsx:71
 #: src/components/import-accounts-selection.jsx:81
 #: src/components/import-export-accounts.jsx:108
-#: src/components/keyboard-shortcuts-help.jsx:52
+#: src/components/keyboard-shortcuts-help.jsx:53
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
 #: src/components/media-attachment.jsx:385
@@ -295,7 +295,7 @@ msgstr "Ver las estadísticas de las publicaciones"
 #: src/pages/notifications.jsx:941
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:100
-#: src/pages/status.jsx:1631
+#: src/pages/status.jsx:1653
 msgid "Close"
 msgstr "Cerrar"
 
@@ -344,7 +344,7 @@ msgstr "Más de <0/>"
 #: src/components/columns.jsx:27
 #: src/components/nav-menu.jsx:181
 #: src/components/shortcuts-settings.jsx:140
-#: src/components/timeline.jsx:464
+#: src/components/timeline.jsx:487
 #: src/pages/catchup.jsx:1008
 #: src/pages/filters.jsx:90
 #: src/pages/followed-hashtags.jsx:41
@@ -506,7 +506,7 @@ msgstr "Error al adjuntar #{i}"
 
 #: src/components/compose.jsx:1445
 #: src/components/status.jsx:2495
-#: src/components/timeline.jsx:990
+#: src/components/timeline.jsx:1013
 msgid "Content warning"
 msgstr "Advertencia de contenido"
 
@@ -599,7 +599,7 @@ msgid "Schedule"
 msgstr "Programar"
 
 #: src/components/compose.jsx:2038
-#: src/components/keyboard-shortcuts-help.jsx:164
+#: src/components/keyboard-shortcuts-help.jsx:165
 #: src/components/status.jsx:1099
 #: src/components/status.jsx:1133
 #: src/components/status.jsx:2126
@@ -723,7 +723,7 @@ msgid "Media"
 msgstr "Multimedia"
 
 #: src/components/drafts.jsx:270
-#: src/components/keyboard-shortcuts-help.jsx:193
+#: src/components/keyboard-shortcuts-help.jsx:194
 #: src/components/status.jsx:762
 msgid "Quote"
 msgstr "Citar"
@@ -735,14 +735,14 @@ msgstr "Instantáneas del historial de edición"
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:208
 #: src/components/media-modal.jsx:478
-#: src/components/timeline.jsx:903
+#: src/components/timeline.jsx:926
 msgid "Previous"
 msgstr "Anterior"
 
 #: src/components/edit-history-controls.jsx:47
 #: src/components/gif-picker-modal.jsx:226
 #: src/components/media-modal.jsx:497
-#: src/components/timeline.jsx:920
+#: src/components/timeline.jsx:943
 msgid "Next"
 msgstr "Siguiente"
 
@@ -833,18 +833,18 @@ msgstr "Cuentas"
 
 #: src/components/generic-accounts.jsx:214
 #: src/components/quotes-modal.jsx:129
-#: src/components/timeline.jsx:546
+#: src/components/timeline.jsx:569
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:921
 #: src/pages/search.jsx:562
-#: src/pages/status.jsx:1665
+#: src/pages/status.jsx:1687
 msgid "Show more…"
 msgstr "Mostrar más…"
 
 #: src/components/generic-accounts.jsx:219
 #: src/components/quote-chain-modal.jsx:169
 #: src/components/quotes-modal.jsx:133
-#: src/components/timeline.jsx:551
+#: src/components/timeline.jsx:574
 #: src/pages/search.jsx:567
 msgid "The end."
 msgstr "El fin."
@@ -929,104 +929,104 @@ msgstr "No se almacena ninguna información de inicio de sesión ni detalles de 
 msgid "<0>{key1}</0> then <1>{key2}</1>"
 msgstr "<0>{key1}</0> luego <1>{key2}</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:56
+#: src/components/keyboard-shortcuts-help.jsx:57
 #: src/components/nav-menu.jsx:368
 #: src/pages/catchup.jsx:1750
 msgid "Keyboard shortcuts"
 msgstr "Atajos de teclado"
 
-#: src/components/keyboard-shortcuts-help.jsx:64
+#: src/components/keyboard-shortcuts-help.jsx:65
 msgid "Keyboard shortcuts help"
 msgstr "Ayuda de los atajos de teclado"
 
-#: src/components/keyboard-shortcuts-help.jsx:68
+#: src/components/keyboard-shortcuts-help.jsx:69
 #: src/pages/catchup.jsx:1775
 msgid "Next post"
 msgstr "Siguiente publicación"
 
-#: src/components/keyboard-shortcuts-help.jsx:72
+#: src/components/keyboard-shortcuts-help.jsx:73
 #: src/pages/catchup.jsx:1783
 msgid "Previous post"
 msgstr "Anterior publicación"
 
-#: src/components/keyboard-shortcuts-help.jsx:76
+#: src/components/keyboard-shortcuts-help.jsx:77
 msgid "Skip carousel to next post"
 msgstr "Saltar carrusel a la siguiente publicación"
 
-#: src/components/keyboard-shortcuts-help.jsx:78
+#: src/components/keyboard-shortcuts-help.jsx:79
 msgid "<0>Shift</0> + <1>j</1>"
 msgstr "<0>Mayús</0> + <1>j</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:84
+#: src/components/keyboard-shortcuts-help.jsx:85
 msgid "Skip carousel to previous post"
 msgstr "Saltar carrusel a la anterior publicación"
 
-#: src/components/keyboard-shortcuts-help.jsx:86
+#: src/components/keyboard-shortcuts-help.jsx:87
 msgid "<0>Shift</0> + <1>k</1>"
 msgstr "<0>Mayús</0> + <1>k</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:92
+#: src/components/keyboard-shortcuts-help.jsx:93
 msgid "Load new posts"
 msgstr "Cargar nuevas publicaciones"
 
-#: src/components/keyboard-shortcuts-help.jsx:96
+#: src/components/keyboard-shortcuts-help.jsx:97
 #: src/pages/catchup.jsx:1807
 msgid "Open post details"
 msgstr "Abrir detalles de la publicación"
 
-#: src/components/keyboard-shortcuts-help.jsx:98
-msgid "<0>Enter</0> or <1>o</1>"
-msgstr "<0>Intro</0> u <1>o</1>"
+#: src/components/keyboard-shortcuts-help.jsx:101
+msgid "Open media or post details"
+msgstr ""
 
-#: src/components/keyboard-shortcuts-help.jsx:105
+#: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
 msgstr "Expandir advertencia de contenido o<0/>alternar hilo ampliado/colapsado"
 
-#: src/components/keyboard-shortcuts-help.jsx:114
+#: src/components/keyboard-shortcuts-help.jsx:115
 msgid "Close post or dialogs"
 msgstr "Cerrar publicación o diálogos"
 
-#: src/components/keyboard-shortcuts-help.jsx:116
+#: src/components/keyboard-shortcuts-help.jsx:117
 msgid "<0>Esc</0> or <1>Backspace</1>"
 msgstr "<0>Esc</0> o <1>Retroceso</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:122
+#: src/components/keyboard-shortcuts-help.jsx:123
 msgid "Focus column in multi-column mode"
 msgstr "Enfocar columna en el modo de múltiples columnas"
 
-#: src/components/keyboard-shortcuts-help.jsx:124
+#: src/components/keyboard-shortcuts-help.jsx:125
 msgid "<0>1</0> to <1>9</1>"
 msgstr "<0>1</0> a <1>9</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:130
+#: src/components/keyboard-shortcuts-help.jsx:131
 msgid "Focus next column in multi-column mode"
 msgstr "Enfocarse en la siguiente columna en el modo multicolumna"
 
-#: src/components/keyboard-shortcuts-help.jsx:134
+#: src/components/keyboard-shortcuts-help.jsx:135
 msgid "Focus previous column in multi-column mode"
 msgstr "Enfocarse en la anterior columna en el modo multicolumna"
 
-#: src/components/keyboard-shortcuts-help.jsx:138
+#: src/components/keyboard-shortcuts-help.jsx:139
 msgid "Compose new post"
 msgstr "Redactar nueva publicación"
 
-#: src/components/keyboard-shortcuts-help.jsx:142
+#: src/components/keyboard-shortcuts-help.jsx:143
 msgid "Compose new post (new window)"
 msgstr "Redactar nueva publicación (nueva ventana)"
 
-#: src/components/keyboard-shortcuts-help.jsx:145
+#: src/components/keyboard-shortcuts-help.jsx:146
 msgid "<0>Shift</0> + <1>c</1>"
 msgstr "<0>Mayús</0> + <1>c</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:151
+#: src/components/keyboard-shortcuts-help.jsx:152
 msgid "Send post"
 msgstr "Enviar publicación"
 
-#: src/components/keyboard-shortcuts-help.jsx:153
+#: src/components/keyboard-shortcuts-help.jsx:154
 msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr "<0>Ctrl</0> + <1>Intro</1> o <2>⌘</2> + <3>Intro</3>"
 
-#: src/components/keyboard-shortcuts-help.jsx:160
+#: src/components/keyboard-shortcuts-help.jsx:161
 #: src/components/nav-menu.jsx:337
 #: src/components/search-form.jsx:208
 #: src/components/shortcuts-settings.jsx:53
@@ -1036,55 +1036,67 @@ msgstr "<0>Ctrl</0> + <1>Intro</1> o <2>⌘</2> + <3>Intro</3>"
 msgid "Search"
 msgstr "Buscar"
 
-#: src/components/keyboard-shortcuts-help.jsx:168
+#: src/components/keyboard-shortcuts-help.jsx:169
 msgid "Reply (new window)"
 msgstr "Responder (nueva ventana)"
 
-#: src/components/keyboard-shortcuts-help.jsx:171
+#: src/components/keyboard-shortcuts-help.jsx:172
 msgid "<0>Shift</0> + <1>r</1>"
 msgstr "<0>Mayús</0> + <1>r</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:177
+#: src/components/keyboard-shortcuts-help.jsx:178
 msgid "Like (favourite)"
 msgstr "Me gusta (favorito)"
 
-#: src/components/keyboard-shortcuts-help.jsx:179
+#: src/components/keyboard-shortcuts-help.jsx:180
 msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> o <1>f</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:185
+#: src/components/keyboard-shortcuts-help.jsx:186
 #: src/components/status.jsx:1169
 #: src/components/status.jsx:2909
 #: src/components/status.jsx:2975
 msgid "Boost"
 msgstr "Impulsar"
 
-#: src/components/keyboard-shortcuts-help.jsx:187
+#: src/components/keyboard-shortcuts-help.jsx:188
 msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Mayús</0> + <1>b</1>"
 
-#: src/components/keyboard-shortcuts-help.jsx:197
+#: src/components/keyboard-shortcuts-help.jsx:198
 #: src/components/status.jsx:1271
 #: src/components/status.jsx:3004
 #: src/components/status.jsx:3005
 msgid "Bookmark"
 msgstr "Añadir marcador"
 
-#: src/components/keyboard-shortcuts-help.jsx:201
+#: src/components/keyboard-shortcuts-help.jsx:202
 msgid "Toggle Cloak mode"
 msgstr "Activar o desactivar el modo oculto"
 
-#: src/components/keyboard-shortcuts-help.jsx:203
+#: src/components/keyboard-shortcuts-help.jsx:204
 msgid "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 msgstr "<0>Mayús</0> + <1>Alt</1> + <2>k</2>"
 
-#: src/components/keyboard-shortcuts-help.jsx:209
+#: src/components/keyboard-shortcuts-help.jsx:210
 msgid "Go to Home"
 msgstr "Ir al inicio"
 
-#: src/components/keyboard-shortcuts-help.jsx:213
+#: src/components/keyboard-shortcuts-help.jsx:214
 msgid "Go to Notifications"
 msgstr "Ir a notificaciones"
+
+#: src/components/keyboard-shortcuts-help.jsx:218
+msgid "Go to Settings"
+msgstr ""
+
+#: src/components/keyboard-shortcuts-help.jsx:222
+msgid "Go to Profile"
+msgstr ""
+
+#: src/components/keyboard-shortcuts-help.jsx:226
+msgid "Go to Bookmarks"
+msgstr ""
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1171,7 +1183,7 @@ msgstr "Descripción de la imagen"
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:116
 #: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1532
+#: src/pages/status.jsx:1554
 #: src/pages/trending.jsx:474
 msgid "More"
 msgstr "Más"
@@ -1315,7 +1327,7 @@ msgstr "Filtrado: {filterTitleStr}"
 #: src/components/status-compact.jsx:70
 #: src/components/status.jsx:3530
 #: src/components/status.jsx:3608
-#: src/components/timeline.jsx:979
+#: src/components/timeline.jsx:1002
 #: src/pages/catchup.jsx:79
 #: src/pages/catchup.jsx:2033
 msgid "Filtered"
@@ -1466,7 +1478,7 @@ msgstr "Cuentas…"
 #: src/components/nav-menu.jsx:326
 #: src/pages/login.jsx:33
 #: src/pages/login.jsx:227
-#: src/pages/status.jsx:1059
+#: src/pages/status.jsx:1081
 #: src/pages/welcome.jsx:68
 msgid "Log in"
 msgstr "Inicia sesión"
@@ -1765,8 +1777,8 @@ msgstr "Mostrar resultado"
 #: src/components/poll.jsx:291
 #: src/components/poll.jsx:293
 #: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1521
-#: src/pages/status.jsx:1544
+#: src/pages/status.jsx:1543
+#: src/pages/status.jsx:1566
 msgid "Refresh"
 msgstr "Actualizar"
 
@@ -2955,30 +2967,30 @@ msgstr "{index}/{total}"
 msgid "{index}/X"
 msgstr "{index}/X"
 
-#: src/components/timeline.jsx:480
+#: src/components/timeline.jsx:503
 #: src/pages/settings.jsx:1290
 msgid "New posts"
 msgstr "Nuevas publicaciones"
 
-#: src/components/timeline.jsx:581
+#: src/components/timeline.jsx:604
 #: src/pages/home.jsx:228
 #: src/pages/notifications.jsx:897
-#: src/pages/status.jsx:1220
-#: src/pages/status.jsx:1694
+#: src/pages/status.jsx:1242
+#: src/pages/status.jsx:1716
 msgid "Try again"
 msgstr "Inténtalo de nuevo"
 
 #. placeholder {0}: fItems.length
-#: src/components/timeline.jsx:616
+#: src/components/timeline.jsx:639
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
 msgstr "{0, plural, one {# Impulso} other {# Impulsos}}"
 
-#: src/components/timeline.jsx:621
+#: src/components/timeline.jsx:644
 msgid "Pinned posts"
 msgstr "Publicaciones fijadas"
 
 #. placeholder {0}: filterInfo.titlesStr
-#: src/components/timeline.jsx:974
+#: src/components/timeline.jsx:997
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtrado</0>: <1>{0}</1>"
 
@@ -4300,101 +4312,101 @@ msgstr "NOTA: Las notificaciones push solo se permiten para <0>una cuenta</0>."
 
 #. js-lingui-explicit-id
 #: src/pages/status.jsx:791
-#: src/pages/status.jsx:1445
+#: src/pages/status.jsx:1467
 msgid "post.title"
 msgstr "Publicación"
 
-#: src/pages/status.jsx:1046
+#: src/pages/status.jsx:1068
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
 msgstr "No estás conectado. No puedes interactuar (responder, impulsar, etc.)."
 
-#: src/pages/status.jsx:1066
+#: src/pages/status.jsx:1088
 msgid "This post is from another instance (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr "Esta publicación es de otra instancia (<0>{instance}</0>). Las interacciones (responder, impulsar, etc.) no son posibles."
 
-#: src/pages/status.jsx:1094
+#: src/pages/status.jsx:1116
 msgid "Error: {e}"
 msgstr "Error: {e}"
 
-#: src/pages/status.jsx:1101
+#: src/pages/status.jsx:1123
 msgid "Switch to my instance to enable interactions"
 msgstr "Cambiar a mi instancia para activar interacciones"
 
-#: src/pages/status.jsx:1211
+#: src/pages/status.jsx:1233
 msgid "Unable to load replies."
 msgstr "No se han podido cargar las respuestas."
 
-#: src/pages/status.jsx:1267
+#: src/pages/status.jsx:1289
 msgid "{months, plural, one {# month later} other {# months later}}"
 msgstr "{months, plural, one {# mes después} other {# meses después}}"
 
-#: src/pages/status.jsx:1273
+#: src/pages/status.jsx:1295
 msgid "{years, plural, one {# year later} other {# years later}}"
 msgstr "{years, plural,one {# año después} other {# años después}}"
 
-#: src/pages/status.jsx:1405
+#: src/pages/status.jsx:1427
 msgid "Back"
 msgstr "Volver"
 
-#: src/pages/status.jsx:1436
+#: src/pages/status.jsx:1458
 msgid "Go to main post"
 msgstr "Ir a la publicación principal"
 
 #. placeholder {0}: ancestors.length
-#: src/pages/status.jsx:1459
+#: src/pages/status.jsx:1481
 msgid "{0} posts above ‒ Go to top"
 msgstr "{0} publicaciones arriba - Ir hacia arriba"
 
-#: src/pages/status.jsx:1508
-#: src/pages/status.jsx:1571
+#: src/pages/status.jsx:1530
+#: src/pages/status.jsx:1593
 msgid "Switch to Side Peek view"
 msgstr "Cambiar a vista lateral"
 
-#: src/pages/status.jsx:1572
+#: src/pages/status.jsx:1594
 msgid "Switch to Full view"
 msgstr "Cambiar a vista completa"
 
-#: src/pages/status.jsx:1590
+#: src/pages/status.jsx:1612
 msgid "Show all sensitive content"
 msgstr "Mostrar todo el contenido sensible"
 
-#: src/pages/status.jsx:1595
+#: src/pages/status.jsx:1617
 msgid "Experimental"
 msgstr "Experimental"
 
-#: src/pages/status.jsx:1604
+#: src/pages/status.jsx:1626
 msgid "Unable to switch"
 msgstr "No se ha podido cambiar"
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
-#: src/pages/status.jsx:1611
+#: src/pages/status.jsx:1633
 msgid "Switch to post's instance ({0})"
 msgstr "Cambiar a la instancia de la publicación ({0})"
 
-#: src/pages/status.jsx:1614
+#: src/pages/status.jsx:1636
 msgid "Switch to post's instance"
 msgstr "Cambiar a la instancia de la publicación"
 
-#: src/pages/status.jsx:1627
+#: src/pages/status.jsx:1649
 msgid "View Edit History Snapshots"
 msgstr "Ver instantáneas del historial de edición"
 
-#: src/pages/status.jsx:1685
+#: src/pages/status.jsx:1707
 msgid "Unable to load post"
 msgstr "No se ha podido cargar la publicación"
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
-#: src/pages/status.jsx:1822
+#: src/pages/status.jsx:1844
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr "{0, plural, one {# respuesta} other {<0>{1}</0> respuestas}}"
 
 #. placeholder {0}: shortenNumber(totalComments)
-#: src/pages/status.jsx:1840
+#: src/pages/status.jsx:1862
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr "{totalComments, plural, one {# comentario} other {<0>{0}</0> comentarios}}"
 
-#: src/pages/status.jsx:1862
+#: src/pages/status.jsx:1884
 msgid "View post with its replies"
 msgstr "Ver publicación con sus respuestas"
 

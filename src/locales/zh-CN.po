@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-20 13:25\n"
+"PO-Revision-Date: 2026-01-21 03:37\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -976,7 +976,7 @@ msgstr "打开嘟文详情页"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Open media or post details"
-msgstr ""
+msgstr "打开媒体或嘟文详情"
 
 #: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
@@ -1088,15 +1088,15 @@ msgstr "转到通知"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr ""
+msgstr "转到设置"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
-msgstr ""
+msgstr "转到个人资料"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
-msgstr ""
+msgstr "转到收藏"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1594,7 +1594,7 @@ msgstr "{account} 编辑了一条你引用过的嘟文。"
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:260
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
-msgstr ""
+msgstr "{count, plural,=1 {{account} 已注册。} other {有 <0><1>{0}</1> 人</0> 已注册。}}"
 
 #: src/components/notification.jsx:274
 msgid "{account} reported {targetAccount}"
@@ -1961,7 +1961,7 @@ msgstr "提及 <0>@{username}</0>"
 
 #: src/components/related-actions.jsx:319
 msgid "Search <0>@{username}</0>'s posts"
-msgstr ""
+msgstr "搜索 <0>@{username}</0> 的嘟文"
 
 #: src/components/related-actions.jsx:333
 msgid "Translate bio"
@@ -3112,7 +3112,7 @@ msgstr "已显示 {0} 中的嘟文"
 #. placeholder {0}: account?.username
 #: src/pages/account-statuses.jsx:465
 msgid "Search @{0}'s posts"
-msgstr ""
+msgstr "搜索 @{0} 的嘟文"
 
 #: src/pages/account-statuses.jsx:511
 #: src/pages/search.jsx:345
@@ -4205,7 +4205,7 @@ msgstr "将文字替换为块，在截图时保护隐私。"
 
 #: src/pages/settings.jsx:711
 msgid "Install {CLIENT_NAME}"
-msgstr ""
+msgstr "安装 {CLIENT_NAME}"
 
 #: src/pages/settings.jsx:719
 msgid "About"

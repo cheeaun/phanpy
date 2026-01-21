@@ -725,6 +725,7 @@ function Status({
 
   const spoilerContentRef = useTruncated();
   const contentRef = useTruncated();
+  const pollRef = useTruncated();
   const mediaContainerRef = useTruncated();
 
   const statusRef = useRef(null);
@@ -2545,34 +2546,40 @@ function Status({
                   />
                 )}
                 {!!poll && (
-                  <Poll
-                    lang={language}
-                    poll={poll}
-                    readOnly={readOnly || !sameInstance || !authenticated}
-                    onUpdate={(newPoll) => {
-                      states.statuses[sKey].poll = newPoll;
-                    }}
-                    refresh={() => {
-                      return masto.v1.polls
-                        .$select(poll.id)
-                        .fetch()
-                        .then((pollResponse) => {
-                          states.statuses[sKey].poll = pollResponse;
-                        })
-                        .catch((e) => {}); // Silently fail
-                    }}
-                    votePoll={(choices) => {
-                      return masto.v1.polls
-                        .$select(poll.id)
-                        .votes.create({
-                          choices,
-                        })
-                        .then((pollResponse) => {
-                          states.statuses[sKey].poll = pollResponse;
-                        })
-                        .catch((e) => {}); // Silently fail
-                    }}
-                  />
+                  <div
+                    class="poll-container"
+                    ref={pollRef}
+                    data-read-more={_(readMoreText)}
+                  >
+                    <Poll
+                      lang={language}
+                      poll={poll}
+                      readOnly={readOnly || !sameInstance || !authenticated}
+                      onUpdate={(newPoll) => {
+                        states.statuses[sKey].poll = newPoll;
+                      }}
+                      refresh={() => {
+                        return masto.v1.polls
+                          .$select(poll.id)
+                          .fetch()
+                          .then((pollResponse) => {
+                            states.statuses[sKey].poll = pollResponse;
+                          })
+                          .catch((e) => {}); // Silently fail
+                      }}
+                      votePoll={(choices) => {
+                        return masto.v1.polls
+                          .$select(poll.id)
+                          .votes.create({
+                            choices,
+                          })
+                          .then((pollResponse) => {
+                            states.statuses[sKey].poll = pollResponse;
+                          })
+                          .catch((e) => {}); // Silently fail
+                      }}
+                    />
+                  </div>
                 )}
                 {(((enableTranslate || inlineTranslate) &&
                   isTranslateble(content, emojis) &&

@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-20 13:25\n"
+"PO-Revision-Date: 2026-01-22 14:43\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -219,7 +219,7 @@ msgid "Original"
 msgstr "Оригинальные"
 
 #: src/components/account-info.jsx:1050
-#: src/components/status.jsx:2734
+#: src/components/status.jsx:2733
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1575
 #: src/pages/catchup.jsx:2230
@@ -231,7 +231,7 @@ msgstr "Ответы"
 
 #: src/components/account-info.jsx:1055
 #: src/components/quotes-modal.jsx:81
-#: src/components/status.jsx:2739
+#: src/components/status.jsx:2738
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1578
 #: src/pages/year-in-posts.jsx:1398
@@ -285,8 +285,8 @@ msgstr "Показать статистику публикации постов"
 #: src/components/shortcuts-settings.jsx:231
 #: src/components/shortcuts-settings.jsx:584
 #: src/components/shortcuts-settings.jsx:785
-#: src/components/status.jsx:3392
-#: src/components/status.jsx:3604
+#: src/components/status.jsx:3391
+#: src/components/status.jsx:3603
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:45
 #: src/pages/catchup.jsx:1712
@@ -604,8 +604,8 @@ msgstr "Запланировать"
 #: src/components/status.jsx:1133
 #: src/components/status.jsx:2126
 #: src/components/status.jsx:2127
-#: src/components/status.jsx:2866
-#: src/components/status.jsx:2878
+#: src/components/status.jsx:2865
+#: src/components/status.jsx:2877
 msgid "Reply"
 msgstr "Ответить"
 
@@ -1054,8 +1054,8 @@ msgstr "<0>l</0> или <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:186
 #: src/components/status.jsx:1169
-#: src/components/status.jsx:2909
-#: src/components/status.jsx:2975
+#: src/components/status.jsx:2908
+#: src/components/status.jsx:2974
 msgid "Boost"
 msgstr "Продвинуть"
 
@@ -1065,8 +1065,8 @@ msgstr "<0>Shift</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:198
 #: src/components/status.jsx:1271
+#: src/components/status.jsx:3003
 #: src/components/status.jsx:3004
-#: src/components/status.jsx:3005
 msgid "Bookmark"
 msgstr "Закладка"
 
@@ -1175,8 +1175,8 @@ msgstr "Описание медиа"
 #: src/components/status.jsx:2150
 #: src/components/status.jsx:2167
 #: src/components/status.jsx:2299
-#: src/components/status.jsx:3025
-#: src/components/status.jsx:3028
+#: src/components/status.jsx:3024
+#: src/components/status.jsx:3027
 #: src/pages/account-statuses.jsx:559
 #: src/pages/accounts.jsx:127
 #: src/pages/hashtag.jsx:203
@@ -1325,8 +1325,8 @@ msgstr "Отфильтровано: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:70
-#: src/components/status.jsx:3530
-#: src/components/status.jsx:3608
+#: src/components/status.jsx:3529
+#: src/components/status.jsx:3607
 #: src/components/timeline.jsx:1002
 #: src/pages/catchup.jsx:79
 #: src/pages/catchup.jsx:2033
@@ -1723,59 +1723,70 @@ msgstr "Поделиться…"
 msgid "Open"
 msgstr "Открыть"
 
-#: src/components/poll.jsx:113
-msgid "Voted"
-msgstr "Проголосовали"
-
-#: src/components/poll.jsx:119
+#: src/components/poll.jsx:128
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
 msgstr "{optionVotesCount, plural, one {# голос} other {# голос(а/ов)}}"
 
-#: src/components/poll.jsx:139
-#: src/components/poll.jsx:269
-#: src/components/poll.jsx:273
+#: src/components/poll.jsx:135
+msgid "Voted"
+msgstr "Проголосовали"
+
+#: src/components/poll.jsx:156
+#: src/components/poll.jsx:350
+#: src/components/poll.jsx:354
 msgid "Hide results"
 msgstr "Скрыть результаты"
 
-#: src/components/poll.jsx:188
+#. placeholder {0}: options.length
+#: src/components/poll.jsx:161
+#: src/components/poll.jsx:251
+#: src/components/poll.jsx:267
+msgid "{0, plural, one {# choice} other {# choices}}"
+msgstr ""
+
+#: src/components/poll.jsx:187
+msgid "Unable to vote in poll"
+msgstr ""
+
+#: src/components/poll.jsx:240
 msgid "Vote"
 msgstr "Голосовать"
 
 #. placeholder {0}: shortenNumber(votesCount)
 #. placeholder {1}: shortenNumber(votesCount)
-#: src/components/poll.jsx:196
+#: src/components/poll.jsx:277
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr "{votesCount, plural, one {<0>{0}</0> проголосовал(а)} other {<1>{1}</1> проголосовали}}"
 
 #. placeholder {0}: shortenNumber(votersCount)
 #. placeholder {1}: shortenNumber(votersCount)
-#: src/components/poll.jsx:217
+#: src/components/poll.jsx:298
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr "{votersCount, plural, one {<0>{0}</0> голосующ(ий/ая)} other {<1>{1}</1> голосующих}}"
 
-#: src/components/poll.jsx:243
+#: src/components/poll.jsx:324
 msgid "Ended <0/>"
 msgstr "Завершено <0/>"
 
-#: src/components/poll.jsx:248
+#: src/components/poll.jsx:329
 msgid "Ended"
 msgstr "Завершено"
 
-#: src/components/poll.jsx:252
+#: src/components/poll.jsx:333
 msgid "Ending <0/>"
 msgstr "Завершение <0/>"
 
-#: src/components/poll.jsx:257
+#: src/components/poll.jsx:338
 msgid "Ending"
 msgstr "Завершение"
 
-#: src/components/poll.jsx:269
-#: src/components/poll.jsx:273
+#: src/components/poll.jsx:350
+#: src/components/poll.jsx:354
 msgid "Show results"
 msgstr "Показать результаты"
 
-#: src/components/poll.jsx:291
-#: src/components/poll.jsx:293
+#: src/components/poll.jsx:372
+#: src/components/poll.jsx:374
 #: src/pages/scheduled-posts.jsx:100
 #: src/pages/status.jsx:1543
 #: src/pages/status.jsx:1566
@@ -2594,9 +2605,9 @@ msgid "You are not allowed to quote this post"
 msgstr "Вам не разрешено цитировать этот пост"
 
 #: src/components/status.jsx:368
+#: src/components/status.jsx:3169
 #: src/components/status.jsx:3170
 #: src/components/status.jsx:3171
-#: src/components/status.jsx:3172
 msgid "Post unavailable"
 msgstr "Пост недоступен"
 
@@ -2663,13 +2674,13 @@ msgstr "Только <0>@{0}</0>"
 
 #: src/components/status.jsx:1169
 #: src/components/status.jsx:1246
-#: src/components/status.jsx:2909
-#: src/components/status.jsx:2973
+#: src/components/status.jsx:2908
+#: src/components/status.jsx:2972
 msgid "Unboost"
 msgstr "Прекратить продвигать"
 
 #: src/components/status.jsx:1208
-#: src/components/status.jsx:2958
+#: src/components/status.jsx:2957
 msgid "Quote with link"
 msgstr "Цитата со ссылкой"
 
@@ -2686,31 +2697,31 @@ msgid "Boosted @{0}'s post"
 msgstr "Продвинул(а) пост @{0}"
 
 #: src/components/status.jsx:1248
-#: src/components/status.jsx:2972
+#: src/components/status.jsx:2971
 msgid "Boost/Quote…"
 msgstr "Продвинуть/Процитировать…"
 
 #: src/components/status.jsx:1249
-#: src/components/status.jsx:2972
+#: src/components/status.jsx:2971
 msgid "Boost…"
 msgstr "Продвинуть…"
 
 #: src/components/status.jsx:1261
 #: src/components/status.jsx:2140
-#: src/components/status.jsx:2992
+#: src/components/status.jsx:2991
 msgid "Unlike"
 msgstr "Не нравится"
 
 #: src/components/status.jsx:1262
 #: src/components/status.jsx:2140
 #: src/components/status.jsx:2141
+#: src/components/status.jsx:2991
 #: src/components/status.jsx:2992
-#: src/components/status.jsx:2993
 msgid "Like"
 msgstr "Нравится"
 
 #: src/components/status.jsx:1271
-#: src/components/status.jsx:3004
+#: src/components/status.jsx:3003
 msgid "Unbookmark"
 msgstr "Удалить закладку"
 
@@ -2835,17 +2846,17 @@ msgstr "Пожаловаться на пост…"
 
 #: src/components/status.jsx:2141
 #: src/components/status.jsx:2177
-#: src/components/status.jsx:2993
+#: src/components/status.jsx:2992
 msgid "Liked"
 msgstr "Нравится"
 
 #: src/components/status.jsx:2174
-#: src/components/status.jsx:2975
+#: src/components/status.jsx:2974
 msgid "Boosted"
 msgstr "Продвинут"
 
 #: src/components/status.jsx:2184
-#: src/components/status.jsx:3005
+#: src/components/status.jsx:3004
 msgid "Bookmarked"
 msgstr "Добавлен в закладки"
 
@@ -2854,7 +2865,7 @@ msgid "Pinned"
 msgstr "Закреплён"
 
 #: src/components/status.jsx:2245
-#: src/components/status.jsx:2749
+#: src/components/status.jsx:2748
 msgid "Deleted"
 msgstr "Удалён"
 
@@ -2865,13 +2876,13 @@ msgstr "{repliesCount, plural, one {# ответ} other {# ответ(а/ов)}}
 
 #: src/components/status.jsx:2295
 #: src/components/status.jsx:2362
-#: src/components/status.jsx:2781
+#: src/components/status.jsx:2780
 msgid "Edited"
 msgstr "Отредактировано"
 
 #: src/components/status.jsx:2458
 #: src/components/status.jsx:2520
-#: src/components/status.jsx:2628
+#: src/components/status.jsx:2627
 msgid "Show less"
 msgstr "Свернуть/скрыть"
 
@@ -2882,62 +2893,62 @@ msgstr "Показать содержимое"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2624
+#: src/components/status.jsx:2623
 #: src/pages/catchup.jsx:2032
 msgid "Filtered: {0}"
 msgstr "Отфильтровано: {0}"
 
-#: src/components/status.jsx:2628
+#: src/components/status.jsx:2627
 msgid "Show media"
 msgstr "Показать медиа"
 
-#: src/components/status.jsx:2867
-#: src/components/status.jsx:2879
+#: src/components/status.jsx:2866
+#: src/components/status.jsx:2878
 msgid "Comments"
 msgstr "Комментарии"
 
-#: src/components/status.jsx:3168
+#: src/components/status.jsx:3167
 msgid "Post hidden by your filters"
 msgstr "Пост скрыт вашими фильтрами"
 
-#: src/components/status.jsx:3169
+#: src/components/status.jsx:3168
 msgid "Post pending"
 msgstr "Пост ожидает подтверждения"
 
-#: src/components/status.jsx:3173
+#: src/components/status.jsx:3172
 msgid "Post removed by author"
 msgstr "Пост удален автором"
 
-#: src/components/status.jsx:3174
+#: src/components/status.jsx:3173
 msgid "Post hidden because you've blocked @{name}."
 msgstr "Пост скрыт, потому что вы заблокировали @{name}."
 
-#: src/components/status.jsx:3176
+#: src/components/status.jsx:3175
 msgid "Post hidden because you've blocked {domain}."
 msgstr "Пост скрыт, потому что вы заблокировали {domain}."
 
-#: src/components/status.jsx:3177
+#: src/components/status.jsx:3176
 msgid "Post hidden because you've muted @{name}."
 msgstr "Пост скрыт, потому что вы заглушали @{name}."
 
-#: src/components/status.jsx:3252
+#: src/components/status.jsx:3251
 msgid "Show anyway"
 msgstr "Всё равно показать"
 
-#: src/components/status.jsx:3397
+#: src/components/status.jsx:3396
 msgid "Edit History"
 msgstr "История изменений"
 
-#: src/components/status.jsx:3401
+#: src/components/status.jsx:3400
 msgid "Failed to load history"
 msgstr "Не удалось загрузить историю"
 
-#: src/components/status.jsx:3406
+#: src/components/status.jsx:3405
 msgid "Loading…"
 msgstr "Загрузка…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3538
+#: src/components/status.jsx:3537
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> продвинули"
 

@@ -1092,7 +1092,9 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     outline-offset: -2px;
   }
 }
-.status-link:active:not(:has(:is(.media, button):active)) {
+.status-link:active:not(
+    :has(:is(.media, .poll, .card, .status-card-link, button):active)
+  ) {
   filter: brightness(0.95);
 }
 

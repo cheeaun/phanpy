@@ -2569,8 +2569,7 @@ function Status({
                         })
                         .then((pollResponse) => {
                           states.statuses[sKey].poll = pollResponse;
-                        })
-                        .catch((e) => {}); // Silently fail
+                        });
                     }}
                   />
                 )}

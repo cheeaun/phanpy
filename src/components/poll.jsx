@@ -11,6 +11,8 @@ import EmojiText from './emoji-text';
 import Icon from './icon';
 import RelativeTime from './relative-time';
 
+const POLL_OPTIONS_BATCH_SIZE = 40;
+
 export default function Poll({
   poll,
   lang,
@@ -20,6 +22,10 @@ export default function Poll({
 }) {
   const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
+  const [visibleOptionsCount, setVisibleOptionsCount] = useState(
+    POLL_OPTIONS_BATCH_SIZE,
+  );
+  const loadMoreRef = useRef(null);
   const {
     expired,
     expiresAt,
@@ -71,6 +77,31 @@ export default function Poll({
   const resultsView =
     (showResults && optionsHaveVoteCounts) || voted || expired;
   const [selectedOptions, setSelectedOptions] = useState(multiple ? [] : null);
+
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+    if (visibleOptionsCount >= options.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleOptionsCount((prev) =>
+            Math.min(prev + POLL_OPTIONS_BATCH_SIZE, options.length),
+          );
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(loadMoreRef.current);
+
+    return () => observer.disconnect();
+  }, [visibleOptionsCount, options.length]);
+
+  useEffect(() => {
+    setVisibleOptionsCount(POLL_OPTIONS_BATCH_SIZE);
+  }, [resultsView, options.length]);
+
   const voteOptionsSelectionCount = multiple
     ? selectedOptions.length
     : selectedOptions !== null
@@ -92,7 +123,7 @@ export default function Poll({
       {resultsView ? (
         <>
           <div class="poll-options" ref={ref}>
-            {options.map((option, i) => {
+            {options.slice(0, visibleOptionsCount).map((option, i) => {
               const { title, votesCount: optionVotesCount } = option;
               const ratio = pollVotesCount
                 ? optionVotesCount / pollVotesCount
@@ -142,6 +173,9 @@ export default function Poll({
                 </div>
               );
             })}
+            {visibleOptionsCount < options.length && (
+              <div ref={loadMoreRef} style={{ height: '1em' }} />
+            )}
           </div>
           {!expired && !voted && (
             <div class="poll-actions">
@@ -191,7 +225,7 @@ export default function Poll({
           }}
         >
           <div class="poll-options" ref={ref}>
-            {options.map((option, i) => {
+            {options.slice(0, visibleOptionsCount).map((option, i) => {
               const { title } = option;
               const isSelected = multiple
                 ? selectedOptions.includes(i)
@@ -226,6 +260,9 @@ export default function Poll({
                 </div>
               );
             })}
+            {visibleOptionsCount < options.length && (
+              <div ref={loadMoreRef} style={{ height: '1em' }} />
+            )}
           </div>
           <div class="poll-actions">
             <button

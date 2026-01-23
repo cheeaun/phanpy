@@ -2268,6 +2268,8 @@ a.card:is(:hover, :focus):visited {
     justify-content: space-between;
     align-items: center;
     position: relative;
+    content-visibility: auto;
+    content-intrinsic-size: auto 2lh;
 
     &:has(> label) {
       padding: 0;

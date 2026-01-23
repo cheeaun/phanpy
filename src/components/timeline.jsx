@@ -244,11 +244,34 @@ function Timeline({
 
   const oRef = useHotkeys(
     ['enter', 'o'],
-    () => {
+    (e, handler) => {
       // open active status
       const activeItem = document.activeElement;
       if (activeItem?.matches(itemsSelector)) {
-        activeItem.click();
+        // find first media link and click it (not inside status-card)
+        const isO = handler.keys.join('') === 'o';
+        if (isO) {
+          const mediaLink = activeItem.querySelector(
+            'a.media:not(.status-card a.media)',
+          );
+          if (mediaLink) {
+            // if link is ?media-only=1, change to media=1 and go to it
+            const url = mediaLink.getAttribute('href');
+            if (/media\-only=/i.test(url)) {
+              const newURL = url.replace(/media\-only=/i, 'media=');
+              setTimeout(() => {
+                // Need timeout to prevent propagate to the o key handler in pages/status.jsx
+                location.hash = newURL;
+              }, 100);
+            } else {
+              mediaLink.click();
+            }
+          } else {
+            activeItem.click();
+          }
+        } else {
+          activeItem.click();
+        }
       }
     },
     {

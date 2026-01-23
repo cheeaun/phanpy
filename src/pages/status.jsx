@@ -951,6 +951,28 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     },
   );
 
+  useHotkeys(
+    'o',
+    () => {
+      // open media of active status (not inside status-card)
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
+      );
+      if (activeStatus) {
+        const mediaLink = activeStatus.querySelector(
+          'a.media:not(.status-card a.media)',
+        );
+        if (mediaLink) {
+          mediaLink.click();
+        }
+      }
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
+
   const [reachTopPost, setReachTopPost] = useState(false);
   // const { nearReachStart } = useScroll({
   //   scrollableRef,

@@ -174,7 +174,7 @@ export default function Poll({
               );
             })}
             {visibleOptionsCount < options.length && (
-              <div ref={loadMoreRef} style={{ height: '1em' }} />
+              <div ref={loadMoreRef} style={{ minHeight: '1em' }} />
             )}
           </div>
           {!expired && !voted && (
@@ -261,7 +261,7 @@ export default function Poll({
               );
             })}
             {visibleOptionsCount < options.length && (
-              <div ref={loadMoreRef} style={{ height: '1em' }} />
+              <div ref={loadMoreRef} style={{ minHeight: '1em' }} />
             )}
           </div>
           <div class="poll-actions">

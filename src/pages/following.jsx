@@ -8,6 +8,7 @@ import { filteredItems } from '../utils/filters';
 import states, { getStatus, saveStatus } from '../utils/states';
 import supports from '../utils/supports';
 import {
+  applyTimelineFilters,
   assignFollowedTags,
   clearFollowedTagsState,
   dedupeBoosts,
@@ -77,6 +78,7 @@ function Following({ title, path, id, ...props }) {
         saveStatus(item, instance);
       });
       value = dedupeBoosts(value, instance);
+      value = applyTimelineFilters(value, snapStates.settings);
       if (firstLoad && latestItemChanged) clearFollowedTagsState();
       setTimeout(() => {
         assignFollowedTags(value, instance);
@@ -110,6 +112,7 @@ function Following({ title, path, id, ...props }) {
       if (value?.length && !valueContainsLatestItem) {
         latestItem.current = value[0].id;
         value = dedupeBoosts(value, instance);
+        value = applyTimelineFilters(value, snapStates.settings);
         value = filteredItems(value, 'home');
         if (value.some((item) => !item.reblog)) {
           return true;

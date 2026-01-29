@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-29 12:16\n"
+"PO-Revision-Date: 2026-01-29 13:38\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2327,7 +2327,7 @@ msgstr "Solo local"
 #: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "Servidor"
 
 #: src/components/shortcuts-settings.jsx:79
 #: src/components/shortcuts-settings.jsx:88
@@ -2472,7 +2472,7 @@ msgstr "Pegar atajos aquí"
 
 #: src/components/shortcuts-settings.jsx:844
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "Descargando accesos directos guardados del servidor…"
 
 #: src/components/shortcuts-settings.jsx:872
 msgid "Unable to download shortcuts"
@@ -2480,7 +2480,7 @@ msgstr "No se han podido descargar los atajos"
 
 #: src/components/shortcuts-settings.jsx:875
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Descargar accesos directos del servidor"
 
 #: src/components/shortcuts-settings.jsx:942
 msgid "* Exists in current shortcuts"
@@ -2545,7 +2545,7 @@ msgstr "No se ha podido copiar los atajos"
 
 #: src/components/shortcuts-settings.jsx:1118
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Guardando accesos directos en el servidor…"
 
 #: src/components/shortcuts-settings.jsx:1125
 msgid "Shortcuts saved"
@@ -2557,7 +2557,7 @@ msgstr "No se ha podido guardar los atajos"
 
 #: src/components/shortcuts-settings.jsx:1133
 msgid "Sync to server"
-msgstr ""
+msgstr "Sincronizar con el servidor"
 
 #: src/components/shortcuts-settings.jsx:1148
 msgid "Shortcut settings copied"
@@ -2582,7 +2582,7 @@ msgstr "No hay más atajos que importar"
 
 #: src/components/shortcuts-settings.jsx:1212
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Importar/exportar ajustes desde/hacia el servidor (muy experimental)"
 
 #: src/components/status.jsx:288
 msgid "Private posts cannot be quoted"
@@ -2617,7 +2617,7 @@ msgstr "<0/> <1>impulsó</1>"
 
 #: src/components/status.jsx:736
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr ""
+msgstr "Lo sentimos, el servidor en el que estás conectado actualmente no puede interactuar con esta publicación desde otro servidor."
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:925
@@ -3149,11 +3149,11 @@ msgstr "No se ha podido obtener información de la cuenta"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:585
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "Cambiar al servidor de la cuenta {0}"
 
 #: src/pages/account-statuses.jsx:615
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Cambiar a mi servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:688
 msgid "Month"
@@ -3334,7 +3334,7 @@ msgstr "Hasta la última puesta al día ({0})"
 
 #: src/pages/catchup.jsx:1159
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Nota: Es posible que tu servidor solamente muestre un máximo de 800 publicaciones en la línea temporal de Inicio, independientemente del intervalo de tiempo. Podría ser menos o más."
 
 #: src/pages/catchup.jsx:1169
 msgid "Previously…"
@@ -3715,25 +3715,25 @@ msgstr "Añadir a atajos"
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Introduce un nuevo servidor, por ejemplo, \"mastodon.social\""
 
 #: src/pages/hashtag.jsx:495
 #: src/pages/public.jsx:144
 #: src/pages/trending.jsx:484
 msgid "Invalid server"
-msgstr ""
+msgstr "Servidor inválido"
 
 #: src/pages/hashtag.jsx:509
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another server…"
-msgstr ""
+msgstr "Ir a otro servidor…"
 
 #: src/pages/hashtag.jsx:522
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Ir a mi servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
@@ -3785,7 +3785,7 @@ msgstr "No se pudo registrar la aplicación"
 
 #: src/pages/login.jsx:246
 msgid "server domain"
-msgstr ""
+msgstr "dominio del servidor"
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -3793,7 +3793,7 @@ msgstr "ejemplo \"mastodon.social\""
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "No se ha podido iniciar sesión. Inténtalo de nuevo o prueba con otro servidor."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4131,7 +4131,7 @@ msgstr "No se ha podido actualizar la visibilidad predeterminada"
 
 #: src/pages/settings.jsx:354
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Sincronizado con la configuración de tu servidor. <0>Ve a tu servidor ({instance}) para obtener más configuraciones.</0>"
 
 #: src/pages/settings.jsx:369
 msgid "Experiments"
@@ -4204,7 +4204,7 @@ msgstr "⚠️⚠️⚠️ Muy experimental.<0/>Guardado en las notas de tu prop
 
 #: src/pages/settings.jsx:656
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "Nota: Esta función utiliza la API del servidor en el que se ha iniciado sesión actualmente."
 
 #: src/pages/settings.jsx:672
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4333,7 +4333,7 @@ msgstr "No estás conectado. No puedes interactuar (responder, impulsar, etc.)."
 
 #: src/pages/status.jsx:1088
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Esta publicación proviene de otro servidor (<0>{instance}</0>). No es posible interactuar (responder, impulsar, etc.)."
 
 #: src/pages/status.jsx:1116
 msgid "Error: {e}"
@@ -4341,7 +4341,7 @@ msgstr "Error: {e}"
 
 #: src/pages/status.jsx:1123
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Cambiar a mi servidor para habilitar las interacciones"
 
 #: src/pages/status.jsx:1231
 msgid "Unable to load replies."
@@ -4392,11 +4392,11 @@ msgstr "No se ha podido cambiar"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1631
 msgid "Switch to post's server ({0})"
-msgstr ""
+msgstr "Cambiar al servidor de la publicación ({0})"
 
 #: src/pages/status.jsx:1634
 msgid "Switch to post's server"
-msgstr ""
+msgstr "Cambiar al servidor de la publicación"
 
 #: src/pages/status.jsx:1647
 msgid "View Edit History Snapshots"
@@ -4470,11 +4470,11 @@ msgstr "Conecta tu cuenta Mastodon/Fediverse existente.<0/>Tus credenciales no s
 
 #: src/pages/welcome.jsx:96
 msgid "Screenshot of Phanpy home timeline on mobile device"
-msgstr ""
+msgstr "Captura de pantalla de la cronología de la página de inicio de Phanpy en un dispositivo móvil"
 
 #: src/pages/welcome.jsx:113
 msgid "Screenshot of Phanpy home timeline on tablet device"
-msgstr ""
+msgstr "Captura de pantalla de la cronología de la página de inicio de Phanpy en una tableta"
 
 #: src/pages/welcome.jsx:127
 msgid "Screenshot of Boosts Carousel"

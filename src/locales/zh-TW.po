@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-22 14:43\n"
+"PO-Revision-Date: 2026-01-29 08:44\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1383,7 +1383,7 @@ msgstr ""
 
 #: src/components/nav-menu.jsx:197
 #: src/pages/catchup.jsx:1003
-#: src/pages/welcome.jsx:149
+#: src/pages/welcome.jsx:154
 msgid "Catch-up"
 msgstr ""
 
@@ -1479,7 +1479,7 @@ msgstr "帳號…"
 #: src/pages/login.jsx:33
 #: src/pages/login.jsx:227
 #: src/pages/status.jsx:1081
-#: src/pages/welcome.jsx:68
+#: src/pages/welcome.jsx:63
 msgid "Log in"
 msgstr "登入"
 
@@ -1723,70 +1723,70 @@ msgstr "分享…"
 msgid "Open"
 msgstr "開啟"
 
-#: src/components/poll.jsx:128
+#: src/components/poll.jsx:159
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
 msgstr ""
 
-#: src/components/poll.jsx:135
+#: src/components/poll.jsx:166
 msgid "Voted"
 msgstr "已投票"
 
-#: src/components/poll.jsx:156
-#: src/components/poll.jsx:350
-#: src/components/poll.jsx:354
+#: src/components/poll.jsx:190
+#: src/components/poll.jsx:387
+#: src/components/poll.jsx:391
 msgid "Hide results"
 msgstr "隱藏結果"
 
 #. placeholder {0}: options.length
-#: src/components/poll.jsx:161
-#: src/components/poll.jsx:251
-#: src/components/poll.jsx:267
+#: src/components/poll.jsx:195
+#: src/components/poll.jsx:288
+#: src/components/poll.jsx:304
 msgid "{0, plural, one {# choice} other {# choices}}"
 msgstr ""
 
-#: src/components/poll.jsx:187
+#: src/components/poll.jsx:221
 msgid "Unable to vote in poll"
 msgstr ""
 
-#: src/components/poll.jsx:240
+#: src/components/poll.jsx:277
 msgid "Vote"
 msgstr "投票"
 
 #. placeholder {0}: shortenNumber(votesCount)
 #. placeholder {1}: shortenNumber(votesCount)
-#: src/components/poll.jsx:277
+#: src/components/poll.jsx:314
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(votersCount)
 #. placeholder {1}: shortenNumber(votersCount)
-#: src/components/poll.jsx:298
+#: src/components/poll.jsx:335
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr ""
 
-#: src/components/poll.jsx:324
+#: src/components/poll.jsx:361
 msgid "Ended <0/>"
 msgstr "已結束 <0/>"
 
-#: src/components/poll.jsx:329
+#: src/components/poll.jsx:366
 msgid "Ended"
 msgstr "已結束"
 
-#: src/components/poll.jsx:333
+#: src/components/poll.jsx:370
 msgid "Ending <0/>"
 msgstr "結束 <0/>"
 
-#: src/components/poll.jsx:338
+#: src/components/poll.jsx:375
 msgid "Ending"
 msgstr "結束"
 
-#: src/components/poll.jsx:350
-#: src/components/poll.jsx:354
+#: src/components/poll.jsx:387
+#: src/components/poll.jsx:391
 msgid "Show results"
 msgstr "顯示結果"
 
-#: src/components/poll.jsx:372
-#: src/components/poll.jsx:374
+#: src/components/poll.jsx:409
+#: src/components/poll.jsx:411
 #: src/pages/scheduled-posts.jsx:100
 #: src/pages/status.jsx:1543
 #: src/pages/status.jsx:1566
@@ -4452,80 +4452,88 @@ msgstr ""
 msgid "No trending posts."
 msgstr ""
 
-#: src/pages/welcome.jsx:57
+#: src/pages/welcome.jsx:52
 msgid "A minimalistic opinionated Mastodon web client."
 msgstr ""
 
-#: src/pages/welcome.jsx:68
+#: src/pages/welcome.jsx:63
 msgid "Log in with Mastodon"
 msgstr ""
 
-#: src/pages/welcome.jsx:74
+#: src/pages/welcome.jsx:69
 msgid "Sign up"
 msgstr ""
 
-#: src/pages/welcome.jsx:81
+#: src/pages/welcome.jsx:76
 msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."
 msgstr ""
 
-#: src/pages/welcome.jsx:98
-msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
+#: src/pages/welcome.jsx:96
+msgid "Screenshot of Phanpy home timeline on mobile device"
 msgstr ""
 
-#: src/pages/welcome.jsx:129
+#: src/pages/welcome.jsx:113
+msgid "Screenshot of Phanpy home timeline on tablet device"
+msgstr ""
+
+#: src/pages/welcome.jsx:127
 msgid "Screenshot of Boosts Carousel"
 msgstr ""
 
-#: src/pages/welcome.jsx:133
+#: src/pages/welcome.jsx:134
 msgid "Boosts Carousel"
 msgstr ""
 
-#: src/pages/welcome.jsx:136
+#: src/pages/welcome.jsx:137
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
 msgstr ""
 
-#: src/pages/welcome.jsx:145
+#: src/pages/welcome.jsx:147
 msgid "Screenshot of Catch-up"
 msgstr ""
 
-#: src/pages/welcome.jsx:152
+#: src/pages/welcome.jsx:157
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
 msgstr ""
 
-#: src/pages/welcome.jsx:161
+#: src/pages/welcome.jsx:167
 msgid "Screenshot of nested comments thread"
 msgstr ""
 
-#: src/pages/welcome.jsx:165
+#: src/pages/welcome.jsx:174
 msgid "Nested comments thread"
 msgstr ""
 
-#: src/pages/welcome.jsx:168
+#: src/pages/welcome.jsx:177
 msgid "Effortlessly follow conversations. Semi-collapsible replies."
 msgstr ""
 
-#: src/pages/welcome.jsx:176
+#: src/pages/welcome.jsx:186
 msgid "Screenshot of multi-column UI"
 msgstr ""
 
-#: src/pages/welcome.jsx:180
+#: src/pages/welcome.jsx:193
 msgid "Single or multi-column"
 msgstr ""
 
-#: src/pages/welcome.jsx:183
+#: src/pages/welcome.jsx:196
 msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
 msgstr ""
 
-#: src/pages/welcome.jsx:192
+#: src/pages/welcome.jsx:206
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
 msgstr ""
 
-#: src/pages/welcome.jsx:196
+#: src/pages/welcome.jsx:213
 msgid "Multi-hashtag timeline"
 msgstr ""
 
-#: src/pages/welcome.jsx:199
+#: src/pages/welcome.jsx:216
 msgid "Up to 5 hashtags combined into a single timeline."
+msgstr ""
+
+#: src/pages/welcome.jsx:231
+msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
 msgstr ""
 
 #: src/utils/open-compose.js:24

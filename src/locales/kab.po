@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-22 14:43\n"
+"PO-Revision-Date: 2026-01-29 08:44\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1383,7 +1383,7 @@ msgstr "yettwaḍeffren"
 
 #: src/components/nav-menu.jsx:197
 #: src/pages/catchup.jsx:1003
-#: src/pages/welcome.jsx:149
+#: src/pages/welcome.jsx:154
 msgid "Catch-up"
 msgstr "Alukem"
 
@@ -1479,7 +1479,7 @@ msgstr "Imiḍanen…"
 #: src/pages/login.jsx:33
 #: src/pages/login.jsx:227
 #: src/pages/status.jsx:1081
-#: src/pages/welcome.jsx:68
+#: src/pages/welcome.jsx:63
 msgid "Log in"
 msgstr "Qqen"
 
@@ -1723,70 +1723,70 @@ msgstr "Bḍu…"
 msgid "Open"
 msgstr "Ldi"
 
-#: src/components/poll.jsx:128
+#: src/components/poll.jsx:159
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
 msgstr ""
 
-#: src/components/poll.jsx:135
+#: src/components/poll.jsx:166
 msgid "Voted"
 msgstr "Yefren"
 
-#: src/components/poll.jsx:156
-#: src/components/poll.jsx:350
-#: src/components/poll.jsx:354
+#: src/components/poll.jsx:190
+#: src/components/poll.jsx:387
+#: src/components/poll.jsx:391
 msgid "Hide results"
 msgstr "Ffer igmaḍ"
 
 #. placeholder {0}: options.length
-#: src/components/poll.jsx:161
-#: src/components/poll.jsx:251
-#: src/components/poll.jsx:267
+#: src/components/poll.jsx:195
+#: src/components/poll.jsx:288
+#: src/components/poll.jsx:304
 msgid "{0, plural, one {# choice} other {# choices}}"
 msgstr ""
 
-#: src/components/poll.jsx:187
+#: src/components/poll.jsx:221
 msgid "Unable to vote in poll"
 msgstr ""
 
-#: src/components/poll.jsx:240
+#: src/components/poll.jsx:277
 msgid "Vote"
 msgstr "Fren"
 
 #. placeholder {0}: shortenNumber(votesCount)
 #. placeholder {1}: shortenNumber(votesCount)
-#: src/components/poll.jsx:277
+#: src/components/poll.jsx:314
 msgid "{votesCount, plural, one {<0>{0}</0> vote} other {<1>{1}</1> votes}}"
 msgstr "{votesCount, plural, one {<0>{0}</0> afran} other {<1>{1}</1> ifranen}}"
 
 #. placeholder {0}: shortenNumber(votersCount)
 #. placeholder {1}: shortenNumber(votersCount)
-#: src/components/poll.jsx:298
+#: src/components/poll.jsx:335
 msgid "{votersCount, plural, one {<0>{0}</0> voter} other {<1>{1}</1> voters}}"
 msgstr "{votersCount, plural, one {<0>{0}</0> amefran} other {<1>{1}</1> imefranen}}"
 
-#: src/components/poll.jsx:324
+#: src/components/poll.jsx:361
 msgid "Ended <0/>"
 msgstr "Ifukk <0/>"
 
-#: src/components/poll.jsx:329
+#: src/components/poll.jsx:366
 msgid "Ended"
 msgstr "Ifukk"
 
-#: src/components/poll.jsx:333
+#: src/components/poll.jsx:370
 msgid "Ending <0/>"
 msgstr "Yettfakk <0/>"
 
-#: src/components/poll.jsx:338
+#: src/components/poll.jsx:375
 msgid "Ending"
 msgstr "Yettfakk"
 
-#: src/components/poll.jsx:350
-#: src/components/poll.jsx:354
+#: src/components/poll.jsx:387
+#: src/components/poll.jsx:391
 msgid "Show results"
 msgstr "Sken igmaḍ"
 
-#: src/components/poll.jsx:372
-#: src/components/poll.jsx:374
+#: src/components/poll.jsx:409
+#: src/components/poll.jsx:411
 #: src/pages/scheduled-posts.jsx:100
 #: src/pages/status.jsx:1543
 #: src/pages/status.jsx:1566
@@ -4452,81 +4452,89 @@ msgstr "Tisuffaɣ tinezzaɣ"
 msgid "No trending posts."
 msgstr "Ulac tisuffaɣ tinezzaɣ."
 
-#: src/pages/welcome.jsx:57
+#: src/pages/welcome.jsx:52
 msgid "A minimalistic opinionated Mastodon web client."
 msgstr "Amsaɣ n Mastodon yella yettwali-t s tmuɣli taḥeqqart."
 
-#: src/pages/welcome.jsx:68
+#: src/pages/welcome.jsx:63
 msgid "Log in with Mastodon"
 msgstr "Qqen s Mastodon"
 
-#: src/pages/welcome.jsx:74
+#: src/pages/welcome.jsx:69
 msgid "Sign up"
 msgstr "Jerred"
 
-#: src/pages/welcome.jsx:81
+#: src/pages/welcome.jsx:76
 msgid "Connect your existing Mastodon/Fediverse account.<0/>Your credentials are not stored on this server."
 msgstr "Qqen amiḍan-ik Mastodon/Fedivers i yellan.<0/>Inekcam-ik ur ttwaskelsen ara ɣef uqeddac-a."
 
-#: src/pages/welcome.jsx:98
-msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
-msgstr "<0>Yettwabna</0> sɣur <1>@cheeaun</1>. <2>Tasertit n tbaḍnit</2>."
+#: src/pages/welcome.jsx:96
+msgid "Screenshot of Phanpy home timeline on mobile device"
+msgstr ""
 
-#: src/pages/welcome.jsx:129
+#: src/pages/welcome.jsx:113
+msgid "Screenshot of Phanpy home timeline on tablet device"
+msgstr ""
+
+#: src/pages/welcome.jsx:127
 msgid "Screenshot of Boosts Carousel"
 msgstr "Tuṭṭfa n ugdil n kaṛusel n yizuzar"
 
-#: src/pages/welcome.jsx:133
+#: src/pages/welcome.jsx:134
 msgid "Boosts Carousel"
 msgstr "Kaṛusel n yizuzar"
 
-#: src/pages/welcome.jsx:136
+#: src/pages/welcome.jsx:137
 msgid "Visually separate original posts and re-shared posts (boosted posts)."
 msgstr "Freq s tmuɣli tisuffaɣ tiɣbula akked tsufaɣ yettwalsen beṭṭu (tisuffaɣ yettwazuzren)."
 
-#: src/pages/welcome.jsx:145
+#: src/pages/welcome.jsx:147
 msgid "Screenshot of Catch-up"
 msgstr ""
 
-#: src/pages/welcome.jsx:152
+#: src/pages/welcome.jsx:157
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
 msgstr ""
 
-#: src/pages/welcome.jsx:161
+#: src/pages/welcome.jsx:167
 msgid "Screenshot of nested comments thread"
 msgstr "Tuṭṭfa n ugdil n yiwenniten yimyikcamen"
 
-#: src/pages/welcome.jsx:165
+#: src/pages/welcome.jsx:174
 msgid "Nested comments thread"
 msgstr "Azrar n yiwenniten yemyikcamen"
 
-#: src/pages/welcome.jsx:168
+#: src/pages/welcome.jsx:177
 msgid "Effortlessly follow conversations. Semi-collapsible replies."
 msgstr "Ḍfer idiwenniyen war ussis. Tiririt s uzgen-afnaẓ."
 
-#: src/pages/welcome.jsx:176
+#: src/pages/welcome.jsx:186
 msgid "Screenshot of multi-column UI"
 msgstr "Tuṭṭfa n ugdil n ugrudem n waṭas n tgejda"
 
-#: src/pages/welcome.jsx:180
+#: src/pages/welcome.jsx:193
 msgid "Single or multi-column"
 msgstr "Yiwet neɣ aṭas n tgejdiyin"
 
-#: src/pages/welcome.jsx:183
+#: src/pages/welcome.jsx:196
 msgid "By default, single column for zen-mode seekers. Configurable multi-column for power users."
 msgstr "S wudem amezwer, tigejdit tasuft i i umnadi n uskar Zen. Aṭas n tgejda ttwasestabent i yiseqdacen n tsaraɣt."
 
-#: src/pages/welcome.jsx:192
+#: src/pages/welcome.jsx:206
 msgid "Screenshot of multi-hashtag timeline with a form to add more hashtags"
 msgstr "Tuṭṭfa n ugdil n tesnimirt n yihacṭagen s tferkit i tmerna n wugar ihacṭagen"
 
-#: src/pages/welcome.jsx:196
+#: src/pages/welcome.jsx:213
 msgid "Multi-hashtag timeline"
 msgstr "Tasnimirt n waṭas yihacṭagen"
 
-#: src/pages/welcome.jsx:199
+#: src/pages/welcome.jsx:216
 msgid "Up to 5 hashtags combined into a single timeline."
 msgstr "Ugar n 5 yihacṭagen ttwasdukklen deg yiwet n tesnimirt."
+
+#: src/pages/welcome.jsx:231
+msgid "<0>Built</0> by <1>@cheeaun</1>. <2>Privacy Policy</2>."
+msgstr "<0>Yettwabna</0> sɣur <1>@cheeaun</1>. <2>Tasertit n tbaḍnit</2>."
 
 #: src/utils/open-compose.js:24
 msgid "Looks like your browser is blocking popups."

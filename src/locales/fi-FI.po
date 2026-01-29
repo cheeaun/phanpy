@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-29 12:17\n"
+"PO-Revision-Date: 2026-01-29 13:38\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2472,7 +2472,7 @@ msgstr "Liitä pikavalinnat tähän"
 
 #: src/components/shortcuts-settings.jsx:844
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "Ladataan tallennetut pikavalinnat palvelimelta…"
 
 #: src/components/shortcuts-settings.jsx:872
 msgid "Unable to download shortcuts"
@@ -2480,7 +2480,7 @@ msgstr "Pikavalintoja ei voitu ladata"
 
 #: src/components/shortcuts-settings.jsx:875
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Lataa pikavalinnat palvelimelta"
 
 #: src/components/shortcuts-settings.jsx:942
 msgid "* Exists in current shortcuts"
@@ -2545,7 +2545,7 @@ msgstr "Pikavalintoja ei voitu kopioida"
 
 #: src/components/shortcuts-settings.jsx:1118
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Tallennetaan pikavalinnat palvelimelle…"
 
 #: src/components/shortcuts-settings.jsx:1125
 msgid "Shortcuts saved"
@@ -2582,7 +2582,7 @@ msgstr "Pikavalintojen raaka‐JSON"
 
 #: src/components/shortcuts-settings.jsx:1212
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Tuo/vie asetukset palvelimelta/palvelimelle (erittäin kokeellinen)"
 
 #: src/components/status.jsx:288
 msgid "Private posts cannot be quoted"
@@ -2617,7 +2617,7 @@ msgstr "<0/> <1>tehosti</1>"
 
 #: src/components/status.jsx:736
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr ""
+msgstr "Valitettavasti parhaillaan kirjautuneena oleva palvelin ei voi olla vuorovaikutuksessa tämän toiselta palvelimelta peräisin olevan julkaisun kanssa."
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:925
@@ -3334,7 +3334,7 @@ msgstr "Edelliseen kiinnikurontaasi asti ({0})"
 
 #: src/pages/catchup.jsx:1159
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Huomaa: Palvelimesi saattaa näyttää kotiaikajanalla enintään vain 800 julkaisua riippumatta valitusta aikavälistä. Määrä voi olla pienempi tai suurempi."
 
 #: src/pages/catchup.jsx:1169
 msgid "Previously…"
@@ -3715,7 +3715,7 @@ msgstr "Lisää pikavalintoihin"
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Anna uusi palvelin, esim. ”mastodon.social”"
 
 #: src/pages/hashtag.jsx:495
 #: src/pages/public.jsx:144
@@ -3733,7 +3733,7 @@ msgstr "Siirry toisille palvelimelle…"
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Siirry omalle palvelimelle (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
@@ -3793,7 +3793,7 @@ msgstr "esim. ”mastodon.social”"
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "Sisäänkirjautuminen epäonnistui. Yritä uudelleen tai kokeile toista palvelinta."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4131,7 +4131,7 @@ msgstr "Oletusnäkyvyyden päivitys epäonnistui"
 
 #: src/pages/settings.jsx:354
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Synkronoituu palvelimesi asetuksiin. <0>Siirry palvelimellesi ({instance}), jos tarvitset lisäasetuksia.</0>"
 
 #: src/pages/settings.jsx:369
 msgid "Experiments"
@@ -4204,7 +4204,7 @@ msgstr "⚠️⚠️⚠️ Erittäin kokeellinen.<0/>Tallennetaan oman profiilis
 
 #: src/pages/settings.jsx:656
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "Huomaa: Tämä ominaisuus käyttää parhaillaan kirjautuneena olevan palvelimen ohjelmointirajapintaa."
 
 #: src/pages/settings.jsx:672
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4333,7 +4333,7 @@ msgstr "Et ole kirjautuneena sisään. Vuorovaikutus (vastaaminen, tehostaminen 
 
 #: src/pages/status.jsx:1088
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Tämä julkaisu on toiselta palvelimelta (<0>{instance}</0>). Vuorovaikutus (vastaaminen, tehostaminen jne.) ei ole mahdollista."
 
 #: src/pages/status.jsx:1116
 msgid "Error: {e}"
@@ -4341,7 +4341,7 @@ msgstr "Virhe: {e}"
 
 #: src/pages/status.jsx:1123
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Vaihda omalle palvelimelle, niin saat vuorovaikutuksen käyttöön"
 
 #: src/pages/status.jsx:1231
 msgid "Unable to load replies."

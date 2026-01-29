@@ -1,13 +1,17 @@
 import { i18n } from '@lingui/core';
 import { plural } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import { useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 
 import shortenNumber from '../utils/shorten-number';
+import showToast from '../utils/show-toast';
+import useTruncated from '../utils/useTruncated';
 
 import EmojiText from './emoji-text';
 import Icon from './icon';
 import RelativeTime from './relative-time';
+
+const POLL_OPTIONS_BATCH_SIZE = 40;
 
 export default function Poll({
   poll,
@@ -18,6 +22,10 @@ export default function Poll({
 }) {
   const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
+  const [visibleOptionsCount, setVisibleOptionsCount] = useState(
+    POLL_OPTIONS_BATCH_SIZE,
+  );
+  const loadMoreRef = useRef(null);
   const {
     expired,
     expiresAt,
@@ -66,6 +74,44 @@ export default function Poll({
   const [showResults, setShowResults] = useState(false);
   const optionsHaveVoteCounts = options.every((o) => o.votesCount !== null);
 
+  const resultsView =
+    (showResults && optionsHaveVoteCounts) || voted || expired;
+  const [selectedOptions, setSelectedOptions] = useState(multiple ? [] : null);
+
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+    if (visibleOptionsCount >= options.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleOptionsCount((prev) =>
+            Math.min(prev + POLL_OPTIONS_BATCH_SIZE, options.length),
+          );
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(loadMoreRef.current);
+
+    return () => observer.disconnect();
+  }, [visibleOptionsCount, options.length]);
+
+  useEffect(() => {
+    setVisibleOptionsCount(POLL_OPTIONS_BATCH_SIZE);
+  }, [resultsView, options.length]);
+
+  const voteOptionsSelectionCount = multiple
+    ? selectedOptions.length
+    : selectedOptions !== null
+      ? 1
+      : 0;
+  const [showPollInfo, setShowPollInfo] = useState(false);
+  const ref = useTruncated({
+    onTruncated: setShowPollInfo,
+  });
+
   return (
     <div
       lang={lang}
@@ -74,10 +120,10 @@ export default function Poll({
         uiState === 'loading' ? 'loading' : ''
       }`}
     >
-      {(showResults && optionsHaveVoteCounts) || voted || expired ? (
+      {resultsView ? (
         <>
-          <div class="poll-options">
-            {options.map((option, i) => {
+          <div class="poll-options" ref={ref}>
+            {options.slice(0, visibleOptionsCount).map((option, i) => {
               const { title, votesCount: optionVotesCount } = option;
               const ratio = pollVotesCount
                 ? optionVotesCount / pollVotesCount
@@ -95,7 +141,7 @@ export default function Poll({
                   Math.max(...options.map((o) => o.votesCount));
               return (
                 <div
-                  key={`${i}-${title}-${optionVotesCount}`}
+                  key={`${i}-${title}`}
                   class={`poll-option poll-result ${
                     isLeading ? 'poll-option-leading' : ''
                   }`}
@@ -107,12 +153,6 @@ export default function Poll({
                     <span>
                       <EmojiText text={title} emojis={emojis} />
                     </span>
-                    {voted && ownVotes.includes(i) && (
-                      <>
-                        {' '}
-                        <Icon icon="check-circle" alt={t`Voted`} />
-                      </>
-                    )}
                   </div>
                   <div
                     class="poll-option-votes"
@@ -121,48 +161,77 @@ export default function Poll({
                       other: `# votes`,
                     })}
                   >
-                    {percentage}
+                    {voted && ownVotes.includes(i) && (
+                      <>
+                        <Icon icon="check-circle" alt={t`Voted`} />{' '}
+                      </>
+                    )}
+                    <span class="poll-option-votes-percentage">
+                      {percentage}
+                    </span>
                   </div>
                 </div>
               );
             })}
+            {visibleOptionsCount < options.length && (
+              <div ref={loadMoreRef} style={{ minHeight: '1em' }} />
+            )}
           </div>
           {!expired && !voted && (
-            <button
-              class="poll-vote-button plain2"
-              disabled={uiState === 'loading'}
-              onClick={(e) => {
-                e.preventDefault();
-                setShowResults(false);
-              }}
-            >
-              <Icon icon="arrow-left" size="s" /> <Trans>Hide results</Trans>
-            </button>
+            <div class="poll-actions">
+              <button
+                class="poll-hide-results-button plain2"
+                disabled={uiState === 'loading'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowResults(false);
+                }}
+              >
+                <Icon icon="arrow-left" size="s" /> <Trans>Hide results</Trans>
+              </button>{' '}
+              <div class="poll-info">
+                {showPollInfo && (
+                  <small class="insignificant">
+                    <Plural
+                      value={options.length}
+                      one={`# choice`}
+                      other={`# choices`}
+                    />
+                  </small>
+                )}
+              </div>
+            </div>
           )}
         </>
       ) : (
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            const form = e.target;
-            const formData = new FormData(form);
-            const choices = [];
-            formData.forEach((value, key) => {
-              if (key === 'poll') {
-                choices.push(value);
-              }
-            });
+            const choices = multiple
+              ? selectedOptions
+              : selectedOptions !== null
+                ? [selectedOptions]
+                : [];
             if (!choices.length) return;
             setUIState('loading');
-            await votePoll(choices);
-            setUIState('default');
+            try {
+              await votePoll(choices);
+            } catch (e) {
+              console.error(e);
+              showToast(t`Unable to vote in poll`);
+            } finally {
+              setUIState('default');
+            }
           }}
         >
-          <div class="poll-options">
-            {options.map((option, i) => {
+          <div class="poll-options" ref={ref}>
+            {options.slice(0, visibleOptionsCount).map((option, i) => {
               const { title } = option;
+              const isSelected = multiple
+                ? selectedOptions.includes(i)
+                : selectedOptions === i;
               return (
-                <div class="poll-option">
+                <div class="poll-option" key={`${i}-${title}`}>
                   <label class="poll-label">
                     <input
                       type={multiple ? 'checkbox' : 'radio'}
@@ -170,6 +239,19 @@ export default function Poll({
                       value={i}
                       disabled={uiState === 'loading'}
                       readOnly={readOnly}
+                      checked={isSelected}
+                      onChange={(e) => {
+                        const value = i;
+                        if (multiple) {
+                          setSelectedOptions((prev) =>
+                            e.target.checked
+                              ? [...prev, value]
+                              : prev.filter((v) => v !== value),
+                          );
+                        } else {
+                          setSelectedOptions(value);
+                        }
+                      }}
                     />
                     <span class="poll-option-title">
                       <EmojiText text={title} emojis={emojis} />
@@ -178,20 +260,56 @@ export default function Poll({
                 </div>
               );
             })}
+            {visibleOptionsCount < options.length && (
+              <div ref={loadMoreRef} style={{ minHeight: '1em' }} />
+            )}
           </div>
-          {!readOnly && (
+          <div class="poll-actions">
             <button
               class="poll-vote-button"
               type="submit"
-              disabled={uiState === 'loading'}
+              disabled={
+                readOnly ||
+                uiState === 'loading' ||
+                voteOptionsSelectionCount === 0
+              }
             >
               <Trans>Vote</Trans>
-            </button>
-          )}
+            </button>{' '}
+            <div class="poll-info">
+              {showPollInfo &&
+                (multiple && voteOptionsSelectionCount > 0 ? (
+                  <small>
+                    {voteOptionsSelectionCount}{' '}
+                    <span class="insignificant">/ {options.length}</span>
+                  </small>
+                ) : (
+                  <small class="insignificant">
+                    <Plural
+                      value={options.length}
+                      one={`# choice`}
+                      other={`# choices`}
+                    />
+                  </small>
+                ))}
+            </div>
+          </div>
         </form>
       )}
       <p class="poll-meta">
         <span class="spacer">
+          {(expired || voted) && showPollInfo && (
+            <>
+              <span class="ib">
+                <Plural
+                  value={options.length}
+                  one={`# choice`}
+                  other={`# choices`}
+                />
+              </span>{' '}
+              &bull;{' '}
+            </>
+          )}
           <span class="ib">
             <Plural
               value={votesCount}
@@ -260,7 +378,7 @@ export default function Poll({
         {!voted && !expired && !readOnly && optionsHaveVoteCounts && (
           <button
             type="button"
-            class="plain small"
+            class="plain small poll-results-button"
             disabled={uiState === 'loading'}
             onClick={(e) => {
               e.preventDefault();

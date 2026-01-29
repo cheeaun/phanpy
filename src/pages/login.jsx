@@ -228,7 +228,7 @@ function Login() {
         </h1>
         <label>
           <p>
-            <Trans>Instance</Trans>
+            <Trans>Server</Trans>
           </p>
           <input
             value={instanceText}
@@ -243,7 +243,7 @@ function Login() {
             autocapitalize="off"
             autocomplete="off"
             spellCheck={false}
-            placeholder={t`instance domain`}
+            placeholder={t`server domain`}
             enterKeyHint="go"
             onInput={(e) => {
               setInstanceText(e.target.value);
@@ -280,7 +280,7 @@ function Login() {
         {uiState === 'error' && (
           <p class="error">
             <Trans>
-              Failed to log in. Please try again or try another instance.
+              Failed to log in. Please try again or try another server.
             </Trans>
           </p>
         )}

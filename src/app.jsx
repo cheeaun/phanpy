@@ -15,6 +15,11 @@ import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
 import 'swiped-events';
 
 import { subscribe } from 'valtio';
+import { unstable_enableOp } from 'valtio/vanilla';
+
+// https://github.com/pmndrs/valtio/releases/tag/v2.3.0
+// Necessary for subscribe() to work properly
+unstable_enableOp(true);
 
 import BackgroundService from './components/background-service';
 import ComposeButton from './components/compose-button';
@@ -77,6 +82,9 @@ const Sandbox =
   import.meta.env.DEV || import.meta.env.PHANPY_DEV
     ? lazy(() => import('./pages/sandbox'))
     : () => null;
+
+// Lazy load MockHome component only in development (not PHANPY_DEV)
+const MockHome = lazy(() => import('./pages/mock-home'));
 
 // Lazy load YearInPosts component
 const YearInPosts = lazy(() => import('./pages/year-in-posts'));
@@ -616,7 +624,7 @@ function Root({ isLoggedIn }) {
 }
 
 function isRootPath(pathname) {
-  return /^\/(login|welcome|_sandbox|_qr-scan)/i.test(pathname);
+  return /^\/(login|welcome|_sandbox|_qr-scan|_mock)/i.test(pathname);
 }
 
 const PrimaryRoutes = memo(({ isLoggedIn }) => {
@@ -631,6 +639,14 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
       <Route path="/" element={<Root isLoggedIn={isLoggedIn} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
+      <Route
+        path="/_mock/home"
+        element={
+          <Suspense>
+            <MockHome />
+          </Suspense>
+        }
+      />
       {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
         <>
           <Route

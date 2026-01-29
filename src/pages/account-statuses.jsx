@@ -583,7 +583,7 @@ function AccountStatuses() {
               <Icon icon="transfer" />{' '}
               <small class="menu-double-lines">
                 <Trans>
-                  Switch to account's instance{' '}
+                  Switch to account's server{' '}
                   {accountInstance ? (
                     <>
                       {' '}
@@ -613,7 +613,7 @@ function AccountStatuses() {
                 <Icon icon="transfer" />{' '}
                 <small class="menu-double-lines">
                   <Trans>
-                    Switch to my instance (<b>{currentInstance}</b>)
+                    Switch to my server (<b>{currentInstance}</b>)
                   </Trans>
                 </small>
               </MenuItem>

@@ -478,10 +478,10 @@ function Trending({ columnMode, ...props }) {
           <MenuItem
             onClick={() => {
               let newInstance = prompt(
-                t`Enter a new instance e.g. "mastodon.social"`,
+                t`Enter a new server e.g. "mastodon.social"`,
               );
               if (!/\./.test(newInstance)) {
-                if (newInstance) alert(t`Invalid instance`);
+                if (newInstance) alert(t`Invalid server`);
                 return;
               }
               if (newInstance) {
@@ -493,7 +493,7 @@ function Trending({ columnMode, ...props }) {
           >
             <Icon icon="bus" />{' '}
             <span>
-              <Trans>Go to another instance…</Trans>
+              <Trans>Go to another server…</Trans>
             </span>
           </MenuItem>
           {currentInstance !== instance && (
@@ -505,7 +505,7 @@ function Trending({ columnMode, ...props }) {
               <Icon icon="bus" />{' '}
               <small class="menu-double-lines">
                 <Trans>
-                  Go to my instance (<b>{currentInstance}</b>)
+                  Go to my server (<b>{currentInstance}</b>)
                 </Trans>
               </small>
             </MenuItem>

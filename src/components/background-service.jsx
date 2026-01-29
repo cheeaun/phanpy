@@ -159,7 +159,6 @@ export default memo(function BackgroundService({ isLoggedIn }) {
       });
     },
     {
-      useKey: true,
       ignoreEventWhen: (e) => e.metaKey || e.ctrlKey,
     },
   );

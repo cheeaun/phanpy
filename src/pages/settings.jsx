@@ -352,13 +352,13 @@ function Settings({ onClose }) {
               <Icon icon="cloud" alt={t`Synced`} class="synced-icon" />{' '}
               <small>
                 <Trans>
-                  Synced to your instance server's settings.{' '}
+                  Synced to your server's settings.{' '}
                   <a
                     href={`https://${instance}/`}
                     target="_blank"
                     rel="noopener"
                   >
-                    Go to your instance ({instance}) for more settings.
+                    Go to your server ({instance}) for more settings.
                   </a>
                 </Trans>
               </small>
@@ -654,8 +654,7 @@ function Settings({ onClose }) {
                 <div class="sub-section insignificant">
                   <small>
                     <Trans>
-                      Note: This feature uses currently-logged-in instance
-                      server API.
+                      Note: This feature uses currently-logged-in server API.
                     </Trans>
                   </small>
                 </div>

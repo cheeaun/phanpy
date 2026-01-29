@@ -951,6 +951,28 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     },
   );
 
+  useHotkeys(
+    'o',
+    () => {
+      // open media of active status (not inside status-card)
+      const activeStatus = document.activeElement.closest(
+        '.status-link, .status-focus',
+      );
+      if (activeStatus) {
+        const mediaLink = activeStatus.querySelector(
+          'a.media:not(.status-card a.media)',
+        );
+        if (mediaLink) {
+          mediaLink.click();
+        }
+      }
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    },
+  );
+
   const [reachTopPost, setReachTopPost] = useState(false);
   // const { nearReachStart } = useScroll({
   //   scrollableRef,
@@ -1064,7 +1086,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   <div class="post-status-banner">
                     <p>
                       <Trans>
-                        This post is from another instance (<b>{instance}</b>).
+                        This post is from another server (<b>{instance}</b>).
                         Interactions (reply, boost, etc) are not possible.
                       </Trans>
                     </p>
@@ -1098,9 +1120,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                       }}
                     >
                       <Icon icon="transfer" />{' '}
-                      <Trans>
-                        Switch to my instance to enable interactions
-                      </Trans>
+                      <Trans>Switch to my server to enable interactions</Trans>
                     </button>
                   </div>
                 )
@@ -1608,10 +1628,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   <Icon icon="transfer" />
                   <small class="menu-double-lines">
                     {postInstance
-                      ? t`Switch to post's instance (${punycode.toUnicode(
+                      ? t`Switch to post's server (${punycode.toUnicode(
                           postInstance,
                         )})`
-                      : t`Switch to post's instance`}
+                      : t`Switch to post's server`}
                   </small>
                 </MenuItem>
                 <MenuItem

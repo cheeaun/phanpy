@@ -83,6 +83,9 @@ const Sandbox =
     ? lazy(() => import('./pages/sandbox'))
     : () => null;
 
+// Lazy load MockHome component only in development (not PHANPY_DEV)
+const MockHome = lazy(() => import('./pages/mock-home'));
+
 // Lazy load YearInPosts component
 const YearInPosts = lazy(() => import('./pages/year-in-posts'));
 
@@ -621,7 +624,7 @@ function Root({ isLoggedIn }) {
 }
 
 function isRootPath(pathname) {
-  return /^\/(login|welcome|_sandbox|_qr-scan)/i.test(pathname);
+  return /^\/(login|welcome|_sandbox|_qr-scan|_mock)/i.test(pathname);
 }
 
 const PrimaryRoutes = memo(({ isLoggedIn }) => {
@@ -636,6 +639,14 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
       <Route path="/" element={<Root isLoggedIn={isLoggedIn} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
+      <Route
+        path="/_mock/home"
+        element={
+          <Suspense>
+            <MockHome />
+          </Suspense>
+        }
+      />
       {(import.meta.env.DEV || import.meta.env.PHANPY_DEV) && (
         <>
           <Route

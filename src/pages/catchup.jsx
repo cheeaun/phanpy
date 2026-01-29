@@ -1157,8 +1157,8 @@ function Catchup() {
               <p class="insignificant">
                 <small>
                   <Trans>
-                    Note: your instance might only show a maximum of 800 posts
-                    in the Home timeline regardless of the time range. Could be
+                    Note: your server might only show a maximum of 800 posts in
+                    the Home timeline regardless of the time range. Could be
                     less or more.
                   </Trans>
                 </small>

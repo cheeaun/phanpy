@@ -733,7 +733,7 @@ function Status({
     0,
   );
 
-  const unauthInteractionErrorMessage = t`Sorry, your current logged-in instance can't interact with this post from another instance.`;
+  const unauthInteractionErrorMessage = t`Sorry, your current logged-in server can't interact with this post from another server.`;
 
   const textWeight = useCallback(
     () =>

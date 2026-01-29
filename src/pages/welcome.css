@@ -141,12 +141,15 @@
         }
 
         transition: all 0.3s var(--timing-function) 0.1s;
-        &:active {
-          transform: scale(1.05);
 
-          &::after {
-            /* move the glare when active */
-            background-position: -10px -10px;
+        @media (hover: hover) {
+          &:active {
+            transform: scale(1.05);
+
+            &::after {
+              /* move the glare when active */
+              background-position: -10px -10px;
+            }
           }
         }
 

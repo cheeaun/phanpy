@@ -3,14 +3,14 @@ import './app.css';
 import { useLingui } from '@lingui/react';
 import debounce from 'just-debounce-it';
 import { lazy, memo, Suspense } from 'preact/compat';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'preact/hooks';
-import { matchPath, Route, Routes, useLocation } from 'react-router-dom';
+  matchPath,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom';
 
 import 'swiped-events';
 
@@ -64,6 +64,7 @@ import {
   initPreferences,
 } from './utils/api';
 import { getAccessToken } from './utils/auth';
+import { AuthProvider, useAuth } from './utils/auth-context';
 import focusDeck from './utils/focus-deck';
 import states, { hideAllModals, initStates, statusKey } from './utils/states';
 import store from './utils/store';
@@ -401,7 +402,10 @@ const isPWA =
 const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const account = getCurrentAccount();
+    return !!account;
+  });
   const [uiState, setUIState] = useState('loading');
   __BENCHMARK.start('app-init');
   __BENCHMARK.start('time-to-following');
@@ -476,6 +480,13 @@ function App() {
 
           setIsLoggedIn(true);
           setUIState('default');
+
+          // Redirect after successful login
+          const redirectPath = store.session.get('loginRedirect');
+          if (redirectPath) {
+            store.session.del('loginRedirect');
+            window.location.hash = redirectPath;
+          }
         } else {
           setUIState('error');
         }
@@ -598,9 +609,9 @@ function App() {
   }
 
   return (
-    <>
-      <PrimaryRoutes isLoggedIn={isLoggedIn} />
-      <SecondaryRoutes isLoggedIn={isLoggedIn} />
+    <AuthProvider value={isLoggedIn}>
+      <PrimaryRoutes />
+      <SecondaryRoutes />
       <Routes>
         <Route path="/:instance?/s/:id" element={<StatusRoute />} />
       </Routes>
@@ -608,15 +619,16 @@ function App() {
       {isLoggedIn && <Shortcuts />}
       <Modals />
       {isLoggedIn && <NotificationService />}
-      <BackgroundService isLoggedIn={isLoggedIn} />
+      <BackgroundService />
       {isLoggedIn && <NavigationCommand />}
       <SearchCommand onClose={focusDeck} />
       <KeyboardShortcutsHelp />
-    </>
+    </AuthProvider>
   );
 }
 
-function Root({ isLoggedIn }) {
+function Root() {
+  const isLoggedIn = useAuth();
   if (isLoggedIn) {
     __BENCHMARK.end('time-to-isLoggedIn');
   }
@@ -627,7 +639,7 @@ function isRootPath(pathname) {
   return /^\/(login|welcome|_sandbox|_qr-scan|_mock)/i.test(pathname);
 }
 
-const PrimaryRoutes = memo(({ isLoggedIn }) => {
+const PrimaryRoutes = memo(() => {
   const location = useLocation();
   const nonRootLocation = useMemo(() => {
     const { pathname } = location;
@@ -636,7 +648,7 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
 
   return (
     <Routes location={nonRootLocation || location}>
-      <Route path="/" element={<Root isLoggedIn={isLoggedIn} />} />
+      <Route path="/" element={<Root />} />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />
       <Route
@@ -664,10 +676,23 @@ const PrimaryRoutes = memo(({ isLoggedIn }) => {
   );
 });
 
+// Auth route wrapper that redirects to login if not authenticated
+function AuthRoute({ children }) {
+  const isLoggedIn = useAuth();
+  const location = useLocation();
+
+  if (!isLoggedIn) {
+    const redirectPath = location.pathname + location.search;
+    store.session.set('loginRedirect', redirectPath);
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+}
+
 function getPrevLocation() {
   return states.prevLocation || null;
 }
-function SecondaryRoutes({ isLoggedIn }) {
+function SecondaryRoutes() {
   // const snapStates = useSnapshot(states);
   const location = useLocation();
   // const prevLocation = snapStates.prevLocation;
@@ -692,43 +717,125 @@ function SecondaryRoutes({ isLoggedIn }) {
 
   return (
     <Routes location={backgroundLocation.current || location}>
-      {isLoggedIn && (
-        <>
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/mentions" element={<Mentions />} />
-          <Route path="/following" element={<Following />} />
-          <Route path="/b" element={<Bookmarks />} />
-          <Route path="/f" element={<Favourites />} />
-          <Route path="/l">
-            <Route index element={<Lists />} />
-            <Route path=":id" element={<List />} />
-          </Route>
-          <Route path="/fh" element={<FollowedHashtags />} />
-          <Route path="/sp" element={<ScheduledPosts />} />
-          <Route path="/ft" element={<Filters />} />
-          <Route path="/catchup" element={<Catchup />} />
-          <Route
-            path="/yip"
-            element={
-              <Suspense
-                fallback={
-                  <div
-                    id="year-in-posts-page"
-                    class="deck-container"
-                    tabIndex="-1"
-                  >
-                    {/* Prevent flash of no background as this is lazy-loaded */}
-                    <Loader />
-                  </div>
-                }
-              >
-                <YearInPosts />
-              </Suspense>
-            }
-          />
-          <Route path="/annual_report/:year" element={<AnnualReport />} />
-        </>
-      )}
+      <Route
+        path="/notifications"
+        element={
+          <AuthRoute>
+            <Notifications />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/mentions"
+        element={
+          <AuthRoute>
+            <Mentions />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/following"
+        element={
+          <AuthRoute>
+            <Following />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/b"
+        element={
+          <AuthRoute>
+            <Bookmarks />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/f"
+        element={
+          <AuthRoute>
+            <Favourites />
+          </AuthRoute>
+        }
+      />
+      <Route path="/l">
+        <Route
+          index
+          element={
+            <AuthRoute>
+              <Lists />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path=":id"
+          element={
+            <AuthRoute>
+              <List />
+            </AuthRoute>
+          }
+        />
+      </Route>
+      <Route
+        path="/fh"
+        element={
+          <AuthRoute>
+            <FollowedHashtags />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/sp"
+        element={
+          <AuthRoute>
+            <ScheduledPosts />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/ft"
+        element={
+          <AuthRoute>
+            <Filters />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/catchup"
+        element={
+          <AuthRoute>
+            <Catchup />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/yip"
+        element={
+          <AuthRoute>
+            <Suspense
+              fallback={
+                <div
+                  id="year-in-posts-page"
+                  class="deck-container"
+                  tabIndex="-1"
+                >
+                  {/* Prevent flash of no background as this is lazy-loaded */}
+                  <Loader />
+                </div>
+              }
+            >
+              <YearInPosts />
+            </Suspense>
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/annual_report/:year"
+        element={
+          <AuthRoute>
+            <AnnualReport />
+          </AuthRoute>
+        }
+      />
       <Route path="/:instance?/t/:hashtag" element={<Hashtag />} />
       <Route path="/:instance?/a/:id" element={<AccountStatuses />} />
       <Route path="/:instance?/p">

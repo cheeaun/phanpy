@@ -498,7 +498,7 @@ function Status({
   if (mediaFirst && hasMediaAttachments) size = 's';
 
   const currentAccount = getCurrentAccID();
-  const isSelf = currentAccount && currentAccount === accountId;
+  const isSelf = currentAccount && currentAccount == accountId;
 
   const filterContext = useContext(FilterContext);
   const filterInfo =

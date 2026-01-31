@@ -2,6 +2,7 @@ import './settings.css';
 
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useDebounce } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
@@ -31,6 +32,8 @@ import { getAPIVersions, getVapidKey } from '../utils/store-utils';
 
 const DEFAULT_TEXT_SIZE = 16;
 const TEXT_SIZES = [14, 15, 16, 17, 18, 19, 20];
+const SMALLEST_TEXT_SIZE = TEXT_SIZES[0];
+const LARGEST_TEXT_SIZE = TEXT_SIZES[TEXT_SIZES.length - 1];
 const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_PRIVACY_POLICY_URL: PRIVACY_POLICY_URL,
@@ -221,43 +224,7 @@ function Settings({ onClose }) {
                   <Trans>Text size</Trans>
                 </label>
               </div>
-              <div class="range-group">
-                <span style={{ fontSize: TEXT_SIZES[0] }}>
-                  <Trans comment="Preview of one character, in smallest size">
-                    A
-                  </Trans>
-                </span>{' '}
-                <input
-                  type="range"
-                  min={TEXT_SIZES[0]}
-                  max={TEXT_SIZES[TEXT_SIZES.length - 1]}
-                  step="1"
-                  value={currentTextSize}
-                  list="sizes"
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value, 10);
-                    const html = document.documentElement;
-                    // set CSS variable
-                    html.style.setProperty('--text-size', `${value}px`);
-                    // save to local storage
-                    if (value === DEFAULT_TEXT_SIZE) {
-                      store.local.del('textSize');
-                    } else {
-                      store.local.set('textSize', e.target.value);
-                    }
-                  }}
-                />{' '}
-                <span style={{ fontSize: TEXT_SIZES[TEXT_SIZES.length - 1] }}>
-                  <Trans comment="Preview of one character, in largest size">
-                    A
-                  </Trans>
-                </span>
-                <datalist id="sizes">
-                  {TEXT_SIZES.map((size) => (
-                    <option value={size} />
-                  ))}
-                </datalist>
-              </div>
+              <TextSizeControl currentTextSize={currentTextSize} />
             </li>
             <li>
               <span>
@@ -385,13 +352,13 @@ function Settings({ onClose }) {
               <Icon icon="cloud" alt={t`Synced`} class="synced-icon" />{' '}
               <small>
                 <Trans>
-                  Synced to your instance server's settings.{' '}
+                  Synced to your server's settings.{' '}
                   <a
                     href={`https://${instance}/`}
                     target="_blank"
                     rel="noopener"
                   >
-                    Go to your instance ({instance}) for more settings.
+                    Go to your server ({instance}) for more settings.
                   </a>
                 </Trans>
               </small>
@@ -687,8 +654,7 @@ function Settings({ onClose }) {
                 <div class="sub-section insignificant">
                   <small>
                     <Trans>
-                      Note: This feature uses currently-logged-in instance
-                      server API.
+                      Note: This feature uses currently-logged-in server API.
                     </Trans>
                   </small>
                 </div>
@@ -989,6 +955,69 @@ function Settings({ onClose }) {
           </details>
         )}
       </main>
+    </div>
+  );
+}
+
+function TextSizeControl({ currentTextSize }) {
+  const textSizeFieldRef = useRef(null);
+  const [size, setSize] = useState(currentTextSize);
+  const [debouncedSize] = useDebounce(size, 1000);
+
+  useEffect(() => {
+    const html = document.documentElement;
+    // set CSS variable
+    html.style.setProperty('--text-size', `${debouncedSize}px`);
+    // save to local storage
+    if (debouncedSize === DEFAULT_TEXT_SIZE) {
+      store.local.del('textSize');
+    } else {
+      store.local.set('textSize', debouncedSize);
+    }
+  }, [debouncedSize]);
+
+  return (
+    <div class={`text-size-control ${size !== debouncedSize ? 'loading' : ''}`}>
+      <button
+        type="button"
+        style={{ fontSize: SMALLEST_TEXT_SIZE }}
+        class={`small light ${size === DEFAULT_TEXT_SIZE ? 'default-size' : ''}`}
+        disabled={size === SMALLEST_TEXT_SIZE}
+        onClick={() => {
+          setSize(Math.max(SMALLEST_TEXT_SIZE, size - 1));
+        }}
+      >
+        <Trans comment="Preview of one character, in smallest size">A</Trans>
+      </button>{' '}
+      <input
+        ref={textSizeFieldRef}
+        type="range"
+        min={SMALLEST_TEXT_SIZE}
+        max={LARGEST_TEXT_SIZE}
+        step="1"
+        value={size}
+        list="sizes"
+        onChange={(e) => {
+          const value = parseInt(e.target.value, 10);
+          setSize(value);
+        }}
+      />{' '}
+      <button
+        type="button"
+        style={{ fontSize: LARGEST_TEXT_SIZE }}
+        class={`small light ${size === DEFAULT_TEXT_SIZE ? 'default-size' : ''}`}
+        disabled={size === LARGEST_TEXT_SIZE}
+        onClick={() => {
+          setSize(Math.min(LARGEST_TEXT_SIZE, size + 1));
+        }}
+      >
+        <Trans comment="Preview of one character, in largest size">A</Trans>
+      </button>
+      <datalist id="sizes">
+        {TEXT_SIZES.map((size) => (
+          <option value={size} />
+        ))}
+      </datalist>
     </div>
   );
 }

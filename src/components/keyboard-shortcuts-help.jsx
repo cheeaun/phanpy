@@ -35,6 +35,7 @@ export default memo(function KeyboardShortcutsHelp() {
     },
     {
       useKey: true,
+      ignoreModifiers: true,
       ignoreEventWhen: (e) => {
         const isCatchUpPage = /\/catchup/i.test(location.hash);
         return isCatchUpPage || e.metaKey || e.ctrlKey || e.altKey;
@@ -94,11 +95,11 @@ export default memo(function KeyboardShortcutsHelp() {
                   },
                   {
                     action: t`Open post details`,
-                    keys: (
-                      <Trans>
-                        <kbd>Enter</kbd> or <kbd>o</kbd>
-                      </Trans>
-                    ),
+                    keys: <kbd>Enter</kbd>,
+                  },
+                  {
+                    action: t`Open media or post details`,
+                    keys: <kbd>o</kbd>,
                   },
                   {
                     action: (
@@ -212,6 +213,18 @@ export default memo(function KeyboardShortcutsHelp() {
                   {
                     action: t`Go to Notifications`,
                     keys: <SequentialKeys key1="g" key2="n" />,
+                  },
+                  {
+                    action: t`Go to Settings`,
+                    keys: <SequentialKeys key1="g" key2="s" />,
+                  },
+                  {
+                    action: t`Go to Profile`,
+                    keys: <SequentialKeys key1="g" key2="p" />,
+                  },
+                  {
+                    action: t`Go to Bookmarks`,
+                    keys: <SequentialKeys key1="g" key2="b" />,
                   },
                 ].map(({ action, className, keys }) => (
                   <tr key={action}>

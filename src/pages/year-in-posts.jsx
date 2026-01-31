@@ -994,12 +994,15 @@ function YearInPosts() {
           {year && uiState === 'results' && (
             <>
               {!searchQuery && monthsWithPosts.length > 0 && (
-                <CalendarBar
-                  year={year}
-                  month={month}
-                  monthsWithPosts={monthsWithPosts}
-                  postType={postType}
-                />
+                <>
+                  <CalendarBar
+                    year={year}
+                    month={month}
+                    monthsWithPosts={monthsWithPosts}
+                    postType={postType}
+                  />
+                  {month === null && <CalendarLegend />}
+                </>
               )}
 
               {(month !== null || searchQuery) && (
@@ -1120,6 +1123,7 @@ function YearInPosts() {
                                   root={scrollableRef.current}
                                   post={post}
                                   instance={instance}
+                                  defaultShow={index < 3}
                                 />
                               ) : (
                                 <Link
@@ -1207,11 +1211,12 @@ function YearInPosts() {
   );
 }
 
-const IntersectionPostItem = ({ root, post, instance }) => {
+const IntersectionPostItem = ({ root, post, instance, defaultShow }) => {
   const ref = useRef();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(defaultShow);
 
   useEffect(() => {
+    if (defaultShow) return;
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
@@ -1229,7 +1234,7 @@ const IntersectionPostItem = ({ root, post, instance }) => {
     return () => {
       if (ref.current) observer.unobserve(ref.current);
     };
-  }, []);
+  }, [defaultShow]);
 
   const statusId = post.reblog?.id || post.id;
 
@@ -1371,6 +1376,33 @@ function CalendarBar({ year, month, monthsWithPosts, postType }) {
           );
         },
       )}
+    </div>
+  );
+}
+
+function CalendarLegend() {
+  return (
+    <div class="calendar-bar-legends">
+      <span class="ib">
+        <span class="calendar-bar-legend-item calendar-bar-original" />{' '}
+        <Trans>Original</Trans>
+      </span>{' '}
+      <span class="ib">
+        <span class="calendar-bar-legend-item calendar-bar-reply" />{' '}
+        <Trans>Replies</Trans>
+      </span>{' '}
+      {supportsNativeQuote() && (
+        <>
+          <span class="ib">
+            <span class="calendar-bar-legend-item calendar-bar-quote" />{' '}
+            <Trans>Quotes</Trans>
+          </span>{' '}
+        </>
+      )}
+      <span class="ib">
+        <span class="calendar-bar-legend-item calendar-bar-boost" />{' '}
+        <Trans>Boosts</Trans>
+      </span>
     </div>
   );
 }

@@ -7,6 +7,12 @@ var _rollbarConfig = {
   hostSafeList: ['dev.phanpy.social', 'phanpy.social'],
   payload: {
     environment: isDev ? 'development' : 'production',
+    client: {
+      javascript: {
+        source_map_enabled: true,
+        code_version: __PHANPY_COMMIT_HASH__,
+      },
+    },
   },
   captureIp: false,
   scrubTelemetryInputs: true,

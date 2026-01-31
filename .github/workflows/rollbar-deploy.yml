@@ -1,0 +1,73 @@
+name: Deploy to Rollbar
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  rollbar-deploy:
+    if: github.repository == 'cheeaun/phanpy'
+    concurrency:
+      group: rollbar-deploy
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Get commit info
+        id: commit
+        run: |
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          echo "version=$COMMIT_HASH" >> $GITHUB_OUTPUT
+
+      - name: Gather source map paths
+        id: maps
+        run: |
+          set -e
+          # Find all .js.map files under dist and produce a space-separated list
+          SOURCE_MAPS=$(find dist -type f -name '*.js.map' -print | tr '\n' ' ' | sed -E 's/ $//' || true)
+          if [ -z "$SOURCE_MAPS" ]; then
+            echo "No source maps found under dist"
+            echo "source_maps=" >> $GITHUB_OUTPUT
+            echo "minified_urls=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Derive minified URLs from each map file. Preserve path under `dist`.
+          HOST_BASE="https://dev.phanpy.social"
+          MINIFIED_URLS=""
+          for map_path in $SOURCE_MAPS; do
+            rel_path=${map_path#dist/}
+            minified_rel_path=${rel_path%.map}
+            if [ -z "$MINIFIED_URLS" ]; then
+              MINIFIED_URLS="$HOST_BASE/$minified_rel_path"
+            else
+              MINIFIED_URLS="$MINIFIED_URLS $HOST_BASE/$minified_rel_path"
+            fi
+          done
+
+          echo "source_maps=$SOURCE_MAPS" >> $GITHUB_OUTPUT
+          echo "minified_urls=$MINIFIED_URLS" >> $GITHUB_OUTPUT
+
+      - name: Deploy to Rollbar
+        uses: rollbar/github-deploy-action@2.1.2
+        env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+        with:
+          environment: "development"
+          version: ${{ steps.commit.outputs.version }}
+          source_maps: ${{ steps.maps.outputs.source_maps }}
+          minified_urls: ${{ steps.maps.outputs.minified_urls }}

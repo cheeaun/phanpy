@@ -1,6 +1,6 @@
 export default {
   public: 'earth',
-  unlisted: 'group',
+  unlisted: 'moon',
   private: 'lock',
   direct: 'message',
   local: 'building',

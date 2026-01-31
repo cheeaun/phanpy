@@ -9,7 +9,7 @@ import testGIFURL from '../assets/sandbox/big-buck-bunny-muted.webm';
 import testPreviewURL from '../assets/sandbox/big-buck-bunny-preview.png';
 
 import Status from '../components/status';
-import { getPreferences } from '../utils/api';
+import { api, getPreferences } from '../utils/api';
 import FilterContext from '../utils/filter-context';
 import states, { statusKey } from '../utils/states';
 import store from '../utils/store';
@@ -42,11 +42,14 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     pollCount,
     pollMultiple,
     pollExpired,
+    pollVoted,
     showCard,
     size,
     filters,
     quoteFilters,
     userPreferences,
+    showTags,
+    tagsCount,
   } = toggles;
 
   const shortContent = 'This is a test status with short text content.';
@@ -159,9 +162,36 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
 
   // Add poll if selected
   if (pollCount > 0) {
+    const pollOptionsCount = parseInt(pollCount, 10);
+
+    // Generate own votes based on poll type if voted
+    let ownVotes = [];
+    if (pollVoted) {
+      if (pollMultiple) {
+        // For multiple-choice, select between 1 and 5 random options (but not all)
+        const maxVotes = Math.min(5, pollOptionsCount - 1); // Ensure at least 1 option is not voted
+        const numVotes = Math.max(1, Math.floor(Math.random() * maxVotes) + 1); // Random between 1 and maxVotes
+        const availableIndices = Array.from(
+          { length: pollOptionsCount },
+          (_, i) => i,
+        );
+        for (let i = 0; i < numVotes; i++) {
+          const randomIndex = Math.floor(
+            Math.random() * availableIndices.length,
+          );
+          ownVotes.push(availableIndices[randomIndex]);
+          availableIndices.splice(randomIndex, 1);
+        }
+        ownVotes.sort((a, b) => a - b);
+      } else {
+        // For single-choice, select one random option
+        ownVotes = [Math.floor(Math.random() * pollOptionsCount)];
+      }
+    }
+
     base.poll = {
       id: 'poll-1',
-      options: Array(parseInt(pollCount, 10))
+      options: Array(pollOptionsCount)
         .fill(0)
         .map((_, i) => ({
           title: `Option ${i + 1}`,
@@ -176,7 +206,8 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
       // Use votersCount for multiple-choice polls, votesCount for single-choice polls
       votesCount: 150,
       votersCount: pollMultiple ? 100 : undefined,
-      voted: false,
+      voted: pollVoted,
+      ownVotes: ownVotes,
     };
   }
 
@@ -215,29 +246,26 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     ];
   }
 
-  if (contentType === 'hashtags') {
-    base.tags = [
-      {
-        name: 'coding',
-        url: 'https://example.social/tags/coding',
-      },
-      {
-        name: 'webdev',
-        url: 'https://example.social/tags/webdev',
-      },
-      {
-        name: 'javascript',
-        url: 'https://example.social/tags/javascript',
-      },
-      {
-        name: 'reactjs',
-        url: 'https://example.social/tags/reactjs',
-      },
-      {
-        name: 'preact',
-        url: 'https://example.social/tags/preact',
-      },
+  // Add tags if selected or if contentType is hashtags
+  if (showTags || contentType === 'hashtags') {
+    const allTags = [
+      'coding',
+      'webdev',
+      'javascript',
+      'reactjs',
+      'preact',
+      'programming',
+      'development',
+      'frontend',
+      'backend',
+      'veryveryveryveryveryveryloooooooooooooooooooonnnnnnghashtag',
     ];
+
+    const count = tagsCount === 'many' ? 10 : 3;
+    base.tags = allTags.slice(0, count).map((name) => ({
+      name,
+      url: `https://example.social/tags/${name}`,
+    }));
   }
 
   // Add any relevant filtered flags based on filter settings
@@ -310,6 +338,7 @@ const INITIAL_STATE = {
   pollCount: '0',
   pollMultiple: false,
   pollExpired: false,
+  pollVoted: false,
   showCard: false,
   showQuotes: false,
   quotesCount: '1',
@@ -322,10 +351,16 @@ const INITIAL_STATE = {
   expandWarnings: false,
   contextType: 'none', // Default context type
   displayStyle: 'adaptive', // Display style for preview
+  showTags: false, // New toggle for showing status tags
+  tagsCount: 'few', // New option for tags count: 'few' (3) or 'many' (10)
 };
 
 export default function Sandbox() {
   useTitle('Sandbox', '/_sandbox');
+
+  // Get the current user's instance to ensure sandbox works correctly
+  // This makes sameInstance=true and authenticated=true if logged in
+  const { instance: currentInstance } = api();
 
   // Consolidated state for all toggles
   const [toggleState, setToggleState] = useState(INITIAL_STATE);
@@ -383,6 +418,41 @@ export default function Sandbox() {
     };
   }, [toggleState.mediaPreference, toggleState.expandWarnings]);
 
+  // Mock the api to simulate authentication for the sandbox's instance
+  // This makes sameInstance=true and authenticated=true for poll voting
+  useEffect(() => {
+    // Save original entry
+    const originalEntry = window.__API__?.apis?.[currentInstance];
+
+    // Create mock masto client
+    const mockMasto = {
+      v1: {
+        polls: {
+          $select: () => ({
+            fetch: () => Promise.resolve({}),
+            vote: () => Promise.resolve({}),
+          }),
+        },
+      },
+    };
+
+    // Set mock api entry with accessToken to simulate authentication
+    window.__API__.apis[currentInstance] = {
+      masto: mockMasto,
+      streaming: null,
+      instance: currentInstance,
+      accessToken: 'sandbox-mock-token',
+    };
+
+    return () => {
+      if (originalEntry) {
+        window.__API__.apis[currentInstance] = originalEntry;
+      } else {
+        delete window.__API__.apis[currentInstance];
+      }
+    };
+  }, [currentInstance]);
+
   // Generate status with current toggle values and context
   let mockStatus = MOCK_STATUS({
     toggles: {
@@ -398,6 +468,7 @@ export default function Sandbox() {
       pollCount: toggleState.pollCount,
       pollMultiple: toggleState.pollMultiple,
       pollExpired: toggleState.pollExpired,
+      pollVoted: toggleState.pollVoted,
       showCard: toggleState.showCard,
       showQuotes: toggleState.showQuotes,
       quotesCount: toggleState.quotesCount,
@@ -406,6 +477,8 @@ export default function Sandbox() {
       size: toggleState.size,
       filters: toggleState.filters,
       quoteFilters: toggleState.quoteFilters,
+      showTags: toggleState.showTags, // Add showTags toggle
+      tagsCount: toggleState.tagsCount, // Add tagsCount option
     },
   });
 
@@ -426,7 +499,7 @@ export default function Sandbox() {
     const concreteId = 'followed-tags-status-123';
     mockStatus.id = concreteId;
 
-    const sKey = statusKey(concreteId, DEFAULT_INSTANCE);
+    const sKey = statusKey(concreteId, currentInstance);
     console.log('Setting followed tags for key:', sKey);
 
     // Clear any existing tags for this status
@@ -472,7 +545,7 @@ export default function Sandbox() {
 
     // Create a properly formatted sKey for the Status component to find quotes
     // Import statusKey from utils/states to create a proper key
-    const sKey = statusKey(mockStatus.id, DEFAULT_INSTANCE);
+    const sKey = statusKey(mockStatus.id, currentInstance);
 
     // Log the key we're using
     console.log('Quote posts key:', sKey);
@@ -489,9 +562,9 @@ export default function Sandbox() {
         // Find all existing quote keys for this status
         Object.keys(states.statusQuotes).forEach((key) => {
           if (
-            key.startsWith(DEFAULT_INSTANCE + '/quote-') ||
-            key.startsWith(DEFAULT_INSTANCE + '/nested-quote-') ||
-            key.startsWith(DEFAULT_INSTANCE + '/deep-nested-')
+            key.startsWith(currentInstance + '/quote-') ||
+            key.startsWith(currentInstance + '/nested-quote-') ||
+            key.startsWith(currentInstance + '/deep-nested-')
           ) {
             // Clean up nested quote references
             delete states.statusQuotes[key];
@@ -531,7 +604,7 @@ export default function Sandbox() {
           // Create a simple reference object for QuoteStatuses
           const quoteRef = {
             id: quoteId,
-            instance: DEFAULT_INSTANCE,
+            instance: currentInstance,
             url: `https://example.social/s/${quoteId}`, // Include URL to ensure uniqueness check works
             state:
               toggleState.quoteState === 'accepted'
@@ -540,7 +613,7 @@ export default function Sandbox() {
           };
 
           // First, delete any existing status with this ID to avoid duplicates
-          const quoteStatusKey = statusKey(quoteId, DEFAULT_INSTANCE);
+          const quoteStatusKey = statusKey(quoteId, currentInstance);
           delete states.statuses[quoteStatusKey];
 
           // Create the actual status object for all quote states
@@ -656,7 +729,7 @@ export default function Sandbox() {
               // Create reference object for nested quote - critical for proper rendering
               const nestedQuoteRef = {
                 id: nestedQuoteId,
-                instance: DEFAULT_INSTANCE,
+                instance: currentInstance,
                 url: `https://example.social/s/${nestedQuoteId}`,
               };
 
@@ -686,17 +759,17 @@ export default function Sandbox() {
                 // Create deep nested reference
                 const deepNestedRef = {
                   id: deepNestedId,
-                  instance: DEFAULT_INSTANCE,
+                  instance: currentInstance,
                   url: `https://example.social/s/${deepNestedId}`,
                 };
 
                 // Important: Use the proper key format for the nested quote
-                const nestedKey = statusKey(nestedQuoteId, DEFAULT_INSTANCE);
+                const nestedKey = statusKey(nestedQuoteId, currentInstance);
                 states.statusQuotes[nestedKey] = [deepNestedRef];
               }
 
               // Add nested quote to the quote's quotes using the proper key format
-              const quoteKey = statusKey(quoteId, DEFAULT_INSTANCE);
+              const quoteKey = statusKey(quoteId, currentInstance);
               states.statusQuotes[quoteKey] = [nestedQuoteRef];
             }
           } // Close the quote status creation block
@@ -717,6 +790,10 @@ export default function Sandbox() {
     toggleState.quoteNestingLevel,
     toggleState.quoteState,
     toggleState.quoteFilters,
+    toggleState.pollCount,
+    toggleState.pollMultiple,
+    toggleState.pollExpired,
+    toggleState.pollVoted,
   ]);
 
   // Handler for filter checkboxes
@@ -767,7 +844,7 @@ export default function Sandbox() {
         class={`sandbox-preview ${toggleState.displayStyle}`}
         onClickCapture={(e) => {
           const isAllowed = e.target.closest(
-            '.media, .media-caption, .spoiler-button, .spoiler-media-button, .math-block button, .status-card-unfulfilled button',
+            '.media, .media-caption, .spoiler-button, .spoiler-media-button, .math-block button, .status-card-unfulfilled button, .poll .poll-results-button, .poll .poll-hide-results-button, .poll-options .poll-option',
           );
           if (isAllowed) return;
           e.preventDefault();
@@ -793,7 +870,7 @@ export default function Sandbox() {
                     ? 'm'
                     : 'l'
               }
-              instance={DEFAULT_INSTANCE}
+              instance={currentInstance}
               allowFilters={true}
               showFollowedTags
               key={`status-${toggleState.mediaPreference}-${toggleState.expandWarnings}-${Date.now()}`}
@@ -1179,9 +1256,10 @@ export default function Sandbox() {
                         pollCount: e.target.checked ? '2' : '0',
                       };
 
-                      // Reset multiple to false when disabling poll
+                      // Reset multiple and voted to false when disabling poll
                       if (!e.target.checked) {
                         updates.pollMultiple = false;
+                        updates.pollVoted = false;
                       }
 
                       updateToggles(updates);
@@ -1191,38 +1269,59 @@ export default function Sandbox() {
                   <input
                     type="number"
                     min="2"
+                    autocomplete="off"
                     value={toggleState.pollCount}
-                    step="1"
+                    step="2"
                     onChange={(e) =>
                       updateToggles({ pollCount: e.target.value })
                     }
                     disabled={parseInt(toggleState.pollCount) === 0}
                   />
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={toggleState.pollMultiple}
-                      onChange={() =>
-                        updateToggles({
-                          pollMultiple: !toggleState.pollMultiple,
-                        })
-                      }
-                      disabled={parseInt(toggleState.pollCount) === 0}
-                    />
-                    <span>Multiple</span>
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={toggleState.pollExpired}
-                      onChange={() =>
-                        updateToggles({ pollExpired: !toggleState.pollExpired })
-                      }
-                      disabled={parseInt(toggleState.pollCount) === 0}
-                    />
-                    <span>Expired</span>
-                  </label>
                 </label>
+                {parseInt(toggleState.pollCount) > 0 && (
+                  <ul>
+                    <li>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={toggleState.pollMultiple}
+                          onChange={() =>
+                            updateToggles({
+                              pollMultiple: !toggleState.pollMultiple,
+                            })
+                          }
+                        />
+                        <span>Multiple</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={toggleState.pollExpired}
+                          onChange={() =>
+                            updateToggles({
+                              pollExpired: !toggleState.pollExpired,
+                            })
+                          }
+                        />
+                        <span>Expired</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={toggleState.pollVoted}
+                          onChange={() =>
+                            updateToggles({ pollVoted: !toggleState.pollVoted })
+                          }
+                        />
+                        <span>Voted</span>
+                      </label>
+                    </li>
+                  </ul>
+                )}
               </li>
               <li>
                 <label>
@@ -1236,6 +1335,44 @@ export default function Sandbox() {
                   <span>Link preview card</span>
                   <sup>1</sup>
                 </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.showTags}
+                    onChange={() =>
+                      updateToggles({ showTags: !toggleState.showTags })
+                    }
+                  />
+                  <span>Out-of-bound tags</span>
+                </label>
+                {toggleState.showTags && (
+                  <ul>
+                    <li>
+                      <label>
+                        <input
+                          type="radio"
+                          name="tagsCount"
+                          checked={toggleState.tagsCount === 'few'}
+                          onChange={() => updateToggles({ tagsCount: 'few' })}
+                        />
+                        <span>Few</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label>
+                        <input
+                          type="radio"
+                          name="tagsCount"
+                          checked={toggleState.tagsCount === 'many'}
+                          onChange={() => updateToggles({ tagsCount: 'many' })}
+                        />
+                        <span>Many</span>
+                      </label>
+                    </li>
+                  </ul>
+                )}
               </li>
               <li>
                 <label>

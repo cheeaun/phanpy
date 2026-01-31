@@ -173,6 +173,7 @@ Users can change the language in the settings, which sets the `localStorage` key
   - [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat) - e.g. "2 days ago", "in 2 days"
   - [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) - e.g. "1,000", "10K"
   - [`Intl.DisplayNames`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames) - e.g. "English" (`en`) in Traditional Chinese (`zh-Hant`) is "英文"
+  - [`Intl.ListFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat) - e.g. "A, B, and C"
   - [`Intl.Locale`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale) (with polyfill for older browsers)
   - [`Intl.Segmenter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter) (with polyfill for older browsers)
 
@@ -208,12 +209,16 @@ Two ways (choose one):
 
 ### Easy way
 
+❌ NOT recommended.
+
 Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the latest `phanpy-dist.zip` or `phanpy-dist.tar.gz`. It's pre-built so don't need to run any install/build commands. Extract it. Serve the folder of extracted files.
 
 > [!IMPORTANT]
 > Text translations connect to an **external service** (`translang.phanpy.social`).
 
 ### Custom-build way
+
+✅ Recommended.
 
 Requires [Node.js](https://nodejs.org/).
 
@@ -335,6 +340,8 @@ These are self-hosted by other wonderful folks.
 - [fedi.woodpeckersnest.space](https://fedi.woodpeckersnest.space) by [@roughnecks@social.woodpeckersnest.space](https://social.woodpeckersnest.space/@roughnecks)
 
 > Note: Add yours by creating a pull request.
+
+There's also a mobile app wrapper by [@fantinel@hachyderm.io](https://hachyderm.io/@fantinel) called **iPhanpy**: https://github.com/matfantinel/iphanpy
 
 ## Costs
 
@@ -478,6 +485,7 @@ And here I am. Building a Mastodon web client.
   - [Masto-FE (🦥 flavour)](https://masto-fe.superseriousbusiness.org)
 - [pl-fe](https://pl.mkljczk.pl)
 - [Mangane](https://github.com/BDX-town/Mangane)
+- [Fedideck](https://fedideck.app/)
 - [TheDesk](https://github.com/cutls/TheDesk) (archived)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 

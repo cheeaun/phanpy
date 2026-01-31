@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-29 12:17\n"
+"PO-Revision-Date: 2026-01-31 05:33\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -88,7 +88,7 @@ msgstr "domínio do servidor"
 
 #: src/components/account-info.jsx:124
 msgid "View profile"
-msgstr ""
+msgstr "Visualizar Perfil"
 
 #: src/components/account-info.jsx:392
 msgid "Unable to load account."
@@ -122,7 +122,7 @@ msgstr "Copiar usuário"
 #: src/components/related-actions.jsx:604
 #: src/components/shortcuts-settings.jsx:1081
 msgid "QR code"
-msgstr ""
+msgstr "QR code"
 
 #: src/components/account-info.jsx:640
 msgid "Go to original profile page"
@@ -162,7 +162,7 @@ msgstr "O usuário privou esta informação."
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info.jsx:813
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 
 #. js-lingui-explicit-id
 #: src/components/account-info.jsx:841
@@ -172,13 +172,13 @@ msgstr "Seguindo"
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:857
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr ""
+msgstr "{followingCount, plural, one {}other {<0>{0}</0> Following}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info.jsx:881
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr ""
+msgstr "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -186,7 +186,7 @@ msgstr ""
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:938
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
-msgstr ""
+msgstr "{0} posts originais, {1} respostas, {2} citações, {3} impulsos"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -236,7 +236,7 @@ msgstr "Respostas"
 #: src/pages/catchup.jsx:1578
 #: src/pages/year-in-posts.jsx:1398
 msgid "Quotes"
-msgstr ""
+msgstr "Citações"
 
 #: src/components/account-info.jsx:1060
 #: src/pages/catchup.jsx:76
@@ -328,11 +328,11 @@ msgstr "Não há listas."
 msgid "New list"
 msgstr "Nova lista"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode disabled"
 msgstr "Modo oculto desativado"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode enabled"
 msgstr "Modo oculto ativado"
 
@@ -393,7 +393,7 @@ msgstr "Adicionar"
 
 #: src/components/compose-poll.jsx:96
 msgid "Multiple choice"
-msgstr ""
+msgstr "Múltipla escolha"
 
 #: src/components/compose-poll.jsx:99
 msgid "Duration"
@@ -425,7 +425,7 @@ msgstr "Adicionar enquete"
 
 #: src/components/compose.jsx:115
 msgid "Add content warning"
-msgstr ""
+msgstr "Adicionar Aviso de Conteúdo"
 
 #: src/components/compose.jsx:116
 msgid "Schedule post"
@@ -530,7 +530,7 @@ msgstr "Editar publicação"
 
 #: src/components/compose.jsx:1489
 msgid "Ask a question"
-msgstr ""
+msgstr "Fazer uma pergunta"
 
 #: src/components/compose.jsx:1490
 msgid "What are you doing?"
@@ -549,25 +549,25 @@ msgstr "Publicando em <0/>"
 #: src/components/status.jsx:296
 #: src/pages/settings.jsx:338
 msgid "Anyone can quote"
-msgstr ""
+msgstr "Qualquer um pode fazer uma citação"
 
 #: src/components/compose.jsx:1904
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:297
 #: src/pages/settings.jsx:341
 msgid "Your followers can quote"
-msgstr ""
+msgstr "Seus seguidores podem fazer citações"
 
 #: src/components/compose.jsx:1907
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:298
 #: src/pages/settings.jsx:344
 msgid "Only you can quote"
-msgstr ""
+msgstr "Apenas você pode fazer citações"
 
 #: src/components/compose.jsx:1947
 msgid "Quotes can't be embedded in private mentions."
-msgstr ""
+msgstr "Citações não podem ser anexadas em menções privadas."
 
 #: src/components/compose.jsx:1969
 #: src/pages/settings.jsx:290
@@ -586,7 +586,7 @@ msgstr "Local"
 #: src/pages/settings.jsx:293
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
-msgstr ""
+msgstr "Publicar silenciosamente"
 
 #: src/components/compose.jsx:1984
 #: src/components/status.jsx:2372
@@ -653,15 +653,15 @@ msgstr "Outros"
 
 #: src/components/custom-emojis-modal.jsx:365
 msgid "Zoom out"
-msgstr ""
+msgstr "Diminuir Zoom"
 
 #: src/components/custom-emojis-modal.jsx:373
 msgid "Zoom in"
-msgstr ""
+msgstr "Aumentar Zoom"
 
 #: src/components/custom-emojis-modal.jsx:380
 msgid "Custom emojis are not available on this server."
-msgstr ""
+msgstr "Emojis personalizados não estão disponíveis neste servidor."
 
 #: src/components/drafts.jsx:62
 #: src/pages/settings.jsx:698
@@ -876,31 +876,31 @@ msgstr "Erro ao carregar GIFs"
 
 #: src/components/import-accounts-selection.jsx:86
 msgid "Select accounts to import"
-msgstr ""
+msgstr "Selecionar contas para importação"
 
 #: src/components/import-accounts-selection.jsx:117
 msgid "Select all"
-msgstr ""
+msgstr "Selecionar tudo"
 
 #: src/components/import-accounts-selection.jsx:158
 msgid "Existing"
-msgstr ""
+msgstr "Existente"
 
 #: src/components/import-accounts-selection.jsx:183
 msgid "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
-msgstr ""
+msgstr "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
 
 #: src/components/import-export-accounts.jsx:52
 msgid "Export failed"
-msgstr ""
+msgstr "Falha na exportação"
 
 #: src/components/import-export-accounts.jsx:72
 msgid "Import failed"
-msgstr ""
+msgstr "Falha na importação"
 
 #: src/components/import-export-accounts.jsx:113
 msgid "Import/Export <0>Accounts</0>"
-msgstr ""
+msgstr "Importar/Exportar <0>Contas</0>"
 
 #: src/components/import-export-accounts.jsx:128
 #: src/components/shortcuts-settings.jsx:800
@@ -909,7 +909,7 @@ msgstr "Importar"
 
 #: src/components/import-export-accounts.jsx:139
 msgid "Select file…"
-msgstr ""
+msgstr "Selecionar arquivo…"
 
 #: src/components/import-export-accounts.jsx:151
 #: src/components/shortcuts-settings.jsx:1048
@@ -919,15 +919,15 @@ msgstr "Exportar"
 #. placeholder {0}: accounts.length
 #: src/components/import-export-accounts.jsx:155
 msgid "{0, plural, one {# account} other {# accounts}}"
-msgstr ""
+msgstr "{0, plural, one {# account} other {# accounts}}"
 
 #: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
-msgstr ""
+msgstr "Nenhuma informação de login ou detalhes para acessar a conta são armazenados nos arquivos exportados. Você terá que fazer log in novamente para cada conta após importação."
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
-msgstr ""
+msgstr "<0>{key1}</0> then <1>{key2}</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:57
 #: src/components/nav-menu.jsx:368
@@ -976,7 +976,7 @@ msgstr "Detalhes da publicação"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Open media or post details"
-msgstr ""
+msgstr "Abrir detalhes do post ou mídia"
 
 #: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
@@ -1080,19 +1080,19 @@ msgstr "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 
 #: src/components/keyboard-shortcuts-help.jsx:210
 msgid "Go to Home"
-msgstr ""
+msgstr "Ir para página inicial"
 
 #: src/components/keyboard-shortcuts-help.jsx:214
 msgid "Go to Notifications"
-msgstr ""
+msgstr "Ir para notificações"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr ""
+msgstr "Ir para configurações"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
-msgstr ""
+msgstr "Ir para perfil"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
@@ -1575,7 +1575,7 @@ msgstr "A enquete que você votou já acabou."
 
 #: src/components/notification.jsx:203
 msgid "{account} edited a post."
-msgstr ""
+msgstr "{account} editou um post."
 
 #: src/components/notification.jsx:205
 msgid "A post you interacted with has been edited."
@@ -1589,12 +1589,12 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 
 #: src/components/notification.jsx:257
 msgid "{account} edited a post you have quoted."
-msgstr ""
+msgstr "{account} editou um post que você citou."
 
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:260
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
-msgstr ""
+msgstr "{count, plural, one {}=1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
 
 #: src/components/notification.jsx:274
 msgid "{account} reported {targetAccount}"
@@ -1704,7 +1704,7 @@ msgstr "Impossível copiar o link"
 
 #: src/components/open-link-sheet.jsx:56
 msgid "Open link?"
-msgstr ""
+msgstr "Abrir link?"
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
@@ -1722,7 +1722,7 @@ msgstr "Compartilhar…"
 
 #: src/components/open-link-sheet.jsx:92
 msgid "Open"
-msgstr ""
+msgstr "Abrir"
 
 #: src/components/poll.jsx:159
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
@@ -1743,11 +1743,11 @@ msgstr "Ocultar resultado"
 #: src/components/poll.jsx:288
 #: src/components/poll.jsx:304
 msgid "{0, plural, one {# choice} other {# choices}}"
-msgstr ""
+msgstr "{0, plural, one {# choice} other {# choices}}"
 
 #: src/components/poll.jsx:221
 msgid "Unable to vote in poll"
-msgstr ""
+msgstr "Incapaz de votar na enquete"
 
 #: src/components/poll.jsx:277
 msgid "Vote"
@@ -1859,11 +1859,11 @@ msgstr "Nota: Esta prévia tem um estilo levemente padronizado."
 #: src/components/private-note-sheet.jsx:41
 #: src/components/related-actions.jsx:232
 msgid "Notes"
-msgstr ""
+msgstr "Anotações"
 
 #: src/components/private-note-sheet.jsx:44
 msgid "Only visible to you"
-msgstr ""
+msgstr "Apenas visível para você"
 
 #: src/components/private-note-sheet.jsx:69
 msgid "Unable to update private note."
@@ -1876,11 +1876,11 @@ msgstr "Salvar e fechar"
 #: src/components/qr-code-modal.jsx:26
 #: src/components/shortcuts-settings.jsx:833
 msgid "Scan QR code"
-msgstr ""
+msgstr "Escanear QR code"
 
 #: src/components/qr-scanner-modal.jsx:263
 msgid "Unable to access camera. Please check permissions."
-msgstr ""
+msgstr "Incapaz de acessar a câmera. Por favor cheque as permissões."
 
 #: src/components/quote-chain-modal.jsx:107
 msgid "Quote chain"

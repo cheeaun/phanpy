@@ -8,7 +8,7 @@ msgstr ""
 "Language: eu\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-02 14:10\n"
+"PO-Revision-Date: 2026-02-02 16:25\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -976,7 +976,7 @@ msgstr "Ireki bidalketaren xehetasunak"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Open media or post details"
-msgstr ""
+msgstr "Ireki multimediaren edo bidalketaren xehetasunak"
 
 #: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
@@ -1088,7 +1088,7 @@ msgstr "Joan jakinarazpenetara"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr "Joan Ezarpenetara"
+msgstr "Joan ezarpenetara"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
@@ -1096,7 +1096,7 @@ msgstr "Joan profilera"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
-msgstr ""
+msgstr "Joan laster-marketara"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1594,7 +1594,7 @@ msgstr "{account}(e)k iruzkindu duzun bidalketa bat editatu du."
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:260
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
-msgstr ""
+msgstr "{count, plural, one {}=1 {{account} izena eman du.} other {<0><1>{0}</1> pertsonak</0> izena eman dute.}}"
 
 #: src/components/notification.jsx:274
 msgid "{account} reported {targetAccount}"
@@ -1742,11 +1742,11 @@ msgstr "Ezkutatu emaitzak"
 #: src/components/poll.jsx:288
 #: src/components/poll.jsx:304
 msgid "{0, plural, one {# choice} other {# choices}}"
-msgstr ""
+msgstr "{0, plural, one {aukera #} other {# aukera}}"
 
 #: src/components/poll.jsx:221
 msgid "Unable to vote in poll"
-msgstr ""
+msgstr "Ezin da bozketan botoa eman"
 
 #: src/components/poll.jsx:277
 msgid "Vote"
@@ -2327,7 +2327,7 @@ msgstr "Lokala bakarrik"
 #: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "Zerbitzaria"
 
 #: src/components/shortcuts-settings.jsx:79
 #: src/components/shortcuts-settings.jsx:88
@@ -2472,7 +2472,7 @@ msgstr "Itsatsi lasterbideak hemen"
 
 #: src/components/shortcuts-settings.jsx:844
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "Gordetako lasterbideak zerbitzaritik deskargatzen…"
 
 #: src/components/shortcuts-settings.jsx:872
 msgid "Unable to download shortcuts"
@@ -2480,7 +2480,7 @@ msgstr "Ezin dira lasterbideak deskargatu"
 
 #: src/components/shortcuts-settings.jsx:875
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Deskargatu lasterbideak zerbitzaritik"
 
 #: src/components/shortcuts-settings.jsx:942
 msgid "* Exists in current shortcuts"
@@ -2545,7 +2545,7 @@ msgstr "Ezin dira lasterbideak kopiatu"
 
 #: src/components/shortcuts-settings.jsx:1118
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Lasterbideak zerbitzarian gordetzen…"
 
 #: src/components/shortcuts-settings.jsx:1125
 msgid "Shortcuts saved"
@@ -2557,7 +2557,7 @@ msgstr "Ezin dira lasterbideak gorde"
 
 #: src/components/shortcuts-settings.jsx:1133
 msgid "Sync to server"
-msgstr ""
+msgstr "Sinkronizatu zerbitzarira"
 
 #: src/components/shortcuts-settings.jsx:1148
 msgid "Shortcut settings copied"
@@ -2582,7 +2582,7 @@ msgstr "Lasterbideen JSON gordina"
 
 #: src/components/shortcuts-settings.jsx:1212
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Inportatu / Esportatu ezarpenak zerbitzarira / zerbitzaritik (oso esperimentala)"
 
 #: src/components/status.jsx:288
 msgid "Private posts cannot be quoted"
@@ -2617,7 +2617,7 @@ msgstr "<0/>(e)k <1>bultzatua</1>"
 
 #: src/components/status.jsx:736
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr ""
+msgstr "Barka baina saioa hasita duzun zerbitzariak ezin du interaktuatu beste zerbitzari batekoa den bidalketa honekin."
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:925
@@ -3149,11 +3149,11 @@ msgstr "Ezin da kontuaren informazioa eskuratu"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:585
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "Aldatu kontuko zerbitzarira {0}"
 
 #: src/pages/account-statuses.jsx:615
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Aldatu nire zerbitzarira(<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:688
 msgid "Month"
@@ -3334,7 +3334,7 @@ msgstr "Azken eguneraketara arte ({0})"
 
 #: src/pages/catchup.jsx:1159
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Oharra: litekeena da zerbitzariak gehienez (gutxi gorabehera) 800 bidalketa erakustea hasierako denbora-lerroan, denbora tartea izaten dena izaten dela."
 
 #: src/pages/catchup.jsx:1169
 msgid "Previously…"
@@ -3715,25 +3715,25 @@ msgstr "Gehitu lasterbideetara"
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Sartu zerbitzari berria, adib. \"mastodon.eus\""
 
 #: src/pages/hashtag.jsx:495
 #: src/pages/public.jsx:144
 #: src/pages/trending.jsx:484
 msgid "Invalid server"
-msgstr ""
+msgstr "Zerbitzaria ez da baliozkoa"
 
 #: src/pages/hashtag.jsx:509
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another server…"
-msgstr ""
+msgstr "Joan beste zerbitzari batera…"
 
 #: src/pages/hashtag.jsx:522
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Joan nire zerbitzarira (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
@@ -3785,7 +3785,7 @@ msgstr "Aplikazioa erregistratzeak huts egin du"
 
 #: src/pages/login.jsx:246
 msgid "server domain"
-msgstr ""
+msgstr "zerbitzariaren domeinua"
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -3793,7 +3793,7 @@ msgstr "adib. \"mastodon.eus\""
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "Ezin da saioa hasi. Saiatu berriro edo saiatu beste zerbitzari batean."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4131,7 +4131,7 @@ msgstr "Defektuzko ikusgaitasunaren eguneraketak huts egin du"
 
 #: src/pages/settings.jsx:354
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Zure zerbitzariko ezarpenekin sinkronizatu da. <0>Joan zure zerbitzarira ({instance}) ezarpen gehiagorako.</0>"
 
 #: src/pages/settings.jsx:369
 msgid "Experiments"
@@ -4204,7 +4204,7 @@ msgstr "⚠️⚠️⚠️ Oso esperimentala.<0/>Zure profileko oharretan gordet
 
 #: src/pages/settings.jsx:656
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "Oharra: ezaugarri honek saio hasita duzun zerbitzariaren APIa darabil."
 
 #: src/pages/settings.jsx:672
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4333,7 +4333,7 @@ msgstr "Ez duzu saiorik hasi. Ezin duzu interaktuatu (erantzun, bultzatu...)"
 
 #: src/pages/status.jsx:1088
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Bidalketa hau beste zerbitzari batekoa da (<0>{instance}</0>). Interakzioak (erantzunak, bultzadak, etab.) ez dira posible."
 
 #: src/pages/status.jsx:1116
 msgid "Error: {e}"
@@ -4341,7 +4341,7 @@ msgstr "Errorea: {e}"
 
 #: src/pages/status.jsx:1123
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Aldatu nire zerbitzarira interakzioak gaitzeko"
 
 #: src/pages/status.jsx:1231
 msgid "Unable to load replies."
@@ -4392,11 +4392,11 @@ msgstr "Ezin da aldatu"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1631
 msgid "Switch to post's server ({0})"
-msgstr ""
+msgstr "Aldatu bidalketaren zerbitzarira ({0})"
 
 #: src/pages/status.jsx:1634
 msgid "Switch to post's server"
-msgstr ""
+msgstr "Aldatu bidalketaren zerbitzarira"
 
 #: src/pages/status.jsx:1647
 msgid "View Edit History Snapshots"
@@ -4470,11 +4470,11 @@ msgstr "Konektatu zure Mastodon / Fedibertsoko kontua.<0/>Zure egiaztagiriak ez 
 
 #: src/pages/welcome.jsx:96
 msgid "Screenshot of Phanpy home timeline on mobile device"
-msgstr ""
+msgstr "Phanpy-ren hasierako denbora-lerroaren pantaila-argazkia mugikor batean"
 
 #: src/pages/welcome.jsx:113
 msgid "Screenshot of Phanpy home timeline on tablet device"
-msgstr ""
+msgstr "Phanpy-ren hasierako denbora-lerroaren pantaila-argazkia tableta batean"
 
 #: src/pages/welcome.jsx:127
 msgid "Screenshot of Boosts Carousel"

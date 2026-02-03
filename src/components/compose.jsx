@@ -238,16 +238,15 @@ function Compose({
   };
 
   const processFiles = (files) => {
-    const filesArray = Array.from(files || []);
     const supportedFiles = [];
     const unsupportedFiles = [];
-    filesArray.forEach((file) => {
+    for (const file of files || []) {
       if (!isMimeTypeSupported(file.type, supportedMimeTypes)) {
         unsupportedFiles.push(file);
       } else {
         supportedFiles.push(file);
       }
-    });
+    }
 
     if (unsupportedFiles.length > 0) {
       alert(

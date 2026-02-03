@@ -238,9 +238,10 @@ function Compose({
   };
 
   const processFiles = (files) => {
+    const filesArray = Array.from(files || []);
     const supportedFiles = [];
     const unsupportedFiles = [];
-    files.forEach((file) => {
+    filesArray.forEach((file) => {
       if (!isMimeTypeSupported(file.type, supportedMimeTypes)) {
         unsupportedFiles.push(file);
       } else {

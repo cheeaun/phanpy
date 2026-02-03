@@ -8,6 +8,10 @@ import {
   NetworkFirst,
   StaleWhileRevalidate,
 } from 'workbox-strategies';
+import {
+  webShareTarget,
+  WEB_SHARE_TARGET_PATH,
+} from '../src/utils/web-share-target';
 
 navigationPreload.enable();
 
@@ -390,3 +394,29 @@ self.addEventListener('notificationclick', (event) => {
     })(),
   );
 });
+
+// WEB SHARE TARGET
+// ================
+registerRoute(
+  // Works with relative path
+  ({ url }) => url.pathname.endsWith(WEB_SHARE_TARGET_PATH),
+  async ({ request }) => {
+    try {
+      const formData = await request.formData();
+      const sharedData = {
+        title: formData.get('title') || '',
+        text: formData.get('text') || '',
+        url: formData.get('url') || '',
+        files: formData.getAll('files'),
+        timestamp: Date.now(),
+      };
+      await webShareTarget.set(sharedData);
+    } catch (error) {
+      console.error('[Share Target] Error handling share:', error);
+    } finally {
+      webShareTarget.close();
+    }
+    return Response.redirect('./?compose', 303);
+  },
+  'POST',
+);

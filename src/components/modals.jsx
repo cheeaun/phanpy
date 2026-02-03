@@ -76,6 +76,11 @@ export default function Modals() {
               window.__COMPOSE__?.quoteStatus ||
               null
             }
+            sharedData={
+              states.showCompose?.sharedData ||
+              window.__COMPOSE__?.sharedData ||
+              null
+            }
             onClose={(results) => {
               const { newStatus, instance, type, scheduledAt } = results || {};
               states.showCompose = false;

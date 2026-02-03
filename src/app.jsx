@@ -75,6 +75,7 @@ import {
   getVapidKey,
   setCurrentAccountID,
 } from './utils/store-utils';
+import { webShareTarget } from './utils/web-share-target';
 
 import './utils/toast-alert';
 
@@ -558,6 +559,33 @@ function App() {
   // }, [location.pathname]);
 
   useEffect(focusDeck, [location, isLoggedIn]);
+
+  useEffect(() => {
+    if (isPWA && isLoggedIn && uiState === 'default') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const openCompose = urlParams.get('compose');
+      if (openCompose !== null) {
+        // Remove compose param from URL
+        urlParams.delete('compose');
+        const newSearch = urlParams.toString();
+        const newUrl =
+          window.location.pathname + (newSearch ? `?${newSearch}` : '');
+        window.history.replaceState({}, document.title, newUrl);
+
+        (async () => {
+          try {
+            const data = await webShareTarget.get();
+            webShareTarget.del(); // Non-blocking delete
+            const sharedData = webShareTarget.process(data);
+            states.showCompose = sharedData ? { sharedData } : true;
+          } catch (error) {
+            console.error('Error loading shared data:', error);
+            states.showCompose = true;
+          }
+        })();
+      }
+    }
+  }, [isLoggedIn, uiState]);
 
   // Save last page for PWA restoration
   const restoredRef = useRef(false);

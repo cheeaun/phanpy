@@ -143,6 +143,7 @@ function Compose({
   quoteStatus,
   standalone,
   hasOpener,
+  sharedData,
 }) {
   const { i18n, _, t } = useLingui();
   const rtf = RTF(i18n.locale);
@@ -234,6 +235,56 @@ function Compose({
     } else {
       return false;
     }
+  };
+
+  const processFiles = (files) => {
+    const supportedFiles = [];
+    const unsupportedFiles = [];
+    files.forEach((file) => {
+      if (!isMimeTypeSupported(file.type, supportedMimeTypes)) {
+        unsupportedFiles.push(file);
+      } else {
+        supportedFiles.push(file);
+      }
+    });
+
+    if (unsupportedFiles.length > 0) {
+      alert(
+        plural(unsupportedFiles.length, {
+          one: `File ${unsupportedFiles[0].name} is not supported.`,
+          other: `Files ${lf.format(
+            unsupportedFiles.map((f) => f.name),
+          )} are not supported.`,
+        }),
+      );
+    }
+
+    if (supportedFiles.length > 0) {
+      // Auto-cut-off files to avoid exceeding maxMediaAttachments
+      let allowedFiles = supportedFiles;
+      if (maxMediaAttachments !== undefined) {
+        const max = maxMediaAttachments - mediaAttachments.length;
+        if (max <= 0) {
+          alert(
+            plural(maxMediaAttachments, {
+              one: 'You can only attach up to 1 file.',
+              other: 'You can only attach up to # files.',
+            }),
+          );
+          return null;
+        }
+        allowedFiles = allowedFiles.slice(0, max);
+      }
+      return allowedFiles.map((file) => ({
+        file,
+        type: file.type,
+        size: file.size,
+        url: URL.createObjectURL(file),
+        id: null,
+        description: null,
+      }));
+    }
+    return null;
   };
 
   const handlePastedLink = async (url) => {
@@ -537,6 +588,24 @@ function Compose({
     }
   }, [draftStatus, editStatus, replyToStatus, replyMode]);
 
+  useEffect(() => {
+    if (sharedData) {
+      const { initialText, files } = sharedData;
+
+      if (initialText && textareaRef.current) {
+        textareaRef.current.value = initialText;
+        oninputTextarea();
+      }
+
+      if (files && files.length > 0) {
+        const mediaFiles = processFiles(files);
+        if (mediaFiles) {
+          setMediaAttachments(mediaFiles);
+        }
+      }
+    }
+  }, [sharedData]);
+
   // focus textarea when state.composerState.minimized turns false
   const snapStates = useSnapshot(states);
   useEffect(() => {
@@ -779,65 +848,19 @@ function Compose({
 
       const { items } = e.clipboardData || e.dataTransfer;
       const files = [];
-      const unsupportedFiles = [];
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         if (item.kind === 'file') {
-          const file = item.getAsFile();
-          if (!isMimeTypeSupported(file.type, supportedMimeTypes)) {
-            unsupportedFiles.push(file);
-          } else {
-            files.push(file);
-          }
+          files.push(item.getAsFile());
         }
       }
-      if (unsupportedFiles.length > 0) {
-        alert(
-          plural(unsupportedFiles.length, {
-            one: `File ${unsupportedFiles[0].name} is not supported.`,
-            other: `Files ${lf.format(
-              unsupportedFiles.map((f) => f.name),
-            )} are not supported.`,
-          }),
-        );
-      }
-      if (files.length > 0 && mediaAttachments.length >= maxMediaAttachments) {
-        alert(
-          plural(maxMediaAttachments, {
-            one: 'You can only attach up to 1 file.',
-            other: 'You can only attach up to # files.',
-          }),
-        );
-        return;
-      }
-      console.log({ files });
       if (files.length > 0) {
         e.preventDefault();
         e.stopPropagation();
-        // Auto-cut-off files to avoid exceeding maxMediaAttachments
-        let allowedFiles = files;
-        if (maxMediaAttachments !== undefined) {
-          const max = maxMediaAttachments - mediaAttachments.length;
-          allowedFiles = allowedFiles.slice(0, max);
-          if (allowedFiles.length <= 0) {
-            alert(
-              plural(maxMediaAttachments, {
-                one: 'You can only attach up to 1 file.',
-                other: 'You can only attach up to # files.',
-              }),
-            );
-            return;
-          }
+        const mediaFiles = processFiles(files);
+        if (mediaFiles) {
+          setMediaAttachments([...mediaAttachments, ...mediaFiles]);
         }
-        const mediaFiles = allowedFiles.map((file) => ({
-          file,
-          type: file.type,
-          size: file.size,
-          url: URL.createObjectURL(file),
-          id: null,
-          description: null,
-        }));
-        setMediaAttachments([...mediaAttachments, ...mediaFiles]);
       }
     };
     window.addEventListener('paste', handleItems);

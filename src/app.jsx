@@ -575,9 +575,13 @@ function App() {
         (async () => {
           try {
             const data = await webShareTarget.get();
-            webShareTarget.del(); // Non-blocking delete
+            // webShareTarget.del(); // Non-blocking delete
             const sharedData = webShareTarget.process(data);
-            states.showCompose = sharedData ? { sharedData } : true;
+            if (sharedData) {
+              states.showCompose = { sharedData };
+            } else {
+              alert('No shared data found', JSON.stringify(data));
+            }
           } catch (error) {
             console.error('Error loading shared data:', error);
             states.showCompose = true;

@@ -390,3 +390,37 @@ self.addEventListener('notificationclick', (event) => {
     })(),
   );
 });
+
+// WEB SHARE TARGET
+// ================
+registerRoute(
+  // Works with relative path
+  ({ url }) => url.pathname.endsWith('/share'),
+  async ({ request, event }) => {
+    try {
+      const formData = await request.formData();
+      const sharedData = {
+        title: formData.get('title') || '',
+        text: formData.get('text') || '',
+        url: formData.get('url') || '',
+        files: formData.getAll('files'),
+        timestamp: Date.now(),
+      };
+
+      if (event.resultingClientId) {
+        const client = await self.clients.get(event.resultingClientId);
+        if (client) {
+          client.postMessage({
+            type: 'share-target',
+            data: sharedData,
+            action: 'compose-with-shared-data',
+          });
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return Response.redirect('./', 303);
+  },
+  'POST',
+);

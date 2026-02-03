@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { api } from '../utils/api';
+import { useAuth } from '../utils/auth-context';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import useInterval from '../utils/useInterval';
@@ -12,7 +13,8 @@ import usePageVisibility from '../utils/usePageVisibility';
 const STREAMING_TIMEOUT = 1000 * 3; // 3 seconds
 const POLL_INTERVAL = 20_000; // 20 seconds
 
-export default memo(function BackgroundService({ isLoggedIn }) {
+export default memo(function BackgroundService() {
+  const isLoggedIn = useAuth();
   const { t } = useLingui();
 
   // Notifications service

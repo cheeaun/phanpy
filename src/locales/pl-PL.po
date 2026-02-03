@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-29 12:17\n"
+"PO-Revision-Date: 2026-01-29 21:19\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -976,7 +976,7 @@ msgstr "Otwórz szczegóły wpisu"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Open media or post details"
-msgstr ""
+msgstr "Otwórz media lub szczegóły wpisu"
 
 #: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
@@ -1088,15 +1088,15 @@ msgstr "Przejdź do powiadomień"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr ""
+msgstr "Przejdź do ustawień"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
-msgstr ""
+msgstr "Przejdź do profilu"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
-msgstr ""
+msgstr "Przejdź do zakładek"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1746,7 +1746,7 @@ msgstr ""
 
 #: src/components/poll.jsx:221
 msgid "Unable to vote in poll"
-msgstr ""
+msgstr "Nie udało się zagłosować w ankiecie"
 
 #: src/components/poll.jsx:277
 msgid "Vote"
@@ -2327,7 +2327,7 @@ msgstr "Tylko Lokalne"
 #: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "Serwer"
 
 #: src/components/shortcuts-settings.jsx:79
 #: src/components/shortcuts-settings.jsx:88
@@ -2472,7 +2472,7 @@ msgstr "Wklej skróty tutaj"
 
 #: src/components/shortcuts-settings.jsx:844
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "Ściąganie zapisanych skrótów z serwera"
 
 #: src/components/shortcuts-settings.jsx:872
 msgid "Unable to download shortcuts"
@@ -2480,7 +2480,7 @@ msgstr "Nie udało się pobrać skrótów"
 
 #: src/components/shortcuts-settings.jsx:875
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Ściąganie skrótów z serwera"
 
 #: src/components/shortcuts-settings.jsx:942
 msgid "* Exists in current shortcuts"
@@ -2545,7 +2545,7 @@ msgstr "Nie udało się skopiować skrótu"
 
 #: src/components/shortcuts-settings.jsx:1118
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Zapisywanie skrótów na serwerze"
 
 #: src/components/shortcuts-settings.jsx:1125
 msgid "Shortcuts saved"
@@ -2557,7 +2557,7 @@ msgstr "Nie udało się zapisać skrótów"
 
 #: src/components/shortcuts-settings.jsx:1133
 msgid "Sync to server"
-msgstr ""
+msgstr "Zsynchronizuj z serwerem"
 
 #: src/components/shortcuts-settings.jsx:1148
 msgid "Shortcut settings copied"
@@ -2582,7 +2582,7 @@ msgstr "JSON ze skrótami"
 
 #: src/components/shortcuts-settings.jsx:1212
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Importuj/eksportuj ustawienia z/na serwer (bardzo eksperymentalne)"
 
 #: src/components/status.jsx:288
 msgid "Private posts cannot be quoted"
@@ -2617,7 +2617,7 @@ msgstr "<0/> <1>podbija</1>"
 
 #: src/components/status.jsx:736
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr ""
+msgstr "Niestety, serwer, na którym aktualnie jesteś zarejestrowany/a nie może wchodzić w interakcję z tym wpisem, który jest na innym serwerze."
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:925
@@ -3149,11 +3149,11 @@ msgstr "Nie udało się pobrać informacji o koncie"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:585
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "Przełącz na sewer konta"
 
 #: src/pages/account-statuses.jsx:615
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Przełącz na swój serwer (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:688
 msgid "Month"
@@ -3334,7 +3334,7 @@ msgstr "Do ostatniego nadrabiania zaległości ({0})"
 
 #: src/pages/catchup.jsx:1159
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Uwaga: Twój serwer może pokazać maksymalnie 800 wpisów na linii czasowej niezależnie od wybranego zakresu czasu. To moze być mniej lub więcej."
 
 #: src/pages/catchup.jsx:1169
 msgid "Previously…"
@@ -3715,25 +3715,25 @@ msgstr "Dodaj do skrótów"
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Wpisz nowy serwer, np. \"mastodon.social\""
 
 #: src/pages/hashtag.jsx:495
 #: src/pages/public.jsx:144
 #: src/pages/trending.jsx:484
 msgid "Invalid server"
-msgstr ""
+msgstr "Nieprawidłowy serwer"
 
 #: src/pages/hashtag.jsx:509
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another server…"
-msgstr ""
+msgstr "Przejdź do innego serwera…"
 
 #: src/pages/hashtag.jsx:522
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Przejdź do swojego serwera (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
@@ -3785,7 +3785,7 @@ msgstr "Nie udało się zarejestrować aplikacji"
 
 #: src/pages/login.jsx:246
 msgid "server domain"
-msgstr ""
+msgstr "domena serwera"
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -3793,7 +3793,7 @@ msgstr "np. “mastodon.social”"
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "Nie udało się zalogować. Spróbuj znowu lub podaj inny serwer."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4131,7 +4131,7 @@ msgstr "Nie udało się zaktualizować ustawień domyślnej widoczności"
 
 #: src/pages/settings.jsx:354
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Zsynchronizowane z ustawieniami Twojego serwera <0>Przejdź do swojego serwera ({instance}) żeby zobaczyć węcej ustawień.</0>"
 
 #: src/pages/settings.jsx:369
 msgid "Experiments"
@@ -4333,7 +4333,7 @@ msgstr "Nie zalogowano. Interakcje (odpowiedzi, podbicia, itp.) nie są możliwe
 
 #: src/pages/status.jsx:1088
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Ten wpis pochodzi z innego serwera (<0>{instance}</0>). Interakcje (odpowiedzi, boosty, itd.) nie są możliwe"
 
 #: src/pages/status.jsx:1116
 msgid "Error: {e}"
@@ -4341,7 +4341,7 @@ msgstr "Błąd: {e}"
 
 #: src/pages/status.jsx:1123
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Przełącz się na swój serwer, żeby umożliwić interakcje"
 
 #: src/pages/status.jsx:1231
 msgid "Unable to load replies."
@@ -4392,11 +4392,11 @@ msgstr "Nie udało się przełączyć"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1631
 msgid "Switch to post's server ({0})"
-msgstr ""
+msgstr "Przełącz na serwer wpisu ({0})"
 
 #: src/pages/status.jsx:1634
 msgid "Switch to post's server"
-msgstr ""
+msgstr "Przełącz na serwer wpisu"
 
 #: src/pages/status.jsx:1647
 msgid "View Edit History Snapshots"
@@ -4470,7 +4470,7 @@ msgstr "Połącz swoje istniejące konto Mastodon/Fediwersum.<0/>Twoje dane uwie
 
 #: src/pages/welcome.jsx:96
 msgid "Screenshot of Phanpy home timeline on mobile device"
-msgstr ""
+msgstr "Zrzut ekranu domowej osi czasu Phanpy na urządzeniach mobilnych"
 
 #: src/pages/welcome.jsx:113
 msgid "Screenshot of Phanpy home timeline on tablet device"

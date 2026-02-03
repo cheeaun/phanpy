@@ -63,6 +63,7 @@ export const getCurrentAccID = mem(getCurrentAccountID, {
 });
 
 export function setCurrentAccountID(id) {
+  getCurrentAccID.cache.clear();
   try {
     store.session.set('currentAccount', id);
   } catch (e) {}

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-29 13:38\n"
+"PO-Revision-Date: 2026-02-03 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -147,7 +147,7 @@ msgid "In Memoriam"
 msgstr "Muistoissamme"
 
 #: src/components/account-info.jsx:786
-#: src/components/compose.jsx:1981
+#: src/components/compose.jsx:2004
 #: src/pages/settings.jsx:296
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -257,7 +257,7 @@ msgstr "Näytä julkaisutilastot"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:1065
+#: src/components/compose.jsx:1088
 #: src/components/custom-emojis-modal.jsx:272
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:89
@@ -328,11 +328,11 @@ msgstr "Ei listoja."
 msgid "New list"
 msgstr "Uusi lista"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode disabled"
 msgstr "Peittotila poistettu käytöstä"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode enabled"
 msgstr "Peittotila otettu käyttöön"
 
@@ -384,7 +384,7 @@ msgid "Remove"
 msgstr "Poista"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1689
+#: src/components/compose.jsx:1712
 #: src/components/mention-modal.jsx:221
 #: src/components/shortcuts-settings.jsx:716
 #: src/pages/list.jsx:388
@@ -431,87 +431,86 @@ msgstr "Lisää sisältövaroitus"
 msgid "Schedule post"
 msgstr "Ajasta julkaisu"
 
-#: src/components/compose.jsx:550
-msgid "You have unsaved changes. Discard this post?"
-msgstr "Sinulla on tallentamattomia muutoksia. Hylätäänkö julkaisu?"
-
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:796
+#: src/components/compose.jsx:253
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, one {Tiedostoa {1} ei tueta.} other {Tiedostoja {2} ei tueta.}}"
 
-#: src/components/compose.jsx:806
-#: src/components/compose.jsx:824
-#: src/components/compose.jsx:2112
+#: src/components/compose.jsx:269
+#: src/components/compose.jsx:2135
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Voit liittää enintään 1 tiedoston.} other {Voit liittää enintään # tiedostoa.}}"
 
-#: src/components/compose.jsx:1046
+#: src/components/compose.jsx:619
+msgid "You have unsaved changes. Discard this post?"
+msgstr "Sinulla on tallentamattomia muutoksia. Hylätäänkö julkaisu?"
+
+#: src/components/compose.jsx:1069
 msgid "Pop out"
 msgstr "Ponnauta ulos"
 
-#: src/components/compose.jsx:1053
+#: src/components/compose.jsx:1076
 msgid "Minimize"
 msgstr "Pienennä"
 
-#: src/components/compose.jsx:1089
+#: src/components/compose.jsx:1112
 msgid "Looks like you closed the parent window."
 msgstr "Näytät sulkeneesi pääikkunan."
 
-#: src/components/compose.jsx:1096
+#: src/components/compose.jsx:1119
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Luontikenttä näyttää olevan sinulla avoinna pääikkunassa ja julkaiseminen meneillään. Odota, että se on valmis, ja yritä myöhemmin uudelleen."
 
-#: src/components/compose.jsx:1101
+#: src/components/compose.jsx:1124
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Luontikenttä näyttää olevan sinulla avoinna pääikkunassa. Tämän ikkunan sisään ponnauttaminen hävittää pääikkunassa tekemäsi muutokset. Jatketaanko?"
 
-#: src/components/compose.jsx:1147
+#: src/components/compose.jsx:1170
 msgid "Pop in"
 msgstr "Ponnauta sisään"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1157
+#: src/components/compose.jsx:1180
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Vastataan käyttäjän @{0} julkaisuun (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1167
+#: src/components/compose.jsx:1190
 msgid "Replying to @{0}’s post"
 msgstr "Vastataan käyttäjän @{0} julkaisuun"
 
-#: src/components/compose.jsx:1180
+#: src/components/compose.jsx:1203
 msgid "Editing source post"
 msgstr "Muokataan lähdejulkaisua"
 
-#: src/components/compose.jsx:1249
+#: src/components/compose.jsx:1272
 msgid "Poll must have at least 2 options"
 msgstr "Äänestyksessä pitää olla vähintään 2 vastausvaihtoehtoa"
 
-#: src/components/compose.jsx:1253
+#: src/components/compose.jsx:1276
 msgid "Some poll choices are empty"
 msgstr "Osa vaihtoehdoista on tyhjiä"
 
-#: src/components/compose.jsx:1266
+#: src/components/compose.jsx:1289
 msgid "Some media have no descriptions. Continue?"
 msgstr "Osalta mediasta puuttuu kuvaus. Jatketaanko?"
 
-#: src/components/compose.jsx:1318
+#: src/components/compose.jsx:1341
 msgid "Attachment #{i} failed"
 msgstr "Liite #{i} epäonnistui"
 
-#: src/components/compose.jsx:1445
+#: src/components/compose.jsx:1468
 #: src/components/status.jsx:2495
 #: src/components/timeline.jsx:1013
 msgid "Content warning"
 msgstr "Sisältövaroitus"
 
-#: src/components/compose.jsx:1477
-#: src/components/compose.jsx:1623
+#: src/components/compose.jsx:1500
+#: src/components/compose.jsx:1646
 #: src/components/edit-profile-sheet.jsx:326
 #: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
@@ -520,85 +519,85 @@ msgstr "Sisältövaroitus"
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: src/components/compose.jsx:1485
+#: src/components/compose.jsx:1508
 msgid "Post your reply"
 msgstr "Julkaise vastauksesi"
 
-#: src/components/compose.jsx:1487
+#: src/components/compose.jsx:1510
 msgid "Edit your post"
 msgstr "Muokkaa julkaisuasi"
 
-#: src/components/compose.jsx:1489
+#: src/components/compose.jsx:1512
 msgid "Ask a question"
 msgstr "Esitä kysymys"
 
-#: src/components/compose.jsx:1490
+#: src/components/compose.jsx:1513
 msgid "What are you doing?"
 msgstr "Mitä teet?"
 
-#: src/components/compose.jsx:1563
+#: src/components/compose.jsx:1586
 msgid "Mark media as sensitive"
 msgstr "Merkitse media arkaluonteiseksi"
 
-#: src/components/compose.jsx:1603
+#: src/components/compose.jsx:1626
 msgid "Posting on <0/>"
 msgstr "Julkaistaan <0/>"
 
-#: src/components/compose.jsx:1901
+#: src/components/compose.jsx:1924
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:296
 #: src/pages/settings.jsx:338
 msgid "Anyone can quote"
 msgstr "Kuka tahansa voi lainata"
 
-#: src/components/compose.jsx:1904
+#: src/components/compose.jsx:1927
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:297
 #: src/pages/settings.jsx:341
 msgid "Your followers can quote"
 msgstr "Seuraajasi voivat lainata"
 
-#: src/components/compose.jsx:1907
+#: src/components/compose.jsx:1930
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:298
 #: src/pages/settings.jsx:344
 msgid "Only you can quote"
 msgstr "Vain sinä voit lainata"
 
-#: src/components/compose.jsx:1947
+#: src/components/compose.jsx:1970
 msgid "Quotes can't be embedded in private mentions."
 msgstr "Lainauksia ei voi upottaa yksityismainintoihin."
 
-#: src/components/compose.jsx:1969
+#: src/components/compose.jsx:1992
 #: src/pages/settings.jsx:290
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Julkinen"
 
-#: src/components/compose.jsx:1974
+#: src/components/compose.jsx:1997
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:166
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Paikallinen"
 
-#: src/components/compose.jsx:1978
+#: src/components/compose.jsx:2001
 #: src/pages/settings.jsx:293
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "Vaivihkaa julkinen"
 
-#: src/components/compose.jsx:1984
+#: src/components/compose.jsx:2007
 #: src/components/status.jsx:2372
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Yksityismaininta"
 
-#: src/components/compose.jsx:2036
+#: src/components/compose.jsx:2059
 msgid "Schedule"
 msgstr "Ajasta"
 
-#: src/components/compose.jsx:2038
+#: src/components/compose.jsx:2061
 #: src/components/keyboard-shortcuts-help.jsx:165
 #: src/components/status.jsx:1099
 #: src/components/status.jsx:1133
@@ -609,20 +608,20 @@ msgstr "Ajasta"
 msgid "Reply"
 msgstr "Vastaa"
 
-#: src/components/compose.jsx:2040
+#: src/components/compose.jsx:2063
 msgid "Update"
 msgstr "Päivitä"
 
-#: src/components/compose.jsx:2041
+#: src/components/compose.jsx:2064
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Julkaise"
 
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2147
 msgid "Downloading GIF…"
 msgstr "Ladataan GIF‐kuvaa…"
 
-#: src/components/compose.jsx:2152
+#: src/components/compose.jsx:2175
 msgid "Failed to download GIF"
 msgstr "GIF‐kuvan lataus epäonnistui"
 
@@ -1112,11 +1111,11 @@ msgstr "Listaa ei voitu luoda."
 
 #: src/components/list-add-edit.jsx:126
 msgid "Show replies to list members"
-msgstr "Näytä vastaukset listan jäsenille"
+msgstr "Näytä listan jäsenille osoitetut vastaukset"
 
 #: src/components/list-add-edit.jsx:129
 msgid "Show replies to people I follow"
-msgstr "Näytä vastaukset seuraamilleni käyttäjille"
+msgstr "Näytä seuraamilleni käyttäjille osoitetut vastaukset"
 
 #: src/components/list-add-edit.jsx:132
 msgid "Don't show replies"
@@ -1341,23 +1340,23 @@ msgstr "Avaa tiedosto"
 msgid "Search accounts"
 msgstr "Hae tilejä"
 
-#: src/components/modals.jsx:89
+#: src/components/modals.jsx:96
 msgid "Post scheduled"
 msgstr "Julkaisu ajastettu"
 
-#: src/components/modals.jsx:90
+#: src/components/modals.jsx:97
 msgid "Post published. Check it out."
 msgstr "Julkaisu lähetetty. Tarkista se."
 
-#: src/components/modals.jsx:92
+#: src/components/modals.jsx:99
 msgid "Reply scheduled"
 msgstr "Vastaus ajastettu"
 
-#: src/components/modals.jsx:93
+#: src/components/modals.jsx:100
 msgid "Reply posted. Check it out."
 msgstr "Vastaus julkaistu. Tarkista se."
 
-#: src/components/modals.jsx:94
+#: src/components/modals.jsx:101
 msgid "Post updated. Check it out."
 msgstr "Julkaisu päivitetty. Tarkista se."
 
@@ -2126,7 +2125,7 @@ msgstr "Raportoi <0>@{username}</0>…"
 
 #: src/components/related-actions.jsx:892
 msgid "Withdraw follow request?"
-msgstr "Perutaanko seurauspyyntö?"
+msgstr "Perutaanko seurantapyyntö?"
 
 #. placeholder {0}: info.acct || info.username
 #: src/components/related-actions.jsx:893
@@ -3578,7 +3577,7 @@ msgstr "Suodatetut julkaisut…"
 
 #: src/pages/filters.jsx:540
 msgid "obscured (media only)"
-msgstr "piilotettu (vain media)"
+msgstr "häivytetään (vain media)"
 
 #: src/pages/filters.jsx:554
 msgid "minimized"
@@ -3632,11 +3631,11 @@ msgstr "Julkaisuja ei voitu ladata."
 
 #: src/pages/hashtag.jsx:56
 msgid "{hashtagTitle} (Media only) on {instance}"
-msgstr "{hashtagTitle} (vain media) instansissa {instance}"
+msgstr "{hashtagTitle} (vain media) palvelimella {instance}"
 
 #: src/pages/hashtag.jsx:57
 msgid "{hashtagTitle} on {instance}"
-msgstr "{hashtagTitle} instanssissa {instance}"
+msgstr "{hashtagTitle} palvelimella {instance}"
 
 #: src/pages/hashtag.jsx:59
 msgid "{hashtagTitle} (Media only)"
@@ -3745,11 +3744,11 @@ msgstr "<0>Uudet</0> <1>seurantapyynnöt</1>"
 
 #: src/pages/http-route.jsx:68
 msgid "Resolving…"
-msgstr "Resolvoidaan…"
+msgstr "Ratkaistaan…"
 
 #: src/pages/http-route.jsx:79
 msgid "Unable to resolve URL"
-msgstr "URL‐osoitetta ei voitu resolvoida"
+msgstr "URL‐osoitetta ei voitu ratkaista"
 
 #: src/pages/list.jsx:108
 msgid "Nothing yet."
@@ -3797,7 +3796,7 @@ msgstr "Sisäänkirjautuminen epäonnistui. Yritä uudelleen tai kokeile toista 
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
-msgstr "Jatka instanssilla {selectedInstanceText}"
+msgstr "Jatka palvelimella {selectedInstanceText}"
 
 #: src/pages/login.jsx:295
 msgid "Continue"
@@ -3860,12 +3859,12 @@ msgstr "{0, plural, one {Tiedote} other {Tiedotteet}}"
 #: src/pages/notifications.jsx:680
 #: src/pages/settings.jsx:1277
 msgid "Follow requests"
-msgstr "Seurauspyynnöt"
+msgstr "Seurantapyynnöt"
 
 #. placeholder {0}: followRequests.length
 #: src/pages/notifications.jsx:685
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
-msgstr "{0, plural, one {# seurauspyyntö} other {# seurauspyyntöä}}"
+msgstr "{0, plural, one {# seurantapyyntö} other {# seurantapyyntöä}}"
 
 #. placeholder {0}: notificationsPolicy.summary.pendingRequestsCount
 #: src/pages/notifications.jsx:740
@@ -4160,7 +4159,7 @@ msgstr "Järjestelmän kieli ({systemTargetLanguageText})"
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
 #: src/pages/settings.jsx:459
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
-msgstr "{0, plural, =0 {Piilota Käännä‐painike kieliltä:} other {Piilota Käännä‐painike kieliltä (#):}}"
+msgstr "{0, plural, =0 {Piilota Käännä‐painike seuraavilta kieliltä:} other {Piilota Käännä‐painike seuraavilta kieliltä (#):}}"
 
 #: src/pages/settings.jsx:514
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."

@@ -232,6 +232,22 @@ export default defineConfig({
           },
         ],
         categories: ['social', 'news'],
+        share_target: {
+          action: './share',
+          method: 'POST',
+          enctype: 'multipart/form-data',
+          params: {
+            title: 'title',
+            text: 'text',
+            url: 'url',
+            files: [
+              {
+                name: 'files',
+                accept: ['image/*', 'video/*', 'audio/*'],
+              },
+            ],
+          },
+        },
       },
       strategies: 'injectManifest',
       injectRegister: 'inline',

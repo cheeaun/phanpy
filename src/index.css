@@ -311,6 +311,7 @@
 
 html {
   text-size-adjust: 100%;
+  text-autospace: normal; /* TODO: remove when browsers default to normal */
 }
 
 body {
@@ -582,6 +583,7 @@ select.plain {
 
 pre {
   tab-size: 2;
+  text-autospace: no-autospace;
 }
 pre code,
 code,

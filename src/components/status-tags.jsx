@@ -16,7 +16,7 @@ const extractTagsFromStatus = (content) => {
       tags.push(
         a.innerText
           .trim()
-          .replace(/^[^#]*#+/, '')
+          .replace(/^[^#＃#️⃣]*[#＃#️⃣]+/, '')
           .toLowerCase(),
       );
     }

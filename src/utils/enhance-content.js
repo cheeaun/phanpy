@@ -9,6 +9,7 @@ const LINK_REGEX = /<a/i;
 const HTTP_LINK_REGEX = /^https?:\/\//i;
 const MENTION_REGEX = /^[@＠][^@＠]+(@[^@＠]+)?$/;
 const HASHTAG_REGEX = /^[#＃][^#＃]+$/;
+const HASH_EMOJI_REGEX = /^#️⃣/;
 const CODE_BLOCK_REGEX = /^```[^]+```$/;
 const CODE_BLOCK_START_REGEX = /^```/;
 const CODE_BLOCK_END_REGEX = /```$/;
@@ -98,8 +99,16 @@ function _enhanceContent(content, opts = {}) {
       // If text looks like #hashtag, then it's a hashtag
       if (HASHTAG_REGEX.test(text)) {
         const hashSymbol = text[0]; // Preserve the original # or ＃
-        if (!hasChildren)
+        if (!hasChildren) {
           link.innerHTML = `${hashSymbol}<span>${text.slice(1)}</span>`;
+        } else {
+          // Special case for #️⃣
+          if (HASH_EMOJI_REGEX.test(text)) {
+            // <span> contains half-char of #️⃣
+            const actualText = text.replace(HASH_EMOJI_REGEX, '');
+            link.innerHTML = `#️⃣<span>${actualText}</span>`;
+          }
+        }
         link.classList.add('mention', 'hashtag');
       }
     }

@@ -8,10 +8,6 @@ import {
   NetworkFirst,
   StaleWhileRevalidate,
 } from 'workbox-strategies';
-import {
-  webShareTarget,
-  WEB_SHARE_TARGET_PATH,
-} from '../src/utils/web-share-target';
 
 navigationPreload.enable();
 
@@ -399,8 +395,8 @@ self.addEventListener('notificationclick', (event) => {
 // ================
 registerRoute(
   // Works with relative path
-  ({ url }) => url.pathname.endsWith(WEB_SHARE_TARGET_PATH),
-  async ({ request }) => {
+  ({ url }) => url.pathname.endsWith('/share'),
+  async ({ request, event }) => {
     try {
       const formData = await request.formData();
       const sharedData = {
@@ -410,13 +406,21 @@ registerRoute(
         files: formData.getAll('files'),
         timestamp: Date.now(),
       };
-      await webShareTarget.set(sharedData);
-    } catch (error) {
-      console.error('[Share Target] Error handling share:', error);
-    } finally {
-      // webShareTarget.close();
+
+      if (event.resultingClientId) {
+        const client = await self.clients.get(event.resultingClientId);
+        if (client) {
+          client.postMessage({
+            type: 'share-target',
+            data: sharedData,
+            action: 'compose-with-shared-data',
+          });
+        }
+      }
+    } catch (e) {
+      console.error(e);
     }
-    return Response.redirect('./?compose', 303);
+    return Response.redirect('./', 303);
   },
   'POST',
 );

@@ -75,7 +75,6 @@ import {
   getVapidKey,
   setCurrentAccountID,
 } from './utils/store-utils';
-import { webShareTarget } from './utils/web-share-target';
 
 import './utils/toast-alert';
 
@@ -402,6 +401,35 @@ const isPWA =
   window.navigator.standalone === true;
 const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
 
+// WEB SHARE TARGET HANDLER
+if ('serviceWorker' in navigator) {
+  function processData(data) {
+    if (!data) return null;
+
+    const textParts = [];
+    if (data.title) textParts.push(data.title);
+    if (data.text) textParts.push(data.text);
+    if (data.url) textParts.push(data.url);
+
+    return {
+      initialText: textParts.join('\n\n'),
+      files: data.files || [],
+    };
+  }
+
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    const { data, action } = event.data || {};
+    if (action === 'compose-with-shared-data') {
+      const sharedData = processData(data);
+      if (sharedData) {
+        setTimeout(() => {
+          states.showCompose = { sharedData };
+        }, 1000); // wait for app to load
+      }
+    }
+  });
+}
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     const account = getCurrentAccount();
@@ -559,37 +587,6 @@ function App() {
   // }, [location.pathname]);
 
   useEffect(focusDeck, [location, isLoggedIn]);
-
-  useEffect(() => {
-    if (isPWA && isLoggedIn && uiState === 'default') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const openCompose = urlParams.get('compose');
-      if (openCompose !== null) {
-        // Remove compose param from URL
-        urlParams.delete('compose');
-        const newSearch = urlParams.toString();
-        const newUrl =
-          window.location.pathname + (newSearch ? `?${newSearch}` : '');
-        window.history.replaceState({}, document.title, newUrl);
-
-        (async () => {
-          try {
-            const data = await webShareTarget.get();
-            // webShareTarget.del(); // Non-blocking delete
-            const sharedData = webShareTarget.process(data);
-            if (sharedData) {
-              states.showCompose = { sharedData };
-            } else {
-              alert('No shared data found', JSON.stringify(data));
-            }
-          } catch (error) {
-            console.error('Error loading shared data:', error);
-            states.showCompose = true;
-          }
-        })();
-      }
-    }
-  }, [isLoggedIn, uiState]);
 
   // Save last page for PWA restoration
   const restoredRef = useRef(false);

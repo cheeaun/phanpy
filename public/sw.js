@@ -414,7 +414,7 @@ registerRoute(
     } catch (error) {
       console.error('[Share Target] Error handling share:', error);
     } finally {
-      webShareTarget.close();
+      // webShareTarget.close();
     }
     return Response.redirect('./?compose', 303);
   },

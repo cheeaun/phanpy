@@ -622,10 +622,6 @@ function App() {
 
       if (window.__SHARED_DATA__) {
         states.showCompose = true; // It'll use __SHARED_DATA__
-        setTimeout(() => {
-          // Clear later
-          window.__SHARED_DATA__ = null;
-        }, 300);
       }
     }
   }, [isPWA, uiState]);

@@ -97,10 +97,6 @@ if ('serviceWorker' in navigator) {
       if (sharedData) {
         window.__SHARED_DATA__ = sharedData;
         states.showCompose = true; // It'll use __SHARED_DATA__
-        setTimeout(() => {
-          // Clear later
-          window.__SHARED_DATA__ = null;
-        }, 300);
       }
     }
   });

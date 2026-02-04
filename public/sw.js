@@ -393,6 +393,20 @@ self.addEventListener('notificationclick', (event) => {
 
 // WEB SHARE TARGET
 // ================
+
+let pendingShareData = null;
+
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'client-ready' && pendingShareData) {
+    event.source.postMessage({
+      type: 'share-target',
+      data: pendingShareData,
+      action: 'compose-with-shared-data',
+    });
+    pendingShareData = null;
+  }
+});
+
 registerRoute(
   // Works with relative path
   ({ url }) => url.pathname.endsWith('/share'),
@@ -408,14 +422,7 @@ registerRoute(
       };
 
       if (event.resultingClientId) {
-        const client = await self.clients.get(event.resultingClientId);
-        if (client) {
-          client.postMessage({
-            type: 'share-target',
-            data: sharedData,
-            action: 'compose-with-shared-data',
-          });
-        }
+        pendingShareData = sharedData;
       }
     } catch (e) {
       console.error(e);

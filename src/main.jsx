@@ -98,6 +98,15 @@ if ('serviceWorker' in navigator) {
       }
     }
   });
+
+  // Signal to service worker that this client is ready to receive share data
+  navigator.serviceWorker.ready.then(() => {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'client-ready',
+      });
+    }
+  });
 }
 
 window.__CLOAK__ = () => {

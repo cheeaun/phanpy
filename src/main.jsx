@@ -14,6 +14,7 @@ import { App } from './app';
 import { IconSpriteProvider } from './components/icon-sprite-manager';
 import { initActivateLang } from './utils/lang';
 import { initPWAViewport } from './utils/pwa-viewport';
+import states from './utils/states';
 
 initActivateLang();
 initPWAViewport();
@@ -95,6 +96,11 @@ if ('serviceWorker' in navigator) {
       const sharedData = processShareData(data);
       if (sharedData) {
         window.__SHARED_DATA__ = sharedData;
+        states.showCompose = true; // It'll use __SHARED_DATA__
+        setTimeout(() => {
+          // Clear later
+          window.__SHARED_DATA__ = null;
+        }, 300);
       }
     }
   });

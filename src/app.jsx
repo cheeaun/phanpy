@@ -611,6 +611,22 @@ function App() {
     }
   }, [uiState, isLoggedIn]);
 
+  // Signal to service worker that this client is ready to receive share data
+  useEffect(() => {
+    if (isPWA && uiState === 'default') {
+      navigator.serviceWorker
+        .getRegistration()
+        .then(function (registration) {
+          if (registration && registration.active) {
+            registration.active.postMessage({ type: 'client-ready' });
+          }
+        })
+        .catch(function (err) {
+          console.error('Could not get registration', err);
+        });
+    }
+  }, [isPWA, uiState]);
+
   if (/\/https?:/.test(location.pathname)) {
     return <HttpRoute />;
   }

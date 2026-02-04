@@ -619,10 +619,6 @@ function App() {
         .catch(function (err) {
           console.error('Could not get registration', err);
         });
-
-      if (window.__SHARED_DATA__) {
-        states.showCompose = true; // It'll use __SHARED_DATA__
-      }
     }
   }, [isPWA, uiState]);
 

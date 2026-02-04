@@ -401,20 +401,6 @@ const isPWA =
   window.navigator.standalone === true;
 const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
 
-function processShareData(data) {
-  if (!data) return null;
-
-  const textParts = [];
-  if (data.title) textParts.push(data.title);
-  if (data.text) textParts.push(data.text);
-  if (data.url) textParts.push(data.url);
-
-  return {
-    initialText: textParts.join('\n\n'),
-    files: data.files || [],
-  };
-}
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     const account = getCurrentAccount();
@@ -634,21 +620,13 @@ function App() {
           console.error('Could not get registration', err);
         });
 
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        const { data, action } = event.data || {};
-        if (action === 'compose-with-shared-data') {
-          console.log('💪 Received shared data from SW', data);
-          const sharedData = processShareData(data);
-          if (sharedData) {
-            window.__SHARED_DATA__ = sharedData;
-            states.showCompose = true; // It'll use __SHARED_DATA__
-            setTimeout(() => {
-              // Clear later
-              window.__SHARED_DATA__ = null;
-            }, 300);
-          }
-        }
-      });
+      if (window.__SHARED_DATA__) {
+        states.showCompose = true; // It'll use __SHARED_DATA__
+        setTimeout(() => {
+          // Clear later
+          window.__SHARED_DATA__ = null;
+        }, 300);
+      }
     }
   }, [isPWA, uiState]);
 

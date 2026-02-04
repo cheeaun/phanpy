@@ -395,23 +395,16 @@ self.addEventListener('notificationclick', (event) => {
 // ================
 
 let pendingShareData = null;
-let clientReady = false;
-function postShareData(data) {
-  console.log('💪 Posting share data to client', clientReady, data);
-  if (data) {
-    clientReady.postMessage({
+self.addEventListener('message', (event) => {
+  console.log('💪 SW received event', event, pendingShareData);
+  const source = event.data?.type === 'client-ready' && event.source;
+  if (source && pendingShareData) {
+    source.postMessage({
       type: 'share-target',
-      data,
+      data: pendingShareData,
       action: 'compose-with-shared-data',
     });
     pendingShareData = null;
-  }
-}
-self.addEventListener('message', (event) => {
-  console.log('💪 SW received event', event, clientReady, pendingShareData);
-  clientReady = event.data?.type === 'client-ready' && event.source;
-  if (clientReady && pendingShareData) {
-    postShareData(pendingShareData);
   }
 });
 
@@ -429,11 +422,8 @@ registerRoute(
         files: formData.getAll('files'),
         timestamp: Date.now(),
       };
-      if (clientReady) {
-        postShareData(sharedData);
-      } else {
-        pendingShareData = sharedData;
-      }
+      // Store pending data and redirect first
+      pendingShareData = sharedData;
     } catch (e) {
       console.error(e);
     }

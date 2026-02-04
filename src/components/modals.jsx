@@ -78,15 +78,12 @@ export default function Modals() {
               window.__COMPOSE__?.quoteStatus ||
               null
             }
-            sharedData={
-              states.showCompose?.sharedData ||
-              window.__COMPOSE__?.sharedData ||
-              null
-            }
+            sharedData={window.__SHARED_DATA__ || null}
             onClose={(results) => {
               const { newStatus, instance, type, scheduledAt } = results || {};
               states.showCompose = false;
               window.__COMPOSE__ = null;
+              window.__SHARED_DATA__ = null;
               if (newStatus) {
                 states.reloadStatusPage++;
                 if (scheduledAt) states.reloadScheduledPosts++;

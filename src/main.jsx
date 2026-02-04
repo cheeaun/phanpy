@@ -73,6 +73,33 @@ if ('serviceWorker' in navigator && typeof caches !== 'undefined') {
   setTimeout(clearCaches, FAST_INTERVAL);
 }
 
+// WEB SHARE TARGET HANDLER
+if ('serviceWorker' in navigator) {
+  function processData(data) {
+    if (!data) return null;
+
+    const textParts = [];
+    if (data.title) textParts.push(data.title);
+    if (data.text) textParts.push(data.text);
+    if (data.url) textParts.push(data.url);
+
+    return {
+      initialText: textParts.join('\n\n'),
+      files: data.files || [],
+    };
+  }
+
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    const { data, action } = event.data || {};
+    if (action === 'compose-with-shared-data') {
+      const sharedData = processData(data);
+      if (sharedData) {
+        window.__SHARED_DATA__ = sharedData;
+      }
+    }
+  });
+}
+
 window.__CLOAK__ = () => {
   document.body.classList.toggle('cloak');
 };

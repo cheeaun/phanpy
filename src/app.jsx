@@ -401,35 +401,6 @@ const isPWA =
   window.navigator.standalone === true;
 const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
 
-// WEB SHARE TARGET HANDLER
-if ('serviceWorker' in navigator) {
-  function processData(data) {
-    if (!data) return null;
-
-    const textParts = [];
-    if (data.title) textParts.push(data.title);
-    if (data.text) textParts.push(data.text);
-    if (data.url) textParts.push(data.url);
-
-    return {
-      initialText: textParts.join('\n\n'),
-      files: data.files || [],
-    };
-  }
-
-  navigator.serviceWorker.addEventListener('message', (event) => {
-    const { data, action } = event.data || {};
-    if (action === 'compose-with-shared-data') {
-      const sharedData = processData(data);
-      if (sharedData) {
-        setTimeout(() => {
-          states.showCompose = { sharedData };
-        }, 1000); // wait for app to load
-      }
-    }
-  });
-}
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     const account = getCurrentAccount();
@@ -626,6 +597,17 @@ function App() {
         }, 300);
       }
       restoredRef.current = true;
+    }
+  }, [uiState, isLoggedIn]);
+
+  // Handle shared data from Web Share Target
+  useEffect(() => {
+    if (isLoggedIn && uiState === 'default' && window.__SHARED_DATA__) {
+      states.showCompose = true; // It'll use __SHARED_DATA__
+      setTimeout(() => {
+        // Clear later
+        window.__SHARED_DATA__ = null;
+      }, 300);
     }
   }, [uiState, isLoggedIn]);
 

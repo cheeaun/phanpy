@@ -395,22 +395,31 @@ self.addEventListener('notificationclick', (event) => {
 // ================
 
 let pendingShareData = null;
-
-self.addEventListener('message', (event) => {
-  if (event.data?.type === 'client-ready' && pendingShareData) {
-    event.source.postMessage({
+let clientReady = false;
+function postShareData(data) {
+  console.log('💪 Posting share data to client', clientReady, data);
+  if (data) {
+    clientReady.postMessage({
       type: 'share-target',
-      data: pendingShareData,
+      data,
       action: 'compose-with-shared-data',
     });
     pendingShareData = null;
+  }
+}
+self.addEventListener('message', (event) => {
+  console.log('💪 SW received event', event, clientReady, pendingShareData);
+  clientReady = event.data?.type === 'client-ready' && event.source;
+  if (clientReady && pendingShareData) {
+    postShareData(pendingShareData);
   }
 });
 
 registerRoute(
   // Works with relative path
   ({ url }) => url.pathname.endsWith('/share'),
-  async ({ request, event }) => {
+  async ({ request }) => {
+    console.log('💪 Handling share target POST request', request);
     try {
       const formData = await request.formData();
       const sharedData = {
@@ -420,8 +429,9 @@ registerRoute(
         files: formData.getAll('files'),
         timestamp: Date.now(),
       };
-
-      if (event.resultingClientId) {
+      if (clientReady) {
+        postShareData(sharedData);
+      } else {
         pendingShareData = sharedData;
       }
     } catch (e) {

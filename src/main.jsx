@@ -100,13 +100,14 @@ if ('serviceWorker' in navigator) {
   });
 
   // Signal to service worker that this client is ready to receive share data
-  navigator.serviceWorker.ready.then(() => {
-    if (navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage({
-        type: 'client-ready',
-      });
-    }
-  });
+  navigator.serviceWorker
+    .getRegistration()
+    .then((registration) => {
+      if (registration && registration.active) {
+        registration.active.postMessage({ type: 'client-ready' });
+      }
+    })
+    .catch((err) => console.error('Could not get registration', err));
 }
 
 window.__CLOAK__ = () => {

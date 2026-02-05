@@ -213,6 +213,7 @@ export default defineConfig({
         description: 'Minimalistic opinionated Mastodon web client',
         // https://github.com/cheeaun/phanpy/issues/231
         theme_color: undefined,
+        background_color: '#b7cdf9', // background for splash
         icons: [
           {
             src: 'logo-192.png',

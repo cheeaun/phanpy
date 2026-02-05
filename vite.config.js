@@ -231,6 +231,12 @@ export default defineConfig({
             type: 'image/png',
             purpose: 'maskable',
           },
+          {
+            src: 'logo-monochrome-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'monochrome',
+          },
         ],
         categories: ['social', 'news'],
         share_target: {

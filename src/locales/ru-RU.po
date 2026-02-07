@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-29 12:17\n"
+"PO-Revision-Date: 2026-02-07 04:30\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -147,7 +147,7 @@ msgid "In Memoriam"
 msgstr "Вечная память"
 
 #: src/components/account-info.jsx:786
-#: src/components/compose.jsx:1981
+#: src/components/compose.jsx:2004
 #: src/pages/settings.jsx:296
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -257,7 +257,7 @@ msgstr "Показать статистику публикации постов"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:1065
+#: src/components/compose.jsx:1088
 #: src/components/custom-emojis-modal.jsx:272
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:89
@@ -328,11 +328,11 @@ msgstr "Списки отсутствуют."
 msgid "New list"
 msgstr "Новый список"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode disabled"
 msgstr "Режим маскировки отключён"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode enabled"
 msgstr "Режим маскировки включён"
 
@@ -384,7 +384,7 @@ msgid "Remove"
 msgstr "Убрать"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1689
+#: src/components/compose.jsx:1712
 #: src/components/mention-modal.jsx:221
 #: src/components/shortcuts-settings.jsx:716
 #: src/pages/list.jsx:388
@@ -431,87 +431,86 @@ msgstr "Добавить предупреждение о содержимом"
 msgid "Schedule post"
 msgstr "Запланировать пост"
 
-#: src/components/compose.jsx:550
-msgid "You have unsaved changes. Discard this post?"
-msgstr "У вас есть несохраненные изменения. Отменить этот пост?"
-
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:796
+#: src/components/compose.jsx:253
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, one {Файл {1} не поддерживается.} other {Файлы {2} не поддерживаются.}}"
 
-#: src/components/compose.jsx:806
-#: src/components/compose.jsx:824
-#: src/components/compose.jsx:2112
+#: src/components/compose.jsx:269
+#: src/components/compose.jsx:2135
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Вы можете прикрепить только 1 файл.} other {Вы можете прикрепить до # файлов.}}"
 
-#: src/components/compose.jsx:1046
+#: src/components/compose.jsx:619
+msgid "You have unsaved changes. Discard this post?"
+msgstr "У вас есть несохраненные изменения. Отменить этот пост?"
+
+#: src/components/compose.jsx:1069
 msgid "Pop out"
 msgstr "Открыть в отдельном окне"
 
-#: src/components/compose.jsx:1053
+#: src/components/compose.jsx:1076
 msgid "Minimize"
 msgstr "Свернуть"
 
-#: src/components/compose.jsx:1089
+#: src/components/compose.jsx:1112
 msgid "Looks like you closed the parent window."
 msgstr "Похоже, вы закрыли родительское окно."
 
-#: src/components/compose.jsx:1096
+#: src/components/compose.jsx:1119
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Похоже, вы уже публикуете пост в родительском окне. Дождитесь публикации и попробуйте снова."
 
-#: src/components/compose.jsx:1101
+#: src/components/compose.jsx:1124
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Похоже, вы уже пишите или редактируете пост в родительском окне. Возвращение этого окна отменит изменения в родительском окне. Продолжить?"
 
-#: src/components/compose.jsx:1147
+#: src/components/compose.jsx:1170
 msgid "Pop in"
 msgstr "Вернуть в родительское окно"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1157
+#: src/components/compose.jsx:1180
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Отвечаем пост @{0}(<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1167
+#: src/components/compose.jsx:1190
 msgid "Replying to @{0}’s post"
 msgstr "Отвечаем на пост @{0}"
 
-#: src/components/compose.jsx:1180
+#: src/components/compose.jsx:1203
 msgid "Editing source post"
 msgstr "Редактирование исходного поста"
 
-#: src/components/compose.jsx:1249
+#: src/components/compose.jsx:1272
 msgid "Poll must have at least 2 options"
 msgstr "Опрос должен иметь не менее 2 вариантов ответа"
 
-#: src/components/compose.jsx:1253
+#: src/components/compose.jsx:1276
 msgid "Some poll choices are empty"
 msgstr "Некоторые варианты ответа пусты"
 
-#: src/components/compose.jsx:1266
+#: src/components/compose.jsx:1289
 msgid "Some media have no descriptions. Continue?"
 msgstr "У некоторых медиафайлов нет описаний. Продолжить?"
 
-#: src/components/compose.jsx:1318
+#: src/components/compose.jsx:1341
 msgid "Attachment #{i} failed"
 msgstr "Не удалось прикрепить вложение №{i}"
 
-#: src/components/compose.jsx:1445
+#: src/components/compose.jsx:1468
 #: src/components/status.jsx:2495
 #: src/components/timeline.jsx:1013
 msgid "Content warning"
 msgstr "Предупреждение о содержании"
 
-#: src/components/compose.jsx:1477
-#: src/components/compose.jsx:1623
+#: src/components/compose.jsx:1500
+#: src/components/compose.jsx:1646
 #: src/components/edit-profile-sheet.jsx:326
 #: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
@@ -520,85 +519,85 @@ msgstr "Предупреждение о содержании"
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/components/compose.jsx:1485
+#: src/components/compose.jsx:1508
 msgid "Post your reply"
 msgstr "Опубликовать ответ"
 
-#: src/components/compose.jsx:1487
+#: src/components/compose.jsx:1510
 msgid "Edit your post"
 msgstr "Редактировать свой пост"
 
-#: src/components/compose.jsx:1489
+#: src/components/compose.jsx:1512
 msgid "Ask a question"
 msgstr "Задать вопрос"
 
-#: src/components/compose.jsx:1490
+#: src/components/compose.jsx:1513
 msgid "What are you doing?"
 msgstr "Начните писать свои мысли"
 
-#: src/components/compose.jsx:1563
+#: src/components/compose.jsx:1586
 msgid "Mark media as sensitive"
 msgstr "Отметить медиафайл как деликатный"
 
-#: src/components/compose.jsx:1603
+#: src/components/compose.jsx:1626
 msgid "Posting on <0/>"
 msgstr "Публикация в <0/>"
 
-#: src/components/compose.jsx:1901
+#: src/components/compose.jsx:1924
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:296
 #: src/pages/settings.jsx:338
 msgid "Anyone can quote"
 msgstr "Любой может цитировать"
 
-#: src/components/compose.jsx:1904
+#: src/components/compose.jsx:1927
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:297
 #: src/pages/settings.jsx:341
 msgid "Your followers can quote"
 msgstr "Ваши подписчики могут цитировать"
 
-#: src/components/compose.jsx:1907
+#: src/components/compose.jsx:1930
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:298
 #: src/pages/settings.jsx:344
 msgid "Only you can quote"
 msgstr "Только вы можете цитировать"
 
-#: src/components/compose.jsx:1947
+#: src/components/compose.jsx:1970
 msgid "Quotes can't be embedded in private mentions."
 msgstr "Нельзя добавить цитирование к личным упоминаниям."
 
-#: src/components/compose.jsx:1969
+#: src/components/compose.jsx:1992
 #: src/pages/settings.jsx:290
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Публичный"
 
-#: src/components/compose.jsx:1974
+#: src/components/compose.jsx:1997
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:166
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Локальная"
 
-#: src/components/compose.jsx:1978
+#: src/components/compose.jsx:2001
 #: src/pages/settings.jsx:293
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "Тихий публичный"
 
-#: src/components/compose.jsx:1984
+#: src/components/compose.jsx:2007
 #: src/components/status.jsx:2372
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Личное упоминание"
 
-#: src/components/compose.jsx:2036
+#: src/components/compose.jsx:2059
 msgid "Schedule"
 msgstr "Запланировать"
 
-#: src/components/compose.jsx:2038
+#: src/components/compose.jsx:2061
 #: src/components/keyboard-shortcuts-help.jsx:165
 #: src/components/status.jsx:1099
 #: src/components/status.jsx:1133
@@ -609,20 +608,20 @@ msgstr "Запланировать"
 msgid "Reply"
 msgstr "Ответить"
 
-#: src/components/compose.jsx:2040
+#: src/components/compose.jsx:2063
 msgid "Update"
 msgstr "Сохранить"
 
-#: src/components/compose.jsx:2041
+#: src/components/compose.jsx:2064
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Опубликовать"
 
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2147
 msgid "Downloading GIF…"
 msgstr "Загружаем GIF-анимацию…"
 
-#: src/components/compose.jsx:2152
+#: src/components/compose.jsx:2175
 msgid "Failed to download GIF"
 msgstr "Не удалось загрузить GIF-анимацию"
 
@@ -661,7 +660,7 @@ msgstr "Приблизить"
 
 #: src/components/custom-emojis-modal.jsx:380
 msgid "Custom emojis are not available on this server."
-msgstr ""
+msgstr "Пользовательские эмодзи недоступны на этом сервере."
 
 #: src/components/drafts.jsx:62
 #: src/pages/settings.jsx:698
@@ -976,7 +975,7 @@ msgstr "Раскрыть пост"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Open media or post details"
-msgstr ""
+msgstr "Открыть медиа или детали поста"
 
 #: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
@@ -1088,15 +1087,15 @@ msgstr "Перейти к уведомлениям"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr ""
+msgstr "Перейти к настройкам"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
-msgstr ""
+msgstr "Перейти в профиль"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
-msgstr ""
+msgstr "Перейти к закладкам"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1341,23 +1340,23 @@ msgstr "Открыть файл"
 msgid "Search accounts"
 msgstr "Поиск пользователей"
 
-#: src/components/modals.jsx:89
+#: src/components/modals.jsx:93
 msgid "Post scheduled"
 msgstr "Пост запланирован"
 
-#: src/components/modals.jsx:90
+#: src/components/modals.jsx:94
 msgid "Post published. Check it out."
 msgstr "Пост опубликован. Проверьте его."
 
-#: src/components/modals.jsx:92
+#: src/components/modals.jsx:96
 msgid "Reply scheduled"
 msgstr "Ответ запланирован"
 
-#: src/components/modals.jsx:93
+#: src/components/modals.jsx:97
 msgid "Reply posted. Check it out."
 msgstr "Ответ опубликован. Проверьте его."
 
-#: src/components/modals.jsx:94
+#: src/components/modals.jsx:98
 msgid "Post updated. Check it out."
 msgstr "Пост обновлен. Проверьте его."
 
@@ -1594,7 +1593,7 @@ msgstr "{account} отредактировал(а) процитированно�
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:260
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
-msgstr ""
+msgstr "{count, plural, =1 {{account} зарегестрировал(ся/ась).} other {Зарегестрировалось <0><1>{0}</1> человек</0>.}}"
 
 #: src/components/notification.jsx:274
 msgid "{account} reported {targetAccount}"
@@ -1742,7 +1741,7 @@ msgstr "Скрыть результаты"
 #: src/components/poll.jsx:288
 #: src/components/poll.jsx:304
 msgid "{0, plural, one {# choice} other {# choices}}"
-msgstr ""
+msgstr "{0, plural, one {# выбор} other {# выбора}}"
 
 #: src/components/poll.jsx:221
 msgid "Unable to vote in poll"

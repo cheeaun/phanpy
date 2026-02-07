@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-07 04:30\n"
+"PO-Revision-Date: 2026-02-07 05:32\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -1745,7 +1745,7 @@ msgstr "{0, plural, one {# выбор} other {# выбора}}"
 
 #: src/components/poll.jsx:221
 msgid "Unable to vote in poll"
-msgstr ""
+msgstr "Не удается проголосовать в опросе"
 
 #: src/components/poll.jsx:277
 msgid "Vote"
@@ -1857,11 +1857,11 @@ msgstr "Примечание: Этот предварительный просм
 #: src/components/private-note-sheet.jsx:41
 #: src/components/related-actions.jsx:232
 msgid "Notes"
-msgstr ""
+msgstr "Заметки"
 
 #: src/components/private-note-sheet.jsx:44
 msgid "Only visible to you"
-msgstr ""
+msgstr "Видно только вам"
 
 #: src/components/private-note-sheet.jsx:69
 msgid "Unable to update private note."
@@ -1882,15 +1882,15 @@ msgstr "Не удается получить доступ к камере. По�
 
 #: src/components/quote-chain-modal.jsx:107
 msgid "Quote chain"
-msgstr ""
+msgstr "Цепочка цитат"
 
 #: src/components/quote-chain-modal.jsx:151
 msgid "Failed to unwrap quote chain"
-msgstr ""
+msgstr "Не удалось развернуть цепочку цитат"
 
 #: src/components/quote-chain-modal.jsx:165
 msgid "Continue unwrapping…"
-msgstr ""
+msgstr "Продолжаем развёртку…"
 
 #: src/components/quote-settings-sheet.jsx:37
 #: src/pages/settings.jsx:329
@@ -1971,7 +1971,7 @@ msgstr "Упомянуть <0>@{username}</0>"
 
 #: src/components/related-actions.jsx:319
 msgid "Search <0>@{username}</0>'s posts"
-msgstr ""
+msgstr "Поиск сообщений от <0>@{username}</0>"
 
 #: src/components/related-actions.jsx:333
 msgid "Translate bio"
@@ -1979,11 +1979,11 @@ msgstr "Перевести поле «О себе»"
 
 #: src/components/related-actions.jsx:343
 msgid "Edit notes"
-msgstr ""
+msgstr "Редактировать заметки"
 
 #: src/components/related-actions.jsx:343
 msgid "Add notes"
-msgstr ""
+msgstr "Добавить заметки"
 
 #: src/components/related-actions.jsx:362
 msgid "Notifications enabled for @{username}'s posts."
@@ -2050,7 +2050,7 @@ msgstr "Показать рекомендуемые профили"
 #: src/components/related-actions.jsx:507
 #: src/pages/account-statuses.jsx:464
 msgid "Search my posts"
-msgstr ""
+msgstr "Поиск по моим постам"
 
 #: src/components/related-actions.jsx:580
 #: src/components/shortcuts-settings.jsx:1175
@@ -2326,7 +2326,7 @@ msgstr "Только локальная"
 #: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "Сервер"
 
 #: src/components/shortcuts-settings.jsx:79
 #: src/components/shortcuts-settings.jsx:88
@@ -2471,7 +2471,7 @@ msgstr "Вставьте ярлыки сюда"
 
 #: src/components/shortcuts-settings.jsx:844
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "Загрузка сохраненных ярлыков с сервера…"
 
 #: src/components/shortcuts-settings.jsx:872
 msgid "Unable to download shortcuts"
@@ -2479,7 +2479,7 @@ msgstr "Не удается загрузить ярлыки"
 
 #: src/components/shortcuts-settings.jsx:875
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Скачать ярлыки с сервера"
 
 #: src/components/shortcuts-settings.jsx:942
 msgid "* Exists in current shortcuts"
@@ -2544,7 +2544,7 @@ msgstr "Не удалось скопировать ярлыки"
 
 #: src/components/shortcuts-settings.jsx:1118
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Сохранение ярлыков на сервер…"
 
 #: src/components/shortcuts-settings.jsx:1125
 msgid "Shortcuts saved"
@@ -2556,7 +2556,7 @@ msgstr "Не удалось сохранить ярлыки"
 
 #: src/components/shortcuts-settings.jsx:1133
 msgid "Sync to server"
-msgstr ""
+msgstr "Синхронизировать с сервером"
 
 #: src/components/shortcuts-settings.jsx:1148
 msgid "Shortcut settings copied"
@@ -2581,7 +2581,7 @@ msgstr "Исходный JSON ярлыков"
 
 #: src/components/shortcuts-settings.jsx:1212
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Импорт/экспорт настроек с сервера (Очень экспериментально)"
 
 #: src/components/status.jsx:288
 msgid "Private posts cannot be quoted"
@@ -2616,7 +2616,7 @@ msgstr "<0/> <1>продвинул(а)</1>"
 
 #: src/components/status.jsx:736
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr ""
+msgstr "К сожалению, ваша текущая учетная запись не может взаимодействовать с этим постом из другого сервера."
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:925
@@ -2730,7 +2730,7 @@ msgstr "Просмотр цитирований"
 
 #: src/components/status.jsx:1318
 msgid "Unwrap quote chain"
-msgstr ""
+msgstr "Развернуть цепочку цитат"
 
 #: src/components/status.jsx:1385
 msgid "Post text copied"
@@ -2970,12 +2970,12 @@ msgstr "Обсуждение {index}/X"
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
 msgid "{index}/{total}"
-msgstr ""
+msgstr "{index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:46
 msgid "{index}/X"
-msgstr ""
+msgstr "{index}/X"
 
 #: src/components/timeline.jsx:503
 #: src/pages/settings.jsx:1289
@@ -3122,7 +3122,7 @@ msgstr "Посты от {0}"
 #. placeholder {0}: account?.username
 #: src/pages/account-statuses.jsx:465
 msgid "Search @{0}'s posts"
-msgstr ""
+msgstr "Поиск постов от @{0}"
 
 #: src/pages/account-statuses.jsx:511
 #: src/pages/search.jsx:345
@@ -3148,11 +3148,11 @@ msgstr "Не удалось получить информацию об учет�
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:585
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "Переключиться на учётную запись сервера {0}"
 
 #: src/pages/account-statuses.jsx:615
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Переключиться на мой сервер (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:688
 msgid "Month"
@@ -3333,7 +3333,7 @@ msgstr "До последнего catch-up ({0})"
 
 #: src/pages/catchup.jsx:1159
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Примечание: Ваш сервер может показывать не более 800 сообщений в домашней ленте, независимо от диапазона времени. Может быть меньше или больше."
 
 #: src/pages/catchup.jsx:1169
 msgid "Previously…"
@@ -3714,25 +3714,25 @@ msgstr "Добавить в ярлыки"
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Введите новый сервер, например \"mastodon.socialс"
 
 #: src/pages/hashtag.jsx:495
 #: src/pages/public.jsx:144
 #: src/pages/trending.jsx:484
 msgid "Invalid server"
-msgstr ""
+msgstr "Неверный сервер"
 
 #: src/pages/hashtag.jsx:509
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another server…"
-msgstr ""
+msgstr "Перейти на другой сервер…"
 
 #: src/pages/hashtag.jsx:522
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Перейти на мой сервер (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
@@ -3784,7 +3784,7 @@ msgstr "Не удалось зарегистрировать приложени�
 
 #: src/pages/login.jsx:246
 msgid "server domain"
-msgstr ""
+msgstr "домен сервера"
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -3792,7 +3792,7 @@ msgstr "например “mastodon.social”"
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "Не удалось войти. Пожалуйста, попробуйте еще раз или попробуйте другой сервер."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4130,7 +4130,7 @@ msgstr "Не удалось обновить видимость по умолч�
 
 #: src/pages/settings.jsx:354
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Синхронизировано с настройками сервера. <0>Перейдите к серверу ({instance}) для дополнительных настроек.</0>"
 
 #: src/pages/settings.jsx:369
 msgid "Experiments"
@@ -4203,7 +4203,7 @@ msgstr "⚠️⚠️⚠️ Очень экспериментально.<0/>Хр�
 
 #: src/pages/settings.jsx:656
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "Примечание: Эта функция использует текущий авторизованный API сервера."
 
 #: src/pages/settings.jsx:672
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4215,7 +4215,7 @@ msgstr "Замените текст блоками, полезными для и
 
 #: src/pages/settings.jsx:710
 msgid "Install {CLIENT_NAME}"
-msgstr ""
+msgstr "Установить {CLIENT_NAME}"
 
 #: src/pages/settings.jsx:718
 msgid "About"
@@ -4332,7 +4332,7 @@ msgstr "Вы не вошли в систему. Взаимодействия (о
 
 #: src/pages/status.jsx:1088
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Это сообщение с другого сервера (<0>{instance}</0>). Взаимодействия (ответ, продвижение и т. д.) невозможны."
 
 #: src/pages/status.jsx:1116
 msgid "Error: {e}"
@@ -4340,7 +4340,7 @@ msgstr "Ошибка: {e}"
 
 #: src/pages/status.jsx:1123
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Переключиться на мой сервер для включения взаимодействий"
 
 #: src/pages/status.jsx:1231
 msgid "Unable to load replies."
@@ -4391,11 +4391,11 @@ msgstr "Не удалось переключиться"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1631
 msgid "Switch to post's server ({0})"
-msgstr ""
+msgstr "Переключиться на сервер поста ({0})"
 
 #: src/pages/status.jsx:1634
 msgid "Switch to post's server"
-msgstr ""
+msgstr "Переключиться на сервер поста"
 
 #: src/pages/status.jsx:1647
 msgid "View Edit History Snapshots"
@@ -4469,11 +4469,11 @@ msgstr "Подключите ваш существующий аккаунт Mast
 
 #: src/pages/welcome.jsx:96
 msgid "Screenshot of Phanpy home timeline on mobile device"
-msgstr ""
+msgstr "Скриншот домашней ленты Phanpy на мобильном устройстве"
 
 #: src/pages/welcome.jsx:113
 msgid "Screenshot of Phanpy home timeline on tablet device"
-msgstr ""
+msgstr "Скриншот домашней ленты Phanpy на планшете"
 
 #: src/pages/welcome.jsx:127
 msgid "Screenshot of Boosts Carousel"

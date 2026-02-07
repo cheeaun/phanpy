@@ -14,6 +14,7 @@ import { App } from './app';
 import { IconSpriteProvider } from './components/icon-sprite-manager';
 import { initActivateLang } from './utils/lang';
 import { initPWAViewport } from './utils/pwa-viewport';
+import states from './utils/states';
 
 initActivateLang();
 initPWAViewport();
@@ -71,6 +72,34 @@ if ('serviceWorker' in navigator && typeof caches !== 'undefined') {
     setTimeout(clearCaches, clearRanOnce ? SLOW_INTERVAL : FAST_INTERVAL);
   }
   setTimeout(clearCaches, FAST_INTERVAL);
+}
+
+if ('serviceWorker' in navigator) {
+  function processShareData(data) {
+    if (!data) return null;
+
+    const textParts = [];
+    if (data.title) textParts.push(data.title);
+    if (data.text) textParts.push(data.text);
+    if (data.url) textParts.push(data.url);
+
+    return {
+      initialText: textParts.join('\n\n'),
+      files: data.files || [],
+    };
+  }
+
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    const { data, action } = event.data || {};
+    if (action === 'compose-with-shared-data') {
+      console.log('💪 Received shared data from SW', data);
+      const sharedData = processShareData(data);
+      if (sharedData) {
+        window.__SHARED_DATA__ = sharedData;
+        states.showCompose = true; // It'll use __SHARED_DATA__
+      }
+    }
+  });
 }
 
 window.__CLOAK__ = () => {

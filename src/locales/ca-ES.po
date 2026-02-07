@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-29 12:17\n"
+"PO-Revision-Date: 2026-02-02 23:58\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -328,11 +328,11 @@ msgstr "No hi ha cap llista."
 msgid "New list"
 msgstr "Llista nova"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode disabled"
 msgstr "Mode ocult desactivat"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode enabled"
 msgstr "Mode ocult activat"
 
@@ -2328,7 +2328,7 @@ msgstr "Només local"
 #: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "Servidor"
 
 #: src/components/shortcuts-settings.jsx:79
 #: src/components/shortcuts-settings.jsx:88
@@ -2473,7 +2473,7 @@ msgstr "Enganxeu dreceres aquí"
 
 #: src/components/shortcuts-settings.jsx:844
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "S'estan baixant les dreceres desades al servidor…"
 
 #: src/components/shortcuts-settings.jsx:872
 msgid "Unable to download shortcuts"
@@ -2481,7 +2481,7 @@ msgstr "No es poden baixar les dreceres"
 
 #: src/components/shortcuts-settings.jsx:875
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Baixa les dreceres des del servidor"
 
 #: src/components/shortcuts-settings.jsx:942
 msgid "* Exists in current shortcuts"
@@ -2546,7 +2546,7 @@ msgstr "No s'han pogut copiar les dreceres"
 
 #: src/components/shortcuts-settings.jsx:1118
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "S'estan desant les dreceres al servidor…"
 
 #: src/components/shortcuts-settings.jsx:1125
 msgid "Shortcuts saved"
@@ -2558,7 +2558,7 @@ msgstr "No es poden desar les dreceres"
 
 #: src/components/shortcuts-settings.jsx:1133
 msgid "Sync to server"
-msgstr ""
+msgstr "Sincronitza amb el servidor"
 
 #: src/components/shortcuts-settings.jsx:1148
 msgid "Shortcut settings copied"
@@ -2583,7 +2583,7 @@ msgstr "Dreceres JSON en brut"
 
 #: src/components/shortcuts-settings.jsx:1212
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Importació o exportació de la configuració des de o cap al servidor (molt experimental)"
 
 #: src/components/status.jsx:288
 msgid "Private posts cannot be quoted"
@@ -2618,7 +2618,7 @@ msgstr "<0/> <1>ha impulsat</1>"
 
 #: src/components/status.jsx:736
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr ""
+msgstr "Ho sentim, el servidor en què heu iniciat la sessió actual no pot interactuar amb aquesta publicació des d'un altre servidor."
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:925
@@ -3150,11 +3150,11 @@ msgstr "No ha estat possible la informació del compte"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:585
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "Canvia al servidor del compte {0}"
 
 #: src/pages/account-statuses.jsx:615
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Canvia al meu servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:688
 msgid "Month"
@@ -3335,7 +3335,7 @@ msgstr "Fins a l'última posada al dia ({0})"
 
 #: src/pages/catchup.jsx:1159
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Nota: el vostre servidor només pot mostrar un màxim de 800 publicacions a la línia de temps d'inici, independentment de l'interval de temps. Aquest valor podria variar."
 
 #: src/pages/catchup.jsx:1169
 msgid "Previously…"
@@ -3716,25 +3716,25 @@ msgstr "Afegeix a les dreceres"
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Introduïu un nou servidor, p. ex. \"mastodont.cat\""
 
 #: src/pages/hashtag.jsx:495
 #: src/pages/public.jsx:144
 #: src/pages/trending.jsx:484
 msgid "Invalid server"
-msgstr ""
+msgstr "Servidor no vàlid"
 
 #: src/pages/hashtag.jsx:509
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another server…"
-msgstr ""
+msgstr "Ves a un altre servidor…"
 
 #: src/pages/hashtag.jsx:522
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Ves al meu servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
@@ -3786,7 +3786,7 @@ msgstr "No s'ha pogut registrar l'aplicació"
 
 #: src/pages/login.jsx:246
 msgid "server domain"
-msgstr ""
+msgstr "domini del servidor"
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -3794,7 +3794,7 @@ msgstr "p. ex. \"mastodont.cat\""
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "No s'ha pogut iniciar la sessió. Torneu-ho a provar o canvieu de servidor."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4132,7 +4132,8 @@ msgstr "No s'ha pogut actualitzar la visibilitat per defecte"
 
 #: src/pages/settings.jsx:354
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Sincronitzat amb la configuració del servidor. \n"
+"<0>Aneu al vostre servidor ({instance}) per realitzar més canvis en la configuració.</0>"
 
 #: src/pages/settings.jsx:369
 msgid "Experiments"
@@ -4205,7 +4206,7 @@ msgstr "⚠️⚠️⚠️ Funcionalitat experimental.<0/>S'emmagatzemen en les 
 
 #: src/pages/settings.jsx:656
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "Nota: Aquesta funcionalitat utilitza l'API del servidor on l'usuari ha iniciat la sessió."
 
 #: src/pages/settings.jsx:672
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4334,7 +4335,7 @@ msgstr "No heu iniciat la sessió. Les interaccions (resposta, impuls, etc.) no 
 
 #: src/pages/status.jsx:1088
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Aquesta publicació és d'un altre servidor (<0>{instance}</0>). Les interaccions (resposta, impuls, etc.) no són possibles."
 
 #: src/pages/status.jsx:1116
 msgid "Error: {e}"
@@ -4342,7 +4343,7 @@ msgstr "Error: {e}"
 
 #: src/pages/status.jsx:1123
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Canvia al meu servidor per permetre interaccions"
 
 #: src/pages/status.jsx:1231
 msgid "Unable to load replies."
@@ -4393,11 +4394,11 @@ msgstr "No s'ha pogut canviar"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1631
 msgid "Switch to post's server ({0})"
-msgstr ""
+msgstr "Canvia al servidor del compte ({0})"
 
 #: src/pages/status.jsx:1634
 msgid "Switch to post's server"
-msgstr ""
+msgstr "Canvia al servidor del compte"
 
 #: src/pages/status.jsx:1647
 msgid "View Edit History Snapshots"
@@ -4471,11 +4472,11 @@ msgstr "Connecteu el vostre compte de Mastodon/Fedivers.<0/>Les vostres credenci
 
 #: src/pages/welcome.jsx:96
 msgid "Screenshot of Phanpy home timeline on mobile device"
-msgstr ""
+msgstr "Captura de pantalla de la cronologia de la pàgina d'inici de Phanpy en un dispositiu mòbil"
 
 #: src/pages/welcome.jsx:113
 msgid "Screenshot of Phanpy home timeline on tablet device"
-msgstr ""
+msgstr "Captura de pantalla de la cronologia de la pàgina d'inici de Phanpy en una tauleta"
 
 #: src/pages/welcome.jsx:127
 msgid "Screenshot of Boosts Carousel"

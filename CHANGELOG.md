@@ -399,6 +399,15 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - 🗓️ Experimental "Year In Posts"
 - 🐛 Bug fixes
 
+## January 31, 2026
+
+📢 https://mastodon.social/@cheeaun/115989883020173120
+
+- ⌨️ More sequential hotkeys, g>s (Settings), g>p (Profile), g>b (Bookmarks)
+- 💈 Redesigned poll
+- 🛬 Redesigned landing page
+- 🐛 Bug fixes
+
 <!--
 
 ## Next

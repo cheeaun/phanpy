@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-29 12:17\n"
+"PO-Revision-Date: 2026-01-31 15:44\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -328,11 +328,11 @@ msgstr "Nessuna lista."
 msgid "New list"
 msgstr "Nuova lista"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode disabled"
 msgstr "Modalità mantello disattivata"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode enabled"
 msgstr "Modalità mantello attivata"
 
@@ -2327,7 +2327,7 @@ msgstr "Solo locale"
 #: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "Istanza"
 
 #: src/components/shortcuts-settings.jsx:79
 #: src/components/shortcuts-settings.jsx:88
@@ -2472,7 +2472,7 @@ msgstr "Incolla scorciatoie qui"
 
 #: src/components/shortcuts-settings.jsx:844
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "Scarico scorciatoie salvate dall'istanza…"
 
 #: src/components/shortcuts-settings.jsx:872
 msgid "Unable to download shortcuts"
@@ -2480,7 +2480,7 @@ msgstr "Impossibile scaricare scorciatoie"
 
 #: src/components/shortcuts-settings.jsx:875
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Scarica scorciatoie dall'istanza"
 
 #: src/components/shortcuts-settings.jsx:942
 msgid "* Exists in current shortcuts"
@@ -2545,7 +2545,7 @@ msgstr "Impossibile copiare scorciatoie"
 
 #: src/components/shortcuts-settings.jsx:1118
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Salvo scorciatoie sull'istanza…"
 
 #: src/components/shortcuts-settings.jsx:1125
 msgid "Shortcuts saved"
@@ -2557,7 +2557,7 @@ msgstr "Impossibile salvare scorciatoie"
 
 #: src/components/shortcuts-settings.jsx:1133
 msgid "Sync to server"
-msgstr ""
+msgstr "Sincronizza con istanza"
 
 #: src/components/shortcuts-settings.jsx:1148
 msgid "Shortcut settings copied"
@@ -2582,7 +2582,7 @@ msgstr "JSON scorciatoie originale"
 
 #: src/components/shortcuts-settings.jsx:1212
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Importa/esporta impostazioni da/su un'istanza (molto sperimentale)"
 
 #: src/components/status.jsx:288
 msgid "Private posts cannot be quoted"
@@ -2617,7 +2617,7 @@ msgstr "<0/> <1>ha rebloggato</1>"
 
 #: src/components/status.jsx:736
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr ""
+msgstr "Spiacenti, l'istanza collegata non può interagire con questo post da un'altra istanza."
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:925
@@ -3149,11 +3149,11 @@ msgstr "Impossibile recuperare info account"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:585
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "Passa all'istanza dell'account {0}"
 
 #: src/pages/account-statuses.jsx:615
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Passa alla mia istanza (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:688
 msgid "Month"
@@ -3334,7 +3334,7 @@ msgstr "Fino all'ultimo recupero ({0})"
 
 #: src/pages/catchup.jsx:1159
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Nota: la tua istanza potrebbe mostrare solamente un massimo di 800 post nella Home a prescindere dall'intervallo di tempo. Il valore massimo può variare."
 
 #: src/pages/catchup.jsx:1169
 msgid "Previously…"
@@ -3715,25 +3715,25 @@ msgstr "Aggiungi a Scorciatoie"
 #: src/pages/public.jsx:141
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Inserisci una nuova istanza, es. \"mastodon.social\""
 
 #: src/pages/hashtag.jsx:495
 #: src/pages/public.jsx:144
 #: src/pages/trending.jsx:484
 msgid "Invalid server"
-msgstr ""
+msgstr "Istanza non valida"
 
 #: src/pages/hashtag.jsx:509
 #: src/pages/public.jsx:158
 #: src/pages/trending.jsx:496
 msgid "Go to another server…"
-msgstr ""
+msgstr "Vai a un'altra istanza…"
 
 #: src/pages/hashtag.jsx:522
 #: src/pages/public.jsx:171
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Vai alla mia istanza (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
@@ -3785,7 +3785,7 @@ msgstr "Registrazione applicazione fallita"
 
 #: src/pages/login.jsx:246
 msgid "server domain"
-msgstr ""
+msgstr "dominio istanza"
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -3793,7 +3793,7 @@ msgstr "es. \"mastodon.social\""
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "Accesso fallito. Riprova o prova con un'altra istanza."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4131,7 +4131,7 @@ msgstr "Impossibile aggiornare la visibilità di default"
 
 #: src/pages/settings.jsx:354
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Sincronizzato con le impostazioni della tua istanza. <0>Vai alla tua istanza ({instance}) per altre impostazioni.</0>"
 
 #: src/pages/settings.jsx:369
 msgid "Experiments"
@@ -4204,7 +4204,7 @@ msgstr "⚠️⚠️⚠️ Molto sperimentale.<0/>Conservato nelle tue note del 
 
 #: src/pages/settings.jsx:656
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "Nota: questa funzione usa l'API dell'istanza attualmente collegata."
 
 #: src/pages/settings.jsx:672
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4333,7 +4333,7 @@ msgstr "Non hai effettuato l'accesso. Le interazioni (risposte, reblog, ecc.) so
 
 #: src/pages/status.jsx:1088
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Questo post è di un'altra istanza (<0>{instance}</0>). Le interazioni (risposte, reblog, ecc.) sono disabilitate."
 
 #: src/pages/status.jsx:1116
 msgid "Error: {e}"
@@ -4341,7 +4341,7 @@ msgstr "Errore: {e}"
 
 #: src/pages/status.jsx:1123
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Passa alla mia istanza per abilitare le interazioni"
 
 #: src/pages/status.jsx:1231
 msgid "Unable to load replies."
@@ -4392,11 +4392,11 @@ msgstr "Impossibile cambiare"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1631
 msgid "Switch to post's server ({0})"
-msgstr ""
+msgstr "Passa all'istanza del post ({0})"
 
 #: src/pages/status.jsx:1634
 msgid "Switch to post's server"
-msgstr ""
+msgstr "Passa all'istanza del post"
 
 #: src/pages/status.jsx:1647
 msgid "View Edit History Snapshots"

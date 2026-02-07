@@ -213,6 +213,7 @@ export default defineConfig({
         description: 'Minimalistic opinionated Mastodon web client',
         // https://github.com/cheeaun/phanpy/issues/231
         theme_color: undefined,
+        background_color: '#b7cdf9', // background for splash
         icons: [
           {
             src: 'logo-192.png',
@@ -225,6 +226,12 @@ export default defineConfig({
             type: 'image/png',
           },
           {
+            src: 'logo-monochrome-maskable-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'monochrome',
+          },
+          {
             src: 'logo-maskable-512.png',
             sizes: '512x512',
             type: 'image/png',
@@ -232,6 +239,22 @@ export default defineConfig({
           },
         ],
         categories: ['social', 'news'],
+        share_target: {
+          action: './share',
+          method: 'POST',
+          enctype: 'multipart/form-data',
+          params: {
+            title: 'title',
+            text: 'text',
+            url: 'url',
+            files: [
+              {
+                name: 'files',
+                accept: ['image/*', 'video/*', 'audio/*'],
+              },
+            ],
+          },
+        },
       },
       strategies: 'injectManifest',
       injectRegister: 'inline',

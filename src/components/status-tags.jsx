@@ -16,7 +16,8 @@ const extractTagsFromStatus = (content) => {
       tags.push(
         a.innerText
           .trim()
-          .replace(/^[^#]*#+/, '')
+          .replace(/^[^#＃#️⃣]*[#＃#️⃣]+/, '')
+          .normalize('NFKC')
           .toLowerCase(),
       );
     }
@@ -29,7 +30,8 @@ export default function StatusTags({ tags, content }) {
 
   const hashtagsInContent = extractTagsFromStatus(content);
   const tagsToShow = tags.filter(
-    (tag) => !hashtagsInContent.includes(tag.name.toLowerCase()),
+    (tag) =>
+      !hashtagsInContent.includes(tag.name.normalize('NFKC').toLowerCase()),
   );
 
   if (!tagsToShow.length) return null;

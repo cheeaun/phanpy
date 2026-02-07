@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-29 12:17\n"
+"PO-Revision-Date: 2026-02-07 15:32\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -147,7 +147,7 @@ msgid "In Memoriam"
 msgstr ""
 
 #: src/components/account-info.jsx:786
-#: src/components/compose.jsx:1981
+#: src/components/compose.jsx:2004
 #: src/pages/settings.jsx:296
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -257,7 +257,7 @@ msgstr "投稿の統計を見る"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:1065
+#: src/components/compose.jsx:1088
 #: src/components/custom-emojis-modal.jsx:272
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:89
@@ -328,11 +328,11 @@ msgstr "リストはありません。"
 msgid "New list"
 msgstr "新しいリスト"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode disabled"
 msgstr "クロークモードは無効化されています"
 
-#: src/components/background-service.jsx:158
+#: src/components/background-service.jsx:160
 msgid "Cloak mode enabled"
 msgstr "クロークモードは有効化されています"
 
@@ -384,7 +384,7 @@ msgid "Remove"
 msgstr "削除"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1689
+#: src/components/compose.jsx:1712
 #: src/components/mention-modal.jsx:221
 #: src/components/shortcuts-settings.jsx:716
 #: src/pages/list.jsx:388
@@ -431,87 +431,86 @@ msgstr "CWを追加"
 msgid "Schedule post"
 msgstr "投稿を予約"
 
-#: src/components/compose.jsx:550
-msgid "You have unsaved changes. Discard this post?"
-msgstr "保存されていない変更があります。この投稿を破棄しますか？"
-
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:796
+#: src/components/compose.jsx:253
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr "{0, plural, other {ファイル {2} はサポートされていません。}}"
 
-#: src/components/compose.jsx:806
-#: src/components/compose.jsx:824
-#: src/components/compose.jsx:2112
+#: src/components/compose.jsx:269
+#: src/components/compose.jsx:2135
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, other {添付できるファイルは最大#個までです。}}"
 
-#: src/components/compose.jsx:1046
+#: src/components/compose.jsx:619
+msgid "You have unsaved changes. Discard this post?"
+msgstr "保存されていない変更があります。この投稿を破棄しますか？"
+
+#: src/components/compose.jsx:1069
 msgid "Pop out"
 msgstr "ポップアウト"
 
-#: src/components/compose.jsx:1053
+#: src/components/compose.jsx:1076
 msgid "Minimize"
 msgstr "最小化"
 
-#: src/components/compose.jsx:1089
+#: src/components/compose.jsx:1112
 msgid "Looks like you closed the parent window."
 msgstr "親ウィンドウを閉じたようです。"
 
-#: src/components/compose.jsx:1096
+#: src/components/compose.jsx:1119
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "親ウィンドウで編集画面が開いており、現在公開中のようです。 完了するまで待ってからもう一度やり直してください。"
 
-#: src/components/compose.jsx:1101
+#: src/components/compose.jsx:1124
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "すでに親ウィンドウで編集画面が開いているようです。 このウィンドウを開くと、親ウィンドウで行った変更が破棄されます。続けますか？"
 
-#: src/components/compose.jsx:1147
+#: src/components/compose.jsx:1170
 msgid "Pop in"
 msgstr "ポップイン"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1157
+#: src/components/compose.jsx:1180
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "@{0}の投稿に返信します (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1167
+#: src/components/compose.jsx:1190
 msgid "Replying to @{0}’s post"
 msgstr "@{0}の投稿に返信します"
 
-#: src/components/compose.jsx:1180
+#: src/components/compose.jsx:1203
 msgid "Editing source post"
 msgstr "元の投稿を編集しています"
 
-#: src/components/compose.jsx:1249
+#: src/components/compose.jsx:1272
 msgid "Poll must have at least 2 options"
 msgstr "投票には少なくとも2つの選択肢が必要です"
 
-#: src/components/compose.jsx:1253
+#: src/components/compose.jsx:1276
 msgid "Some poll choices are empty"
 msgstr "一部のアンケートの選択肢が空です"
 
-#: src/components/compose.jsx:1266
+#: src/components/compose.jsx:1289
 msgid "Some media have no descriptions. Continue?"
 msgstr "一部のメディアには説明がありません。続行しますか？"
 
-#: src/components/compose.jsx:1318
+#: src/components/compose.jsx:1341
 msgid "Attachment #{i} failed"
 msgstr "ファイル #{i} の添付に失敗しました"
 
-#: src/components/compose.jsx:1445
+#: src/components/compose.jsx:1468
 #: src/components/status.jsx:2495
 #: src/components/timeline.jsx:1013
 msgid "Content warning"
 msgstr "コンテンツに関する警告"
 
-#: src/components/compose.jsx:1477
-#: src/components/compose.jsx:1623
+#: src/components/compose.jsx:1500
+#: src/components/compose.jsx:1646
 #: src/components/edit-profile-sheet.jsx:326
 #: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
@@ -520,85 +519,85 @@ msgstr "コンテンツに関する警告"
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/components/compose.jsx:1485
+#: src/components/compose.jsx:1508
 msgid "Post your reply"
 msgstr "返信を投稿"
 
-#: src/components/compose.jsx:1487
+#: src/components/compose.jsx:1510
 msgid "Edit your post"
 msgstr "投稿を編集する"
 
-#: src/components/compose.jsx:1489
+#: src/components/compose.jsx:1512
 msgid "Ask a question"
 msgstr "質問する"
 
-#: src/components/compose.jsx:1490
+#: src/components/compose.jsx:1513
 msgid "What are you doing?"
 msgstr "なにしてる？"
 
-#: src/components/compose.jsx:1563
+#: src/components/compose.jsx:1586
 msgid "Mark media as sensitive"
 msgstr "メディアを閲覧注意にする"
 
-#: src/components/compose.jsx:1603
+#: src/components/compose.jsx:1626
 msgid "Posting on <0/>"
 msgstr "投稿日時"
 
-#: src/components/compose.jsx:1901
+#: src/components/compose.jsx:1924
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:296
 #: src/pages/settings.jsx:338
 msgid "Anyone can quote"
 msgstr "誰でも引用可能"
 
-#: src/components/compose.jsx:1904
+#: src/components/compose.jsx:1927
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:297
 #: src/pages/settings.jsx:341
 msgid "Your followers can quote"
 msgstr "あなたのフォロワーが引用可能"
 
-#: src/components/compose.jsx:1907
+#: src/components/compose.jsx:1930
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:298
 #: src/pages/settings.jsx:344
 msgid "Only you can quote"
 msgstr "あなただけが引用可能"
 
-#: src/components/compose.jsx:1947
+#: src/components/compose.jsx:1970
 msgid "Quotes can't be embedded in private mentions."
 msgstr "引用を非公開メンションに含めることはできません。"
 
-#: src/components/compose.jsx:1969
+#: src/components/compose.jsx:1992
 #: src/pages/settings.jsx:290
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "公開"
 
-#: src/components/compose.jsx:1974
+#: src/components/compose.jsx:1997
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:166
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "ローカル"
 
-#: src/components/compose.jsx:1978
+#: src/components/compose.jsx:2001
 #: src/pages/settings.jsx:293
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "ひかえめな公開"
 
-#: src/components/compose.jsx:1984
+#: src/components/compose.jsx:2007
 #: src/components/status.jsx:2372
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "非公開の返信"
 
-#: src/components/compose.jsx:2036
+#: src/components/compose.jsx:2059
 msgid "Schedule"
 msgstr "予約する"
 
-#: src/components/compose.jsx:2038
+#: src/components/compose.jsx:2061
 #: src/components/keyboard-shortcuts-help.jsx:165
 #: src/components/status.jsx:1099
 #: src/components/status.jsx:1133
@@ -609,20 +608,20 @@ msgstr "予約する"
 msgid "Reply"
 msgstr "返信"
 
-#: src/components/compose.jsx:2040
+#: src/components/compose.jsx:2063
 msgid "Update"
 msgstr "更新"
 
-#: src/components/compose.jsx:2041
+#: src/components/compose.jsx:2064
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "投稿"
 
-#: src/components/compose.jsx:2124
+#: src/components/compose.jsx:2147
 msgid "Downloading GIF…"
 msgstr "GIF をダウンロード中…"
 
-#: src/components/compose.jsx:2152
+#: src/components/compose.jsx:2175
 msgid "Failed to download GIF"
 msgstr "GIF のダウンロードに失敗しました"
 
@@ -1341,23 +1340,23 @@ msgstr "ファイルを開く"
 msgid "Search accounts"
 msgstr "アカウントを検索"
 
-#: src/components/modals.jsx:89
+#: src/components/modals.jsx:93
 msgid "Post scheduled"
 msgstr "投稿を予約しました"
 
-#: src/components/modals.jsx:90
+#: src/components/modals.jsx:94
 msgid "Post published. Check it out."
 msgstr "公開しました。チェックしてみてください。"
 
-#: src/components/modals.jsx:92
+#: src/components/modals.jsx:96
 msgid "Reply scheduled"
 msgstr "返信を予約しました"
 
-#: src/components/modals.jsx:93
+#: src/components/modals.jsx:97
 msgid "Reply posted. Check it out."
 msgstr "返信を予約しました。チェックしてみてください。"
 
-#: src/components/modals.jsx:94
+#: src/components/modals.jsx:98
 msgid "Post updated. Check it out."
 msgstr "投稿を更新しました。チェックしてみてください。"
 
@@ -1858,7 +1857,7 @@ msgstr "注: このプレビューは軽くスタイル付けされています�
 #: src/components/private-note-sheet.jsx:41
 #: src/components/related-actions.jsx:232
 msgid "Notes"
-msgstr ""
+msgstr "メモ"
 
 #: src/components/private-note-sheet.jsx:44
 msgid "Only visible to you"
@@ -1883,15 +1882,15 @@ msgstr "カメラにアクセスできません。権限を確認してくださ
 
 #: src/components/quote-chain-modal.jsx:107
 msgid "Quote chain"
-msgstr ""
+msgstr "引用チェーン"
 
 #: src/components/quote-chain-modal.jsx:151
 msgid "Failed to unwrap quote chain"
-msgstr ""
+msgstr "引用チェーンの展開に失敗しました"
 
 #: src/components/quote-chain-modal.jsx:165
 msgid "Continue unwrapping…"
-msgstr ""
+msgstr "さらに展開…"
 
 #: src/components/quote-settings-sheet.jsx:37
 #: src/pages/settings.jsx:329
@@ -1972,7 +1971,7 @@ msgstr "<0>@{username}</0>にメンション"
 
 #: src/components/related-actions.jsx:319
 msgid "Search <0>@{username}</0>'s posts"
-msgstr ""
+msgstr "<0>@{username}</0> さんの投稿を検索"
 
 #: src/components/related-actions.jsx:333
 msgid "Translate bio"
@@ -1980,11 +1979,11 @@ msgstr "プロフィールを翻訳"
 
 #: src/components/related-actions.jsx:343
 msgid "Edit notes"
-msgstr ""
+msgstr "メモを編集"
 
 #: src/components/related-actions.jsx:343
 msgid "Add notes"
-msgstr ""
+msgstr "メモを追加"
 
 #: src/components/related-actions.jsx:362
 msgid "Notifications enabled for @{username}'s posts."
@@ -2008,7 +2007,7 @@ msgstr "@{username} からのブーストを有効にしました。"
 
 #: src/components/related-actions.jsx:394
 msgid "Boosts from @{username} disabled."
-msgstr ""
+msgstr "@{username} からのブーストを無効にしました。"
 
 #: src/components/related-actions.jsx:405
 msgid "Disable boosts"
@@ -2051,7 +2050,7 @@ msgstr "紹介されたプロフィールを表示"
 #: src/components/related-actions.jsx:507
 #: src/pages/account-statuses.jsx:464
 msgid "Search my posts"
-msgstr ""
+msgstr "自分の投稿を検索"
 
 #: src/components/related-actions.jsx:580
 #: src/components/shortcuts-settings.jsx:1175
@@ -2219,7 +2218,7 @@ msgstr "ポストを報告しました"
 
 #: src/components/report-modal.jsx:189
 msgid "Profile reported"
-msgstr "プロファイルを報告しました"
+msgstr "プロフィールを報告しました"
 
 #: src/components/report-modal.jsx:197
 msgid "Unable to report post"
@@ -2327,7 +2326,7 @@ msgstr "ローカルのみ"
 #: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "サーバー"
 
 #: src/components/shortcuts-settings.jsx:79
 #: src/components/shortcuts-settings.jsx:88
@@ -2650,12 +2649,12 @@ msgstr ""
 
 #: src/components/status.jsx:1098
 msgid "Reply…"
-msgstr ""
+msgstr "返信…"
 
 #: src/components/status.jsx:1107
 #: src/components/status.jsx:1116
 msgid "Reply all"
-msgstr ""
+msgstr "全員に返信"
 
 #: src/components/status.jsx:1110
 msgid "{mentionsCount, plural, other {# mentions}}"
@@ -2735,20 +2734,20 @@ msgstr ""
 
 #: src/components/status.jsx:1385
 msgid "Post text copied"
-msgstr ""
+msgstr "投稿テキストをコピーしました"
 
 #: src/components/status.jsx:1388
 msgid "Unable to copy post text"
-msgstr ""
+msgstr "投稿テキストをコピーできません"
 
 #: src/components/status.jsx:1394
 msgid "Copy post text"
-msgstr ""
+msgstr "投稿テキストをコピー"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1412
 msgid "View post by <0>@{0}</0>"
-msgstr ""
+msgstr "<0>@{0}</0> さんの投稿を表示"
 
 #: src/components/status.jsx:1433
 msgid "Show Edit History"
@@ -2760,19 +2759,19 @@ msgstr "編集済み： {editedDateText}"
 
 #: src/components/status.jsx:1519
 msgid "Conversation unmuted"
-msgstr ""
+msgstr "会話のミュートを解除しました"
 
 #: src/components/status.jsx:1519
 msgid "Conversation muted"
-msgstr ""
+msgstr "会話をミュートしました"
 
 #: src/components/status.jsx:1525
 msgid "Unable to unmute conversation"
-msgstr ""
+msgstr "会話のミュートを解除できません"
 
 #: src/components/status.jsx:1526
 msgid "Unable to mute conversation"
-msgstr ""
+msgstr "会話をミュートできません"
 
 #: src/components/status.jsx:1535
 msgid "Unmute conversation"
@@ -2788,15 +2787,15 @@ msgstr ""
 
 #: src/components/status.jsx:1559
 msgid "Post pinned to profile"
-msgstr ""
+msgstr "プロフィールにピン留めされた投稿"
 
 #: src/components/status.jsx:1564
 msgid "Unable to unpin post"
-msgstr ""
+msgstr "ポストのピン留めを削除できません"
 
 #: src/components/status.jsx:1564
 msgid "Unable to pin post"
-msgstr ""
+msgstr "ポストをピン留めできません"
 
 #: src/components/status.jsx:1573
 msgid "Unpin from profile"

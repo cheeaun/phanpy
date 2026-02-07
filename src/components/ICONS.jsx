@@ -182,6 +182,7 @@ export const ICONS = {
   celebrate: () => import('@iconify-icons/mingcute/celebrate-line'),
   schedule: () => import('@iconify-icons/mingcute/calendar-time-add-line'),
   day: () => import('@iconify-icons/mingcute/calendar-day-line'),
+  'fav-boost-celebrate': () => import('@iconify-icons/mingcute/celebrate-line'),
   camera: () => import('@iconify-icons/mingcute/camera-line'),
   endorsement: {
     module: () => import('@iconify-icons/mingcute/user-star-line'),

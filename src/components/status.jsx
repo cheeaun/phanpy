@@ -889,6 +889,81 @@ function Status({
     }
   };
 
+  const favouriteAndBoostStatus = async () => {
+    if (!sameInstance || !authenticated) {
+      alert(unauthInteractionErrorMessage);
+      return false;
+    }
+    try {
+      // Case 1: Neither liked nor boosted - add both
+      // Case 2: Either liked or boosted - preserve existing and add other
+      // Case 3: Both liked and boosted - remove both
+      const newFavourited = !(favourited && reblogged);
+      const newReblogged = !(favourited && reblogged);
+
+      states.statuses[sKey] = {
+        ...status,
+        favourited: newFavourited,
+        favouritesCount: favouritesCount + (newFavourited ? 1 : -1),
+        reblogged: newReblogged,
+        reblogsCount: reblogsCount + (newReblogged ? 1 : -1),
+      };
+
+      // Execute actions based on state changes
+      const actions = [];
+      if (newFavourited !== favourited) {
+        actions.push(
+          newFavourited
+            ? masto.v1.statuses.$select(id).favourite()
+            : masto.v1.statuses.$select(id).unfavourite(),
+        );
+      }
+      if (newReblogged !== reblogged) {
+        actions.push(
+          newReblogged
+            ? masto.v1.statuses.$select(id).reblog()
+            : masto.v1.statuses.$select(id).unreblog(),
+        );
+      }
+
+      const results = await Promise.all(actions);
+
+      // If we're turning off both actions, refresh the status to ensure UI sync
+      if (!newFavourited && !newReblogged) {
+        const refreshedStatus = await masto.v1.statuses.$select(id).fetch();
+        saveStatus(refreshedStatus, instance);
+      } else if (results.length) {
+        const lastResult = results[results.length - 1];
+        saveStatus(lastResult, instance);
+      }
+
+      return true;
+    } catch (e) {
+      console.error(e);
+      // Revert optimistic update
+      states.statuses[sKey] = status;
+      return false;
+    }
+  };
+
+  const favouriteAndBoostStatusNotify = async () => {
+    try {
+      const success = await favouriteAndBoostStatus();
+      if (success) {
+        showToast(
+          !favourited && !reblogged
+            ? t`Liked and boosted!`
+            : favourited && reblogged
+              ? t`Removed like and boost`
+              : t`Updated status`,
+        );
+      }
+    } catch (e) {
+      console.error(e);
+      showToast(t`Unable to update status`);
+    }
+  };
+
   const favouriteStatus = async () => {
     if (!sameInstance || !authenticated) {
       alert(unauthInteractionErrorMessage);
@@ -2995,6 +3070,21 @@ function Status({
                     count={favouritesCount}
                     onClick={favouriteStatus}
                   />
+                </div>
+                <div class="action">
+                  <button
+                    type="button"
+                    class={`plain favourite-boost-button ${favourited && reblogged ? 'checked' : ''}`}
+                    title={t`Like and boost`}
+                    disabled={!canBoost}
+                    onClick={favouriteAndBoostStatusNotify}
+                  >
+                    <Icon
+                      icon="fav-boost-celebrate"
+                      size="l"
+                      alt={t`Like and boost`}
+                    />
+                  </button>
                 </div>
                 {supports('@mastodon/post-bookmark') && (
                   <div class="action">

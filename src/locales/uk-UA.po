@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-08 19:38\n"
+"PO-Revision-Date: 2026-02-08 21:05\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -162,7 +162,7 @@ msgstr "Цей користувач вирішив не розкривати ц�
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info.jsx:813
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> Підписник} few {<1>{1}</1> Підписники} other {<1>{1}</1> Підписників}}"
 
 #. js-lingui-explicit-id
 #: src/components/account-info.jsx:841
@@ -172,7 +172,7 @@ msgstr "Підписок"
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info.jsx:857
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr ""
+msgstr "{followingCount, plural, one {<0>{0}</0> Підписка} few {<0>{0}</0> Підписки} other {<0>{0}</0> Підписок}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
@@ -186,7 +186,7 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> Допис} few {<1>{1}</1> До
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:938
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
-msgstr ""
+msgstr "{0} оригінальних дописів, {1} відповідей, {2} цитувань, {3} поширень"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -595,7 +595,7 @@ msgstr "Лише згадані"
 
 #: src/components/compose.jsx:2059
 msgid "Schedule"
-msgstr ""
+msgstr "Запланувати"
 
 #: src/components/compose.jsx:2061
 #: src/components/keyboard-shortcuts-help.jsx:165
@@ -887,7 +887,7 @@ msgstr "Наявні"
 
 #: src/components/import-accounts-selection.jsx:183
 msgid "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
-msgstr ""
+msgstr "{selectedCount, plural, one {Імпортувати # обліковий запис} few {Імпортувати # облікові записи} other {Імпортувати # облікових записів}}"
 
 #: src/components/import-export-accounts.jsx:52
 msgid "Export failed"
@@ -918,15 +918,15 @@ msgstr "Експорт"
 #. placeholder {0}: accounts.length
 #: src/components/import-export-accounts.jsx:155
 msgid "{0, plural, one {# account} other {# accounts}}"
-msgstr ""
+msgstr "{0, plural, one {# обліковий запис} few {# облікові записи} other {# облікових записів}}"
 
 #: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
-msgstr ""
+msgstr "Жодної інформації про авторизацію або доступ до облікового запису не зберігається в експортованих файлах. Вам необхідно буде заново авторизуватися у кожен обліковий запис після імпорту."
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
-msgstr ""
+msgstr "<0>{key1}</0> та <1>{key2}</1> (послідовно)"
 
 #: src/components/keyboard-shortcuts-help.jsx:57
 #: src/components/nav-menu.jsx:368
@@ -1079,23 +1079,23 @@ msgstr "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 
 #: src/components/keyboard-shortcuts-help.jsx:210
 msgid "Go to Home"
-msgstr ""
+msgstr "Відкрити домашню сторінку"
 
 #: src/components/keyboard-shortcuts-help.jsx:214
 msgid "Go to Notifications"
-msgstr ""
+msgstr "Відкрити сповіщення"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr ""
+msgstr "Відкрити налаштування"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
-msgstr ""
+msgstr "Відкрити сторінку профілю"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
-msgstr ""
+msgstr "Відкрити закладки"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1232,7 +1232,7 @@ msgstr "Розмір файлу завеликий. Можуть виникну�
 #: src/components/media-attachment.jsx:261
 #: src/components/media-attachment.jsx:281
 msgid "Dimension too large. Uploading might encounter issues. Try reduce dimension from {0}×{1}px to {2}×{3}px."
-msgstr ""
+msgstr "Розмір зображення завеликий. Можуть виникнути проблеми. Спробуйте зменшити зображення з {0}×{1}px до {2}×{3}px."
 
 #: src/components/media-attachment.jsx:289
 msgid "Frame rate too high. Uploading might encounter issues."
@@ -1264,7 +1264,7 @@ msgstr "Генерується опис. Будь ласка, зачекайте
 #. placeholder {0}: e.message
 #: src/components/media-attachment.jsx:459
 msgid "Failed to generate description: {0}"
-msgstr ""
+msgstr "Помилка генерації опису: {0}"
 
 #: src/components/media-attachment.jsx:460
 msgid "Failed to generate description"
@@ -1279,7 +1279,7 @@ msgstr "Згенерувати опис…"
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/media-attachment.jsx:511
 msgid "Failed to generate description{0}"
-msgstr ""
+msgstr "Помилка генерації опису{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/media-attachment.jsx:526
@@ -1593,7 +1593,7 @@ msgstr "{account} відредагував допис, який ви зацит�
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:260
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
-msgstr ""
+msgstr "{count, plural, =1 {{account} зареєструвався.} few {<0><1>{0}</1> користувачі</0> зареєструвалися.} other {<0><1>{0}</1> користувачів</0> зареєструвалося.}}"
 
 #: src/components/notification.jsx:274
 msgid "{account} reported {targetAccount}"
@@ -1741,11 +1741,11 @@ msgstr "Приховати результати"
 #: src/components/poll.jsx:288
 #: src/components/poll.jsx:304
 msgid "{0, plural, one {# choice} other {# choices}}"
-msgstr ""
+msgstr "{0, plural, one {# вибір} few { # вибори} other {# виборів}}"
 
 #: src/components/poll.jsx:221
 msgid "Unable to vote in poll"
-msgstr ""
+msgstr "Неможливо проголосувати в опитуванні"
 
 #: src/components/poll.jsx:277
 msgid "Vote"
@@ -1900,48 +1900,48 @@ msgstr "Налаштування цитування оновлено"
 #: src/components/quote-settings-sheet.jsx:47
 #: src/pages/settings.jsx:331
 msgid "Failed to update quote settings"
-msgstr ""
+msgstr "Не вдалося оновити налаштування цитування"
 
 #: src/components/quote-settings-sheet.jsx:66
 msgid "Quote settings for this post"
-msgstr ""
+msgstr "Налаштування цитування цього допису"
 
 #: src/components/quote-suggestion.jsx:19
 msgid "Turn link into a quote?"
-msgstr ""
+msgstr "Перетворити посилання в цитату?"
 
 #: src/components/quote-suggestion.jsx:37
 msgid "Keep as link"
-msgstr ""
+msgstr "Зберегти посилання"
 
 #: src/components/quote-suggestion.jsx:42
 msgid "Replace current quote"
-msgstr ""
+msgstr "Замінити поточну цитату"
 
 #: src/components/quote-suggestion.jsx:44
 msgid "Turn into quote"
-msgstr ""
+msgstr "Перетворити у цитату"
 
 #: src/components/quotes-modal.jsx:150
 msgid "Error loading quotes"
-msgstr ""
+msgstr "Помилка завантаження цитат"
 
 #: src/components/quotes-modal.jsx:154
 msgid "No quotes yet"
-msgstr ""
+msgstr "Ще немає цитувань"
 
 #: src/components/recent-searches.jsx:27
 msgid "Cleared recent searches"
-msgstr ""
+msgstr "Нещодавні пошукові запити очищено"
 
 #: src/components/recent-searches.jsx:49
 #: src/components/search-form.jsx:333
 msgid "Recent searches"
-msgstr ""
+msgstr "Нещодавні пошукові запити"
 
 #: src/components/recent-searches.jsx:59
 msgid "Clear all"
-msgstr ""
+msgstr "Очистити все"
 
 #: src/components/recent-searches.jsx:94
 #: src/pages/account-statuses.jsx:325
@@ -1971,7 +1971,7 @@ msgstr "Згадати <0>@{username}</0>"
 
 #: src/components/related-actions.jsx:319
 msgid "Search <0>@{username}</0>'s posts"
-msgstr ""
+msgstr "Шукати дописи <0>@{username}</0>"
 
 #: src/components/related-actions.jsx:333
 msgid "Translate bio"
@@ -1979,7 +1979,7 @@ msgstr "Перекласти біографію"
 
 #: src/components/related-actions.jsx:343
 msgid "Edit notes"
-msgstr ""
+msgstr "Редагувати примітки"
 
 #: src/components/related-actions.jsx:343
 msgid "Add notes"
@@ -2050,7 +2050,7 @@ msgstr "Показати рекомендовані профілі"
 #: src/components/related-actions.jsx:507
 #: src/pages/account-statuses.jsx:464
 msgid "Search my posts"
-msgstr ""
+msgstr "Шукати мої дописи"
 
 #: src/components/related-actions.jsx:580
 #: src/components/shortcuts-settings.jsx:1175
@@ -2060,11 +2060,11 @@ msgstr "Здається, поширення не працює."
 
 #: src/components/related-actions.jsx:622
 msgid "Unmuted @{username}"
-msgstr ""
+msgstr "@{username} більше не глушиться"
 
 #: src/components/related-actions.jsx:634
 msgid "Unmute <0>@{username}</0>"
-msgstr ""
+msgstr "Не глушити <0>@{username}</0>"
 
 #: src/components/related-actions.jsx:650
 msgid "Mute <0>@{username}</0>…"
@@ -2282,7 +2282,7 @@ msgstr "Облікові записи з <0>{query}</0>"
 
 #: src/components/search-form.jsx:37
 msgid "Posts tagged with <0>{hashtag}</0>"
-msgstr ""
+msgstr "Дописи, що помічені <0>{hashtag}</0>"
 
 #: src/components/search-form.jsx:46
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
@@ -2326,7 +2326,7 @@ msgstr "Лише локальна"
 #: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "Сервер"
 
 #: src/components/shortcuts-settings.jsx:79
 #: src/components/shortcuts-settings.jsx:88
@@ -2471,7 +2471,7 @@ msgstr "Вставити ярлики сюди"
 
 #: src/components/shortcuts-settings.jsx:844
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "Завантаження збережених ярликів з сервера…"
 
 #: src/components/shortcuts-settings.jsx:872
 msgid "Unable to download shortcuts"
@@ -2479,7 +2479,7 @@ msgstr "Не вдалося завантажити ярлики"
 
 #: src/components/shortcuts-settings.jsx:875
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Завантажити ярлики з сервера"
 
 #: src/components/shortcuts-settings.jsx:942
 msgid "* Exists in current shortcuts"
@@ -2544,7 +2544,7 @@ msgstr "Не вдалося скопіювати ярлики"
 
 #: src/components/shortcuts-settings.jsx:1118
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Збереження ярликів до сервера…"
 
 #: src/components/shortcuts-settings.jsx:1125
 msgid "Shortcuts saved"
@@ -2556,7 +2556,7 @@ msgstr "Не вдалося зберегти ярлики"
 
 #: src/components/shortcuts-settings.jsx:1133
 msgid "Sync to server"
-msgstr ""
+msgstr "Синхронізація з сервером"
 
 #: src/components/shortcuts-settings.jsx:1148
 msgid "Shortcut settings copied"
@@ -2581,11 +2581,11 @@ msgstr "Вихідний JSON Ярликів"
 
 #: src/components/shortcuts-settings.jsx:1212
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Імпорт/експорт налаштувань з/на сервер (Дуже експериментально)"
 
 #: src/components/status.jsx:288
 msgid "Private posts cannot be quoted"
-msgstr ""
+msgstr "Приватні повідомлення не можна цитувати"
 
 #: src/components/status.jsx:289
 msgid "Request to quote"
@@ -2658,13 +2658,13 @@ msgstr "Відповісти всім"
 
 #: src/components/status.jsx:1110
 msgid "{mentionsCount, plural, other {# mentions}}"
-msgstr ""
+msgstr "{mentionsCount, plural, one {# згадка} few {# згадки} other {# згадок}}"
 
 #. placeholder {0}: mentionsCount - 1
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:1119
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
-msgstr ""
+msgstr "{0, plural, one {<0>@{1}</0> спочатку, інший нижче} few {<0>@{1}</0> спочатку, # інші нижче} other {<0>@{1}</0> спочатку, # інших нижче}}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1136
@@ -2825,7 +2825,7 @@ msgstr "Не вдалося видалити допис"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1670
 msgid "Remove my post from <0>@{0}</0>'s post?"
-msgstr ""
+msgstr "Вилучити мій допис з допису <0>@{0}</0>?"
 
 #: src/components/status.jsx:1691
 msgid "Quote removed"
@@ -3198,7 +3198,7 @@ msgstr "Вийти з…"
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:269
 msgid "Connected on {0} (<0/>)"
-msgstr ""
+msgstr "Під’єднано до {0} (<0/>)"
 
 #: src/pages/accounts.jsx:286
 msgid "Add an existing account"
@@ -3278,7 +3278,7 @@ msgstr "Групи"
 
 #: src/pages/catchup.jsx:721
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} quotes {quotes} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr ""
+msgstr "Показуються {selectedFilterCategory, select, all {усі дописи} original {оригінальні дописи} replies {відповіді} boosts {поширення} quotes {цитування} followedTags {відстежувані теґи} groups {групи} filtered {відфільтровані дописи}}, {sortBy, select, createdAt {{sortOrder, select, asc {найстаріші} desc {найновіші}}} reblogsCount {{sortOrder, select, asc {найменш поширені} desc {найпоширеніші}}} favouritesCount {{sortOrder, select, asc {найменш вподобані} desc {найвподобаніші}}} repliesCount {{sortOrder, select, asc {найменше відповідей} desc {найбільше відповідей}}} density {{sortOrder, select, asc {найменш наповнені} desc {найбільш наповнені}}}} перші{groupBy, select, account {, згруповані за авторами} other {}}"
 
 #: src/pages/catchup.jsx:1014
 #: src/pages/catchup.jsx:1038
@@ -4348,11 +4348,11 @@ msgstr "Не вдалося завантажити відповіді."
 
 #: src/pages/status.jsx:1287
 msgid "{months, plural, one {# month later} other {# months later}}"
-msgstr ""
+msgstr "{months, plural, one {# місяць потому} few {# місяці потому} other {# місяців потому}}"
 
 #: src/pages/status.jsx:1293
 msgid "{years, plural, one {# year later} other {# years later}}"
-msgstr ""
+msgstr "{years, plural, one {# рік потому} few {# роки потому} other {# років потому}}"
 
 #: src/pages/status.jsx:1425
 msgid "Back"

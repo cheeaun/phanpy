@@ -1,7 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Menu, MenuDivider, MenuItem } from '@szhsin/react-menu';
-import { useRef } from 'preact/hooks';
-import { useNavigate, useParams } from 'react-router-dom';
+import { MenuDivider, MenuItem } from '@szhsin/react-menu';
+import { useRef, useState } from 'preact/hooks';
+import { useParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import Icon from '../components/icon';
@@ -10,7 +10,9 @@ import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
 import states, { saveStatus } from '../utils/states';
+import store from '../utils/store';
 import supports from '../utils/supports';
+import { checkTimelineAccess } from '../utils/timeline-access';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -20,10 +22,10 @@ function Public({ local, columnMode, ...props }) {
   const snapStates = useSnapshot(states);
   const isLocal = !!local;
   const params = columnMode ? {} : useParams();
-  const { masto, instance } = api({
+  const { masto, authenticated, instance } = api({
     instance: props?.instance || params.instance,
   });
-  const { masto: currentMasto, instance: currentInstance } = api();
+  const { instance: currentInstance } = api();
   const title = isLocal
     ? t`Local timeline (${instance})`
     : t`Federated timeline (${instance})`;
@@ -31,9 +33,32 @@ function Public({ local, columnMode, ...props }) {
   // const navigate = useNavigate();
   const latestItem = useRef();
 
+  // Timeline access: public, authenticated, disabled
+  const [timelineAccess, setTimelineAccess] = useState(null);
+  const isDisabled = timelineAccess === 'disabled';
+  const requiresAuth = timelineAccess === 'authenticated';
+  const isPrivate = requiresAuth && !authenticated;
+
   const publicIterator = useRef();
   async function fetchPublic(firstLoad) {
     if (firstLoad || !publicIterator.current) {
+      const access = await checkTimelineAccess(
+        masto,
+        instance,
+        'liveFeeds',
+        isLocal ? 'local' : 'remote',
+      );
+      setTimelineAccess(access);
+      if (
+        (access === 'authenticated' && !authenticated) ||
+        access !== 'public'
+      ) {
+        return {
+          done: true,
+          value: [],
+        };
+      }
+
       const opts = {
         limit: LIMIT,
         local: isLocal || undefined,
@@ -62,6 +87,7 @@ function Public({ local, columnMode, ...props }) {
   }
 
   async function checkForUpdates() {
+    if (isDisabled || isPrivate) return false;
     try {
       const results = await masto.v1.timelines.public
         .list({
@@ -95,7 +121,13 @@ function Public({ local, columnMode, ...props }) {
       }
       id="public"
       instance={instance}
-      emptyText={t`No one has posted anything yet.`}
+      emptyText={
+        isDisabled
+          ? t`This timeline is disabled on this server.`
+          : isPrivate
+            ? t`Login required to see posts from this server.`
+            : t`No one has posted anything yet.`
+      }
       errorText={t`Unable to load posts`}
       fetchItems={fetchPublic}
       checkForUpdates={checkForUpdates}

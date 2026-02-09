@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-09 02:36\n"
+"PO-Revision-Date: 2026-02-09 03:41\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1741,11 +1741,11 @@ msgstr "隐藏结果"
 #: src/components/poll.jsx:288
 #: src/components/poll.jsx:304
 msgid "{0, plural, one {# choice} other {# choices}}"
-msgstr ""
+msgstr "{0, plural, other {# 项}}"
 
 #: src/components/poll.jsx:221
 msgid "Unable to vote in poll"
-msgstr ""
+msgstr "无法参与此投票"
 
 #: src/components/poll.jsx:277
 msgid "Vote"
@@ -2326,7 +2326,7 @@ msgstr "仅限本站"
 #: src/components/shortcuts-settings.jsx:123
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "实例"
 
 #: src/components/shortcuts-settings.jsx:79
 #: src/components/shortcuts-settings.jsx:88
@@ -2471,7 +2471,7 @@ msgstr "在此粘贴快捷方式配置"
 
 #: src/components/shortcuts-settings.jsx:844
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "正在从实例下载保存的快捷键配置…"
 
 #: src/components/shortcuts-settings.jsx:872
 msgid "Unable to download shortcuts"
@@ -2479,7 +2479,7 @@ msgstr "无法下载快捷方式"
 
 #: src/components/shortcuts-settings.jsx:875
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "从实例下载快捷键配置"
 
 #: src/components/shortcuts-settings.jsx:942
 msgid "* Exists in current shortcuts"
@@ -2544,7 +2544,7 @@ msgstr "无法复制快捷方式"
 
 #: src/components/shortcuts-settings.jsx:1118
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "正在将快捷键配置保存到实例…"
 
 #: src/components/shortcuts-settings.jsx:1125
 msgid "Shortcuts saved"
@@ -2556,7 +2556,7 @@ msgstr "无法保存快捷方式"
 
 #: src/components/shortcuts-settings.jsx:1133
 msgid "Sync to server"
-msgstr ""
+msgstr "同步到实例"
 
 #: src/components/shortcuts-settings.jsx:1148
 msgid "Shortcut settings copied"
@@ -2581,7 +2581,7 @@ msgstr "原始快捷方式 JSON"
 
 #: src/components/shortcuts-settings.jsx:1212
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "从实例导入或导出设置（很不稳定）"
 
 #: src/components/status.jsx:288
 msgid "Private posts cannot be quoted"
@@ -2616,7 +2616,7 @@ msgstr "<0/> <1>转嘟了</1>"
 
 #: src/components/status.jsx:736
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr ""
+msgstr "抱歉，你当前登录的实例无法与该外站嘟文互动。"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:925
@@ -3148,11 +3148,11 @@ msgstr "无法获取账户信息"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:585
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "切换到该账户所在实例 {0}"
 
 #: src/pages/account-statuses.jsx:615
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "切换到我的实例 (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:688
 msgid "Month"
@@ -3333,7 +3333,7 @@ msgstr "直至上次补看 ({0})"
 
 #: src/pages/catchup.jsx:1159
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "注意: 无论时间范围如何，你的实例可能在主页时间线中最多只显示800条嘟文。这个值可能会更少或更多。"
 
 #: src/pages/catchup.jsx:1169
 msgid "Previously…"
@@ -3649,13 +3649,13 @@ msgstr "{hashtagTitle}"
 #: src/pages/public.jsx:126
 #: src/pages/trending.jsx:477
 msgid "This timeline is disabled on this server."
-msgstr ""
+msgstr "此实例已经停用这一时间线。"
 
 #: src/pages/hashtag.jsx:210
 #: src/pages/public.jsx:128
 #: src/pages/trending.jsx:479
 msgid "Login required to see posts from this server."
-msgstr ""
+msgstr "登录后才可查看此实例上的嘟文。"
 
 #: src/pages/hashtag.jsx:211
 msgid "No one has posted anything with this tag yet."
@@ -3726,25 +3726,25 @@ msgstr "添加到快捷方式"
 #: src/pages/public.jsx:173
 #: src/pages/trending.jsx:511
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "输入一个新实例地址，例如 ”mastodon.social“"
 
 #: src/pages/hashtag.jsx:522
 #: src/pages/public.jsx:176
 #: src/pages/trending.jsx:514
 msgid "Invalid server"
-msgstr ""
+msgstr "实例无效"
 
 #: src/pages/hashtag.jsx:536
 #: src/pages/public.jsx:190
 #: src/pages/trending.jsx:526
 msgid "Go to another server…"
-msgstr ""
+msgstr "转到另一实例…"
 
 #: src/pages/hashtag.jsx:549
 #: src/pages/public.jsx:203
 #: src/pages/trending.jsx:537
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "转到我所在的实例 (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:224
 msgid "Unable to fetch notifications."
@@ -3796,7 +3796,7 @@ msgstr "注册应用失败"
 
 #: src/pages/login.jsx:246
 msgid "server domain"
-msgstr ""
+msgstr "实例域名"
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -3804,7 +3804,7 @@ msgstr "例如：“mastodon.social”"
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "登录失败。请重试或登录其它实例。"
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4142,7 +4142,7 @@ msgstr "默认可见性修改失败"
 
 #: src/pages/settings.jsx:354
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "已同步到你账号所在实例的设置。<0>前往你所在的实例 ({instance}) 查看更多设置。</0>"
 
 #: src/pages/settings.jsx:369
 msgid "Experiments"
@@ -4215,7 +4215,7 @@ msgstr "⚠️⚠️⚠️ 非常不稳定。<0/>配置存储于你对自己账�
 
 #: src/pages/settings.jsx:656
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "注意: 此功能使用了当前登录的站点的服务端 API。"
 
 #: src/pages/settings.jsx:672
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4344,7 +4344,7 @@ msgstr "你尚未登录。互动 ()"
 
 #: src/pages/status.jsx:1088
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "此嘟文加载自其它实例 (<0>{instance}</0>)。 无法进行互动 (回复、转嘟等)。"
 
 #: src/pages/status.jsx:1116
 msgid "Error: {e}"
@@ -4352,7 +4352,7 @@ msgstr "错误: {e}"
 
 #: src/pages/status.jsx:1123
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "切换到我所在的实例以进行互动"
 
 #: src/pages/status.jsx:1231
 msgid "Unable to load replies."
@@ -4403,11 +4403,11 @@ msgstr "无法切换"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1631
 msgid "Switch to post's server ({0})"
-msgstr ""
+msgstr "切换到此嘟文所在的实例 ({0})"
 
 #: src/pages/status.jsx:1634
 msgid "Switch to post's server"
-msgstr ""
+msgstr "切换到此嘟文所在的实例"
 
 #: src/pages/status.jsx:1647
 msgid "View Edit History Snapshots"
@@ -4481,11 +4481,11 @@ msgstr "连接你现有的 Mastodon/Fediverse 账户。<0/>你的凭据不会在
 
 #: src/pages/welcome.jsx:96
 msgid "Screenshot of Phanpy home timeline on mobile device"
-msgstr ""
+msgstr "Phanpy 在移动设备上显示主页时间线的截图"
 
 #: src/pages/welcome.jsx:113
 msgid "Screenshot of Phanpy home timeline on tablet device"
-msgstr ""
+msgstr "Phanpy 在大屏移动设备上显示主页时间线的截图"
 
 #: src/pages/welcome.jsx:127
 msgid "Screenshot of Boosts Carousel"

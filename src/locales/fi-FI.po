@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-09 02:36\n"
+"PO-Revision-Date: 2026-02-09 08:51\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1178,12 +1178,12 @@ msgstr "Median kuvaus"
 #: src/components/status.jsx:3027
 #: src/pages/account-statuses.jsx:559
 #: src/pages/accounts.jsx:127
-#: src/pages/hashtag.jsx:230
+#: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
-#: src/pages/public.jsx:148
+#: src/pages/public.jsx:147
 #: src/pages/scheduled-posts.jsx:89
 #: src/pages/status.jsx:1552
-#: src/pages/trending.jsx:504
+#: src/pages/trending.jsx:474
 msgid "More"
 msgstr "Lisää"
 
@@ -1393,7 +1393,7 @@ msgstr "Kiinnikuronta"
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
 #: src/pages/settings.jsx:1261
-#: src/pages/trending.jsx:408
+#: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "Maininnat"
 
@@ -1450,7 +1450,7 @@ msgstr "Seurattavat aihetunnisteet"
 #: src/pages/account-statuses.jsx:332
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
-#: src/pages/hashtag.jsx:371
+#: src/pages/hashtag.jsx:373
 msgid "Filters"
 msgstr "Suodattimet"
 
@@ -1485,7 +1485,7 @@ msgstr "Kirjaudu sisään"
 #: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:173
-#: src/pages/trending.jsx:468
+#: src/pages/trending.jsx:444
 msgid "Trending"
 msgstr "Suositut"
 
@@ -2038,7 +2038,7 @@ msgid "Don't feature on profile"
 msgstr "Poista esiltä profiilista"
 
 #: src/components/related-actions.jsx:456
-#: src/pages/hashtag.jsx:360
+#: src/pages/hashtag.jsx:362
 msgid "Feature on profile"
 msgstr "Nosta esille profiiliin"
 
@@ -2142,7 +2142,7 @@ msgstr "Peru…"
 
 #: src/components/related-actions.jsx:972
 #: src/components/related-actions.jsx:976
-#: src/pages/hashtag.jsx:292
+#: src/pages/hashtag.jsx:294
 msgid "Follow"
 msgstr "Seuraa"
 
@@ -2347,7 +2347,7 @@ msgid "e.g. PixelArt (Max 5, space-separated)"
 msgstr "esim. PixelArt (enintään 5, välilyönnein eroteltuina)"
 
 #: src/components/shortcuts-settings.jsx:118
-#: src/pages/hashtag.jsx:387
+#: src/pages/hashtag.jsx:389
 msgid "Media only"
 msgstr "Vain media"
 
@@ -3135,8 +3135,8 @@ msgid "Nothing to see here yet."
 msgstr "Täällä ei ole vielä mitään nähtävää."
 
 #: src/pages/account-statuses.jsx:537
-#: src/pages/public.jsx:131
-#: src/pages/trending.jsx:482
+#: src/pages/public.jsx:130
+#: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr "Julkaisua ei voitu ladata"
 
@@ -3645,104 +3645,102 @@ msgstr "{hashtagTitle} (vain media)"
 msgid "{hashtagTitle}"
 msgstr "{hashtagTitle}"
 
-#: src/pages/hashtag.jsx:208
-#: src/pages/public.jsx:126
-#: src/pages/trending.jsx:477
-msgid "This timeline is disabled on this server."
-msgstr ""
-
 #: src/pages/hashtag.jsx:210
-#: src/pages/public.jsx:128
-#: src/pages/trending.jsx:479
-msgid "Login required to see posts from this server."
-msgstr ""
+#: src/pages/public.jsx:125
+msgid "This timeline is disabled on this server."
+msgstr "Tämä aikajana on poistettu käytöstä tällä palvelimella."
 
-#: src/pages/hashtag.jsx:211
+#: src/pages/hashtag.jsx:212
+#: src/pages/public.jsx:127
+msgid "Login required to see posts from this server."
+msgstr "Tämän palvelimen julkaisujen tarkastelemiseen vaaditaan kirjautuminen."
+
+#: src/pages/hashtag.jsx:213
 msgid "No one has posted anything with this tag yet."
 msgstr "Kukaan ei ole julkaissut vielä mitään tällä tunnisteella."
 
-#: src/pages/hashtag.jsx:213
+#: src/pages/hashtag.jsx:215
 msgid "Unable to load posts with this tag"
 msgstr "Julkaisuja tällä tunnisteella ei voitu ladata"
 
-#: src/pages/hashtag.jsx:239
+#: src/pages/hashtag.jsx:241
 msgid "Unfollow #{hashtag}?"
 msgstr "Lopetetaanko tunnisteen #{hashtag} seuraaminen?"
 
-#: src/pages/hashtag.jsx:254
+#: src/pages/hashtag.jsx:256
 msgid "Unfollowed #{hashtag}"
 msgstr "Lopetettu tunnisteen #{hashtag} seuraaminen"
 
-#: src/pages/hashtag.jsx:269
+#: src/pages/hashtag.jsx:271
 msgid "Followed #{hashtag}"
 msgstr "Seurataan tunnistetta #{hashtag}"
 
-#: src/pages/hashtag.jsx:285
+#: src/pages/hashtag.jsx:287
 msgid "Following…"
 msgstr "Seurataan…"
 
-#: src/pages/hashtag.jsx:314
+#: src/pages/hashtag.jsx:316
 msgid "Unfeatured on profile"
 msgstr "Poistettu esiltä profiilista"
 
-#: src/pages/hashtag.jsx:328
+#: src/pages/hashtag.jsx:330
 msgid "Unable to unfeature on profile"
 msgstr "Ei voitu poistaa esiltä profiilista"
 
-#: src/pages/hashtag.jsx:337
-#: src/pages/hashtag.jsx:353
+#: src/pages/hashtag.jsx:339
+#: src/pages/hashtag.jsx:355
 msgid "Featured on profile"
 msgstr "Nostettu esille profiiliin"
 
-#: src/pages/hashtag.jsx:425
+#: src/pages/hashtag.jsx:427
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
 msgstr "{TOTAL_TAGS_LIMIT, plural, other {Enintään # tunnistetta}}"
 
-#: src/pages/hashtag.jsx:428
+#: src/pages/hashtag.jsx:430
 msgid "Add hashtag"
 msgstr "Lisää aihetunniste"
 
-#: src/pages/hashtag.jsx:461
+#: src/pages/hashtag.jsx:463
 msgid "Remove hashtag"
 msgstr "Poista aihetunniste"
 
-#: src/pages/hashtag.jsx:475
+#: src/pages/hashtag.jsx:477
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
 msgstr "{SHORTCUTS_LIMIT, plural, one {Pikavalintojen enimmäismäärä # ylitetty. Pikavalintaa ei voitu lisätä.} other {Pikavalintojen enimmäismäärä # ylitetty. Pikavalintaa ei voitu lisätä.}}"
 
-#: src/pages/hashtag.jsx:504
+#: src/pages/hashtag.jsx:506
 msgid "This shortcut already exists"
 msgstr "Tämä pikavalinta on jo olemassa"
 
-#: src/pages/hashtag.jsx:507
+#: src/pages/hashtag.jsx:509
 msgid "Hashtag shortcut added"
 msgstr "Aihetunnisteen pikavalinta lisätty"
 
-#: src/pages/hashtag.jsx:513
+#: src/pages/hashtag.jsx:515
 msgid "Add to Shortcuts"
 msgstr "Lisää pikavalintoihin"
 
-#: src/pages/hashtag.jsx:519
-#: src/pages/public.jsx:173
-#: src/pages/trending.jsx:511
+#: src/pages/hashtag.jsx:521
+#: src/pages/public.jsx:172
+#: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
 msgstr "Anna uusi palvelin, esim. ”mastodon.social”"
 
-#: src/pages/hashtag.jsx:522
-#: src/pages/public.jsx:176
-#: src/pages/trending.jsx:514
+#: src/pages/hashtag.jsx:524
+#: src/pages/public.jsx:175
+#: src/pages/trending.jsx:484
 msgid "Invalid server"
 msgstr "Virheellinen palvelin"
 
-#: src/pages/hashtag.jsx:536
-#: src/pages/public.jsx:190
-#: src/pages/trending.jsx:526
+#: src/pages/hashtag.jsx:538
+#: src/pages/public.jsx:189
+#: src/pages/trending.jsx:496
 msgid "Go to another server…"
 msgstr "Siirry toisille palvelimelle…"
 
-#: src/pages/hashtag.jsx:549
-#: src/pages/public.jsx:203
-#: src/pages/trending.jsx:537
+#: src/pages/hashtag.jsx:551
+#: src/pages/public.jsx:202
+#: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
 msgstr "Siirry omalle palvelimelle (<0>{currentInstance}</0>)"
 
@@ -3972,23 +3970,23 @@ msgstr "Paikallinen aikajana ({instance})"
 msgid "Federated timeline ({instance})"
 msgstr "Federoitu aikajana ({instance})"
 
-#: src/pages/public.jsx:118
+#: src/pages/public.jsx:117
 msgid "Local timeline"
 msgstr "Paikallinen aikajana"
 
-#: src/pages/public.jsx:118
+#: src/pages/public.jsx:117
 msgid "Federated timeline"
 msgstr "Federoitu aikajana"
 
-#: src/pages/public.jsx:129
+#: src/pages/public.jsx:128
 msgid "No one has posted anything yet."
 msgstr "Kukaan ei ole vielä julkaissut mitään."
 
-#: src/pages/public.jsx:157
+#: src/pages/public.jsx:156
 msgid "Switch to Federated"
 msgstr "Vaihda federoituun"
 
-#: src/pages/public.jsx:164
+#: src/pages/public.jsx:163
 msgid "Switch to Local"
 msgstr "Vaihda paikalliseen"
 
@@ -4432,34 +4430,34 @@ msgstr "{totalComments, plural, one {# kommentti} other {<0>{0}</0> kommenttia}
 msgid "View post with its replies"
 msgstr "Näytä julkaisu vastauksineen"
 
-#: src/pages/trending.jsx:78
+#: src/pages/trending.jsx:77
 msgid "Trending ({instance})"
 msgstr "Suositut ({instance})"
 
-#: src/pages/trending.jsx:259
+#: src/pages/trending.jsx:235
 msgid "Trending News"
 msgstr "Suositut uutiset"
 
 #. By [Author]
 #. placeholder {0}: author ? ( <NameText account={author} showAvatar /> ) : authorUrl ? ( <a href={authorUrl} target="_blank" rel="noopener" > {authorName} </a> ) : ( authorName )
-#: src/pages/trending.jsx:374
+#: src/pages/trending.jsx:350
 msgid "By {0}"
 msgstr "Tehnyt {0}"
 
-#: src/pages/trending.jsx:435
+#: src/pages/trending.jsx:411
 msgid "Back to showing trending posts"
 msgstr "Takaisin katsomaan suosittuja julkaisuja"
 
 #. placeholder {0}: currentLink .replace(/^https?:\/\/(www\.)?/i, '') .replace(/\/$/, '')
-#: src/pages/trending.jsx:440
+#: src/pages/trending.jsx:416
 msgid "Showing posts mentioning <0>{0}</0>"
 msgstr "Näytetään julkaisut, joissa mainitaan <0>{0}</0>"
 
-#: src/pages/trending.jsx:452
+#: src/pages/trending.jsx:428
 msgid "Trending posts"
 msgstr "Suositut julkaisut"
 
-#: src/pages/trending.jsx:480
+#: src/pages/trending.jsx:451
 msgid "No trending posts."
 msgstr "Ei suosittuja julkaisuja."
 

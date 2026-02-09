@@ -82,14 +82,16 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
     // const results = await hashtagsIterator.current.next();
 
     // NOTE: Temporary fix for listHashtag not persisting `any` in subsequent calls.
-    const access = await checkTimelineAccess(
-      masto,
+    const access = await checkTimelineAccess({
+      feed: 'hashtagFeeds',
+      feedType: 'local',
       instance,
-      'hashtagFeeds',
-      'public',
-    );
+    });
     setTimelineAccess(access);
-    if ((access === 'authenticated' && !authenticated) || access !== 'public') {
+    if (
+      access === 'disabled' ||
+      (access === 'authenticated' && !authenticated)
+    ) {
       return {
         done: true,
         value: [],

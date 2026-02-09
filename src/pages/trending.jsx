@@ -24,7 +24,6 @@ import pmem from '../utils/pmem';
 import shortenNumber from '../utils/shorten-number';
 import states, { saveStatus } from '../utils/states';
 import supports from '../utils/supports';
-import { checkTimelineAccess } from '../utils/timeline-access';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -82,12 +81,6 @@ function Trending({ columnMode, ...props }) {
 
   const sameCurrentInstance = instance === currentInstance;
 
-  // Timeline access: public, authenticated, disabled
-  const [timelineAccess, setTimelineAccess] = useState(null);
-  const isDisabled = timelineAccess === 'disabled';
-  const requiresAuth = timelineAccess === 'authenticated';
-  const isPrivate = requiresAuth && !authenticated;
-
   const [hashtags, setHashtags] = useState([]);
   const [links, setLinks] = useState([]);
   const trendIterator = useRef();
@@ -95,23 +88,6 @@ function Trending({ columnMode, ...props }) {
   async function fetchTrends(firstLoad) {
     console.log('fetchTrend', firstLoad);
     if (firstLoad || !trendIterator.current) {
-      const access = await checkTimelineAccess(
-        masto,
-        instance,
-        'trendingLinkFeeds',
-        'public',
-      );
-      setTimelineAccess(access);
-      if (
-        (access === 'authenticated' && !authenticated) ||
-        access !== 'public'
-      ) {
-        return {
-          done: true,
-          value: [],
-        };
-      }
-
       trendIterator.current = fetchTrendsStatuses(masto);
 
       // Get hashtags
@@ -472,13 +448,7 @@ function Trending({ columnMode, ...props }) {
       }
       id="trending"
       instance={instance}
-      emptyText={
-        isDisabled
-          ? t`This timeline is disabled on this server.`
-          : isPrivate
-            ? t`Login required to see posts from this server.`
-            : t`No trending posts.`
-      }
+      emptyText={t`No trending posts.`}
       errorText={t`Unable to load posts`}
       fetchItems={hasCurrentLink ? fetchLinkMentions : fetchTrends}
       checkForUpdates={hasCurrentLink ? undefined : checkForUpdates}

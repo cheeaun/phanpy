@@ -42,16 +42,15 @@ function Public({ local, columnMode, ...props }) {
   const publicIterator = useRef();
   async function fetchPublic(firstLoad) {
     if (firstLoad || !publicIterator.current) {
-      const access = await checkTimelineAccess(
-        masto,
+      const access = await checkTimelineAccess({
+        feed: 'liveFeeds',
+        feedType: isLocal ? 'local' : 'remote',
         instance,
-        'liveFeeds',
-        isLocal ? 'local' : 'remote',
-      );
+      });
       setTimelineAccess(access);
       if (
-        (access === 'authenticated' && !authenticated) ||
-        access !== 'public'
+        access === 'disabled' ||
+        (access === 'authenticated' && !authenticated)
       ) {
         return {
           done: true,

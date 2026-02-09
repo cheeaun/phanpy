@@ -1,12 +1,12 @@
 import store from './store';
 
 // Mock data to test timeline access controls
-export const MOCK_INSTANCES = {
+const MOCK_INSTANCES = {
   'disabled.example.com': 'disabled',
   'authenticated.example.com': 'authenticated',
 };
 
-// feeds = liveFeeds, trendingFeed, hashtagFeed
+// feeds = liveFeeds, trendingLinkFeeds, hashtagFeeds
 // feedType = local, remote
 export async function checkTimelineAccess(masto, instance, feeds, feedType) {
   try {

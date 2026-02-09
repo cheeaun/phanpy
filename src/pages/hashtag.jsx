@@ -85,7 +85,7 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
     const access = await checkTimelineAccess(
       masto,
       instance,
-      'hashtagFeed',
+      'hashtagFeeds',
       'public',
     );
     setTimelineAccess(access);

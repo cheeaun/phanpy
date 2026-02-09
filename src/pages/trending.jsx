@@ -98,7 +98,7 @@ function Trending({ columnMode, ...props }) {
       const access = await checkTimelineAccess(
         masto,
         instance,
-        'trendingFeed',
+        'trendingLinkFeeds',
         'public',
       );
       setTimelineAccess(access);

@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-09 02:36\n"
+"PO-Revision-Date: 2026-02-09 14:25\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1178,12 +1178,12 @@ msgstr "Descripción de la imagen"
 #: src/components/status.jsx:3027
 #: src/pages/account-statuses.jsx:559
 #: src/pages/accounts.jsx:127
-#: src/pages/hashtag.jsx:230
+#: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
-#: src/pages/public.jsx:148
+#: src/pages/public.jsx:147
 #: src/pages/scheduled-posts.jsx:89
 #: src/pages/status.jsx:1552
-#: src/pages/trending.jsx:504
+#: src/pages/trending.jsx:474
 msgid "More"
 msgstr "Más"
 
@@ -1393,7 +1393,7 @@ msgstr "Ponerse al día"
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
 #: src/pages/settings.jsx:1261
-#: src/pages/trending.jsx:408
+#: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "Menciones"
 
@@ -1450,7 +1450,7 @@ msgstr "Etiquetas seguidas"
 #: src/pages/account-statuses.jsx:332
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
-#: src/pages/hashtag.jsx:371
+#: src/pages/hashtag.jsx:373
 msgid "Filters"
 msgstr "Filtros"
 
@@ -1485,7 +1485,7 @@ msgstr "Inicia sesión"
 #: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:173
-#: src/pages/trending.jsx:468
+#: src/pages/trending.jsx:444
 msgid "Trending"
 msgstr "Tendencias"
 
@@ -2038,7 +2038,7 @@ msgid "Don't feature on profile"
 msgstr "No destacar en el perfil"
 
 #: src/components/related-actions.jsx:456
-#: src/pages/hashtag.jsx:360
+#: src/pages/hashtag.jsx:362
 msgid "Feature on profile"
 msgstr "Destacar en el perfil"
 
@@ -2142,7 +2142,7 @@ msgstr "Descartar…"
 
 #: src/components/related-actions.jsx:972
 #: src/components/related-actions.jsx:976
-#: src/pages/hashtag.jsx:292
+#: src/pages/hashtag.jsx:294
 msgid "Follow"
 msgstr "Seguir"
 
@@ -2347,7 +2347,7 @@ msgid "e.g. PixelArt (Max 5, space-separated)"
 msgstr "p. ej. PixelArt (Max 5, separada por espacios)"
 
 #: src/components/shortcuts-settings.jsx:118
-#: src/pages/hashtag.jsx:387
+#: src/pages/hashtag.jsx:389
 msgid "Media only"
 msgstr "Solo multimedia"
 
@@ -3135,8 +3135,8 @@ msgid "Nothing to see here yet."
 msgstr "No hay nada que ver aquí… todavía."
 
 #: src/pages/account-statuses.jsx:537
-#: src/pages/public.jsx:131
-#: src/pages/trending.jsx:482
+#: src/pages/public.jsx:130
+#: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr "No se han podido cargar las publicaciones"
 
@@ -3645,104 +3645,102 @@ msgstr "{hashtagTitle} (solo multimedia)"
 msgid "{hashtagTitle}"
 msgstr "{hashtagTitle}"
 
-#: src/pages/hashtag.jsx:208
-#: src/pages/public.jsx:126
-#: src/pages/trending.jsx:477
-msgid "This timeline is disabled on this server."
-msgstr ""
-
 #: src/pages/hashtag.jsx:210
-#: src/pages/public.jsx:128
-#: src/pages/trending.jsx:479
-msgid "Login required to see posts from this server."
-msgstr ""
+#: src/pages/public.jsx:125
+msgid "This timeline is disabled on this server."
+msgstr "Esta línea de tiempo está desactivada en este servidor."
 
-#: src/pages/hashtag.jsx:211
+#: src/pages/hashtag.jsx:212
+#: src/pages/public.jsx:127
+msgid "Login required to see posts from this server."
+msgstr "Es necesario iniciar sesión para ver las publicaciones de este servidor."
+
+#: src/pages/hashtag.jsx:213
 msgid "No one has posted anything with this tag yet."
 msgstr "Nadie ha publicado nada con esta etiqueta todavía."
 
-#: src/pages/hashtag.jsx:213
+#: src/pages/hashtag.jsx:215
 msgid "Unable to load posts with this tag"
 msgstr "No se han podido cargar las publicaciones con esta etiqueta"
 
-#: src/pages/hashtag.jsx:239
+#: src/pages/hashtag.jsx:241
 msgid "Unfollow #{hashtag}?"
 msgstr "¿Deseas dejar de seguir la etiqueta #{hashtag}?"
 
-#: src/pages/hashtag.jsx:254
+#: src/pages/hashtag.jsx:256
 msgid "Unfollowed #{hashtag}"
 msgstr "Se ha dejado de seguir la etiqueta #{hashtag}"
 
-#: src/pages/hashtag.jsx:269
+#: src/pages/hashtag.jsx:271
 msgid "Followed #{hashtag}"
 msgstr "Se ha comenzado a seguir la etiqueta #{hashtag}"
 
-#: src/pages/hashtag.jsx:285
+#: src/pages/hashtag.jsx:287
 msgid "Following…"
 msgstr "Siguiendo…"
 
-#: src/pages/hashtag.jsx:314
+#: src/pages/hashtag.jsx:316
 msgid "Unfeatured on profile"
 msgstr "No destacado en el perfil"
 
-#: src/pages/hashtag.jsx:328
+#: src/pages/hashtag.jsx:330
 msgid "Unable to unfeature on profile"
 msgstr "No se ha podido desactivar en el perfil"
 
-#: src/pages/hashtag.jsx:337
-#: src/pages/hashtag.jsx:353
+#: src/pages/hashtag.jsx:339
+#: src/pages/hashtag.jsx:355
 msgid "Featured on profile"
 msgstr "Destacado en el perfil"
 
-#: src/pages/hashtag.jsx:425
+#: src/pages/hashtag.jsx:427
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
 msgstr "{TOTAL_TAGS_LIMIT, plural, one {}other {Máximo # etiquetas}}"
 
-#: src/pages/hashtag.jsx:428
+#: src/pages/hashtag.jsx:430
 msgid "Add hashtag"
 msgstr "Añadir etiqueta"
 
-#: src/pages/hashtag.jsx:461
+#: src/pages/hashtag.jsx:463
 msgid "Remove hashtag"
 msgstr "Eliminar etiqueta"
 
-#: src/pages/hashtag.jsx:475
+#: src/pages/hashtag.jsx:477
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
 msgstr "{SHORTCUTS_LIMIT, plural, one {Se ha alcanzado el límite máximo de # atajos. No se ha podido añadir el atajo.} other {Se ha alcanzado el límite máximo de # atajos. No se ha podido añadir el atajo.}}"
 
-#: src/pages/hashtag.jsx:504
+#: src/pages/hashtag.jsx:506
 msgid "This shortcut already exists"
 msgstr "Este atajo ya existe"
 
-#: src/pages/hashtag.jsx:507
+#: src/pages/hashtag.jsx:509
 msgid "Hashtag shortcut added"
 msgstr "Atajo de etiqueta añadido"
 
-#: src/pages/hashtag.jsx:513
+#: src/pages/hashtag.jsx:515
 msgid "Add to Shortcuts"
 msgstr "Añadir a atajos"
 
-#: src/pages/hashtag.jsx:519
-#: src/pages/public.jsx:173
-#: src/pages/trending.jsx:511
+#: src/pages/hashtag.jsx:521
+#: src/pages/public.jsx:172
+#: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
 msgstr "Introduce un nuevo servidor, por ejemplo, \"mastodon.social\""
 
-#: src/pages/hashtag.jsx:522
-#: src/pages/public.jsx:176
-#: src/pages/trending.jsx:514
+#: src/pages/hashtag.jsx:524
+#: src/pages/public.jsx:175
+#: src/pages/trending.jsx:484
 msgid "Invalid server"
 msgstr "Servidor inválido"
 
-#: src/pages/hashtag.jsx:536
-#: src/pages/public.jsx:190
-#: src/pages/trending.jsx:526
+#: src/pages/hashtag.jsx:538
+#: src/pages/public.jsx:189
+#: src/pages/trending.jsx:496
 msgid "Go to another server…"
 msgstr "Ir a otro servidor…"
 
-#: src/pages/hashtag.jsx:549
-#: src/pages/public.jsx:203
-#: src/pages/trending.jsx:537
+#: src/pages/hashtag.jsx:551
+#: src/pages/public.jsx:202
+#: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
 msgstr "Ir a mi servidor (<0>{currentInstance}</0>)"
 
@@ -3972,23 +3970,23 @@ msgstr "Línea de tiempo local ({instance})"
 msgid "Federated timeline ({instance})"
 msgstr "Línea temporal federada ({instance})"
 
-#: src/pages/public.jsx:118
+#: src/pages/public.jsx:117
 msgid "Local timeline"
 msgstr "Línea de tiempo local"
 
-#: src/pages/public.jsx:118
+#: src/pages/public.jsx:117
 msgid "Federated timeline"
 msgstr "Línea temporal federada"
 
-#: src/pages/public.jsx:129
+#: src/pages/public.jsx:128
 msgid "No one has posted anything yet."
 msgstr "Nadie ha publicado nada todavía."
 
-#: src/pages/public.jsx:157
+#: src/pages/public.jsx:156
 msgid "Switch to Federated"
 msgstr "Cambiar a Federado"
 
-#: src/pages/public.jsx:164
+#: src/pages/public.jsx:163
 msgid "Switch to Local"
 msgstr "Cambiar a Local"
 
@@ -4432,34 +4430,34 @@ msgstr "{totalComments, plural, one {# comentario} other {<0>{0}</0> comentarios
 msgid "View post with its replies"
 msgstr "Ver publicación con sus respuestas"
 
-#: src/pages/trending.jsx:78
+#: src/pages/trending.jsx:77
 msgid "Trending ({instance})"
 msgstr "Tendencias ({instance})"
 
-#: src/pages/trending.jsx:259
+#: src/pages/trending.jsx:235
 msgid "Trending News"
 msgstr "Noticias populares"
 
 #. By [Author]
 #. placeholder {0}: author ? ( <NameText account={author} showAvatar /> ) : authorUrl ? ( <a href={authorUrl} target="_blank" rel="noopener" > {authorName} </a> ) : ( authorName )
-#: src/pages/trending.jsx:374
+#: src/pages/trending.jsx:350
 msgid "By {0}"
 msgstr "Por {0}"
 
-#: src/pages/trending.jsx:435
+#: src/pages/trending.jsx:411
 msgid "Back to showing trending posts"
 msgstr "Volver a mostrar publicaciones en tendencia"
 
 #. placeholder {0}: currentLink .replace(/^https?:\/\/(www\.)?/i, '') .replace(/\/$/, '')
-#: src/pages/trending.jsx:440
+#: src/pages/trending.jsx:416
 msgid "Showing posts mentioning <0>{0}</0>"
 msgstr "Mostrando publicaciones que mencionan <0>{0}</0>"
 
-#: src/pages/trending.jsx:452
+#: src/pages/trending.jsx:428
 msgid "Trending posts"
 msgstr "Publicaciones en tendencia"
 
-#: src/pages/trending.jsx:480
+#: src/pages/trending.jsx:451
 msgid "No trending posts."
 msgstr "No hay publicaciones en tendencia."
 

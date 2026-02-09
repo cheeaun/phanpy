@@ -8,7 +8,7 @@ msgstr ""
 "Language: uk\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-08 21:05\n"
+"PO-Revision-Date: 2026-02-09 02:36\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -33,12 +33,12 @@ msgid "Last posted: {0}"
 msgstr "Останній допис: {0}"
 
 #: src/components/account-block.jsx:170
-#: src/components/account-info.jsx:716
+#: src/components/account-info.jsx:726
 msgid "Automated"
 msgstr "Автоматизовано"
 
 #: src/components/account-block.jsx:177
-#: src/components/account-info.jsx:721
+#: src/components/account-info.jsx:731
 #: src/components/status.jsx:605
 msgid "Group"
 msgstr "Група"
@@ -67,14 +67,14 @@ msgid "{followersCount, plural, one {# follower} other {# followers}}"
 msgstr "{followersCount, plural, one {# підписник} many {# підписників} other {# підписники}}"
 
 #: src/components/account-block.jsx:216
-#: src/components/account-info.jsx:764
+#: src/components/account-info.jsx:774
 msgid "Verified"
 msgstr "Верифіковано"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:231
-#: src/components/account-info.jsx:903
+#: src/components/account-info.jsx:913
 msgid "Joined <0>{0}</0>"
 msgstr "Приєднав(-ла)ся <0>{0}</0>"
 
@@ -102,81 +102,81 @@ msgstr "Перейти на сторінку облікового запису"
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> вказав(-ла), що новий обліковий запис зараз:"
 
-#: src/components/account-info.jsx:607
+#: src/components/account-info.jsx:617
 #: src/components/related-actions.jsx:530
 msgid "Handle copied"
 msgstr "Ідентифікатор скопійовано"
 
-#: src/components/account-info.jsx:610
+#: src/components/account-info.jsx:620
 #: src/components/related-actions.jsx:533
 msgid "Unable to copy handle"
 msgstr "Не вдалося скопіювати ідентифікатор"
 
-#: src/components/account-info.jsx:616
+#: src/components/account-info.jsx:626
 #: src/components/related-actions.jsx:539
 msgid "Copy handle"
 msgstr "Скопіювати ідентифікатор"
 
-#: src/components/account-info.jsx:634
+#: src/components/account-info.jsx:644
 #: src/components/related-actions.jsx:255
 #: src/components/related-actions.jsx:604
 #: src/components/shortcuts-settings.jsx:1081
 msgid "QR code"
 msgstr "QR-код"
 
-#: src/components/account-info.jsx:640
+#: src/components/account-info.jsx:650
 msgid "Go to original profile page"
 msgstr "Перейти на сторінку на сервері"
 
-#: src/components/account-info.jsx:658
+#: src/components/account-info.jsx:668
 msgid "View profile image"
 msgstr "Переглянути зображення профілю"
 
-#: src/components/account-info.jsx:676
+#: src/components/account-info.jsx:686
 msgid "View profile header"
 msgstr "Переглянути шапку профілю"
 
-#: src/components/account-info.jsx:692
+#: src/components/account-info.jsx:702
 #: src/components/edit-profile-sheet.jsx:94
 #: src/components/related-actions.jsx:856
 msgid "Edit profile"
 msgstr "Редагувати профіль"
 
-#: src/components/account-info.jsx:711
+#: src/components/account-info.jsx:721
 msgid "In Memoriam"
 msgstr "Вічна пам'ять"
 
-#: src/components/account-info.jsx:786
+#: src/components/account-info.jsx:796
 #: src/components/compose.jsx:2004
 #: src/pages/settings.jsx:296
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
 msgstr "Підписники"
 
-#: src/components/account-info.jsx:793
-#: src/components/account-info.jsx:851
+#: src/components/account-info.jsx:803
+#: src/components/account-info.jsx:861
 msgid "This user has chosen to not make this information available."
 msgstr "Цей користувач вирішив не розкривати цю інформацію."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-info.jsx:813
+#: src/components/account-info.jsx:823
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> Підписник} few {<1>{1}</1> Підписники} other {<1>{1}</1> Підписників}}"
 
 #. js-lingui-explicit-id
-#: src/components/account-info.jsx:841
+#: src/components/account-info.jsx:851
 msgid "following.stats"
 msgstr "Підписок"
 
 #. placeholder {0}: shortenNumber(followingCount)
-#: src/components/account-info.jsx:857
+#: src/components/account-info.jsx:867
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, one {<0>{0}</0> Підписка} few {<0>{0}</0> Підписки} other {<0>{0}</0> Підписок}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
-#: src/components/account-info.jsx:881
+#: src/components/account-info.jsx:891
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> Допис} few {<1>{1}</1> Дописи} other {<1>{1}</1> Дописів}}"
 
@@ -184,14 +184,14 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> Допис} few {<1>{1}</1> До
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:938
+#: src/components/account-info.jsx:948
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} оригінальних дописів, {1} відповідей, {2} цитувань, {3} поширень"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:955
+#: src/components/account-info.jsx:965
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} дописи, {1} відповіді, {2} поширення"
 
@@ -202,23 +202,23 @@ msgstr "{0} дописи, {1} відповіді, {2} поширення"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:972
+#: src/components/account-info.jsx:982
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {1 останній допис за 1 останній день} other {1 останній допис за {2} останніх днів}}} other {{3, plural, one {Останні {4} дописів за 1 останній день} other {Останні {5} дописів за {6} останніх днів}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:988
+#: src/components/account-info.jsx:998
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {{1}  допис} few {{1} дописи} many {{1} дописів} other {{1} дописи}} за останній рік чи роки"
 
-#: src/components/account-info.jsx:1046
+#: src/components/account-info.jsx:1056
 #: src/pages/catchup.jsx:73
 #: src/pages/year-in-posts.jsx:1388
 msgid "Original"
 msgstr "Оригінал"
 
-#: src/components/account-info.jsx:1050
+#: src/components/account-info.jsx:1060
 #: src/components/status.jsx:2733
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1575
@@ -229,7 +229,7 @@ msgstr "Оригінал"
 msgid "Replies"
 msgstr "Відповіді"
 
-#: src/components/account-info.jsx:1055
+#: src/components/account-info.jsx:1065
 #: src/components/quotes-modal.jsx:81
 #: src/components/status.jsx:2738
 #: src/pages/catchup.jsx:75
@@ -238,7 +238,7 @@ msgstr "Відповіді"
 msgid "Quotes"
 msgstr "Цитати"
 
-#: src/components/account-info.jsx:1060
+#: src/components/account-info.jsx:1070
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1577
 #: src/pages/catchup.jsx:2242
@@ -247,11 +247,11 @@ msgstr "Цитати"
 msgid "Boosts"
 msgstr "Поширення"
 
-#: src/components/account-info.jsx:1066
+#: src/components/account-info.jsx:1076
 msgid "Post stats unavailable."
 msgstr "Статистика дописів недоступна."
 
-#: src/components/account-info.jsx:1093
+#: src/components/account-info.jsx:1103
 msgid "View post stats"
 msgstr "Переглянути статистику дописів"
 
@@ -1178,12 +1178,12 @@ msgstr "Опис медіа"
 #: src/components/status.jsx:3027
 #: src/pages/account-statuses.jsx:559
 #: src/pages/accounts.jsx:127
-#: src/pages/hashtag.jsx:203
+#: src/pages/hashtag.jsx:230
 #: src/pages/list.jsx:171
-#: src/pages/public.jsx:116
+#: src/pages/public.jsx:148
 #: src/pages/scheduled-posts.jsx:89
 #: src/pages/status.jsx:1552
-#: src/pages/trending.jsx:474
+#: src/pages/trending.jsx:504
 msgid "More"
 msgstr "Більше"
 
@@ -1393,7 +1393,7 @@ msgstr "Ретроспектива"
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
 #: src/pages/settings.jsx:1261
-#: src/pages/trending.jsx:384
+#: src/pages/trending.jsx:408
 msgid "Mentions"
 msgstr "Згадки"
 
@@ -1450,7 +1450,7 @@ msgstr "Відстежувані хештеґи"
 #: src/pages/account-statuses.jsx:332
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
-#: src/pages/hashtag.jsx:344
+#: src/pages/hashtag.jsx:371
 msgid "Filters"
 msgstr "Фільтри"
 
@@ -1485,7 +1485,7 @@ msgstr "Увійти"
 #: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:173
-#: src/pages/trending.jsx:444
+#: src/pages/trending.jsx:468
 msgid "Trending"
 msgstr "Популярне"
 
@@ -2038,7 +2038,7 @@ msgid "Don't feature on profile"
 msgstr "Не рекомендувати в профілі"
 
 #: src/components/related-actions.jsx:456
-#: src/pages/hashtag.jsx:333
+#: src/pages/hashtag.jsx:360
 msgid "Feature on profile"
 msgstr "Рекомендувати в профілі"
 
@@ -2142,7 +2142,7 @@ msgstr "Відкликати…"
 
 #: src/components/related-actions.jsx:972
 #: src/components/related-actions.jsx:976
-#: src/pages/hashtag.jsx:265
+#: src/pages/hashtag.jsx:292
 msgid "Follow"
 msgstr "Підписатися"
 
@@ -2347,7 +2347,7 @@ msgid "e.g. PixelArt (Max 5, space-separated)"
 msgstr "напр. PixelArt (Макс 5, розділені пробілом)"
 
 #: src/components/shortcuts-settings.jsx:118
-#: src/pages/hashtag.jsx:360
+#: src/pages/hashtag.jsx:387
 msgid "Media only"
 msgstr "Лише медіа"
 
@@ -3135,8 +3135,8 @@ msgid "Nothing to see here yet."
 msgstr "Поки що тут нічого нема."
 
 #: src/pages/account-statuses.jsx:537
-#: src/pages/public.jsx:99
-#: src/pages/trending.jsx:452
+#: src/pages/public.jsx:131
+#: src/pages/trending.jsx:482
 msgid "Unable to load posts"
 msgstr "Не вдалося завантажити дописи"
 
@@ -3629,108 +3629,120 @@ msgstr "Немає на що дивитись."
 msgid "Unable to load posts."
 msgstr "Не вдалося завантажити дописи."
 
-#: src/pages/hashtag.jsx:56
+#: src/pages/hashtag.jsx:57
 msgid "{hashtagTitle} (Media only) on {instance}"
 msgstr "{hashtagTitle} (Лише медіа) на {instance}"
 
-#: src/pages/hashtag.jsx:57
+#: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} on {instance}"
 msgstr "{hashtagTitle} на {instance}"
 
-#: src/pages/hashtag.jsx:59
+#: src/pages/hashtag.jsx:60
 msgid "{hashtagTitle} (Media only)"
 msgstr "{hashtagTitle} (Лише медіа)"
 
-#: src/pages/hashtag.jsx:60
+#: src/pages/hashtag.jsx:61
 msgid "{hashtagTitle}"
 msgstr "{hashtagTitle}"
 
-#: src/pages/hashtag.jsx:185
+#: src/pages/hashtag.jsx:208
+#: src/pages/public.jsx:126
+#: src/pages/trending.jsx:477
+msgid "This timeline is disabled on this server."
+msgstr ""
+
+#: src/pages/hashtag.jsx:210
+#: src/pages/public.jsx:128
+#: src/pages/trending.jsx:479
+msgid "Login required to see posts from this server."
+msgstr ""
+
+#: src/pages/hashtag.jsx:211
 msgid "No one has posted anything with this tag yet."
 msgstr "Жодного допису із цим хештеґом."
 
-#: src/pages/hashtag.jsx:186
+#: src/pages/hashtag.jsx:213
 msgid "Unable to load posts with this tag"
 msgstr "Не вдалося завантажити дописи із цим хештеґом."
 
-#: src/pages/hashtag.jsx:212
+#: src/pages/hashtag.jsx:239
 msgid "Unfollow #{hashtag}?"
 msgstr "Не відстежувати #{hashtag}?"
 
-#: src/pages/hashtag.jsx:227
+#: src/pages/hashtag.jsx:254
 msgid "Unfollowed #{hashtag}"
 msgstr "#{hashtag} не відстежується"
 
-#: src/pages/hashtag.jsx:242
+#: src/pages/hashtag.jsx:269
 msgid "Followed #{hashtag}"
 msgstr "#{hashtag} відстежується"
 
-#: src/pages/hashtag.jsx:258
+#: src/pages/hashtag.jsx:285
 msgid "Following…"
 msgstr "Відстежуємо…"
 
-#: src/pages/hashtag.jsx:287
+#: src/pages/hashtag.jsx:314
 msgid "Unfeatured on profile"
 msgstr "Не рекомендовано в профілі"
 
-#: src/pages/hashtag.jsx:301
+#: src/pages/hashtag.jsx:328
 msgid "Unable to unfeature on profile"
 msgstr "Не вдалося скасувати рекомендацію в профілі"
 
-#: src/pages/hashtag.jsx:310
-#: src/pages/hashtag.jsx:326
+#: src/pages/hashtag.jsx:337
+#: src/pages/hashtag.jsx:353
 msgid "Featured on profile"
 msgstr "Рекомендовано в профілі"
 
-#: src/pages/hashtag.jsx:398
+#: src/pages/hashtag.jsx:425
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
 msgstr "{TOTAL_TAGS_LIMIT, plural, few {Макс. # теґи} other {Макс. # теґів}}"
 
-#: src/pages/hashtag.jsx:401
+#: src/pages/hashtag.jsx:428
 msgid "Add hashtag"
 msgstr "Додати хештеґ"
 
-#: src/pages/hashtag.jsx:434
+#: src/pages/hashtag.jsx:461
 msgid "Remove hashtag"
 msgstr "Видалити хештеґ"
 
-#: src/pages/hashtag.jsx:448
+#: src/pages/hashtag.jsx:475
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
 msgstr "Досягнуто ліміт в {SHORTCUTS_LIMIT, plural, one {# ярлик.} few {# ярлики.} other {# ярликів.}} Не вдалося додати ярлик."
 
-#: src/pages/hashtag.jsx:477
+#: src/pages/hashtag.jsx:504
 msgid "This shortcut already exists"
 msgstr "Цей ярлик вже існує"
 
-#: src/pages/hashtag.jsx:480
+#: src/pages/hashtag.jsx:507
 msgid "Hashtag shortcut added"
 msgstr "Ярлик хештеґу додано"
 
-#: src/pages/hashtag.jsx:486
+#: src/pages/hashtag.jsx:513
 msgid "Add to Shortcuts"
 msgstr "Додати в Ярлики"
 
-#: src/pages/hashtag.jsx:492
-#: src/pages/public.jsx:141
-#: src/pages/trending.jsx:481
+#: src/pages/hashtag.jsx:519
+#: src/pages/public.jsx:173
+#: src/pages/trending.jsx:511
 msgid "Enter a new server e.g. \"mastodon.social\""
 msgstr "Введіть новий сервер, напр. \"twiukraine.com\""
 
-#: src/pages/hashtag.jsx:495
-#: src/pages/public.jsx:144
-#: src/pages/trending.jsx:484
+#: src/pages/hashtag.jsx:522
+#: src/pages/public.jsx:176
+#: src/pages/trending.jsx:514
 msgid "Invalid server"
 msgstr "Недійсний сервер"
 
-#: src/pages/hashtag.jsx:509
-#: src/pages/public.jsx:158
-#: src/pages/trending.jsx:496
+#: src/pages/hashtag.jsx:536
+#: src/pages/public.jsx:190
+#: src/pages/trending.jsx:526
 msgid "Go to another server…"
 msgstr "Перейти на інший сервер…"
 
-#: src/pages/hashtag.jsx:522
-#: src/pages/public.jsx:171
-#: src/pages/trending.jsx:507
+#: src/pages/hashtag.jsx:549
+#: src/pages/public.jsx:203
+#: src/pages/trending.jsx:537
 msgid "Go to my server (<0>{currentInstance}</0>)"
 msgstr "Перейти до мого серверу (<0>{currentInstance}</0>)"
 
@@ -3952,31 +3964,31 @@ msgstr "Відхилити"
 msgid "Dismissed"
 msgstr "Відхилено"
 
-#: src/pages/public.jsx:28
+#: src/pages/public.jsx:30
 msgid "Local timeline ({instance})"
 msgstr "Локальна стрічка ({instance})"
 
-#: src/pages/public.jsx:29
+#: src/pages/public.jsx:31
 msgid "Federated timeline ({instance})"
 msgstr "Федеративна стрічка ({instance})"
 
-#: src/pages/public.jsx:92
+#: src/pages/public.jsx:118
 msgid "Local timeline"
 msgstr "Локальна стрічка"
 
-#: src/pages/public.jsx:92
+#: src/pages/public.jsx:118
 msgid "Federated timeline"
 msgstr "Федеративна стрічка"
 
-#: src/pages/public.jsx:98
+#: src/pages/public.jsx:129
 msgid "No one has posted anything yet."
 msgstr "Ще ніхто нічого не опублікував."
 
-#: src/pages/public.jsx:125
+#: src/pages/public.jsx:157
 msgid "Switch to Federated"
 msgstr "Перемкнути на Федеративну"
 
-#: src/pages/public.jsx:132
+#: src/pages/public.jsx:164
 msgid "Switch to Local"
 msgstr "Перемкнути на Локальну"
 
@@ -4420,34 +4432,34 @@ msgstr "{totalComments, plural, one {# коментар} few {<0>{0}</0> ком�
 msgid "View post with its replies"
 msgstr "Переглянути допис і відповіді на нього"
 
-#: src/pages/trending.jsx:77
+#: src/pages/trending.jsx:78
 msgid "Trending ({instance})"
 msgstr "Популярне ({instance})"
 
-#: src/pages/trending.jsx:235
+#: src/pages/trending.jsx:259
 msgid "Trending News"
 msgstr "Популярні Новини"
 
 #. By [Author]
 #. placeholder {0}: author ? ( <NameText account={author} showAvatar /> ) : authorUrl ? ( <a href={authorUrl} target="_blank" rel="noopener" > {authorName} </a> ) : ( authorName )
-#: src/pages/trending.jsx:350
+#: src/pages/trending.jsx:374
 msgid "By {0}"
 msgstr "Від {0}"
 
-#: src/pages/trending.jsx:411
+#: src/pages/trending.jsx:435
 msgid "Back to showing trending posts"
 msgstr "Назад до популярних дописів"
 
 #. placeholder {0}: currentLink .replace(/^https?:\/\/(www\.)?/i, '') .replace(/\/$/, '')
-#: src/pages/trending.jsx:416
+#: src/pages/trending.jsx:440
 msgid "Showing posts mentioning <0>{0}</0>"
 msgstr "Показ дописів зі згадкою <0>{0}</0>"
 
-#: src/pages/trending.jsx:428
+#: src/pages/trending.jsx:452
 msgid "Trending posts"
 msgstr "Популярні дописи"
 
-#: src/pages/trending.jsx:451
+#: src/pages/trending.jsx:480
 msgid "No trending posts."
 msgstr "Немає популярних дописів."
 

@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-07 16:37\n"
+"PO-Revision-Date: 2026-02-09 02:36\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -33,12 +33,12 @@ msgid "Last posted: {0}"
 msgstr "最終投稿: {0}"
 
 #: src/components/account-block.jsx:170
-#: src/components/account-info.jsx:716
+#: src/components/account-info.jsx:726
 msgid "Automated"
 msgstr "BOTアカウント"
 
 #: src/components/account-block.jsx:177
-#: src/components/account-info.jsx:721
+#: src/components/account-info.jsx:731
 #: src/components/status.jsx:605
 msgid "Group"
 msgstr "グループ"
@@ -67,14 +67,14 @@ msgid "{followersCount, plural, one {# follower} other {# followers}}"
 msgstr "{followersCount, plural, one {# フォロワー} other {# フォロワー}}"
 
 #: src/components/account-block.jsx:216
-#: src/components/account-info.jsx:764
+#: src/components/account-info.jsx:774
 msgid "Verified"
 msgstr "認証済み"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:231
-#: src/components/account-info.jsx:903
+#: src/components/account-info.jsx:913
 msgid "Joined <0>{0}</0>"
 msgstr "<0>{0}</0> に参加しました"
 
@@ -102,81 +102,81 @@ msgstr "アカウントページに移動"
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0>の新しいアカウント:"
 
-#: src/components/account-info.jsx:607
+#: src/components/account-info.jsx:617
 #: src/components/related-actions.jsx:530
 msgid "Handle copied"
 msgstr "ハンドルをコピーしました"
 
-#: src/components/account-info.jsx:610
+#: src/components/account-info.jsx:620
 #: src/components/related-actions.jsx:533
 msgid "Unable to copy handle"
 msgstr "ハンドルをコピーできません"
 
-#: src/components/account-info.jsx:616
+#: src/components/account-info.jsx:626
 #: src/components/related-actions.jsx:539
 msgid "Copy handle"
 msgstr "ハンドルをコピー"
 
-#: src/components/account-info.jsx:634
+#: src/components/account-info.jsx:644
 #: src/components/related-actions.jsx:255
 #: src/components/related-actions.jsx:604
 #: src/components/shortcuts-settings.jsx:1081
 msgid "QR code"
 msgstr "QRコード"
 
-#: src/components/account-info.jsx:640
+#: src/components/account-info.jsx:650
 msgid "Go to original profile page"
 msgstr "元のプロフィールページに移動"
 
-#: src/components/account-info.jsx:658
+#: src/components/account-info.jsx:668
 msgid "View profile image"
 msgstr "プロフィール画像を表示"
 
-#: src/components/account-info.jsx:676
+#: src/components/account-info.jsx:686
 msgid "View profile header"
 msgstr "プロフィールヘッダーを表示"
 
-#: src/components/account-info.jsx:692
+#: src/components/account-info.jsx:702
 #: src/components/edit-profile-sheet.jsx:94
 #: src/components/related-actions.jsx:856
 msgid "Edit profile"
 msgstr "プロフィールを編集"
 
-#: src/components/account-info.jsx:711
+#: src/components/account-info.jsx:721
 msgid "In Memoriam"
 msgstr ""
 
-#: src/components/account-info.jsx:786
+#: src/components/account-info.jsx:796
 #: src/components/compose.jsx:2004
 #: src/pages/settings.jsx:296
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
 msgstr "フォロワー"
 
-#: src/components/account-info.jsx:793
-#: src/components/account-info.jsx:851
+#: src/components/account-info.jsx:803
+#: src/components/account-info.jsx:861
 msgid "This user has chosen to not make this information available."
 msgstr "このユーザーはこの情報を利用できないように選択しました。"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-info.jsx:813
+#: src/components/account-info.jsx:823
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> フォロワー} other {<1>{1}</1> フォロワー}}"
 
 #. js-lingui-explicit-id
-#: src/components/account-info.jsx:841
+#: src/components/account-info.jsx:851
 msgid "following.stats"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(followingCount)
-#: src/components/account-info.jsx:857
+#: src/components/account-info.jsx:867
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, other {<0>{0}</0> フォロー}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
-#: src/components/account-info.jsx:881
+#: src/components/account-info.jsx:891
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> 投稿} other {<1>{1}</1> 投稿}}"
 
@@ -184,14 +184,14 @@ msgstr "{statusesCount, plural, one {<0>{0}</0> 投稿} other {<1>{1}</1> 投稿
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:938
+#: src/components/account-info.jsx:948
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} 投稿、 {1} 返信、 {2} 引用、 {3} ブースト"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:955
+#: src/components/account-info.jsx:965
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} 投稿、 {1} 返信、 {2} ブースト"
 
@@ -202,23 +202,23 @@ msgstr "{0} 投稿、 {1} 返信、 {2} ブースト"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:972
+#: src/components/account-info.jsx:982
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr ""
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:988
+#: src/components/account-info.jsx:998
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {1 年以内に 1 回の投稿} other {1 年以内に {1} 回の投稿}}"
 
-#: src/components/account-info.jsx:1046
+#: src/components/account-info.jsx:1056
 #: src/pages/catchup.jsx:73
 #: src/pages/year-in-posts.jsx:1388
 msgid "Original"
 msgstr "オリジナル"
 
-#: src/components/account-info.jsx:1050
+#: src/components/account-info.jsx:1060
 #: src/components/status.jsx:2733
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1575
@@ -229,7 +229,7 @@ msgstr "オリジナル"
 msgid "Replies"
 msgstr "返信"
 
-#: src/components/account-info.jsx:1055
+#: src/components/account-info.jsx:1065
 #: src/components/quotes-modal.jsx:81
 #: src/components/status.jsx:2738
 #: src/pages/catchup.jsx:75
@@ -238,7 +238,7 @@ msgstr "返信"
 msgid "Quotes"
 msgstr "引用"
 
-#: src/components/account-info.jsx:1060
+#: src/components/account-info.jsx:1070
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1577
 #: src/pages/catchup.jsx:2242
@@ -247,11 +247,11 @@ msgstr "引用"
 msgid "Boosts"
 msgstr "ブースト"
 
-#: src/components/account-info.jsx:1066
+#: src/components/account-info.jsx:1076
 msgid "Post stats unavailable."
 msgstr "投稿の統計情報を利用できません。"
 
-#: src/components/account-info.jsx:1093
+#: src/components/account-info.jsx:1103
 msgid "View post stats"
 msgstr "投稿の統計を見る"
 
@@ -1178,12 +1178,12 @@ msgstr "メディアの説明"
 #: src/components/status.jsx:3027
 #: src/pages/account-statuses.jsx:559
 #: src/pages/accounts.jsx:127
-#: src/pages/hashtag.jsx:203
+#: src/pages/hashtag.jsx:230
 #: src/pages/list.jsx:171
-#: src/pages/public.jsx:116
+#: src/pages/public.jsx:148
 #: src/pages/scheduled-posts.jsx:89
 #: src/pages/status.jsx:1552
-#: src/pages/trending.jsx:474
+#: src/pages/trending.jsx:504
 msgid "More"
 msgstr "その他"
 
@@ -1393,7 +1393,7 @@ msgstr "キャッチアップ"
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
 #: src/pages/settings.jsx:1261
-#: src/pages/trending.jsx:384
+#: src/pages/trending.jsx:408
 msgid "Mentions"
 msgstr "メンション"
 
@@ -1450,7 +1450,7 @@ msgstr "フォロー中のハッシュタグ"
 #: src/pages/account-statuses.jsx:332
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
-#: src/pages/hashtag.jsx:344
+#: src/pages/hashtag.jsx:371
 msgid "Filters"
 msgstr "フィルター"
 
@@ -1485,7 +1485,7 @@ msgstr "ログイン"
 #: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:173
-#: src/pages/trending.jsx:444
+#: src/pages/trending.jsx:468
 msgid "Trending"
 msgstr "トレンド"
 
@@ -2038,7 +2038,7 @@ msgid "Don't feature on profile"
 msgstr "プロフィールから外す"
 
 #: src/components/related-actions.jsx:456
-#: src/pages/hashtag.jsx:333
+#: src/pages/hashtag.jsx:360
 msgid "Feature on profile"
 msgstr "プロフィールで紹介"
 
@@ -2142,7 +2142,7 @@ msgstr "取り消し…"
 
 #: src/components/related-actions.jsx:972
 #: src/components/related-actions.jsx:976
-#: src/pages/hashtag.jsx:265
+#: src/pages/hashtag.jsx:292
 msgid "Follow"
 msgstr "フォロー"
 
@@ -2347,7 +2347,7 @@ msgid "e.g. PixelArt (Max 5, space-separated)"
 msgstr "例: PixelArt (最大 5 個、スペース区切り)"
 
 #: src/components/shortcuts-settings.jsx:118
-#: src/pages/hashtag.jsx:360
+#: src/pages/hashtag.jsx:387
 msgid "Media only"
 msgstr "メディアのみ対象"
 
@@ -3135,8 +3135,8 @@ msgid "Nothing to see here yet."
 msgstr "ここに表示するものはまだありません。"
 
 #: src/pages/account-statuses.jsx:537
-#: src/pages/public.jsx:99
-#: src/pages/trending.jsx:452
+#: src/pages/public.jsx:131
+#: src/pages/trending.jsx:482
 msgid "Unable to load posts"
 msgstr "ポストを読み込むことができません"
 
@@ -3629,108 +3629,120 @@ msgstr ""
 msgid "Unable to load posts."
 msgstr ""
 
-#: src/pages/hashtag.jsx:56
+#: src/pages/hashtag.jsx:57
 msgid "{hashtagTitle} (Media only) on {instance}"
 msgstr ""
 
-#: src/pages/hashtag.jsx:57
+#: src/pages/hashtag.jsx:58
 msgid "{hashtagTitle} on {instance}"
 msgstr ""
 
-#: src/pages/hashtag.jsx:59
+#: src/pages/hashtag.jsx:60
 msgid "{hashtagTitle} (Media only)"
 msgstr ""
 
-#: src/pages/hashtag.jsx:60
+#: src/pages/hashtag.jsx:61
 msgid "{hashtagTitle}"
 msgstr ""
 
-#: src/pages/hashtag.jsx:185
+#: src/pages/hashtag.jsx:208
+#: src/pages/public.jsx:126
+#: src/pages/trending.jsx:477
+msgid "This timeline is disabled on this server."
+msgstr ""
+
+#: src/pages/hashtag.jsx:210
+#: src/pages/public.jsx:128
+#: src/pages/trending.jsx:479
+msgid "Login required to see posts from this server."
+msgstr ""
+
+#: src/pages/hashtag.jsx:211
 msgid "No one has posted anything with this tag yet."
 msgstr ""
 
-#: src/pages/hashtag.jsx:186
+#: src/pages/hashtag.jsx:213
 msgid "Unable to load posts with this tag"
 msgstr ""
 
-#: src/pages/hashtag.jsx:212
+#: src/pages/hashtag.jsx:239
 msgid "Unfollow #{hashtag}?"
 msgstr ""
 
-#: src/pages/hashtag.jsx:227
+#: src/pages/hashtag.jsx:254
 msgid "Unfollowed #{hashtag}"
 msgstr ""
 
-#: src/pages/hashtag.jsx:242
+#: src/pages/hashtag.jsx:269
 msgid "Followed #{hashtag}"
 msgstr ""
 
-#: src/pages/hashtag.jsx:258
+#: src/pages/hashtag.jsx:285
 msgid "Following…"
 msgstr ""
 
-#: src/pages/hashtag.jsx:287
+#: src/pages/hashtag.jsx:314
 msgid "Unfeatured on profile"
 msgstr ""
 
-#: src/pages/hashtag.jsx:301
+#: src/pages/hashtag.jsx:328
 msgid "Unable to unfeature on profile"
 msgstr ""
 
-#: src/pages/hashtag.jsx:310
-#: src/pages/hashtag.jsx:326
+#: src/pages/hashtag.jsx:337
+#: src/pages/hashtag.jsx:353
 msgid "Featured on profile"
 msgstr ""
 
-#: src/pages/hashtag.jsx:398
+#: src/pages/hashtag.jsx:425
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
 msgstr ""
 
-#: src/pages/hashtag.jsx:401
+#: src/pages/hashtag.jsx:428
 msgid "Add hashtag"
 msgstr ""
 
-#: src/pages/hashtag.jsx:434
+#: src/pages/hashtag.jsx:461
 msgid "Remove hashtag"
 msgstr ""
 
-#: src/pages/hashtag.jsx:448
+#: src/pages/hashtag.jsx:475
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
 msgstr ""
 
-#: src/pages/hashtag.jsx:477
+#: src/pages/hashtag.jsx:504
 msgid "This shortcut already exists"
 msgstr ""
 
-#: src/pages/hashtag.jsx:480
+#: src/pages/hashtag.jsx:507
 msgid "Hashtag shortcut added"
 msgstr ""
 
-#: src/pages/hashtag.jsx:486
+#: src/pages/hashtag.jsx:513
 msgid "Add to Shortcuts"
 msgstr ""
 
-#: src/pages/hashtag.jsx:492
-#: src/pages/public.jsx:141
-#: src/pages/trending.jsx:481
+#: src/pages/hashtag.jsx:519
+#: src/pages/public.jsx:173
+#: src/pages/trending.jsx:511
 msgid "Enter a new server e.g. \"mastodon.social\""
 msgstr ""
 
-#: src/pages/hashtag.jsx:495
-#: src/pages/public.jsx:144
-#: src/pages/trending.jsx:484
+#: src/pages/hashtag.jsx:522
+#: src/pages/public.jsx:176
+#: src/pages/trending.jsx:514
 msgid "Invalid server"
 msgstr ""
 
-#: src/pages/hashtag.jsx:509
-#: src/pages/public.jsx:158
-#: src/pages/trending.jsx:496
+#: src/pages/hashtag.jsx:536
+#: src/pages/public.jsx:190
+#: src/pages/trending.jsx:526
 msgid "Go to another server…"
 msgstr ""
 
-#: src/pages/hashtag.jsx:522
-#: src/pages/public.jsx:171
-#: src/pages/trending.jsx:507
+#: src/pages/hashtag.jsx:549
+#: src/pages/public.jsx:203
+#: src/pages/trending.jsx:537
 msgid "Go to my server (<0>{currentInstance}</0>)"
 msgstr ""
 
@@ -3952,31 +3964,31 @@ msgstr ""
 msgid "Dismissed"
 msgstr ""
 
-#: src/pages/public.jsx:28
+#: src/pages/public.jsx:30
 msgid "Local timeline ({instance})"
 msgstr ""
 
-#: src/pages/public.jsx:29
+#: src/pages/public.jsx:31
 msgid "Federated timeline ({instance})"
 msgstr ""
 
-#: src/pages/public.jsx:92
+#: src/pages/public.jsx:118
 msgid "Local timeline"
 msgstr ""
 
-#: src/pages/public.jsx:92
+#: src/pages/public.jsx:118
 msgid "Federated timeline"
 msgstr ""
 
-#: src/pages/public.jsx:98
+#: src/pages/public.jsx:129
 msgid "No one has posted anything yet."
 msgstr ""
 
-#: src/pages/public.jsx:125
+#: src/pages/public.jsx:157
 msgid "Switch to Federated"
 msgstr ""
 
-#: src/pages/public.jsx:132
+#: src/pages/public.jsx:164
 msgid "Switch to Local"
 msgstr ""
 
@@ -4420,34 +4432,34 @@ msgstr ""
 msgid "View post with its replies"
 msgstr ""
 
-#: src/pages/trending.jsx:77
+#: src/pages/trending.jsx:78
 msgid "Trending ({instance})"
 msgstr ""
 
-#: src/pages/trending.jsx:235
+#: src/pages/trending.jsx:259
 msgid "Trending News"
 msgstr ""
 
 #. By [Author]
 #. placeholder {0}: author ? ( <NameText account={author} showAvatar /> ) : authorUrl ? ( <a href={authorUrl} target="_blank" rel="noopener" > {authorName} </a> ) : ( authorName )
-#: src/pages/trending.jsx:350
+#: src/pages/trending.jsx:374
 msgid "By {0}"
 msgstr ""
 
-#: src/pages/trending.jsx:411
+#: src/pages/trending.jsx:435
 msgid "Back to showing trending posts"
 msgstr ""
 
 #. placeholder {0}: currentLink .replace(/^https?:\/\/(www\.)?/i, '') .replace(/\/$/, '')
-#: src/pages/trending.jsx:416
+#: src/pages/trending.jsx:440
 msgid "Showing posts mentioning <0>{0}</0>"
 msgstr ""
 
-#: src/pages/trending.jsx:428
+#: src/pages/trending.jsx:452
 msgid "Trending posts"
 msgstr ""
 
-#: src/pages/trending.jsx:451
+#: src/pages/trending.jsx:480
 msgid "No trending posts."
 msgstr ""
 

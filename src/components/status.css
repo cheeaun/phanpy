@@ -229,8 +229,10 @@
 .status-card-link:is(:hover, :focus)
   .status-card:not(.status-card .status-card)
   img {
-  animation: position-object 5s ease-in-out 1s 5;
-  animation-duration: var(--anim-duration, 5s);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 5s ease-in-out 1s 5;
+    animation-duration: var(--anim-duration, 5s);
+  }
 }
 .status-card-link:is(:active) .status-card {
   background-color: var(--bg-faded-color);
@@ -1418,8 +1420,10 @@
 }
 .status .media:not([data-has-small-dimension]) img:is(:hover, :focus),
 a:focus-visible .status .media:not([data-has-small-dimension]) img {
-  animation: position-object 5s ease-in-out 1s 5;
-  animation-duration: var(--anim-duration, 5s);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 5s ease-in-out 1s 5;
+    animation-duration: var(--anim-duration, 5s);
+  }
 }
 body:has(#modal-container .carousel) .status .media img:hover {
   animation: none;
@@ -2060,8 +2064,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
 }
 .card:is(:hover, :focus) img,
 a:focus-visible .card img {
-  animation: position-object 5s ease-in-out 1s 5;
-  animation-duration: var(--anim-duration, 5s);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 5s ease-in-out 1s 5;
+    animation-duration: var(--anim-duration, 5s);
+  }
 }
 .card p {
   margin: 0;

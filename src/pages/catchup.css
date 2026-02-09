@@ -941,8 +941,10 @@
           transform: scale(1.5);
           position: relative;
           z-index: 1;
-          animation: position-object 5s ease-in-out 5;
-          animation-duration: var(--anim-duration, 5s);
+          @media (prefers-reduced-motion: no-preference) {
+            animation: position-object 5s ease-in-out 5;
+            animation-duration: var(--anim-duration, 5s);
+          }
 
           /* @media (min-width: 40em) and (min-height: 600px) {
             transform: scale(3);

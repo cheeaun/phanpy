@@ -291,7 +291,10 @@
   pointer-events: none;
 }
 .account-container .header-banner:hover {
-  animation: position-object 5s ease-in-out 1s 5;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 10s ease-in-out 2s 5;
+    animation-duration: var(--anim-duration, 10s);
+  }
 }
 .account-container .header-banner:active {
   mask-image: none;

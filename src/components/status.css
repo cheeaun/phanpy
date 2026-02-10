@@ -3248,6 +3248,37 @@ a.card:is(:hover, :focus):visited {
   }
 }
 
+/* VERTICAL TEXT LAYOUT */
+
+/* Some API returns mnMong (without dash, invalid BCP47) & :lang() won't recognize it */
+.status .content > .inner-content:lang(mn-Mong),
+.status .content > .inner-content[lang='mnMong'] {
+  writing-mode: vertical-lr;
+  max-height: 50vh;
+}
+.status
+  .content:has(
+    > .inner-content:lang(mn-Mong),
+    > .inner-content[lang='mnMong']
+  ) {
+  overflow-x: auto;
+  animation: fade-edges linear;
+  animation-timeline: scroll(self inline);
+}
+
+@keyframes fade-edges {
+  0% {
+    mask-image: linear-gradient(
+      to right,
+      black 0% calc(100% - 32px),
+      transparent
+    );
+  }
+  100% {
+    mask-image: linear-gradient(to right, transparent, black 32px 100%);
+  }
+}
+
 /* STATUS TAGS */
 
 .status-tags {

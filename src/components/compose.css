@@ -167,24 +167,26 @@
     0 -3px 6px -3px var(--drop-shadow-color);
 }
 
-#compose-container textarea {
+#compose-container .compose-field {
   width: 100%;
   max-width: 100%;
   line-height: 1.4;
   border-color: transparent;
-
-  &:hover {
-    border-color: var(--divider-color);
-  }
-}
-
-#compose-container .compose-field {
-  width: 100%;
   height: 4em;
   min-height: 4em;
   max-height: 50vh;
   resize: vertical;
+
   border-radius: 0;
+  &:hover {
+    border-color: var(--divider-color);
+  }
+
+  &:lang(mn-Mong) {
+    height: auto !important;
+    max-height: 50vh !important;
+    writing-mode: vertical-lr;
+  }
 
   @media (min-width: 40em) {
     max-height: 65vh;
@@ -987,6 +989,11 @@
     min-height: 4em;
     max-height: 50vh;
     scrollbar-width: none;
+
+    :lang(mn-Mong) ~ & {
+      writing-mode: vertical-lr;
+      max-height: 50vh !important;
+    }
 
     &::-webkit-scrollbar {
       display: none;

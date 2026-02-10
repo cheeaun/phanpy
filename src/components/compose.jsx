@@ -75,6 +75,12 @@ const supportedLanguagesMap = supportedLanguages.reduce((acc, l) => {
   return acc;
 }, {});
 
+// Convert camelCase to kebab-case for language codes
+// e.g., "mnMong" → "mn-Mong", "msArab" → "ms-Arab"
+const camelToKebabCase = (str) => {
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2');
+};
+
 /* NOTES:
   - Max character limit includes BOTH status text and Content Warning text
 */
@@ -132,6 +138,17 @@ function isMimeTypeSupported(fileType, supportedMimeTypes) {
   });
 
   return !!subTypeMap[subtype];
+}
+
+function fixLanguage(language) {
+  if (!language || typeof language !== 'string') return null;
+  // If inside list, return it, else fix it
+  if (supportedLanguagesMap[language]) return language;
+  const fixedLanguage = camelToKebabCase(language);
+  if (supportedLanguagesMap[fixedLanguage]) {
+    return fixedLanguage;
+  }
+  return null;
 }
 
 function Compose({
@@ -473,7 +490,7 @@ function Compose({
           : visibility,
       );
       setLanguage(
-        language ||
+        fixLanguage(language) ||
           prefs['posting:default:language']?.toLowerCase() ||
           DEFAULT_LANG,
       );
@@ -2014,7 +2031,7 @@ function Compose({
               }`}
             >
               <span class="icon-text">
-                {supportedLanguagesMap[language]?.native}
+                {supportedLanguagesMap[language]?.native || language}
               </span>
               <select
                 name="language"

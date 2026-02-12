@@ -8,6 +8,18 @@
   --posting-stats-size: 8px;
   --original-color: var(--link-color);
 
+  &.mini {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    margin-bottom: 0 !important;
+
+    .stats {
+      justify-content: safe center;
+    }
+  }
+
   .note {
     font-size: 0.95em;
     line-height: 1.4;

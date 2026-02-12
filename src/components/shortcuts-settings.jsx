@@ -21,7 +21,7 @@ import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
 import store from '../utils/store';
-import { getCurrentAccountID } from '../utils/store-utils';
+import { getCurrentAccount, getCurrentAccountID } from '../utils/store-utils';
 
 import AsyncText from './AsyncText';
 import Icon from './icon';
@@ -42,6 +42,7 @@ const TYPES = [
   'hashtag',
   'bookmarks',
   'favourites',
+  'profile', // Own profile
   // NOTE: Hide for now
   // 'account-statuses', // Need @acct search first
 ];
@@ -57,6 +58,7 @@ const TYPE_TEXT = {
   hashtag: msg`Hashtag`,
   trending: msg`Trending`,
   mentions: msg`Mentions`,
+  profile: msg`Profile`,
 };
 const TYPE_PARAMS = {
   list: [
@@ -184,6 +186,12 @@ export const SHORTCUTS_META = {
         : '/search',
     icon: 'search',
     excludeViewMode: ({ query }) => (!query ? ['multi-column'] : []),
+  },
+  profile: {
+    id: 'profile',
+    title: msg`Profile`,
+    path: () => `/a/${getCurrentAccountID()}?replies=1`,
+    icon: 'user',
   },
   'account-statuses': {
     id: 'account-statuses',

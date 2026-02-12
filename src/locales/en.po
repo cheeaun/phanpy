@@ -712,7 +712,7 @@ msgid "Poll"
 msgstr ""
 
 #: src/components/drafts.jsx:266
-#: src/pages/account-statuses.jsx:366
+#: src/pages/account-statuses.jsx:369
 msgid "Media"
 msgstr ""
 
@@ -1171,7 +1171,7 @@ msgstr ""
 #: src/components/status.jsx:2299
 #: src/components/status.jsx:3024
 #: src/components/status.jsx:3027
-#: src/pages/account-statuses.jsx:559
+#: src/pages/account-statuses.jsx:562
 #: src/pages/accounts.jsx:127
 #: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
@@ -1442,7 +1442,7 @@ msgid "Followed Hashtags"
 msgstr ""
 
 #: src/components/nav-menu.jsx:273
-#: src/pages/account-statuses.jsx:332
+#: src/pages/account-statuses.jsx:335
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
 #: src/pages/hashtag.jsx:373
@@ -1939,7 +1939,7 @@ msgid "Clear all"
 msgstr "Clear all"
 
 #: src/components/recent-searches.jsx:94
-#: src/pages/account-statuses.jsx:325
+#: src/pages/account-statuses.jsx:328
 msgid "Clear"
 msgstr ""
 
@@ -2043,7 +2043,7 @@ msgid "Show featured profiles"
 msgstr "Show featured profiles"
 
 #: src/components/related-actions.jsx:507
-#: src/pages/account-statuses.jsx:464
+#: src/pages/account-statuses.jsx:467
 msgid "Search my posts"
 msgstr "Search my posts"
 
@@ -3064,92 +3064,94 @@ msgstr ""
 msgid "{accountDisplay} (+ Replies)"
 msgstr ""
 
+#. Real minus sign (−) is used here
 #: src/pages/account-statuses.jsx:241
-msgid "{accountDisplay} (- Boosts)"
-msgstr ""
+msgid "{accountDisplay} (− Boosts)"
+msgstr "{accountDisplay} (− Boosts)"
 
-#: src/pages/account-statuses.jsx:243
+#: src/pages/account-statuses.jsx:246
 msgid "{accountDisplay} (#{tagged})"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:245
+#: src/pages/account-statuses.jsx:248
 msgid "{accountDisplay} (Media)"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:251
+#: src/pages/account-statuses.jsx:254
 msgid "{accountDisplay} ({monthYear})"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:322
+#: src/pages/account-statuses.jsx:325
 msgid "Clear filters"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:339
+#: src/pages/account-statuses.jsx:342
 msgid "Showing post with replies"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:344
+#: src/pages/account-statuses.jsx:347
 msgid "+ Replies"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:350
+#: src/pages/account-statuses.jsx:353
 msgid "Showing posts without boosts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:355
-msgid "- Boosts"
-msgstr ""
+#. Real minus sign (−) is used here
+#: src/pages/account-statuses.jsx:358
+msgid "− Boosts"
+msgstr "− Boosts"
 
-#: src/pages/account-statuses.jsx:361
+#: src/pages/account-statuses.jsx:364
 msgid "Showing posts with media"
 msgstr ""
 
 #. placeholder {0}: tag.name
-#: src/pages/account-statuses.jsx:378
+#: src/pages/account-statuses.jsx:381
 msgid "Showing posts tagged with #{0}"
 msgstr ""
 
 #. placeholder {0}: date.toLocaleString( i18n.locale, { month: 'long', year: 'numeric', }, )
-#: src/pages/account-statuses.jsx:418
+#: src/pages/account-statuses.jsx:421
 msgid "Showing posts in {0}"
 msgstr "Showing posts in {0}"
 
 #. placeholder {0}: account?.username
-#: src/pages/account-statuses.jsx:465
+#: src/pages/account-statuses.jsx:468
 msgid "Search @{0}'s posts"
 msgstr "Search @{0}'s posts"
 
-#: src/pages/account-statuses.jsx:511
+#: src/pages/account-statuses.jsx:514
 #: src/pages/search.jsx:345
 #: src/pages/search.jsx:492
 msgid "Posts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:536
+#: src/pages/account-statuses.jsx:539
 msgid "Nothing to see here yet."
 msgstr ""
 
-#: src/pages/account-statuses.jsx:537
+#: src/pages/account-statuses.jsx:540
 #: src/pages/public.jsx:130
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:578
-#: src/pages/account-statuses.jsx:608
+#: src/pages/account-statuses.jsx:581
+#: src/pages/account-statuses.jsx:611
 msgid "Unable to fetch account info"
 msgstr ""
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:585
+#: src/pages/account-statuses.jsx:588
 msgid "Switch to account's server {0}"
 msgstr "Switch to account's server {0}"
 
-#: src/pages/account-statuses.jsx:615
+#: src/pages/account-statuses.jsx:618
 msgid "Switch to my server (<0>{currentInstance}</0>)"
 msgstr "Switch to my server (<0>{currentInstance}</0>)"
 
-#: src/pages/account-statuses.jsx:688
+#: src/pages/account-statuses.jsx:691
 msgid "Month"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgstr ""
 "Language: cs\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-09 02:36\n"
+"PO-Revision-Date: 2026-02-12 16:03\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
@@ -147,7 +147,7 @@ msgid "In Memoriam"
 msgstr "In Memoriam"
 
 #: src/components/account-info.jsx:796
-#: src/components/compose.jsx:2004
+#: src/components/compose.jsx:2021
 #: src/pages/settings.jsx:296
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -257,7 +257,7 @@ msgstr "Zobrazit statistiky příspěvku"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:1088
+#: src/components/compose.jsx:1105
 #: src/components/custom-emojis-modal.jsx:272
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:89
@@ -384,7 +384,7 @@ msgid "Remove"
 msgstr "Odstranit"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1712
+#: src/components/compose.jsx:1729
 #: src/components/mention-modal.jsx:221
 #: src/components/shortcuts-settings.jsx:716
 #: src/pages/list.jsx:388
@@ -403,114 +403,114 @@ msgstr "Trvání"
 msgid "Remove poll"
 msgstr "Odstranit anketu"
 
-#: src/components/compose.jsx:110
+#: src/components/compose.jsx:116
 msgid "Take photo or video"
 msgstr ""
 
-#: src/components/compose.jsx:111
+#: src/components/compose.jsx:117
 msgid "Add media"
 msgstr "Přidat média"
 
-#: src/components/compose.jsx:112
+#: src/components/compose.jsx:118
 msgid "Add custom emoji"
 msgstr "Přidat vlastní emoji"
 
-#: src/components/compose.jsx:113
+#: src/components/compose.jsx:119
 msgid "Add GIF"
 msgstr "Přidat GIF"
 
-#: src/components/compose.jsx:114
+#: src/components/compose.jsx:120
 msgid "Add poll"
 msgstr "Přidat anketu"
 
-#: src/components/compose.jsx:115
+#: src/components/compose.jsx:121
 msgid "Add content warning"
 msgstr ""
 
-#: src/components/compose.jsx:116
+#: src/components/compose.jsx:122
 msgid "Schedule post"
 msgstr ""
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:253
+#: src/components/compose.jsx:270
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr ""
 
-#: src/components/compose.jsx:269
-#: src/components/compose.jsx:2135
+#: src/components/compose.jsx:286
+#: src/components/compose.jsx:2152
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Můžete připojit pouze 1 soubor.} few {Můžete připojit pouze # souborů.} many {Můžete připojit pouze # souborů.} other {Můžete připojit pouze # souborů.}}"
 
-#: src/components/compose.jsx:619
+#: src/components/compose.jsx:636
 msgid "You have unsaved changes. Discard this post?"
 msgstr "Máte neuložené změny. Zrušit tento příspěvek?"
 
-#: src/components/compose.jsx:1069
+#: src/components/compose.jsx:1086
 msgid "Pop out"
 msgstr "Vyskakovací okno"
 
-#: src/components/compose.jsx:1076
+#: src/components/compose.jsx:1093
 msgid "Minimize"
 msgstr "Minimalizovat"
 
-#: src/components/compose.jsx:1112
+#: src/components/compose.jsx:1129
 msgid "Looks like you closed the parent window."
 msgstr "Zdá se, že jste zavřeli nadřazené okno."
 
-#: src/components/compose.jsx:1119
+#: src/components/compose.jsx:1136
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Vypadá to, že již máte složené pole otevřené v nadřazeném okně a aktuálně publikované. Počkejte prosím, než se to udělá a zkuste to znovu později."
 
-#: src/components/compose.jsx:1124
+#: src/components/compose.jsx:1141
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Vypadá to, že již máte v nadřazeném okně otevřené políčko. Vyskakování v tomto okně zruší změny, které jste provedli v nadřazeném okně. Pokračovat?"
 
-#: src/components/compose.jsx:1170
+#: src/components/compose.jsx:1187
 msgid "Pop in"
 msgstr "Ukázat v"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1180
+#: src/components/compose.jsx:1197
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Odpovědět na příspěvek od @{0} (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1190
+#: src/components/compose.jsx:1207
 msgid "Replying to @{0}’s post"
 msgstr "Odpovídám na příspěvek uživatele @{0}"
 
-#: src/components/compose.jsx:1203
+#: src/components/compose.jsx:1220
 msgid "Editing source post"
 msgstr "Editace zdrojového příspěvku"
 
-#: src/components/compose.jsx:1272
+#: src/components/compose.jsx:1289
 msgid "Poll must have at least 2 options"
 msgstr "Anketa musí mít alespoň dvě možnosti"
 
-#: src/components/compose.jsx:1276
+#: src/components/compose.jsx:1293
 msgid "Some poll choices are empty"
 msgstr "Některé volby anket jsou prázdné"
 
-#: src/components/compose.jsx:1289
+#: src/components/compose.jsx:1306
 msgid "Some media have no descriptions. Continue?"
 msgstr "Některá média jsou bez popisu. Pokračovat?"
 
-#: src/components/compose.jsx:1341
+#: src/components/compose.jsx:1358
 msgid "Attachment #{i} failed"
 msgstr "Příloha #{i} selhala"
 
-#: src/components/compose.jsx:1468
+#: src/components/compose.jsx:1485
 #: src/components/status.jsx:2495
 #: src/components/timeline.jsx:1013
 msgid "Content warning"
 msgstr "Varování o obsahu"
 
-#: src/components/compose.jsx:1500
-#: src/components/compose.jsx:1646
+#: src/components/compose.jsx:1517
+#: src/components/compose.jsx:1663
 #: src/components/edit-profile-sheet.jsx:326
 #: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
@@ -519,85 +519,85 @@ msgstr "Varování o obsahu"
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: src/components/compose.jsx:1508
+#: src/components/compose.jsx:1525
 msgid "Post your reply"
 msgstr "Poslat odpověď"
 
-#: src/components/compose.jsx:1510
+#: src/components/compose.jsx:1527
 msgid "Edit your post"
 msgstr "Upravit příspěvek"
 
-#: src/components/compose.jsx:1512
+#: src/components/compose.jsx:1529
 msgid "Ask a question"
 msgstr ""
 
-#: src/components/compose.jsx:1513
+#: src/components/compose.jsx:1530
 msgid "What are you doing?"
 msgstr "Co děláte??"
 
-#: src/components/compose.jsx:1586
+#: src/components/compose.jsx:1603
 msgid "Mark media as sensitive"
 msgstr "Označit média jako citlivá"
 
-#: src/components/compose.jsx:1626
+#: src/components/compose.jsx:1643
 msgid "Posting on <0/>"
 msgstr ""
 
-#: src/components/compose.jsx:1924
+#: src/components/compose.jsx:1941
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:296
 #: src/pages/settings.jsx:338
 msgid "Anyone can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1927
+#: src/components/compose.jsx:1944
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:297
 #: src/pages/settings.jsx:341
 msgid "Your followers can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1930
+#: src/components/compose.jsx:1947
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:298
 #: src/pages/settings.jsx:344
 msgid "Only you can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1970
+#: src/components/compose.jsx:1987
 msgid "Quotes can't be embedded in private mentions."
 msgstr ""
 
-#: src/components/compose.jsx:1992
+#: src/components/compose.jsx:2009
 #: src/pages/settings.jsx:290
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Veřejný"
 
-#: src/components/compose.jsx:1997
+#: src/components/compose.jsx:2014
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:166
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Místní"
 
-#: src/components/compose.jsx:2001
+#: src/components/compose.jsx:2018
 #: src/pages/settings.jsx:293
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr ""
 
-#: src/components/compose.jsx:2007
+#: src/components/compose.jsx:2024
 #: src/components/status.jsx:2372
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Soukromá zmínka"
 
-#: src/components/compose.jsx:2059
+#: src/components/compose.jsx:2076
 msgid "Schedule"
 msgstr ""
 
-#: src/components/compose.jsx:2061
+#: src/components/compose.jsx:2078
 #: src/components/keyboard-shortcuts-help.jsx:165
 #: src/components/status.jsx:1099
 #: src/components/status.jsx:1133
@@ -608,20 +608,20 @@ msgstr ""
 msgid "Reply"
 msgstr "Odpovědět"
 
-#: src/components/compose.jsx:2063
+#: src/components/compose.jsx:2080
 msgid "Update"
 msgstr "Aktualizovat"
 
-#: src/components/compose.jsx:2064
+#: src/components/compose.jsx:2081
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Příspěvek"
 
-#: src/components/compose.jsx:2147
+#: src/components/compose.jsx:2164
 msgid "Downloading GIF…"
 msgstr "Stahování GIFu…"
 
-#: src/components/compose.jsx:2175
+#: src/components/compose.jsx:2192
 msgid "Failed to download GIF"
 msgstr "Nepodařilo se stáhnout GIF"
 
@@ -717,7 +717,7 @@ msgid "Poll"
 msgstr "Anketa"
 
 #: src/components/drafts.jsx:266
-#: src/pages/account-statuses.jsx:366
+#: src/pages/account-statuses.jsx:369
 msgid "Media"
 msgstr "Média"
 
@@ -1176,14 +1176,14 @@ msgstr "Popis médií"
 #: src/components/status.jsx:2299
 #: src/components/status.jsx:3024
 #: src/components/status.jsx:3027
-#: src/pages/account-statuses.jsx:559
+#: src/pages/account-statuses.jsx:562
 #: src/pages/accounts.jsx:127
-#: src/pages/hashtag.jsx:230
+#: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
-#: src/pages/public.jsx:148
+#: src/pages/public.jsx:147
 #: src/pages/scheduled-posts.jsx:89
 #: src/pages/status.jsx:1552
-#: src/pages/trending.jsx:504
+#: src/pages/trending.jsx:474
 msgid "More"
 msgstr "Více"
 
@@ -1393,7 +1393,7 @@ msgstr "Rekapitulace"
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
 #: src/pages/settings.jsx:1261
-#: src/pages/trending.jsx:408
+#: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "Zmínky"
 
@@ -1447,10 +1447,10 @@ msgid "Followed Hashtags"
 msgstr "Sledované hashtagy"
 
 #: src/components/nav-menu.jsx:273
-#: src/pages/account-statuses.jsx:332
+#: src/pages/account-statuses.jsx:335
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
-#: src/pages/hashtag.jsx:371
+#: src/pages/hashtag.jsx:373
 msgid "Filters"
 msgstr "Filtry"
 
@@ -1485,7 +1485,7 @@ msgstr "Přihlásit se"
 #: src/components/nav-menu.jsx:343
 #: src/components/shortcuts-settings.jsx:58
 #: src/components/shortcuts-settings.jsx:173
-#: src/pages/trending.jsx:468
+#: src/pages/trending.jsx:444
 msgid "Trending"
 msgstr "Trendy"
 
@@ -1944,7 +1944,7 @@ msgid "Clear all"
 msgstr ""
 
 #: src/components/recent-searches.jsx:94
-#: src/pages/account-statuses.jsx:325
+#: src/pages/account-statuses.jsx:328
 msgid "Clear"
 msgstr "Vyčistit"
 
@@ -2038,7 +2038,7 @@ msgid "Don't feature on profile"
 msgstr ""
 
 #: src/components/related-actions.jsx:456
-#: src/pages/hashtag.jsx:360
+#: src/pages/hashtag.jsx:362
 msgid "Feature on profile"
 msgstr "Zmínit v profilu"
 
@@ -2048,7 +2048,7 @@ msgid "Show featured profiles"
 msgstr ""
 
 #: src/components/related-actions.jsx:507
-#: src/pages/account-statuses.jsx:464
+#: src/pages/account-statuses.jsx:467
 msgid "Search my posts"
 msgstr ""
 
@@ -2142,7 +2142,7 @@ msgstr "Vybrat…"
 
 #: src/components/related-actions.jsx:972
 #: src/components/related-actions.jsx:976
-#: src/pages/hashtag.jsx:292
+#: src/pages/hashtag.jsx:294
 msgid "Follow"
 msgstr "Sledovat"
 
@@ -2347,7 +2347,7 @@ msgid "e.g. PixelArt (Max 5, space-separated)"
 msgstr "např. PixelArt (Max 5, oddělený mezerami)"
 
 #: src/components/shortcuts-settings.jsx:118
-#: src/pages/hashtag.jsx:387
+#: src/pages/hashtag.jsx:389
 msgid "Media only"
 msgstr "Pouze média"
 
@@ -3069,92 +3069,94 @@ msgstr "Příspěvky účtu"
 msgid "{accountDisplay} (+ Replies)"
 msgstr "{accountDisplay} (+ Odpovědi)"
 
+#. Real minus sign (−) is used here
 #: src/pages/account-statuses.jsx:241
-msgid "{accountDisplay} (- Boosts)"
-msgstr "{accountDisplay} (- Boosty)"
+msgid "{accountDisplay} (− Boosts)"
+msgstr ""
 
-#: src/pages/account-statuses.jsx:243
+#: src/pages/account-statuses.jsx:246
 msgid "{accountDisplay} (#{tagged})"
 msgstr "{accountDisplay} (#{tagged})"
 
-#: src/pages/account-statuses.jsx:245
+#: src/pages/account-statuses.jsx:248
 msgid "{accountDisplay} (Media)"
 msgstr "{accountDisplay} (Média)"
 
-#: src/pages/account-statuses.jsx:251
+#: src/pages/account-statuses.jsx:254
 msgid "{accountDisplay} ({monthYear})"
 msgstr "{accountDisplay} ({monthYear})"
 
-#: src/pages/account-statuses.jsx:322
+#: src/pages/account-statuses.jsx:325
 msgid "Clear filters"
 msgstr "Vymazat filtry"
 
-#: src/pages/account-statuses.jsx:339
+#: src/pages/account-statuses.jsx:342
 msgid "Showing post with replies"
 msgstr "Zobrazení příspěvku s odpovědmi"
 
-#: src/pages/account-statuses.jsx:344
+#: src/pages/account-statuses.jsx:347
 msgid "+ Replies"
 msgstr "+ Odpovědi"
 
-#: src/pages/account-statuses.jsx:350
+#: src/pages/account-statuses.jsx:353
 msgid "Showing posts without boosts"
 msgstr "Zobrazení příspěvků bez boostů"
 
-#: src/pages/account-statuses.jsx:355
-msgid "- Boosts"
-msgstr "- Boosty"
+#. Real minus sign (−) is used here
+#: src/pages/account-statuses.jsx:358
+msgid "− Boosts"
+msgstr ""
 
-#: src/pages/account-statuses.jsx:361
+#: src/pages/account-statuses.jsx:364
 msgid "Showing posts with media"
 msgstr "Zobrazování příspěvků s médii"
 
 #. placeholder {0}: tag.name
-#: src/pages/account-statuses.jsx:378
+#: src/pages/account-statuses.jsx:381
 msgid "Showing posts tagged with #{0}"
 msgstr "Zobrazuji příspěvky označené štítkem #{0}"
 
 #. placeholder {0}: date.toLocaleString( i18n.locale, { month: 'long', year: 'numeric', }, )
-#: src/pages/account-statuses.jsx:418
+#: src/pages/account-statuses.jsx:421
 msgid "Showing posts in {0}"
 msgstr ""
 
 #. placeholder {0}: account?.username
-#: src/pages/account-statuses.jsx:465
+#: src/pages/account-statuses.jsx:468
 msgid "Search @{0}'s posts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:511
+#: src/pages/account-statuses.jsx:514
 #: src/pages/search.jsx:345
 #: src/pages/search.jsx:492
 msgid "Posts"
 msgstr "Příspěvky"
 
-#: src/pages/account-statuses.jsx:536
+#: src/pages/account-statuses.jsx:539
 msgid "Nothing to see here yet."
 msgstr "Zatím zde není co vidět."
 
-#: src/pages/account-statuses.jsx:537
-#: src/pages/public.jsx:131
-#: src/pages/trending.jsx:482
+#: src/pages/account-statuses.jsx:540
+#: src/pages/public.jsx:130
+#: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr "Nelze načíst příspěvky"
 
-#: src/pages/account-statuses.jsx:578
-#: src/pages/account-statuses.jsx:608
+#: src/pages/account-statuses.jsx:581
+#: src/pages/account-statuses.jsx:611
 msgid "Unable to fetch account info"
 msgstr "Nelze získat informace o účtu"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:585
+#: src/pages/account-statuses.jsx:588
 msgid "Switch to account's server {0}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:615
+#: src/pages/account-statuses.jsx:618
 msgid "Switch to my server (<0>{currentInstance}</0>)"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:688
+#: src/pages/account-statuses.jsx:691
 msgid "Month"
 msgstr "Měsíc"
 
@@ -3645,104 +3647,102 @@ msgstr "{hashtagTitle} (pouze média)"
 msgid "{hashtagTitle}"
 msgstr "{hashtagTitle}"
 
-#: src/pages/hashtag.jsx:208
-#: src/pages/public.jsx:126
-#: src/pages/trending.jsx:477
+#: src/pages/hashtag.jsx:210
+#: src/pages/public.jsx:125
 msgid "This timeline is disabled on this server."
 msgstr ""
 
-#: src/pages/hashtag.jsx:210
-#: src/pages/public.jsx:128
-#: src/pages/trending.jsx:479
+#: src/pages/hashtag.jsx:212
+#: src/pages/public.jsx:127
 msgid "Login required to see posts from this server."
 msgstr ""
 
-#: src/pages/hashtag.jsx:211
+#: src/pages/hashtag.jsx:213
 msgid "No one has posted anything with this tag yet."
 msgstr "S tímto štítkem zatím nikdo nic nepřidal."
 
-#: src/pages/hashtag.jsx:213
+#: src/pages/hashtag.jsx:215
 msgid "Unable to load posts with this tag"
 msgstr "Nepodařilo se načíst příspěvky s tímto štítkem"
 
-#: src/pages/hashtag.jsx:239
+#: src/pages/hashtag.jsx:241
 msgid "Unfollow #{hashtag}?"
 msgstr "Přestat sledovat #{hashtag}?"
 
-#: src/pages/hashtag.jsx:254
+#: src/pages/hashtag.jsx:256
 msgid "Unfollowed #{hashtag}"
 msgstr "#{hashtag} již není sledován"
 
-#: src/pages/hashtag.jsx:269
+#: src/pages/hashtag.jsx:271
 msgid "Followed #{hashtag}"
 msgstr "Sledován #{hashtag}"
 
-#: src/pages/hashtag.jsx:285
+#: src/pages/hashtag.jsx:287
 msgid "Following…"
 msgstr "Sleduji…"
 
-#: src/pages/hashtag.jsx:314
+#: src/pages/hashtag.jsx:316
 msgid "Unfeatured on profile"
 msgstr "Odebráno z profilu"
 
-#: src/pages/hashtag.jsx:328
+#: src/pages/hashtag.jsx:330
 msgid "Unable to unfeature on profile"
 msgstr "Nepodařilo se odebrat z profilu"
 
-#: src/pages/hashtag.jsx:337
-#: src/pages/hashtag.jsx:353
+#: src/pages/hashtag.jsx:339
+#: src/pages/hashtag.jsx:355
 msgid "Featured on profile"
 msgstr "Zmíněno v profilu"
 
-#: src/pages/hashtag.jsx:425
+#: src/pages/hashtag.jsx:427
 msgid "{TOTAL_TAGS_LIMIT, plural, other {Max # tags}}"
 msgstr "{TOTAL_TAGS_LIMIT, plural, one {} few {#} many {#}other {#}}"
 
-#: src/pages/hashtag.jsx:428
+#: src/pages/hashtag.jsx:430
 msgid "Add hashtag"
 msgstr "Přidat hashtag"
 
-#: src/pages/hashtag.jsx:461
+#: src/pages/hashtag.jsx:463
 msgid "Remove hashtag"
 msgstr "Odstranit hashtag"
 
-#: src/pages/hashtag.jsx:475
+#: src/pages/hashtag.jsx:477
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
 msgstr ""
 
-#: src/pages/hashtag.jsx:504
+#: src/pages/hashtag.jsx:506
 msgid "This shortcut already exists"
 msgstr "Tato zkratka již existuje"
 
-#: src/pages/hashtag.jsx:507
+#: src/pages/hashtag.jsx:509
 msgid "Hashtag shortcut added"
 msgstr ""
 
-#: src/pages/hashtag.jsx:513
+#: src/pages/hashtag.jsx:515
 msgid "Add to Shortcuts"
 msgstr "Přidat do zkratek"
 
-#: src/pages/hashtag.jsx:519
-#: src/pages/public.jsx:173
-#: src/pages/trending.jsx:511
+#: src/pages/hashtag.jsx:521
+#: src/pages/public.jsx:172
+#: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
 msgstr ""
 
-#: src/pages/hashtag.jsx:522
-#: src/pages/public.jsx:176
-#: src/pages/trending.jsx:514
+#: src/pages/hashtag.jsx:524
+#: src/pages/public.jsx:175
+#: src/pages/trending.jsx:484
 msgid "Invalid server"
 msgstr ""
 
-#: src/pages/hashtag.jsx:536
-#: src/pages/public.jsx:190
-#: src/pages/trending.jsx:526
+#: src/pages/hashtag.jsx:538
+#: src/pages/public.jsx:189
+#: src/pages/trending.jsx:496
 msgid "Go to another server…"
 msgstr ""
 
-#: src/pages/hashtag.jsx:549
-#: src/pages/public.jsx:203
-#: src/pages/trending.jsx:537
+#: src/pages/hashtag.jsx:551
+#: src/pages/public.jsx:202
+#: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
 msgstr ""
 
@@ -3972,23 +3972,23 @@ msgstr "Místní časová osa ({instance})"
 msgid "Federated timeline ({instance})"
 msgstr "Federovaná časová osa ({instance})"
 
-#: src/pages/public.jsx:118
+#: src/pages/public.jsx:117
 msgid "Local timeline"
 msgstr "Místní časová osa"
 
-#: src/pages/public.jsx:118
+#: src/pages/public.jsx:117
 msgid "Federated timeline"
 msgstr "Federovaná časová osa"
 
-#: src/pages/public.jsx:129
+#: src/pages/public.jsx:128
 msgid "No one has posted anything yet."
 msgstr ""
 
-#: src/pages/public.jsx:157
+#: src/pages/public.jsx:156
 msgid "Switch to Federated"
 msgstr ""
 
-#: src/pages/public.jsx:164
+#: src/pages/public.jsx:163
 msgid "Switch to Local"
 msgstr ""
 
@@ -4432,34 +4432,34 @@ msgstr ""
 msgid "View post with its replies"
 msgstr ""
 
-#: src/pages/trending.jsx:78
+#: src/pages/trending.jsx:77
 msgid "Trending ({instance})"
 msgstr ""
 
-#: src/pages/trending.jsx:259
+#: src/pages/trending.jsx:235
 msgid "Trending News"
 msgstr ""
 
 #. By [Author]
 #. placeholder {0}: author ? ( <NameText account={author} showAvatar /> ) : authorUrl ? ( <a href={authorUrl} target="_blank" rel="noopener" > {authorName} </a> ) : ( authorName )
-#: src/pages/trending.jsx:374
+#: src/pages/trending.jsx:350
 msgid "By {0}"
 msgstr ""
 
-#: src/pages/trending.jsx:435
+#: src/pages/trending.jsx:411
 msgid "Back to showing trending posts"
 msgstr ""
 
 #. placeholder {0}: currentLink .replace(/^https?:\/\/(www\.)?/i, '') .replace(/\/$/, '')
-#: src/pages/trending.jsx:440
+#: src/pages/trending.jsx:416
 msgid "Showing posts mentioning <0>{0}</0>"
 msgstr ""
 
-#: src/pages/trending.jsx:452
+#: src/pages/trending.jsx:428
 msgid "Trending posts"
 msgstr ""
 
-#: src/pages/trending.jsx:480
+#: src/pages/trending.jsx:451
 msgid "No trending posts."
 msgstr ""
 

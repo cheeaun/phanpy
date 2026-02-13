@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-12 16:03\n"
+"PO-Revision-Date: 2026-02-13 15:42\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -86,6 +86,47 @@ msgstr "用户名"
 msgid "server domain name"
 msgstr "站点域名"
 
+#: src/components/account-info-mini.jsx:57
+#: src/components/account-info.jsx:796
+#: src/components/compose.jsx:2021
+#: src/pages/settings.jsx:296
+#: src/utils/visibility-text.jsx:7
+msgid "Followers"
+msgstr "粉丝"
+
+#: src/components/account-info-mini.jsx:61
+#: src/components/account-info-mini.jsx:100
+#: src/components/account-info.jsx:803
+#: src/components/account-info.jsx:861
+msgid "This user has chosen to not make this information available."
+msgstr "该用户选择不提供此信息。"
+
+#. placeholder {0}: shortenNumber(followersCount)
+#. placeholder {1}: shortenNumber(followersCount)
+#: src/components/account-info-mini.jsx:67
+#: src/components/account-info.jsx:823
+msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
+msgstr "{followersCount, plural, other {<1>{1}</1> 粉丝}}"
+
+#. js-lingui-explicit-id
+#: src/components/account-info-mini.jsx:93
+#: src/components/account-info.jsx:851
+msgid "following.stats"
+msgstr "关注"
+
+#. placeholder {0}: shortenNumber(followingCount)
+#: src/components/account-info-mini.jsx:106
+#: src/components/account-info.jsx:867
+msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
+msgstr "{followingCount, plural, other {<0>{0}</0> 关注}}"
+
+#. placeholder {0}: shortenNumber(statusesCount)
+#. placeholder {1}: shortenNumber(statusesCount)
+#: src/components/account-info-mini.jsx:119
+#: src/components/account-info.jsx:891
+msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
+msgstr "{statusesCount, plural, other {<1>{1}</1> 嘟文}}"
+
 #: src/components/account-info.jsx:124
 msgid "View profile"
 msgstr "查看个人资料"
@@ -120,7 +161,7 @@ msgstr "复制用户名"
 #: src/components/account-info.jsx:644
 #: src/components/related-actions.jsx:255
 #: src/components/related-actions.jsx:604
-#: src/components/shortcuts-settings.jsx:1081
+#: src/components/shortcuts-settings.jsx:1089
 msgid "QR code"
 msgstr "二维码"
 
@@ -145,40 +186,6 @@ msgstr "编辑个人资料"
 #: src/components/account-info.jsx:721
 msgid "In Memoriam"
 msgstr "悼念账户"
-
-#: src/components/account-info.jsx:796
-#: src/components/compose.jsx:2021
-#: src/pages/settings.jsx:296
-#: src/utils/visibility-text.jsx:7
-msgid "Followers"
-msgstr "粉丝"
-
-#: src/components/account-info.jsx:803
-#: src/components/account-info.jsx:861
-msgid "This user has chosen to not make this information available."
-msgstr "该用户选择不提供此信息。"
-
-#. placeholder {0}: shortenNumber(followersCount)
-#. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-info.jsx:823
-msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr "{followersCount, plural, other {<1>{1}</1> 粉丝}}"
-
-#. js-lingui-explicit-id
-#: src/components/account-info.jsx:851
-msgid "following.stats"
-msgstr "关注"
-
-#. placeholder {0}: shortenNumber(followingCount)
-#: src/components/account-info.jsx:867
-msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr "{followingCount, plural, other {<0>{0}</0> 关注}}"
-
-#. placeholder {0}: shortenNumber(statusesCount)
-#. placeholder {1}: shortenNumber(statusesCount)
-#: src/components/account-info.jsx:891
-msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
-msgstr "{statusesCount, plural, other {<1>{1}</1> 嘟文}}"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -282,9 +289,9 @@ msgstr "查看嘟文统计"
 #: src/components/quote-settings-sheet.jsx:61
 #: src/components/quotes-modal.jsx:76
 #: src/components/report-modal.jsx:118
-#: src/components/shortcuts-settings.jsx:231
-#: src/components/shortcuts-settings.jsx:584
-#: src/components/shortcuts-settings.jsx:785
+#: src/components/shortcuts-settings.jsx:239
+#: src/components/shortcuts-settings.jsx:592
+#: src/components/shortcuts-settings.jsx:793
 #: src/components/status.jsx:3391
 #: src/components/status.jsx:3603
 #: src/components/translated-bio-sheet.jsx:21
@@ -341,9 +348,9 @@ msgstr "已启用文字打码模式"
 msgid "More from <0/>"
 msgstr "<0/> 的更多内容"
 
-#: src/components/columns.jsx:27
+#: src/components/columns.jsx:29
 #: src/components/nav-menu.jsx:181
-#: src/components/shortcuts-settings.jsx:140
+#: src/components/shortcuts-settings.jsx:142
 #: src/components/timeline.jsx:487
 #: src/pages/catchup.jsx:1008
 #: src/pages/filters.jsx:90
@@ -377,7 +384,7 @@ msgstr "选项 {0}"
 
 #: src/components/compose-poll.jsx:64
 #: src/components/media-attachment.jsx:349
-#: src/components/shortcuts-settings.jsx:727
+#: src/components/shortcuts-settings.jsx:735
 #: src/pages/catchup.jsx:1209
 #: src/pages/filters.jsx:415
 msgid "Remove"
@@ -386,7 +393,7 @@ msgstr "移除"
 #: src/components/compose-poll.jsx:80
 #: src/components/compose.jsx:1729
 #: src/components/mention-modal.jsx:221
-#: src/components/shortcuts-settings.jsx:716
+#: src/components/shortcuts-settings.jsx:724
 #: src/pages/list.jsx:388
 msgid "Add"
 msgstr "添加"
@@ -576,7 +583,7 @@ msgstr "公开"
 
 #: src/components/compose.jsx:2014
 #: src/components/nav-menu.jsx:349
-#: src/components/shortcuts-settings.jsx:166
+#: src/components/shortcuts-settings.jsx:168
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "本站"
@@ -717,7 +724,7 @@ msgid "Poll"
 msgstr "投票"
 
 #: src/components/drafts.jsx:266
-#: src/pages/account-statuses.jsx:369
+#: src/pages/account-statuses.jsx:440
 msgid "Media"
 msgstr "媒体"
 
@@ -785,7 +792,7 @@ msgstr "内容"
 #: src/components/edit-profile-sheet.jsx:329
 #: src/components/list-add-edit.jsx:152
 #: src/components/quote-settings-sheet.jsx:92
-#: src/components/shortcuts-settings.jsx:716
+#: src/components/shortcuts-settings.jsx:724
 #: src/pages/filters.jsx:572
 #: src/pages/notifications.jsx:1007
 msgid "Save"
@@ -902,7 +909,7 @@ msgid "Import/Export <0>Accounts</0>"
 msgstr "导入/导出 <0>帐户</0>"
 
 #: src/components/import-export-accounts.jsx:128
-#: src/components/shortcuts-settings.jsx:800
+#: src/components/shortcuts-settings.jsx:808
 msgid "Import"
 msgstr "导入"
 
@@ -911,7 +918,7 @@ msgid "Select file…"
 msgstr "选择文件…"
 
 #: src/components/import-export-accounts.jsx:151
-#: src/components/shortcuts-settings.jsx:1048
+#: src/components/shortcuts-settings.jsx:1056
 msgid "Export"
 msgstr "导出"
 
@@ -1028,8 +1035,8 @@ msgstr "<0>Ctrl</0> + <1>Enter</1> 或 <2>⌘</2> + <3>Enter</3>"
 #: src/components/keyboard-shortcuts-help.jsx:161
 #: src/components/nav-menu.jsx:337
 #: src/components/search-form.jsx:208
-#: src/components/shortcuts-settings.jsx:53
-#: src/components/shortcuts-settings.jsx:180
+#: src/components/shortcuts-settings.jsx:54
+#: src/components/shortcuts-settings.jsx:182
 #: src/pages/search.jsx:47
 #: src/pages/search.jsx:317
 msgid "Search"
@@ -1176,8 +1183,8 @@ msgstr "媒体描述"
 #: src/components/status.jsx:2299
 #: src/components/status.jsx:3024
 #: src/components/status.jsx:3027
-#: src/pages/account-statuses.jsx:562
-#: src/pages/accounts.jsx:127
+#: src/pages/account-statuses.jsx:641
+#: src/pages/accounts.jsx:147
 #: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:147
@@ -1374,7 +1381,7 @@ msgstr "有更新可用…"
 
 #. js-lingui-explicit-id
 #: src/components/nav-menu.jsx:190
-#: src/components/shortcuts-settings.jsx:141
+#: src/components/shortcuts-settings.jsx:143
 #: src/pages/following.jsx:23
 #: src/pages/following.jsx:156
 msgid "following.title"
@@ -1387,8 +1394,8 @@ msgid "Catch-up"
 msgstr "补看"
 
 #: src/components/nav-menu.jsx:204
-#: src/components/shortcuts-settings.jsx:59
-#: src/components/shortcuts-settings.jsx:147
+#: src/components/shortcuts-settings.jsx:60
+#: src/components/shortcuts-settings.jsx:149
 #: src/pages/home.jsx:240
 #: src/pages/mentions.jsx:21
 #: src/pages/mentions.jsx:174
@@ -1398,8 +1405,8 @@ msgid "Mentions"
 msgstr "提及"
 
 #: src/components/nav-menu.jsx:211
-#: src/components/shortcuts-settings.jsx:50
-#: src/components/shortcuts-settings.jsx:153
+#: src/components/shortcuts-settings.jsx:51
+#: src/components/shortcuts-settings.jsx:155
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:86
 #: src/pages/home.jsx:198
@@ -1413,12 +1420,14 @@ msgid "New"
 msgstr "新"
 
 #: src/components/nav-menu.jsx:225
+#: src/components/shortcuts-settings.jsx:61
+#: src/components/shortcuts-settings.jsx:192
 msgid "Profile"
 msgstr "个人资料"
 
 #: src/components/nav-menu.jsx:233
-#: src/components/shortcuts-settings.jsx:55
-#: src/components/shortcuts-settings.jsx:196
+#: src/components/shortcuts-settings.jsx:56
+#: src/components/shortcuts-settings.jsx:204
 #: src/pages/bookmarks.jsx:12
 #: src/pages/bookmarks.jsx:26
 msgid "Bookmarks"
@@ -1430,8 +1439,8 @@ msgid "More…"
 msgstr "更多…"
 
 #: src/components/nav-menu.jsx:253
-#: src/components/shortcuts-settings.jsx:56
-#: src/components/shortcuts-settings.jsx:202
+#: src/components/shortcuts-settings.jsx:57
+#: src/components/shortcuts-settings.jsx:210
 #: src/pages/catchup.jsx:1576
 #: src/pages/catchup.jsx:2236
 #: src/pages/favourites.jsx:12
@@ -1447,7 +1456,7 @@ msgid "Followed Hashtags"
 msgstr "关注的话题标签"
 
 #: src/components/nav-menu.jsx:273
-#: src/pages/account-statuses.jsx:335
+#: src/pages/account-statuses.jsx:382
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
 #: src/pages/hashtag.jsx:373
@@ -1483,14 +1492,14 @@ msgid "Log in"
 msgstr "登录"
 
 #: src/components/nav-menu.jsx:343
-#: src/components/shortcuts-settings.jsx:58
-#: src/components/shortcuts-settings.jsx:173
+#: src/components/shortcuts-settings.jsx:59
+#: src/components/shortcuts-settings.jsx:175
 #: src/pages/trending.jsx:444
 msgid "Trending"
 msgstr "热门"
 
 #: src/components/nav-menu.jsx:355
-#: src/components/shortcuts-settings.jsx:166
+#: src/components/shortcuts-settings.jsx:168
 msgid "Federated"
 msgstr "跨站"
 
@@ -1505,8 +1514,8 @@ msgstr "设置…"
 
 #: src/components/nav-menu.jsx:432
 #: src/components/nav-menu.jsx:467
-#: src/components/shortcuts-settings.jsx:51
-#: src/components/shortcuts-settings.jsx:159
+#: src/components/shortcuts-settings.jsx:52
+#: src/components/shortcuts-settings.jsx:161
 #: src/pages/list.jsx:127
 #: src/pages/lists.jsx:18
 #: src/pages/lists.jsx:54
@@ -1707,7 +1716,7 @@ msgstr "是否打开链接？"
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
 #: src/components/related-actions.jsx:565
-#: src/components/shortcuts-settings.jsx:1157
+#: src/components/shortcuts-settings.jsx:1165
 #: src/components/status.jsx:1468
 msgid "Copy"
 msgstr "复制"
@@ -1872,7 +1881,7 @@ msgid "Save & close"
 msgstr "保存并关闭"
 
 #: src/components/qr-code-modal.jsx:26
-#: src/components/shortcuts-settings.jsx:833
+#: src/components/shortcuts-settings.jsx:841
 msgid "Scan QR code"
 msgstr "扫描二维码"
 
@@ -1944,7 +1953,7 @@ msgid "Clear all"
 msgstr "全部清除"
 
 #: src/components/recent-searches.jsx:94
-#: src/pages/account-statuses.jsx:328
+#: src/pages/account-statuses.jsx:375
 msgid "Clear"
 msgstr "清除"
 
@@ -2048,12 +2057,12 @@ msgid "Show featured profiles"
 msgstr "展示精选账户列表"
 
 #: src/components/related-actions.jsx:507
-#: src/pages/account-statuses.jsx:467
+#: src/pages/account-statuses.jsx:546
 msgid "Search my posts"
 msgstr "搜索我的嘟文"
 
 #: src/components/related-actions.jsx:580
-#: src/components/shortcuts-settings.jsx:1175
+#: src/components/shortcuts-settings.jsx:1183
 #: src/components/status.jsx:1484
 msgid "Sharing doesn't seem to work."
 msgstr "分享似乎无法正常工作。"
@@ -2297,289 +2306,289 @@ msgstr "查找 <0>{query}</0>"
 msgid "See all"
 msgstr "查看全部"
 
-#: src/components/shortcuts-settings.jsx:49
+#: src/components/shortcuts-settings.jsx:50
 msgid "Home / Following"
 msgstr "主页 / 关注"
 
-#: src/components/shortcuts-settings.jsx:52
+#: src/components/shortcuts-settings.jsx:53
 msgid "Public (Local / Federated)"
 msgstr "公共 (本站 / 跨站)"
 
-#: src/components/shortcuts-settings.jsx:54
+#: src/components/shortcuts-settings.jsx:55
 msgid "Account"
 msgstr "账户"
 
-#: src/components/shortcuts-settings.jsx:57
+#: src/components/shortcuts-settings.jsx:58
 msgid "Hashtag"
 msgstr "话题标签"
 
-#: src/components/shortcuts-settings.jsx:64
+#: src/components/shortcuts-settings.jsx:66
 msgid "List ID"
 msgstr "列表ID"
 
-#: src/components/shortcuts-settings.jsx:71
+#: src/components/shortcuts-settings.jsx:73
 msgid "Local only"
 msgstr "仅限本站"
 
-#: src/components/shortcuts-settings.jsx:76
-#: src/components/shortcuts-settings.jsx:85
-#: src/components/shortcuts-settings.jsx:123
+#: src/components/shortcuts-settings.jsx:78
+#: src/components/shortcuts-settings.jsx:87
+#: src/components/shortcuts-settings.jsx:125
 #: src/pages/login.jsx:231
 msgid "Server"
 msgstr "实例"
 
-#: src/components/shortcuts-settings.jsx:79
-#: src/components/shortcuts-settings.jsx:88
-#: src/components/shortcuts-settings.jsx:126
+#: src/components/shortcuts-settings.jsx:81
+#: src/components/shortcuts-settings.jsx:90
+#: src/components/shortcuts-settings.jsx:128
 msgid "Optional, e.g. mastodon.social"
 msgstr "可选，如 mastodon.social"
 
-#: src/components/shortcuts-settings.jsx:94
+#: src/components/shortcuts-settings.jsx:96
 msgid "Search term"
 msgstr "搜索关键词"
 
-#: src/components/shortcuts-settings.jsx:97
+#: src/components/shortcuts-settings.jsx:99
 msgid "Optional, unless for multi-column mode"
 msgstr "可选，除非为多栏模式"
 
-#: src/components/shortcuts-settings.jsx:114
+#: src/components/shortcuts-settings.jsx:116
 msgid "e.g. PixelArt (Max 5, space-separated)"
 msgstr "例如:像素艺术 (最多 5 个，用空格分隔)"
 
-#: src/components/shortcuts-settings.jsx:118
+#: src/components/shortcuts-settings.jsx:120
 #: src/pages/hashtag.jsx:389
 msgid "Media only"
 msgstr "仅媒体"
 
-#: src/components/shortcuts-settings.jsx:236
+#: src/components/shortcuts-settings.jsx:244
 #: src/components/shortcuts.jsx:220
 msgid "Shortcuts"
 msgstr "快捷方式"
 
-#: src/components/shortcuts-settings.jsx:244
+#: src/components/shortcuts-settings.jsx:252
 msgid "beta"
 msgstr "beta"
 
-#: src/components/shortcuts-settings.jsx:250
+#: src/components/shortcuts-settings.jsx:258
 msgid "Specify a list of shortcuts that'll appear as:"
 msgstr "指定一组快捷方式，显示样式为:"
 
-#: src/components/shortcuts-settings.jsx:256
+#: src/components/shortcuts-settings.jsx:264
 msgid "Floating button"
 msgstr "悬浮按钮"
 
-#: src/components/shortcuts-settings.jsx:261
+#: src/components/shortcuts-settings.jsx:269
 msgid "Tab/Menu bar"
 msgstr "标签/菜单栏"
 
-#: src/components/shortcuts-settings.jsx:266
+#: src/components/shortcuts-settings.jsx:274
 msgid "Multi-column"
 msgstr "多栏"
 
-#: src/components/shortcuts-settings.jsx:333
+#: src/components/shortcuts-settings.jsx:341
 msgid "Not available in current view mode"
 msgstr "在当前视图模式下不可用"
 
-#: src/components/shortcuts-settings.jsx:352
-#: src/pages/accounts.jsx:197
+#: src/components/shortcuts-settings.jsx:360
+#: src/pages/accounts.jsx:217
 msgid "Move up"
 msgstr "向上移动"
 
-#: src/components/shortcuts-settings.jsx:368
-#: src/pages/accounts.jsx:212
+#: src/components/shortcuts-settings.jsx:376
+#: src/pages/accounts.jsx:232
 msgid "Move down"
 msgstr "向下移动"
 
-#: src/components/shortcuts-settings.jsx:380
+#: src/components/shortcuts-settings.jsx:388
 #: src/components/status.jsx:1615
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "编辑"
 
-#: src/components/shortcuts-settings.jsx:401
+#: src/components/shortcuts-settings.jsx:409
 msgid "Add more than one shortcut/column to make this work."
 msgstr "需要添加一个以上快捷方式/栏以使其正常工作。"
 
-#: src/components/shortcuts-settings.jsx:412
+#: src/components/shortcuts-settings.jsx:420
 msgid "No columns yet. Tap on the Add column button."
 msgstr "尚未添加任何栏。点击以添加栏。"
 
-#: src/components/shortcuts-settings.jsx:413
+#: src/components/shortcuts-settings.jsx:421
 msgid "No shortcuts yet. Tap on the Add shortcut button."
 msgstr "尚未添加任何快捷方式。点击以添加快捷方式。"
 
-#: src/components/shortcuts-settings.jsx:416
+#: src/components/shortcuts-settings.jsx:424
 msgid "Not sure what to add?<0/>Try adding <1>Home / Following and Notifications</1> first."
 msgstr "不确定要添加哪些？<0/>可以先尝试添加<1>主页 / 关注和通知</1>。"
 
-#: src/components/shortcuts-settings.jsx:444
+#: src/components/shortcuts-settings.jsx:452
 msgid "Max {SHORTCUTS_LIMIT} columns"
 msgstr "最多 {SHORTCUTS_LIMIT} 栏"
 
-#: src/components/shortcuts-settings.jsx:445
+#: src/components/shortcuts-settings.jsx:453
 msgid "Max {SHORTCUTS_LIMIT} shortcuts"
 msgstr "最多 {SHORTCUTS_LIMIT} 个快捷方式"
 
-#: src/components/shortcuts-settings.jsx:459
-#: src/pages/accounts.jsx:306
+#: src/components/shortcuts-settings.jsx:467
+#: src/pages/accounts.jsx:358
 msgid "Import/export"
 msgstr "导入/导出"
 
-#: src/components/shortcuts-settings.jsx:469
+#: src/components/shortcuts-settings.jsx:477
 msgid "Add column…"
 msgstr "添加栏…"
 
-#: src/components/shortcuts-settings.jsx:470
+#: src/components/shortcuts-settings.jsx:478
 msgid "Add shortcut…"
 msgstr "添加快捷方式…"
 
-#: src/components/shortcuts-settings.jsx:517
+#: src/components/shortcuts-settings.jsx:525
 msgid "Specific list is optional. For multi-column mode, list is required, else the column will not be shown."
 msgstr "特定的某个列表是可选的。但在多栏模式下，必须添加列表，否则对应的栏将不会显示。"
 
-#: src/components/shortcuts-settings.jsx:518
+#: src/components/shortcuts-settings.jsx:526
 msgid "For multi-column mode, search term is required, else the column will not be shown."
 msgstr "在多栏模式下，搜索关键词是必须的，否则对应的栏将不会显示。"
 
-#: src/components/shortcuts-settings.jsx:519
+#: src/components/shortcuts-settings.jsx:527
 msgid "Multiple hashtags are supported. Space-separated."
 msgstr "支持添加多个话题标签。以空格分隔。"
 
-#: src/components/shortcuts-settings.jsx:588
+#: src/components/shortcuts-settings.jsx:596
 msgid "Edit shortcut"
 msgstr "编辑快捷方式"
 
-#: src/components/shortcuts-settings.jsx:588
+#: src/components/shortcuts-settings.jsx:596
 msgid "Add shortcut"
 msgstr "添加快捷方式"
 
-#: src/components/shortcuts-settings.jsx:624
+#: src/components/shortcuts-settings.jsx:632
 msgid "Timeline"
 msgstr "时间线"
 
-#: src/components/shortcuts-settings.jsx:650
+#: src/components/shortcuts-settings.jsx:658
 msgid "List"
 msgstr "列表"
 
-#: src/components/shortcuts-settings.jsx:790
+#: src/components/shortcuts-settings.jsx:798
 msgid "Import/Export <0>Shortcuts</0>"
 msgstr "导入/导出 <0>快捷方式</0>"
 
-#: src/components/shortcuts-settings.jsx:808
+#: src/components/shortcuts-settings.jsx:816
 msgid "Paste shortcuts here"
 msgstr "在此粘贴快捷方式配置"
 
-#: src/components/shortcuts-settings.jsx:844
+#: src/components/shortcuts-settings.jsx:852
 msgid "Downloading saved shortcuts from server…"
 msgstr "正在从实例下载保存的快捷键配置…"
 
-#: src/components/shortcuts-settings.jsx:872
+#: src/components/shortcuts-settings.jsx:880
 msgid "Unable to download shortcuts"
 msgstr "无法下载快捷方式"
 
-#: src/components/shortcuts-settings.jsx:875
+#: src/components/shortcuts-settings.jsx:883
 msgid "Download shortcuts from server"
 msgstr "从实例下载快捷键配置"
 
-#: src/components/shortcuts-settings.jsx:942
+#: src/components/shortcuts-settings.jsx:950
 msgid "* Exists in current shortcuts"
 msgstr "* 已存在于当前快捷方式中"
 
-#: src/components/shortcuts-settings.jsx:947
+#: src/components/shortcuts-settings.jsx:955
 msgid "List may not work if it's from a different account."
 msgstr "如果列表来自不同的账户，则可能无法使用。"
 
-#: src/components/shortcuts-settings.jsx:957
+#: src/components/shortcuts-settings.jsx:965
 msgid "Invalid settings format"
 msgstr "设置格式非法"
 
-#: src/components/shortcuts-settings.jsx:965
+#: src/components/shortcuts-settings.jsx:973
 msgid "Append to current shortcuts?"
 msgstr "是否追加到当前快捷方式？"
 
-#: src/components/shortcuts-settings.jsx:968
+#: src/components/shortcuts-settings.jsx:976
 msgid "Only shortcuts that don’t exist in current shortcuts will be appended."
 msgstr "只有不存在于当前快捷方式中的快捷方式才会被追加。"
 
-#: src/components/shortcuts-settings.jsx:990
+#: src/components/shortcuts-settings.jsx:998
 msgid "No new shortcuts to import"
 msgstr "没有新的快捷方式可供导入"
 
-#: src/components/shortcuts-settings.jsx:1005
+#: src/components/shortcuts-settings.jsx:1013
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
 msgstr "已导入快捷方式。但总数超出最大限制 {SHORTCUTS_LIMIT}，因此超出的部分未被导入。"
 
-#: src/components/shortcuts-settings.jsx:1006
-#: src/components/shortcuts-settings.jsx:1030
+#: src/components/shortcuts-settings.jsx:1014
+#: src/components/shortcuts-settings.jsx:1038
 msgid "Shortcuts imported"
 msgstr "已导入快捷方式"
 
-#: src/components/shortcuts-settings.jsx:1016
+#: src/components/shortcuts-settings.jsx:1024
 msgid "Import & append…"
 msgstr "导入并追加…"
 
-#: src/components/shortcuts-settings.jsx:1024
+#: src/components/shortcuts-settings.jsx:1032
 msgid "Override current shortcuts?"
 msgstr "是否覆盖当前快捷方式配置？"
 
-#: src/components/shortcuts-settings.jsx:1025
+#: src/components/shortcuts-settings.jsx:1033
 msgid "Import shortcuts?"
 msgstr "是否导入快捷方式？"
 
-#: src/components/shortcuts-settings.jsx:1039
+#: src/components/shortcuts-settings.jsx:1047
 msgid "or override…"
 msgstr "或覆盖…"
 
-#: src/components/shortcuts-settings.jsx:1039
+#: src/components/shortcuts-settings.jsx:1047
 msgid "Import…"
 msgstr "导入…"
 
-#: src/components/shortcuts-settings.jsx:1063
+#: src/components/shortcuts-settings.jsx:1071
 msgid "Shortcuts copied"
 msgstr "已复制快捷方式"
 
-#: src/components/shortcuts-settings.jsx:1066
+#: src/components/shortcuts-settings.jsx:1074
 msgid "Unable to copy shortcuts"
 msgstr "无法复制快捷方式"
 
-#: src/components/shortcuts-settings.jsx:1118
+#: src/components/shortcuts-settings.jsx:1126
 msgid "Saving shortcuts to server…"
 msgstr "正在将快捷键配置保存到实例…"
 
-#: src/components/shortcuts-settings.jsx:1125
+#: src/components/shortcuts-settings.jsx:1133
 msgid "Shortcuts saved"
 msgstr "已保存快捷方式"
 
-#: src/components/shortcuts-settings.jsx:1130
+#: src/components/shortcuts-settings.jsx:1138
 msgid "Unable to save shortcuts"
 msgstr "无法保存快捷方式"
 
-#: src/components/shortcuts-settings.jsx:1133
+#: src/components/shortcuts-settings.jsx:1141
 msgid "Sync to server"
 msgstr "同步到实例"
 
-#: src/components/shortcuts-settings.jsx:1148
+#: src/components/shortcuts-settings.jsx:1156
 msgid "Shortcut settings copied"
 msgstr "已复制快捷方式设置"
 
-#: src/components/shortcuts-settings.jsx:1151
+#: src/components/shortcuts-settings.jsx:1159
 msgid "Unable to copy shortcut settings"
 msgstr "无法复制快捷方式设置"
 
-#: src/components/shortcuts-settings.jsx:1181
+#: src/components/shortcuts-settings.jsx:1189
 msgid "Share"
 msgstr "分享"
 
 #. placeholder {0}: shortcutsStr.length
-#: src/components/shortcuts-settings.jsx:1187
+#: src/components/shortcuts-settings.jsx:1195
 msgid "{0, plural, one {# character} other {# characters}}"
 msgstr "{0, plural, other {# 个字符}}"
 
-#: src/components/shortcuts-settings.jsx:1199
+#: src/components/shortcuts-settings.jsx:1207
 msgid "Raw Shortcuts JSON"
 msgstr "原始快捷方式 JSON"
 
-#: src/components/shortcuts-settings.jsx:1212
+#: src/components/shortcuts-settings.jsx:1220
 msgid "Import/export settings from/to server (Very experimental)"
 msgstr "从实例导入或导出设置（很不稳定）"
 
@@ -3061,152 +3070,164 @@ msgstr "需要登录。"
 msgid "Go home"
 msgstr "返回主页"
 
-#: src/pages/account-statuses.jsx:232
+#: src/pages/account-statuses.jsx:272
 msgid "Account posts"
 msgstr "该账户的嘟文"
 
-#: src/pages/account-statuses.jsx:239
+#: src/pages/account-statuses.jsx:279
 msgid "{accountDisplay} (+ Replies)"
 msgstr "{accountDisplay} (+ 回复)"
 
-#. Real minus sign (−) is used here
-#: src/pages/account-statuses.jsx:241
-msgid "{accountDisplay} (− Boosts)"
+#: src/pages/account-statuses.jsx:281
+msgid "{accountDisplay} (- Boosts)"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:246
+#: src/pages/account-statuses.jsx:283
 msgid "{accountDisplay} (#{tagged})"
 msgstr "{accountDisplay} (#{tagged})"
 
-#: src/pages/account-statuses.jsx:248
+#: src/pages/account-statuses.jsx:285
 msgid "{accountDisplay} (Media)"
 msgstr "{accountDisplay} (媒体)"
 
-#: src/pages/account-statuses.jsx:254
+#: src/pages/account-statuses.jsx:291
 msgid "{accountDisplay} ({monthYear})"
 msgstr "{accountDisplay} ({monthYear})"
 
-#: src/pages/account-statuses.jsx:325
+#: src/pages/account-statuses.jsx:366
 msgid "Clear filters"
 msgstr "清除过滤规则"
 
-#: src/pages/account-statuses.jsx:342
+#: src/pages/account-statuses.jsx:397
 msgid "Showing post with replies"
 msgstr "已展示回复"
 
-#: src/pages/account-statuses.jsx:347
+#: src/pages/account-statuses.jsx:402
 msgid "+ Replies"
 msgstr "+ 回复"
 
-#: src/pages/account-statuses.jsx:353
+#: src/pages/account-statuses.jsx:416
 msgid "Showing posts without boosts"
 msgstr "已隐藏转嘟"
 
-#. Real minus sign (−) is used here
-#: src/pages/account-statuses.jsx:358
-msgid "− Boosts"
+#: src/pages/account-statuses.jsx:421
+msgid "- Boosts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:364
+#: src/pages/account-statuses.jsx:435
 msgid "Showing posts with media"
 msgstr "已展示媒体"
 
 #. placeholder {0}: tag.name
-#: src/pages/account-statuses.jsx:381
+#: src/pages/account-statuses.jsx:460
 msgid "Showing posts tagged with #{0}"
 msgstr "已展示带有 #{0} 话题标签的嘟文"
 
 #. placeholder {0}: date.toLocaleString( i18n.locale, { month: 'long', year: 'numeric', }, )
-#: src/pages/account-statuses.jsx:421
+#: src/pages/account-statuses.jsx:500
 msgid "Showing posts in {0}"
 msgstr "已显示 {0} 中的嘟文"
 
 #. placeholder {0}: account?.username
-#: src/pages/account-statuses.jsx:468
+#: src/pages/account-statuses.jsx:547
 msgid "Search @{0}'s posts"
 msgstr "搜索 @{0} 的嘟文"
 
-#: src/pages/account-statuses.jsx:514
+#: src/pages/account-statuses.jsx:593
 #: src/pages/search.jsx:345
 #: src/pages/search.jsx:492
 msgid "Posts"
 msgstr "嘟文"
 
-#: src/pages/account-statuses.jsx:539
+#: src/pages/account-statuses.jsx:618
 msgid "Nothing to see here yet."
 msgstr "空空如也"
 
-#: src/pages/account-statuses.jsx:540
+#: src/pages/account-statuses.jsx:619
 #: src/pages/public.jsx:130
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr "无法加载嘟文"
 
-#: src/pages/account-statuses.jsx:581
-#: src/pages/account-statuses.jsx:611
+#: src/pages/account-statuses.jsx:660
+#: src/pages/account-statuses.jsx:690
 msgid "Unable to fetch account info"
 msgstr "无法获取账户信息"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:588
+#: src/pages/account-statuses.jsx:667
 msgid "Switch to account's server {0}"
 msgstr "切换到该账户所在实例 {0}"
 
-#: src/pages/account-statuses.jsx:618
+#: src/pages/account-statuses.jsx:697
 msgid "Switch to my server (<0>{currentInstance}</0>)"
 msgstr "切换到我的实例 (<0>{currentInstance}</0>)"
 
-#: src/pages/account-statuses.jsx:691
+#: src/pages/account-statuses.jsx:770
 msgid "Month"
 msgstr "月"
 
-#: src/pages/accounts.jsx:65
+#: src/pages/accounts.jsx:85
 msgid "Current"
 msgstr "当前账号"
 
-#: src/pages/accounts.jsx:113
+#: src/pages/accounts.jsx:133
 msgid "Logged out"
 msgstr "已登出"
 
-#: src/pages/accounts.jsx:119
+#: src/pages/accounts.jsx:139
 msgid "Default"
 msgstr "默认"
 
-#: src/pages/accounts.jsx:141
+#: src/pages/accounts.jsx:161
 msgid "Switch to this account"
 msgstr "切换到此账户"
 
-#: src/pages/accounts.jsx:150
+#: src/pages/accounts.jsx:170
 msgid "Switch in new tab/window"
 msgstr "在新标签页/窗口中切换"
 
-#: src/pages/accounts.jsx:164
+#: src/pages/accounts.jsx:184
 msgid "View profile…"
 msgstr "查看个人资料…"
 
-#: src/pages/accounts.jsx:182
+#: src/pages/accounts.jsx:202
 msgid "Set as default"
 msgstr "设为默认账号"
 
 #. placeholder {0}: account.info.acct
-#: src/pages/accounts.jsx:224
+#: src/pages/accounts.jsx:245
 msgid "Log out <0>@{0}</0>?"
 msgstr "是否退出 <0>@{0}</0>？"
 
-#: src/pages/accounts.jsx:262
+#. placeholder {0}: account.info.acct
+#: src/pages/accounts.jsx:273
+msgid "Log out and remove <0>@{0}</0>"
+msgstr ""
+
+#: src/pages/accounts.jsx:285
 msgid "Log out…"
 msgstr "登出…"
 
+#. placeholder {0}: account.info.acct
+#: src/pages/accounts.jsx:295
+msgid "Remove <0>@{0}</0>?"
+msgstr ""
+
+#: src/pages/accounts.jsx:313
+msgid "Remove account…"
+msgstr ""
+
 #. placeholder {0}: niceDateTime(account.createdAt)
-#: src/pages/accounts.jsx:269
+#: src/pages/accounts.jsx:321
 msgid "Connected on {0} (<0/>)"
 msgstr "在 {0} (<0/>) 建立连接"
 
-#: src/pages/accounts.jsx:286
+#: src/pages/accounts.jsx:338
 msgid "Add an existing account"
 msgstr "添加现有账号"
 
-#: src/pages/accounts.jsx:293
+#: src/pages/accounts.jsx:345
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr "注意: 首次加载时始终使用<0>默认</0>帐户。当前帐户被切换后将在会话期间保持有效。"
 

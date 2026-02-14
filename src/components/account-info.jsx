@@ -498,6 +498,16 @@ function AccountInfo({
                   crossOrigin="anonymous"
                   onLoad={(e) => {
                     e.target.classList.add('loaded');
+                    const { width, height } = e.target;
+                    // 25px per second (rough estimate)
+                    // Clamp between 10s and 120s
+                    e.target.style.setProperty(
+                      '--anim-duration',
+                      `${Math.min(
+                        Math.max(Math.max(width, height) / 25, 10),
+                        120,
+                      )}s`,
+                    );
                     try {
                       // Get color from four corners of image
                       const canvas = window.OffscreenCanvas
@@ -506,8 +516,8 @@ function AccountInfo({
                       const ctx = canvas.getContext('2d', {
                         willReadFrequently: true,
                       });
-                      canvas.width = e.target.width;
-                      canvas.height = e.target.height;
+                      canvas.width = width;
+                      canvas.height = height;
                       ctx.imageSmoothingEnabled = false;
                       ctx.drawImage(e.target, 0, 0);
                       // const colors = [

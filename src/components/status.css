@@ -229,8 +229,10 @@
 .status-card-link:is(:hover, :focus)
   .status-card:not(.status-card .status-card)
   img {
-  animation: position-object 5s ease-in-out 1s 5;
-  animation-duration: var(--anim-duration, 5s);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 5s ease-in-out 1s 5;
+    animation-duration: var(--anim-duration, 5s);
+  }
 }
 .status-card-link:is(:active) .status-card {
   background-color: var(--bg-faded-color);
@@ -1418,8 +1420,10 @@
 }
 .status .media:not([data-has-small-dimension]) img:is(:hover, :focus),
 a:focus-visible .status .media:not([data-has-small-dimension]) img {
-  animation: position-object 5s ease-in-out 1s 5;
-  animation-duration: var(--anim-duration, 5s);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 5s ease-in-out 1s 5;
+    animation-duration: var(--anim-duration, 5s);
+  }
 }
 body:has(#modal-container .carousel) .status .media img:hover {
   animation: none;
@@ -2060,8 +2064,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
 }
 .card:is(:hover, :focus) img,
 a:focus-visible .card img {
-  animation: position-object 5s ease-in-out 1s 5;
-  animation-duration: var(--anim-duration, 5s);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 5s ease-in-out 1s 5;
+    animation-duration: var(--anim-duration, 5s);
+  }
 }
 .card p {
   margin: 0;
@@ -3239,6 +3245,37 @@ a.card:is(:hover, :focus):visited {
   *:nth-child(even):not(:has(*)) {
     /* sprinkle a bit more gradual magical feel */
     animation: appear 1s ease-out;
+  }
+}
+
+/* VERTICAL TEXT LAYOUT */
+
+/* Some API returns mnMong (without dash, invalid BCP47) & :lang() won't recognize it */
+.status .content > .inner-content:lang(mn-Mong),
+.status .content > .inner-content[lang='mnMong'] {
+  writing-mode: vertical-lr;
+  max-height: 50vh;
+}
+.status
+  .content:has(
+    > .inner-content:lang(mn-Mong),
+    > .inner-content[lang='mnMong']
+  ) {
+  overflow-x: auto;
+  animation: fade-edges linear;
+  animation-timeline: scroll(self inline);
+}
+
+@keyframes fade-edges {
+  0% {
+    mask-image: linear-gradient(
+      to right,
+      black 0% calc(100% - 32px),
+      transparent
+    );
+  }
+  100% {
+    mask-image: linear-gradient(to right, transparent, black 32px 100%);
   }
 }
 

@@ -108,8 +108,10 @@
 
     :not(.filtered, .has-spoiler) &:is(:hover, :focus) img {
       /* Less delay here to make it feel more responsive */
-      animation: position-object 5s ease-in-out 0.1s 5;
-      animation-duration: var(--anim-duration, 5s);
+      @media (prefers-reduced-motion: no-preference) {
+        animation: position-object 5s ease-in-out 0.1s 5;
+        animation-duration: var(--anim-duration, 5s);
+      }
     }
   }
 

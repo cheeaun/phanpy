@@ -20,6 +20,7 @@ import { filteredItems } from '../utils/filters';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import { isMediaFirstInstance } from '../utils/store-utils';
+import { checkTimelineAccess } from '../utils/timeline-access';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -63,6 +64,12 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
 
   const mediaFirst = useMemo(() => isMediaFirstInstance(), []);
 
+  // Timeline access: public, authenticated, disabled
+  const [timelineAccess, setTimelineAccess] = useState(null);
+  const isDisabled = timelineAccess === 'disabled';
+  const requiresAuth = timelineAccess === 'authenticated';
+  const isPrivate = requiresAuth && !authenticated;
+
   // const hashtagsIterator = useRef();
   const maxID = useRef(undefined);
   async function fetchHashtags(firstLoad) {
@@ -75,6 +82,22 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
     // const results = await hashtagsIterator.current.next();
 
     // NOTE: Temporary fix for listHashtag not persisting `any` in subsequent calls.
+    const access = await checkTimelineAccess({
+      feed: 'hashtagFeeds',
+      feedType: 'local',
+      instance,
+    });
+    setTimelineAccess(access);
+    if (
+      access === 'disabled' ||
+      (access === 'authenticated' && !authenticated)
+    ) {
+      return {
+        done: true,
+        value: [],
+      };
+    }
+
     const results = await masto.v1.timelines.tag
       .$select(hashtag)
       .list({
@@ -182,7 +205,13 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
         }
         id="hashtag"
         instance={instance}
-        emptyText={t`No one has posted anything with this tag yet.`}
+        emptyText={
+          isDisabled
+            ? t`This timeline is disabled on this server.`
+            : isPrivate
+              ? t`Login required to see posts from this server.`
+              : t`No one has posted anything with this tag yet.`
+        }
         errorText={t`Unable to load posts with this tag`}
         fetchItems={fetchHashtags}
         checkForUpdates={checkForUpdates}

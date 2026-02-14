@@ -85,6 +85,12 @@ const camelToKebabCase = (str) => {
   - Max character limit includes BOTH status text and Content Warning text
 */
 
+// Detect devices that can't open proper custom-sized windows
+// (Android phones/tablets, iOS devices, but not Chromebooks)
+const isPopOutNotSupported =
+  /Android|iPhone|iPad|iPod/.test(navigator.userAgent) &&
+  !/CrOS/.test(navigator.userAgent);
+
 const expirySeconds = Object.keys(expiryOptions);
 const oneDay = 24 * 60 * 60;
 
@@ -1035,7 +1041,7 @@ function Compose({
               useAvatarStatic
             />
           )}
-          {!standalone ? (
+          {!isPopOutNotSupported ? (
             <span class="compose-controls">
               <button
                 type="button"

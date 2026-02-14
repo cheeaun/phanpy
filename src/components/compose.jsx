@@ -1041,13 +1041,14 @@ function Compose({
               useAvatarStatic
             />
           )}
-          {!isPopOutNotSupported ? (
+          {!standalone ? (
             <span class="compose-controls">
-              <button
-                type="button"
-                class="plain4 pop-button"
-                disabled={uiState === 'loading'}
-                onClick={() => {
+              {!isPopOutNotSupported && (
+                <button
+                  type="button"
+                  class="plain4 pop-button"
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
                   // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
                   // const containNonIDMediaAttachments =
                   //   mediaAttachments.length > 0 &&
@@ -1087,10 +1088,11 @@ function Compose({
                   }
 
                   onClose();
-                }}
-              >
-                <Icon icon="popout" alt={t`Pop out`} />
-              </button>
+                  }}
+                >
+                  <Icon icon="popout" alt={t`Pop out`} />
+                </button>
+              )}
               <button
                 type="button"
                 class="plain4 min-button"

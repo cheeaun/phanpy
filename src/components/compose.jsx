@@ -1049,45 +1049,45 @@ function Compose({
                   class="plain4 pop-button"
                   disabled={uiState === 'loading'}
                   onClick={() => {
-                  // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
-                  // const containNonIDMediaAttachments =
-                  //   mediaAttachments.length > 0 &&
-                  //   mediaAttachments.some((media) => !media.id);
-                  // if (containNonIDMediaAttachments) {
-                  //   const yes = confirm(
-                  //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
-                  //   );
-                  //   if (!yes) {
-                  //     return;
-                  //   }
-                  // }
+                    // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
+                    // const containNonIDMediaAttachments =
+                    //   mediaAttachments.length > 0 &&
+                    //   mediaAttachments.some((media) => !media.id);
+                    // if (containNonIDMediaAttachments) {
+                    //   const yes = confirm(
+                    //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
+                    //   );
+                    //   if (!yes) {
+                    //     return;
+                    //   }
+                    // }
 
-                  // const mediaAttachmentsWithIDs = mediaAttachments.filter(
-                  //   (media) => media.id,
-                  // );
+                    // const mediaAttachmentsWithIDs = mediaAttachments.filter(
+                    //   (media) => media.id,
+                    // );
 
-                  const newWin = openCompose({
-                    editStatus,
-                    replyToStatus,
-                    draftStatus: {
-                      uid: UID.current,
-                      status: textareaRef.current.value,
-                      spoilerText: spoilerTextRef.current.value,
-                      visibility,
-                      language,
-                      sensitive,
-                      poll,
-                      mediaAttachments,
-                      scheduledAt,
-                    },
-                    quoteStatus: currentQuoteStatus,
-                  });
+                    const newWin = openCompose({
+                      editStatus,
+                      replyToStatus,
+                      draftStatus: {
+                        uid: UID.current,
+                        status: textareaRef.current.value,
+                        spoilerText: spoilerTextRef.current.value,
+                        visibility,
+                        language,
+                        sensitive,
+                        poll,
+                        mediaAttachments,
+                        scheduledAt,
+                      },
+                      quoteStatus: currentQuoteStatus,
+                    });
 
-                  if (!newWin) {
-                    return;
-                  }
+                    if (!newWin) {
+                      return;
+                    }
 
-                  onClose();
+                    onClose();
                   }}
                 >
                   <Icon icon="popout" alt={t`Pop out`} />

@@ -726,13 +726,6 @@
   }
 }
 
-@media (display-mode: standalone) {
-  /* No popping in standalone mode */
-  #compose-container .pop-button {
-    display: none;
-  }
-}
-
 #compose-container button[type='submit'] {
   border-radius: 9px;
   align-self: stretch;

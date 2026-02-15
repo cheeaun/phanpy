@@ -8,7 +8,7 @@ msgstr ""
 "Language: gl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-14 05:18\n"
+"PO-Revision-Date: 2026-02-15 10:36\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -88,7 +88,7 @@ msgstr "dominio do servidor"
 
 #: src/components/account-info-mini.jsx:57
 #: src/components/account-info.jsx:796
-#: src/components/compose.jsx:2027
+#: src/components/compose.jsx:2029
 #: src/pages/settings.jsx:296
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -264,7 +264,7 @@ msgstr "Ver estatísticas de publicación"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
-#: src/components/compose.jsx:1111
+#: src/components/compose.jsx:1113
 #: src/components/custom-emojis-modal.jsx:272
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:89
@@ -299,7 +299,7 @@ msgstr "Ver estatísticas de publicación"
 #: src/pages/catchup.jsx:1712
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
-#: src/pages/notifications.jsx:941
+#: src/pages/notifications.jsx:1005
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:100
 #: src/pages/status.jsx:1651
@@ -356,7 +356,7 @@ msgstr "Mais de <0/>"
 #: src/pages/filters.jsx:90
 #: src/pages/followed-hashtags.jsx:41
 #: src/pages/home.jsx:54
-#: src/pages/notifications.jsx:586
+#: src/pages/notifications.jsx:638
 #: src/pages/scheduled-posts.jsx:74
 msgid "Home"
 msgstr "Inicio"
@@ -391,7 +391,7 @@ msgid "Remove"
 msgstr "Retirar"
 
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1735
+#: src/components/compose.jsx:1737
 #: src/components/mention-modal.jsx:221
 #: src/components/shortcuts-settings.jsx:724
 #: src/pages/list.jsx:388
@@ -446,7 +446,7 @@ msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not sup
 msgstr "{0, plural, one {O ficheiro {1} non é compatible.} other {Os ficheiros {2} non son compatibles.}}"
 
 #: src/components/compose.jsx:292
-#: src/components/compose.jsx:2158
+#: src/components/compose.jsx:2160
 #: src/components/file-picker-input.jsx:38
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Só podes anexar un ficheiro.} other {Só podes anexar ata # ficheiros.}}"
@@ -455,69 +455,69 @@ msgstr "{maxMediaAttachments, plural, one {Só podes anexar un ficheiro.} other 
 msgid "You have unsaved changes. Discard this post?"
 msgstr "Tes cambios sen gardar. Desbotas esta publicación?"
 
-#: src/components/compose.jsx:1092
+#: src/components/compose.jsx:1093
 msgid "Pop out"
 msgstr "Despregar"
 
-#: src/components/compose.jsx:1099
+#: src/components/compose.jsx:1101
 msgid "Minimize"
 msgstr "Minimizar"
 
-#: src/components/compose.jsx:1135
+#: src/components/compose.jsx:1137
 msgid "Looks like you closed the parent window."
 msgstr "Semella que fechaches a xanela nai."
 
-#: src/components/compose.jsx:1142
+#: src/components/compose.jsx:1144
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Semella que xa tes aberto un cadro de edición na xanela nai e estase a publicar. Por favor agarda a que remate e inténtao outra vez máis tarde."
 
-#: src/components/compose.jsx:1147
+#: src/components/compose.jsx:1149
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Semella que xa tes un cadro de edición aberto na xanela nai. Ao traelo a esta xanela desbotarás os cambios realizados na xanela nai. Queres continuar?"
 
-#: src/components/compose.jsx:1193
+#: src/components/compose.jsx:1195
 msgid "Pop in"
 msgstr "Restablecer"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1203
+#: src/components/compose.jsx:1205
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Respondendo á publicación de @{0} (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1213
+#: src/components/compose.jsx:1215
 msgid "Replying to @{0}’s post"
 msgstr "Respondendo á publicación de @{0}"
 
-#: src/components/compose.jsx:1226
+#: src/components/compose.jsx:1228
 msgid "Editing source post"
 msgstr "Editando o contido da publicación"
 
-#: src/components/compose.jsx:1295
+#: src/components/compose.jsx:1297
 msgid "Poll must have at least 2 options"
 msgstr "A enquisa ten que ter 2 opcións como mínimo"
 
-#: src/components/compose.jsx:1299
+#: src/components/compose.jsx:1301
 msgid "Some poll choices are empty"
 msgstr "Algunhas opcións da enquisa están baleiras"
 
-#: src/components/compose.jsx:1312
+#: src/components/compose.jsx:1314
 msgid "Some media have no descriptions. Continue?"
 msgstr "Algún do multimedia non ten descrición. Queres continuar?"
 
-#: src/components/compose.jsx:1364
+#: src/components/compose.jsx:1366
 msgid "Attachment #{i} failed"
 msgstr "Fallou o anexo #{i}"
 
-#: src/components/compose.jsx:1491
+#: src/components/compose.jsx:1493
 #: src/components/status.jsx:2495
 #: src/components/timeline.jsx:1013
 msgid "Content warning"
 msgstr "Aviso sobre o contido"
 
-#: src/components/compose.jsx:1523
-#: src/components/compose.jsx:1669
+#: src/components/compose.jsx:1525
+#: src/components/compose.jsx:1671
 #: src/components/edit-profile-sheet.jsx:326
 #: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
@@ -526,85 +526,85 @@ msgstr "Aviso sobre o contido"
 msgid "Cancel"
 msgstr "Desbotar"
 
-#: src/components/compose.jsx:1531
+#: src/components/compose.jsx:1533
 msgid "Post your reply"
 msgstr "Publica a resposta"
 
-#: src/components/compose.jsx:1533
+#: src/components/compose.jsx:1535
 msgid "Edit your post"
 msgstr "Edita a publicación"
 
-#: src/components/compose.jsx:1535
+#: src/components/compose.jsx:1537
 msgid "Ask a question"
 msgstr "Preguntar"
 
-#: src/components/compose.jsx:1536
+#: src/components/compose.jsx:1538
 msgid "What are you doing?"
 msgstr "Que estás a facer?"
 
-#: src/components/compose.jsx:1609
+#: src/components/compose.jsx:1611
 msgid "Mark media as sensitive"
 msgstr "Marcar o multimedia como sensible"
 
-#: src/components/compose.jsx:1649
+#: src/components/compose.jsx:1651
 msgid "Posting on <0/>"
 msgstr "Publicar o <0/>"
 
-#: src/components/compose.jsx:1947
+#: src/components/compose.jsx:1949
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:296
 #: src/pages/settings.jsx:338
 msgid "Anyone can quote"
 msgstr "Calquera pode citarte"
 
-#: src/components/compose.jsx:1950
+#: src/components/compose.jsx:1952
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:297
 #: src/pages/settings.jsx:341
 msgid "Your followers can quote"
 msgstr "As túas seguidoras poden citarte"
 
-#: src/components/compose.jsx:1953
+#: src/components/compose.jsx:1955
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:298
 #: src/pages/settings.jsx:344
 msgid "Only you can quote"
 msgstr "Só ti podes citar"
 
-#: src/components/compose.jsx:1993
+#: src/components/compose.jsx:1995
 msgid "Quotes can't be embedded in private mentions."
 msgstr "As citas non se poden incluír nas mencións privadas."
 
-#: src/components/compose.jsx:2015
+#: src/components/compose.jsx:2017
 #: src/pages/settings.jsx:290
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "Pública"
 
-#: src/components/compose.jsx:2020
+#: src/components/compose.jsx:2022
 #: src/components/nav-menu.jsx:349
 #: src/components/shortcuts-settings.jsx:168
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Local"
 
-#: src/components/compose.jsx:2024
+#: src/components/compose.jsx:2026
 #: src/pages/settings.jsx:293
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "Pública limitada"
 
-#: src/components/compose.jsx:2030
+#: src/components/compose.jsx:2032
 #: src/components/status.jsx:2372
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Mención privada"
 
-#: src/components/compose.jsx:2082
+#: src/components/compose.jsx:2084
 msgid "Schedule"
 msgstr "Programar"
 
-#: src/components/compose.jsx:2084
+#: src/components/compose.jsx:2086
 #: src/components/keyboard-shortcuts-help.jsx:165
 #: src/components/status.jsx:1099
 #: src/components/status.jsx:1133
@@ -615,20 +615,20 @@ msgstr "Programar"
 msgid "Reply"
 msgstr "Responder"
 
-#: src/components/compose.jsx:2086
+#: src/components/compose.jsx:2088
 msgid "Update"
 msgstr "Actualizar"
 
-#: src/components/compose.jsx:2087
+#: src/components/compose.jsx:2089
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Publicar"
 
-#: src/components/compose.jsx:2170
+#: src/components/compose.jsx:2172
 msgid "Downloading GIF…"
 msgstr "Descargando GIF…"
 
-#: src/components/compose.jsx:2198
+#: src/components/compose.jsx:2200
 msgid "Failed to download GIF"
 msgstr "Fallou a descarga da GIF"
 
@@ -794,7 +794,7 @@ msgstr "Contido"
 #: src/components/quote-settings-sheet.jsx:92
 #: src/components/shortcuts-settings.jsx:724
 #: src/pages/filters.jsx:572
-#: src/pages/notifications.jsx:1007
+#: src/pages/notifications.jsx:1071
 msgid "Save"
 msgstr "Gardar"
 
@@ -812,7 +812,7 @@ msgid "No featured profiles."
 msgstr "Sen perfís destacados"
 
 #: src/components/follow-request-buttons.jsx:43
-#: src/pages/notifications.jsx:991
+#: src/pages/notifications.jsx:1055
 msgid "Accept"
 msgstr "Aceptar"
 
@@ -821,7 +821,7 @@ msgid "Reject"
 msgstr "Rexeitar"
 
 #: src/components/follow-request-buttons.jsx:76
-#: src/pages/notifications.jsx:1275
+#: src/pages/notifications.jsx:1339
 msgid "Accepted"
 msgstr "Aceptado"
 
@@ -841,7 +841,7 @@ msgstr "Contas"
 #: src/components/quotes-modal.jsx:129
 #: src/components/timeline.jsx:569
 #: src/pages/list.jsx:321
-#: src/pages/notifications.jsx:921
+#: src/pages/notifications.jsx:985
 #: src/pages/search.jsx:562
 #: src/pages/status.jsx:1685
 msgid "Show more…"
@@ -1397,8 +1397,9 @@ msgstr "Ponte ao día"
 #: src/components/shortcuts-settings.jsx:60
 #: src/components/shortcuts-settings.jsx:149
 #: src/pages/home.jsx:240
-#: src/pages/mentions.jsx:21
-#: src/pages/mentions.jsx:174
+#: src/pages/mentions.jsx:25
+#: src/pages/mentions.jsx:256
+#: src/pages/notifications.jsx:862
 #: src/pages/settings.jsx:1261
 #: src/pages/trending.jsx:384
 msgid "Mentions"
@@ -1411,7 +1412,7 @@ msgstr "Mencións"
 #: src/pages/home.jsx:86
 #: src/pages/home.jsx:198
 #: src/pages/notifications.jsx:111
-#: src/pages/notifications.jsx:590
+#: src/pages/notifications.jsx:642
 msgid "Notifications"
 msgstr "Notificacións"
 
@@ -2993,7 +2994,7 @@ msgstr "Novas publicacións"
 
 #: src/components/timeline.jsx:604
 #: src/pages/home.jsx:228
-#: src/pages/notifications.jsx:897
+#: src/pages/notifications.jsx:961
 #: src/pages/status.jsx:1240
 #: src/pages/status.jsx:1714
 msgid "Try again"
@@ -3408,7 +3409,7 @@ msgid "Shared by {0}"
 msgstr "Compartido por {0}"
 
 #: src/pages/catchup.jsx:1447
-#: src/pages/mentions.jsx:154
+#: src/pages/mentions.jsx:235
 #: src/pages/search.jsx:330
 msgid "All"
 msgstr "Todo"
@@ -3839,19 +3840,23 @@ msgstr "Continuar"
 msgid "Don't have an account? Create one!"
 msgstr "Non tes unha conta? Crea unha!"
 
-#: src/pages/mentions.jsx:21
+#: src/pages/mentions.jsx:25
 msgid "Private mentions"
 msgstr "Mencións privadas"
 
-#: src/pages/mentions.jsx:166
+#: src/pages/mentions.jsx:221
+msgid "Only followings"
+msgstr ""
+
+#: src/pages/mentions.jsx:247
 msgid "Private"
 msgstr "Privadas"
 
-#: src/pages/mentions.jsx:176
+#: src/pages/mentions.jsx:258
 msgid "No one mentioned you :("
 msgstr "Ninguén te mencionou :("
 
-#: src/pages/mentions.jsx:177
+#: src/pages/mentions.jsx:259
 msgid "Unable to load mentions."
 msgstr "Non se cargaron as mencións."
 
@@ -3875,113 +3880,113 @@ msgstr "Con mención privada non solicitada"
 msgid "Who are limited by server moderators"
 msgstr "Que está limitada pola moderación do servidor"
 
-#: src/pages/notifications.jsx:604
-#: src/pages/notifications.jsx:945
+#: src/pages/notifications.jsx:656
+#: src/pages/notifications.jsx:1009
 msgid "Notifications settings"
 msgstr "Axustes das notificacións"
 
-#: src/pages/notifications.jsx:622
+#: src/pages/notifications.jsx:674
 msgid "New notifications"
 msgstr "Novas notificacións"
 
 #. placeholder {0}: announcements.length
-#: src/pages/notifications.jsx:633
+#: src/pages/notifications.jsx:685
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Anuncio} other {Anuncios}}"
 
-#: src/pages/notifications.jsx:680
+#: src/pages/notifications.jsx:732
 #: src/pages/settings.jsx:1277
 msgid "Follow requests"
 msgstr "Solicitudes de seguimento"
 
 #. placeholder {0}: followRequests.length
-#: src/pages/notifications.jsx:685
+#: src/pages/notifications.jsx:737
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr "{0, plural, one {# solicitude de seguimento} other {# solicitudes de seguimento}}"
 
 #. placeholder {0}: notificationsPolicy.summary.pendingRequestsCount
-#: src/pages/notifications.jsx:740
+#: src/pages/notifications.jsx:792
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr "{0, plural, one {Notificacións filtradas de # persoa} other {Notificacións filtradas de # persoas}}"
 
-#: src/pages/notifications.jsx:813
+#: src/pages/notifications.jsx:875
 msgid "Only mentions"
 msgstr "Só mencións"
 
-#: src/pages/notifications.jsx:817
+#: src/pages/notifications.jsx:881
 msgid "Today"
 msgstr "Hoxe"
 
-#: src/pages/notifications.jsx:822
+#: src/pages/notifications.jsx:886
 msgid "You're all caught up."
 msgstr "Xa estás ao día."
 
-#: src/pages/notifications.jsx:845
+#: src/pages/notifications.jsx:909
 msgid "Yesterday"
 msgstr "Onte"
 
-#: src/pages/notifications.jsx:893
+#: src/pages/notifications.jsx:957
 msgid "Unable to load notifications"
 msgstr "Non se cargaron as notificacións"
 
-#: src/pages/notifications.jsx:972
+#: src/pages/notifications.jsx:1036
 msgid "Notifications settings updated"
 msgstr "Actualizáronse os axustes das notificacións"
 
-#: src/pages/notifications.jsx:980
+#: src/pages/notifications.jsx:1044
 msgid "Filter out notifications from people:"
 msgstr "Filtrar as notificacións de persoas:"
 
-#: src/pages/notifications.jsx:994
+#: src/pages/notifications.jsx:1058
 msgid "Filter"
 msgstr "Filtrar"
 
-#: src/pages/notifications.jsx:997
+#: src/pages/notifications.jsx:1061
 msgid "Ignore"
 msgstr "Ignorar"
 
 #. placeholder {0}: niceDateTime(updatedAtDate)
-#: src/pages/notifications.jsx:1070
+#: src/pages/notifications.jsx:1134
 msgid "Updated <0>{0}</0>"
 msgstr "Acutalizado <0>{0}</0>"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1138
+#: src/pages/notifications.jsx:1202
 msgid "View notifications from <0>@{0}</0>"
 msgstr "Ver notificacións de <0>@{0}</0>"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1159
+#: src/pages/notifications.jsx:1223
 msgid "Notifications from <0>@{0}</0>"
 msgstr "Notificacións de <0>@{0}</0>"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1227
+#: src/pages/notifications.jsx:1291
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr "A partir de agora non se filtrarán as notificacións de @{0}."
 
-#: src/pages/notifications.jsx:1232
+#: src/pages/notifications.jsx:1296
 msgid "Unable to accept notification request"
 msgstr "Non se puido aceptar a solicitude de notificación"
 
-#: src/pages/notifications.jsx:1237
+#: src/pages/notifications.jsx:1301
 msgid "Allow"
 msgstr "Permitir"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1257
+#: src/pages/notifications.jsx:1321
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "A partir de agora non se mostrarán as notificacións de @{0} nas Notificacións filtradas."
 
-#: src/pages/notifications.jsx:1262
+#: src/pages/notifications.jsx:1326
 msgid "Unable to dismiss notification request"
 msgstr "Non se puido desbotar a solicitude de notificación"
 
-#: src/pages/notifications.jsx:1267
+#: src/pages/notifications.jsx:1331
 msgid "Dismiss"
 msgstr "Desbotar"
 
-#: src/pages/notifications.jsx:1282
+#: src/pages/notifications.jsx:1346
 msgid "Dismissed"
 msgstr "Desbotada"
 

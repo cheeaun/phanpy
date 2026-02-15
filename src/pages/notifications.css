@@ -313,7 +313,7 @@
 #mentions-option label {
   color: var(--text-insignificant-color);
   display: inline-block;
-  padding: 1em 16px;
+  padding: 8px 16px;
   position: relative;
   cursor: pointer;
   z-index: 1;
@@ -324,6 +324,9 @@
 #mentions-option label:has(:checked) {
   color: var(--text-color);
   background-color: var(--bg-color);
+}
+#mentions-option .button {
+  background-color: var(--bg-blur-color);
 }
 
 /* FOLLOW REQUESTS */

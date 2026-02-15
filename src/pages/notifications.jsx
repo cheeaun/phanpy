@@ -117,6 +117,8 @@ function Notifications({ columnMode }) {
   const notificationAccessToken = searchParams.get('access_token');
   const [showMore, setShowMore] = useState(false);
   const [onlyMentions, setOnlyMentions] = useState(false);
+  const [showMentionsLink, setShowMentionsLink] = useState(false);
+  const [hasAnalyzedFirstLoad, setHasAnalyzedFirstLoad] = useState(false);
   const scrollableRef = useRef();
   const { nearReachEnd, scrollDirection, reachStart, nearReachStart } =
     useScroll({
@@ -261,6 +263,54 @@ function Notifications({ columnMode }) {
     return masto.v1.notifications.requests.list();
   }
 
+  const analyzeNotifications = () => {
+    // Once Mentions link is shown, don't need to analyze again
+    if (showMentionsLink) return;
+
+    const totalNotifications = snapStates.notifications.reduce(
+      (sum, n) => sum + (n.notificationsCount || 1),
+      0,
+    );
+    const totalMentions = snapStates.notifications.filter(
+      (n) => n.type === 'mention',
+    ).length;
+    const notificationCountPerDay = {};
+    snapStates.notifications.forEach((n) => {
+      const { createdAt, notificationsCount } = n;
+      const date = new Date(createdAt).toDateString();
+      notificationCountPerDay[date] =
+        (notificationCountPerDay[date] || 0) + (notificationsCount || 1);
+    });
+    const mentionsPercentage =
+      totalNotifications > 0 ? totalMentions / totalNotifications : 0;
+    // Show mentions link if:
+    // - < 50% mentions OR
+    const lessThan50PercentMentions = mentionsPercentage < 0.5;
+    // - only 1 day of notifications OR
+    const onlyOneDayOfNotifications =
+      Object.keys(notificationCountPerDay).length === 1;
+    // - > 30 notifications on any day
+    const moreThan30NotificationsOnAnyDay =
+      Math.max(...Object.values(notificationCountPerDay)) > 30;
+    setShowMentionsLink(
+      lessThan50PercentMentions ||
+        onlyOneDayOfNotifications ||
+        moreThan30NotificationsOnAnyDay,
+    );
+    setHasAnalyzedFirstLoad(Date.now());
+
+    // [DEBUG]
+    console.log('🔔 Notifications analysis:', {
+      totalNotifications,
+      totalMentions,
+      notificationCountPerDay,
+      mentionsPercentage,
+      lessThan50PercentMentions,
+      onlyOneDayOfNotifications,
+      moreThan30NotificationsOnAnyDay,
+    });
+  };
+
   const loadNotifications = (firstLoad) => {
     setShowNew(false);
     setUIState('loading');
@@ -291,6 +341,8 @@ function Notifications({ columnMode }) {
           if (supportsFilteredNotifications) {
             loadNotificationsPolicy();
           }
+
+          analyzeNotifications();
         }
 
         const { done } = await fetchNotificationsPromise;
@@ -801,18 +853,30 @@ function Notifications({ columnMode }) {
             </div>
           </div>
         )}
-        <div id="mentions-option">
-          <label>
-            <input
-              type="checkbox"
-              checked={onlyMentions}
-              onChange={(e) => {
-                setOnlyMentions(e.target.checked);
-              }}
-            />{' '}
-            <Trans>Only mentions</Trans>
-          </label>
-        </div>
+        {!!hasAnalyzedFirstLoad && (
+          <div id="mentions-option">
+            {showMentionsLink ? (
+              <Link to="/mentions" class="button plain">
+                <Icon icon="at" />{' '}
+                <span>
+                  <Trans>Mentions</Trans>
+                </span>{' '}
+                <Icon icon="arrow-right" class="more-insignificant" />
+              </Link>
+            ) : (
+              <label>
+                <input
+                  type="checkbox"
+                  checked={onlyMentions}
+                  onChange={(e) => {
+                    setOnlyMentions(e.target.checked);
+                  }}
+                />{' '}
+                <Trans>Only mentions</Trans>
+              </label>
+            )}
+          </div>
+        )}
         <h2 class="timeline-header">
           <Trans>Today</Trans>{' '}
           <small class="insignificant bidi-isolate">{todaySubHeading}</small>

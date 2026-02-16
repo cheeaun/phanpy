@@ -4,6 +4,14 @@ import Link from './link';
 
 const fauxDiv = document.createElement('div');
 const HASHTAG_REGEX = /^[#＃][^#＃]+$/;
+const ANOTHER_HASHTAG_REGEX = /^[^#＃#️⃣]*[#＃#️⃣]+/;
+
+const collator = new Intl.Collator(undefined, {
+  sensitivity: 'base',
+  usage: 'search',
+});
+const isSameTag = (a, b) => collator.compare(a, b) === 0;
+
 const extractTagsFromStatus = (content) => {
   if (!content) return [];
   if (content.indexOf('#') === -1) return [];
@@ -17,12 +25,7 @@ const extractTagsFromStatus = (content) => {
       link.classList.contains('hashtag') || HASHTAG_REGEX.test(text);
 
     if (isHashtagLink) {
-      tags.push(
-        text
-          .replace(/^[^#＃#️⃣]*[#＃#️⃣]+/, '')
-          .normalize('NFKC')
-          .toLowerCase(),
-      );
+      tags.push(text.replace(ANOTHER_HASHTAG_REGEX, ''));
     }
   }
 
@@ -34,8 +37,7 @@ export default function StatusTags({ tags, content }) {
 
   const hashtagsInContent = extractTagsFromStatus(content);
   const tagsToShow = tags.filter(
-    (tag) =>
-      !hashtagsInContent.includes(tag.name.normalize('NFKC').toLowerCase()),
+    (tag) => !hashtagsInContent.some((ht) => isSameTag(ht, tag.name)),
   );
 
   if (!tagsToShow.length) return null;
@@ -45,14 +47,13 @@ export default function StatusTags({ tags, content }) {
   return (
     <ul class="status-tags">
       {tagsToShow.map((tag) => (
-        <li>
+        <li key={tag.name}>
           <Link
             to={
               instance
                 ? `/${instance}/t/${encodeURIComponent(tag.name)}`
                 : `/t/${encodeURIComponent(tag.name)}`
             }
-            key={tag.name}
           >
             <span class="more-insignificant">#</span>
             {tag.name}

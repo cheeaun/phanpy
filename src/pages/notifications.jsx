@@ -197,6 +197,8 @@ function Notifications({ columnMode }) {
             },
           })
           .catch(() => {});
+
+        analyzeNotifications(groupedNotifications);
       } else {
         states.notifications.push(...groupedNotifications);
       }
@@ -263,52 +265,82 @@ function Notifications({ columnMode }) {
     return masto.v1.notifications.requests.list();
   }
 
-  const analyzeNotifications = () => {
+  const analyzeNotifications = (notifications) => {
     // Once Mentions link is shown, don't need to analyze again
     if (showMentionsLink) return;
 
-    const totalNotifications = snapStates.notifications.reduce(
+    const totalNotifications = notifications.length;
+    const totalActualNotifications = notifications.reduce(
       (sum, n) => sum + (n.notificationsCount || 1),
       0,
     );
-    const totalMentions = snapStates.notifications.filter(
+    const totalMentions = notifications.filter(
       (n) => n.type === 'mention',
     ).length;
+    const mentionsCountPerDay = {};
     const notificationCountPerDay = {};
-    snapStates.notifications.forEach((n) => {
-      const { createdAt, notificationsCount } = n;
+    notifications.forEach((n) => {
+      const { createdAt, notificationsCount, type } = n;
       const date = new Date(createdAt).toDateString();
       notificationCountPerDay[date] =
         (notificationCountPerDay[date] || 0) + (notificationsCount || 1);
+      if (type === 'mention') {
+        mentionsCountPerDay[date] = (mentionsCountPerDay[date] || 0) + 1;
+      }
     });
     const mentionsPercentage =
       totalNotifications > 0 ? totalMentions / totalNotifications : 0;
     // Show mentions link if:
-    // - < 50% mentions OR
-    const lessThan50PercentMentions = mentionsPercentage < 0.5;
-    // - only 1 day of notifications OR
-    const onlyOneDayOfNotifications =
-      Object.keys(notificationCountPerDay).length === 1;
-    // - > 30 notifications on any day
-    const moreThan30NotificationsOnAnyDay =
-      Math.max(...Object.values(notificationCountPerDay)) > 30;
+    // - < 33% mentions OR
+    const littleMentions = mentionsPercentage < 0.33;
+    // - > 30 mentions in a day
+    const tooManyMentionsPerDay = Object.values(mentionsCountPerDay).some(
+      (count) => count > 30,
+    );
+    // - > 30 on any grouped notification (notificationCount > 30)
+    const tooManyNotificationsPerGroupNotification = notifications.some(
+      (n) => n.notificationsCount > 30,
+    );
+    // - > 30 notifications per hour
+    const notificationCountPerHour = {};
+    let tooManyNotificationsPerHour = false;
+    for (const n of notifications) {
+      const { createdAt, notificationsCount } = n;
+      const date = new Date(createdAt);
+      const hourKey = date.toISOString().slice(0, 13); // YYYY-MM-DDTHH
+      notificationCountPerHour[hourKey] =
+        (notificationCountPerHour[hourKey] || 0) + (notificationsCount || 1);
+      if (notificationCountPerHour[hourKey] > 30) {
+        tooManyNotificationsPerHour = true;
+        break;
+      }
+    }
     setShowMentionsLink(
-      lessThan50PercentMentions ||
-        onlyOneDayOfNotifications ||
-        moreThan30NotificationsOnAnyDay,
+      littleMentions ||
+        tooManyMentionsPerDay ||
+        tooManyNotificationsPerGroupNotification ||
+        tooManyNotificationsPerHour,
     );
     setHasAnalyzedFirstLoad(Date.now());
 
     // [DEBUG]
-    console.log('🔔 Notifications analysis:', {
-      totalNotifications,
-      totalMentions,
-      notificationCountPerDay,
-      mentionsPercentage,
-      lessThan50PercentMentions,
-      onlyOneDayOfNotifications,
-      moreThan30NotificationsOnAnyDay,
-    });
+    console.log(
+      '🔔 Notifications analysis:',
+      {
+        totalNotifications,
+        totalActualNotifications,
+        totalMentions,
+        notificationCountPerDay,
+        notificationCountPerHour,
+        mentionsPercentage,
+      },
+      {
+        littleMentions,
+        tooManyMentionsPerDay,
+        tooManyNotificationsPerGroupNotification,
+        tooManyNotificationsPerHour,
+      },
+    );
   };
 
   const loadNotifications = (firstLoad) => {
@@ -341,8 +373,6 @@ function Notifications({ columnMode }) {
           if (supportsFilteredNotifications) {
             loadNotificationsPolicy();
           }
-
-          analyzeNotifications();
         }
 
         const { done } = await fetchNotificationsPromise;

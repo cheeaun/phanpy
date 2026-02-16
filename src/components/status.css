@@ -2355,6 +2355,9 @@ a.card:is(:hover, :focus):visited {
     flex-shrink: 0;
     font-size: 90%;
     line-height: 1;
+    display: flex;
+    gap: 4px;
+    align-items: center;
 
     .poll-option-votes-percentage {
       opacity: 0.75;

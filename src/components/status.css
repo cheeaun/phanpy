@@ -3300,7 +3300,7 @@ a.card:is(:hover, :focus):visited {
     transparent
   );
   scrollbar-width: none;
-  overscroll-behavior: contain;
+  overscroll-behavior-inline: contain;
 
   &::-webkit-scrollbar {
     display: none;
@@ -3315,6 +3315,7 @@ a.card:is(:hover, :focus):visited {
     margin-inline: 0;
     padding-inline: 0;
     mask-image: none;
+    overscroll-behavior-inline: auto;
 
     > li {
       flex-shrink: 1;

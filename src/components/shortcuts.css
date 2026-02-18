@@ -9,6 +9,7 @@
   z-index: 101;
   transition: all 0.3s ease-in-out;
   border: var(--hairline-width) solid var(--bg-color);
+  box-shadow: 0 3px 8px -1px var(--drop-shadow-color);
 
   body.exp-tab-bar-v2 & {
     box-shadow:

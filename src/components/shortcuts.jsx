@@ -183,6 +183,17 @@ function Shortcuts() {
     },
   );
 
+  const bindProfileLongPress = useLongPress(
+    () => {
+      states.showAccounts = true;
+    },
+    {
+      threshold: 600,
+      detect: 'touch',
+      cancelOnMovement: true,
+    },
+  );
+
   if (isMultiColumnMode) {
     return null;
   }
@@ -202,50 +213,27 @@ function Shortcuts() {
             <ul>
               {formattedShortcuts.map(
                 ({ id, path, title, subtitle, icon, altIcon }, i) => {
-                  if (id === 'lists') {
-                    return (
-                      <li key={`${i}-${id}-${title}-${subtitle}-${path}`}>
-                        <Link
-                          ref={listsLinkRef}
-                          class={subtitle ? 'has-subtitle' : ''}
-                          to={path}
-                          onClick={(e) => {
-                            if (e.target.classList.contains('is-active')) {
-                              e.preventDefault();
-                              const page = document.getElementById(
-                                `${id}-page`,
-                              );
-                              if (page) {
-                                page.scrollTop = 0;
-                                const updatesButton =
-                                  page.querySelector('.updates-button');
-                                if (updatesButton) {
-                                  updatesButton.click();
-                                }
-                              }
-                            }
-                          }}
-                          onContextMenu={(e) => {
+                  const extraProps =
+                    id === 'lists'
+                      ? {
+                          ref: listsLinkRef,
+                          onContextMenu(e) {
                             e.preventDefault();
                             e.stopPropagation();
                             setListsMenuState('open');
-                          }}
-                          {...bindListsLongPress()}
-                        >
-                          <Icon icon={icon} size="xl" />
-                          <span>
-                            <AsyncText>{title}</AsyncText>
-                            {subtitle && (
-                              <>
-                                <br />
-                                <small>{subtitle}</small>
-                              </>
-                            )}
-                          </span>
-                        </Link>
-                      </li>
-                    );
-                  }
+                          },
+                          ...bindListsLongPress(),
+                        }
+                      : id === 'profile'
+                        ? {
+                            onContextMenu(e) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              states.showAccounts = true;
+                            },
+                            ...bindProfileLongPress(),
+                          }
+                        : {};
 
                   return (
                     <li key={`${i}-${id}-${title}-${subtitle}-${path}`}>
@@ -256,7 +244,6 @@ function Shortcuts() {
                           if (e.target.classList.contains('is-active')) {
                             e.preventDefault();
                             const page = document.getElementById(`${id}-page`);
-                            console.log(id, page);
                             if (page) {
                               page.scrollTop = 0;
                               const updatesButton =
@@ -267,6 +254,7 @@ function Shortcuts() {
                             }
                           }
                         }}
+                        {...extraProps}
                       >
                         {altIcon?.url ? (
                           altIcon?.type === 'avatar' ? (

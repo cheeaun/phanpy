@@ -726,6 +726,25 @@ function SecondaryRoutes() {
       matchPath('/s/:id', location.pathname)
     );
   }, [location.pathname, matchPath]);
+
+  // Persist prevLocation to sessionStorage while on a status/post page so it
+  // survives a page reload. Clear it when navigating away.
+  useEffect(() => {
+    if (isModalPage) {
+      if (states.prevLocation) {
+        store.session.setJSON('prevLocation', {
+          pathname: states.prevLocation.pathname,
+          search: states.prevLocation.search,
+        });
+      }
+    } else {
+      if (states.prevLocation) {
+        states.prevLocation = null;
+      }
+      store.session.del('prevLocation');
+    }
+  }, [isModalPage]);
+
   if (isModalPage) {
     if (!backgroundLocation.current)
       backgroundLocation.current = getPrevLocation();

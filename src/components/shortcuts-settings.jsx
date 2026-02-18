@@ -192,6 +192,14 @@ export const SHORTCUTS_META = {
     title: msg`Profile`,
     path: () => `/a/${getCurrentAccountID()}?replies=1`,
     icon: 'user',
+    altIcon: () => {
+      const account = getCurrentAccount();
+      return {
+        // Prefer static URL
+        url: account?.info?.avatarStatic || account?.info?.avatar,
+        type: 'avatar',
+      };
+    },
   },
   'account-statuses': {
     id: 'account-statuses',

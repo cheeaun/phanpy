@@ -240,6 +240,12 @@ body.exp-tab-bar-v2 {
     transform: scale(1);
     opacity: 1;
   }
+
+  .avatar,
+  .shortcut-icon {
+    outline: 2px solid var(--link-color);
+    outline-offset: -2px;
+  }
 }
 #app:has(#home-page):not(:has(#home-page ~ .deck-container)):has(header[hidden])
   #shortcuts
@@ -249,6 +255,14 @@ shortcuts .tab-bar[hidden] {
   transform: translateY(200%);
   pointer-events: none;
   user-select: none;
+}
+
+#shortcuts .shortcut-icon {
+  border-radius: 9999px;
+  overflow: hidden;
+  object-fit: cover;
+  flex-shrink: 0;
+  vertical-align: middle;
 }
 
 @media (max-width: calc(40em - 1px)) {

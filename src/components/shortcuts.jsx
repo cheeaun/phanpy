@@ -16,6 +16,7 @@ import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 
 import AsyncText from './AsyncText';
+import Avatar from './avatar';
 import Icon from './icon';
 import Link from './link';
 import ListExclusiveBadge from './list-exclusive-badge';
@@ -70,7 +71,7 @@ function Shortcuts() {
     .map((pin, i) => {
       const { type, ...data } = pin;
       if (!SHORTCUTS_META[type]) return null;
-      let { id, path, title, subtitle, icon } = SHORTCUTS_META[type];
+      let { id, path, title, subtitle, icon, altIcon } = SHORTCUTS_META[type];
 
       if (typeof id === 'function') {
         id = id(data, i);
@@ -99,6 +100,9 @@ function Shortcuts() {
       if (typeof icon === 'function') {
         icon = icon(data, i);
       }
+      if (typeof altIcon === 'function') {
+        altIcon = altIcon(data, i);
+      }
 
       if (id === 'lists') {
         hasLists.current = true;
@@ -110,6 +114,7 @@ function Shortcuts() {
         title,
         subtitle,
         icon,
+        altIcon,
       };
     })
     .filter(Boolean);
@@ -196,7 +201,7 @@ function Shortcuts() {
           >
             <ul>
               {formattedShortcuts.map(
-                ({ id, path, title, subtitle, icon }, i) => {
+                ({ id, path, title, subtitle, icon, altIcon }, i) => {
                   if (id === 'lists') {
                     return (
                       <li key={`${i}-${id}-${title}-${subtitle}-${path}`}>
@@ -263,7 +268,22 @@ function Shortcuts() {
                           }
                         }}
                       >
-                        <Icon icon={icon} size="xl" />
+                        {altIcon?.url ? (
+                          altIcon?.type === 'avatar' ? (
+                            <Avatar staticUrl={altIcon.url} size="l" />
+                          ) : (
+                            <img
+                              src={altIcon.url}
+                              alt=""
+                              class="shortcut-icon"
+                              loading="lazy"
+                              decoding="async"
+                              fetchPriority="low"
+                            />
+                          )
+                        ) : (
+                          <Icon icon={icon} size="xl" />
+                        )}
                         <span>
                           <AsyncText>{title}</AsyncText>
                           {subtitle && (

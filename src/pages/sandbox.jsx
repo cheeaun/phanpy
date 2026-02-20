@@ -50,6 +50,7 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     userPreferences,
     showTags,
     tagsCount,
+    deleted,
   } = toggles;
 
   const shortContent = 'This is a test status with short text content.';
@@ -340,6 +341,11 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     };
   }
 
+  // Add _deleted flag if enabled
+  if (deleted) {
+    base._deleted = true;
+  }
+
   console.log('Final base', base);
   return base;
 };
@@ -373,6 +379,7 @@ const INITIAL_STATE = {
   displayStyle: 'adaptive', // Display style for preview
   showTags: false, // New toggle for showing status tags
   tagsCount: 'few', // New option for tags count: 'few' (3) or 'many' (10)
+  deleted: false, // Toggle to mark status as deleted
 };
 
 export default function Sandbox() {
@@ -499,6 +506,7 @@ export default function Sandbox() {
       quoteFilters: toggleState.quoteFilters,
       showTags: toggleState.showTags, // Add showTags toggle
       tagsCount: toggleState.tagsCount, // Add tagsCount option
+      deleted: toggleState.deleted, // Add deleted toggle
     },
   });
 
@@ -944,6 +952,18 @@ export default function Sandbox() {
                     }
                   />
                   <span>Media first</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.deleted}
+                    onChange={() =>
+                      updateToggles({ deleted: !toggleState.deleted })
+                    }
+                  />
+                  <span>Deleted</span>
                 </label>
               </li>
             </ul>

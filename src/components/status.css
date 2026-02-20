@@ -2986,11 +2986,16 @@ a.card:is(:hover, :focus):visited {
 
 .status-deleted {
   opacity: 0.75;
+
+  img,
+  video {
+    filter: grayscale(0.5);
+  }
 }
 .status-deleted-tag {
-  color: var(--text-insignificant-color);
   text-transform: uppercase;
   font-size: 80%;
+  font-weight: 600;
 }
 
 /* MENU OPEN */

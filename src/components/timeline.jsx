@@ -20,7 +20,11 @@ import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { isMediaFirstInstance } from '../utils/store-utils';
-import { groupBoosts, groupContext } from '../utils/timeline-utils';
+import {
+  filterHiddenStatuses,
+  groupBoosts,
+  groupContext,
+} from '../utils/timeline-utils';
 import useInterval from '../utils/useInterval';
 import usePageVisibility from '../utils/usePageVisibility';
 import useScroll from '../utils/useScroll';
@@ -102,6 +106,7 @@ function Timeline({
               [[], []],
             );
             value = otherPosts;
+            value = filterHiddenStatuses(value, filterContext);
             if (allowGrouping) {
               if (boostsCarousel) {
                 value = groupBoosts(value);

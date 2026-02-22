@@ -308,22 +308,25 @@
   &:dir(rtl) {
     float: left;
   }
-  margin-top: 0.5em;
+  margin: 16px 8px 0 0;
 }
 #mentions-option label {
   color: var(--text-insignificant-color);
   display: inline-block;
-  padding: 1em 16px;
+  padding: 8px;
   position: relative;
   cursor: pointer;
   z-index: 1;
   font-size: 90%;
   background-color: var(--bg-blur-color);
-  border-radius: 2em;
+  border-radius: 8px;
 }
 #mentions-option label:has(:checked) {
   color: var(--text-color);
   background-color: var(--bg-color);
+}
+#mentions-option .button {
+  background-color: var(--bg-blur-color);
 }
 
 /* FOLLOW REQUESTS */

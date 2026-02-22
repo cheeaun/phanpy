@@ -9,6 +9,7 @@ import mem from './mem';
 const codeMappings = {
   'zh-YUE': 'YUE',
   zh_HANT: 'zh-Hant',
+  mnMong: 'mn-Mong',
 };
 
 const IntlDN = mem(
@@ -18,6 +19,11 @@ const IntlDN = mem(
     }),
 );
 
+function notSameIncaseSensitive(s1, s2) {
+  if (!s1 || !s2) return s1 !== s2;
+  return s1.toLowerCase() !== s2.toLowerCase();
+}
+
 function _localeCode2Text(code) {
   let locale;
   let fallback;
@@ -26,12 +32,12 @@ function _localeCode2Text(code) {
   }
   try {
     const text = IntlDN(locale || i18n.locale).of(code);
-    if (text !== code) return text;
+    if (notSameIncaseSensitive(text, code)) return text;
     if (!fallback) {
       const anotherText = IntlDN(code).of(code);
-      if (anotherText !== code) return anotherText;
+      if (notSameIncaseSensitive(anotherText, code)) return anotherText;
       const yetAnotherText = translangLanguagesNative?.[locale];
-      if (yetAnotherText !== code) return yetAnotherText;
+      if (notSameIncaseSensitive(yetAnotherText, code)) return yetAnotherText;
     }
     return fallback || '';
   } catch (e) {
@@ -40,7 +46,7 @@ function _localeCode2Text(code) {
         const text = IntlDN(codeMappings[locale] || locale || i18n.locale).of(
           codeMappings[code],
         );
-        if (text !== codeMappings[code]) return text;
+        if (notSameIncaseSensitive(text, codeMappings[code])) return text;
         return fallback || '';
       } catch (e2) {
         console.warn(code, e2);

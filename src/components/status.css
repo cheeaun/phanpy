@@ -229,8 +229,10 @@
 .status-card-link:is(:hover, :focus)
   .status-card:not(.status-card .status-card)
   img {
-  animation: position-object 5s ease-in-out 1s 5;
-  animation-duration: var(--anim-duration, 5s);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 5s ease-in-out 1s 5;
+    animation-duration: var(--anim-duration, 5s);
+  }
 }
 .status-card-link:is(:active) .status-card {
   background-color: var(--bg-faded-color);
@@ -1418,8 +1420,10 @@
 }
 .status .media:not([data-has-small-dimension]) img:is(:hover, :focus),
 a:focus-visible .status .media:not([data-has-small-dimension]) img {
-  animation: position-object 5s ease-in-out 1s 5;
-  animation-duration: var(--anim-duration, 5s);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 5s ease-in-out 1s 5;
+    animation-duration: var(--anim-duration, 5s);
+  }
 }
 body:has(#modal-container .carousel) .status .media img:hover {
   animation: none;
@@ -2060,8 +2064,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
 }
 .card:is(:hover, :focus) img,
 a:focus-visible .card img {
-  animation: position-object 5s ease-in-out 1s 5;
-  animation-duration: var(--anim-duration, 5s);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: position-object 5s ease-in-out 1s 5;
+    animation-duration: var(--anim-duration, 5s);
+  }
 }
 .card p {
   margin: 0;
@@ -2349,6 +2355,9 @@ a.card:is(:hover, :focus):visited {
     flex-shrink: 0;
     font-size: 90%;
     line-height: 1;
+    display: flex;
+    gap: 4px;
+    align-items: center;
 
     .poll-option-votes-percentage {
       opacity: 0.75;
@@ -2977,11 +2986,16 @@ a.card:is(:hover, :focus):visited {
 
 .status-deleted {
   opacity: 0.75;
+
+  img,
+  video {
+    filter: grayscale(0.5);
+  }
 }
 .status-deleted-tag {
-  color: var(--text-insignificant-color);
   text-transform: uppercase;
   font-size: 80%;
+  font-weight: 600;
 }
 
 /* MENU OPEN */
@@ -3242,6 +3256,37 @@ a.card:is(:hover, :focus):visited {
   }
 }
 
+/* VERTICAL TEXT LAYOUT */
+
+/* Some API returns mnMong (without dash, invalid BCP47) & :lang() won't recognize it */
+.status .content > .inner-content:lang(mn-Mong),
+.status .content > .inner-content[lang='mnMong'] {
+  writing-mode: vertical-lr;
+  max-height: 50vh;
+}
+.status
+  .content:has(
+    > .inner-content:lang(mn-Mong),
+    > .inner-content[lang='mnMong']
+  ) {
+  overflow-x: auto;
+  animation: fade-edges linear;
+  animation-timeline: scroll(self inline);
+}
+
+@keyframes fade-edges {
+  0% {
+    mask-image: linear-gradient(
+      to right,
+      black 0% calc(100% - 32px),
+      transparent
+    );
+  }
+  100% {
+    mask-image: linear-gradient(to right, transparent, black 32px 100%);
+  }
+}
+
 /* STATUS TAGS */
 
 .status-tags {
@@ -3260,7 +3305,7 @@ a.card:is(:hover, :focus):visited {
     transparent
   );
   scrollbar-width: none;
-  overscroll-behavior: contain;
+  overscroll-behavior-inline: contain;
 
   &::-webkit-scrollbar {
     display: none;
@@ -3275,6 +3320,7 @@ a.card:is(:hover, :focus):visited {
     margin-inline: 0;
     padding-inline: 0;
     mask-image: none;
+    overscroll-behavior-inline: auto;
 
     > li {
       flex-shrink: 1;

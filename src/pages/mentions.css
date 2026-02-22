@@ -1,0 +1,26 @@
+#mentions-page {
+  #followings-option {
+    position: relative;
+    z-index: 2;
+    float: right;
+    &:dir(rtl) {
+      float: left;
+    }
+    margin-top: 0.5em;
+  }
+  #followings-option label {
+    color: var(--text-insignificant-color);
+    display: inline-block;
+    padding: 8px 16px;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+    font-size: 90%;
+    background-color: var(--bg-blur-color);
+    border-radius: 2em;
+  }
+  #followings-option label:has(:checked) {
+    color: var(--text-color);
+    background-color: var(--bg-color);
+  }
+}

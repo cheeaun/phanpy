@@ -57,14 +57,14 @@ quote = Someone quoted one of your statuses
 quoted_update = A status you have quoted has been edited
 */
 
-function emojiText({ account, emoji, emoji_url }) {
+function emojiText({ account, emoji, emojiURL }) {
   let url;
   let staticUrl;
-  if (typeof emoji_url === 'string') {
-    url = emoji_url;
+  if (typeof emojiURL === 'string') {
+    url = emojiURL;
   } else {
-    url = emoji_url?.url;
-    staticUrl = emoji_url?.staticUrl;
+    url = emojiURL?.url;
+    staticUrl = emojiURL?.staticUrl;
   }
   const emojiObject = url ? (
     <CustomEmoji url={url} staticUrl={staticUrl} alt={emoji} />

@@ -91,6 +91,7 @@ export default memo(Icon, (prevProps, nextProps) => {
   return (
     prevProps.icon === nextProps.icon &&
     prevProps.title === nextProps.title &&
-    prevProps.alt === nextProps.alt
+    prevProps.alt === nextProps.alt &&
+    prevProps.size === nextProps.size
   );
 });

@@ -34,6 +34,12 @@ function NavMenu(props) {
     return [acc, accounts.length > 1];
   }, []);
 
+  // Don't show avatar in nav button if profile shortcut is already showing
+  const tabMenuHasProfile =
+    snapStates.settings.shortcutsViewMode === 'tab-menu-bar' &&
+    snapStates.shortcuts.some((pin) => pin.type === 'profile');
+  const showAvatarInButton = moreThanOneAccount && !tabMenuHasProfile;
+
   // Home = Following
   // But when in multi-column mode, Home becomes columns of anything
   // User may choose pin or not to pin Following
@@ -98,7 +104,7 @@ function NavMenu(props) {
         ref={buttonRef}
         type="button"
         class={`button plain nav-menu-button ${
-          moreThanOneAccount ? 'with-avatar' : ''
+          showAvatarInButton ? 'with-avatar' : ''
         } ${menuState === 'open' ? 'active' : ''}`}
         style={{ position: 'relative' }}
         onClick={() => {
@@ -111,7 +117,7 @@ function NavMenu(props) {
         }}
         {...bindLongPress()}
       >
-        {moreThanOneAccount && (
+        {showAvatarInButton && (
           <Avatar
             url={
               currentAccount?.info?.avatar || currentAccount?.info?.avatarStatic
@@ -120,7 +126,7 @@ function NavMenu(props) {
             squircle={currentAccount?.info?.bot}
           />
         )}
-        <Icon icon="menu" size={moreThanOneAccount ? 's' : 'l'} alt={t`Menu`} />
+        <Icon icon="menu" size={showAvatarInButton ? 's' : 'l'} alt={t`Menu`} />
       </button>
       <ControlledMenu
         menuClassName="nav-menu"

@@ -18,16 +18,17 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - name: Update catalogs.json
+      - name: Update catalog data
         run: |
           node scripts/catalogs.js
-          if git diff --quiet src/data/catalogs.json; then
-            echo "No changes to catalogs.json"
+          DATA_FILES="src/data/catalogs.json src/data/listed-locales.json"
+          if git diff --quiet $DATA_FILES; then
+            echo "No changes"
           else
-            echo "Changes to catalogs.json"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git config --global user.name "github-actions[bot]"
-            git add src/data/catalogs.json
-            git commit -m "Update catalogs.json"
+            git add $DATA_FILES
+            git diff --cached --name-only | xargs -I {} echo "Changed: {}"
+            git commit -m "Update catalog data"
             git push origin HEAD:l10n_main || true
           fi

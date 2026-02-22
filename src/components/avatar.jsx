@@ -26,6 +26,10 @@ ctx.imageSmoothingEnabled = false;
 const MISSING_IMAGE_PATH_REGEX = /missing\.png$/;
 
 function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
+  if (!url) {
+    url = staticUrl;
+    staticUrl = undefined;
+  }
   size = SIZES[size] || size || SIZES.m;
   const avatarRef = useRef();
   const isMissing = MISSING_IMAGE_PATH_REGEX.test(url);

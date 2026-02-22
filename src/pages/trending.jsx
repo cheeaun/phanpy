@@ -70,7 +70,7 @@ function Trending({ columnMode, ...props }) {
   const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const params = columnMode ? {} : useParams();
-  const { masto, instance } = api({
+  const { masto, instance, authenticated } = api({
     instance: props?.instance || params.instance,
   });
   const { masto: currentMasto, instance: currentInstance } = api();

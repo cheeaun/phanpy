@@ -50,6 +50,7 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     userPreferences,
     showTags,
     tagsCount,
+    deleted,
   } = toggles;
 
   const shortContent = 'This is a test status with short text content.';
@@ -58,6 +59,17 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
   <p>Second paragraph goes here with more sample text. The Status component will render this appropriately based on the current size setting.</p>
 
   <p>Third paragraph adds even more content to ensure we have a properly long post that might get truncated depending on the view settings.</p>`;
+  const shortVerticalLrContent = `<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>
+<p><a href="https://example.com">this website</a> - <a href="https://example.social/tags/coding" class="hashtag" rel="tag">#coding</a> - <a href="https://example.social/@test" class="u-url mention">@test</a></p>
+<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>`;
+  const longVerticalLrContent = `<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>
+<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>
+<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>
+<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>
+<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>
+<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>
+<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>
+<p>ᠬᠦᠮᠦᠨ ᠪᠦᠷ ᠲᠥᠷᠥᠵᠦ ᠮᠡᠨᠳᠡᠯᠡᠬᠦ ᠡᠷᠬᠡ ᠴᠢᠯᠥᠭᠡ ᠲᠡᠢ᠂ ᠠᠳᠠᠯᠢᠬᠠᠨ ᠨᠡᠷ᠎ᠡ ᠲᠥᠷᠥ ᠲᠡᠢ᠂ ᠢᠵᠢᠯ ᠡᠷᠬᠡ ᠲᠡᠢ ᠪᠠᠢᠠᠭ᠃</p>`;
   const linksContent = `<p>This is a test status with links. Check out <a href="https://example.com">this website</a> and <a href="https://google.com">Google</a>. Links should be clickable and properly styled.</p>`;
   const hashtagsContent = `<p>This is a test status with hashtags. <a href="https://example.social/tags/coding" class="hashtag" rel="tag">#coding</a> <a href="https://example.social/tags/webdev" class="hashtag" rel="tag">#webdev</a> <a href="https://example.social/tags/javascript" class="hashtag" rel="tag">#javascript</a> <a href="https://example.social/tags/reactjs" class="hashtag" rel="tag">#reactjs</a> <a href="https://example.social/tags/preact" class="hashtag" rel="tag">#preact</a></p><p>Hashtags should be formatted and clickable.</p>`;
   const mentionsContent = `<p>This is a test status with mentions. Hello <a href="https://example.social/@cheeaun" class="u-url mention">@cheeaun</a> and <a href="https://example.social/@test" class="u-url mention">@test</a>! What do you think about this <a href="https://example.social/@another_user" class="u-url mention">@another_user</a>?</p><p>Mentions should be highlighted and clickable.</p>`;
@@ -78,15 +90,19 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
       contentFormat === 'text'
         ? contentType === 'long'
           ? longContent
-          : contentType === 'links'
-            ? linksContent
-            : contentType === 'hashtags'
-              ? hashtagsContent
-              : contentType === 'mentions'
-                ? mentionsContent
-                : contentType === 'math'
-                  ? mathContent
-                  : shortContent
+          : contentType === 'shortVerticalLr'
+            ? shortVerticalLrContent
+            : contentType === 'longVerticalLr'
+              ? longVerticalLrContent
+              : contentType === 'links'
+                ? linksContent
+                : contentType === 'hashtags'
+                  ? hashtagsContent
+                  : contentType === 'mentions'
+                    ? mentionsContent
+                    : contentType === 'math'
+                      ? mathContent
+                      : shortContent
         : '',
     visibility: toggles.visibility || 'public',
     createdAt: new Date().toISOString(),
@@ -98,6 +114,11 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     tags: [],
     mediaAttachments: [],
   };
+
+  // Add language key for vertical-lr content
+  if (contentType === 'shortVerticalLr' || contentType === 'longVerticalLr') {
+    base.language = 'mn-Mong';
+  }
 
   // Add media if selected
   if (mediaCount > 0) {
@@ -320,6 +341,11 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     };
   }
 
+  // Add _deleted flag if enabled
+  if (deleted) {
+    base._deleted = true;
+  }
+
   console.log('Final base', base);
   return base;
 };
@@ -353,6 +379,7 @@ const INITIAL_STATE = {
   displayStyle: 'adaptive', // Display style for preview
   showTags: false, // New toggle for showing status tags
   tagsCount: 'few', // New option for tags count: 'few' (3) or 'many' (10)
+  deleted: false, // Toggle to mark status as deleted
 };
 
 export default function Sandbox() {
@@ -479,6 +506,7 @@ export default function Sandbox() {
       quoteFilters: toggleState.quoteFilters,
       showTags: toggleState.showTags, // Add showTags toggle
       tagsCount: toggleState.tagsCount, // Add tagsCount option
+      deleted: toggleState.deleted, // Add deleted toggle
     },
   });
 
@@ -926,6 +954,18 @@ export default function Sandbox() {
                   <span>Media first</span>
                 </label>
               </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.deleted}
+                    onChange={() =>
+                      updateToggles({ deleted: !toggleState.deleted })
+                    }
+                  />
+                  <span>Deleted</span>
+                </label>
+              </li>
             </ul>
           </li>
           <li>
@@ -1027,6 +1067,34 @@ export default function Sandbox() {
                         disabled={!toggleState.hasContent}
                       />
                       <span>Long</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input
+                        type="radio"
+                        name="contentType"
+                        checked={toggleState.contentType === 'shortVerticalLr'}
+                        onChange={() =>
+                          updateToggles({ contentType: 'shortVerticalLr' })
+                        }
+                        disabled={!toggleState.hasContent}
+                      />
+                      <span>Short vertical-lr</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input
+                        type="radio"
+                        name="contentType"
+                        checked={toggleState.contentType === 'longVerticalLr'}
+                        onChange={() =>
+                          updateToggles({ contentType: 'longVerticalLr' })
+                        }
+                        disabled={!toggleState.hasContent}
+                      />
+                      <span>Long vertical-lr</span>
                     </label>
                   </li>
                   <li>

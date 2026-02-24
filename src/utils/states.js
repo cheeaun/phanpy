@@ -9,10 +9,19 @@ import rateLimit from './ratelimit';
 import store from './store';
 import unfurlMastodonLink from './unfurl-link';
 
+// Restore prevLocation from sessionStorage for page reload persistence
+function restorePrevLocation() {
+  const saved = store.session.getJSON('prevLocation');
+  if (saved && saved.pathname) {
+    return saved;
+  }
+  return null;
+}
+
 const states = proxy({
   appVersion: {},
   // history: [],
-  prevLocation: null,
+  prevLocation: restorePrevLocation(),
   currentLocation: null,
   statuses: {},
   statusThreadNumber: {},

@@ -31,6 +31,8 @@ a.mention span {
   text-decoration-color: inherit;
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
+}
+a.mention:not(.hashtag) {
   font-variant-numeric: slashed-zero;
   font-feature-settings: 'ss01';
 }

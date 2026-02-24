@@ -68,6 +68,8 @@ function highlightText(text, { maxCharacters = Infinity }) {
 
 function autoResizeTextarea(textarea) {
   if (!textarea) return;
+  // writing-mode is vertical, don't do this
+  if (getComputedStyle(textarea).writingMode.includes('vertical')) return;
   const { value, offsetHeight, scrollHeight, clientHeight } = textarea;
   if (offsetHeight < window.innerHeight) {
     // NOTE: This check is needed because the offsetHeight return 50000 (really large number) on first render

@@ -5,6 +5,7 @@ import { subscribe, useSnapshot } from 'valtio';
 
 import Accounts from '../pages/accounts';
 import Settings from '../pages/settings';
+import { useAuth } from '../utils/auth-context';
 import focusDeck from '../utils/focus-deck';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
@@ -38,6 +39,7 @@ export default function Modals() {
   const snapStates = useSnapshot(states);
   const navigate = useNavigate();
   const location = useLocation();
+  const isLoggedIn = useAuth();
 
   useEffect(() => {
     setTimeout(preload, 1000);
@@ -45,7 +47,7 @@ export default function Modals() {
 
   return (
     <>
-      {!!snapStates.showCompose && (
+      {isLoggedIn && !!snapStates.showCompose && (
         <Modal
           class={`solid ${snapStates.composerState.minimized ? 'min' : ''}`}
           minimized={!!snapStates.composerState.minimized}
@@ -76,10 +78,12 @@ export default function Modals() {
               window.__COMPOSE__?.quoteStatus ||
               null
             }
+            sharedData={window.__SHARED_DATA__ || null}
             onClose={(results) => {
               const { newStatus, instance, type, scheduledAt } = results || {};
               states.showCompose = false;
               window.__COMPOSE__ = null;
+              window.__SHARED_DATA__ = null;
               if (newStatus) {
                 states.reloadStatusPage++;
                 if (scheduledAt) states.reloadScheduledPosts++;
@@ -114,7 +118,7 @@ export default function Modals() {
           />
         </Modal>
       )}
-      {!!snapStates.showSettings && (
+      {isLoggedIn && !!snapStates.showSettings && (
         <Modal
           onClose={() => {
             states.showSettings = false;
@@ -127,7 +131,7 @@ export default function Modals() {
           />
         </Modal>
       )}
-      {!!snapStates.showAccounts && (
+      {isLoggedIn && !!snapStates.showAccounts && (
         <Modal
           onClose={() => {
             states.showAccounts = false;
@@ -174,7 +178,7 @@ export default function Modals() {
           />
         </Modal>
       )}
-      {!!snapStates.showDrafts && (
+      {isLoggedIn && !!snapStates.showDrafts && (
         <Modal
           onClose={() => {
             states.showDrafts = false;
@@ -205,7 +209,7 @@ export default function Modals() {
           />
         </Modal>
       )}
-      {!!snapStates.showShortcutsSettings && (
+      {isLoggedIn && !!snapStates.showShortcutsSettings && (
         <Modal
           onClose={() => {
             states.showShortcutsSettings = false;
@@ -266,7 +270,7 @@ export default function Modals() {
           />
         </Modal>
       )}
-      {!!snapStates.showReportModal && (
+      {isLoggedIn && !!snapStates.showReportModal && (
         <Modal
           onClose={() => {
             states.showReportModal = false;
@@ -319,7 +323,7 @@ export default function Modals() {
           />
         </Modal>
       )}
-      {!!snapStates.showImportExportAccounts && (
+      {isLoggedIn && !!snapStates.showImportExportAccounts && (
         <Modal
           onClose={() => {
             states.showImportExportAccounts = false;

@@ -1,3 +1,5 @@
+import './mentions.css';
+
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useMemo, useRef, useState } from 'preact/hooks';
 import { useSearchParams } from 'react-router-dom';
@@ -6,7 +8,9 @@ import Link from '../components/link';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { fixNotifications } from '../utils/group-notifications';
+import { fetchRelationships } from '../utils/relationships';
 import { saveStatus } from '../utils/states';
+import { getCurrentAccountID } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -20,8 +24,29 @@ function Mentions({ columnMode, ...props }) {
   const type = props?.type || searchParams.get('type') || stateType;
   useTitle(type === 'private' ? t`Private mentions` : t`Mentions`, '/mentions');
 
+  const [onlyFollowings, setOnlyFollowings] = useState(false);
+  const relationshipsMap = useRef({});
+
   const mentionsIterator = useRef();
   const latestItem = useRef();
+
+  function filterByFollowings(items) {
+    if (!onlyFollowings || !items?.length) return items;
+
+    const currentAccountID = getCurrentAccountID();
+    return items.filter((item) => {
+      const accountID = item.account?.id;
+      if (!accountID) return false;
+
+      // Exclude self-posts
+      if (accountID === currentAccountID) {
+        return false;
+      }
+
+      const relationship = relationshipsMap.current[accountID];
+      return relationship?.following === true;
+    });
+  }
 
   async function fetchMentions(firstLoad) {
     if (firstLoad || !mentionsIterator.current) {
@@ -45,6 +70,27 @@ function Mentions({ columnMode, ...props }) {
       value.forEach(({ status: item }) => {
         saveStatus(item, instance);
       });
+
+      let statuses = value.map((item) => item.status);
+      if (onlyFollowings && statuses?.length) {
+        const accounts = statuses.map((status) => status.account);
+        const relationships = await fetchRelationships(
+          accounts,
+          relationshipsMap.current,
+        );
+        if (relationships) {
+          relationshipsMap.current = {
+            ...relationshipsMap.current,
+            ...relationships,
+          };
+        }
+        statuses = filterByFollowings(statuses);
+      }
+
+      return {
+        ...results,
+        value: statuses,
+      };
     }
     return {
       ...results,
@@ -74,6 +120,28 @@ function Mentions({ columnMode, ...props }) {
       value.forEach(({ lastStatus: item }) => {
         saveStatus(item, instance);
       });
+
+      let statuses = value.map((item) => item.lastStatus);
+      if (onlyFollowings && statuses?.length) {
+        const accounts = statuses.map((status) => status.account);
+        const relationships = await fetchRelationships(
+          accounts,
+          relationshipsMap.current,
+        );
+        if (relationships) {
+          relationshipsMap.current = {
+            ...relationshipsMap.current,
+            ...relationships,
+          };
+        }
+        statuses = filterByFollowings(statuses);
+      }
+
+      console.log('results', results);
+      return {
+        ...results,
+        value: statuses,
+      };
     }
     console.log('results', results);
     return {
@@ -140,34 +208,48 @@ function Mentions({ columnMode, ...props }) {
 
   const TimelineStart = useMemo(() => {
     return (
-      <div class="filter-bar centered">
-        <Link
-          to="/mentions"
-          class={!type ? 'is-active' : ''}
-          onClick={(e) => {
-            if (columnMode) {
-              e.preventDefault();
-              setStateType(null);
-            }
-          }}
-        >
-          <Trans>All</Trans>
-        </Link>
-        <Link
-          to="/mentions?type=private"
-          class={type === 'private' ? 'is-active' : ''}
-          onClick={(e) => {
-            if (columnMode) {
-              e.preventDefault();
-              setStateType('private');
-            }
-          }}
-        >
-          <Trans>Private</Trans>
-        </Link>
-      </div>
+      <>
+        <div id="followings-option">
+          <label>
+            <input
+              type="checkbox"
+              checked={onlyFollowings}
+              onChange={(e) => {
+                setOnlyFollowings(e.target.checked);
+              }}
+            />{' '}
+            <Trans>Only followings</Trans>
+          </label>
+        </div>
+        <div class="filter-bar">
+          <Link
+            to="/mentions"
+            class={!type ? 'is-active' : ''}
+            onClick={(e) => {
+              if (columnMode) {
+                e.preventDefault();
+                setStateType(null);
+              }
+            }}
+          >
+            <Trans>All</Trans>
+          </Link>
+          <Link
+            to="/mentions?type=private"
+            class={type === 'private' ? 'is-active' : ''}
+            onClick={(e) => {
+              if (columnMode) {
+                e.preventDefault();
+                setStateType('private');
+              }
+            }}
+          >
+            <Trans>Private</Trans>
+          </Link>
+        </div>
+      </>
     );
-  }, [type]);
+  }, [type, onlyFollowings]);
 
   return (
     <Timeline
@@ -180,7 +262,7 @@ function Mentions({ columnMode, ...props }) {
       checkForUpdates={checkForUpdates}
       useItemID
       timelineStart={TimelineStart}
-      refresh={type}
+      refresh={`${type}-${onlyFollowings}`}
       filterContext="notifications"
     />
   );

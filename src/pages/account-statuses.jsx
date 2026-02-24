@@ -1,9 +1,12 @@
+import './account-statuses.css';
+
 import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuItem } from '@szhsin/react-menu';
 import {
   useCallback,
   useEffect,
   useMemo,
+  useReducer,
   useRef,
   useState,
 } from 'preact/hooks';
@@ -12,6 +15,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
 import AccountInfo from '../components/account-info';
+import AccountInfoMini from '../components/account-info-mini';
 import EmojiText from '../components/emoji-text';
 import Icon from '../components/icon';
 import Link from '../components/link';
@@ -44,17 +48,53 @@ const supportsInputMonth = mem(() => {
   }
 });
 
-function AccountStatuses() {
+function AccountStatuses({ columnMode, ...props }) {
   const { i18n, t } = useLingui();
   const snapStates = useSnapshot(states);
-  const { id, ...params } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { id, ...params } = columnMode ? { id: props.id } : useParams();
+
+  const profileSearchParamsRef = useRef(new URLSearchParams({ replies: 1 }));
+  const [, forceUpdate] = useReducer((c) => c + 1, 0);
+  const profileSetSearchParams = useCallback((objOrFn) => {
+    const params = profileSearchParamsRef.current;
+    if (typeof objOrFn === 'function') {
+      objOrFn(params);
+    } else {
+      Object.entries(objOrFn).forEach(([key, value]) => {
+        if (value) {
+          params.set(key, value);
+        } else {
+          params.delete(key);
+        }
+      });
+    }
+    forceUpdate();
+  }, []);
+  const [searchParams, setSearchParams] = columnMode
+    ? [profileSearchParamsRef.current, profileSetSearchParams]
+    : useSearchParams();
+  const clearAndSetParam = useCallback(
+    (paramName, paramValue) => {
+      setSearchParams((params) => {
+        Array.from(params.keys()).forEach((key) => {
+          params.delete(key);
+        });
+        if (paramValue !== undefined) {
+          params.set(paramName, paramValue);
+        }
+      });
+    },
+    [setSearchParams],
+  );
+
   const month = searchParams.get('month');
   const excludeReplies = !searchParams.get('replies');
   const excludeBoosts = !!searchParams.get('boosts');
   const tagged = searchParams.get('tagged');
   const media = !!searchParams.get('media');
-  const { masto, instance, authenticated } = api({ instance: params.instance });
+  const { masto, instance, authenticated } = api({
+    instance: params?.instance,
+  });
   const { masto: currentMasto, instance: currentInstance } = api();
   const accountStatusesIterator = useRef();
 
@@ -151,7 +191,7 @@ function AccountStatuses() {
     }
 
     let results = [];
-    if (firstLoad) {
+    if (firstLoad && !columnMode) {
       const { value } = await masto.v1.accounts
         .$select(id)
         .statuses.list({
@@ -299,14 +339,18 @@ function AccountStatuses() {
 
     return (
       <>
-        <AccountInfo
-          instance={instance}
-          account={cachedAccount || id}
-          fetchAccount={fetchAccount}
-          authenticated={authenticated}
-          standalone
-          showEndorsements
-        />
+        {columnMode ? (
+          <AccountInfoMini account={account} instance={instance} />
+        ) : (
+          <AccountInfo
+            instance={instance}
+            account={cachedAccount || id}
+            fetchAccount={fetchAccount}
+            authenticated={authenticated}
+            standalone
+            showEndorsements
+          />
+        )}
         {!mediaFirst && (
           <div
             class="filter-bar"
@@ -321,6 +365,12 @@ function AccountStatuses() {
                 class="insignificant filter-clear"
                 title={t`Clear filters`}
                 key="clear-filters"
+                onClick={(e) => {
+                  if (columnMode) {
+                    e.preventDefault();
+                    clearAndSetParam();
+                  }
+                }}
               >
                 <Icon icon="x" size="l" alt={t`Clear`} />
               </Link>
@@ -334,7 +384,15 @@ function AccountStatuses() {
             )}
             <Link
               to={`/${instance}/a/${id}${excludeReplies ? '?replies=1' : ''}`}
-              onClick={() => {
+              onClick={(e) => {
+                if (columnMode) {
+                  e.preventDefault();
+                  if (excludeReplies) {
+                    clearAndSetParam('replies', '1');
+                  } else {
+                    clearAndSetParam();
+                  }
+                }
                 if (excludeReplies) {
                   showToast(t`Showing post with replies`);
                 }
@@ -345,7 +403,15 @@ function AccountStatuses() {
             </Link>
             <Link
               to={`/${instance}/a/${id}${excludeBoosts ? '' : '?boosts=0'}`}
-              onClick={() => {
+              onClick={(e) => {
+                if (columnMode) {
+                  e.preventDefault();
+                  if (!excludeBoosts) {
+                    clearAndSetParam('boosts', '0');
+                  } else {
+                    clearAndSetParam();
+                  }
+                }
                 if (!excludeBoosts) {
                   showToast(t`Showing posts without boosts`);
                 }
@@ -356,7 +422,15 @@ function AccountStatuses() {
             </Link>
             <Link
               to={`/${instance}/a/${id}${media ? '' : '?media=1'}`}
-              onClick={() => {
+              onClick={(e) => {
+                if (columnMode) {
+                  e.preventDefault();
+                  if (!media) {
+                    clearAndSetParam('media', '1');
+                  } else {
+                    clearAndSetParam();
+                  }
+                }
                 if (!media) {
                   showToast(t`Showing posts with media`);
                 }
@@ -373,7 +447,15 @@ function AccountStatuses() {
                     ? ''
                     : `?tagged=${encodeURIComponent(tag.name)}`
                 }`}
-                onClick={() => {
+                onClick={(e) => {
+                  if (columnMode) {
+                    e.preventDefault();
+                    if (tagged !== tag.name) {
+                      clearAndSetParam('tagged', tag.name);
+                    } else {
+                      clearAndSetParam();
+                    }
+                  }
                   if (tagged !== tag.name) {
                     showToast(t`Showing posts tagged with #${tag.name}`);
                   }
@@ -390,7 +472,7 @@ function AccountStatuses() {
                 {/* <span class="filter-count">{tag.statusesCount}</span> */}
               </Link>
             ))}
-            {searchEnabled && (
+            {searchEnabled && !columnMode && (
               <>
                 {supportsInputMonth() ? (
                   <label class={`filter-field ${month ? 'is-active' : ''}`}>
@@ -538,7 +620,7 @@ function AccountStatuses() {
         fetchItems={fetchAccountStatuses}
         useItemID
         view={media || mediaFirst ? 'media' : undefined}
-        boostsCarousel={snapStates.settings.boostsCarousel}
+        boostsCarousel={!isSelf && snapStates.settings.boostsCarousel}
         timelineStart={TimelineStart}
         refresh={[
           excludeReplies,
@@ -692,9 +774,7 @@ function MonthPicker(props) {
           <option
             value={
               // Month is 1-indexed
-              (i + 1)
-                .toString()
-                .padStart(2, '0')
+              (i + 1).toString().padStart(2, '0')
             }
             key={i}
           >

@@ -2,6 +2,7 @@ import { useLingui } from '@lingui/react/macro';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
 
+import AccountStatuses from '../pages/account-statuses';
 import Bookmarks from '../pages/bookmarks';
 import Favourites from '../pages/favourites';
 import Following from '../pages/following';
@@ -14,6 +15,7 @@ import Search from '../pages/search';
 import Trending from '../pages/trending';
 import isRTL from '../utils/is-rtl';
 import states from '../utils/states';
+import { getCurrentAccountID } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
 const scrollIntoViewOptions = {
@@ -44,12 +46,17 @@ function Columns() {
       mentions: Mentions,
       trending: Trending,
       search: Search,
+      profile: AccountStatuses,
     }[type];
     if (!Component) return null;
     // Don't show Search column with no query, for now
     if (type === 'search' && !params.query) return null;
     // Don't show List column with no list, for now
     if (type === 'list' && !params.id) return null;
+    // If profile, provide the account ID
+    if (type === 'profile') {
+      params.id = getCurrentAccountID();
+    }
     return (
       <Component key={type + JSON.stringify(params)} {...params} columnMode />
     );

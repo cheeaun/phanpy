@@ -117,6 +117,8 @@ function Notifications({ columnMode }) {
   const notificationAccessToken = searchParams.get('access_token');
   const [showMore, setShowMore] = useState(false);
   const [onlyMentions, setOnlyMentions] = useState(false);
+  const [showMentionsLink, setShowMentionsLink] = useState(false);
+  const [hasAnalyzedFirstLoad, setHasAnalyzedFirstLoad] = useState(false);
   const scrollableRef = useRef();
   const { nearReachEnd, scrollDirection, reachStart, nearReachStart } =
     useScroll({
@@ -195,6 +197,8 @@ function Notifications({ columnMode }) {
             },
           })
           .catch(() => {});
+
+        analyzeNotifications(groupedNotifications);
       } else {
         states.notifications.push(...groupedNotifications);
       }
@@ -260,6 +264,84 @@ function Notifications({ columnMode }) {
   function fetchNotificationsRequest() {
     return masto.v1.notifications.requests.list();
   }
+
+  const analyzeNotifications = (notifications) => {
+    // Once Mentions link is shown, don't need to analyze again
+    if (showMentionsLink) return;
+
+    const totalNotifications = notifications.length;
+    const totalActualNotifications = notifications.reduce(
+      (sum, n) => sum + (n.notificationsCount || 1),
+      0,
+    );
+    const totalMentions = notifications.filter(
+      (n) => n.type === 'mention',
+    ).length;
+    const mentionsCountPerDay = {};
+    const notificationCountPerDay = {};
+    notifications.forEach((n) => {
+      const { createdAt, notificationsCount, type } = n;
+      const date = new Date(createdAt).toDateString();
+      notificationCountPerDay[date] =
+        (notificationCountPerDay[date] || 0) + (notificationsCount || 1);
+      if (type === 'mention') {
+        mentionsCountPerDay[date] = (mentionsCountPerDay[date] || 0) + 1;
+      }
+    });
+    const mentionsPercentage =
+      totalNotifications > 0 ? totalMentions / totalNotifications : 0;
+    // Show mentions link if:
+    // - < 33% mentions OR
+    const littleMentions = mentionsPercentage < 0.33;
+    // - > 30 mentions in a day
+    const tooManyMentionsPerDay = Object.values(mentionsCountPerDay).some(
+      (count) => count > 30,
+    );
+    // - > 30 on any grouped notification (notificationCount > 30)
+    const tooManyNotificationsPerGroupNotification = notifications.some(
+      (n) => n.notificationsCount > 30,
+    );
+    // - > 30 notifications per hour
+    const notificationCountPerHour = {};
+    let tooManyNotificationsPerHour = false;
+    for (const n of notifications) {
+      const { createdAt, notificationsCount } = n;
+      const date = new Date(createdAt);
+      const hourKey = date.toISOString().slice(0, 13); // YYYY-MM-DDTHH
+      notificationCountPerHour[hourKey] =
+        (notificationCountPerHour[hourKey] || 0) + (notificationsCount || 1);
+      if (notificationCountPerHour[hourKey] > 30) {
+        tooManyNotificationsPerHour = true;
+        break;
+      }
+    }
+    setShowMentionsLink(
+      littleMentions ||
+        tooManyMentionsPerDay ||
+        tooManyNotificationsPerGroupNotification ||
+        tooManyNotificationsPerHour,
+    );
+    setHasAnalyzedFirstLoad(Date.now());
+
+    // [DEBUG]
+    console.log(
+      '🔔 Notifications analysis:',
+      {
+        totalNotifications,
+        totalActualNotifications,
+        totalMentions,
+        notificationCountPerDay,
+        notificationCountPerHour,
+        mentionsPercentage,
+      },
+      {
+        littleMentions,
+        tooManyMentionsPerDay,
+        tooManyNotificationsPerGroupNotification,
+        tooManyNotificationsPerHour,
+      },
+    );
+  };
 
   const loadNotifications = (firstLoad) => {
     setShowNew(false);
@@ -801,18 +883,30 @@ function Notifications({ columnMode }) {
             </div>
           </div>
         )}
-        <div id="mentions-option">
-          <label>
-            <input
-              type="checkbox"
-              checked={onlyMentions}
-              onChange={(e) => {
-                setOnlyMentions(e.target.checked);
-              }}
-            />{' '}
-            <Trans>Only mentions</Trans>
-          </label>
-        </div>
+        {!!hasAnalyzedFirstLoad && (
+          <div id="mentions-option">
+            {showMentionsLink ? (
+              <Link to="/mentions" class="button plain">
+                <Icon icon="at" />{' '}
+                <span>
+                  <Trans>Mentions</Trans>
+                </span>{' '}
+                <Icon icon="arrow-right" class="more-insignificant" />
+              </Link>
+            ) : (
+              <label>
+                <input
+                  type="checkbox"
+                  checked={onlyMentions}
+                  onChange={(e) => {
+                    setOnlyMentions(e.target.checked);
+                  }}
+                />{' '}
+                <Trans>Only mentions</Trans>
+              </label>
+            )}
+          </div>
+        )}
         <h2 class="timeline-header">
           <Trans>Today</Trans>{' '}
           <small class="insignificant bidi-isolate">{todaySubHeading}</small>

@@ -408,6 +408,17 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - 🛬 Redesigned landing page
 - 🐛 Bug fixes
 
+## February 24, 2026
+
+📢 https://mastodon.social/@cheeaun/116126267334672277
+
+- 📤 Allow receiving shared data with the Web Share Target API
+- 🔐 Timeline access controls
+- 👤 New shortcut: "Profile"
+- 📝 "Only followings" filter for Mentions
+- ↕️ Preliminary support for vertical-lr writing mode
+- 🐛 Bug fixes
+
 <!--
 
 ## Next

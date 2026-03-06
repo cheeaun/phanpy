@@ -485,9 +485,10 @@ And here I am. Building a Mastodon web client.
 - [Tusked](https://tusked.app/) ([archived](https://github.com/raikasdev/tusked))
 - [Mastodon Glitch Edition (standalone frontend)](https://iceshrimp.dev/iceshrimp/masto-fe-standalone) - forks ↓
   - [Masto-FE (🦥 flavour)](https://masto-fe.superseriousbusiness.org)
-- [pl-fe](https://pl.mkljczk.pl)
+- [Nicolium](https://web.nicolium.app) (previously [pl-fe](https://pl.mkljczk.pl))
 - [Mangane](https://github.com/BDX-town/Mangane)
 - [Fedideck](https://fedideck.app/)
+- [Elefeed](https://elefeed.app)
 - [TheDesk](https://github.com/cutls/TheDesk) (archived)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 

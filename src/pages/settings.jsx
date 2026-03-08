@@ -65,7 +65,8 @@ function Settings({ onClose }) {
   const systemTargetLanguage = getTranslateTargetLanguage();
   const systemTargetLanguageText = localeCode2Text(systemTargetLanguage);
   const currentTextSize = store.local.get('textSize') || DEFAULT_TEXT_SIZE;
-  const currentColumnSize = store.local.get('columnSize') || DEFAULT_COLUMN_WIDTH;
+  const currentColumnSize =
+    store.local.get('columnSize') || DEFAULT_COLUMN_WIDTH;
 
   const [prefs, setPrefs] = useState(getPreferences());
   const { masto, authenticated, instance } = api();
@@ -1037,7 +1038,6 @@ function TextSizeControl({ currentTextSize }) {
   );
 }
 
-
 function ColumnSizeControl({ currentColumnSize }) {
   const columnSizeFieldRef = useRef(null);
   const [size, setSize] = useState(currentColumnSize);
@@ -1061,7 +1061,6 @@ function ColumnSizeControl({ currentColumnSize }) {
 
   return (
     <div class={`text-size-control ${size !== debouncedSize ? 'loading' : ''}`}>
-      
       <input
         ref={columnSizeFieldRef}
         type="range"

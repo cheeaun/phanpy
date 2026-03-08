@@ -1,6 +1,8 @@
 import { useLingui } from '@lingui/react/macro';
+import { useLayoutEffect } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
+import store from '../utils/store';
 
 import AccountStatuses from '../pages/account-statuses';
 import Bookmarks from '../pages/bookmarks';
@@ -31,6 +33,17 @@ function Columns() {
   const { shortcuts } = snapStates;
 
   console.debug('RENDER Columns', shortcuts);
+
+  useLayoutEffect(() => {
+    const columnSize = store.local.get('columnSize');
+    if (!columnSize) return;
+    const col = document.getElementById('columns');
+    if (col) {
+      col.style.setProperty('--column-size', `${columnSize}px`);
+    } else {
+      console.warn('Failed to set column size: #columns not found');
+    }
+  }, []);
 
   const components = shortcuts.map((shortcut) => {
     if (!shortcut) return null;

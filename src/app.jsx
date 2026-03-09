@@ -31,7 +31,6 @@ import NavigationCommand from './components/navigation-command';
 import NotificationService from './components/notification-service';
 import SearchCommand from './components/search-command';
 import Shortcuts from './components/shortcuts';
-import NotFound from './pages/404';
 import AccountStatuses from './pages/account-statuses';
 import AnnualReport from './pages/annual-report';
 import Bookmarks from './pages/bookmarks';

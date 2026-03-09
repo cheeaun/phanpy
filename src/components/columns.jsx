@@ -2,7 +2,6 @@ import { useLingui } from '@lingui/react/macro';
 import { useLayoutEffect } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
-import store from '../utils/store';
 
 import AccountStatuses from '../pages/account-statuses';
 import Bookmarks from '../pages/bookmarks';
@@ -17,6 +16,7 @@ import Search from '../pages/search';
 import Trending from '../pages/trending';
 import isRTL from '../utils/is-rtl';
 import states from '../utils/states';
+import store from '../utils/store';
 import { getCurrentAccountID } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 

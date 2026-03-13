@@ -158,6 +158,8 @@ function YearInPosts() {
       ignoreEventWhen: (e) => {
         const hasModal = !!document.querySelector('#modal-container > *');
         const isInput = ['INPUT', 'TEXTAREA'].includes(e.target.tagName);
+        // Allow '/' even with Shift (e.g. German keyboards)
+        if (e.key === '/') return false;
         return (
           hasModal ||
           isInput ||

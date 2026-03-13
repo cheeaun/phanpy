@@ -44,6 +44,8 @@ export default memo(function SearchCommand({ onClose = () => {} }) {
         const isSearchPage = /\/search/.test(location.hash);
         const isYearInPostsPage = /\/yip/.test(location.hash);
         const hasModal = !!document.querySelector('#modal-container > *');
+        // Allow '/' even with Shift (e.g. German keyboards)
+        if (e.key === '/') return false;
         return (
           isSearchPage ||
           isYearInPostsPage ||

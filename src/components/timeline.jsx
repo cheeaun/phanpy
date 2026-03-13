@@ -194,7 +194,8 @@ function Timeline({
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'j',
     },
   );
 
@@ -243,7 +244,8 @@ function Timeline({
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'k',
     },
   );
 
@@ -281,7 +283,17 @@ function Timeline({
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) => {
+        // 'enter' doesn't need key validation (physical key, layout-independent)
+        if (e.key === 'Enter') return false;
+        return (
+          e.metaKey ||
+          e.ctrlKey ||
+          e.altKey ||
+          e.shiftKey ||
+          e.key.toLowerCase() !== 'o'
+        );
+      },
     },
   );
 
@@ -296,7 +308,11 @@ function Timeline({
   }, [loadItems, showNewPostsIndicator]);
   const dotRef = useHotkeys('.', handleLoadNewPosts, {
     useKey: true,
-    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    ignoreEventWhen: (e) => {
+      // Allow '.' even with Shift (some keyboard layouts require Shift for '.')
+      if (e.key === '.') return false;
+      return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
+    },
   });
 
   // const {

@@ -1776,18 +1776,29 @@ function Status({
     {
       enabled: hotkeysEnabled,
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'r',
     },
   );
   const fRef = useHotkeys('f, l', favouriteStatusNotify, {
     enabled: hotkeysEnabled,
-    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    ignoreEventWhen: (e) =>
+      e.metaKey ||
+      e.ctrlKey ||
+      e.altKey ||
+      e.shiftKey ||
+      !['f', 'l'].includes(e.key.toLowerCase()),
     useKey: true,
   });
   const dRef = useHotkeys('d', bookmarkStatusNotify, {
     enabled: hotkeysEnabled,
     useKey: true,
-    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    ignoreEventWhen: (e) =>
+      e.metaKey ||
+      e.ctrlKey ||
+      e.altKey ||
+      e.shiftKey ||
+      e.key.toLowerCase() !== 'd',
   });
   const bRef = useHotkeys(
     'shift+b',
@@ -1811,7 +1822,8 @@ function Status({
     {
       enabled: hotkeysEnabled && canBoost,
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'b',
     },
   );
   const xRef = useHotkeys(
@@ -1840,7 +1852,12 @@ function Status({
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'x',
     },
   );
   const qRef = useHotkeys(
@@ -1870,7 +1887,12 @@ function Status({
     {
       enabled: hotkeysEnabled,
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'q',
     },
   );
 

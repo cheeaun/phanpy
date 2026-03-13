@@ -569,7 +569,12 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'j',
     },
   );
 
@@ -606,7 +611,12 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'k',
     },
   );
 
@@ -621,7 +631,17 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) => {
+        // 'enter' doesn't need key validation (physical key, layout-independent)
+        if (e.key === 'Enter') return false;
+        return (
+          e.metaKey ||
+          e.ctrlKey ||
+          e.altKey ||
+          e.shiftKey ||
+          e.key.toLowerCase() !== 'o'
+        );
+      },
     },
   );
 

@@ -40,6 +40,7 @@ import Favourites from './pages/favourites';
 import Filters from './pages/filters';
 import FollowedHashtags from './pages/followed-hashtags';
 import Following from './pages/following';
+import Following2 from './pages/following2';
 import Hashtag from './pages/hashtag';
 import Home from './pages/home';
 import HttpRoute from './pages/http-route';
@@ -779,6 +780,14 @@ function SecondaryRoutes() {
         element={
           <AuthRoute>
             <Following />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/_following2"
+        element={
+          <AuthRoute>
+            <Following2 />
           </AuthRoute>
         }
       />

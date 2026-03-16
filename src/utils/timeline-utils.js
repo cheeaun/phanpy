@@ -57,6 +57,7 @@ export function groupBoosts(values) {
   }
 }
 
+const BOOSTS_LIMIT = 100;
 export function dedupeBoosts(items, instance) {
   const boostedStatusIDs = store.account.get('boostedStatusIDs') || {};
   const filteredItems = items.filter((item) => {
@@ -75,10 +76,10 @@ export function dedupeBoosts(items, instance) {
     }
     return true;
   });
-  // Limit to 50
+  // Limit to BOOSTS_LIMIT
   const keys = Object.keys(boostedStatusIDs);
-  if (keys.length > 50) {
-    keys.slice(0, keys.length - 50).forEach((key) => {
+  if (keys.length > BOOSTS_LIMIT) {
+    keys.slice(0, keys.length - BOOSTS_LIMIT).forEach((key) => {
       delete boostedStatusIDs[key];
     });
   }

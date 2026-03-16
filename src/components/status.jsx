@@ -56,6 +56,7 @@ import Avatar from './avatar';
 import CustomEmoji from './custom-emoji';
 import EmojiText from './emoji-text';
 import Icon from './icon';
+import LazyRender from './lazy-render';
 import LazyShazam from './lazy-shazam';
 import Link from './link';
 import Loader from './loader';
@@ -2396,7 +2397,7 @@ function Status({
             </>
           )}
           {!withinContext && (
-            <>
+            <LazyRender id={sKey} class="pre-content-container">
               {isThread ? (
                 <ThreadBadge
                   showIcon
@@ -2420,7 +2421,7 @@ function Status({
                   </div>
                 )
               )}
-            </>
+            </LazyRender>
           )}
           <div
             class={`content-container ${

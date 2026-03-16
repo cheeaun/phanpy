@@ -13,6 +13,7 @@ import supportedLanguages from '../data/status-supported-languages';
 import { api, getPreferences } from '../utils/api';
 import db from '../utils/db';
 import { getDtfLocale } from '../utils/dtf-locale';
+import haptics from '../utils/haptics';
 import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import mem from '../utils/mem';
@@ -2079,7 +2080,11 @@ function Compose({
                 })}
               </select>
             </label>{' '}
-            <button type="submit" disabled={uiState === 'loading'}>
+            <button
+              type="submit"
+              disabled={uiState === 'loading'}
+              onClick={() => haptics.trigger('medium')}
+            >
               {scheduledAt
                 ? t`Schedule`
                 : replyToStatus

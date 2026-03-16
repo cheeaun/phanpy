@@ -15,6 +15,7 @@ import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
 import { revokeAccessToken } from '../utils/auth';
+import haptics from '../utils/haptics';
 import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -115,6 +116,7 @@ function Accounts({ onClose }) {
                       }
                       showAcct
                       onClick={() => {
+                        haptics.trigger('medium');
                         if (isLoggedOut) {
                           location.href = `/#/login?instance=${account.instanceURL}`;
                           onClose();

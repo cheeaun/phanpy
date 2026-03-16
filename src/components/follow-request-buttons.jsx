@@ -2,6 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
+import haptics from '../utils/haptics';
 
 import Icon from './icon';
 import Loader from './loader';
@@ -21,6 +22,7 @@ function FollowRequestButtons({ accountID, onChange }) {
         type="button"
         disabled={uiState === 'loading' || hasRelationship}
         onClick={() => {
+          haptics.trigger('success');
           setUIState('loading');
           setRequestState('accept');
           (async () => {
@@ -47,6 +49,7 @@ function FollowRequestButtons({ accountID, onChange }) {
         disabled={uiState === 'loading' || hasRelationship}
         class="light danger"
         onClick={() => {
+          haptics.trigger('light');
           setUIState('loading');
           setRequestState('reject');
           (async () => {

@@ -96,7 +96,6 @@ export default function ComposeButton() {
   // Setup longpress handler to open context menu
   const bindLongPress = useLongPress(
     () => {
-      haptics.trigger('medium');
       setMenuOpen(true);
     },
     {
@@ -145,7 +144,6 @@ export default function ComposeButton() {
         }}
         onContextMenu={(e) => {
           e.preventDefault();
-          haptics.trigger('medium');
           setMenuOpen(true);
         }}
         {...bindLongPress()}

@@ -28,7 +28,6 @@ import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
-import haptics from '../utils/haptics';
 import htmlContentLength from '../utils/html-content-length';
 import localeMatch from '../utils/locale-match';
 import mem from '../utils/mem';
@@ -1749,7 +1748,6 @@ function Status({
           )
             return;
           e.preventDefault();
-          haptics.trigger('medium');
           setContextMenuProps({
             anchorPoint: {
               x: clientX,
@@ -2092,7 +2090,6 @@ function Status({
             }
           }
           e.preventDefault();
-          haptics.trigger('medium');
           setContextMenuProps({
             anchorPoint: {
               x: e.clientX,
@@ -3493,7 +3490,6 @@ function FilteredStatus({
   const [showPeek, setShowPeek] = useState(false);
   const bindLongPressPeek = useLongPress(
     () => {
-      haptics.trigger('medium');
       setShowPeek(true);
     },
     {
@@ -3535,7 +3531,6 @@ function FilteredStatus({
       // title={statusPeekText}
       onContextMenu={(e) => {
         e.preventDefault();
-        haptics.trigger('medium');
         setShowPeek(true);
       }}
       {...bindLongPressPeek()}

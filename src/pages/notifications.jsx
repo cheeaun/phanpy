@@ -34,6 +34,7 @@ import groupNotifications, {
   massageNotifications2,
 } from '../utils/group-notifications';
 import handleContentLinks from '../utils/handle-content-links';
+import haptics from '../utils/haptics';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import { getRegistration } from '../utils/push-notifications';
@@ -1325,6 +1326,7 @@ function NotificationRequestButtons({ request, onChange }) {
         type="button"
         disabled={uiState === 'loading' || hasRequestState}
         onClick={() => {
+          haptics.trigger('success');
           setUIState('loading');
           (async () => {
             try {
@@ -1355,6 +1357,7 @@ function NotificationRequestButtons({ request, onChange }) {
         disabled={uiState === 'loading' || hasRequestState}
         class="light danger"
         onClick={() => {
+          haptics.trigger('light');
           setUIState('loading');
           (async () => {
             try {

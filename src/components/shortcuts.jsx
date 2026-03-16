@@ -11,7 +11,6 @@ import { useSnapshot } from 'valtio';
 
 import { SHORTCUTS_META } from '../components/shortcuts-settings';
 import { api } from '../utils/api';
-import haptics from '../utils/haptics';
 import { getLists } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
@@ -179,7 +178,6 @@ function Shortcuts() {
 
   const bindListsLongPress = useLongPress(
     () => {
-      haptics.trigger('medium');
       setListsMenuState('open');
     },
     {
@@ -191,7 +189,6 @@ function Shortcuts() {
 
   const bindProfileLongPress = useLongPress(
     () => {
-      haptics.trigger('medium');
       states.showAccounts = true;
     },
     {
@@ -236,7 +233,6 @@ function Shortcuts() {
                             onContextMenu(e) {
                               e.preventDefault();
                               e.stopPropagation();
-                              haptics.trigger('medium');
                               states.showAccounts = true;
                             },
                             ...bindProfileLongPress(),

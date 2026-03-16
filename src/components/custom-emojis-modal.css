@@ -9,10 +9,8 @@
     );
   }
   max-width: calc(
-    var(--main-width) +
-    ((var(--custom-emoji-size) - 1) * var(--size-bump)) -
-    50px -
-    16px
+    var(--main-width) + ((var(--custom-emoji-size) - 1) * var(--size-bump)) -
+      50px - 16px
   );
 
   header {

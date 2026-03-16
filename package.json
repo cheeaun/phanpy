@@ -18,7 +18,8 @@
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
-    "formatting-check": "npx biome check",
+    "formatting": "oxfmt",
+    "formatting-check": "oxfmt --check",
     "git:po-filter": "git config --local diff.po-filter.textconv \"sed 's/:[0-9]*$//'\"",
     "postinstall": "node scripts/generate-icons.js",
     "generate-icons": "node scripts/generate-icons.js"
@@ -70,7 +71,6 @@
     "valtio": "2.3.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.7",
     "@iconify/utils": "~3.1.0",
     "@lingui/babel-plugin-lingui-macro": "~5.9.3",
     "@lingui/cli": "~5.9.3",
@@ -78,6 +78,7 @@
     "@playwright/test": "~1.58.2",
     "@preact/preset-vite": "~2.10.4",
     "@types/node": "~25.5.0",
+    "oxfmt": "~0.40.0",
     "postcss": "~8.5.8",
     "postcss-dark-theme-class": "~2.0.0",
     "postcss-preset-env": "~11.2.0",
@@ -129,7 +130,7 @@
       ],
       "xmp": true
     },
-      "exclude": {
+    "exclude": {
       "mpf": true,
       "photoshop": true,
       "thumbnail": true,

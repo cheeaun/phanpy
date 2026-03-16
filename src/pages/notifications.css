@@ -52,10 +52,10 @@
   }
 }
 .notification-type:is(
-    .notification-mention,
-    .notification-quote,
-    .notification-mention\+quote
-  ) {
+  .notification-mention,
+  .notification-quote,
+  .notification-mention\+quote
+) {
   padding-top: 16px;
 }
 .only-mentions .notification:not(.notification-mention),

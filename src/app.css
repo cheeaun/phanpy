@@ -553,10 +553,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   + .replies
   .replies-summary {
   margin-inline-start: calc(
-    var(--avatar-size) +
-    var(--avatar-margin-start) +
-    var(--avatar-margin-end) +
-    (var(--line-margin-end) * (var(--comments-level) - 1))
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      (var(--line-margin-end) * (var(--comments-level) - 1))
   );
 }
 .timeline.contextual
@@ -565,10 +563,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   + .replies
   :is(.status-link, .status-focus) {
   padding-inline-start: calc(
-    var(--avatar-size) +
-    var(--avatar-margin-start) +
-    var(--avatar-margin-end) +
-    (var(--line-margin-end) * (var(--comments-level) - 1))
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      (var(--line-margin-end) * (var(--comments-level) - 1))
   );
 }
 .timeline.contextual
@@ -577,9 +573,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   + .replies
   .replies-summary {
   margin-inline-start: calc(
-    var(--thread-start) +
-    var(--line-margin-end) *
-    var(--comments-level)
+    var(--thread-start) + var(--line-margin-end) * var(--comments-level)
   );
 }
 .timeline.contextual
@@ -588,9 +582,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   + .replies
   :is(.status-link, .status-focus) {
   padding-inline-start: calc(
-    var(--thread-start) +
-    var(--line-margin-end) *
-    var(--comments-level)
+    var(--thread-start) + var(--line-margin-end) * var(--comments-level)
   );
 }
 .timeline.contextual > li.descendant:not(.thread):before {
@@ -615,9 +607,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline.contextual > li.ancestor .replies-link {
   margin-inline-start: calc(
-    var(--avatar-size) +
-    var(--avatar-margin-start) +
-    var(--avatar-margin-end)
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
   );
 }
 .timeline.contextual
@@ -625,9 +615,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   > :is(.status-link, .status-focus)
   .replies-link {
   margin-inline-start: calc(
-    var(--avatar-size) +
-    var(--avatar-margin-start) +
-    var(--avatar-margin-end)
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end)
   );
 }
 .timeline.contextual > li .replies-link * {
@@ -782,9 +770,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline.contextual > li .replies li:not(.content li) {
   --line-start: calc(
-    var(--thread-start) +
-    var(--line-margin-end) *
-    var(--comments-level)
+    var(--thread-start) + var(--line-margin-end) * var(--comments-level)
   );
   --line-end: calc(var(--line-start) + var(--line-width));
   background-image: linear-gradient(
@@ -806,10 +792,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 } */
 .timeline.contextual > li.thread .replies li:not(.content li) {
   --line-start: calc(
-    var(--avatar-size) +
-    var(--avatar-margin-start) +
-    var(--avatar-margin-end) +
-    (var(--line-margin-end) * (var(--comments-level) - 1))
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      (var(--line-margin-end) * (var(--comments-level) - 1))
   );
 }
 /* .timeline.contextual > li.thread .replies .replies li {
@@ -852,10 +836,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 } */
 .timeline.contextual > li.thread .replies li:not(.content li):before {
   --line-start: calc(
-    var(--avatar-size) +
-    var(--avatar-margin-start) +
-    var(--avatar-margin-end) +
-    (var(--line-margin-end) * (var(--comments-level) - 1))
+    var(--avatar-size) + var(--avatar-margin-start) + var(--avatar-margin-end) +
+      (var(--line-margin-end) * (var(--comments-level) - 1))
   );
 }
 /* .timeline.contextual > li.thread .replies .replies li:before {
@@ -1020,8 +1002,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 
 .timeline .show-more {
   padding-inline-start: calc(
-    var(--line-end) +
-    var(--line-margin-end)
+    var(--line-end) + var(--line-margin-end)
   ) !important;
   text-align: start;
   background-color: transparent !important;

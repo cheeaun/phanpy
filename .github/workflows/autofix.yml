@@ -1,11 +1,15 @@
-name: Code formatting check on pull requests
+name: autofix.ci
 
 on:
   pull_request:
-  workflow_dispatch:
+  push:
+    branches: ['main']
+
+permissions:
+  contents: read
 
 jobs:
-  format-check:
+  autofix:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,4 +17,5 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm run formatting-check
+      - run: npm run formatting
+      - uses: autofix-ci/action@v1

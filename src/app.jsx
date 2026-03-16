@@ -1,5 +1,7 @@
 import './app.css';
 
+import 'swiped-events';
+
 import { useLingui } from '@lingui/react';
 import debounce from 'just-debounce-it';
 import { lazy, memo, Suspense } from 'preact/compat';
@@ -11,15 +13,14 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-
-import 'swiped-events';
-
 import { subscribe } from 'valtio';
 import { unstable_enableOp } from 'valtio/vanilla';
 
 // https://github.com/pmndrs/valtio/releases/tag/v2.3.0
 // Necessary for subscribe() to work properly
 unstable_enableOp(true);
+
+import './utils/toast-alert';
 
 import BackgroundService from './components/background-service';
 import ComposeButton from './components/compose-button';
@@ -76,8 +77,6 @@ import {
   getVapidKey,
   setCurrentAccountID,
 } from './utils/store-utils';
-
-import './utils/toast-alert';
 
 // Lazy load Sandbox component only in development
 const Sandbox =

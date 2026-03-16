@@ -875,9 +875,9 @@ function YearInPosts() {
                   {!searchEnabled && (
                     <p class="insignificant">
                       <small>
-                        ⚠️ Your server doesn't support advanced search, this will
-                        make more requests to the server and take much longer
-                        time.
+                        ⚠️ Your server doesn't support advanced search, this
+                        will make more requests to the server and take much
+                        longer time.
                       </small>
                     </p>
                   )}

@@ -1,13 +1,13 @@
 import './settings.css';
 
+import '../components/button-install';
+
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useDebounce } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
-
-import '../components/button-install';
 
 import Icon from '../components/icon';
 import LangSelector from '../components/lang-selector';

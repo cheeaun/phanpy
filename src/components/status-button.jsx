@@ -1,6 +1,7 @@
 import { forwardRef } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
 
+import haptics from '../utils/haptics';
 import shortenNumber from '../utils/shorten-number';
 
 import Icon from './icon';
@@ -51,6 +52,7 @@ const StatusButton = forwardRef((props, ref) => {
         if (!onClick) return;
         e.preventDefault();
         e.stopPropagation();
+        haptics.trigger('light');
         onClick(e);
       }}
       {...otherProps}

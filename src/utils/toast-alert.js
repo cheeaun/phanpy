@@ -1,6 +1,8 @@
 // Replace alert() with toastify-js
 import Toastify from 'toastify-js';
 
+import haptics from './haptics';
+
 const nativeAlert = window.alert;
 if (!window.__nativeAlert) window.__nativeAlert = nativeAlert;
 
@@ -17,6 +19,7 @@ window.alert = function (message) {
     message = JSON.stringify(message);
   }
 
+  haptics.trigger('warning');
   const toast = Toastify({
     text: message,
     className: 'alert',

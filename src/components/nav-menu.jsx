@@ -8,6 +8,7 @@ import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
+import haptics from '../utils/haptics';
 import { getLists } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
@@ -52,6 +53,7 @@ function NavMenu(props) {
 
   const bindLongPress = useLongPress(
     () => {
+      haptics.trigger('medium');
       states.showAccounts = true;
     },
     {
@@ -113,6 +115,7 @@ function NavMenu(props) {
         }}
         onContextMenu={(e) => {
           e.preventDefault();
+          haptics.trigger('medium');
           states.showAccounts = true;
         }}
         {...bindLongPress()}

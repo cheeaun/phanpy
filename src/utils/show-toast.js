@@ -1,12 +1,24 @@
 import Toastify from 'toastify-js';
 
+import haptics from './haptics';
+
 window._showToast = showToast;
 
 function showToast(props) {
   if (typeof props === 'string') {
     props = { text: props };
   }
-  const { onClick, delay, ...rest } = props;
+  const { onClick, delay, haptic, ...rest } = props;
+  if (haptic) {
+    haptics.trigger(haptic);
+  } else if (rest.text) {
+    const text = String(rest.text).toLowerCase();
+    if (/unable|error|fail/.test(text)) {
+      haptics.trigger('error');
+    } else if (/warn/.test(text)) {
+      haptics.trigger('warning');
+    }
+  }
   const toast = Toastify({
     className: `${onClick || props.destination ? 'shiny-pill' : ''}`,
     gravity: 'bottom',

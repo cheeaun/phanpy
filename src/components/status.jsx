@@ -23,12 +23,12 @@ import { useSnapshot } from 'valtio';
 
 import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
-import haptics from '../utils/haptics';
 import { useEditHistory } from '../utils/edit-history-context';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
+import haptics from '../utils/haptics';
 import htmlContentLength from '../utils/html-content-length';
 import localeMatch from '../utils/locale-match';
 import mem from '../utils/mem';
@@ -1106,7 +1106,12 @@ function Status({
   );
   const replyModeMenuItems = (
     <>
-      <MenuItem onClick={(e) => { haptics.trigger('light'); replyStatus(e, 'all'); }}>
+      <MenuItem
+        onClick={(e) => {
+          haptics.trigger('light');
+          replyStatus(e, 'all');
+        }}
+      >
         <small>
           <Trans>Reply all</Trans>
           <br />
@@ -1115,7 +1120,12 @@ function Status({
           </span>
         </small>
       </MenuItem>
-      <MenuItem onClick={(e) => { haptics.trigger('light'); replyStatus(e, 'author-first'); }}>
+      <MenuItem
+        onClick={(e) => {
+          haptics.trigger('light');
+          replyStatus(e, 'author-first');
+        }}
+      >
         <small>
           <Trans>Reply all</Trans>
           <br />
@@ -1132,7 +1142,12 @@ function Status({
           </span>
         </small>
       </MenuItem>
-      <MenuItem onClick={(e) => { haptics.trigger('light'); replyStatus(e, 'author-only'); }}>
+      <MenuItem
+        onClick={(e) => {
+          haptics.trigger('light');
+          replyStatus(e, 'author-only');
+        }}
+      >
         <small>
           <Trans>Reply</Trans>
           <br />
@@ -1163,7 +1178,14 @@ function Status({
                 {replyModeMenuItems}
               </SubMenu2>
             ) : (
-              <MenuItem onClick={(e) => { haptics.trigger('light'); replyStatus(e); }}>{<ReplyMenuContent />}</MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  haptics.trigger('light');
+                  replyStatus(e);
+                }}
+              >
+                {<ReplyMenuContent />}
+              </MenuItem>
             )}
             <MenuConfirm
               subMenu

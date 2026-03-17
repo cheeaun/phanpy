@@ -1184,7 +1184,7 @@ function Status({
                   replyStatus(e);
                 }}
               >
-                {<ReplyMenuContent />}
+                <ReplyMenuContent />
               </MenuItem>
             )}
             <MenuConfirm

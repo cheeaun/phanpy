@@ -23,6 +23,7 @@ import { useSnapshot } from 'valtio';
 
 import { api, getPreferences } from '../utils/api';
 import { langDetector } from '../utils/browser-translator';
+import haptics from '../utils/haptics';
 import { useEditHistory } from '../utils/edit-history-context';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
@@ -918,6 +919,7 @@ function Status({
     }
   };
   const favouriteStatusNotify = async () => {
+    haptics.trigger('light');
     try {
       const done = await favouriteStatus();
       if (!isSizeLarge && done) {
@@ -958,6 +960,7 @@ function Status({
     }
   };
   const bookmarkStatusNotify = async () => {
+    haptics.trigger('light');
     try {
       const done = await bookmarkStatus();
       if (!isSizeLarge && done) {
@@ -1103,7 +1106,7 @@ function Status({
   );
   const replyModeMenuItems = (
     <>
-      <MenuItem onClick={(e) => replyStatus(e, 'all')}>
+      <MenuItem onClick={(e) => { haptics.trigger('light'); replyStatus(e, 'all'); }}>
         <small>
           <Trans>Reply all</Trans>
           <br />
@@ -1112,7 +1115,7 @@ function Status({
           </span>
         </small>
       </MenuItem>
-      <MenuItem onClick={(e) => replyStatus(e, 'author-first')}>
+      <MenuItem onClick={(e) => { haptics.trigger('light'); replyStatus(e, 'author-first'); }}>
         <small>
           <Trans>Reply all</Trans>
           <br />
@@ -1129,7 +1132,7 @@ function Status({
           </span>
         </small>
       </MenuItem>
-      <MenuItem onClick={(e) => replyStatus(e, 'author-only')}>
+      <MenuItem onClick={(e) => { haptics.trigger('light'); replyStatus(e, 'author-only'); }}>
         <small>
           <Trans>Reply</Trans>
           <br />
@@ -1160,7 +1163,7 @@ function Status({
                 {replyModeMenuItems}
               </SubMenu2>
             ) : (
-              <MenuItem onClick={replyStatus}>{<ReplyMenuContent />}</MenuItem>
+              <MenuItem onClick={(e) => { haptics.trigger('light'); replyStatus(e); }}>{<ReplyMenuContent />}</MenuItem>
             )}
             <MenuConfirm
               subMenu
@@ -1218,6 +1221,7 @@ function Status({
               menuFooter={menuFooter}
               disabled={!canBoost}
               onClick={async () => {
+                haptics.trigger('light');
                 try {
                   const done = await confirmBoostStatus();
                   if (!isSizeLarge && done) {
@@ -1511,6 +1515,7 @@ function Status({
           {(isSelf || mentionSelf) && (
             <MenuItem
               onClick={async () => {
+                haptics.trigger('light');
                 try {
                   const newStatus = await masto.v1.statuses
                     .$select(id)
@@ -1549,6 +1554,7 @@ function Status({
           {isSelf && isPinnable && (
             <MenuItem
               onClick={async () => {
+                haptics.trigger('light');
                 try {
                   const newStatus = await masto.v1.statuses
                     .$select(id)
@@ -1681,6 +1687,7 @@ function Status({
                   }}
                   menuItemClassName="danger"
                   onClick={() => {
+                    haptics.trigger('light');
                     (async () => {
                       try {
                         // POST /api/v1/statuses/:id/quotes/:quoting_status_id/revoke
@@ -2153,9 +2160,10 @@ function Status({
                 iconSize="m"
                 // Menu doesn't work here
                 // Temporary solution: reply author-first if too many mentions
-                onClick={(e) =>
-                  replyStatus(e, tooManyMentions ? 'author-first' : 'all')
-                }
+                onClick={(e) => {
+                  haptics.trigger('light');
+                  replyStatus(e, tooManyMentions ? 'author-first' : 'all');
+                }}
               />
               <StatusButton
                 size="s"
@@ -2902,7 +2910,10 @@ function Status({
                       class="reply-button"
                       icon="comment"
                       count={repliesCount}
-                      onClick={replyStatus}
+                      onClick={(e) => {
+                        haptics.trigger('light');
+                        replyStatus(e);
+                      }}
                     />
                   )}
                 </div>
@@ -2923,7 +2934,10 @@ function Status({
                 >
                   <MenuConfirm
                     disabled={!canBoost}
-                    onClick={confirmBoostStatus}
+                    onClick={() => {
+                      haptics.trigger('light');
+                      return confirmBoostStatus();
+                    }}
                     confirmLabel={
                       <>
                         <Icon icon="rocket" />
@@ -3016,7 +3030,10 @@ function Status({
                     class="favourite-button"
                     icon="heart"
                     count={favouritesCount}
-                    onClick={favouriteStatus}
+                    onClick={(e) => {
+                      haptics.trigger('light');
+                      favouriteStatus(e);
+                    }}
                   />
                 </div>
                 {supports('@mastodon/post-bookmark') && (
@@ -3027,7 +3044,10 @@ function Status({
                       alt={[t`Bookmark`, t`Bookmarked`]}
                       class="bookmark-button"
                       icon="bookmark"
-                      onClick={bookmarkStatus}
+                      onClick={(e) => {
+                        haptics.trigger('light');
+                        bookmarkStatus(e);
+                      }}
                     />
                   </div>
                 )}

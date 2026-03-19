@@ -2419,38 +2419,39 @@ function Status({
                 ))}
             </div>
           )}
-          {visibility === 'direct' && (
-            <>
-              <div class="status-direct-badge">
-                <Trans>Private mention</Trans>
-              </div>{' '}
-            </>
-          )}
-          {!withinContext && (
+          {(visibility === 'direct' || !withinContext) && (
             <LazyRender id={sKey} class="pre-content-container">
-              {isThread ? (
-                <ThreadBadge
-                  showIcon
-                  showText
-                  index={snapStates.statusThreadNumber[sKey]}
-                />
-              ) : (
-                !!inReplyToId &&
-                !!inReplyToAccount &&
-                (!!spoilerText ||
-                  !mentions.find((mention) => {
-                    return mention.id === inReplyToAccountId;
-                  })) && (
-                  <div class="status-reply-badge">
-                    <Icon icon="reply" />{' '}
-                    <NameText
-                      account={inReplyToAccount}
-                      instance={instance}
-                      short
-                    />
-                  </div>
-                )
+              {visibility === 'direct' && (
+                <>
+                  <div class="status-direct-badge">
+                    <Trans>Private mention</Trans>
+                  </div>{' '}
+                </>
               )}
+              {!withinContext &&
+                (isThread ? (
+                  <ThreadBadge
+                    showIcon
+                    showText
+                    index={snapStates.statusThreadNumber[sKey]}
+                  />
+                ) : (
+                  !!inReplyToId &&
+                  !!inReplyToAccount &&
+                  (!!spoilerText ||
+                    !mentions.find((mention) => {
+                      return mention.id === inReplyToAccountId;
+                    })) && (
+                    <div class="status-reply-badge">
+                      <Icon icon="reply" />{' '}
+                      <NameText
+                        account={inReplyToAccount}
+                        instance={instance}
+                        short
+                      />
+                    </div>
+                  )
+                ))}
             </LazyRender>
           )}
           <div

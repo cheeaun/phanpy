@@ -631,7 +631,7 @@ function Compose({
               setMediaAttachments(mediaFiles);
             }
           })
-          .catch((err) => console.error('Failed to process file(s):', err));
+          .catch((err) => { console.error('Failed to process file(s):', err); });
       }
     }
   }, [sharedData]);
@@ -893,7 +893,7 @@ function Compose({
               setMediaAttachments((prev) => [...prev, ...mediaFiles]);
             }
           })
-          .catch((err) => console.error('Failed to process file(s):', err));
+          .catch((err) => { console.error('Failed to process file(s):', err); });
       }
     };
     window.addEventListener('paste', handleItems);

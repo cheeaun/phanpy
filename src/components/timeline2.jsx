@@ -298,12 +298,10 @@ function Timeline2({
               setShowOlder(hasOlder);
               setShowNewer(false);
             } else if (loadState === 'next') {
-              saveScrollAnchor({ items, direction: 'next' });
               maxID.current = maxIDValue;
               scrollableRef.current.classList.add('scrolling-next');
-              // headerRef.current.hidden = true;
-              // resetScrollDirection();
               setItems((prevItems) => {
+                saveScrollAnchor({ items: prevItems, direction: 'next' });
                 const newItems = [...prevItems, ...value].slice(
                   -TIMELINE_LIMIT,
                 );
@@ -313,12 +311,10 @@ function Timeline2({
               setShowOlder(hasOlder);
               setShowNewer(true);
             } else if (loadState === 'prev') {
-              saveScrollAnchor({ items, direction: 'prev' });
               minID.current = minIDValue;
               scrollableRef.current.classList.add('scrolling-prev');
-              // headerRef.current.hidden = true;
-              // resetScrollDirection();
               setItems((prevItems) => {
+                saveScrollAnchor({ items: prevItems, direction: 'prev' });
                 const newItems = [...value, ...prevItems].slice(
                   0,
                   TIMELINE_LIMIT,
@@ -476,7 +472,11 @@ function Timeline2({
     });
     if (!scrollableRef.current || !scrollAnchorRef.current) return;
 
-    const { itemId, offset, direction } = scrollAnchorRef.current;
+    // Clear the anchor immediately to prevent re-entrant executions
+    const anchor = scrollAnchorRef.current;
+    scrollAnchorRef.current = null;
+
+    const { itemId, offset, direction } = anchor;
     const targetElement = scrollableRef.current.querySelector(
       `[data-state-post-id~="${itemId}"]`,
     );
@@ -486,14 +486,19 @@ function Timeline2({
       const containerRect = scrollableRef.current.getBoundingClientRect();
       const targetRect = targetElement.getBoundingClientRect();
       const currentOffset = targetRect.top - containerRect.top;
+      const delta = currentOffset - offset;
       console.log('Scrolling to', {
         itemId,
         offset,
         containerRect,
         targetRect,
         currentOffset,
+        delta,
       });
-      scrollableRef.current.scrollTop += currentOffset - offset;
+      // Only scroll if the delta is meaningful to avoid triggering unnecessary scroll events
+      if (Math.abs(delta) > 1) {
+        scrollableRef.current.scrollTop += delta;
+      }
       setTimeout(() => {
         scrollableRef.current?.classList.remove(`scrolling-${direction}`);
       }, 300);
@@ -504,9 +509,6 @@ function Timeline2({
         targetElement,
       });
     }
-
-    // Clear the anchor after use
-    scrollAnchorRef.current = null;
   }, [items, uiState]);
 
   return (

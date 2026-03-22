@@ -242,10 +242,23 @@ function MiniDraft({ draft }) {
     if (!hasMedia) return;
     const image = mediaAttachments.find((media) => /image/.test(media.type));
     if (!image) return;
-    const { file } = image;
-    const objectURL = URL.createObjectURL(file);
-    return objectURL;
+    const { fileData, type, file, url } = image;
+    if (fileData) {
+      const blob = new Blob([fileData], { type });
+      return URL.createObjectURL(blob);
+    }
+    if (file) return URL.createObjectURL(file);
+    return url || null;
   }, [hasMedia, mediaAttachments]);
+
+  useEffect(() => {
+    return () => {
+      if (firstImageMedia?.startsWith('blob:')) {
+        URL.revokeObjectURL(firstImageMedia);
+      }
+    };
+  }, [firstImageMedia]);
+
   return (
     <>
       <div class="mini-draft">

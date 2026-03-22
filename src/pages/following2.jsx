@@ -1,22 +1,17 @@
 import { useLingui } from '@lingui/react/macro';
-import { useEffect, useRef, useState } from 'preact/hooks';
-import { useSnapshot } from 'valtio';
+import { useEffect, useState } from 'preact/hooks';
 
-import Timeline from '../components/timeline';
+import Timeline2 from '../components/timeline2';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
-import states, { getStatus, saveStatus } from '../utils/states';
+import { getStatus, saveStatus } from '../utils/states';
 import supports from '../utils/supports';
-import {
-  assignFollowedTags,
-  clearFollowedTagsState,
-  dedupeBoosts,
-} from '../utils/timeline-utils';
+import { assignFollowedTags, dedupeBoosts } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
 
-function Following({ title, path, id, ...props }) {
+function Following2({ title, path, id, ...props }) {
   const { t } = useLingui();
   useTitle(
     title ||
@@ -24,15 +19,10 @@ function Following({ title, path, id, ...props }) {
         id: 'following.title',
         message: 'Following',
       }),
-    path || '/following',
+    path || '/_following2',
   );
   const { masto, streaming, instance, client } = api();
   const [streamingClient, setStreamingClient] = useState(streaming);
-
-  const snapStates = useSnapshot(states);
-  const homeIterable = useRef();
-  const homeIterator = useRef();
-  const latestItem = useRef();
 
   // Streaming only happens after instance is initialized
   useEffect(() => {
@@ -44,40 +34,31 @@ function Following({ title, path, id, ...props }) {
   }, [client]);
   __BENCHMARK.end('time-to-following');
 
-  console.debug('RENDER Following', title, id);
+  console.debug('RENDER Following2', title, id);
   const supportsPixelfed = supports('@pixelfed/home-include-reblogs');
 
-  async function fetchHome(firstLoad) {
-    if (firstLoad || !homeIterator.current) {
-      __BENCHMARK.start('fetch-home-first');
-      homeIterable.current = masto.v1.timelines.home.list({ limit: LIMIT });
-      homeIterator.current = homeIterable.current.values();
-    }
-    if (supportsPixelfed && homeIterable.current?.params) {
-      if (typeof homeIterable.current.params === 'string') {
-        homeIterable.current.params += '&include_reblogs=true';
-      } else {
-        homeIterable.current.params.include_reblogs = true;
-      }
-    }
-    const results = await homeIterator.current.next();
-    let { value } = results;
-    if (value?.length) {
-      let latestItemChanged = false;
-      if (firstLoad) {
-        if (value[0].id !== latestItem.current) {
-          latestItemChanged = true;
-        }
-        latestItem.current = value[0].id;
-        console.log('First load', latestItem.current);
-      }
+  async function fetchHome({ max_id, min_id } = {}) {
+    __BENCHMARK.start('fetch-home');
 
+    const opts = {
+      limit: LIMIT,
+    };
+    if (max_id) opts.max_id = max_id;
+    if (min_id) opts.min_id = min_id;
+    if (supportsPixelfed) {
+      opts.include_reblogs = true;
+    }
+
+    const results = await masto.v1.timelines.home.list(opts).values().next();
+    let { value } = results;
+
+    const originalValue = [...(value || [])];
+    if (value?.length) {
       // value = filteredItems(value, 'home');
       value.forEach((item) => {
         saveStatus(item, instance);
       });
-      value = dedupeBoosts(value, instance);
-      if (firstLoad && latestItemChanged) clearFollowedTagsState();
+      // value = dedupeBoosts(value, instance);
       setTimeout(() => {
         assignFollowedTags(value, instance);
       }, 100);
@@ -87,33 +68,30 @@ function Following({ title, path, id, ...props }) {
         return Date.parse(b.createdAt) - Date.parse(a.createdAt);
       });
     }
-    __BENCHMARK.end('fetch-home-first');
+
+    __BENCHMARK.end('fetch-home');
     return {
       ...results,
       value,
+      originalValue,
     };
   }
 
-  async function checkForUpdates() {
+  async function checkForUpdates({ minID }) {
     try {
       const opts = {
         limit: 5,
-        since_id: latestItem.current,
+        since_id: minID,
       };
       if (supportsPixelfed) {
         opts.include_reblogs = true;
       }
       const results = await masto.v1.timelines.home.list(opts).values().next();
       let { value } = results;
-      console.log('checkForUpdates', latestItem.current, value);
-      const valueContainsLatestItem = value[0]?.id === latestItem.current; // since_id might not be supported
-      if (value?.length && !valueContainsLatestItem) {
-        latestItem.current = value[0].id;
+      if (value?.length) {
         value = dedupeBoosts(value, instance);
         value = filteredItems(value, 'home');
-        if (value.some((item) => !item.reblog)) {
-          return true;
-        }
+        return value.length > 0;
       }
       return false;
     } catch (e) {
@@ -127,7 +105,7 @@ function Following({ title, path, id, ...props }) {
     (async () => {
       if (streamingClient) {
         sub = streamingClient.user.subscribe();
-        console.log('🎏 Streaming user', sub);
+        console.log('🎏 Streaming user (Following2)', sub);
         for await (const entry of sub) {
           if (!sub) break;
           if (entry.event === 'status.update') {
@@ -137,12 +115,11 @@ function Following({ title, path, id, ...props }) {
           } else if (entry.event === 'delete') {
             const statusID = entry.payload;
             console.log(`❌ Status ${statusID} deleted`);
-            // delete states.statuses[statusID];
             const s = getStatus(statusID, instance);
             if (s) s._deleted = true;
           }
         }
-        console.log('💥 Streaming user loop STOPPED');
+        console.log('💥 Streaming user loop STOPPED (Following2)');
       }
     })();
     return () => {
@@ -152,18 +129,16 @@ function Following({ title, path, id, ...props }) {
   }, [streamingClient]);
 
   return (
-    <Timeline
+    <Timeline2
       title={title || t({ id: 'following.title', message: 'Following' })}
-      id={id || 'following'}
+      id={id || 'following2'}
       emptyText={t`Nothing to see here.`}
       errorText={t`Unable to load posts.`}
       instance={instance}
       fetchItems={fetchHome}
       checkForUpdates={checkForUpdates}
       useItemID
-      boostsCarousel={snapStates.settings.boostsCarousel}
       {...props}
-      // allowFilters
       filterContext="home"
       showFollowedTags
       showReplyParent
@@ -171,4 +146,4 @@ function Following({ title, path, id, ...props }) {
   );
 }
 
-export default Following;
+export default Following2;

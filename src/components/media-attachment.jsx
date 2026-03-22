@@ -40,14 +40,34 @@ function MediaAttachment({
   const [uiState, setUIState] = useState('default');
   const supportsEdit =
     supports('@mastodon') || supports('@gotosocial/edit-media-attributes');
-  const { type, id, file } = attachment;
-  const url = useMemo(
-    () => (file ? URL.createObjectURL(file) : attachment.url),
-    [file, attachment.url],
-  );
+  const { type, id, fileData, fileName, file } = attachment;
+  const fileSize = attachment.size ?? file?.size;
+  const url = useMemo(() => {
+    let objectURL;
+    // Prioritize fileData so restored drafts get a fresh blob URL
+    if (fileData) {
+      const blob = new Blob([fileData], { type });
+      objectURL = URL.createObjectURL(blob);
+    } else if (file) {
+      objectURL = URL.createObjectURL(file);
+    }
+    if (objectURL) {
+      return objectURL;
+    }
+    return attachment.url || null;
+  }, [fileData, file, attachment.url, type]);
+
+  useEffect(() => {
+    return () => {
+      if (url && url !== attachment.url) {
+        URL.revokeObjectURL(url);
+      }
+    };
+  }, [url]);
+
   console.log({ attachment });
 
-  const checkMaxError = !!file?.size;
+  const checkMaxError = !!fileSize;
   const configuration = checkMaxError ? getCurrentInstanceConfiguration() : {};
   const {
     mediaAttachments: {
@@ -64,24 +84,24 @@ function MediaAttachment({
     if (
       type.startsWith('image') &&
       imageSizeLimit &&
-      file.size > imageSizeLimit
+      fileSize > imageSizeLimit
     ) {
       return {
         type: 'imageSizeLimit',
         details: {
-          imageSize: file.size,
+          imageSize: fileSize,
           imageSizeLimit,
         },
       };
     } else if (
       type.startsWith('video') &&
       videoSizeLimit &&
-      file.size > videoSizeLimit
+      fileSize > videoSizeLimit
     ) {
       return {
         type: 'videoSizeLimit',
         details: {
-          videoSize: file.size,
+          videoSize: fileSize,
           videoSizeLimit,
         },
       };
@@ -125,7 +145,13 @@ function MediaAttachment({
 
   // Extract description from images that's not uploaded yet
   useEffect(() => {
-    if (!file || !type.startsWith('image/') || id || attachment.description) {
+    const hasFileData = fileData || file;
+    if (
+      !hasFileData ||
+      !type.startsWith('image/') ||
+      id ||
+      attachment.description
+    ) {
       return;
     }
 
@@ -134,7 +160,11 @@ function MediaAttachment({
     (async () => {
       setUIState('loading');
       try {
-        const extractedDescription = await extractImageDescription(file);
+        // Reconstruct File from fileData, or fall back to legacy file object
+        const fileObj = fileData
+          ? new File([fileData], fileName || 'upload', { type })
+          : file;
+        const extractedDescription = await extractImageDescription(fileObj);
         if (!cancelled && extractedDescription) {
           setDescription(extractedDescription);
         }

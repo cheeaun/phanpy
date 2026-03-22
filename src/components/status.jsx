@@ -28,6 +28,7 @@ import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
+import haptics from '../utils/haptics';
 import htmlContentLength from '../utils/html-content-length';
 import localeMatch from '../utils/locale-match';
 import mem from '../utils/mem';
@@ -56,6 +57,7 @@ import Avatar from './avatar';
 import CustomEmoji from './custom-emoji';
 import EmojiText from './emoji-text';
 import Icon from './icon';
+import LazyRender from './lazy-render';
 import LazyShazam from './lazy-shazam';
 import Link from './link';
 import Loader from './loader';
@@ -917,6 +919,7 @@ function Status({
     }
   };
   const favouriteStatusNotify = async () => {
+    haptics.trigger('light');
     try {
       const done = await favouriteStatus();
       if (!isSizeLarge && done) {
@@ -957,6 +960,7 @@ function Status({
     }
   };
   const bookmarkStatusNotify = async () => {
+    haptics.trigger('light');
     try {
       const done = await bookmarkStatus();
       if (!isSizeLarge && done) {
@@ -1102,7 +1106,12 @@ function Status({
   );
   const replyModeMenuItems = (
     <>
-      <MenuItem onClick={(e) => replyStatus(e, 'all')}>
+      <MenuItem
+        onClick={(e) => {
+          haptics.trigger('light');
+          replyStatus(e, 'all');
+        }}
+      >
         <small>
           <Trans>Reply all</Trans>
           <br />
@@ -1111,7 +1120,12 @@ function Status({
           </span>
         </small>
       </MenuItem>
-      <MenuItem onClick={(e) => replyStatus(e, 'author-first')}>
+      <MenuItem
+        onClick={(e) => {
+          haptics.trigger('light');
+          replyStatus(e, 'author-first');
+        }}
+      >
         <small>
           <Trans>Reply all</Trans>
           <br />
@@ -1128,7 +1142,12 @@ function Status({
           </span>
         </small>
       </MenuItem>
-      <MenuItem onClick={(e) => replyStatus(e, 'author-only')}>
+      <MenuItem
+        onClick={(e) => {
+          haptics.trigger('light');
+          replyStatus(e, 'author-only');
+        }}
+      >
         <small>
           <Trans>Reply</Trans>
           <br />
@@ -1159,7 +1178,14 @@ function Status({
                 {replyModeMenuItems}
               </SubMenu2>
             ) : (
-              <MenuItem onClick={replyStatus}>{<ReplyMenuContent />}</MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  haptics.trigger('light');
+                  replyStatus(e);
+                }}
+              >
+                <ReplyMenuContent />
+              </MenuItem>
             )}
             <MenuConfirm
               subMenu
@@ -1217,6 +1243,7 @@ function Status({
               menuFooter={menuFooter}
               disabled={!canBoost}
               onClick={async () => {
+                haptics.trigger('light');
                 try {
                   const done = await confirmBoostStatus();
                   if (!isSizeLarge && done) {
@@ -1510,6 +1537,7 @@ function Status({
           {(isSelf || mentionSelf) && (
             <MenuItem
               onClick={async () => {
+                haptics.trigger('light');
                 try {
                   const newStatus = await masto.v1.statuses
                     .$select(id)
@@ -1548,6 +1576,7 @@ function Status({
           {isSelf && isPinnable && (
             <MenuItem
               onClick={async () => {
+                haptics.trigger('light');
                 try {
                   const newStatus = await masto.v1.statuses
                     .$select(id)
@@ -1680,6 +1709,7 @@ function Status({
                   }}
                   menuItemClassName="danger"
                   onClick={() => {
+                    haptics.trigger('light');
                     (async () => {
                       try {
                         // POST /api/v1/statuses/:id/quotes/:quoting_status_id/revoke
@@ -1776,18 +1806,29 @@ function Status({
     {
       enabled: hotkeysEnabled,
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'r',
     },
   );
   const fRef = useHotkeys('f, l', favouriteStatusNotify, {
     enabled: hotkeysEnabled,
-    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    ignoreEventWhen: (e) =>
+      e.metaKey ||
+      e.ctrlKey ||
+      e.altKey ||
+      e.shiftKey ||
+      !['f', 'l'].includes(e.key.toLowerCase()),
     useKey: true,
   });
   const dRef = useHotkeys('d', bookmarkStatusNotify, {
     enabled: hotkeysEnabled,
     useKey: true,
-    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    ignoreEventWhen: (e) =>
+      e.metaKey ||
+      e.ctrlKey ||
+      e.altKey ||
+      e.shiftKey ||
+      e.key.toLowerCase() !== 'd',
   });
   const bRef = useHotkeys(
     'shift+b',
@@ -1811,7 +1852,8 @@ function Status({
     {
       enabled: hotkeysEnabled && canBoost,
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'b',
     },
   );
   const xRef = useHotkeys(
@@ -1840,7 +1882,12 @@ function Status({
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'x',
     },
   );
   const qRef = useHotkeys(
@@ -1870,7 +1917,12 @@ function Status({
     {
       enabled: hotkeysEnabled,
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'q',
     },
   );
 
@@ -2130,9 +2182,10 @@ function Status({
                 iconSize="m"
                 // Menu doesn't work here
                 // Temporary solution: reply author-first if too many mentions
-                onClick={(e) =>
-                  replyStatus(e, tooManyMentions ? 'author-first' : 'all')
-                }
+                onClick={(e) => {
+                  haptics.trigger('light');
+                  replyStatus(e, tooManyMentions ? 'author-first' : 'all');
+                }}
               />
               <StatusButton
                 size="s"
@@ -2366,39 +2419,40 @@ function Status({
                 ))}
             </div>
           )}
-          {visibility === 'direct' && (
-            <>
-              <div class="status-direct-badge">
-                <Trans>Private mention</Trans>
-              </div>{' '}
-            </>
-          )}
-          {!withinContext && (
-            <>
-              {isThread ? (
-                <ThreadBadge
-                  showIcon
-                  showText
-                  index={snapStates.statusThreadNumber[sKey]}
-                />
-              ) : (
-                !!inReplyToId &&
-                !!inReplyToAccount &&
-                (!!spoilerText ||
-                  !mentions.find((mention) => {
-                    return mention.id === inReplyToAccountId;
-                  })) && (
-                  <div class="status-reply-badge">
-                    <Icon icon="reply" />{' '}
-                    <NameText
-                      account={inReplyToAccount}
-                      instance={instance}
-                      short
-                    />
-                  </div>
-                )
+          {(visibility === 'direct' || !withinContext) && (
+            <LazyRender id={sKey} class="pre-content-container">
+              {visibility === 'direct' && (
+                <>
+                  <div class="status-direct-badge">
+                    <Trans>Private mention</Trans>
+                  </div>{' '}
+                </>
               )}
-            </>
+              {!withinContext &&
+                (isThread ? (
+                  <ThreadBadge
+                    showIcon
+                    showText
+                    index={snapStates.statusThreadNumber[sKey]}
+                  />
+                ) : (
+                  !!inReplyToId &&
+                  !!inReplyToAccount &&
+                  (!!spoilerText ||
+                    !mentions.find((mention) => {
+                      return mention.id === inReplyToAccountId;
+                    })) && (
+                    <div class="status-reply-badge">
+                      <Icon icon="reply" />{' '}
+                      <NameText
+                        account={inReplyToAccount}
+                        instance={instance}
+                        short
+                      />
+                    </div>
+                  )
+                ))}
+            </LazyRender>
           )}
           <div
             class={`content-container ${
@@ -2879,7 +2933,10 @@ function Status({
                       class="reply-button"
                       icon="comment"
                       count={repliesCount}
-                      onClick={replyStatus}
+                      onClick={(e) => {
+                        haptics.trigger('light');
+                        replyStatus(e);
+                      }}
                     />
                   )}
                 </div>
@@ -2900,7 +2957,10 @@ function Status({
                 >
                   <MenuConfirm
                     disabled={!canBoost}
-                    onClick={confirmBoostStatus}
+                    onClick={() => {
+                      haptics.trigger('light');
+                      return confirmBoostStatus();
+                    }}
                     confirmLabel={
                       <>
                         <Icon icon="rocket" />
@@ -2993,7 +3053,10 @@ function Status({
                     class="favourite-button"
                     icon="heart"
                     count={favouritesCount}
-                    onClick={favouriteStatus}
+                    onClick={(e) => {
+                      haptics.trigger('light');
+                      favouriteStatus(e);
+                    }}
                   />
                 </div>
                 {supports('@mastodon/post-bookmark') && (
@@ -3004,7 +3067,10 @@ function Status({
                       alt={[t`Bookmark`, t`Bookmarked`]}
                       class="bookmark-button"
                       icon="bookmark"
-                      onClick={bookmarkStatus}
+                      onClick={(e) => {
+                        haptics.trigger('light');
+                        bookmarkStatus(e);
+                      }}
                     />
                   </div>
                 )}

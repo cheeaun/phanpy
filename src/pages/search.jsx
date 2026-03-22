@@ -207,7 +207,11 @@ function Search({ columnMode, ...props }) {
     {
       useKey: true,
       preventDefault: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) => {
+        // Allow '/' even with Shift (e.g. German keyboards)
+        if (e.key === '/') return false;
+        return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
+      },
     },
   );
 
@@ -244,7 +248,12 @@ function Search({ columnMode, ...props }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'j',
     },
   );
 
@@ -281,7 +290,12 @@ function Search({ columnMode, ...props }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'k',
     },
   );
 

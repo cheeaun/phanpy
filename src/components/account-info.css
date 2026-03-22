@@ -117,7 +117,7 @@
     background-position:
       var(--dot-offset-x) var(--dot-offset-y),
       calc(var(--dot-spacing) / 2 + var(--dot-offset-x))
-      calc(var(--dot-spacing) / 2 + var(--dot-offset-y));
+        calc(var(--dot-spacing) / 2 + var(--dot-offset-y));
   }
 
   .posting-stats-bar-quotes {
@@ -854,9 +854,9 @@
     --shadow-spread: calc(var(--shadow-blur) * -0.75);
     box-shadow:
       calc(var(--shadow-offset) * -1) var(--shadow-offset) var(--shadow-blur)
-      var(--shadow-spread) var(--header-color-1, var(--drop-shadow-color)),
+        var(--shadow-spread) var(--header-color-1, var(--drop-shadow-color)),
       var(--shadow-offset) var(--shadow-offset) var(--shadow-blur)
-      var(--shadow-spread) var(--header-color-2, var(--drop-shadow-color));
+        var(--shadow-spread) var(--header-color-2, var(--drop-shadow-color));
   }
   /* .timeline-start .account-container .header-banner {
     margin-bottom: -77px;

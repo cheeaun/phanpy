@@ -230,7 +230,7 @@ export function groupContext(items, instance) {
 
   // FETCH AND SHOW REPLY HINTS
   if (inReplyToIds?.length) {
-    queueMicrotask(() => {
+    setTimeout(() => {
       const { masto } = api({ instance });
       console.log('REPLYHINT', inReplyToIds);
 
@@ -290,7 +290,7 @@ export function groupContext(items, instance) {
       } else {
         fallbackFetch();
       }
-    });
+    }, 10);
   }
 
   return newItems;

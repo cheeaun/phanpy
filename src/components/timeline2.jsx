@@ -83,8 +83,8 @@ function Timeline2({
   emptyText,
   errorText,
   useItemID,
-  fetchItems = () => {},
-  checkForUpdates = () => {},
+  fetchItems = async () => {},
+  checkForUpdates = async () => {},
   checkForUpdatesInterval = 15_000,
   headerStart,
   headerEnd,
@@ -323,7 +323,8 @@ function Timeline2({
                 return newItems;
               });
               setShowOlder(true);
-              setShowNewer(false);
+              // If prevItems > batch size, show newer
+              setShowNewer(originalValue.length >= BATCH_SIZE);
             }
           } else {
             // No items

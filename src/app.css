@@ -2740,6 +2740,9 @@ ul.link-list li a .icon {
     -1px 0 var(--bg-color),
     -2px 0 var(--drop-shadow-color),
     -3px 0 var(--bg-color);
+
+  transition: flex-basis 0.3s ease-in-out;
+
   &:dir(rtl) {
     box-shadow:
       1px 0 var(--bg-color),

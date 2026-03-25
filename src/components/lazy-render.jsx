@@ -9,6 +9,7 @@ export default function LazyRender({
   id,
   class: className,
   children,
+  renderIfHasChildren = true,
   ...props
 }) {
   const rootRef = useRef(null);
@@ -35,7 +36,7 @@ export default function LazyRender({
     if (rect.bottom <= TOP) {
       const childElementCount = rootRef.current.childElementCount;
       const hasChildren = childElementCount > 0;
-      if (hasChildren) {
+      if (hasChildren && renderIfHasChildren) {
         // Don't need to observe if has children
         observerRef(null);
         // Debugging

@@ -59,6 +59,7 @@ function StatusCompact({ sKey }) {
       }`}
       tabindex="-1"
       data-state-post-id={srKey}
+      renderIfHasChildren={false}
     >
       <Avatar url={avatarStatic || avatar} squircle={bot} />
       <div

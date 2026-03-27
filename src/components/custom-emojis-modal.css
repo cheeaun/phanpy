@@ -31,9 +31,13 @@
   main {
     mask-image: none;
     /* padding-bottom: 88px; */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .size-range {
+    align-self: flex-end;
     float: var(--forward);
     position: sticky;
     bottom: 0;
@@ -42,6 +46,10 @@
     border: 1px solid var(--outline-color);
     box-shadow: 0 8px 16px -8px var(--drop-shadow-color);
     border-radius: 9999px;
+
+    .custom-emojis-list:empty + & {
+      display: none;
+    }
   }
 
   .custom-emojis-matches {
@@ -53,6 +61,8 @@
   }
 
   .custom-emojis-list {
+    flex: 1;
+
     .section-container {
       position: relative;
       content-visibility: auto;

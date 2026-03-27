@@ -110,8 +110,7 @@ const CustomEmojisList = memo(({ emojis, onSelect }) => {
 const CUSTOM_EMOJI_SIZE = 'composer-customEmojiSize';
 
 function CustomEmojisModal({
-  masto,
-  instance,
+  instance: propInstance,
   onClose = () => {},
   onSelect = () => {},
   defaultSearchTerm,
@@ -120,6 +119,9 @@ function CustomEmojisModal({
   const [uiState, setUIState] = useState('default');
   const customEmojisList = useRef([]);
   const [customEmojis, setCustomEmojis] = useState([]);
+  const [customInstance, setCustomInstance] = useState(null);
+  const instance = customInstance || propInstance;
+
   const recentlyUsedCustomEmojis = useMemo(
     () => store.account.get('recentlyUsedCustomEmojis') || [],
   );
@@ -128,7 +130,7 @@ function CustomEmojisModal({
     setUIState('loading');
     (async () => {
       try {
-        const [emojis, searcher] = await getCustomEmojis(instance, masto);
+        const [emojis, searcher] = await getCustomEmojis(instance);
         console.log('emojis', emojis);
         searcherRef.current = searcher;
         setCustomEmojis(emojis);
@@ -138,7 +140,7 @@ function CustomEmojisModal({
         console.error(e);
       }
     })();
-  }, []);
+  }, [instance]);
 
   const customEmojisCatList = useMemo(() => {
     // Group emojis by category
@@ -167,9 +169,10 @@ function CustomEmojisModal({
 
   const scrollableRef = useRef();
   const [matches, setMatches] = useState(null);
-  const [emojiSize, setEmojiSize] = useState(
-    store.local.get(CUSTOM_EMOJI_SIZE) || EMOJI_SIZE_MIN,
-  );
+  const [emojiSize, setEmojiSize] = useState(() => {
+    const stored = Number(store.local.get(CUSTOM_EMOJI_SIZE));
+    return stored && stored >= EMOJI_SIZE_MIN ? stored : EMOJI_SIZE_MIN;
+  });
   const onEmojiSizeDecrease = useCallback(() => {
     const newSize = Math.max(EMOJI_SIZE_MIN, emojiSize - EMOJI_SIZE_STEP);
     setEmojiSize(newSize);
@@ -280,7 +283,31 @@ function CustomEmojisModal({
           {uiState === 'loading' ? (
             <Loader />
           ) : (
-            <small class="insignificant"> • {instance}</small>
+            <small class="insignificant">
+              {' '}
+              •{' '}
+              {import.meta.env.DEV ? (
+                <button
+                  type="button"
+                  class="textual"
+                  onClick={() => {
+                    const newInstance = prompt(
+                      '[DEV] Change instance. Leave blank to reset',
+                      instance,
+                    );
+                    if (newInstance && newInstance.trim()) {
+                      setCustomInstance(newInstance.trim());
+                    } else {
+                      setCustomInstance(null);
+                    }
+                  }}
+                >
+                  {instance}
+                </button>
+              ) : (
+                instance
+              )}
+            </small>
           )}
         </div>
         {hasCustomEmojis && (

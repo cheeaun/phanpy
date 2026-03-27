@@ -2151,7 +2151,6 @@ function Compose({
           }}
         >
           <CustomEmojisModal
-            masto={masto}
             instance={instance}
             onClose={() => {
               setShowEmoji2Picker(false);

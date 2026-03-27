@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef } from 'preact/hooks';
+import { Children } from 'preact/compat';
+import { useLayoutEffect, useRef, useMemo } from 'preact/hooks';
 import { useOnInView } from 'react-intersection-observer';
 
 // The sticky header, usually at the top
@@ -30,12 +31,15 @@ export default function LazyRender({
     },
   );
 
+  const hasChildren = useMemo(
+    () => Children.toArray(children).filter((child) => !!child).length > 0,
+    [children],
+  );
+
   useLayoutEffect(() => {
     if (!rootRef.current) return;
     const rect = rootRef.current.getBoundingClientRect();
     if (rect.bottom <= TOP) {
-      const childElementCount = rootRef.current.childElementCount;
-      const hasChildren = childElementCount > 0;
       if (hasChildren && renderIfHasChildren) {
         // Don't need to observe if has children
         observerRef(null);
@@ -48,7 +52,7 @@ export default function LazyRender({
         rootRef.current.classList.add('hidden');
       }
     }
-  }, []);
+  }, [hasChildren, renderIfHasChildren]);
 
   return (
     <Root

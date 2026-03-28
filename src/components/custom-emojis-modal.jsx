@@ -21,7 +21,7 @@ const EMOJI_SIZE_MIN = 1;
 const EMOJI_SIZE_MAX = 2;
 const EMOJI_SIZE_STEP = 0.5;
 
-const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
+const CustomEmojiButton = memo(({ emoji, onSelect, showCode }) => {
   const addEdges = (e) => {
     // Add edge-left or edge-right class based on self position relative to scrollable parent
     // If near left edge, add edge-left, if near right edge, add edge-right
@@ -43,11 +43,15 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
     }
   };
 
+  const handleClick = useCallback(() => {
+    onSelect(`:${emoji.shortcode}:`);
+  }, [onSelect, emoji.shortcode]);
+
   return (
     <button
       type="button"
       className="plain4"
-      onClick={onClick}
+      onClick={handleClick}
       data-title={showCode ? undefined : emoji.shortcode}
       onPointerEnter={addEdges}
       onFocus={addEdges}
@@ -89,9 +93,7 @@ const CustomEmojisList = memo(({ emojis, onSelect }) => {
         <CustomEmojiButton
           key={emoji.shortcode}
           emoji={emoji}
-          onClick={() => {
-            onSelect(`:${emoji.shortcode}:`);
-          }}
+          onSelect={onSelect}
         />
       ))}
       {showMore && (
@@ -143,12 +145,8 @@ function CustomEmojisModal({
   }, [instance]);
 
   const customEmojisCatList = useMemo(() => {
-    // Group emojis by category
-    const emojisCat = {
-      '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
-        customEmojis.find((e) => e.shortcode === emoji.shortcode),
-      ),
-    };
+    const shortcodeSet = new Set(customEmojis.map(e => e.shortcode));
+    const categoryMap = new Map();
     const othersCat = [];
     customEmojis.forEach((emoji) => {
       customEmojisList.current?.push?.(emoji);
@@ -156,13 +154,19 @@ function CustomEmojisModal({
         othersCat.push(emoji);
         return;
       }
-      if (!emojisCat[emoji.category]) {
-        emojisCat[emoji.category] = [];
+      if (!categoryMap.has(emoji.category)) {
+        categoryMap.set(emoji.category, []);
       }
-      emojisCat[emoji.category].push(emoji);
+      categoryMap.get(emoji.category).push(emoji);
     });
+    const emojisCat = {
+      '--recent--': recentlyUsedCustomEmojis.filter((emoji) => shortcodeSet.has(emoji.shortcode)),
+    };
     if (othersCat.length) {
       emojisCat['--others--'] = othersCat;
+    }
+    for (const [category, list] of categoryMap) {
+      emojisCat[category] = list;
     }
     return emojisCat;
   }, [customEmojis]);
@@ -345,9 +349,7 @@ function CustomEmojisModal({
                   <li key={emoji.shortcode} class="custom-emojis-match">
                     <CustomEmojiButton
                       emoji={emoji}
-                      onClick={() => {
-                        onSelectEmoji(`:${emoji.shortcode}:`);
-                      }}
+                      onSelect={onSelectEmoji}
                       showCode
                     />
                   </li>

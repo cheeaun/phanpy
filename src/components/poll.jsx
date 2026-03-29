@@ -3,6 +3,7 @@ import { plural } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
+import haptics from '../utils/haptics';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import useTruncated from '../utils/useTruncated';
@@ -273,6 +274,7 @@ export default function Poll({
                 uiState === 'loading' ||
                 voteOptionsSelectionCount === 0
               }
+              onClick={() => haptics.trigger('medium')}
             >
               <Trans>Vote</Trans>
             </button>{' '}

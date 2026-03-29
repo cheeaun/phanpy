@@ -337,7 +337,7 @@ These are self-hosted by other wonderful folks.
 - [phanpy.vmst.io](https://phanpy.vmst.io/) by [@vmstan@vmst.io](https://vmst.io/@vmstan)
 - [phanpy.linuxusers.in](https://phanpy.linuxusers.in) by [@dharmik@linuxusers.in](https://linuxusers.in/dharmik)
 - [phanpy.blablalinux.be](https://phanpy.blablalinux.be) by [@blablalinux@mastodon.blablalinux.be](https://mastodon.blablalinux.be/@blablalinux)
-- [fedi.woodpeckersnest.space](https://fedi.woodpeckersnest.space) by [@roughnecks@social.woodpeckersnest.space](https://social.woodpeckersnest.space/@roughnecks)
+- [fedi.woodpeckersnest.space](https://fedi.woodpeckersnest.space) by [@roughnecks@mastodon.social](https://mastodon.social/@roughnecks)
 
 > Note: Add yours by creating a pull request.
 
@@ -404,6 +404,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13990351/medium/86942d51f67a5f5366c5d6385ea59b77_default.png" alt="" width="16" height="16" /> manuelviens (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16537713/medium/825f0bf1a14fc545a76891a52839d86e_default.png" alt="" width="16" height="16" /> marcin.kozinski (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16812323/medium/72bffbdf4a331845f23400eafa0b3d48.jpeg" alt="" width="16" height="16" /> martinmodrak (Czech)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17641218/medium/d9c1dc538e1fd737af0f2db4173515e4.jpeg" alt="" width="16" height="16" /> micahblachman (Hebrew)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13044/medium/bfa55b9a0569a9e382fd694c91d3db1b_default.png" alt="" width="16" height="16" /> misk (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13521465/medium/76cb9aa6b753ce900a70478bff7fcea0.png" alt="" width="16" height="16" /> mkljczkk (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12882812/medium/77744d8db46e9a3e09030e1a02b7a572.jpeg" alt="" width="16" height="16" /> mojosoeun (Korean)
@@ -439,7 +440,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16791511/medium/13af704ac9b4ce8350cd2dc6b823d050.jpg" alt="" width="16" height="16" /> uzaylul (Turkish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14427566/medium/ab733b5044c21867fc5a9d1b22cd2c03.png" alt="" width="16" height="16" /> Vac31. (Lithuanian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16026914/medium/35f400b0799c35e8e5f4556a7fa63544.jpg" alt="" width="16" height="16" /> valtlai (Finnish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16608515/medium/85506c21dce8df07843ca11908ee3951.jpeg" alt="" width="16" height="16" /> vasiriri (Polish)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16608515/medium/dee237c31a735318507e5a5b1b2b7c1d.png" alt="" width="16" height="16" /> Vasirion (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16355626/medium/a10a29f0016c6beb94e8219d50e8b8d7.jpeg" alt="" width="16" height="16" /> voitech (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16563757/medium/af4556c13862d1fd593b51084a159b75_default.png" alt="" width="16" height="16" /> voyagercy (Chinese Traditional)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15982109/medium/9c03062bdc1d3c6d384dbfead97c26ba.jpeg" alt="" width="16" height="16" /> xabi_itzultzaile (Basque)
@@ -485,9 +486,10 @@ And here I am. Building a Mastodon web client.
 - [Tusked](https://tusked.app/) ([archived](https://github.com/raikasdev/tusked))
 - [Mastodon Glitch Edition (standalone frontend)](https://iceshrimp.dev/iceshrimp/masto-fe-standalone) - forks ↓
   - [Masto-FE (🦥 flavour)](https://masto-fe.superseriousbusiness.org)
-- [pl-fe](https://pl.mkljczk.pl)
+- [Nicolium](https://web.nicolium.app) (previously [pl-fe](https://pl.mkljczk.pl))
 - [Mangane](https://github.com/BDX-town/Mangane)
 - [Fedideck](https://fedideck.app/)
+- [Elefeed](https://elefeed.app)
 - [TheDesk](https://github.com/cutls/TheDesk) (archived)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 

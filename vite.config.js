@@ -309,7 +309,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
     cssCodeSplit: false,
-    rollupOptions: {
+    rolldownOptions: {
       treeshake: false,
       external: ['@xmldom/xmldom'], // exifreader's optional dependency, not needed
       input: {

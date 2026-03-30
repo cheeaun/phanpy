@@ -1,5 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+
 import { _localeMatch as localeMatch } from '../src/utils/locale-match.js';
 
 // https://github.com/formatjs/formatjs/blob/cacd3182a590b6f373ca726b011a026a241f4740/packages/intl-localematcher/tests/index.test.ts

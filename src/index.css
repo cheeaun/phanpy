@@ -757,6 +757,25 @@ kbd {
   }
 }
 
+.lazy-render {
+  &:empty {
+    display: none;
+  }
+
+  overflow: clip;
+  will-change: opacity, height, margin-block, padding-block, border-block-width;
+  transition: 0.3s var(--timing-function) allow-discrete;
+  transition-property:
+    opacity, height, margin-block, padding-block, border-block-width;
+  &.hidden {
+    opacity: 0;
+    height: 0;
+    margin-block: 0;
+    padding-block: 0;
+    border-block-width: 0;
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);

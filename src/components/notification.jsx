@@ -32,6 +32,7 @@ const NOTIFICATION_ICONS = {
   severed_relationships: 'heart-break',
   moderation_warning: 'alert',
   emoji_reaction: 'emoji2',
+  reaction: 'emoji2',
   'pleroma:emoji_reaction': 'emoji2',
   annual_report: 'celebrate',
   quote: 'quote',
@@ -286,6 +287,7 @@ const contentText = {
     </b>
   ),
   emoji_reaction: emojiText,
+  reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
   annual_report: ({ year }) => <Trans>Your {year} #Wrapstodon is here!</Trans>,
 };

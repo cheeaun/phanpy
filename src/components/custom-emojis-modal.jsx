@@ -145,7 +145,7 @@ function CustomEmojisModal({
   }, [instance]);
 
   const customEmojisCatList = useMemo(() => {
-    const shortcodeSet = new Set(customEmojis.map(e => e.shortcode));
+    const shortcodeSet = new Set(customEmojis.map((e) => e.shortcode));
     const categoryMap = new Map();
     const othersCat = [];
     customEmojis.forEach((emoji) => {
@@ -160,7 +160,9 @@ function CustomEmojisModal({
       categoryMap.get(emoji.category).push(emoji);
     });
     const emojisCat = {
-      '--recent--': recentlyUsedCustomEmojis.filter((emoji) => shortcodeSet.has(emoji.shortcode)),
+      '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
+        shortcodeSet.has(emoji.shortcode),
+      ),
     };
     if (othersCat.length) {
       emojisCat['--others--'] = othersCat;

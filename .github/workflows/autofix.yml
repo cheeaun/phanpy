@@ -18,4 +18,5 @@ jobs:
           node-version: 24
       - run: npm ci
       - run: npm run formatting
+      - run: npm run messages:extract:clean
       - uses: autofix-ci/action@v1

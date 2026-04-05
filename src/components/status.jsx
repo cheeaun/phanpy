@@ -2419,41 +2419,39 @@ function Status({
                 ))}
             </div>
           )}
-          {(visibility === 'direct' || !withinContext) && (
-            <LazyRender id={sKey} class="pre-content-container">
-              {visibility === 'direct' && (
-                <>
-                  <div class="status-direct-badge">
-                    <Trans>Private mention</Trans>
-                  </div>{' '}
-                </>
-              )}
-              {!withinContext &&
-                (isThread ? (
-                  <ThreadBadge
-                    showIcon
-                    showText
-                    index={snapStates.statusThreadNumber[sKey]}
-                  />
-                ) : (
-                  !!inReplyToId &&
-                  !!inReplyToAccount &&
-                  (!!spoilerText ||
-                    !mentions.find((mention) => {
-                      return mention.id === inReplyToAccountId;
-                    })) && (
-                    <div class="status-reply-badge">
-                      <Icon icon="reply" />{' '}
-                      <NameText
-                        account={inReplyToAccount}
-                        instance={instance}
-                        short
-                      />
-                    </div>
-                  )
-                ))}
-            </LazyRender>
-          )}
+          <LazyRender id={sKey} class="pre-content-container">
+            {visibility === 'direct' && (
+              <>
+                <div class="status-direct-badge">
+                  <Trans>Private mention</Trans>
+                </div>{' '}
+              </>
+            )}
+            {!withinContext &&
+              (isThread ? (
+                <ThreadBadge
+                  showIcon
+                  showText
+                  index={snapStates.statusThreadNumber[sKey]}
+                />
+              ) : (
+                !!inReplyToId &&
+                !!inReplyToAccount &&
+                (!!spoilerText ||
+                  !mentions.find((mention) => {
+                    return mention.id === inReplyToAccountId;
+                  })) && (
+                  <div class="status-reply-badge">
+                    <Icon icon="reply" />{' '}
+                    <NameText
+                      account={inReplyToAccount}
+                      instance={instance}
+                      short
+                    />
+                  </div>
+                )
+              ))}
+          </LazyRender>
           <div
             class={`content-container ${
               spoilerText ||

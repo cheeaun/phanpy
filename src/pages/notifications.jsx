@@ -199,7 +199,7 @@ function Notifications({ columnMode }) {
           })
           .catch(() => {});
 
-        analyzeNotifications(groupedNotifications);
+        if (!columnMode) analyzeNotifications(groupedNotifications);
       } else {
         states.notifications.push(...groupedNotifications);
       }

@@ -310,6 +310,8 @@ function createdAtSort(a, b) {
 }
 
 const MONTH_IN_MS = 1000 * 60 * 60 * 24 * 30;
+const segmenter =
+  typeof Intl?.Segmenter === 'function' ? new Intl.Segmenter() : null;
 
 function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const { t } = useLingui();
@@ -781,7 +783,13 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     if (text.length > 64) {
       // "The title should ideally be less than 64 characters in length"
       // https://www.w3.org/Provider/Style/TITLE.html
-      text = text.slice(0, 64) + '…';
+      text =
+        (segmenter
+          ? [...segmenter.segment(text)].map((s) => s.segment)
+          : [...text]
+        )
+          .slice(0, 64)
+          .join('') + '…';
     }
     return text;
   }, [heroStatus]);

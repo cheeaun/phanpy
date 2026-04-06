@@ -269,6 +269,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     grid-auto-rows: fit-content;
     gap: var(--grid-gap);
     padding: var(--grid-gap);
+    background-attachment: fixed;
+    background-size: 100% 100vh;
+    background-image: radial-gradient(
+      closest-side,
+      var(--bg-color) 30%,
+      transparent 90%
+    );
 
     &:not(#columns &) {
       background-color: var(--bg-faded-color);
@@ -302,12 +309,16 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
       border: 0 !important;
       overflow: visible !important;
       background-color: transparent !important;
-      box-shadow: none !important;
     }
 
-    @supports (grid-template-rows: masonry) {
-      grid-template-rows: masonry;
-      masonry-auto-flow: pack;
+    @supports (display: grid-lanes) {
+      display: grid-lanes;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+
+      &:not(#columns &) {
+        width: 95vw;
+        max-width: 95vw;
+      }
 
       .media-post a {
         aspect-ratio: revert !important;
@@ -316,6 +327,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
         img,
         audio {
           min-height: var(--min-dimension); /* for extreme dimensions */
+          max-height: 200svh;
+
+          @media (width < 20em), (height < 640px) {
+            max-height: 75svh;
+          }
         }
       }
     }

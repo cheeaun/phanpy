@@ -725,6 +725,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
       background-color: var(--link-faded-color);
     }
   }
+
+  &:not(:hover, :focus) ~ * {
+    content-visibility: auto;
+    contain-intrinsic-size: 100% 3em;
+  }
 }
 .timeline.contextual > li .replies > .replies-summary::-webkit-details-marker {
   display: none;

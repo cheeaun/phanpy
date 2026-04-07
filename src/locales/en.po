@@ -222,6 +222,7 @@ msgstr ""
 
 #: src/components/account-info.jsx:1060
 #: src/components/status.jsx:2785
+#: src/pages/account-statuses.jsx:428
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1594
 #: src/pages/catchup.jsx:2249
@@ -241,6 +242,7 @@ msgid "Quotes"
 msgstr "Quotes"
 
 #: src/components/account-info.jsx:1070
+#: src/pages/account-statuses.jsx:444
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1596
 #: src/pages/catchup.jsx:2261
@@ -721,7 +723,7 @@ msgid "Poll"
 msgstr ""
 
 #: src/components/drafts.jsx:279
-#: src/pages/account-statuses.jsx:440
+#: src/pages/account-statuses.jsx:462
 msgid "Media"
 msgstr ""
 
@@ -1181,7 +1183,7 @@ msgstr ""
 #: src/components/status.jsx:2352
 #: src/components/status.jsx:3088
 #: src/components/status.jsx:3091
-#: src/pages/account-statuses.jsx:641
+#: src/pages/account-statuses.jsx:676
 #: src/pages/accounts.jsx:149
 #: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
@@ -1457,7 +1459,7 @@ msgid "Followed Hashtags"
 msgstr ""
 
 #: src/components/nav-menu.jsx:279
-#: src/pages/account-statuses.jsx:382
+#: src/pages/account-statuses.jsx:410
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
 #: src/pages/hashtag.jsx:373
@@ -1954,7 +1956,6 @@ msgid "Clear all"
 msgstr "Clear all"
 
 #: src/components/recent-searches.jsx:94
-#: src/pages/account-statuses.jsx:375
 msgid "Clear"
 msgstr ""
 
@@ -2058,7 +2059,7 @@ msgid "Show featured profiles"
 msgstr "Show featured profiles"
 
 #: src/components/related-actions.jsx:507
-#: src/pages/account-statuses.jsx:546
+#: src/pages/account-statuses.jsx:578
 msgid "Search my posts"
 msgstr "Search my posts"
 
@@ -3072,100 +3073,98 @@ msgstr "Login required."
 msgid "Go home"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:272
+#: src/pages/account-statuses.jsx:287
 msgid "Account posts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:279
-msgid "{accountDisplay} (+ Replies)"
+#: src/pages/account-statuses.jsx:294
+msgid "Media posts tagged #{tagged} by {accountDisplay}"
+msgstr "Media posts tagged #{tagged} by {accountDisplay}"
+
+#: src/pages/account-statuses.jsx:296
+msgid "Posts tagged #{tagged} by {accountDisplay}"
+msgstr "Posts tagged #{tagged} by {accountDisplay}"
+
+#: src/pages/account-statuses.jsx:303
+msgid "Posts in {monthYear} by {accountDisplay}"
+msgstr "Posts in {monthYear} by {accountDisplay}"
+
+#: src/pages/account-statuses.jsx:305
+msgid "Media posts by {accountDisplay}"
+msgstr "Media posts by {accountDisplay}"
+
+#: src/pages/account-statuses.jsx:394
+#: src/pages/account-statuses.jsx:403
+#: src/pages/catchup.jsx:1290
+msgid "Reset filters"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:281
-msgid "{accountDisplay} (- Boosts)"
-msgstr "{accountDisplay} (- Boosts)"
+#: src/pages/account-statuses.jsx:422
+msgid "Showing replies"
+msgstr "Showing replies"
 
-#: src/pages/account-statuses.jsx:283
-msgid "{accountDisplay} (#{tagged})"
-msgstr ""
+#: src/pages/account-statuses.jsx:424
+msgid "Hiding replies"
+msgstr "Hiding replies"
 
-#: src/pages/account-statuses.jsx:285
-msgid "{accountDisplay} (Media)"
-msgstr ""
+#: src/pages/account-statuses.jsx:438
+msgid "Showing boosts"
+msgstr "Showing boosts"
 
-#: src/pages/account-statuses.jsx:291
-msgid "{accountDisplay} ({monthYear})"
-msgstr ""
+#: src/pages/account-statuses.jsx:440
+msgid "Hiding boosts"
+msgstr "Hiding boosts"
 
-#: src/pages/account-statuses.jsx:366
-msgid "Clear filters"
-msgstr ""
-
-#: src/pages/account-statuses.jsx:397
-msgid "Showing post with replies"
-msgstr ""
-
-#: src/pages/account-statuses.jsx:402
-msgid "+ Replies"
-msgstr ""
-
-#: src/pages/account-statuses.jsx:416
-msgid "Showing posts without boosts"
-msgstr ""
-
-#: src/pages/account-statuses.jsx:421
-msgid "- Boosts"
-msgstr "- Boosts"
-
-#: src/pages/account-statuses.jsx:435
+#: src/pages/account-statuses.jsx:457
 msgid "Showing posts with media"
 msgstr ""
 
 #. placeholder {0}: tag.name
-#: src/pages/account-statuses.jsx:460
+#: src/pages/account-statuses.jsx:492
 msgid "Showing posts tagged with #{0}"
 msgstr ""
 
 #. placeholder {0}: date.toLocaleString( i18n.locale, { month: 'long', year: 'numeric', }, )
-#: src/pages/account-statuses.jsx:500
+#: src/pages/account-statuses.jsx:532
 msgid "Showing posts in {0}"
 msgstr "Showing posts in {0}"
 
 #. placeholder {0}: account?.username
-#: src/pages/account-statuses.jsx:547
+#: src/pages/account-statuses.jsx:579
 msgid "Search @{0}'s posts"
 msgstr "Search @{0}'s posts"
 
-#: src/pages/account-statuses.jsx:593
+#: src/pages/account-statuses.jsx:628
 #: src/pages/search.jsx:359
 #: src/pages/search.jsx:506
 msgid "Posts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:618
+#: src/pages/account-statuses.jsx:653
 msgid "Nothing to see here yet."
 msgstr ""
 
-#: src/pages/account-statuses.jsx:619
+#: src/pages/account-statuses.jsx:654
 #: src/pages/public.jsx:130
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:660
-#: src/pages/account-statuses.jsx:690
+#: src/pages/account-statuses.jsx:695
+#: src/pages/account-statuses.jsx:725
 msgid "Unable to fetch account info"
 msgstr ""
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:667
+#: src/pages/account-statuses.jsx:702
 msgid "Switch to account's server {0}"
 msgstr "Switch to account's server {0}"
 
-#: src/pages/account-statuses.jsx:697
+#: src/pages/account-statuses.jsx:732
 msgid "Switch to my server (<0>{currentInstance}</0>)"
 msgstr "Switch to my server (<0>{currentInstance}</0>)"
 
-#: src/pages/account-statuses.jsx:770
+#: src/pages/account-statuses.jsx:805
 msgid "Month"
 msgstr ""
 
@@ -3393,10 +3392,6 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1255
 msgid "This might take a while."
-msgstr ""
-
-#: src/pages/catchup.jsx:1290
-msgid "Reset filters"
 msgstr ""
 
 #: src/pages/catchup.jsx:1298

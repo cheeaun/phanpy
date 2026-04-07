@@ -3012,6 +3012,14 @@ ul.link-list li a .icon {
       }
     }
   }
+
+  .filter-bar-separator {
+    width: 1px;
+    height: 24px;
+    margin-inline: 4px;
+    background-color: var(--divider-color);
+    flex-shrink: 0;
+  }
 }
 .filter-bar.centered {
   justify-content: center;
@@ -3021,7 +3029,7 @@ ul.link-list li a .icon {
     background-color: transparent;
   }
 }
-.filter-bar > a:not(.filter-clear) {
+.filter-bar > :is(a, button, label):not(.filter-clear) {
   padding: 8px 16px;
   border-radius: 999px;
   background-color: var(--bg-color);
@@ -3033,23 +3041,28 @@ ul.link-list li a .icon {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
+  font-size: inherit;
+  line-height: 1;
+  background-image: none;
+  margin: 0;
 }
-.filter-bar > a:focus-visible {
+.filter-bar > :is(a, button, label):focus-visible {
   border-color: var(--link-light-color);
 }
 @media (hover: hover) {
-  .filter-bar > a:hover {
+  .filter-bar > :is(a, button, label):hover {
     border-color: var(--link-light-color);
   }
 }
-.filter-bar > a > * {
+.filter-bar > :is(a, button, label) > * {
   vertical-align: middle;
 }
-.filter-bar > a.is-active {
+.filter-bar > :is(a, button, label).is-active {
   border-color: var(--link-color);
   box-shadow: inset 0 0 8px var(--link-faded-color);
 }
-.filter-bar > a > .filter-count {
+.filter-bar > :is(a, button, label) > .filter-count {
   font-size: 80%;
   display: inline-block;
   color: var(--text-insignificant-color);
@@ -3060,6 +3073,61 @@ ul.link-list li a .icon {
   margin-inline-end: -8px;
   background-color: var(--bg-faded-color);
   border-radius: 999px;
+}
+.filter-bar > .filter-bar-group {
+  display: inline-flex;
+  flex-shrink: 0;
+  border-radius: 999px;
+  gap: 2px;
+  background-color: var(--bg-color);
+  transition: box-shadow 0.3s ease-out;
+
+  &:hover,
+  &:has(.is-active, :focus-visible) {
+    box-shadow: 0 0 0 2px var(--bg-color);
+  }
+}
+.filter-bar > .filter-bar-group > :is(a, button, label) {
+  padding: 8px;
+  background-color: transparent;
+  color: var(--text-color);
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: inherit;
+  line-height: 1;
+  background-image: none;
+  margin: 0;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  box-shadow: none;
+  transition: border-color 0.3s ease-out;
+
+  &:is(a) {
+    color: var(--link-color);
+  }
+
+  > input {
+    cursor: inherit;
+  }
+}
+.filter-bar > .filter-bar-group > :is(a, button, label):focus-visible {
+  background-color: var(--bg-color);
+  border-color: var(--link-light-color);
+}
+.filter-bar > .filter-bar-group > :is(a, button, label).is-active {
+  background-color: var(--bg-color);
+  border-color: var(--link-color);
+  box-shadow: inset 0 0 8px var(--link-faded-color);
+}
+@media (hover: hover) {
+  .filter-bar > .filter-bar-group > :is(a, button, label):hover {
+    border-color: var(--link-light-color);
+    background-color: var(--bg-color);
+  }
 }
 
 /* NOTIFICATION PEEK */

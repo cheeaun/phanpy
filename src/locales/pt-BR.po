@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-07 21:15\n"
+"PO-Revision-Date: 2026-04-07 22:33\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -106,7 +106,7 @@ msgstr "O usuário privou esta informação."
 #: src/components/account-info-mini.jsx:67
 #: src/components/account-info.jsx:823
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
-msgstr "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
+msgstr "{followersCount, plural, one {<0>{0}</0> Seguidor} other {<1>{1}</1> Seguidores}}"
 
 #. js-lingui-explicit-id
 #: src/components/account-info-mini.jsx:93
@@ -118,7 +118,7 @@ msgstr "Seguindo"
 #: src/components/account-info-mini.jsx:106
 #: src/components/account-info.jsx:867
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr "{followingCount, plural, one {}other {<0>{0}</0> Following}}"
+msgstr "{followingCount, plural, one {}other {<0>{0}</0> Seguindo}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
@@ -702,7 +702,7 @@ msgstr "Erro ao obter estado de resposta!"
 
 #: src/components/drafts.jsx:159
 msgid "Error fetching quoted status!"
-msgstr ""
+msgstr "Erro ao obter estado de resposta!"
 
 #: src/components/drafts.jsx:187
 msgid "Delete all drafts?"
@@ -756,7 +756,7 @@ msgstr "Seguinte"
 
 #: src/components/edit-history-controls.jsx:57
 msgid "Exit"
-msgstr ""
+msgstr "Sair"
 
 #: src/components/edit-profile-sheet.jsx:149
 msgid "Unable to update profile."
@@ -932,11 +932,11 @@ msgstr "{0, plural, one {# account} other {# accounts}}"
 
 #: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
-msgstr "Nenhuma informação de login ou detalhes para acessar a conta são armazenados nos arquivos exportados. Você terá que fazer log in novamente para cada conta após importação."
+msgstr "Nenhuma informação de login ou detalhes para acessar a conta são armazenados nos arquivos exportados. Você terá que fazer login novamente para cada conta após importação."
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
-msgstr "<0>{key1}</0> then <1>{key2}</1>"
+msgstr "<0>{key1}</0> então <1>{key2}</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:57
 #: src/components/nav-menu.jsx:374
@@ -1105,7 +1105,7 @@ msgstr "Ir para perfil"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
-msgstr ""
+msgstr "Ir aos Favoritos"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1890,61 +1890,61 @@ msgstr "Salvar e fechar"
 #: src/components/qr-code-modal.jsx:26
 #: src/components/shortcuts-settings.jsx:849
 msgid "Scan QR code"
-msgstr "Escanear QR code"
+msgstr "Escanear código QR"
 
 #: src/components/qr-scanner-modal.jsx:263
 msgid "Unable to access camera. Please check permissions."
-msgstr "Incapaz de acessar a câmera. Por favor cheque as permissões."
+msgstr "Incapaz de acessar a câmera. Por favor, cheque as permissões."
 
 #: src/components/quote-chain-modal.jsx:107
 msgid "Quote chain"
-msgstr ""
+msgstr "Sequência de citações"
 
 #: src/components/quote-chain-modal.jsx:151
 msgid "Failed to unwrap quote chain"
-msgstr ""
+msgstr "Falha ao desenrolar sequência de citações"
 
 #: src/components/quote-chain-modal.jsx:165
 msgid "Continue unwrapping…"
-msgstr ""
+msgstr "Continuar desenrolando…"
 
 #: src/components/quote-settings-sheet.jsx:37
 #: src/pages/settings.jsx:333
 msgid "Quote settings updated"
-msgstr ""
+msgstr "Configurações de citação atualizadas"
 
 #: src/components/quote-settings-sheet.jsx:47
 #: src/pages/settings.jsx:335
 msgid "Failed to update quote settings"
-msgstr ""
+msgstr "Falha na atualização de configurações de citação"
 
 #: src/components/quote-settings-sheet.jsx:66
 msgid "Quote settings for this post"
-msgstr ""
+msgstr "Configurações de citação para este post"
 
 #: src/components/quote-suggestion.jsx:19
 msgid "Turn link into a quote?"
-msgstr ""
+msgstr "Transformar link em citação?"
 
 #: src/components/quote-suggestion.jsx:37
 msgid "Keep as link"
-msgstr ""
+msgstr "Manter como link"
 
 #: src/components/quote-suggestion.jsx:42
 msgid "Replace current quote"
-msgstr ""
+msgstr "Substituir citação atual"
 
 #: src/components/quote-suggestion.jsx:44
 msgid "Turn into quote"
-msgstr ""
+msgstr "Transformar em citação"
 
 #: src/components/quotes-modal.jsx:150
 msgid "Error loading quotes"
-msgstr ""
+msgstr "Erro ao carregar citações"
 
 #: src/components/quotes-modal.jsx:154
 msgid "No quotes yet"
-msgstr ""
+msgstr "Ainda sem citações"
 
 #: src/components/recent-searches.jsx:27
 msgid "Cleared recent searches"
@@ -2066,7 +2066,7 @@ msgstr "Exibir destaques"
 #: src/components/related-actions.jsx:507
 #: src/pages/account-statuses.jsx:546
 msgid "Search my posts"
-msgstr ""
+msgstr "Buscar nos meus posts"
 
 #: src/components/related-actions.jsx:580
 #: src/components/shortcuts-settings.jsx:1193
@@ -2298,7 +2298,7 @@ msgstr "Contas com <0>{query}</0>"
 
 #: src/components/search-form.jsx:37
 msgid "Posts tagged with <0>{hashtag}</0>"
-msgstr ""
+msgstr "Posts etiquetados com <0>{hashtag}</0>"
 
 #: src/components/search-form.jsx:46
 msgid "{query} <0>‒ accounts, hashtags & posts</0>"
@@ -2487,7 +2487,7 @@ msgstr "Cole atalhos aqui"
 
 #: src/components/shortcuts-settings.jsx:860
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "Baixando atalhos salvos do servidor…"
 
 #: src/components/shortcuts-settings.jsx:888
 msgid "Unable to download shortcuts"
@@ -2495,7 +2495,7 @@ msgstr "Impossível baixar atalhos"
 
 #: src/components/shortcuts-settings.jsx:891
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Baixar atalhos do servidor"
 
 #: src/components/shortcuts-settings.jsx:960
 msgid "* Exists in current shortcuts"
@@ -2560,7 +2560,7 @@ msgstr "Impossível copiar atalhos"
 
 #: src/components/shortcuts-settings.jsx:1136
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Salvando atalhos no servidor…"
 
 #: src/components/shortcuts-settings.jsx:1143
 msgid "Shortcuts saved"
@@ -2572,7 +2572,7 @@ msgstr "Impossível salvar atalhos"
 
 #: src/components/shortcuts-settings.jsx:1151
 msgid "Sync to server"
-msgstr ""
+msgstr "Sincronizar com o servidor"
 
 #: src/components/shortcuts-settings.jsx:1166
 msgid "Shortcut settings copied"
@@ -2597,27 +2597,27 @@ msgstr "Atalhos brutos JSON"
 
 #: src/components/shortcuts-settings.jsx:1230
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Importar/exportar configurações do/para o servidor (Muito experimental)"
 
 #: src/components/status.jsx:290
 msgid "Private posts cannot be quoted"
-msgstr ""
+msgstr "Posts privados não podem ser citados"
 
 #: src/components/status.jsx:291
 msgid "Request to quote"
-msgstr ""
+msgstr "Pedir para citar"
 
 #: src/components/status.jsx:292
 msgid "Author will manually review"
-msgstr ""
+msgstr "O autor vai revisar manualmente"
 
 #: src/components/status.jsx:293
 msgid "Only followers can quote this post"
-msgstr ""
+msgstr "Apenas seguidores podem citar este post"
 
 #: src/components/status.jsx:294
 msgid "You are not allowed to quote this post"
-msgstr ""
+msgstr "Você não pode citar este post"
 
 #: src/components/status.jsx:370
 #: src/components/status.jsx:3235
@@ -2632,7 +2632,7 @@ msgstr "<0/> <1>impulsionou</1>"
 
 #: src/components/status.jsx:738
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr ""
+msgstr "Desculpe, o seu servidor atualmente conectado não pode interagir com este post de outro servidor."
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:928
@@ -2665,27 +2665,27 @@ msgstr "Publicação antiga (<0>{0}</0>)"
 
 #: src/components/status.jsx:1102
 msgid "Reply…"
-msgstr ""
+msgstr "Responder…"
 
 #: src/components/status.jsx:1116
 #: src/components/status.jsx:1130
 msgid "Reply all"
-msgstr ""
+msgstr "Responder a todos"
 
 #: src/components/status.jsx:1119
 msgid "{mentionsCount, plural, other {# mentions}}"
-msgstr ""
+msgstr "{mentionsCount, plural, other {# menções}}"
 
 #. placeholder {0}: mentionsCount - 1
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:1133
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
-msgstr ""
+msgstr "{0, plural, other {<0>@{1}</0> primeiro, # outros abaixo}}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1155
 msgid "Only <0>@{0}</0>"
-msgstr ""
+msgstr "Apenas <0>@{0}</0>"
 
 #: src/components/status.jsx:1195
 #: src/components/status.jsx:1273
@@ -2697,7 +2697,7 @@ msgstr "Desimpulsionar"
 #: src/components/status.jsx:1234
 #: src/components/status.jsx:3017
 msgid "Quote with link"
-msgstr ""
+msgstr "Citar com link"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1252
@@ -2714,7 +2714,7 @@ msgstr "Impulsionou a publicação de @{0}"
 #: src/components/status.jsx:1275
 #: src/components/status.jsx:3031
 msgid "Boost/Quote…"
-msgstr ""
+msgstr "Boost/Citação…"
 
 #: src/components/status.jsx:1276
 #: src/components/status.jsx:3031
@@ -2742,11 +2742,11 @@ msgstr "Desfavoritar"
 
 #: src/components/status.jsx:1333
 msgid "View Quotes"
-msgstr ""
+msgstr "Ver Citações"
 
 #: src/components/status.jsx:1345
 msgid "Unwrap quote chain"
-msgstr ""
+msgstr "Desenrolar sequência de citações"
 
 #: src/components/status.jsx:1412
 msgid "Post text copied"
@@ -2824,7 +2824,7 @@ msgstr "Fixar ao perfil"
 #: src/components/status.jsx:1622
 #: src/pages/settings.jsx:307
 msgid "Quote settings"
-msgstr ""
+msgstr "Configurações de citações"
 
 #: src/components/status.jsx:1655
 msgid "Delete this post?"
@@ -2841,11 +2841,11 @@ msgstr "Impossível excluir publicação"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1699
 msgid "Remove my post from <0>@{0}</0>'s post?"
-msgstr ""
+msgstr "Remover meu post do post de <0>@{0}</0>?"
 
 #: src/components/status.jsx:1721
 msgid "Quote removed"
-msgstr ""
+msgstr "Citação removida"
 
 #: src/components/status.jsx:1725
 msgid "Unable to remove quote"
@@ -2976,22 +2976,22 @@ msgstr "Tópico"
 
 #: src/components/thread-badge.jsx:28
 msgid "Thread {index}/{total}"
-msgstr ""
+msgstr "Fio {index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
 msgid "Thread {index}/X"
-msgstr ""
+msgstr "Fio {index}/X"
 
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
 msgid "{index}/{total}"
-msgstr ""
+msgstr "{index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:46
 msgid "{index}/X"
-msgstr ""
+msgstr "{index}/X"
 
 #: src/components/timeline.jsx:555
 #: src/pages/settings.jsx:1323
@@ -3088,7 +3088,7 @@ msgstr "{accountDisplay} (+ Respostas)"
 
 #: src/pages/account-statuses.jsx:281
 msgid "{accountDisplay} (- Boosts)"
-msgstr ""
+msgstr "{accountDisplay} (- Boosts)"
 
 #: src/pages/account-statuses.jsx:283
 msgid "{accountDisplay} (#{tagged})"
@@ -3120,7 +3120,7 @@ msgstr "Exibindo publicações sem impulsos"
 
 #: src/pages/account-statuses.jsx:421
 msgid "- Boosts"
-msgstr ""
+msgstr "- Boosts"
 
 #: src/pages/account-statuses.jsx:435
 msgid "Showing posts with media"
@@ -3139,7 +3139,7 @@ msgstr "Exibindo publicações em {0}"
 #. placeholder {0}: account?.username
 #: src/pages/account-statuses.jsx:547
 msgid "Search @{0}'s posts"
-msgstr ""
+msgstr "Buscar posts de @{0}"
 
 #: src/pages/account-statuses.jsx:593
 #: src/pages/search.jsx:359
@@ -3165,11 +3165,11 @@ msgstr "Impossível obter informações da conta"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:667
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "Mudar para o servidor da conta {0}"
 
 #: src/pages/account-statuses.jsx:697
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Trocar para o meu servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:770
 msgid "Month"
@@ -3181,7 +3181,7 @@ msgstr "Atual"
 
 #: src/pages/accounts.jsx:135
 msgid "Logged out"
-msgstr ""
+msgstr "Desconectado"
 
 #: src/pages/accounts.jsx:141
 msgid "Default"
@@ -3211,7 +3211,7 @@ msgstr "Encerrar sessão <0>@{0}</0>?"
 #. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:275
 msgid "Log out and remove <0>@{0}</0>"
-msgstr ""
+msgstr "Desconectar e remover <0>@{0}</0>"
 
 #: src/pages/accounts.jsx:287
 msgid "Log out…"
@@ -3220,11 +3220,11 @@ msgstr "Encerrar sessão…"
 #. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:297
 msgid "Remove <0>@{0}</0>?"
-msgstr ""
+msgstr "Remover <0>@{0}</0>?"
 
 #: src/pages/accounts.jsx:315
 msgid "Remove account…"
-msgstr ""
+msgstr "Remover conta…"
 
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:323
@@ -3309,7 +3309,7 @@ msgstr "Grupos"
 
 #: src/pages/catchup.jsx:721
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} quotes {quotes} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr ""
+msgstr "Mostrando {selectedFilterCategory, select, all {todos os posts} original {posts originais} replies {respostas} boosts {boosts} quotes {citações} followedTags {etiquetas seguidas} groups {grupos} filtered {posts filtrados}}, {sortBy, select, createdAt {{sortOrder, select, asc {mais antigo} desc {mais recente}}} reblogsCount {{sortOrder, select, asc {menos boosts} desc {mais boosts}}} favouritesCount {{sortOrder, select, asc {menos likes} desc {mais likes}}} repliesCount {{sortOrder, select, asc {menos respostas} desc {mais respostas}}} density {{sortOrder, select, asc {menos denso} desc {mais denso}}}} primeiro{groupBy, select, account {, agrupado por autores} other {}}"
 
 #: src/pages/catchup.jsx:1033
 #: src/pages/catchup.jsx:1057
@@ -3364,7 +3364,7 @@ msgstr "Até a última reacompanhada ({0})"
 
 #: src/pages/catchup.jsx:1178
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Nota: seu servidor pode mostrar apenas um máximo de 800 posts na linha do tempo Home independentemente do período. Poderia ser mais ou menos."
 
 #: src/pages/catchup.jsx:1188
 msgid "Previously…"
@@ -3681,12 +3681,12 @@ msgstr "{hashtagTitle}"
 #: src/pages/hashtag.jsx:210
 #: src/pages/public.jsx:125
 msgid "This timeline is disabled on this server."
-msgstr ""
+msgstr "Esta linha do tempo está desabilitada neste servidor."
 
 #: src/pages/hashtag.jsx:212
 #: src/pages/public.jsx:127
 msgid "Login required to see posts from this server."
-msgstr ""
+msgstr "Login necessário para ver posts neste servidor."
 
 #: src/pages/hashtag.jsx:213
 msgid "No one has posted anything with this tag yet."
@@ -3757,25 +3757,25 @@ msgstr "Adicionar aos atalhos"
 #: src/pages/public.jsx:172
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Insira um novo servidor, ex.: mastodon.com.br"
 
 #: src/pages/hashtag.jsx:524
 #: src/pages/public.jsx:175
 #: src/pages/trending.jsx:484
 msgid "Invalid server"
-msgstr ""
+msgstr "Servidor inválido"
 
 #: src/pages/hashtag.jsx:538
 #: src/pages/public.jsx:189
 #: src/pages/trending.jsx:496
 msgid "Go to another server…"
-msgstr ""
+msgstr "Ir a outro servidor…"
 
 #: src/pages/hashtag.jsx:551
 #: src/pages/public.jsx:202
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Ir ao meu servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:239
 msgid "Unable to fetch notifications."
@@ -3827,7 +3827,7 @@ msgstr "Houve um erro ao registrar aplicação"
 
 #: src/pages/login.jsx:246
 msgid "server domain"
-msgstr ""
+msgstr "domínio do servidor"
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -3835,7 +3835,7 @@ msgstr "ex. “mastodon.social”"
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "O login falhou. Por favor tente novamente, ou em outro servidor."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -3855,7 +3855,7 @@ msgstr "Menções privadas"
 
 #: src/pages/mentions.jsx:221
 msgid "Only followings"
-msgstr ""
+msgstr "Apenas seguindo"
 
 #: src/pages/mentions.jsx:247
 msgid "Private"
@@ -4169,15 +4169,15 @@ msgstr "Sincronizado"
 
 #: src/pages/settings.jsx:285
 msgid "Default visibility updated"
-msgstr ""
+msgstr "Visibilidade padrão atualizada"
 
 #: src/pages/settings.jsx:287
 msgid "Failed to update default visibility"
-msgstr ""
+msgstr "Falha na atualização da visibilidade padrão"
 
 #: src/pages/settings.jsx:358
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Sincronizado com as configurações do seu servidor. <0>Vá ao seu servidor ({instance}) para mais configurações.</0>"
 
 #: src/pages/settings.jsx:373
 msgid "Experiments"
@@ -4222,11 +4222,11 @@ msgstr "Exibe tradução automaticamente para publicações na timeline. Somente
 
 #: src/pages/settings.jsx:577
 msgid "Paginated timeline (beta)"
-msgstr ""
+msgstr "Linha do tempo paginada (beta)"
 
 #: src/pages/settings.jsx:581
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
-msgstr ""
+msgstr "Paginação manual de posts na linha do tempo ao invés de rolagem infinita. Funciona apenas para Home e Seguindo por enquanto. Auto atualização e carrossel de boosts não vão funcionar quando isto está ligado."
 
 #: src/pages/settings.jsx:601
 msgid "GIF Picker for composer"
@@ -4258,7 +4258,7 @@ msgstr "⚠️⚠️⚠️ Muito experimental.<0/>Armazenado nas notas do seu pe
 
 #: src/pages/settings.jsx:690
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "Nota: Este recurso utiliza o API do servidor conectado atualmente."
 
 #: src/pages/settings.jsx:706
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4270,7 +4270,7 @@ msgstr "Substituir os textos por blocos, útil ao fazer capturas de tela, por ra
 
 #: src/pages/settings.jsx:744
 msgid "Install {CLIENT_NAME}"
-msgstr ""
+msgstr "Instalar {CLIENT_NAME}"
 
 #: src/pages/settings.jsx:752
 msgid "About"
@@ -4387,7 +4387,7 @@ msgstr "Você não está conectado. Interações como (respostas, impulsos, etc.
 
 #: src/pages/status.jsx:1108
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Este post é de outro servidor (<0>{instance}</0>). Interações (respostas, boosts etc.) não são possíveis."
 
 #: src/pages/status.jsx:1136
 msgid "Error: {e}"
@@ -4395,7 +4395,7 @@ msgstr "Erro: {e}"
 
 #: src/pages/status.jsx:1143
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Mudar para o meu servidor para poder interagir"
 
 #: src/pages/status.jsx:1251
 msgid "Unable to load replies."
@@ -4403,11 +4403,11 @@ msgstr "Impossível carregar respostas."
 
 #: src/pages/status.jsx:1307
 msgid "{months, plural, one {# month later} other {# months later}}"
-msgstr ""
+msgstr "{months, plural, one {# mês depois} other {# meses depois}}"
 
 #: src/pages/status.jsx:1313
 msgid "{years, plural, one {# year later} other {# years later}}"
-msgstr ""
+msgstr "{years, plural, one {# ano depois} other {# anos depois}}"
 
 #: src/pages/status.jsx:1445
 msgid "Back"
@@ -4446,11 +4446,11 @@ msgstr "Impossível alterar"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1651
 msgid "Switch to post's server ({0})"
-msgstr ""
+msgstr "Mudar para o servidor do post ({0})"
 
 #: src/pages/status.jsx:1654
 msgid "Switch to post's server"
-msgstr ""
+msgstr "Mudar para o servidor do post"
 
 #: src/pages/status.jsx:1667
 msgid "View Edit History Snapshots"

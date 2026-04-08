@@ -566,6 +566,15 @@
   line-height: 1.25;
   flex-shrink: 0;
   max-width: calc(100% - 12px - 2em);
+
+  &.profile-verified {
+    background-image: radial-gradient(
+      farthest-corner,
+      var(--green-bg-color) 25%,
+      transparent
+    );
+    text-shadow: 0 1px var(--bg-color);
+  }
 }
 .account-container .profile-field:only-child {
   max-width: 100%;

@@ -474,7 +474,9 @@ function MediaAttachment({
                               try {
                                 const body = new FormData();
                                 const fileObj = fileData
-                                  ? new File([fileData], fileName || 'upload', { type })
+                                  ? new File([fileData], fileName || 'upload', {
+                                      type,
+                                    })
                                   : file;
                                 body.append('image', fileObj);
                                 const response = await fetch(IMG_ALT_API_URL, {
@@ -526,7 +528,11 @@ function MediaAttachment({
                                 try {
                                   const body = new FormData();
                                   const fileObj = fileData
-                                    ? new File([fileData], fileName || 'upload', { type })
+                                    ? new File(
+                                        [fileData],
+                                        fileName || 'upload',
+                                        { type },
+                                      )
                                     : file;
                                   body.append('image', fileObj);
                                   const params = `?lang=${lang}`;

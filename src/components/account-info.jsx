@@ -177,6 +177,7 @@ function AccountInfo({
     acct,
     avatar,
     avatarStatic,
+    avatarDescription,
     bot,
     createdAt,
     displayName,
@@ -187,6 +188,7 @@ function AccountInfo({
     group,
     // header,
     // headerStatic,
+    headerDescription,
     id,
     lastStatusAt,
     locked,
@@ -477,7 +479,7 @@ function AccountInfo({
               {!!header && !/missing\.png$/.test(header) && (
                 <img
                   src={header}
-                  alt=""
+                  alt={headerDescription || ''}
                   class={`header-banner ${
                     headerIsAvatar ? 'header-is-avatar' : ''
                   }`}
@@ -599,6 +601,7 @@ function AccountInfo({
                           account={info}
                           instance={instance}
                           avatarSize="xxxl"
+                          avatarDescription={avatarDescription}
                           onClick={() => {}}
                         />
                       </div>
@@ -658,6 +661,7 @@ function AccountInfo({
                             {
                               type: 'image',
                               url: avatarStatic,
+                              description: avatarDescription,
                             },
                           ],
                         };
@@ -676,6 +680,7 @@ function AccountInfo({
                               {
                                 type: 'image',
                                 url: headerStatic,
+                                description: headerDescription,
                               },
                             ],
                           };

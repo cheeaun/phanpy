@@ -1237,6 +1237,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               level={level}
               accWeight={weight}
               openAll={totalDescendants.current < SUBCOMMENTS_OPEN_ALL_LIMIT}
+              lazyRenderReplies={totalDescendants.current > LIMIT}
               parentLink={{
                 to: instance ? `/${instance}/s/${statusID}` : `/s/${statusID}`,
                 onClick: () => resetScrollPosition(statusID),
@@ -1296,8 +1297,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     return STATUS_URL_REGEX.test(states.prevLocation?.pathname);
   }, [sKey]);
 
-  const moreStatusesKeys = useMemo(() => {
-    if (!showMore) return [];
+  const allStatusesKeys = useMemo(() => {
     const ids = [];
     function getIDs(status) {
       ids.push(status.id);
@@ -1305,9 +1305,9 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
         status.replies.forEach(getIDs);
       }
     }
-    statuses.slice(limit).forEach(getIDs);
+    statuses.forEach(getIDs);
     return ids.map((id) => statusKey(id, instance));
-  }, [showMore, statuses, limit, instance]);
+  }, [statuses, instance]);
 
   // Helper function to format time differences between two dates
   function formatTimeGap(months) {
@@ -1697,7 +1697,6 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   disabled={uiState === 'loading'}
                   onClick={() => setLimit((l) => l + LIMIT)}
                   style={{ marginBlockEnd: '6em' }}
-                  data-state-post-ids={moreStatusesKeys.join(' ')}
                 >
                   <div class="ib avatars-bunch">
                     {/* show avatars for first 5 statuses */}
@@ -1745,6 +1744,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             )}
           </>
         )}
+        <div data-state-post-ids={allStatusesKeys.join(' ')} hidden />
       </div>
     </ThreadCountContext.Provider>
   );
@@ -1758,6 +1758,7 @@ function SubComments({
   accWeight,
   openAll,
   parentLink,
+  lazyRenderReplies,
 }) {
   const { t } = useLingui();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -1820,15 +1821,14 @@ function SubComments({
     };
   }, []);
 
-  // If not open, delay render replies
-  const [renderReplies, setRenderReplies] = useState(openBefore || open);
+  const [isOpen, setIsOpen] = useState(openBefore || open);
+
+  // If lazyRenderReplies, only render when open; else always render
+  const shouldRenderReplies = lazyRenderReplies ? isOpen : true;
+  const [renderReplies, setRenderReplies] = useState(shouldRenderReplies);
   useEffect(() => {
-    let timer;
-    if (!openBefore && !open) {
-      timer = setTimeout(() => setRenderReplies(true), 100);
-    }
-    return () => clearTimeout(timer);
-  }, [openBefore, open]);
+    setRenderReplies(shouldRenderReplies);
+  }, [shouldRenderReplies]);
 
   const Container = open ? 'div' : 'details';
   const isDetails = Container === 'details';
@@ -1842,6 +1842,7 @@ function SubComments({
         isDetails
           ? (e) => {
               const { open } = e.target;
+              setIsOpen(open);
               // use first reply as ID
               cachedRepliesToggle[replies[0].id] = open;
             }
@@ -1952,6 +1953,7 @@ function SubComments({
                   level={r.level}
                   accWeight={!open ? r.weight : totalWeight}
                   openAll={openAll}
+                  lazyRenderReplies={lazyRenderReplies}
                   parentLink={{
                     to: instance ? `/${instance}/s/${r.id}` : `/s/${r.id}`,
                     onClick: () => {

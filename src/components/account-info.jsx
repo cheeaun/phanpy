@@ -413,10 +413,7 @@ function AccountInfo({
               </p>
             )}
             {isString && (
-              <button
-                type="button"
-                onClick={reload}
-              >
+              <button type="button" onClick={reload}>
                 <Trans>Try again</Trans>
               </button>
             )}

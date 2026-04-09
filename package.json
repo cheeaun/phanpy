@@ -72,6 +72,8 @@
     "web-haptics": "~0.0.6"
   },
   "devDependencies": {
+    "@emnapi/core": "~1.9.2",
+    "@emnapi/runtime": "~1.9.2",
     "@iconify/utils": "~3.1.0",
     "@lingui/babel-plugin-lingui-macro": "~5.9.5",
     "@lingui/cli": "~5.9.5",
@@ -100,6 +102,7 @@
     "workbox-strategies": "~7.4.0"
   },
   "//notes": [
+    "@emnapi/core and @emnapi/runtime are temporary fixes for https://github.com/napi-rs/napi-rs/issues/3174",
     "react-quick-pinch-zoom requires prop-types",
     "playwright uses @types/node"
   ],

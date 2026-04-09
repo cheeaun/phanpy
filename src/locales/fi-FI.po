@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-08 18:02\n"
+"PO-Revision-Date: 2026-04-09 18:09\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -33,12 +33,12 @@ msgid "Last posted: {0}"
 msgstr "Julkaissut viimeksi: {0}"
 
 #: src/components/account-block.jsx:172
-#: src/components/account-info.jsx:731
+#: src/components/account-info.jsx:738
 msgid "Automated"
 msgstr "Botti"
 
 #: src/components/account-block.jsx:179
-#: src/components/account-info.jsx:736
+#: src/components/account-info.jsx:743
 #: src/components/status.jsx:607
 msgid "Group"
 msgstr "Ryhmä"
@@ -67,14 +67,14 @@ msgid "{followersCount, plural, one {# follower} other {# followers}}"
 msgstr "{followersCount, plural, one {# seuraaja} other {# seuraajaa}}"
 
 #: src/components/account-block.jsx:218
-#: src/components/account-info.jsx:779
+#: src/components/account-info.jsx:786
 msgid "Verified"
 msgstr "Vahvistettu"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:233
-#: src/components/account-info.jsx:918
+#: src/components/account-info.jsx:925
 msgid "Joined <0>{0}</0>"
 msgstr "Liittynyt <0>{0}</0>"
 
@@ -87,7 +87,7 @@ msgid "server domain name"
 msgstr "palvelimen verkkotunnus"
 
 #: src/components/account-info-mini.jsx:57
-#: src/components/account-info.jsx:801
+#: src/components/account-info.jsx:808
 #: src/components/compose.jsx:2048
 #: src/pages/settings.jsx:300
 #: src/utils/visibility-text.jsx:7
@@ -96,94 +96,104 @@ msgstr "Seuraajat"
 
 #: src/components/account-info-mini.jsx:61
 #: src/components/account-info-mini.jsx:100
-#: src/components/account-info.jsx:808
-#: src/components/account-info.jsx:866
+#: src/components/account-info.jsx:815
+#: src/components/account-info.jsx:873
 msgid "This user has chosen to not make this information available."
 msgstr "Käyttäjä on päättänyt pitää nämä tiedot yksityisinä."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info-mini.jsx:67
-#: src/components/account-info.jsx:828
+#: src/components/account-info.jsx:835
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> seuraaja} other {<1>{1}</1> seuraajaa}}"
 
 #. js-lingui-explicit-id
 #: src/components/account-info-mini.jsx:93
-#: src/components/account-info.jsx:856
+#: src/components/account-info.jsx:863
 msgid "following.stats"
 msgstr "Seurattavat"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info-mini.jsx:106
-#: src/components/account-info.jsx:872
+#: src/components/account-info.jsx:879
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, one {<0>{0}</0> seurattava}other {<0>{0}</0> seurattavaa}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info-mini.jsx:119
-#: src/components/account-info.jsx:896
+#: src/components/account-info.jsx:903
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> julkaisu} other {<1>{1}</1> julkaisua}}"
 
-#: src/components/account-info.jsx:124
+#: src/components/account-info.jsx:125
 msgid "View profile"
 msgstr "Näytä profiili"
 
-#: src/components/account-info.jsx:394
+#: src/components/account-info.jsx:396
 msgid "Unable to load account."
 msgstr "Tiliä ei voitu ladata."
 
-#: src/components/account-info.jsx:409
+#: src/components/account-info.jsx:411
 msgid "Go to account page"
 msgstr "Siirry tilisivulle"
 
-#: src/components/account-info.jsx:464
+#: src/components/account-info.jsx:417
+#: src/components/timeline.jsx:656
+#: src/components/timeline2.jsx:685
+#: src/pages/home.jsx:243
+#: src/pages/notifications.jsx:1012
+#: src/pages/status.jsx:1269
+#: src/pages/status.jsx:1741
+msgid "Try again"
+msgstr "Yritä uudelleen"
+
+#: src/components/account-info.jsx:471
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> on ilmoittanut, että hänen uusi tilinsä on nyt:"
 
-#: src/components/account-info.jsx:620
+#: src/components/account-info.jsx:627
 #: src/components/related-actions.jsx:530
 msgid "Handle copied"
 msgstr "Käyttäjätunnus kopioitu"
 
-#: src/components/account-info.jsx:623
+#: src/components/account-info.jsx:630
 #: src/components/related-actions.jsx:533
 msgid "Unable to copy handle"
 msgstr "Käyttäjätunnusta ei voitu kopioida"
 
-#: src/components/account-info.jsx:629
+#: src/components/account-info.jsx:636
 #: src/components/related-actions.jsx:539
 msgid "Copy handle"
 msgstr "Kopioi käyttäjätunnus"
 
-#: src/components/account-info.jsx:647
+#: src/components/account-info.jsx:654
 #: src/components/related-actions.jsx:255
 #: src/components/related-actions.jsx:604
 #: src/components/shortcuts-settings.jsx:1099
 msgid "QR code"
 msgstr "QR‐koodi"
 
-#: src/components/account-info.jsx:653
+#: src/components/account-info.jsx:660
 msgid "Go to original profile page"
 msgstr "Siirry alkuperäiselle profiilisivulle"
 
-#: src/components/account-info.jsx:672
+#: src/components/account-info.jsx:679
 msgid "View profile image"
 msgstr "Näytä profiilikuva"
 
-#: src/components/account-info.jsx:691
+#: src/components/account-info.jsx:698
 msgid "View profile header"
 msgstr "Näytä profiilin otsake"
 
-#: src/components/account-info.jsx:707
+#: src/components/account-info.jsx:714
 #: src/components/edit-profile-sheet.jsx:94
 #: src/components/related-actions.jsx:856
 msgid "Edit profile"
 msgstr "Muokkaa profiilia"
 
-#: src/components/account-info.jsx:726
+#: src/components/account-info.jsx:733
 msgid "In Memoriam"
 msgstr "Muistoissamme"
 
@@ -191,14 +201,14 @@ msgstr "Muistoissamme"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:953
+#: src/components/account-info.jsx:960
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} alkuperäistä julkaisua, {1} vastausta, {2} lainausta, {3} tehostusta"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:970
+#: src/components/account-info.jsx:977
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} alkuperäistä julkaisua, {1} vastausta, {2} tehostusta"
 
@@ -209,23 +219,23 @@ msgstr "{0} alkuperäistä julkaisua, {1} vastausta, {2} tehostusta"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:987
+#: src/components/account-info.jsx:994
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {Viimeisin julkaisu viime päivänä} other {Viimeisin julkaisu viimeisenä {2} päivänä}}} other {{3, plural, one {Viimeiset {4} julkaisua viime päivänä} other {Viimeiset {5} julkaisua viimeisenä {6} päivänä}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:1003
+#: src/components/account-info.jsx:1010
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Viimeisen julkaisu viime vuosina} other {Viimeiset {1} julkaisua viime vuosina}}"
 
-#: src/components/account-info.jsx:1061
+#: src/components/account-info.jsx:1068
 #: src/pages/catchup.jsx:73
 #: src/pages/year-in-posts.jsx:1390
 msgid "Original"
 msgstr "Alkuperäiset"
 
-#: src/components/account-info.jsx:1065
+#: src/components/account-info.jsx:1072
 #: src/components/status.jsx:2785
 #: src/pages/account-statuses.jsx:428
 #: src/pages/catchup.jsx:74
@@ -237,7 +247,7 @@ msgstr "Alkuperäiset"
 msgid "Replies"
 msgstr "Vastaukset"
 
-#: src/components/account-info.jsx:1070
+#: src/components/account-info.jsx:1077
 #: src/components/quotes-modal.jsx:81
 #: src/components/status.jsx:2790
 #: src/pages/catchup.jsx:75
@@ -246,7 +256,7 @@ msgstr "Vastaukset"
 msgid "Quotes"
 msgstr "Lainaukset"
 
-#: src/components/account-info.jsx:1075
+#: src/components/account-info.jsx:1082
 #: src/pages/account-statuses.jsx:444
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1596
@@ -256,11 +266,11 @@ msgstr "Lainaukset"
 msgid "Boosts"
 msgstr "Tehostukset"
 
-#: src/components/account-info.jsx:1081
+#: src/components/account-info.jsx:1088
 msgid "Post stats unavailable."
 msgstr "Julkaisutilastoja ei saatavilla."
 
-#: src/components/account-info.jsx:1108
+#: src/components/account-info.jsx:1115
 msgid "View post stats"
 msgstr "Näytä julkaisutilastot"
 
@@ -2998,15 +3008,6 @@ msgstr "{index}/X"
 msgid "New posts"
 msgstr "Uudet julkaisut"
 
-#: src/components/timeline.jsx:656
-#: src/components/timeline2.jsx:685
-#: src/pages/home.jsx:243
-#: src/pages/notifications.jsx:1012
-#: src/pages/status.jsx:1269
-#: src/pages/status.jsx:1741
-msgid "Try again"
-msgstr "Yritä uudelleen"
-
 #. placeholder {0}: fItems.length
 #: src/components/timeline.jsx:691
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
@@ -3084,19 +3085,19 @@ msgstr "Tilin julkaisut"
 
 #: src/pages/account-statuses.jsx:294
 msgid "Media posts tagged #{tagged} by {accountDisplay}"
-msgstr ""
+msgstr "Mediajulkaisut tunnisteella #{tagged} käyttäjältä {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:296
 msgid "Posts tagged #{tagged} by {accountDisplay}"
-msgstr ""
+msgstr "Julkaisut tunnisteella #{tagged} käyttäjältä {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:303
 msgid "Posts in {monthYear} by {accountDisplay}"
-msgstr ""
+msgstr "Julkaisut ajalta {monthYear} käyttäjältä {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:305
 msgid "Media posts by {accountDisplay}"
-msgstr ""
+msgstr "Mediajulkaisut käyttäjältä {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:394
 #: src/pages/account-statuses.jsx:403
@@ -3106,19 +3107,19 @@ msgstr "Palauta suodattimet"
 
 #: src/pages/account-statuses.jsx:422
 msgid "Showing replies"
-msgstr ""
+msgstr "Näytetään vastaukset"
 
 #: src/pages/account-statuses.jsx:424
 msgid "Hiding replies"
-msgstr ""
+msgstr "Piilotetaan vastaukset"
 
 #: src/pages/account-statuses.jsx:438
 msgid "Showing boosts"
-msgstr ""
+msgstr "Näytetään tehostukset"
 
 #: src/pages/account-statuses.jsx:440
 msgid "Hiding boosts"
-msgstr ""
+msgstr "Piilotetaan tehostukset"
 
 #: src/pages/account-statuses.jsx:457
 msgid "Showing posts with media"

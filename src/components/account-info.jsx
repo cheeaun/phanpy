@@ -7,6 +7,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useReducer,
   useRef,
   useState,
 } from 'preact/hooks';
@@ -147,6 +148,7 @@ function AccountInfo({
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
+  const [reloadCount, reload] = useReducer((c) => c + 1, 0);
 
   const sameCurrentInstance = useMemo(
     () => instance === currentInstance,
@@ -171,7 +173,7 @@ function AccountInfo({
         setUIState('error');
       }
     })();
-  }, [isString, account, fetchAccount]);
+  }, [isString, account, fetchAccount, reloadCount]);
 
   const {
     acct,
@@ -409,6 +411,14 @@ function AccountInfo({
                   <Trans>Go to account page</Trans> <Icon icon="external" />
                 </a>
               </p>
+            )}
+            {isString && (
+              <button
+                type="button"
+                onClick={reload}
+              >
+                <Trans>Try again</Trans>
+              </button>
             )}
           </div>
         )}

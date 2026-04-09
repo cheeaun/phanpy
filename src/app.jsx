@@ -120,15 +120,18 @@ window.__STATES_STATS__ = () => {
   console.warn('STATE stats', counts);
 
   const { statuses } = states;
-  const unmountedPosts = [];
-  for (const key in statuses) {
-    const $post = document.querySelector(
-      `[data-state-post-id~="${key}"], [data-state-post-ids~="${key}"]`,
-    );
-    if (!$post) {
-      unmountedPosts.push(key);
-    }
-  }
+  const mountedKeys = new Set();
+  document
+    .querySelectorAll('[data-state-post-id], [data-state-post-ids]')
+    .forEach(($post) => {
+      const id = $post.dataset.statePostId;
+      const ids = $post.dataset.statePostIds;
+      if (id) mountedKeys.add(id);
+      if (ids) ids.split(/\s+/).forEach((key) => mountedKeys.add(key));
+    });
+  const unmountedPosts = Object.keys(statuses).filter(
+    (key) => !mountedKeys.has(key),
+  );
   console.warn('Unmounted posts', unmountedPosts.length, unmountedPosts);
 };
 
@@ -141,16 +144,22 @@ setInterval(
     const { statuses, unfurledLinks, notifications } = states;
     let keysCount = 0;
     const { instance } = api();
+    const mountedKeys = new Set();
+    document
+      .querySelectorAll('[data-state-post-id], [data-state-post-ids]')
+      .forEach(($post) => {
+        const id = $post.dataset.statePostId;
+        const ids = $post.dataset.statePostIds;
+        if (id) mountedKeys.add(id);
+        if (ids) ids.split(/\s+/).forEach((key) => mountedKeys.add(key));
+      });
     for (const key in statuses) {
       if (!window.__IDLE__) break;
       try {
-        const $post = document.querySelector(
-          `[data-state-post-id~="${key}"], [data-state-post-ids~="${key}"]`,
-        );
         const postInNotifications = notifications.some(
           (n) => key === statusKey(n.status?.id, instance),
         );
-        if (!$post && !postInNotifications) {
+        if (!mountedKeys.has(key) && !postInNotifications) {
           delete states.statuses[key];
           delete states.statusQuotes[key];
           for (const link in unfurledLinks) {

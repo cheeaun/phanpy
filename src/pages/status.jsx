@@ -1301,6 +1301,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     const ids = [];
     function getIDs(status) {
       ids.push(status.id);
+      const quoteId = status.quote?.quotedStatus?.id || status.quote?.id;
+      if (quoteId) {
+        ids.push(quoteId);
+      }
       if (status.replies) {
         status.replies.forEach(getIDs);
       }

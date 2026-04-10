@@ -48,7 +48,7 @@
   }
 
   .timeline-link-mentions {
-    .status .card {
+    .status :is(.card-byline, .card) {
       display: none;
     }
   }

@@ -370,6 +370,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16848873/medium/d8773fdb621f4c9c1b08d2c641fa519a.jpeg" alt="" width="16" height="16" /> AmaseCocoa (Japanese)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13170041/medium/603136896af17fc005fd592ce3f48717_default.png" alt="" width="16" height="16" /> BoFFire (Arabic, French, Kabyle)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12898464/medium/d3758a76b894bade4bf271c9b32ea69b.png" alt="" width="16" height="16" /> Brawaru (Russian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17653638/medium/2eb675fdb326ae5464ef556b7f4fad30.png" alt="" width="16" height="16" /> cairobraga (Catalan, Portuguese, Brazilian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15460040/medium/1cfcfe5f5511b783b5d9f2b968bad819.png" alt="" width="16" height="16" /> cbasje (Dutch)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15525631/medium/51293156034d0236f1a1020c10f7d539_default.png" alt="" width="16" height="16" /> cbo92 (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15910131/medium/67fab7eeab5551853450e76e2ef19e59.jpeg" alt="" width="16" height="16" /> CDN (Chinese Simplified)

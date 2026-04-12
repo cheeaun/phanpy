@@ -1,5 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+
 import DateTimeFormat, {
   refreshLocales,
 } from '../src/utils/date-time-format.js';

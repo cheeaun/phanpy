@@ -1,13 +1,13 @@
 import './settings.css';
 
+import '../components/button-install';
+
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useDebounce } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
-
-import '../components/button-install';
 
 import Icon from '../components/icon';
 import LangSelector from '../components/lang-selector';
@@ -82,6 +82,10 @@ function Settings({ onClose }) {
 
   const [expTabBarV2, setExpTabBarV2] = useState(
     store.local.get('experiments-tabBarV2') ?? false,
+  );
+
+  const [expTimeline2, setExpTimeline2] = useState(
+    store.local.get('experiments-timeline2') ?? false,
   );
 
   const disableQuotePolicy = prefs['posting:default:visibility'] === 'private';
@@ -551,6 +555,36 @@ function Settings({ onClose }) {
                       </small>
                     </p>
                   </div>
+                </div>
+              </li>
+            )}
+            {authenticated && (
+              <li class="block">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={expTimeline2}
+                    onChange={(e) => {
+                      const { checked } = e.target;
+                      setExpTimeline2(checked);
+                      if (checked) {
+                        store.local.set('experiments-timeline2', true);
+                      } else {
+                        store.local.del('experiments-timeline2');
+                      }
+                    }}
+                  />{' '}
+                  <Trans>Paginated timeline (beta)</Trans>
+                </label>
+                <div class="sub-section insignificant">
+                  <small>
+                    <Trans>
+                      Manual pagination of timeline posts instead of infinite
+                      scrolling. Only works for Home/Following timeline for now.
+                      Auto refresh and boosts carousel will not work when this
+                      is enabled.
+                    </Trans>
+                  </small>
                 </div>
               </li>
             )}

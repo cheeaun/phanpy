@@ -59,14 +59,14 @@ function TextExpander({ onTrigger = null, ...props }, ref) {
   useEffect(() => {
     if (searcherRef.current) return; // Already set up
 
-    getCustomEmojis(instance, masto)
+    getCustomEmojis(instance)
       .then(([, searcher]) => {
         searcherRef.current = searcher;
       })
       .catch((e) => {
         console.error(e);
       });
-  }, [instance, masto]);
+  }, [instance]);
 
   useEffect(() => {
     const textExpander = textExpanderRef.current;

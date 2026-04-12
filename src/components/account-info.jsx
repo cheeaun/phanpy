@@ -7,6 +7,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useReducer,
   useRef,
   useState,
 } from 'preact/hooks';
@@ -147,6 +148,7 @@ function AccountInfo({
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
+  const [reloadCount, reload] = useReducer((c) => c + 1, 0);
 
   const sameCurrentInstance = useMemo(
     () => instance === currentInstance,
@@ -171,12 +173,13 @@ function AccountInfo({
         setUIState('error');
       }
     })();
-  }, [isString, account, fetchAccount]);
+  }, [isString, account, fetchAccount, reloadCount]);
 
   const {
     acct,
     avatar,
     avatarStatic,
+    avatarDescription,
     bot,
     createdAt,
     displayName,
@@ -187,6 +190,7 @@ function AccountInfo({
     group,
     // header,
     // headerStatic,
+    headerDescription,
     id,
     lastStatusAt,
     locked,
@@ -408,6 +412,11 @@ function AccountInfo({
                 </a>
               </p>
             )}
+            {isString && (
+              <button type="button" onClick={reload}>
+                <Trans>Try again</Trans>
+              </button>
+            )}
           </div>
         )}
         {uiState === 'loading' ? (
@@ -477,7 +486,7 @@ function AccountInfo({
               {!!header && !/missing\.png$/.test(header) && (
                 <img
                   src={header}
-                  alt=""
+                  alt={headerDescription || ''}
                   class={`header-banner ${
                     headerIsAvatar ? 'header-is-avatar' : ''
                   }`}
@@ -599,6 +608,7 @@ function AccountInfo({
                           account={info}
                           instance={instance}
                           avatarSize="xxxl"
+                          avatarDescription={avatarDescription}
                           onClick={() => {}}
                         />
                       </div>
@@ -658,6 +668,7 @@ function AccountInfo({
                             {
                               type: 'image',
                               url: avatarStatic,
+                              description: avatarDescription,
                             },
                           ],
                         };
@@ -676,6 +687,7 @@ function AccountInfo({
                               {
                                 type: 'image',
                                 url: headerStatic,
+                                description: headerDescription,
                               },
                             ],
                           };

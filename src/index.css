@@ -35,6 +35,7 @@
   );
   --purple-bg-color: color-mix(in srgb, var(--purple-color) 10%, transparent);
   --green-color: darkgreen;
+  --green-bg-color: color-mix(in srgb, var(--green-color) 10%, transparent);
   --orange-color: darkorange;
   --orange-light-bg-color: color-mix(
     in srgb,
@@ -754,6 +755,34 @@ kbd {
     opacity: 0;
     height: 0;
     overflow: clip;
+  }
+}
+
+.lazy-render {
+  &:empty {
+    display: none;
+  }
+
+  overflow: clip;
+  will-change: opacity, height, margin-block, padding-block, border-block-width;
+  transition: 0.3s var(--timing-function) allow-discrete;
+  transition-property:
+    opacity, height, margin-block, padding-block, border-block-width;
+  &.hidden {
+    opacity: 0;
+    height: 0;
+    margin-block: 0;
+    padding-block: 0;
+    border-block-width: 0;
+  }
+  &:not(.hidden) {
+    @starting-style {
+      opacity: 0;
+      height: 0;
+      margin-block: 0;
+      padding-block: 0;
+      border-block-width: 0;
+    }
   }
 }
 

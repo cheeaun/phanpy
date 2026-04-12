@@ -6,6 +6,7 @@ import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
+import haptics from '../utils/haptics';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
 import openOSK from '../utils/open-osk';
@@ -137,7 +138,10 @@ export default function ComposeButton() {
         ref={buttonRef}
         type="button"
         id="compose-button"
-        onClick={handleButton}
+        onClick={(e) => {
+          haptics.trigger('light');
+          handleButton(e);
+        }}
         onContextMenu={(e) => {
           e.preventDefault();
           setMenuOpen(true);

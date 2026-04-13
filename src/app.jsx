@@ -124,8 +124,8 @@ window.__STATES_STATS__ = () => {
   document
     .querySelectorAll('[data-state-post-id], [data-state-post-ids]')
     .forEach(($post) => {
-      const id = $post.dataset.statePostId;
-      const ids = $post.dataset.statePostIds;
+      const id = $post.dataset.statePostId?.trim?.();
+      const ids = $post.dataset.statePostIds?.trim?.();
       if (id) mountedKeys.add(id);
       if (ids) ids.split(/\s+/).forEach((key) => mountedKeys.add(key));
     });

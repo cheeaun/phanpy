@@ -491,6 +491,7 @@ And here I am. Building a Mastodon web client.
 - [Mangane](https://github.com/BDX-town/Mangane)
 - [Fedideck](https://fedideck.app/)
 - [Elefeed](https://elefeed.app)
+- [SmolFedi](https://codeberg.org/adele/smolfedi)
 - [TheDesk](https://github.com/cutls/TheDesk) (archived)
 - [More...](https://github.com/hueyy/awesome-mastodon/#clients)
 

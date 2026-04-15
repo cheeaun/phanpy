@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-08 18:02\n"
+"PO-Revision-Date: 2026-04-15 09:53\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -33,12 +33,12 @@ msgid "Last posted: {0}"
 msgstr "Ultimo post: {0}"
 
 #: src/components/account-block.jsx:172
-#: src/components/account-info.jsx:731
+#: src/components/account-info.jsx:738
 msgid "Automated"
 msgstr "Automatizzato"
 
 #: src/components/account-block.jsx:179
-#: src/components/account-info.jsx:736
+#: src/components/account-info.jsx:743
 #: src/components/status.jsx:607
 msgid "Group"
 msgstr "Gruppo"
@@ -67,14 +67,14 @@ msgid "{followersCount, plural, one {# follower} other {# followers}}"
 msgstr "{followersCount, plural, one {# seguace} other {# seguaci}}"
 
 #: src/components/account-block.jsx:218
-#: src/components/account-info.jsx:779
+#: src/components/account-info.jsx:786
 msgid "Verified"
 msgstr "Verificato"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:233
-#: src/components/account-info.jsx:918
+#: src/components/account-info.jsx:925
 msgid "Joined <0>{0}</0>"
 msgstr "Iscrizione: <0>{0}</0>"
 
@@ -87,7 +87,7 @@ msgid "server domain name"
 msgstr "nome dominio del server"
 
 #: src/components/account-info-mini.jsx:57
-#: src/components/account-info.jsx:801
+#: src/components/account-info.jsx:808
 #: src/components/compose.jsx:2048
 #: src/pages/settings.jsx:300
 #: src/utils/visibility-text.jsx:7
@@ -96,94 +96,104 @@ msgstr "Seguaci"
 
 #: src/components/account-info-mini.jsx:61
 #: src/components/account-info-mini.jsx:100
-#: src/components/account-info.jsx:808
-#: src/components/account-info.jsx:866
+#: src/components/account-info.jsx:815
+#: src/components/account-info.jsx:873
 msgid "This user has chosen to not make this information available."
 msgstr "L'utente ha scelto di non condividere questa informazione."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info-mini.jsx:67
-#: src/components/account-info.jsx:828
+#: src/components/account-info.jsx:835
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> Seguace} other {<1>{1}</1> Seguaci}}"
 
 #. js-lingui-explicit-id
 #: src/components/account-info-mini.jsx:93
-#: src/components/account-info.jsx:856
+#: src/components/account-info.jsx:863
 msgid "following.stats"
 msgstr "Seguiti"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info-mini.jsx:106
-#: src/components/account-info.jsx:872
+#: src/components/account-info.jsx:879
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, one {<0>{0}</0> Seguito}other {<0>{0}</0> Seguiti}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info-mini.jsx:119
-#: src/components/account-info.jsx:896
+#: src/components/account-info.jsx:903
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Post}}"
 
-#: src/components/account-info.jsx:124
+#: src/components/account-info.jsx:125
 msgid "View profile"
 msgstr "Visualizza profilo"
 
-#: src/components/account-info.jsx:394
+#: src/components/account-info.jsx:396
 msgid "Unable to load account."
 msgstr "Impossibile caricare account."
 
-#: src/components/account-info.jsx:409
+#: src/components/account-info.jsx:411
 msgid "Go to account page"
 msgstr "Vai alla pagina dell'account"
 
-#: src/components/account-info.jsx:464
+#: src/components/account-info.jsx:417
+#: src/components/timeline.jsx:656
+#: src/components/timeline2.jsx:685
+#: src/pages/home.jsx:243
+#: src/pages/notifications.jsx:1012
+#: src/pages/status.jsx:1269
+#: src/pages/status.jsx:1745
+msgid "Try again"
+msgstr "Riprova"
+
+#: src/components/account-info.jsx:471
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> ha indicato che il suo nuovo account è ora:"
 
-#: src/components/account-info.jsx:620
+#: src/components/account-info.jsx:627
 #: src/components/related-actions.jsx:530
 msgid "Handle copied"
 msgstr "Nome utente copiato"
 
-#: src/components/account-info.jsx:623
+#: src/components/account-info.jsx:630
 #: src/components/related-actions.jsx:533
 msgid "Unable to copy handle"
 msgstr "Impossibile copiare nome utente"
 
-#: src/components/account-info.jsx:629
+#: src/components/account-info.jsx:636
 #: src/components/related-actions.jsx:539
 msgid "Copy handle"
 msgstr "Copia nome utente"
 
-#: src/components/account-info.jsx:647
+#: src/components/account-info.jsx:654
 #: src/components/related-actions.jsx:255
 #: src/components/related-actions.jsx:604
 #: src/components/shortcuts-settings.jsx:1099
 msgid "QR code"
 msgstr "Codice QR"
 
-#: src/components/account-info.jsx:653
+#: src/components/account-info.jsx:660
 msgid "Go to original profile page"
 msgstr "Vai alla pagina originale del profilo"
 
-#: src/components/account-info.jsx:672
+#: src/components/account-info.jsx:679
 msgid "View profile image"
 msgstr "Visualizza immagine di profilo"
 
-#: src/components/account-info.jsx:691
+#: src/components/account-info.jsx:698
 msgid "View profile header"
 msgstr "Visualizza immagine di copertina"
 
-#: src/components/account-info.jsx:707
+#: src/components/account-info.jsx:714
 #: src/components/edit-profile-sheet.jsx:94
 #: src/components/related-actions.jsx:856
 msgid "Edit profile"
 msgstr "Modifica profilo"
 
-#: src/components/account-info.jsx:726
+#: src/components/account-info.jsx:733
 msgid "In Memoriam"
 msgstr "In memoriam"
 
@@ -191,14 +201,14 @@ msgstr "In memoriam"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:953
+#: src/components/account-info.jsx:960
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} post originali, {1} risposte, {2} citazioni, {3} reblog"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:970
+#: src/components/account-info.jsx:977
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} post originali, {1} risposte, {2} reblog"
 
@@ -209,35 +219,35 @@ msgstr "{0} post originali, {1} risposte, {2} reblog"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:987
+#: src/components/account-info.jsx:994
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural,one {{1, plural,one {Ultimo post nell'ultimo giorno}other {Ultimo post negli ultimi {2} giorni}}} other {{3, plural,one {Ultimi {4} post nell'ultimo giorno} other {Ultimi {5} post negli ultimi {6} giorni}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:1003
+#: src/components/account-info.jsx:1010
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Ultimo post nell'ultimo anno(i)} other {Ultimi {1} post nell'ultimo anno(i)}}"
 
-#: src/components/account-info.jsx:1061
+#: src/components/account-info.jsx:1068
 #: src/pages/catchup.jsx:73
 #: src/pages/year-in-posts.jsx:1390
 msgid "Original"
 msgstr "Originali"
 
-#: src/components/account-info.jsx:1065
+#: src/components/account-info.jsx:1072
 #: src/components/status.jsx:2785
 #: src/pages/account-statuses.jsx:428
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1594
 #: src/pages/catchup.jsx:2249
 #: src/pages/status.jsx:1215
-#: src/pages/status.jsx:1941
+#: src/pages/status.jsx:1945
 #: src/pages/year-in-posts.jsx:1394
 msgid "Replies"
 msgstr "Risposte"
 
-#: src/components/account-info.jsx:1070
+#: src/components/account-info.jsx:1077
 #: src/components/quotes-modal.jsx:81
 #: src/components/status.jsx:2790
 #: src/pages/catchup.jsx:75
@@ -246,7 +256,7 @@ msgstr "Risposte"
 msgid "Quotes"
 msgstr "Citazioni"
 
-#: src/components/account-info.jsx:1075
+#: src/components/account-info.jsx:1082
 #: src/pages/account-statuses.jsx:444
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1596
@@ -256,11 +266,11 @@ msgstr "Citazioni"
 msgid "Boosts"
 msgstr "Reblog"
 
-#: src/components/account-info.jsx:1081
+#: src/components/account-info.jsx:1088
 msgid "Post stats unavailable."
 msgstr "Statistiche post non disponibili."
 
-#: src/components/account-info.jsx:1108
+#: src/components/account-info.jsx:1115
 msgid "View post stats"
 msgstr "Visualizza statistiche post"
 
@@ -304,7 +314,7 @@ msgstr "Visualizza statistiche post"
 #: src/pages/notifications.jsx:1056
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:104
-#: src/pages/status.jsx:1679
+#: src/pages/status.jsx:1683
 msgid "Close"
 msgstr "Chiudi"
 
@@ -847,7 +857,7 @@ msgstr "Account"
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:1036
 #: src/pages/search.jsx:576
-#: src/pages/status.jsx:1712
+#: src/pages/status.jsx:1716
 msgid "Show more…"
 msgstr "Mostra altro…"
 
@@ -1194,7 +1204,7 @@ msgstr "Descrizione contenuti"
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:147
 #: src/pages/scheduled-posts.jsx:89
-#: src/pages/status.jsx:1580
+#: src/pages/status.jsx:1584
 #: src/pages/trending.jsx:474
 msgid "More"
 msgstr "Altro"
@@ -1804,8 +1814,8 @@ msgstr "Mostra risultati"
 #: src/components/poll.jsx:411
 #: src/components/poll.jsx:413
 #: src/pages/scheduled-posts.jsx:100
-#: src/pages/status.jsx:1569
-#: src/pages/status.jsx:1592
+#: src/pages/status.jsx:1573
+#: src/pages/status.jsx:1596
 msgid "Refresh"
 msgstr "Ricarica"
 
@@ -2998,15 +3008,6 @@ msgstr "{index}/X"
 msgid "New posts"
 msgstr "Nuovi post"
 
-#: src/components/timeline.jsx:656
-#: src/components/timeline2.jsx:685
-#: src/pages/home.jsx:243
-#: src/pages/notifications.jsx:1012
-#: src/pages/status.jsx:1269
-#: src/pages/status.jsx:1741
-msgid "Try again"
-msgstr "Riprova"
-
 #. placeholder {0}: fItems.length
 #: src/components/timeline.jsx:691
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
@@ -3084,19 +3085,19 @@ msgstr "Post dell'account"
 
 #: src/pages/account-statuses.jsx:294
 msgid "Media posts tagged #{tagged} by {accountDisplay}"
-msgstr ""
+msgstr "Post con media e tag #{tagged} di {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:296
 msgid "Posts tagged #{tagged} by {accountDisplay}"
-msgstr ""
+msgstr "Post con tag #{tagged} di {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:303
 msgid "Posts in {monthYear} by {accountDisplay}"
-msgstr ""
+msgstr "Post di {monthYear} di {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:305
 msgid "Media posts by {accountDisplay}"
-msgstr ""
+msgstr "Post con media di {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:394
 #: src/pages/account-statuses.jsx:403
@@ -3106,19 +3107,19 @@ msgstr "Reimposta filtri"
 
 #: src/pages/account-statuses.jsx:422
 msgid "Showing replies"
-msgstr ""
+msgstr "Risposte visibili"
 
 #: src/pages/account-statuses.jsx:424
 msgid "Hiding replies"
-msgstr ""
+msgstr "Risposte nascoste"
 
 #: src/pages/account-statuses.jsx:438
 msgid "Showing boosts"
-msgstr ""
+msgstr "Reblog visibili"
 
 #: src/pages/account-statuses.jsx:440
 msgid "Hiding boosts"
-msgstr ""
+msgstr "Reblog nascosti"
 
 #: src/pages/account-statuses.jsx:457
 msgid "Showing posts with media"
@@ -4371,7 +4372,7 @@ msgstr "NOTA: Le notifiche push funzionano solo per <0>un account</0>."
 
 #. js-lingui-explicit-id
 #: src/pages/status.jsx:799
-#: src/pages/status.jsx:1493
+#: src/pages/status.jsx:1497
 msgid "post.title"
 msgstr "Post"
 
@@ -4395,77 +4396,77 @@ msgstr "Passa al mio server per abilitare le interazioni"
 msgid "Unable to load replies."
 msgstr "Impossibile caricare risposte."
 
-#: src/pages/status.jsx:1315
+#: src/pages/status.jsx:1319
 msgid "{months, plural, one {# month later} other {# months later}}"
 msgstr "{months, plural, one {# mese dopo} other {# mesi dopo}}"
 
-#: src/pages/status.jsx:1321
+#: src/pages/status.jsx:1325
 msgid "{years, plural, one {# year later} other {# years later}}"
 msgstr "{years, plural, one {# anno dopo} other {# anni dopo}}"
 
-#: src/pages/status.jsx:1453
+#: src/pages/status.jsx:1457
 msgid "Back"
 msgstr "Indietro"
 
-#: src/pages/status.jsx:1484
+#: src/pages/status.jsx:1488
 msgid "Go to main post"
 msgstr "Vai al post principale"
 
 #. placeholder {0}: ancestors.length
-#: src/pages/status.jsx:1507
+#: src/pages/status.jsx:1511
 msgid "{0} posts above ‒ Go to top"
 msgstr "{0} post sopra - Torna in cima"
 
-#: src/pages/status.jsx:1556
-#: src/pages/status.jsx:1619
+#: src/pages/status.jsx:1560
+#: src/pages/status.jsx:1623
 msgid "Switch to Side Peek view"
 msgstr "Passa a vista laterale"
 
-#: src/pages/status.jsx:1620
+#: src/pages/status.jsx:1624
 msgid "Switch to Full view"
 msgstr "Passa a vista completa"
 
-#: src/pages/status.jsx:1638
+#: src/pages/status.jsx:1642
 msgid "Show all sensitive content"
 msgstr "Mostra tutti i contenuti sensibili"
 
-#: src/pages/status.jsx:1643
+#: src/pages/status.jsx:1647
 msgid "Experimental"
 msgstr "Sperimentale"
 
-#: src/pages/status.jsx:1652
+#: src/pages/status.jsx:1656
 msgid "Unable to switch"
 msgstr "Impossibile cambiare"
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
-#: src/pages/status.jsx:1659
+#: src/pages/status.jsx:1663
 msgid "Switch to post's server ({0})"
 msgstr "Passa al server del post ({0})"
 
-#: src/pages/status.jsx:1662
+#: src/pages/status.jsx:1666
 msgid "Switch to post's server"
 msgstr "Passa al server del post"
 
-#: src/pages/status.jsx:1675
+#: src/pages/status.jsx:1679
 msgid "View Edit History Snapshots"
 msgstr "Visualizza istantanee della cronologia modifiche"
 
-#: src/pages/status.jsx:1732
+#: src/pages/status.jsx:1736
 msgid "Unable to load post"
 msgstr "Impossibile caricare post"
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)
-#: src/pages/status.jsx:1871
+#: src/pages/status.jsx:1875
 msgid "{0, plural, one {# reply} other {<0>{1}</0> replies}}"
 msgstr "{0, plural, one {# risposta} other {<0>{1}</0> risposte}}"
 
 #. placeholder {0}: shortenNumber(totalComments)
-#: src/pages/status.jsx:1889
+#: src/pages/status.jsx:1893
 msgid "{totalComments, plural, one {# comment} other {<0>{0}</0> comments}}"
 msgstr "{totalComments, plural, one {# commento} other {<0>{0}</0> commenti}}"
 
-#: src/pages/status.jsx:1911
+#: src/pages/status.jsx:1915
 msgid "View post with its replies"
 msgstr "Visualizza post con le risposte"
 

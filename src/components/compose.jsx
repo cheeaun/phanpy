@@ -1429,9 +1429,11 @@ function Compose({
                     );
                   }
                 } else {
-                  if (supportsNativeQuote() && currentQuoteStatus?.id) {
-                    params.quoted_status_id = currentQuoteStatus.id;
+                  if (supportsNativeQuote()) {
                     params.quote_approval_policy = quoteApprovalPolicy;
+                    if (currentQuoteStatus?.id) {
+                      params.quoted_status_id = currentQuoteStatus.id;
+                    }
                   }
                   params.visibility = visibility;
                   // params.inReplyToId = replyToStatus?.id || undefined;

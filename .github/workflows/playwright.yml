@@ -13,10 +13,10 @@ jobs:
     timeout-minutes: 60
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: 24
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers

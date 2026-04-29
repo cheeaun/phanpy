@@ -1,3 +1,5 @@
+import { useMemo } from 'preact/hooks';
+
 import { api } from '../utils/api';
 
 import Link from './link';
@@ -20,7 +22,7 @@ const extractTagsFromStatus = (content) => {
 
   const allLinks = fauxDiv.querySelectorAll('a[href]');
   for (const link of allLinks) {
-    const text = link.innerText.trim();
+    const text = link.textContent.trim();
     const isHashtagLink =
       link.classList.contains('hashtag') || HASHTAG_REGEX.test(text);
 
@@ -35,14 +37,17 @@ const extractTagsFromStatus = (content) => {
 export default function StatusTags({ tags, content }) {
   if (!tags?.length) return null;
 
-  const hashtagsInContent = extractTagsFromStatus(content);
-  const tagsToShow = tags.filter(
-    (tag) => !hashtagsInContent.some((ht) => isSameTag(ht, tag.name)),
-  );
+  const { instance } = api();
+
+  const tagsToShow = useMemo(() => {
+    const hashtagsInContent = extractTagsFromStatus(content);
+    if (!hashtagsInContent.length) return tags;
+    return tags.filter(
+      (tag) => !hashtagsInContent.some((ht) => isSameTag(ht, tag.name)),
+    );
+  }, [tags, content]);
 
   if (!tagsToShow.length) return null;
-
-  const { instance } = api();
 
   return (
     <ul class="status-tags">

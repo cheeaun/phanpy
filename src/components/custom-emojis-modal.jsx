@@ -21,7 +21,7 @@ const EMOJI_SIZE_MIN = 1;
 const EMOJI_SIZE_MAX = 2;
 const EMOJI_SIZE_STEP = 0.5;
 
-const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
+const CustomEmojiButton = memo(({ emoji, onSelect, showCode }) => {
   const addEdges = (e) => {
     // Add edge-left or edge-right class based on self position relative to scrollable parent
     // If near left edge, add edge-left, if near right edge, add edge-right
@@ -43,11 +43,15 @@ const CustomEmojiButton = memo(({ emoji, onClick, showCode }) => {
     }
   };
 
+  const handleClick = useCallback(() => {
+    onSelect(`:${emoji.shortcode}:`);
+  }, [onSelect, emoji.shortcode]);
+
   return (
     <button
       type="button"
       className="plain4"
-      onClick={onClick}
+      onClick={handleClick}
       data-title={showCode ? undefined : emoji.shortcode}
       onPointerEnter={addEdges}
       onFocus={addEdges}
@@ -89,9 +93,7 @@ const CustomEmojisList = memo(({ emojis, onSelect }) => {
         <CustomEmojiButton
           key={emoji.shortcode}
           emoji={emoji}
-          onClick={() => {
-            onSelect(`:${emoji.shortcode}:`);
-          }}
+          onSelect={onSelect}
         />
       ))}
       {showMore && (
@@ -110,8 +112,7 @@ const CustomEmojisList = memo(({ emojis, onSelect }) => {
 const CUSTOM_EMOJI_SIZE = 'composer-customEmojiSize';
 
 function CustomEmojisModal({
-  masto,
-  instance,
+  instance: propInstance,
   onClose = () => {},
   onSelect = () => {},
   defaultSearchTerm,
@@ -120,6 +121,9 @@ function CustomEmojisModal({
   const [uiState, setUIState] = useState('default');
   const customEmojisList = useRef([]);
   const [customEmojis, setCustomEmojis] = useState([]);
+  const [customInstance, setCustomInstance] = useState(null);
+  const instance = customInstance || propInstance;
+
   const recentlyUsedCustomEmojis = useMemo(
     () => store.account.get('recentlyUsedCustomEmojis') || [],
   );
@@ -128,7 +132,7 @@ function CustomEmojisModal({
     setUIState('loading');
     (async () => {
       try {
-        const [emojis, searcher] = await getCustomEmojis(instance, masto);
+        const [emojis, searcher] = await getCustomEmojis(instance);
         console.log('emojis', emojis);
         searcherRef.current = searcher;
         setCustomEmojis(emojis);
@@ -138,15 +142,11 @@ function CustomEmojisModal({
         console.error(e);
       }
     })();
-  }, []);
+  }, [instance]);
 
   const customEmojisCatList = useMemo(() => {
-    // Group emojis by category
-    const emojisCat = {
-      '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
-        customEmojis.find((e) => e.shortcode === emoji.shortcode),
-      ),
-    };
+    const shortcodeSet = new Set(customEmojis.map((e) => e.shortcode));
+    const categoryMap = new Map();
     const othersCat = [];
     customEmojis.forEach((emoji) => {
       customEmojisList.current?.push?.(emoji);
@@ -154,22 +154,31 @@ function CustomEmojisModal({
         othersCat.push(emoji);
         return;
       }
-      if (!emojisCat[emoji.category]) {
-        emojisCat[emoji.category] = [];
+      if (!categoryMap.has(emoji.category)) {
+        categoryMap.set(emoji.category, []);
       }
-      emojisCat[emoji.category].push(emoji);
+      categoryMap.get(emoji.category).push(emoji);
     });
+    const emojisCat = {
+      '--recent--': recentlyUsedCustomEmojis.filter((emoji) =>
+        shortcodeSet.has(emoji.shortcode),
+      ),
+    };
     if (othersCat.length) {
       emojisCat['--others--'] = othersCat;
+    }
+    for (const [category, list] of categoryMap) {
+      emojisCat[category] = list;
     }
     return emojisCat;
   }, [customEmojis]);
 
   const scrollableRef = useRef();
   const [matches, setMatches] = useState(null);
-  const [emojiSize, setEmojiSize] = useState(
-    store.local.get(CUSTOM_EMOJI_SIZE) || EMOJI_SIZE_MIN,
-  );
+  const [emojiSize, setEmojiSize] = useState(() => {
+    const stored = Number(store.local.get(CUSTOM_EMOJI_SIZE));
+    return stored && stored >= EMOJI_SIZE_MIN ? stored : EMOJI_SIZE_MIN;
+  });
   const onEmojiSizeDecrease = useCallback(() => {
     const newSize = Math.max(EMOJI_SIZE_MIN, emojiSize - EMOJI_SIZE_STEP);
     setEmojiSize(newSize);
@@ -280,7 +289,31 @@ function CustomEmojisModal({
           {uiState === 'loading' ? (
             <Loader />
           ) : (
-            <small class="insignificant"> • {instance}</small>
+            <small class="insignificant">
+              {' '}
+              •{' '}
+              {import.meta.env.DEV ? (
+                <button
+                  type="button"
+                  class="textual"
+                  onClick={() => {
+                    const newInstance = prompt(
+                      '[DEV] Change instance. Leave blank to reset',
+                      instance,
+                    );
+                    if (newInstance && newInstance.trim()) {
+                      setCustomInstance(newInstance.trim());
+                    } else {
+                      setCustomInstance(null);
+                    }
+                  }}
+                >
+                  {instance}
+                </button>
+              ) : (
+                instance
+              )}
+            </small>
           )}
         </div>
         {hasCustomEmojis && (
@@ -318,9 +351,7 @@ function CustomEmojisModal({
                   <li key={emoji.shortcode} class="custom-emojis-match">
                     <CustomEmojiButton
                       emoji={emoji}
-                      onClick={() => {
-                        onSelectEmoji(`:${emoji.shortcode}:`);
-                      }}
+                      onSelect={onSelectEmoji}
                       showCode
                     />
                   </li>

@@ -17,6 +17,7 @@ function AccountBlock({
   skeleton,
   account,
   avatarSize = 'xl',
+  avatarDescription,
   useAvatarStatic = false,
   instance,
   external,
@@ -114,6 +115,7 @@ function AccountBlock({
           staticUrl={useAvatarStatic ? undefined : avatarStatic}
           size={avatarSize}
           squircle={bot}
+          alt={avatarDescription || ''}
         />
       </div>
       <span class="account-block-content">

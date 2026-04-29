@@ -1,0 +1,109 @@
+.timeline-2-container {
+  scroll-behavior: auto;
+  overflow-anchor: auto;
+
+  > * {
+    /* overflow-anchor: none; */
+  }
+
+  .timeline-pagination {
+    border-bottom: var(--hairline-width) solid var(--divider-color);
+    display: flex;
+    gap: 1px;
+    background-color: var(--bg-faded-color);
+
+    @media (min-width: 40em) {
+      border-bottom: 0;
+      column-gap: 16px;
+    }
+
+    &.timeline-pagination-top {
+      @media (min-width: 40em) {
+        margin-block: 16px;
+      }
+
+      &.transitioning {
+        transition: 0.3s var(--timing-function);
+        transition-property: height, opacity, margin-block-start, transform;
+        @starting-style {
+          height: 0;
+          opacity: 0;
+          overflow: hidden;
+          margin-block-start: 0;
+          transform: scale(0.975);
+        }
+      }
+    }
+
+    &.timeline-pagination-bottom {
+      margin-block-end: 16px;
+      /* button {
+        height: 160px;
+      } */
+    }
+
+    button {
+      height: 44px;
+      background-color: var(--bg-color);
+      border-radius: 0;
+      backdrop-filter: none;
+      transition: width 0.3s var(--timing-function);
+
+      @media (min-width: 40em) {
+        border: 1px solid var(--divider-color);
+        border-radius: 16px;
+      }
+
+      > * {
+        opacity: 0.75;
+      }
+      &:hover {
+        filter: none !important;
+
+        > * {
+          opacity: 1;
+        }
+      }
+      &:active {
+        filter: brightness(0.9) !important;
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: var(--link-bg-hover-color);
+        }
+      }
+
+      > .loader-container {
+        opacity: 1;
+        margin: 0;
+      }
+    }
+  }
+
+  .timeline {
+    > li {
+      content-visibility: visible !important;
+      transition: 0.6s var(--timing-function);
+      transition-property: opacity, transform;
+    }
+  }
+
+  /* 20 = API call pagination limit */
+  &.scrolling-next {
+    .timeline > li {
+      @starting-style {
+        opacity: 0;
+        transform: translateY(44px) scale(0.975);
+      }
+    }
+  }
+  &.scrolling-prev {
+    .timeline > li {
+      @starting-style {
+        opacity: 0;
+        transform: translateY(-44px) scale(0.975);
+      }
+    }
+  }
+}

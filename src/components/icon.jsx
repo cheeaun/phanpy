@@ -1,8 +1,8 @@
 import { memo } from 'preact/compat';
 import { useEffect } from 'preact/hooks';
 
-import { ICONS } from './ICONS';
 import { ICON_NAMESPACE, useIconSprite } from './icon-sprite-manager';
+import { ICONS } from './ICONS';
 
 const SIZES = {
   xs: 8,

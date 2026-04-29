@@ -156,7 +156,11 @@ function Shortcuts() {
     {
       enabled: !isMultiColumnMode,
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) => {
+        // Allow number even with Shift (e.g. French AZERTY requires Shift for numbers)
+        if (/^[1-9]$/.test(e.key)) return false;
+        return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
+      },
     },
   );
 

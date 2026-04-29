@@ -17,9 +17,11 @@ import db from '../utils/db';
 import FilterContext from '../utils/filter-context';
 import { massageNotifications2 } from '../utils/group-notifications';
 import states, { saveStatus } from '../utils/states';
+import store from '../utils/store';
 import { getCurrentAccountNS } from '../utils/store-utils';
 
 import Following from './following';
+import Following2 from './following2';
 import {
   getGroupedNotifications,
   mastoFetchNotifications,
@@ -42,6 +44,11 @@ function Home() {
     })();
   }, []);
 
+  const expTimeline2 = useRef(false);
+  if (!expTimeline2.current) {
+    expTimeline2.current = store.local.get('experiments-timeline2') ?? false;
+  }
+
   return (
     <>
       {(snapStates.settings.shortcutsViewMode === 'multi-column' ||
@@ -49,6 +56,14 @@ function Home() {
           snapStates.settings.shortcutsColumnsMode)) &&
       !!snapStates.shortcuts?.length ? (
         <Columns />
+      ) : expTimeline2.current ? (
+        <Following2
+          title={_(msg`Home`)}
+          path="/"
+          id="home"
+          headerStart={false}
+          headerEnd={<NotificationsLink />}
+        />
       ) : (
         <Following
           title={_(msg`Home`)}

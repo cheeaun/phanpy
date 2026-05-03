@@ -645,6 +645,29 @@ function Notifications({ columnMode }) {
       },
     },
   );
+  
+  const dotRef = useHotkeys(
+    '.',
+    () => {
+      loadNotifications(true);
+      scrollableRef.current?.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => {
+        return (
+          e.metaKey ||
+          e.ctrlKey ||
+          e.altKey ||
+          e.shiftKey ||
+          e.key !== '.'
+        );
+      }
+    }
+  );
 
   const today = new Date();
   const todaySubHeading = useMemo(() => {
@@ -664,6 +687,7 @@ function Notifications({ columnMode }) {
         jRef.current = node;
         kRef.current = node;
         oRef.current = node;
+        dotRef.current = node;
       }}
       tabIndex="-1"
     >

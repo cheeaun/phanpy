@@ -645,7 +645,7 @@ function Notifications({ columnMode }) {
       },
     },
   );
-  
+
   const dotRef = useHotkeys(
     '.',
     () => {
@@ -659,14 +659,10 @@ function Notifications({ columnMode }) {
       useKey: true,
       ignoreEventWhen: (e) => {
         return (
-          e.metaKey ||
-          e.ctrlKey ||
-          e.altKey ||
-          e.shiftKey ||
-          e.key !== '.'
+          e.metaKey || e.ctrlKey || e.altKey || e.shiftKey || e.key !== '.'
         );
-      }
-    }
+      },
+    },
   );
 
   const today = new Date();

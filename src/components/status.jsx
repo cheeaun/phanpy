@@ -545,9 +545,9 @@ function Status({
   const createdAtDate = new Date(createdAt);
   const editedAtDate = new Date(editedAt);
 
-  let inReplyToAccountRef = mentions?.find(
-    (mention) => mention.id === inReplyToAccountId,
-  );
+  let inReplyToAccountRef =
+    status._atproto?.replyParentAccount ||
+    mentions?.find((mention) => mention.id === inReplyToAccountId);
   if (!inReplyToAccountRef && inReplyToAccountId === id) {
     inReplyToAccountRef = { url: accountURL, username, displayName };
   }

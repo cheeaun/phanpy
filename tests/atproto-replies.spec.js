@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test';
 
-import { postToStatus } from '../src/utils/atproto-adapter.js';
+import {
+  hydrateReplyParentAccounts,
+  postToStatus,
+} from '../src/utils/atproto-adapter.js';
 import { shouldShowReplyBadge } from '../src/utils/reply-badge.js';
 
 const parentUri = 'at://did:plc:parent/app.bsky.feed.post/root';
@@ -66,6 +69,10 @@ test.describe('ATProto reply mapping', () => {
       uri: parentUri,
       cid: 'parent-cid',
     });
+    expect(status._atproto.replyParentAccount).toMatchObject({
+      id: 'did:plc:parent',
+      username: 'parent.test',
+    });
   });
 
   test('falls back to the parent AT URI repo when the parent post is not hydrated', () => {
@@ -75,6 +82,36 @@ test.describe('ATProto reply mapping', () => {
     const status = postToStatus(item);
 
     expect(status.inReplyToAccountId).toBe('did:plc:parent');
+  });
+
+  test('batch hydrates missing parent actors before timeline render', async () => {
+    const item = feedReply({ reply: undefined });
+    delete item.reply;
+    const status = postToStatus(item);
+    let requestedActors;
+
+    await hydrateReplyParentAccounts([status], {
+      getProfiles: async ({ actors }) => {
+        requestedActors = actors;
+        return {
+          data: {
+            profiles: [
+              {
+                did: 'did:plc:parent',
+                handle: 'parent.test',
+                displayName: 'Parent',
+              },
+            ],
+          },
+        };
+      },
+    });
+
+    expect(requestedActors).toEqual(['did:plc:parent']);
+    expect(status._atproto.replyParentAccount).toMatchObject({
+      id: 'did:plc:parent',
+      username: 'parent.test',
+    });
   });
 
   test('shows Bluesky reply badges even when the reply mentions the parent actor', () => {

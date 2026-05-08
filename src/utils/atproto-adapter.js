@@ -8,11 +8,8 @@ import { createAtprotoExternalEmbed, getFirstPostURL } from './atproto-unfurl';
 
 const BSKY_APPVIEW = 'https://public.api.bsky.app';
 export const BSKY_INSTANCE = 'bsky.social';
-const BSKY_APPVIEW_DID = 'did:web:api.bsky.app';
-const BSKY_APPVIEW_SERVICE = `${BSKY_APPVIEW_DID}#bsky_appview`;
 const BSKY_DISCOVER_FEED =
   'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot';
-const SLINGSHOT = 'https://slingshot.microcosm.blue';
 const BSKY_VIDEO_SERVICE = 'https://video.bsky.app';
 const BSKY_VIDEO_SERVICE_DID = 'did:web:video.bsky.app';
 export { BSKY_PDS, resolveAtprotoLoginService };
@@ -331,10 +328,6 @@ function atUriRepo(uri) {
   return /^at:\/\/([^/]+)/.exec(uri || '')?.[1] || null;
 }
 
-function didHandle(did) {
-  return did || 'unknown.bsky.social';
-}
-
 function strongRef(value) {
   if (!value?.uri) return value;
   return {
@@ -345,85 +338,6 @@ function strongRef(value) {
 
 function isPostView(value) {
   return !!(value?.uri && value?.author && value?.record);
-}
-
-async function resolveSlingshotIdentifiers(dids) {
-  const uniqueDids = [...new Set(dids.filter(Boolean))];
-  const entries = await Promise.all(
-    uniqueDids.map(async (did) => {
-      const url = new URL(
-        '/xrpc/blue.microcosm.identity.resolveMiniDoc',
-        SLINGSHOT,
-      );
-      url.searchParams.set('identifier', did);
-      const res = await fetch(url).catch(() => null);
-      if (!res?.ok) return [did, null];
-      const data = await res.json().catch(() => null);
-      return [did, data?.status === 'error' ? null : data];
-    }),
-  );
-  return Object.fromEntries(entries);
-}
-
-function rawRecordToPostView(record, identifier) {
-  if (record?.status && record.status !== 'found') return null;
-  const uri = record?.uri;
-  const value = record?.value;
-  const did = atUriRepo(uri);
-  if (!uri || !value || value.$type !== 'app.bsky.feed.post' || !did) {
-    return null;
-  }
-  const handle = identifier?.handle || didHandle(did);
-  return {
-    uri,
-    cid: record.cid,
-    author: {
-      did,
-      handle,
-      displayName: handle,
-    },
-    record: value,
-    indexedAt: value.createdAt,
-    replyCount: 0,
-    repostCount: 0,
-    likeCount: 0,
-    quoteCount: 0,
-  };
-}
-
-export async function mergeSlingshotFeedRecords(
-  feed,
-  records = {},
-  identifiers = {},
-) {
-  const recordDids = Object.keys(records)
-    .map(atUriRepo)
-    .filter((did) => !identifiers[did]);
-  const resolvedIdentifiers = {
-    ...(await resolveSlingshotIdentifiers(recordDids)),
-    ...identifiers,
-  };
-  const postViews = Object.fromEntries(
-    Object.entries(records)
-      .map(([uri, record]) => [
-        uri,
-        rawRecordToPostView(record, resolvedIdentifiers[atUriRepo(uri)]),
-      ])
-      .filter(([, post]) => post),
-  );
-  const hydrateRef = (ref) => postViews[ref?.uri] || ref;
-  return feed.map((item) => {
-    const reply = item.reply || item.post?.record?.reply;
-    if (!reply) return item;
-    return {
-      ...item,
-      reply: {
-        ...item.reply,
-        root: hydrateRef(reply.root),
-        parent: hydrateRef(reply.parent),
-      },
-    };
-  });
 }
 
 function feedItemToStatuses(feedItem, agent) {
@@ -449,15 +363,6 @@ function feedItemToStatuses(feedItem, agent) {
 export function feedToStatuses(feed, agent) {
   return feed.flatMap((item) => feedItemToStatuses(item, agent));
 }
-
-const SLINGSHOT_REPLY_HYDRATION_SOURCES = [
-  { path: 'feed[].post.record.reply.parent', shape: 'strong-ref' },
-  { path: 'feed[].post.record.reply.root', shape: 'strong-ref' },
-  { path: 'feed[].post.record.reply.parent.uri', shape: 'at-uri' },
-  { path: 'feed[].post.record.reply.root.uri', shape: 'at-uri' },
-  { path: 'feed[].post.record.reply.parent.uri', shape: 'at-identifier' },
-  { path: 'feed[].post.record.reply.root.uri', shape: 'at-identifier' },
-];
 
 export function postToStatus(feedItemOrPost, agent) {
   const post = feedItemOrPost?.post || feedItemOrPost;
@@ -779,61 +684,6 @@ export function createAtprotoClient({
     agent.sessionManager.session = session;
   }
   const uploadedMedia = new Map();
-  const appViewAuthTokens = new Map();
-
-  async function getAppViewAuthToken(lxm) {
-    const cached = appViewAuthTokens.get(lxm);
-    const now = Date.now() / 1000;
-    if (cached && cached.exp > now + 30) return cached.token;
-    const exp = now + 60 * 5;
-    const token = await getServiceAuthToken({
-      agent,
-      aud: BSKY_APPVIEW_DID,
-      lxm,
-      exp,
-    });
-    appViewAuthTokens.set(lxm, { token, exp });
-    return token;
-  }
-
-  async function fetchSlingshotFeed({ xrpc, params, fetchDirect }) {
-    const body = {
-      xrpc,
-      atproto_proxy: BSKY_APPVIEW_SERVICE,
-      params,
-      hydration_sources: SLINGSHOT_REPLY_HYDRATION_SOURCES,
-    };
-    const token = await getAppViewAuthToken(xrpc).catch(() => null);
-    if (token) body.authorization = `Bearer ${token}`;
-
-    try {
-      const res = await fetch(
-        `${SLINGSHOT}/xrpc/com.bad-example.proxy.hydrateQueryResponse`,
-        {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify(body),
-        },
-      );
-      if (!res.ok) throw new Error(`Slingshot returned ${res.status}`);
-      const data = await res.json();
-      if (!Array.isArray(data.output?.feed)) {
-        throw new Error('Slingshot response missing feed');
-      }
-      return {
-        ...data.output,
-        feed: await mergeSlingshotFeedRecords(
-          data.output.feed,
-          data.records,
-          data.identifiers,
-        ),
-      };
-    } catch (error) {
-      console.warn('Slingshot feed hydration failed', error);
-      const res = await fetchDirect();
-      return res.data;
-    }
-  }
 
   const statusAPI = (id) => {
     const uri = decodeURIComponent(id);
@@ -1074,18 +924,13 @@ export function createAtprotoClient({
       } = {}) {
         if (pinned) return emptyCollection();
         return makeCollection(async (cursor) => {
-          const params = {
+          const res = await agent.getAuthorFeed({
             actor: normalizeActor(id),
             limit,
             cursor,
             filter: 'posts_with_replies',
-          };
-          const data = await fetchSlingshotFeed({
-            xrpc: 'app.bsky.feed.getAuthorFeed',
-            params,
-            fetchDirect: () => agent.getAuthorFeed(params),
           });
-          let items = feedToStatuses(data.feed, agent);
+          let items = feedToStatuses(res.data.feed, agent);
           if (excludeReplies) items = items.filter((item) => !item.inReplyToId);
           if (excludeReposts) items = items.filter((item) => !item.reblog);
           if (onlyMedia) {
@@ -1097,7 +942,7 @@ export function createAtprotoClient({
               item.tags?.some((itemTag) => itemTag.name?.toLowerCase() === tag),
             );
           }
-          return { cursor: data.cursor, items };
+          return { cursor: res.data.cursor, items };
         });
       },
     },
@@ -1508,15 +1353,10 @@ export function createAtprotoClient({
         home: {
           list({ limit = 20 } = {}) {
             return makeCollection(async (cursor) => {
-              const params = { limit, cursor };
-              const data = await fetchSlingshotFeed({
-                xrpc: 'app.bsky.feed.getTimeline',
-                params,
-                fetchDirect: () => agent.getTimeline(params),
-              });
+              const res = await agent.getTimeline({ limit, cursor });
               return {
-                cursor: data.cursor,
-                items: feedToStatuses(data.feed, agent),
+                cursor: res.data.cursor,
+                items: feedToStatuses(res.data.feed, agent),
               };
             });
           },
@@ -1524,19 +1364,14 @@ export function createAtprotoClient({
         public: {
           list({ limit = 20 } = {}) {
             return makeCollection(async (cursor) => {
-              const params = {
+              const res = await agent.app.bsky.feed.getFeed({
                 feed: BSKY_DISCOVER_FEED,
                 limit,
                 cursor,
-              };
-              const data = await fetchSlingshotFeed({
-                xrpc: 'app.bsky.feed.getFeed',
-                params,
-                fetchDirect: () => agent.app.bsky.feed.getFeed(params),
               });
               return {
-                cursor: data.cursor,
-                items: feedToStatuses(data.feed, agent),
+                cursor: res.data.cursor,
+                items: feedToStatuses(res.data.feed, agent),
               };
             });
           },
@@ -1595,20 +1430,14 @@ export function createAtprotoClient({
                     ? 'getFeed'
                     : 'getListFeed';
                   const key = method === 'getFeed' ? 'feed' : 'list';
-                  const xrpc = `app.bsky.feed.${method}`;
-                  const params = {
+                  const res = await agent.app.bsky.feed[method]({
                     [key]: uri,
                     limit,
                     cursor,
-                  };
-                  const data = await fetchSlingshotFeed({
-                    xrpc,
-                    params,
-                    fetchDirect: () => agent.app.bsky.feed[method](params),
                   });
                   return {
-                    cursor: data.cursor,
-                    items: feedToStatuses(data.feed, agent),
+                    cursor: res.data.cursor,
+                    items: feedToStatuses(res.data.feed, agent),
                   };
                 });
               },
@@ -1709,19 +1538,14 @@ export function createAtprotoClient({
       favourites: {
         list({ limit = 20 } = {}) {
           return makeCollection(async (cursor) => {
-            const params = {
+            const res = await agent.app.bsky.feed.getActorLikes({
               actor: agent.did,
               limit,
               cursor,
-            };
-            const data = await fetchSlingshotFeed({
-              xrpc: 'app.bsky.feed.getActorLikes',
-              params,
-              fetchDirect: () => agent.app.bsky.feed.getActorLikes(params),
             });
             return {
-              cursor: data.cursor,
-              items: feedToStatuses(data.feed, agent),
+              cursor: res.data.cursor,
+              items: feedToStatuses(res.data.feed, agent),
             };
           });
         },
@@ -1808,19 +1632,14 @@ export function createAtprotoClient({
         statuses: {
           list({ limit = 20 } = {}) {
             return makeCollection(async (cursor) => {
-              const params = {
+              const res = await agent.app.bsky.feed.getFeed({
                 feed: BSKY_DISCOVER_FEED,
                 limit,
                 cursor,
-              };
-              const data = await fetchSlingshotFeed({
-                xrpc: 'app.bsky.feed.getFeed',
-                params,
-                fetchDirect: () => agent.app.bsky.feed.getFeed(params),
               });
               return {
-                cursor: data.cursor,
-                items: feedToStatuses(data.feed, agent),
+                cursor: res.data.cursor,
+                items: feedToStatuses(res.data.feed, agent),
               };
             });
           },

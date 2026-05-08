@@ -4,6 +4,10 @@ import { getPdsEndpoint } from '@atproto/common-web';
 import { encodeAtprotoID } from './atproto-route';
 import { createAtprotoOAuthAgent } from './atproto-oauth';
 import {
+  createAtprotoExternalEmbed,
+  getFirstPostURL,
+} from './atproto-unfurl';
+import {
   BSKY_PDS,
   resolveAtprotoLoginService,
 } from './atproto-login-service';
@@ -1800,6 +1804,17 @@ export function createAtprotoClient({
                 };
               }
             }
+          }
+          if (!record.embed) {
+            const externalEmbed = await createAtprotoExternalEmbed(
+              agent,
+              params.card_url ||
+                params.cardUrl ||
+                params.external_url ||
+                params.externalUrl ||
+                getFirstPostURL(rt.text),
+            );
+            if (externalEmbed) record.embed = externalEmbed;
           }
           const res = await agent.post(record);
           const id = encodeAtprotoID(res.uri);

@@ -484,12 +484,13 @@ function relationshipFromAtproto(rel = {}, profile = {}) {
   };
 }
 
-function notificationType(reason) {
+export function notificationType(reason) {
   switch (reason) {
     case 'like':
     case 'like-via-repost':
       return 'favourite';
     case 'repost':
+    case 'repost-via-repost':
       return 'reblog';
     case 'quote':
       return 'quote';
@@ -503,8 +504,11 @@ function notificationType(reason) {
   }
 }
 
-function notificationStatusURI(notification) {
+export function notificationStatusURI(notification) {
   if (notification.reason === 'like-via-repost') {
+    return notification.record?.subject?.uri || notification.reasonSubject;
+  }
+  if (notification.reason === 'repost-via-repost') {
     return notification.record?.subject?.uri || notification.reasonSubject;
   }
   if (['like', 'repost'].includes(notification.reason)) {

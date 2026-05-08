@@ -40,6 +40,7 @@ import {
   supportsNativeQuote,
 } from '../utils/quote-utils';
 import RTF from '../utils/relative-time-format';
+import { shouldShowReplyBadge } from '../utils/reply-badge';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import shortenNumber from '../utils/shorten-number';
 import showCompose from '../utils/show-compose';
@@ -575,6 +576,14 @@ function Status({
   const mentionSelf =
     (inReplyToAccountId && inReplyToAccountId === currentAccount) ||
     mentions?.find((mention) => mention.id === currentAccount);
+  const showReplyBadge = shouldShowReplyBadge({
+    inReplyToId,
+    inReplyToAccount,
+    instance,
+    spoilerText,
+    mentions,
+    inReplyToAccountId,
+  });
 
   const prefs = getPreferences();
   const readingExpandSpoilers = !!prefs['reading:expand:spoilers'];
@@ -2434,12 +2443,7 @@ function Status({
                   index={snapStates.statusThreadNumber[sKey]}
                 />
               ) : (
-                !!inReplyToId &&
-                !!inReplyToAccount &&
-                (!!spoilerText ||
-                  !mentions.find((mention) => {
-                    return mention.id === inReplyToAccountId;
-                  })) && (
+                showReplyBadge && (
                   <div class="status-reply-badge">
                     <Icon icon="reply" />{' '}
                     <NameText

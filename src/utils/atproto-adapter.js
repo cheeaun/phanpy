@@ -1,16 +1,10 @@
 import { BskyAgent, RichText } from '@atproto/api';
 import { getPdsEndpoint } from '@atproto/common-web';
 
-import { encodeAtprotoID } from './atproto-route';
+import { BSKY_PDS, resolveAtprotoLoginService } from './atproto-login-service';
 import { createAtprotoOAuthAgent } from './atproto-oauth';
-import {
-  createAtprotoExternalEmbed,
-  getFirstPostURL,
-} from './atproto-unfurl';
-import {
-  BSKY_PDS,
-  resolveAtprotoLoginService,
-} from './atproto-login-service';
+import { encodeAtprotoID } from './atproto-route';
+import { createAtprotoExternalEmbed, getFirstPostURL } from './atproto-unfurl';
 
 const BSKY_APPVIEW = 'https://public.api.bsky.app';
 export const BSKY_INSTANCE = 'bsky.social';
@@ -330,10 +324,34 @@ function feedGeneratorToPhanpyList(feed = {}) {
   };
 }
 
+function atUriRepo(uri) {
+  return /^at:\/\/([^/]+)/.exec(uri || '')?.[1] || null;
+}
+
+function strongRef(value) {
+  if (!value?.uri) return value;
+  return {
+    uri: value.uri,
+    cid: value.cid,
+  };
+}
+
 export function postToStatus(feedItemOrPost, agent) {
   const post = feedItemOrPost?.post || feedItemOrPost;
   const record = post?.record || post?.value || {};
-  const replyRef = post.reply || record.reply;
+  const feedReply = feedItemOrPost?.reply;
+  const replyParent = feedReply?.parent || post.reply?.parent;
+  const replyParentRef = strongRef(
+    record.reply?.parent || post.reply?.parent || feedReply?.parent,
+  );
+  const replyRootRef = strongRef(
+    record.reply?.root || post.reply?.root || feedReply?.root,
+  );
+  const replyParentURI = replyParentRef?.uri;
+  const replyParentAuthorDid =
+    replyParent?.author?.did ||
+    post.reply?.parent?.author?.did ||
+    atUriRepo(replyParentURI);
   const id = encodeAtprotoID(post.uri);
   const { mediaAttachments, card, quote } = embedToParts(
     post.embed || post.embeds || record.embed || record.embeds,
@@ -391,16 +409,14 @@ export function postToStatus(feedItemOrPost, agent) {
     emojis: [],
     poll: null,
     editedAt: null,
-    inReplyToId: replyRef?.parent?.uri
-      ? encodeAtprotoID(replyRef.parent.uri)
-      : null,
-    inReplyToAccountId: post.reply?.parent?.author?.did || null,
+    inReplyToId: replyParentURI ? encodeAtprotoID(replyParentURI) : null,
+    inReplyToAccountId: replyParentAuthorDid || null,
     quote,
     _atproto: {
       uri: post.uri,
       cid: post.cid,
-      root: replyRef?.root,
-      parent: replyRef?.parent,
+      root: replyRootRef,
+      parent: replyParentRef,
       like: post.viewer?.like,
       repost: post.viewer?.repost,
       text: record.text || '',
@@ -2043,11 +2059,7 @@ export function atprotoInstanceInfo() {
   };
 }
 
-export async function loginAtproto({
-  identifier,
-  password,
-  service,
-}) {
+export async function loginAtproto({ identifier, password, service }) {
   service = await resolveAtprotoLoginService({ identifier, service });
   const agent = new BskyAgent({ service });
   await agent.login({ identifier, password });

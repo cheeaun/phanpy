@@ -10,6 +10,7 @@ const BSKY_APPVIEW = 'https://public.api.bsky.app';
 export const BSKY_INSTANCE = 'bsky.social';
 const BSKY_DISCOVER_FEED =
   'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot';
+const BSKY_GET_POSTS_LIMIT = 25;
 const BSKY_VIDEO_SERVICE = 'https://video.bsky.app';
 const BSKY_VIDEO_SERVICE_DID = 'did:web:video.bsky.app';
 export { BSKY_PDS, resolveAtprotoLoginService };
@@ -360,6 +361,52 @@ function replyContextSourceForPost(feedItem, post) {
     };
   }
   return post;
+}
+
+export async function hydrateFeedReplyContext(feed, agent) {
+  const feedPostURIs = new Set(
+    feed.map((item) => item.post?.uri).filter(Boolean),
+  );
+  const missingURIs = [];
+  const seen = new Set(feedPostURIs);
+  feed.forEach((item) => {
+    if (item?.reason?.$type === 'app.bsky.feed.defs#reasonRepost') return;
+    const refs = [
+      item.reply?.root || item.post?.record?.reply?.root,
+      item.reply?.parent || item.post?.record?.reply?.parent,
+    ];
+    refs.forEach((ref) => {
+      if (!ref?.uri || isPostView(ref) || seen.has(ref.uri)) return;
+      seen.add(ref.uri);
+      missingURIs.push(ref.uri);
+    });
+  });
+  if (!missingURIs.length) return feed;
+
+  const hydratedPosts = [];
+  for (let i = 0; i < missingURIs.length; i += BSKY_GET_POSTS_LIMIT) {
+    const uris = missingURIs.slice(i, i + BSKY_GET_POSTS_LIMIT);
+    const res = await agent.getPosts({ uris });
+    hydratedPosts.push(...(res.data.posts || []));
+  }
+  if (!hydratedPosts.length) return feed;
+
+  const postsByURI = Object.fromEntries(
+    hydratedPosts.map((post) => [post.uri, post]),
+  );
+  const hydrateRef = (ref) => postsByURI[ref?.uri] || ref;
+  return feed.map((item) => {
+    const reply = item.reply || item.post?.record?.reply;
+    if (!reply) return item;
+    return {
+      ...item,
+      reply: {
+        ...item.reply,
+        root: hydrateRef(reply.root),
+        parent: hydrateRef(reply.parent),
+      },
+    };
+  });
 }
 
 function feedItemToStatuses(feedItem, agent) {
@@ -958,7 +1005,8 @@ export function createAtprotoClient({
             cursor,
             filter: 'posts_with_replies',
           });
-          let items = feedToStatuses(res.data.feed, agent);
+          const feed = await hydrateFeedReplyContext(res.data.feed, agent);
+          let items = feedToStatuses(feed, agent);
           if (excludeReplies) items = items.filter((item) => !item.inReplyToId);
           if (excludeReposts) items = items.filter((item) => !item.reblog);
           if (onlyMedia) {
@@ -1382,9 +1430,10 @@ export function createAtprotoClient({
           list({ limit = 20 } = {}) {
             return makeCollection(async (cursor) => {
               const res = await agent.getTimeline({ limit, cursor });
+              const feed = await hydrateFeedReplyContext(res.data.feed, agent);
               return {
                 cursor: res.data.cursor,
-                items: feedToStatuses(res.data.feed, agent),
+                items: feedToStatuses(feed, agent),
               };
             });
           },
@@ -1397,9 +1446,10 @@ export function createAtprotoClient({
                 limit,
                 cursor,
               });
+              const feed = await hydrateFeedReplyContext(res.data.feed, agent);
               return {
                 cursor: res.data.cursor,
-                items: feedToStatuses(res.data.feed, agent),
+                items: feedToStatuses(feed, agent),
               };
             });
           },
@@ -1463,9 +1513,13 @@ export function createAtprotoClient({
                     limit,
                     cursor,
                   });
+                  const feed = await hydrateFeedReplyContext(
+                    res.data.feed,
+                    agent,
+                  );
                   return {
                     cursor: res.data.cursor,
-                    items: feedToStatuses(res.data.feed, agent),
+                    items: feedToStatuses(feed, agent),
                   };
                 });
               },
@@ -1571,9 +1625,10 @@ export function createAtprotoClient({
               limit,
               cursor,
             });
+            const feed = await hydrateFeedReplyContext(res.data.feed, agent);
             return {
               cursor: res.data.cursor,
-              items: feedToStatuses(res.data.feed, agent),
+              items: feedToStatuses(feed, agent),
             };
           });
         },
@@ -1665,9 +1720,10 @@ export function createAtprotoClient({
                 limit,
                 cursor,
               });
+              const feed = await hydrateFeedReplyContext(res.data.feed, agent);
               return {
                 cursor: res.data.cursor,
-                items: feedToStatuses(res.data.feed, agent),
+                items: feedToStatuses(feed, agent),
               };
             });
           },

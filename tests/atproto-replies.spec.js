@@ -1,6 +1,10 @@
 import { expect, test } from '@playwright/test';
 
-import { feedToStatuses, postToStatus } from '../src/utils/atproto-adapter.js';
+import {
+  feedToStatuses,
+  hydrateFeedReplyContext,
+  postToStatus,
+} from '../src/utils/atproto-adapter.js';
 import { shouldShowReplyBadge } from '../src/utils/reply-badge.js';
 import {
   shouldFetchReplyContextForInstance,
@@ -250,6 +254,49 @@ test.describe('ATProto reply mapping', () => {
     expect(statuses[1]._atproto.replyParentAccount).toMatchObject({
       id: 'did:plc:grandparent',
       username: 'grandparent.test',
+    });
+  });
+
+  test('batch hydrates missing feed reply parents before timeline render', async () => {
+    const item = feedReply({ reply: undefined });
+    delete item.reply;
+    let requestedURIs;
+
+    const feed = await hydrateFeedReplyContext([item], {
+      getPosts: async ({ uris }) => {
+        requestedURIs = uris;
+        return {
+          data: {
+            posts: [
+              {
+                uri: parentUri,
+                cid: 'parent-cid',
+                author: {
+                  did: 'did:plc:parent',
+                  handle: 'parent.test',
+                  displayName: 'Parent',
+                  avatar: 'https://cdn.example/avatar.jpg',
+                },
+                record: {
+                  $type: 'app.bsky.feed.post',
+                  text: 'parent text',
+                  createdAt: '2026-05-08T00:00:00.000Z',
+                },
+                indexedAt: '2026-05-08T00:00:00.000Z',
+              },
+            ],
+          },
+        };
+      },
+    });
+    const statuses = feedToStatuses(feed);
+
+    expect(requestedURIs).toEqual([parentUri]);
+    expect(statuses.map((status) => status.uri)).toEqual([parentUri, childUri]);
+    expect(statuses[1]._atproto.replyParentAccount).toMatchObject({
+      id: 'did:plc:parent',
+      username: 'parent.test',
+      avatar: 'https://cdn.example/avatar.jpg',
     });
   });
 });

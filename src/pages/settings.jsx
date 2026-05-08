@@ -775,7 +775,7 @@ function Settings({ onClose }) {
               }}
             />
             <div>
-              <b>Phanpy</b>{' '}
+              <b>Phanpy for Bluesky</b>{' '}
               <a
                 href="https://hachyderm.io/@phanpy"
                 // target="_blank"

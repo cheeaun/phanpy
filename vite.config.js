@@ -148,7 +148,7 @@ export default defineConfig({
               },
               {
                 property: 'og:description',
-                content: 'Minimalistic opinionated Mastodon web client',
+                content: 'Minimalistic opinionated Bluesky web client',
               },
               {
                 property: 'og:image',
@@ -220,7 +220,7 @@ export default defineConfig({
         scope: './',
         name: CLIENT_NAME,
         short_name: CLIENT_NAME,
-        description: 'Minimalistic opinionated Mastodon web client',
+        description: 'Minimalistic opinionated Bluesky web client',
         // https://github.com/cheeaun/phanpy/issues/231
         theme_color: undefined,
         background_color: '#b7cdf9', // background for splash

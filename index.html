@@ -9,7 +9,7 @@
     <title>%PHANPY_CLIENT_NAME%</title>
     <meta
       name="description"
-      content="Minimalistic opinionated Mastodon web client"
+      content="Minimalistic opinionated Bluesky web client"
     />
     <meta name="color-scheme" content="light dark" />
     <style>
@@ -62,27 +62,27 @@
   </head>
   <body>
     <div id="app">
-      <div id="boot-status">Loading Phanpy...</div>
+      <div id="boot-status">Loading Phanpy for Bluesky...</div>
     </div>
     <div id="modal-container"></div>
     <script>
       window.addEventListener('error', (event) => {
         const bootStatus = document.getElementById('boot-status');
         if (bootStatus) {
-          bootStatus.textContent = `Phanpy failed to start: ${event.message || 'unknown error'}`;
+          bootStatus.textContent = `Phanpy for Bluesky failed to start: ${event.message || 'unknown error'}`;
         }
       });
       window.addEventListener('unhandledrejection', (event) => {
         const bootStatus = document.getElementById('boot-status');
         if (bootStatus) {
-          bootStatus.textContent = `Phanpy failed to start: ${event.reason?.message || event.reason || 'unknown error'}`;
+          bootStatus.textContent = `Phanpy for Bluesky failed to start: ${event.reason?.message || event.reason || 'unknown error'}`;
         }
       });
       window.setTimeout(() => {
         const bootStatus = document.getElementById('boot-status');
         if (bootStatus) {
           bootStatus.textContent =
-            'Phanpy is still loading. If this stays here, Safari did not run the app script.';
+            'Phanpy for Bluesky is still loading. If this stays here, Safari did not run the app script.';
         }
       }, 5000);
     </script>

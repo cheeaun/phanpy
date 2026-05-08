@@ -45,7 +45,12 @@ function Welcome() {
         <div class="hero-content">
           <h1>
             <img src={logo} alt="" width="100" height="100" />
-            <img src={logoText} alt="Phanpy" width="180" height="52" />
+            <img
+              src={logoText}
+              alt="Phanpy for Bluesky"
+              width="180"
+              height="52"
+            />
           </h1>
           <p class="desc">
             <Trans>A minimalistic opinionated Bluesky web client.</Trans>

@@ -1026,7 +1026,8 @@ function Compose({
     },
   });
 
-  const showScheduledAt = !editStatus;
+  const showScheduledAt =
+    !editStatus && currentAccount?.instanceURL !== 'bsky.social';
   const scheduledAtButtonDisabled = uiState === 'loading' || !!scheduledAt;
   const onScheduledAtClick = () => {
     const date = new Date(Date.now() + DEFAULT_SCHEDULED_AT);

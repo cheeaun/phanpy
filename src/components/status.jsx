@@ -2165,8 +2165,7 @@ function Status({
           size !== 'l' &&
           !previewMode &&
           !readOnly &&
-          !_deleted &&
-          !quoted && (
+          !_deleted && (
             <div
               class={`status-actions ${
                 isContextMenuOpen === 'actions-bar' ? 'open' : ''
@@ -3382,7 +3381,7 @@ const QuoteStatuses = memo(
           <QuoteStatus
             quote={{
               // Same structure as the one in saveStatus (utils/states)
-              id,
+              id: fallbackQuote.quotedStatus.id || fallbackQuote.id || id,
               instance,
               // url
               state: fallbackQuote.state,

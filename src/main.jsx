@@ -1,3 +1,4 @@
+import './instrument';
 import './index.css';
 import './cloak-mode.css';
 
@@ -5,6 +6,7 @@ import './polyfills';
 
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
+import * as Sentry from '@sentry/react';
 // Polyfill needed for Firefox < 122
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1423593
 // import '@formatjs/intl-segmenter/polyfill';
@@ -41,7 +43,9 @@ render(
   <I18nProvider i18n={i18n}>
     <HashRouter>
       <IconSpriteProvider>
-        <App />
+        <Sentry.ErrorBoundary fallback={<p>Something went wrong.</p>}>
+          <App />
+        </Sentry.ErrorBoundary>
       </IconSpriteProvider>
     </HashRouter>
   </I18nProvider>,

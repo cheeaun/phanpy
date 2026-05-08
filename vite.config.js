@@ -4,6 +4,7 @@ import { resolve } from 'path';
 
 import { lingui } from '@lingui/vite-plugin';
 import preact from '@preact/preset-vite';
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 import Sonda from 'sonda/vite';
 import { uid } from 'uid/single';
 import { createLogger, defineConfig, loadEnv } from 'vite';
@@ -17,6 +18,11 @@ import { ALL_LOCALES } from './src/locales';
 
 const allowedEnvPrefixes = ['VITE_', 'PHANPY_'];
 const { NODE_ENV } = process.env;
+const { SENTRY_AUTH_TOKEN, SENTRY_ORG, SENTRY_PROJECT } = loadEnv(
+  'production',
+  process.cwd(),
+  ['SENTRY_'],
+);
 const {
   PHANPY_WEBSITE: WEBSITE,
   PHANPY_CLIENT_NAME: CLIENT_NAME,
@@ -213,6 +219,17 @@ export default defineConfig({
         }
       },
     },
+    SENTRY_AUTH_TOKEN &&
+      SENTRY_ORG &&
+      SENTRY_PROJECT &&
+      sentryVitePlugin({
+        authToken: SENTRY_AUTH_TOKEN,
+        org: SENTRY_ORG,
+        project: SENTRY_PROJECT,
+        release: {
+          name: commitHash ? `bluepy@${commitHash}` : undefined,
+        },
+      }),
     VitePWA({
       manifest: {
         id: './', // Cannot be empty string for Web Install API to work

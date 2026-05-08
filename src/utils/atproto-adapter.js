@@ -906,6 +906,7 @@ export function createAtprotoClient({
         return {
           ...current,
           favourited: true,
+          favouritesCount: current.favouritesCount + 1,
           _atproto: { ...current._atproto, like: like.uri },
         };
       },
@@ -913,7 +914,11 @@ export function createAtprotoClient({
         const current = await this.fetch();
         if (current._atproto.like)
           await agent.deleteLike(current._atproto.like);
-        return { ...current, favourited: false };
+        return {
+          ...current,
+          favourited: false,
+          favouritesCount: Math.max(0, current.favouritesCount - 1),
+        };
       },
       async reblog() {
         const current = await this.fetch();
@@ -921,6 +926,7 @@ export function createAtprotoClient({
         return {
           ...current,
           reblogged: true,
+          reblogsCount: current.reblogsCount + 1,
           _atproto: { ...current._atproto, repost: repost.uri },
         };
       },
@@ -928,7 +934,11 @@ export function createAtprotoClient({
         const current = await this.fetch();
         if (current._atproto.repost)
           await agent.deleteRepost(current._atproto.repost);
-        return { ...current, reblogged: false };
+        return {
+          ...current,
+          reblogged: false,
+          reblogsCount: Math.max(0, current.reblogsCount - 1),
+        };
       },
       async bookmark() {
         const current = await this.fetch();

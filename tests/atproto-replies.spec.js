@@ -183,4 +183,73 @@ test.describe('ATProto reply mapping', () => {
       username: 'parent.test',
     });
   });
+
+  test('uses grandparent author for payload-hydrated middle replies', () => {
+    const grandparentUri = 'at://did:plc:grandparent/app.bsky.feed.post/root';
+    const item = feedReply({
+      post: {
+        record: {
+          $type: 'app.bsky.feed.post',
+          text: 'reply text',
+          createdAt: '2026-05-08T00:02:00.000Z',
+          reply: {
+            root: { uri: grandparentUri, cid: 'grandparent-cid' },
+            parent: { uri: parentUri, cid: 'parent-cid' },
+          },
+        },
+      },
+      reply: {
+        root: {
+          uri: grandparentUri,
+          cid: 'grandparent-cid',
+          author: {
+            did: 'did:plc:grandparent',
+            handle: 'grandparent.test',
+            displayName: 'Grandparent',
+          },
+          record: {
+            $type: 'app.bsky.feed.post',
+            text: 'grandparent text',
+            createdAt: '2026-05-08T00:00:00.000Z',
+          },
+        },
+        parent: {
+          uri: parentUri,
+          cid: 'parent-cid',
+          author: {
+            did: 'did:plc:parent',
+            handle: 'parent.test',
+            displayName: 'Parent',
+          },
+          record: {
+            $type: 'app.bsky.feed.post',
+            text: 'parent text',
+            createdAt: '2026-05-08T00:01:00.000Z',
+            reply: {
+              root: { uri: grandparentUri, cid: 'grandparent-cid' },
+              parent: { uri: grandparentUri, cid: 'grandparent-cid' },
+            },
+          },
+        },
+        grandparentAuthor: {
+          did: 'did:plc:grandparent',
+          handle: 'grandparent.test',
+          displayName: 'Grandparent',
+        },
+      },
+    });
+
+    const statuses = feedToStatuses([item]);
+
+    expect(statuses.map((status) => status.uri)).toEqual([
+      grandparentUri,
+      parentUri,
+      childUri,
+    ]);
+    expect(statuses[1]._atproto.replyParentUnavailable).toBe(false);
+    expect(statuses[1]._atproto.replyParentAccount).toMatchObject({
+      id: 'did:plc:grandparent',
+      username: 'grandparent.test',
+    });
+  });
 });

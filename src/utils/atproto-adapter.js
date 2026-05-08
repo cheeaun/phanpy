@@ -340,6 +340,28 @@ function isPostView(value) {
   return !!(value?.uri && value?.author && value?.record);
 }
 
+function replyContextSourceForPost(feedItem, post) {
+  if (!feedItem?.reply || feedItem.post?.uri === post.uri) return feedItem;
+  const parent = feedItem.reply.parent;
+  if (
+    parent?.uri === post.uri &&
+    feedItem.reply.grandparentAuthor &&
+    post.record?.reply?.parent?.uri
+  ) {
+    return {
+      post,
+      reply: {
+        root: feedItem.reply.root,
+        parent: {
+          ...post.record.reply.parent,
+          author: feedItem.reply.grandparentAuthor,
+        },
+      },
+    };
+  }
+  return post;
+}
+
 function feedItemToStatuses(feedItem, agent) {
   const post = feedItem?.post || feedItem;
   if (feedItem?.reason?.$type === 'app.bsky.feed.defs#reasonRepost') {
@@ -354,8 +376,14 @@ function feedItemToStatuses(feedItem, agent) {
     statuses.push(postToStatus(statusSource, agent));
   };
 
-  addPost(feedItem?.reply?.root);
-  addPost(feedItem?.reply?.parent);
+  addPost(
+    feedItem?.reply?.root,
+    replyContextSourceForPost(feedItem, feedItem?.reply?.root),
+  );
+  addPost(
+    feedItem?.reply?.parent,
+    replyContextSourceForPost(feedItem, feedItem?.reply?.parent),
+  );
   addPost(post, feedItem);
   return statuses;
 }

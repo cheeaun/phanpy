@@ -28,6 +28,15 @@
   transition: all 0.2s ease-in-out;
 }
 
+#login .bsky-advanced-login {
+  margin: 1em 0;
+}
+
+#login .bsky-advanced-login summary {
+  cursor: pointer;
+  color: var(--text-insignificant-color);
+}
+
 #instances-suggestions {
   margin: 0.2em 0 0;
   padding: 0;

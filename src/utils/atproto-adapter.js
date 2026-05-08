@@ -2,14 +2,18 @@ import { BskyAgent, RichText } from '@atproto/api';
 import { getPdsEndpoint } from '@atproto/common-web';
 
 import { encodeAtprotoID } from './atproto-route';
+import {
+  BSKY_PDS,
+  resolveAtprotoLoginService,
+} from './atproto-login-service';
 
 const BSKY_APPVIEW = 'https://public.api.bsky.app';
-export const BSKY_PDS = 'https://bsky.social';
 export const BSKY_INSTANCE = 'bsky.social';
 const BSKY_DISCOVER_FEED =
   'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot';
 const BSKY_VIDEO_SERVICE = 'https://video.bsky.app';
 const BSKY_VIDEO_SERVICE_DID = 'did:web:video.bsky.app';
+export { BSKY_PDS, resolveAtprotoLoginService };
 
 function getServiceAuthAudFromUrl(url) {
   const { hostname } = new URL(url);
@@ -2014,8 +2018,9 @@ export function atprotoInstanceInfo() {
 export async function loginAtproto({
   identifier,
   password,
-  service = BSKY_PDS,
+  service,
 }) {
+  service = await resolveAtprotoLoginService({ identifier, service });
   const agent = new BskyAgent({ service });
   await agent.login({ identifier, password });
   const profile = await agent.getProfile({ actor: agent.did });

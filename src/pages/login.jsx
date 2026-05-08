@@ -14,7 +14,6 @@ import instancesListURL from '../data/instances.json?url';
 import { initClient, initInstance, initPreferences } from '../utils/api';
 import {
   BSKY_INSTANCE,
-  BSKY_PDS,
   loginAtproto,
 } from '../utils/atproto-adapter';
 import {
@@ -44,6 +43,7 @@ function Login() {
   const [uiState, setUIState] = useState('default');
   const [bskyIdentifier, setBskyIdentifier] = useState('');
   const [bskyPassword, setBskyPassword] = useState('');
+  const [bskyService, setBskyService] = useState('');
   const [searchParams] = useSearchParams();
   const instance = searchParams.get('instance');
   const submit = searchParams.get('submit');
@@ -231,7 +231,7 @@ function Login() {
         const { account, session, service } = await loginAtproto({
           identifier: bskyIdentifier.trim(),
           password: bskyPassword,
-          service: BSKY_PDS,
+          service: bskyService,
         });
         const accessToken = JSON.stringify({
           type: 'atproto',
@@ -303,6 +303,24 @@ function Login() {
               onInput={(e) => setBskyPassword(e.target.value)}
             />
           </label>
+          <details class="bsky-advanced-login">
+            <summary>Advanced</summary>
+            <label>
+              <p>PDS URL, optional</p>
+              <input
+                value={bskyService}
+                type="text"
+                class="large"
+                disabled={uiState === 'loading'}
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="url"
+                spellCheck={false}
+                placeholder="pds.example.com"
+                onInput={(e) => setBskyService(e.target.value)}
+              />
+            </label>
+          </details>
           <div>
             <button
               disabled={

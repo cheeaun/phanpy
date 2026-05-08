@@ -611,11 +611,7 @@ function App() {
 
   // Signal to service worker that this client is ready to receive share data
   useEffect(() => {
-    if (
-      'serviceWorker' in navigator &&
-      (isPWA || import.meta.env.DEV) &&
-      uiState === 'default'
-    ) {
+    if ('serviceWorker' in navigator && isPWA && uiState === 'default') {
       navigator.serviceWorker
         .getRegistration()
         .then(function (registration) {
@@ -672,13 +668,29 @@ function isRootPath(pathname) {
 
 const PrimaryRoutes = memo(() => {
   const location = useLocation();
-  const nonRootLocation = useMemo(() => {
+  const primaryLocation = useMemo(() => {
     const { pathname } = location;
-    return !isRootPath(pathname);
+    if (pathname === '/' || isRootPath(pathname)) return location;
+
+    const isModalPage =
+      matchPath('/:instance/s/:id', pathname) || matchPath('/s/:id', pathname);
+    const prevLocation = states.prevLocation;
+    if (
+      isModalPage &&
+      (!prevLocation ||
+        prevLocation.pathname === '/' ||
+        isRootPath(prevLocation.pathname))
+    ) {
+      return prevLocation || { ...location, pathname: '/' };
+    }
+
+    return null;
   }, [location]);
 
+  if (!primaryLocation) return null;
+
   return (
-    <Routes location={nonRootLocation || location}>
+    <Routes location={primaryLocation}>
       <Route path="/" element={<Root />} />
       <Route path="/login" element={<Login />} />
       <Route path="/welcome" element={<Welcome />} />

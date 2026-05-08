@@ -1,14 +1,19 @@
 import './nav-menu.css';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import { ControlledMenu, MenuDivider, MenuItem } from '@szhsin/react-menu';
+import {
+  ControlledMenu,
+  MenuDivider,
+  MenuHeader,
+  MenuItem,
+} from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
-import { getLists } from '../utils/lists';
+import { getLists, splitListsAndFeeds } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -40,15 +45,7 @@ function NavMenu(props) {
     snapStates.shortcuts.some((pin) => pin.type === 'profile');
   const showAvatarInButton = moreThanOneAccount && !tabMenuHasProfile;
 
-  // Home = Following
-  // But when in multi-column mode, Home becomes columns of anything
-  // User may choose pin or not to pin Following
-  // If user doesn't pin Following, we show it in the menu
-  const showFollowing =
-    (snapStates.settings.shortcutsViewMode === 'multi-column' ||
-      (!snapStates.settings.shortcutsViewMode &&
-        snapStates.settings.shortcutsColumnsMode)) &&
-    !snapStates.shortcuts.find((pin) => pin.type === 'following');
+  const showFollowing = authenticated;
 
   const bindLongPress = useLongPress(
     () => {
@@ -381,7 +378,7 @@ function NavMenu(props) {
               >
                 <Icon icon="shortcut" size="l" />{' '}
                 <span>
-                  <Trans>Shortcuts / Columns…</Trans>
+                  <Trans>Shortcuts…</Trans>
                 </span>
               </MenuItem>
               <MenuItem
@@ -419,6 +416,7 @@ function NavMenu(props) {
 function ListMenu({ menuState }) {
   const supportsLists = supports('@mastodon/lists');
   const [lists, setLists] = useState([]);
+  const { lists: userLists, feeds } = splitListsAndFeeds(lists);
   useEffect(() => {
     if (!supportsLists) return;
     if (menuState === 'open') {
@@ -428,14 +426,14 @@ function ListMenu({ menuState }) {
 
   return lists.length > 0 ? (
     <SubMenu2
-      menuClassName="nav-submenu"
+      menuClassName="nav-submenu lists-picker-menu"
       overflow="auto"
       gap={-8}
       label={
         <>
           <Icon icon="list" size="l" />
           <span class="menu-grow">
-            <Trans>Lists</Trans>
+            <Trans>Lists & Feeds</Trans>
           </span>
           <Icon icon="chevron-right" />
         </>
@@ -443,25 +441,44 @@ function ListMenu({ menuState }) {
     >
       <MenuLink to="/l">
         <span>
-          <Trans>All Lists</Trans>
+          <Trans>Lists & Feeds</Trans>
         </span>
       </MenuLink>
-      {lists?.length > 0 && (
+      {(userLists.length > 0 || feeds.length > 0) && (
         <>
           <MenuDivider />
-          {lists.map((list) => (
-            <MenuLink key={list.id} to={`/l/${list.id}`}>
-              <span>
-                {list.title}
-                {list.exclusive && (
-                  <>
-                    {' '}
-                    <ListExclusiveBadge />
-                  </>
-                )}
-              </span>
-            </MenuLink>
-          ))}
+          {userLists.length > 0 && (
+            <>
+              <MenuHeader className="plain">
+                <Trans>Lists</Trans>
+              </MenuHeader>
+              {userLists.map((list) => (
+                <MenuLink key={list.id} to={`/l/${list.id}`}>
+                  <span>
+                    {list.title}
+                    {list.exclusive && (
+                      <>
+                        {' '}
+                        <ListExclusiveBadge />
+                      </>
+                    )}
+                  </span>
+                </MenuLink>
+              ))}
+            </>
+          )}
+          {feeds.length > 0 && (
+            <>
+              <MenuHeader className="plain">
+                <Trans>Feeds</Trans>
+              </MenuHeader>
+              {feeds.map((feed) => (
+                <MenuLink key={feed.id} to={`/l/${feed.id}`}>
+                  <Icon icon="sparkles" /> <span>{feed.title}</span>
+                </MenuLink>
+              ))}
+            </>
+          )}
         </>
       )}
     </SubMenu2>
@@ -470,7 +487,7 @@ function ListMenu({ menuState }) {
       <MenuLink to="/l">
         <Icon icon="list" size="l" />
         <span>
-          <Trans>Lists</Trans>
+          <Trans>Lists & Feeds</Trans>
         </span>
       </MenuLink>
     )

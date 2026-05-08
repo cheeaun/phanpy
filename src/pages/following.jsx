@@ -6,6 +6,7 @@ import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
 import states, { getStatus, saveStatus } from '../utils/states';
+import store from '../utils/store';
 import supports from '../utils/supports';
 import {
   assignFollowedTags,
@@ -33,6 +34,13 @@ function Following({ title, path, id, ...props }) {
   const homeIterable = useRef();
   const homeIterator = useRef();
   const latestItem = useRef();
+
+  useEffect(() => {
+    if (path === '/') return;
+    const homeTimeline = { type: 'following' };
+    store.account.set('homeTimeline', homeTimeline);
+    states.homeTimeline = homeTimeline;
+  }, [path]);
 
   // Streaming only happens after instance is initialized
   useEffect(() => {

@@ -7,7 +7,6 @@ import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
-import Columns from '../components/columns';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
@@ -22,6 +21,7 @@ import { getCurrentAccountNS } from '../utils/store-utils';
 
 import Following from './following';
 import Following2 from './following2';
+import List from './list';
 import {
   getGroupedNotifications,
   mastoFetchNotifications,
@@ -48,17 +48,26 @@ function Home() {
   if (!expTimeline2.current) {
     expTimeline2.current = store.local.get('experiments-timeline2') ?? false;
   }
+  const homeTimeline =
+    snapStates.homeTimeline || store.account.get('homeTimeline');
+  const defaultFeedID =
+    homeTimeline?.type === 'feed' && homeTimeline?.id ? homeTimeline.id : null;
+  const defaultFollowing = homeTimeline?.type === 'following';
 
   return (
     <>
-      {(snapStates.settings.shortcutsViewMode === 'multi-column' ||
-        (!snapStates.settings.shortcutsViewMode &&
-          snapStates.settings.shortcutsColumnsMode)) &&
-      !!snapStates.shortcuts?.length ? (
-        <Columns />
-      ) : expTimeline2.current ? (
+      {defaultFeedID ? (
+        <List id={defaultFeedID} />
+      ) : expTimeline2.current && !defaultFollowing ? (
         <Following2
           title={_(msg`Home`)}
+          path="/"
+          id="home"
+          headerStart={false}
+          headerEnd={<NotificationsLink />}
+        />
+      ) : defaultFollowing ? (
+        <Following
           path="/"
           id="home"
           headerStart={false}

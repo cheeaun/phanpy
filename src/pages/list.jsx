@@ -9,6 +9,7 @@ import { useSnapshot } from 'valtio';
 
 import AccountBlock from '../components/account-block';
 import Icon from '../components/icon';
+import Link from '../components/link';
 import ListAddEdit from '../components/list-add-edit';
 import ListExclusiveBadge from '../components/list-exclusive-badge';
 import MenuConfirm from '../components/menu-confirm';
@@ -18,8 +19,14 @@ import Modal from '../components/modal';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
-import { getList, getLists } from '../utils/lists';
+import {
+  getList,
+  getLists,
+  isFeedList,
+  splitListsAndFeeds,
+} from '../utils/lists';
 import states, { saveStatus } from '../utils/states';
+import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -28,7 +35,8 @@ function List(props) {
   const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const { masto, instance } = api();
-  const id = props?.id || useParams()?.id;
+  const params = useParams();
+  const id = props?.id || params?.id;
   // const navigate = useNavigate();
   const latestItem = useRef();
   // const [reloadCount, reload] = useReducer((c) => c + 1, 0);
@@ -82,6 +90,8 @@ function List(props) {
   const [lists, setLists] = useState([]);
 
   const [list, setList] = useState({ title: 'List' });
+  const isFeed = isFeedList(list);
+  const { lists: menuLists, feeds: menuFeeds } = splitListsAndFeeds(lists);
   // const [title, setTitle] = useState(`List`);
   useTitle(list.title, `/l/:id`);
   useEffect(() => {
@@ -89,6 +99,14 @@ function List(props) {
       try {
         const list = await getList(id);
         setList(list);
+        if (isFeedList(list)) {
+          const homeTimeline = {
+            type: 'feed',
+            id: list.id,
+          };
+          store.account.set('homeTimeline', homeTimeline);
+          states.homeTimeline = homeTimeline;
+        }
         // setTitle(list.title);
       } catch (e) {
         console.error(e);
@@ -122,9 +140,10 @@ function List(props) {
           // </Link>
           <Menu2
             overflow="auto"
+            menuClassName="lists-picker-menu"
             menuButton={
               <button type="button" class="plain">
-                <Icon icon="list" size="l" alt={t`Lists`} />
+                <Icon icon="list" size="l" alt={t`Lists & Feeds`} />
                 <Icon icon="chevron-down" size="s" />
               </button>
             }
@@ -136,13 +155,16 @@ function List(props) {
           >
             <MenuLink to="/l">
               <span>
-                <Trans>All Lists</Trans>
+                <Trans>Lists & Feeds</Trans>
               </span>
             </MenuLink>
-            {lists?.length > 0 && (
+            {menuLists?.length > 0 && (
               <>
                 <MenuDivider />
-                {lists.map((list) => (
+                <MenuHeader className="plain">
+                  <Trans>Lists</Trans>
+                </MenuHeader>
+                {menuLists.map((list) => (
                   <MenuLink key={list.id} to={`/l/${list.id}`}>
                     <span>
                       {list.title}
@@ -157,51 +179,72 @@ function List(props) {
                 ))}
               </>
             )}
+            {menuFeeds?.length > 0 && (
+              <>
+                <MenuDivider />
+                <MenuHeader className="plain">
+                  <Trans>Feeds</Trans>
+                </MenuHeader>
+                {menuFeeds.map((list) => (
+                  <MenuLink key={list.id} to={`/l/${list.id}`}>
+                    <Icon icon="sparkles" />
+                    <span>{list.title}</span>
+                  </MenuLink>
+                ))}
+              </>
+            )}
           </Menu2>
         }
         headerEnd={
-          <Menu2
-            portal
-            setDownOverflow
-            overflow="auto"
-            viewScroll="close"
-            position="anchor"
-            menuButton={
-              <button type="button" class="plain">
-                <Icon icon="more" size="l" alt={t`More`} />
-              </button>
-            }
-          >
-            {list?.exclusive && (
-              <>
-                <MenuHeader className="plain">
-                  <ListExclusiveBadge />{' '}
-                  <Trans>
-                    Posts on this list are hidden from Home/Following
-                  </Trans>
-                </MenuHeader>
-                <MenuDivider />
-              </>
+          <>
+            <Link to="/notifications" class="button plain notifications-button">
+              <Icon icon="notification" size="l" alt={t`Notifications`} />
+            </Link>
+            {!isFeed && (
+              <Menu2
+                portal
+                setDownOverflow
+                overflow="auto"
+                viewScroll="close"
+                position="anchor"
+                menuButton={
+                  <button type="button" class="plain">
+                    <Icon icon="more" size="l" alt={t`More`} />
+                  </button>
+                }
+              >
+                {list?.exclusive && (
+                  <>
+                    <MenuHeader className="plain">
+                      <ListExclusiveBadge />{' '}
+                      <Trans>
+                        Posts on this list are hidden from Home/Following
+                      </Trans>
+                    </MenuHeader>
+                    <MenuDivider />
+                  </>
+                )}
+                <MenuItem
+                  onClick={() =>
+                    setShowListAddEditModal({
+                      list,
+                    })
+                  }
+                >
+                  <Icon icon="pencil" size="l" />
+                  <span>
+                    <Trans>Edit</Trans>
+                  </span>
+                </MenuItem>
+                <MenuItem onClick={() => setShowManageMembersModal(true)}>
+                  <Icon icon="group" size="l" />
+                  <span>
+                    <Trans>Manage members</Trans>
+                  </span>
+                </MenuItem>
+              </Menu2>
             )}
-            <MenuItem
-              onClick={() =>
-                setShowListAddEditModal({
-                  list,
-                })
-              }
-            >
-              <Icon icon="pencil" size="l" />
-              <span>
-                <Trans>Edit</Trans>
-              </span>
-            </MenuItem>
-            <MenuItem onClick={() => setShowManageMembersModal(true)}>
-              <Icon icon="group" size="l" />
-              <span>
-                <Trans>Manage members</Trans>
-              </span>
-            </MenuItem>
-          </Menu2>
+          </>
         }
       />
       {showListAddEditModal && (

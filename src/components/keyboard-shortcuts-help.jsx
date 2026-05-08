@@ -120,22 +120,6 @@ export default memo(function KeyboardShortcutsHelp() {
                     ),
                   },
                   {
-                    action: t`Focus column in multi-column mode`,
-                    keys: (
-                      <Trans>
-                        <kbd>1</kbd> to <kbd>9</kbd>
-                      </Trans>
-                    ),
-                  },
-                  {
-                    action: t`Focus next column in multi-column mode`,
-                    keys: <kbd>]</kbd>,
-                  },
-                  {
-                    action: t`Focus previous column in multi-column mode`,
-                    keys: <kbd>[</kbd>,
-                  },
-                  {
                     action: t`Compose new post`,
                     keys: <kbd>c</kbd>,
                   },

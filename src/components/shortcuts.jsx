@@ -1,7 +1,7 @@
 import './shortcuts.css';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import { ControlledMenu, MenuDivider } from '@szhsin/react-menu';
+import { ControlledMenu, MenuDivider, MenuHeader } from '@szhsin/react-menu';
 import { memo } from 'preact/compat';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -11,7 +11,7 @@ import { useSnapshot } from 'valtio';
 
 import { SHORTCUTS_META } from '../components/shortcuts-settings';
 import { api } from '../utils/api';
-import { getLists } from '../utils/lists';
+import { getLists, splitListsAndFeeds } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
 
@@ -25,27 +25,47 @@ import Menu2 from './menu2';
 import SubMenu2 from './submenu2';
 
 function ListsMenuContent({ lists }) {
+  const { lists: userLists, feeds } = splitListsAndFeeds(lists);
   return (
     <>
       <MenuLink to="/l">
         <span>
-          <Trans>All Lists</Trans>
+          <Trans>Lists & Feeds</Trans>
         </span>
       </MenuLink>
       <MenuDivider />
-      {lists?.map((list) => (
-        <MenuLink key={list.id} to={`/l/${list.id}`}>
-          <span>
-            {list.title}
-            {list.exclusive && (
-              <>
-                {' '}
-                <ListExclusiveBadge />
-              </>
-            )}
-          </span>
-        </MenuLink>
-      ))}
+      {userLists.length > 0 && (
+        <>
+          <MenuHeader className="plain">
+            <Trans>Lists</Trans>
+          </MenuHeader>
+          {userLists.map((list) => (
+            <MenuLink key={list.id} to={`/l/${list.id}`}>
+              <span>
+                {list.title}
+                {list.exclusive && (
+                  <>
+                    {' '}
+                    <ListExclusiveBadge />
+                  </>
+                )}
+              </span>
+            </MenuLink>
+          ))}
+        </>
+      )}
+      {feeds.length > 0 && (
+        <>
+          <MenuHeader className="plain">
+            <Trans>Feeds</Trans>
+          </MenuHeader>
+          {feeds.map((feed) => (
+            <MenuLink key={feed.id} to={`/l/${feed.id}`}>
+              <Icon icon="sparkles" /> <span>{feed.title}</span>
+            </MenuLink>
+          ))}
+        </>
+      )}
     </>
   );
 }
@@ -59,9 +79,7 @@ function Shortcuts() {
   if (!shortcuts.length) {
     return null;
   }
-  const isMultiColumnMode =
-    settings.shortcutsViewMode === 'multi-column' ||
-    (!settings.shortcutsViewMode && settings.shortcutsColumnsMode);
+  const isMultiColumnMode = false;
 
   const menuRef = useRef();
   const tabBarRef = useRef();
@@ -296,6 +314,7 @@ function Shortcuts() {
             ref={listsMenuRef}
             state={listsMenuState}
             anchorRef={listsLinkRef}
+            menuClassName="lists-picker-menu"
             onClose={() => {
               setListsMenuState(undefined);
             }}
@@ -350,7 +369,7 @@ function Shortcuts() {
             if (id === 'lists') {
               return (
                 <SubMenu2
-                  menuClassName="glass-menu"
+                  menuClassName="glass-menu lists-picker-menu"
                   overflow="auto"
                   gap={-8}
                   label={

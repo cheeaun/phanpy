@@ -97,11 +97,10 @@ export function initStates() {
   states.shortcuts = store.account.get('shortcuts') ?? [];
   states.settings.autoRefresh =
     store.account.get('settings-autoRefresh') ?? false;
+  const shortcutsViewMode = store.account.get('settings-shortcutsViewMode');
   states.settings.shortcutsViewMode =
-    store.account.get('settings-shortcutsViewMode') ?? null;
-  if (store.account.get('settings-shortcutsColumnsMode')) {
-    states.settings.shortcutsColumnsMode = true;
-  }
+    shortcutsViewMode === 'multi-column' ? null : (shortcutsViewMode ?? null);
+  states.settings.shortcutsColumnsMode = false;
   states.settings.boostsCarousel =
     store.account.get('settings-boostsCarousel') ?? true;
   states.settings.contentTranslation =
@@ -135,7 +134,10 @@ subscribe(states, (changes) => {
       store.account.set('settings-boostsCarousel', !!value);
     }
     if (path.join('.') === 'settings.shortcutsViewMode') {
-      store.account.set('settings-shortcutsViewMode', value);
+      store.account.set(
+        'settings-shortcutsViewMode',
+        value === 'multi-column' ? null : value,
+      );
     }
     if (path.join('.') === 'settings.contentTranslation') {
       store.account.set('settings-contentTranslation', !!value);

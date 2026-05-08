@@ -4,7 +4,8 @@ import { useEffect, useState } from 'preact/hooks';
 import Timeline2 from '../components/timeline2';
 import { api } from '../utils/api';
 import { filteredItems } from '../utils/filters';
-import { getStatus, saveStatus } from '../utils/states';
+import states, { getStatus, saveStatus } from '../utils/states';
+import store from '../utils/store';
 import supports from '../utils/supports';
 import { assignFollowedTags, dedupeBoosts } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
@@ -23,6 +24,13 @@ function Following2({ title, path, id, ...props }) {
   );
   const { masto, streaming, instance, client } = api();
   const [streamingClient, setStreamingClient] = useState(streaming);
+
+  useEffect(() => {
+    if (path === '/') return;
+    const homeTimeline = { type: 'following' };
+    store.account.set('homeTimeline', homeTimeline);
+    states.homeTimeline = homeTimeline;
+  }, [path]);
 
   // Streaming only happens after instance is initialized
   useEffect(() => {

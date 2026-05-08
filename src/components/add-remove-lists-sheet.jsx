@@ -2,7 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useReducer, useState } from 'preact/hooks';
 
 import { api } from '../utils/api';
-import { getLists } from '../utils/lists';
+import { getUserLists } from '../utils/lists';
 
 import Icon from './icon';
 import ListAddEdit from './list-add-edit';
@@ -21,7 +21,7 @@ function AddRemoveListsSheet({ accountID, onClose }) {
     setUIState('loading');
     (async () => {
       try {
-        const lists = await getLists();
+        const lists = await getUserLists();
         setLists(lists);
         const listsContainingAccount = await masto.v1.accounts
           .$select(accountID)

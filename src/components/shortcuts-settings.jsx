@@ -11,12 +11,11 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import floatingButtonUrl from '../assets/floating-button.svg';
-import multiColumnUrl from '../assets/multi-column.svg';
 import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
 
 import { api } from '../utils/api';
 import { fetchFollowedTags } from '../utils/followed-tags';
-import { getLists, getListTitle } from '../utils/lists';
+import { getLists, getListTitle, splitListsAndFeeds } from '../utils/lists';
 import pmem from '../utils/pmem';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
@@ -49,7 +48,7 @@ const TYPES = [
 const TYPE_TEXT = {
   following: msg`Home / Following`,
   notifications: msg`Notifications`,
-  list: msg`Lists`,
+  list: msg`Lists & Feeds`,
   public: msg`Public (Local / Federated)`,
   search: msg`Search`,
   'account-statuses': msg`Account`,
@@ -96,7 +95,7 @@ const TYPE_PARAMS = {
       text: msg`Search term`,
       name: 'query',
       type: 'text',
-      placeholder: msg`Optional, unless for multi-column mode`,
+      placeholder: msg`Optional`,
       notRequired: true,
     },
   ],
@@ -158,10 +157,9 @@ export const SHORTCUTS_META = {
   },
   list: {
     id: ({ id }) => (id ? 'list' : 'lists'),
-    title: ({ id }) => (id ? getListTitle(id) : t`Lists`),
+    title: ({ id }) => (id ? getListTitle(id) : t`Lists & Feeds`),
     path: ({ id }) => (id ? `/l/${id}` : '/l'),
     icon: 'list',
-    excludeViewMode: ({ id }) => (!id ? ['multi-column'] : []),
   },
   public: {
     id: 'public',
@@ -185,7 +183,6 @@ export const SHORTCUTS_META = {
         ? `/search?q=${encodeURIComponent(query)}&type=statuses`
         : '/search',
     icon: 'search',
-    excludeViewMode: ({ query }) => (!query ? ['multi-column'] : []),
   },
   profile: {
     id: 'profile',
@@ -276,11 +273,6 @@ function ShortcutsSettings({ onClose }) {
               value: 'tab-menu-bar',
               label: t`Tab/Menu bar`,
               imgURL: tabMenuBarUrl,
-            },
-            {
-              value: 'multi-column',
-              label: t`Multi-column`,
-              imgURL: multiColumnUrl,
             },
           ].map(({ value, label, imgURL }) => {
             const checked =
@@ -423,11 +415,7 @@ function ShortcutsSettings({ onClose }) {
           </>
         ) : (
           <div class="ui-state insignificant">
-            <p>
-              {snapStates.settings.shortcutsViewMode === 'multi-column'
-                ? t`No columns yet. Tap on the Add column button.`
-                : t`No shortcuts yet. Tap on the Add shortcut button.`}
-            </p>
+            <p>{t`No shortcuts yet. Tap on the Add shortcut button.`}</p>
             <p>
               <Trans>
                 Not sure what to add?
@@ -456,9 +444,7 @@ function ShortcutsSettings({ onClose }) {
         )}
         <p class="insignificant">
           {shortcuts.length >= SHORTCUTS_LIMIT &&
-            (snapStates.settings.shortcutsViewMode === 'multi-column'
-              ? t`Max ${SHORTCUTS_LIMIT} columns`
-              : t`Max ${SHORTCUTS_LIMIT} shortcuts`)}
+            t`Max ${SHORTCUTS_LIMIT} shortcuts`}
         </p>
         <p
           style={{
@@ -479,12 +465,7 @@ function ShortcutsSettings({ onClose }) {
             disabled={shortcuts.length >= SHORTCUTS_LIMIT}
             onClick={() => setShowForm(true)}
           >
-            <Icon icon="plus" />{' '}
-            <span>
-              {snapStates.settings.shortcutsViewMode === 'multi-column'
-                ? t`Add column…`
-                : t`Add shortcut…`}
-            </span>
+            <Icon icon="plus" /> <span>{t`Add shortcut…`}</span>
           </button>
         </p>
       </main>
@@ -530,8 +511,7 @@ function ShortcutsSettings({ onClose }) {
 }
 
 const FORM_NOTES = {
-  list: msg`Specific list is optional. For multi-column mode, list is required, else the column will not be shown.`,
-  search: msg`For multi-column mode, search term is required, else the column will not be shown.`,
+  list: msg`Specific list is optional.`,
   hashtag: msg`Multiple hashtags are supported. Space-separated.`,
 };
 
@@ -549,6 +529,7 @@ function ShortcutForm({
 
   const [uiState, setUIState] = useState('default');
   const [lists, setLists] = useState([]);
+  const { lists: userLists, feeds } = splitListsAndFeeds(lists);
   const [followedHashtags, setFollowedHashtags] = useState([]);
   useEffect(() => {
     (async () => {
@@ -673,9 +654,20 @@ function ShortcutForm({
                         dir="auto"
                       >
                         <option value=""></option>
-                        {lists.map((list) => (
-                          <option value={list.id}>{list.title}</option>
-                        ))}
+                        {userLists.length > 0 && (
+                          <optgroup label={t`Lists`}>
+                            {userLists.map((list) => (
+                              <option value={list.id}>{list.title}</option>
+                            ))}
+                          </optgroup>
+                        )}
+                        {feeds.length > 0 && (
+                          <optgroup label={t`Feeds`}>
+                            {feeds.map((feed) => (
+                              <option value={feed.id}>{feed.title}</option>
+                            ))}
+                          </optgroup>
+                        )}
                       </select>
                     </label>
                   </p>

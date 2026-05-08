@@ -10,12 +10,12 @@ import ListExclusiveBadge from '../components/list-exclusive-badge';
 import Loader from '../components/loader';
 import Modal from '../components/modal';
 import NavMenu from '../components/nav-menu';
-import { fetchLists } from '../utils/lists';
+import { fetchLists, splitListsAndFeeds } from '../utils/lists';
 import useTitle from '../utils/useTitle';
 
 function Lists() {
   const { t } = useLingui();
-  useTitle(t`Lists`, `/l`);
+  useTitle(t`Lists & Feeds`, `/l`);
   const [uiState, setUIState] = useState('default');
 
   const [reloadCount, reload] = useReducer((c) => c + 1, 0);
@@ -37,7 +37,8 @@ function Lists() {
 
   const [showListAddEditModal, setShowListAddEditModal] = useState(false);
 
-  const hasExclusiveLists = lists.some((list) => list.exclusive);
+  const { lists: userLists, feeds } = splitListsAndFeeds(lists);
+  const hasExclusiveLists = userLists.some((list) => list.exclusive);
 
   return (
     <div id="lists-page" class="deck-container" tabIndex="-1">
@@ -51,7 +52,7 @@ function Lists() {
               </Link>
             </div>
             <h1>
-              <Trans>Lists</Trans>
+              <Trans>Lists & Feeds</Trans>
             </h1>
             <div class="header-side">
               <button
@@ -67,21 +68,26 @@ function Lists() {
         <main>
           {lists.length > 0 ? (
             <>
-              <ul class="link-list">
-                {lists.map((list) => (
-                  <li>
-                    <Link to={`/l/${list.id}`}>
-                      <Icon icon="list" />{' '}
-                      <span>
-                        {list.title}
-                        {list.exclusive && (
-                          <>
-                            {' '}
-                            <ListExclusiveBadge insignificant />
-                          </>
-                        )}
-                      </span>
-                      {/* <button
+              {userLists.length > 0 && (
+                <>
+                  <h2 class="timeline-header">
+                    <Trans>Lists</Trans>
+                  </h2>
+                  <ul class="link-list">
+                    {userLists.map((list) => (
+                      <li>
+                        <Link to={`/l/${list.id}`}>
+                          <Icon icon="list" />{' '}
+                          <span>
+                            {list.title}
+                            {list.exclusive && (
+                              <>
+                                {' '}
+                                <ListExclusiveBadge insignificant />
+                              </>
+                            )}
+                          </span>
+                          {/* <button
                       type="button"
                       class="plain"
                       onClick={(e) => {
@@ -94,10 +100,28 @@ function Lists() {
                     >
                       <Icon icon="pencil" />
                     </button> */}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {feeds.length > 0 && (
+                <>
+                  <h2 class="timeline-header">
+                    <Trans>Feeds</Trans>
+                  </h2>
+                  <ul class="link-list">
+                    {feeds.map((feed) => (
+                      <li>
+                        <Link to={`/l/${feed.id}`}>
+                          <Icon icon="sparkles" /> <span>{feed.title}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
               {lists.length > 1 && (
                 <footer class="ui-state">
                   {hasExclusiveLists && (
@@ -112,11 +136,21 @@ function Lists() {
                   )}
                   <p>
                     <small class="insignificant">
-                      <Plural
-                        value={lists.length}
-                        one="# list"
-                        other="# lists"
-                      />
+                      {userLists.length > 0 && (
+                        <Plural
+                          value={userLists.length}
+                          one="# list"
+                          other="# lists"
+                        />
+                      )}
+                      {userLists.length > 0 && feeds.length > 0 && ' · '}
+                      {feeds.length > 0 && (
+                        <Plural
+                          value={feeds.length}
+                          one="# feed"
+                          other="# feeds"
+                        />
+                      )}
                     </small>
                   </p>
                 </footer>
@@ -132,7 +166,7 @@ function Lists() {
             </p>
           ) : (
             <p class="ui-state">
-              <Trans>No lists yet.</Trans>
+              <Trans>No lists or feeds yet.</Trans>
             </p>
           )}
         </main>

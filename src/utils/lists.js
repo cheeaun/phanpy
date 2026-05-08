@@ -5,6 +5,17 @@ import store from './store';
 const FETCH_MAX_AGE = 1000 * 60; // 1 minute
 const MAX_AGE = 24 * 60 * 60 * 1000; // 1 day
 
+export function isFeedList(list) {
+  return list?._atproto?.type === 'feed';
+}
+
+export function splitListsAndFeeds(lists = []) {
+  return {
+    lists: lists.filter((list) => !isFeedList(list)),
+    feeds: lists.filter(isFeedList),
+  };
+}
+
 export const fetchLists = pmem(
   async () => {
     const { masto } = api();
@@ -41,6 +52,11 @@ export async function getLists() {
   } catch (e) {
     return [];
   }
+}
+
+export async function getUserLists() {
+  const lists = await getLists();
+  return splitListsAndFeeds(lists).lists;
 }
 
 export const fetchList = pmem(

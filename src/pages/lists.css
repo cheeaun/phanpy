@@ -2,6 +2,12 @@
   display: none;
 }
 
+.lists-picker-menu {
+  max-height: min(70vh, 32rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
 .list-form {
   padding: 8px 0;
   display: flex;

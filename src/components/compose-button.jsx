@@ -53,7 +53,7 @@ export default function ComposeButton() {
   const buttonRef = useRef(null);
   const menuRef = useRef(null);
 
-  const columnMode = snapStates.settings.shortcutsViewMode === 'multi-column';
+  const columnMode = false;
 
   function handleButton(e) {
     // useKey will even listen to Shift

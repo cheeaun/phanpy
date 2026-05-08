@@ -1,6 +1,10 @@
 import { expect, test } from '@playwright/test';
 
-import { feedToStatuses, postToStatus } from '../src/utils/atproto-adapter.js';
+import {
+  feedToStatuses,
+  mergeSlingshotFeedRecords,
+  postToStatus,
+} from '../src/utils/atproto-adapter.js';
 import { shouldShowReplyBadge } from '../src/utils/reply-badge.js';
 import {
   shouldFetchReplyContextForInstance,
@@ -179,6 +183,40 @@ test.describe('ATProto reply mapping', () => {
       childUri,
     ]);
     expect(statuses[2]._atproto.replyParentAccount).toMatchObject({
+      id: 'did:plc:parent',
+      username: 'parent.test',
+    });
+  });
+
+  test('extracts Slingshot raw reply records before timeline render', async () => {
+    const item = feedReply({ reply: undefined });
+    delete item.reply;
+    const feed = await mergeSlingshotFeedRecords(
+      [item],
+      {
+        [parentUri]: {
+          status: 'found',
+          uri: parentUri,
+          cid: 'parent-cid',
+          value: {
+            $type: 'app.bsky.feed.post',
+            text: 'parent text',
+            createdAt: '2026-05-08T00:00:00.000Z',
+          },
+        },
+      },
+      {
+        'did:plc:parent': {
+          did: 'did:plc:parent',
+          handle: 'parent.test',
+        },
+      },
+    );
+
+    const statuses = feedToStatuses(feed);
+
+    expect(statuses.map((status) => status.uri)).toEqual([parentUri, childUri]);
+    expect(statuses[1]._atproto.replyParentAccount).toMatchObject({
       id: 'did:plc:parent',
       username: 'parent.test',
     });

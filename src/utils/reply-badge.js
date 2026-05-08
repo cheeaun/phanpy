@@ -1,6 +1,7 @@
 export function shouldShowReplyBadge({
   inReplyToId,
   inReplyToAccount,
+  isReplyParentUnavailable,
   instance,
   spoilerText,
   mentions = [],
@@ -8,7 +9,7 @@ export function shouldShowReplyBadge({
 }) {
   return (
     !!inReplyToId &&
-    !!inReplyToAccount &&
+    (!!inReplyToAccount || !!isReplyParentUnavailable) &&
     (instance === 'bsky.social' ||
       !!spoilerText ||
       !mentions.find((mention) => mention.id === inReplyToAccountId))

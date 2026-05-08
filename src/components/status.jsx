@@ -551,8 +551,13 @@ function Status({
   if (!inReplyToAccountRef && inReplyToAccountId === id) {
     inReplyToAccountRef = { url: accountURL, username, displayName };
   }
+  const isAtprotoReplyParentUnavailable =
+    instance === 'bsky.social' &&
+    !!inReplyToId &&
+    !!status._atproto?.replyParentUnavailable;
   const [inReplyToAccount, setInReplyToAccount] = useState(inReplyToAccountRef);
   useEffect(() => {
+    if (instance === 'bsky.social') return;
     if (!withinContext && !inReplyToAccount && inReplyToAccountId) {
       const account = states.accounts[inReplyToAccountId];
       if (account) {
@@ -579,6 +584,7 @@ function Status({
   const showReplyBadge = shouldShowReplyBadge({
     inReplyToId,
     inReplyToAccount,
+    isReplyParentUnavailable: isAtprotoReplyParentUnavailable,
     instance,
     spoilerText,
     mentions,
@@ -2446,11 +2452,15 @@ function Status({
                 showReplyBadge && (
                   <div class="status-reply-badge">
                     <Icon icon="reply" />{' '}
-                    <NameText
-                      account={inReplyToAccount}
-                      instance={instance}
-                      short
-                    />
+                    {inReplyToAccount ? (
+                      <NameText
+                        account={inReplyToAccount}
+                        instance={instance}
+                        short
+                      />
+                    ) : (
+                      <span>a post</span>
+                    )}
                   </div>
                 )
               ))}

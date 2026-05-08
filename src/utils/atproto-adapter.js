@@ -336,64 +336,6 @@ function strongRef(value) {
   };
 }
 
-function statusTargets(statuses = []) {
-  const targets = [];
-  const seen = new Set();
-  const collect = (status) => {
-    if (!status || seen.has(status)) return;
-    seen.add(status);
-    targets.push(status);
-    collect(status.reblog);
-    collect(status.quote?.quotedStatus);
-  };
-  statuses.forEach(collect);
-  return targets;
-}
-
-export async function hydrateReplyParentAccounts(statuses, agent) {
-  const targets = statusTargets(statuses);
-  const missingParentDids = [
-    ...new Set(
-      targets
-        .filter(
-          (status) =>
-            status?.inReplyToAccountId && !status._atproto?.replyParentAccount,
-        )
-        .map((status) => status.inReplyToAccountId),
-    ),
-  ];
-  if (!missingParentDids.length) return statuses;
-
-  const res = await agent
-    .getProfiles({ actors: missingParentDids })
-    .catch(() => null);
-  if (!res) return statuses;
-  const accounts = Object.fromEntries(
-    res.data.profiles.map((profile) => [profile.did, actorToAccount(profile)]),
-  );
-  targets.forEach((status) => {
-    const account = accounts[status?.inReplyToAccountId];
-    if (account) {
-      status._atproto.replyParentAccount = account;
-    }
-  });
-  return statuses;
-}
-
-async function feedToStatuses(feed, agent) {
-  return hydrateReplyParentAccounts(
-    feed.map((item) => postToStatus(item, agent)),
-    agent,
-  );
-}
-
-async function postsToStatuses(posts, agent) {
-  return hydrateReplyParentAccounts(
-    posts.map((post) => postToStatus(post, agent)),
-    agent,
-  );
-}
-
 export function postToStatus(feedItemOrPost, agent) {
   const post = feedItemOrPost?.post || feedItemOrPost;
   const record = post?.record || post?.value || {};
@@ -478,6 +420,7 @@ export function postToStatus(feedItemOrPost, agent) {
       replyParentAccount: replyParent?.author
         ? actorToAccount(replyParent.author)
         : undefined,
+      replyParentUnavailable: !!replyParentURI && !replyParent?.author,
       like: post.viewer?.like,
       repost: post.viewer?.repost,
       text: record.text || '',
@@ -740,7 +683,6 @@ export function createAtprotoClient({
         const post = res.data.posts?.[0];
         if (!post) throw new Error('Post not found');
         const status = await hydrateLegacyLinkQuote(postToStatus(post, agent));
-        await hydrateReplyParentAccounts([status], agent);
         return status;
       },
       context: {
@@ -836,7 +778,7 @@ export function createAtprotoClient({
             });
             return {
               cursor: res.data.cursor,
-              items: await postsToStatuses(res.data.posts, agent),
+              items: res.data.posts.map((post) => postToStatus(post, agent)),
             };
           });
         },
@@ -960,7 +902,7 @@ export function createAtprotoClient({
             cursor,
             filter: 'posts_with_replies',
           });
-          let items = await feedToStatuses(res.data.feed, agent);
+          let items = res.data.feed.map((item) => postToStatus(item, agent));
           if (excludeReplies) items = items.filter((item) => !item.inReplyToId);
           if (excludeReposts) items = items.filter((item) => !item.reblog);
           if (onlyMedia) {
@@ -1259,7 +1201,7 @@ export function createAtprotoClient({
           .catch(() => [])
       : [];
     const postMap = Object.fromEntries(
-      (await postsToStatuses(posts, agent)).map((post) => [post.uri, post]),
+      posts.map((post) => [post.uri, postToStatus(post, agent)]),
     );
     const items = notifications.map((notification) => {
       const statusURI = notificationStatusURI(notification);
@@ -1386,7 +1328,7 @@ export function createAtprotoClient({
               const res = await agent.getTimeline({ limit, cursor });
               return {
                 cursor: res.data.cursor,
-                items: await feedToStatuses(res.data.feed, agent),
+                items: res.data.feed.map((item) => postToStatus(item, agent)),
               };
             });
           },
@@ -1401,7 +1343,7 @@ export function createAtprotoClient({
               });
               return {
                 cursor: res.data.cursor,
-                items: await feedToStatuses(res.data.feed, agent),
+                items: res.data.feed.map((item) => postToStatus(item, agent)),
               };
             });
           },
@@ -1420,7 +1362,9 @@ export function createAtprotoClient({
                     limit,
                     cursor,
                   });
-                  let items = await postsToStatuses(res.data.posts, agent);
+                  let items = res.data.posts.map((post) =>
+                    postToStatus(post, agent),
+                  );
                   if (onlyMedia) {
                     items = items.filter(
                       (item) => item.mediaAttachments?.length,
@@ -1443,7 +1387,7 @@ export function createAtprotoClient({
               });
               return {
                 cursor: res.data.cursor,
-                items: await postsToStatuses(res.data.posts, agent),
+                items: res.data.posts.map((post) => postToStatus(post, agent)),
               };
             });
           },
@@ -1465,7 +1409,9 @@ export function createAtprotoClient({
                   });
                   return {
                     cursor: res.data.cursor,
-                    items: await feedToStatuses(res.data.feed, agent),
+                    items: res.data.feed.map((item) =>
+                      postToStatus(item, agent),
+                    ),
                   };
                 });
               },
@@ -1556,7 +1502,9 @@ export function createAtprotoClient({
             });
             return {
               cursor: res.data.cursor,
-              items: await postsToStatuses(res.data.bookmarks, agent),
+              items: res.data.bookmarks.map((post) =>
+                postToStatus(post, agent),
+              ),
             };
           });
         },
@@ -1571,7 +1519,7 @@ export function createAtprotoClient({
             });
             return {
               cursor: res.data.cursor,
-              items: await feedToStatuses(res.data.feed, agent),
+              items: res.data.feed.map((item) => postToStatus(item, agent)),
             };
           });
         },
@@ -1665,7 +1613,7 @@ export function createAtprotoClient({
               });
               return {
                 cursor: res.data.cursor,
-                items: await feedToStatuses(res.data.feed, agent),
+                items: res.data.feed.map((item) => postToStatus(item, agent)),
               };
             });
           },
@@ -1789,7 +1737,7 @@ export function createAtprotoClient({
           if (!ids.length) return [];
           const uris = ids.map((value) => decodeURIComponent(value));
           const res = await agent.getPosts({ uris });
-          return postsToStatuses(res.data.posts, agent);
+          return res.data.posts.map((post) => postToStatus(post, agent));
         },
         async create(params = {}) {
           if (params.scheduled_at || params.scheduledAt) {
@@ -2059,7 +2007,9 @@ export function createAtprotoClient({
               q,
               limit,
             });
-            results.statuses = await postsToStatuses(res.data.posts, agent);
+            results.statuses = res.data.posts.map((post) =>
+              postToStatus(post, agent),
+            );
           }
 
           if (wanted.includes('hashtags')) {

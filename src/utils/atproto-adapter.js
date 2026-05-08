@@ -336,6 +336,34 @@ function strongRef(value) {
   };
 }
 
+function isPostView(value) {
+  return !!(value?.uri && value?.author && value?.record);
+}
+
+function feedItemToStatuses(feedItem, agent) {
+  const post = feedItem?.post || feedItem;
+  if (feedItem?.reason?.$type === 'app.bsky.feed.defs#reasonRepost') {
+    return [postToStatus(feedItem, agent)];
+  }
+
+  const statuses = [];
+  const seen = new Set();
+  const addPost = (item, statusSource = item) => {
+    if (!isPostView(item) || seen.has(item.uri)) return;
+    seen.add(item.uri);
+    statuses.push(postToStatus(statusSource, agent));
+  };
+
+  addPost(feedItem?.reply?.root);
+  addPost(feedItem?.reply?.parent);
+  addPost(post, feedItem);
+  return statuses;
+}
+
+export function feedToStatuses(feed, agent) {
+  return feed.flatMap((item) => feedItemToStatuses(item, agent));
+}
+
 export function postToStatus(feedItemOrPost, agent) {
   const post = feedItemOrPost?.post || feedItemOrPost;
   const record = post?.record || post?.value || {};
@@ -902,7 +930,7 @@ export function createAtprotoClient({
             cursor,
             filter: 'posts_with_replies',
           });
-          let items = res.data.feed.map((item) => postToStatus(item, agent));
+          let items = feedToStatuses(res.data.feed, agent);
           if (excludeReplies) items = items.filter((item) => !item.inReplyToId);
           if (excludeReposts) items = items.filter((item) => !item.reblog);
           if (onlyMedia) {
@@ -1328,7 +1356,7 @@ export function createAtprotoClient({
               const res = await agent.getTimeline({ limit, cursor });
               return {
                 cursor: res.data.cursor,
-                items: res.data.feed.map((item) => postToStatus(item, agent)),
+                items: feedToStatuses(res.data.feed, agent),
               };
             });
           },
@@ -1343,7 +1371,7 @@ export function createAtprotoClient({
               });
               return {
                 cursor: res.data.cursor,
-                items: res.data.feed.map((item) => postToStatus(item, agent)),
+                items: feedToStatuses(res.data.feed, agent),
               };
             });
           },
@@ -1409,9 +1437,7 @@ export function createAtprotoClient({
                   });
                   return {
                     cursor: res.data.cursor,
-                    items: res.data.feed.map((item) =>
-                      postToStatus(item, agent),
-                    ),
+                    items: feedToStatuses(res.data.feed, agent),
                   };
                 });
               },
@@ -1519,7 +1545,7 @@ export function createAtprotoClient({
             });
             return {
               cursor: res.data.cursor,
-              items: res.data.feed.map((item) => postToStatus(item, agent)),
+              items: feedToStatuses(res.data.feed, agent),
             };
           });
         },
@@ -1613,7 +1639,7 @@ export function createAtprotoClient({
               });
               return {
                 cursor: res.data.cursor,
-                items: res.data.feed.map((item) => postToStatus(item, agent)),
+                items: feedToStatuses(res.data.feed, agent),
               };
             });
           },

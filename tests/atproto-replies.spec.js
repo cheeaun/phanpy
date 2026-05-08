@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { postToStatus } from '../src/utils/atproto-adapter.js';
+import { feedToStatuses, postToStatus } from '../src/utils/atproto-adapter.js';
 import { shouldShowReplyBadge } from '../src/utils/reply-badge.js';
 import {
   shouldFetchReplyContextForInstance,
@@ -9,6 +9,7 @@ import {
 
 const parentUri = 'at://did:plc:parent/app.bsky.feed.post/root';
 const childUri = 'at://did:plc:child/app.bsky.feed.post/reply';
+const rootUri = 'at://did:plc:root/app.bsky.feed.post/root';
 
 function feedReply(overrides = {}) {
   return {
@@ -137,5 +138,49 @@ test.describe('ATProto reply mapping', () => {
         },
       }),
     ).toBe(false);
+  });
+
+  test('extracts hydrated reply context from feed payload synchronously', () => {
+    const item = feedReply({
+      post: {
+        record: {
+          $type: 'app.bsky.feed.post',
+          text: 'reply text',
+          createdAt: '2026-05-08T00:02:00.000Z',
+          reply: {
+            root: { uri: rootUri, cid: 'root-cid' },
+            parent: { uri: parentUri, cid: 'parent-cid' },
+          },
+        },
+      },
+      reply: {
+        root: {
+          uri: rootUri,
+          cid: 'root-cid',
+          author: {
+            did: 'did:plc:root',
+            handle: 'root.test',
+            displayName: 'Root',
+          },
+          record: {
+            $type: 'app.bsky.feed.post',
+            text: 'root text',
+            createdAt: '2026-05-08T00:00:00.000Z',
+          },
+        },
+      },
+    });
+
+    const statuses = feedToStatuses([item]);
+
+    expect(statuses.map((status) => status.uri)).toEqual([
+      rootUri,
+      parentUri,
+      childUri,
+    ]);
+    expect(statuses[2]._atproto.replyParentAccount).toMatchObject({
+      id: 'did:plc:parent',
+      username: 'parent.test',
+    });
   });
 });

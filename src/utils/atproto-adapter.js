@@ -147,6 +147,10 @@ function actorToAccount(actor = {}) {
   const displayName = actor.displayName || handle;
   const description = actor.description || '';
   const url = `https://bsky.app/profile/${handle}`;
+  const hasProfileCounts =
+    Number.isFinite(actor.followersCount) &&
+    Number.isFinite(actor.followsCount) &&
+    Number.isFinite(actor.postsCount);
   return {
     id: actor.did || handle,
     username: handle,
@@ -163,13 +167,16 @@ function actorToAccount(actor = {}) {
     avatarStatic: actor.avatar,
     header: actor.banner,
     headerStatic: actor.banner,
-    followersCount: actor.followersCount || 0,
-    followingCount: actor.followsCount || 0,
-    statusesCount: actor.postsCount || 0,
+    followersCount: actor.followersCount ?? 0,
+    followingCount: actor.followsCount ?? 0,
+    statusesCount: actor.postsCount ?? 0,
     emojis: [],
     fields: [],
     bot: false,
     group: false,
+    _atproto: {
+      hasProfileCounts,
+    },
   };
 }
 

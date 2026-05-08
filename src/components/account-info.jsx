@@ -158,7 +158,7 @@ function AccountInfo({
   useEffect(() => {
     if (!isString) {
       setInfo(account);
-      return;
+      if (account?._atproto?.hasProfileCounts !== false) return;
     }
     setUIState('loading');
     (async () => {
@@ -169,7 +169,7 @@ function AccountInfo({
         setUIState('default');
       } catch (e) {
         console.error(e);
-        setInfo(null);
+        if (isString) setInfo(null);
         setUIState('error');
       }
     })();

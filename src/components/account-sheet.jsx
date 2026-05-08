@@ -86,7 +86,7 @@ function AccountSheet({ account, instance: propInstance, onClose }) {
               }
             }
           } else {
-            return account;
+            return masto.v1.accounts.$select(account.id).fetch();
           }
         }}
       />

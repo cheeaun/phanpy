@@ -12,6 +12,15 @@ function getAssociatedRecord(value) {
   return value;
 }
 
+export async function fetchAtprotoLinkMetadata(uri, { fetcher = fetch } = {}) {
+  if (!uri) return null;
+  const res = await fetcher(`${BSKY_LINK_META_PROXY}${encodeURIComponent(uri)}`);
+  if (!res.ok) return null;
+  const metadata = await res.json();
+  if (metadata?.error) return null;
+  return metadata;
+}
+
 export async function createAtprotoExternalEmbed(
   agent,
   uri,
@@ -20,14 +29,12 @@ export async function createAtprotoExternalEmbed(
   if (!uri) return null;
   let metadata;
   try {
-    const res = await fetcher(`${BSKY_LINK_META_PROXY}${encodeURIComponent(uri)}`);
-    if (!res.ok) return null;
-    metadata = await res.json();
+    metadata = await fetchAtprotoLinkMetadata(uri, { fetcher });
   } catch (e) {
     console.error('Failed to fetch Bluesky link metadata', e);
     return null;
   }
-  if (metadata?.error) return null;
+  if (!metadata) return null;
 
   const external = {
     uri: metadata.url || uri,

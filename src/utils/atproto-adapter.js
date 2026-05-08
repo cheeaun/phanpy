@@ -1804,7 +1804,7 @@ export function createAtprotoClient({
               }
             }
           }
-          if (!record.embed) {
+          if (!record.embed && !(params.disable_card || params.disableCard)) {
             const externalEmbed = await createAtprotoExternalEmbed(
               agent,
               params.card_url ||

@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import {
   createAtprotoExternalEmbed,
+  fetchAtprotoLinkMetadata,
   getFirstPostURL,
 } from '../src/utils/atproto-unfurl.js';
 
@@ -74,6 +75,29 @@ test.describe('ATProto compose helpers', () => {
           size: 3,
         },
       },
+    });
+  });
+
+  test('fetches cardyb metadata for composer previews', async () => {
+    const metadata = await fetchAtprotoLinkMetadata('https://example.com/post', {
+      fetcher: async (url) => {
+        expect(String(url)).toBe(
+          'https://cardyb.bsky.app/v1/extract?url=https%3A%2F%2Fexample.com%2Fpost',
+        );
+        return Response.json({
+          url: 'https://example.com/post',
+          title: 'Example link',
+          description: 'Preview description',
+          image: 'https://example.com/card.jpg',
+        });
+      },
+    });
+
+    expect(metadata).toMatchObject({
+      url: 'https://example.com/post',
+      title: 'Example link',
+      description: 'Preview description',
+      image: 'https://example.com/card.jpg',
     });
   });
 });

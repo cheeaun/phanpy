@@ -27,6 +27,10 @@ import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
 import {
+  fetchAtprotoLinkMetadata,
+  getFirstPostURL,
+} from '../utils/atproto-unfurl';
+import {
   getAPIVersions,
   getCurrentAccount,
   getCurrentAccountNS,
@@ -228,12 +232,48 @@ function Compose({
   const [quoteSuggestion, setQuoteSuggestion] = useState(null);
   const [localQuoteStatus, setLocalQuoteStatus] = useState(quoteStatus);
   const [quoteCleared, setQuoteCleared] = useState(false);
+  const [linkPreview, setLinkPreview] = useState(null);
+  const linkPreviewRef = useRef({ id: 0, timeout: null });
 
   const prefs = getPreferences();
 
   const currentQuoteStatus = quoteCleared
     ? null
     : localQuoteStatus || quoteStatus;
+  const canShowLinkPreview =
+    currentAccount?.atproto &&
+    !editStatus &&
+    !currentQuoteStatus?.id &&
+    mediaAttachments.length === 0;
+
+  const updateLinkPreview = (text) => {
+    clearTimeout(linkPreviewRef.current.timeout);
+    if (!canShowLinkPreview) {
+      setLinkPreview(null);
+      return;
+    }
+    const url = getFirstPostURL(text || '');
+    if (!url) {
+      setLinkPreview(null);
+      return;
+    }
+    if (linkPreview?.url === url && linkPreview?.removed) return;
+    if (linkPreview?.url === url && linkPreview?.metadata) return;
+
+    const requestId = linkPreviewRef.current.id + 1;
+    linkPreviewRef.current.id = requestId;
+    setLinkPreview({ url, loading: true });
+    linkPreviewRef.current.timeout = setTimeout(async () => {
+      try {
+        const metadata = await fetchAtprotoLinkMetadata(url);
+        if (requestId !== linkPreviewRef.current.id) return;
+        setLinkPreview(metadata ? { url, metadata } : null);
+      } catch (e) {
+        console.error(e);
+        if (requestId === linkPreviewRef.current.id) setLinkPreview(null);
+      }
+    }, 300);
+  };
 
   // Quote eligibility logic duplicated from status.jsx
   const checkQuoteEligibility = (status) => {
@@ -355,6 +395,13 @@ function Compose({
       }
     }
   };
+
+  useEffect(() => {
+    if (!canShowLinkPreview) {
+      clearTimeout(linkPreviewRef.current.timeout);
+      setLinkPreview(null);
+    }
+  }, [canShowLinkPreview]);
 
   const oninputTextarea = () => {
     if (!textareaRef.current) return;
@@ -1439,6 +1486,11 @@ function Compose({
                   // params.inReplyToId = replyToStatus?.id || undefined;
                   params.in_reply_to_id = replyToStatus?.id || undefined;
                   params.scheduled_at = scheduledAt;
+                  if (linkPreview?.removed) {
+                    params.disable_card = true;
+                  } else if (linkPreview?.metadata) {
+                    params.card_url = linkPreview.url;
+                  }
                 }
                 params = removeNullUndefined(params);
                 console.log('POST', params);
@@ -1563,6 +1615,7 @@ function Compose({
               lang={language}
               onInput={() => {
                 updateCharCount();
+                updateLinkPreview(textareaRef.current?.value || '');
               }}
               maxCharacters={maxCharacters}
               onTrigger={(action) => {
@@ -1586,6 +1639,48 @@ function Compose({
               }}
             />
           </div>
+          {!!linkPreview && !linkPreview.removed && (
+            <div class="compose-link-preview">
+              {linkPreview.loading ? (
+                <div class="compose-link-preview-body">
+                  <span class="compose-link-preview-title">
+                    Loading link preview...
+                  </span>
+                  <small>{linkPreview.url}</small>
+                </div>
+              ) : (
+                <>
+                  {!!linkPreview.metadata?.image && (
+                    <img
+                      src={linkPreview.metadata.image}
+                      alt=""
+                      loading="lazy"
+                    />
+                  )}
+                  <div class="compose-link-preview-body">
+                    <span class="compose-link-preview-title">
+                      {linkPreview.metadata?.title || linkPreview.url}
+                    </span>
+                    {!!linkPreview.metadata?.description && (
+                      <small>{linkPreview.metadata.description}</small>
+                    )}
+                    <small>{linkPreview.metadata?.url || linkPreview.url}</small>
+                  </div>
+                </>
+              )}
+              <button
+                type="button"
+                class="plain4 close-button small"
+                onClick={() => {
+                  clearTimeout(linkPreviewRef.current.timeout);
+                  setLinkPreview({ ...linkPreview, removed: true });
+                  focusTextarea();
+                }}
+              >
+                <Icon icon="x" alt={t`Cancel`} />
+              </button>
+            </div>
+          )}
           {mediaAttachments?.length > 0 && (
             <div class="media-attachments">
               {mediaAttachments.map((attachment, i) => {

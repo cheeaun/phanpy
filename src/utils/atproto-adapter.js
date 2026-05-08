@@ -228,13 +228,17 @@ function embedToParts(embed, agent) {
     };
   }
 
-  const video = embed.video || embed.media?.video;
+  const video =
+    (embed.playlist && embed) ||
+    embed.video ||
+    (embed.media?.playlist && embed.media) ||
+    embed.media?.video;
   if (video?.playlist) {
     mediaAttachments.push({
-      id: video.playlist,
+      id: video.cid || video.playlist,
       type: 'video',
       url: video.playlist,
-      previewUrl: video.thumbnail,
+      previewUrl: video.thumbnail || video.thumb,
       remoteUrl: video.playlist,
       description: video.alt || '',
       meta: {

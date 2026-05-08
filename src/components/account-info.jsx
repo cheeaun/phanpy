@@ -504,7 +504,11 @@ function AccountInfo({
                       e.target.remove();
                     }
                   }}
-                  crossOrigin="anonymous"
+                  crossOrigin={
+                    /\/\/cdn\.bsky\.app\//.test(header)
+                      ? undefined
+                      : 'anonymous'
+                  }
                   onLoad={(e) => {
                     e.target.classList.add('loaded');
                     const { width, height } = e.target;

@@ -11,6 +11,12 @@ import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import instancesListURL from '../data/instances.json?url';
+import { initClient, initInstance, initPreferences } from '../utils/api';
+import {
+  BSKY_INSTANCE,
+  BSKY_PDS,
+  loginAtproto,
+} from '../utils/atproto-adapter';
 import {
   getAuthorizationURL,
   getPKCEAuthorizationURL,
@@ -22,6 +28,8 @@ import store from '../utils/store';
 import {
   getCredentialApplication,
   hasAccountInInstance,
+  saveAccount,
+  setCurrentAccountID,
   storeCredentialApplication,
 } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
@@ -34,6 +42,8 @@ function Login() {
   const instanceURLRef = useRef();
   const cachedInstanceURL = store.local.get('instanceURL');
   const [uiState, setUIState] = useState('default');
+  const [bskyIdentifier, setBskyIdentifier] = useState('');
+  const [bskyPassword, setBskyPassword] = useState('');
   const [searchParams] = useSearchParams();
   const instance = searchParams.get('instance');
   const submit = searchParams.get('submit');
@@ -212,6 +222,45 @@ function Login() {
     submitInstance(selectedInstanceText);
   };
 
+  const submitBluesky = (e) => {
+    e.preventDefault();
+    if (!bskyIdentifier || !bskyPassword) return;
+    (async () => {
+      setUIState('loading');
+      try {
+        const { account, session, service } = await loginAtproto({
+          identifier: bskyIdentifier.trim(),
+          password: bskyPassword,
+          service: BSKY_PDS,
+        });
+        const accessToken = JSON.stringify({
+          type: 'atproto',
+          service,
+          session,
+        });
+        saveAccount({
+          info: account,
+          instanceURL: BSKY_INSTANCE,
+          accessToken,
+          atproto: true,
+          createdAt: Date.now(),
+        });
+        setCurrentAccountID(account.id);
+        const client = initClient({ instance: BSKY_INSTANCE, accessToken });
+        await Promise.allSettled([
+          initPreferences(client),
+          initInstance(client, BSKY_INSTANCE),
+        ]);
+        location.href = location.pathname || '/';
+      } catch (e) {
+        console.error(e);
+        setUIState('error');
+      } finally {
+        setUIState('default');
+      }
+    })();
+  };
+
   if (submit) {
     useEffect(() => {
       submitInstance(instance || selectedInstanceText);
@@ -220,90 +269,59 @@ function Login() {
 
   return (
     <main id="login" style={{ textAlign: 'center' }}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={submitBluesky}>
         <h1>
           <img src={logo} alt="" width="80" height="80" />
           <br />
           <Trans>Log in</Trans>
         </h1>
-        <label>
-          <p>
-            <Trans>Server</Trans>
-          </p>
-          <input
-            value={instanceText}
-            required
-            type="text"
-            class="large"
-            id="instanceURL"
-            ref={instanceURLRef}
-            disabled={uiState === 'loading'}
-            // list="instances-list"
-            autocorrect="off"
-            autocapitalize="off"
-            autocomplete="off"
-            spellCheck={false}
-            placeholder={t`server domain`}
-            enterKeyHint="go"
-            onInput={(e) => {
-              setInstanceText(e.target.value);
-            }}
-            dir="auto"
-          />
-          {instancesSuggestions?.length > 0 ? (
-            <ul id="instances-suggestions">
-              {instancesSuggestions.map((instance, i) => (
-                <li>
-                  <button
-                    type="button"
-                    class="plain5"
-                    onClick={() => {
-                      submitInstance(instance);
-                    }}
-                  >
-                    {instance}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div id="instances-eg">
-              <Trans>e.g. &ldquo;mastodon.social&rdquo;</Trans>
-            </div>
-          )}
-          {/* <datalist id="instances-list">
-            {instancesList.map((instance) => (
-              <option value={instance} />
-            ))}
-          </datalist> */}
-        </label>
+        <section class="bsky-login">
+          <h2>Bluesky</h2>
+          <label>
+            <p>Handle or email</p>
+            <input
+              value={bskyIdentifier}
+              type="text"
+              class="large"
+              disabled={uiState === 'loading'}
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="username"
+              spellCheck={false}
+              placeholder="alice.bsky.social"
+              onInput={(e) => setBskyIdentifier(e.target.value)}
+            />
+          </label>
+          <label>
+            <p>App password</p>
+            <input
+              value={bskyPassword}
+              type="password"
+              class="large"
+              disabled={uiState === 'loading'}
+              autocomplete="current-password"
+              onInput={(e) => setBskyPassword(e.target.value)}
+            />
+          </label>
+          <div>
+            <button
+              disabled={
+                uiState === 'loading' || !bskyIdentifier || !bskyPassword
+              }
+            >
+              Continue with Bluesky
+            </button>
+          </div>
+        </section>
         {uiState === 'error' && (
           <p class="error">
             <Trans>
-              Failed to log in. Please try again or try another server.
+              Failed to log in. Please check your handle and app password.
             </Trans>
           </p>
         )}
-        <div>
-          <button
-            disabled={
-              uiState === 'loading' || !instanceText || !selectedInstanceText
-            }
-          >
-            {selectedInstanceText
-              ? t`Continue with ${selectedInstanceText}`
-              : t`Continue`}
-          </button>{' '}
-        </div>
         <Loader hidden={uiState !== 'loading'} />
         <hr />
-        {!DEFAULT_INSTANCE && (
-          <p>
-            <a href="https://joinmastodon.org/servers" target="_blank">
-              <Trans>Don't have an account? Create one!</Trans>
-            </a>
-          </p>
-        )}
         <p>
           <Link to="/">
             <Trans>Go home</Trans>

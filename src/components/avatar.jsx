@@ -38,6 +38,7 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
   size = SIZES[size] || size || SIZES.m;
   const avatarRef = useRef();
   const isMissing = MISSING_IMAGE_PATH_REGEX.test(url);
+  const canCheckAlpha = url && !/\/\/cdn\.bsky\.app\//.test(url);
   return (
     <picture
       ref={avatarRef}
@@ -64,7 +65,9 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
           decoding="async"
           fetchPriority="low"
           crossOrigin={
-            !alphaCache.has(url) && !isMissing ? 'anonymous' : undefined
+            canCheckAlpha && !alphaCache.has(url) && !isMissing
+              ? 'anonymous'
+              : undefined
           }
           onError={(e) => {
             if (e.target.crossOrigin) {
@@ -76,6 +79,7 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
             if (avatarRef.current) avatarRef.current.dataset.loaded = true;
             if (alphaCache.has(url)) return;
             if (isMissing) return;
+            if (!canCheckAlpha) return;
             scheduleTask(() => {
               try {
                 // Check if image has alpha channel

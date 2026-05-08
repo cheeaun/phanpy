@@ -24,6 +24,19 @@ if (import.meta.env.DEV) {
   import('preact/debug');
 }
 
+if (import.meta.env.DEV && 'serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .getRegistrations()
+    .then((registrations) => {
+      registrations.forEach((registration) => {
+        registration.unregister();
+      });
+    })
+    .catch(() => {});
+}
+
+document.getElementById('boot-status')?.remove();
+
 render(
   <I18nProvider i18n={i18n}>
     <HashRouter>

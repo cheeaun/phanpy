@@ -65,6 +65,9 @@ export const getCurrentAccID = mem(getCurrentAccountID, {
 export function setCurrentAccountID(id) {
   getCurrentAccID.cache.clear();
   try {
+    getCurrentAcc.cache.clear();
+  } catch (e) {}
+  try {
     store.session.set('currentAccount', id);
   } catch (e) {}
   if (standaloneMQ?.matches) {
@@ -142,6 +145,7 @@ export function getCurrentInstance() {
   if (currentInstance) return currentInstance;
   try {
     const account = getCurrentAccount();
+    if (!account) return {};
     const instances = store.local.getJSON('instances');
     const instance = account.instanceURL.toLowerCase();
     return (currentInstance = instances[instance]);
@@ -160,6 +164,7 @@ export function getCurrentNodeInfo() {
   if (currentNodeInfo) return currentNodeInfo;
   try {
     const account = getCurrentAccount();
+    if (!account) return {};
     const nodeInfos = store.local.getJSON('nodeInfos') || {};
     const instanceURL = account.instanceURL.toLowerCase();
     return (currentNodeInfo = nodeInfos[instanceURL] || {});

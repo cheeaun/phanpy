@@ -141,7 +141,7 @@ const sessionCookie = {
 const account = {
   get: (key) => {
     try {
-      return local.getJSON(key)[getCurrentAccountNS()];
+      return local.getJSON(key)?.[getCurrentAccountNS()] ?? null;
     } catch (e) {
       console.warn(e);
       return null;

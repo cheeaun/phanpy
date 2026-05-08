@@ -25,6 +25,7 @@ const {
   PHANPY_DISALLOW_ROBOTS: DISALLOW_ROBOTS,
   PHANPY_DEV,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
+const DEV_PORT = Number(process.env.PORT || process.env.VITE_PORT) || undefined;
 
 const now = new Date();
 let commitHash;
@@ -78,6 +79,7 @@ export default defineConfig({
   },
   server: {
     host: true,
+    port: DEV_PORT,
     watch: {
       awaitWriteFinish: {
         pollInterval: 1000,
@@ -271,7 +273,7 @@ export default defineConfig({
         injectionPoint: undefined,
       },
       devOptions: {
-        enabled: NODE_ENV === 'development',
+        enabled: false,
         type: 'module',
       },
     }),

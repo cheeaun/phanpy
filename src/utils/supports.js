@@ -29,6 +29,15 @@ const platformFeatures = {
 };
 
 const supportsCache = {};
+const bskyUnsupportedFeatures = new Set([
+  '@mastodon/filters',
+  '@mastodon/endorsements',
+  '@mastodon/pinned-posts',
+  '@mastodon/post-edit',
+  '@mastodon/profile-private-note',
+  '@mastodon/trending-hashtags',
+  '@mastodon/trending-links',
+]);
 
 const semverExtract = /^\d+\.\d+(\.\d+)?/;
 const atSoftwareSlashMatch = /^@([a-z]+)\//i;
@@ -37,6 +46,10 @@ function supports(feature) {
   try {
     let { version, domain } = getCurrentInstance();
     let softwareName = getCurrentNodeInfo()?.software?.name || 'mastodon';
+
+    if (domain === 'bsky.social' && bskyUnsupportedFeatures.has(feature)) {
+      return false;
+    }
 
     if (softwareName === 'hometown') {
       // Hometown is a Mastodon fork and inherits its features

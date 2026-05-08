@@ -7,6 +7,9 @@ console.warn = () => {};
 console.info = () => {};
 console.debug = () => {};
 
+const DEV_PORT = Number(process.env.PORT || process.env.VITE_PORT) || 5173;
+const BASE_URL = `http://localhost:${DEV_PORT}`;
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -33,7 +36,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:5173',
+    baseURL: BASE_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -42,15 +45,22 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'Mobile Safari',
-      use: { ...devices['iPhone 13 Mini'] },
+      name: 'Chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          executablePath:
+            process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ||
+            '/run/current-system/sw/bin/chromium',
+        },
+      },
     },
   ],
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:5173',
+    command: `npm run dev -- --port ${DEV_PORT}`,
+    url: BASE_URL,
     reuseExistingServer: !process.env.CI,
   },
 });

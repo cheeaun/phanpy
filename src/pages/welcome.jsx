@@ -16,7 +16,6 @@ import homeTabletLight from '../assets/screenshots/home-tablet-light@2x.png';
 
 import LangSelector from '../components/lang-selector';
 import Link from '../components/link';
-import states from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const {
@@ -49,7 +48,7 @@ function Welcome() {
             <img src={logoText} alt="Phanpy" width="180" height="52" />
           </h1>
           <p class="desc">
-            <Trans>A minimalistic opinionated Mastodon web client.</Trans>
+            <Trans>A minimalistic opinionated Bluesky web client.</Trans>
           </p>
           <p>
             <Link
@@ -60,7 +59,7 @@ function Welcome() {
               }
               class="button plain6"
             >
-              {DEFAULT_INSTANCE ? t`Log in` : t`Log in with Mastodon`}
+              {DEFAULT_INSTANCE ? t`Log in` : t`Log in with Bluesky`}
             </Link>
           </p>
           {DEFAULT_INSTANCE && DEFAULT_INSTANCE_REGISTRATION_URL && (
@@ -74,7 +73,7 @@ function Welcome() {
             <p class="insignificant">
               <small>
                 <Trans>
-                  Connect your existing Mastodon/Fediverse account.
+                  Connect your existing Bluesky account.
                   <br />
                   Your credentials are not stored on this server.
                 </Trans>
@@ -233,14 +232,7 @@ function Welcome() {
               Built
             </a>{' '}
             by{' '}
-            <a
-              href="https://mastodon.social/@cheeaun"
-              target="_blank"
-              onClick={(e) => {
-                e.preventDefault();
-                states.showAccount = 'cheeaun@mastodon.social';
-              }}
-            >
+            <a href="https://github.com/cheeaun" target="_blank">
               @cheeaun
             </a>
             .{' '}

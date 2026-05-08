@@ -1,6 +1,11 @@
 import { compareVersions, satisfies, validate } from 'compare-versions';
 import { createRestAPIClient, createStreamingAPIClient } from 'masto';
 
+import {
+  atprotoInstanceInfo,
+  BSKY_INSTANCE,
+  createAtprotoClient,
+} from './atproto-adapter';
 import mem from '../utils/mem';
 
 import store from './store';
@@ -40,6 +45,52 @@ export function initClient({ instance, accessToken }) {
       .replace(/\/+$/, '')
       .toLowerCase();
   }
+  const atprotoSession = parseAtprotoSession(accessToken);
+  if (isAtprotoInstance(instance) || atprotoSession) {
+    instance = BSKY_INSTANCE;
+    let client;
+    let persistedAccessToken = accessToken;
+    const persistSession = (event, session) => {
+      if (!session || !persistedAccessToken) return;
+      const account = getAccountByAccessToken(persistedAccessToken);
+      if (!account) return;
+      const nextAccessToken = JSON.stringify({
+        type: 'atproto',
+        service: atprotoSession?.service,
+        session,
+      });
+      account.accessToken = nextAccessToken;
+      account.updatedAt = Date.now();
+      saveAccount(account);
+      if (accountApis[instance]?.[persistedAccessToken]) {
+        delete accountApis[instance][persistedAccessToken];
+      }
+      persistedAccessToken = nextAccessToken;
+      if (client) {
+        client.accessToken = nextAccessToken;
+        accountApis[instance][nextAccessToken] = client;
+      }
+    };
+    const masto = createAtprotoClient({
+      session: atprotoSession?.session,
+      service: atprotoSession?.service,
+      persistSession,
+    });
+    client = {
+      masto,
+      instance,
+      accessToken,
+      atproto: true,
+      onStreamingReady: function (callback) {
+        this._streamingCallback = callback;
+      },
+    };
+    apis[instance] = client;
+    if (!accountApis[instance]) accountApis[instance] = {};
+    if (accessToken) accountApis[instance][accessToken] = client;
+    return client;
+  }
+
   const url = instance ? `https://${instance}` : `https://${DEFAULT_INSTANCE}`;
 
   const masto = createRestAPIClient({
@@ -64,6 +115,20 @@ export function initClient({ instance, accessToken }) {
   return client;
 }
 
+export function isAtprotoInstance(instance) {
+  return instance === BSKY_INSTANCE || instance === 'atproto' || instance === 'bsky';
+}
+
+function parseAtprotoSession(accessToken) {
+  if (!accessToken) return null;
+  try {
+    const data = JSON.parse(accessToken);
+    return data?.type === 'atproto' ? data : null;
+  } catch (e) {
+    return null;
+  }
+}
+
 export function hasInstance(instance) {
   const instances = store.local.getJSON('instances') || {};
   return !!instances[instance];
@@ -73,6 +138,17 @@ export function hasInstance(instance) {
 // The config is needed for composing
 export async function initInstance(client, instance) {
   console.log('INIT INSTANCE', client, instance);
+  if (client.atproto) {
+    const instances = store.local.getJSON('instances') || {};
+    instances[BSKY_INSTANCE] = atprotoInstanceInfo();
+    store.local.setJSON('instances', instances);
+    const nodeInfos = store.local.getJSON('nodeInfos') || {};
+    nodeInfos[BSKY_INSTANCE] = {
+      software: { name: 'mastodon', version: '4.4.0' },
+    };
+    store.local.setJSON('nodeInfos', nodeInfos);
+    return;
+  }
   const { masto, accessToken } = client;
   // Request v2, fallback to v1 if fail
   let info;
@@ -180,6 +256,19 @@ export async function initInstance(client, instance) {
 
 // Get the account information and store it
 export async function initAccount(client, instance, accessToken, vapidKey) {
+  if (client.atproto) {
+    const atprotoAccount = await client.masto.v1.accounts.verifyCredentials();
+    setCurrentAccountID(atprotoAccount.id);
+    saveAccount({
+      info: atprotoAccount,
+      instanceURL: BSKY_INSTANCE,
+      accessToken,
+      vapidKey,
+      atproto: true,
+      createdAt: Date.now(),
+    });
+    return;
+  }
   const { masto } = client;
   const mastoAccount = await masto.v1.accounts.verifyCredentials();
 

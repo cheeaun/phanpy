@@ -114,6 +114,60 @@ test.describe('ATProto reply mapping', () => {
     });
   });
 
+  test('batch hydrates reply parents inside quoted statuses', async () => {
+    const status = {
+      id: 'top',
+      _atproto: {},
+      quote: {
+        quotedStatus: postToStatus({
+          uri: 'at://did:plc:quote/app.bsky.feed.post/reply',
+          cid: 'quote-cid',
+          author: {
+            did: 'did:plc:quote',
+            handle: 'quote.test',
+            displayName: 'Quote',
+          },
+          record: {
+            $type: 'app.bsky.feed.post',
+            text: 'quoted reply',
+            createdAt: '2026-05-08T00:00:00.000Z',
+            reply: {
+              root: { uri: parentUri, cid: 'parent-cid' },
+              parent: { uri: parentUri, cid: 'parent-cid' },
+            },
+          },
+          indexedAt: '2026-05-08T00:00:00.000Z',
+        }),
+      },
+    };
+    let requestedActors;
+
+    await hydrateReplyParentAccounts([status], {
+      getProfiles: async ({ actors }) => {
+        requestedActors = actors;
+        return {
+          data: {
+            profiles: [
+              {
+                did: 'did:plc:parent',
+                handle: 'parent.test',
+                displayName: 'Parent',
+              },
+            ],
+          },
+        };
+      },
+    });
+
+    expect(requestedActors).toEqual(['did:plc:parent']);
+    expect(status.quote.quotedStatus._atproto.replyParentAccount).toMatchObject(
+      {
+        id: 'did:plc:parent',
+        username: 'parent.test',
+      },
+    );
+  });
+
   test('shows Bluesky reply badges even when the reply mentions the parent actor', () => {
     expect(
       shouldShowReplyBadge({

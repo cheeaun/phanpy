@@ -337,9 +337,17 @@ function strongRef(value) {
 }
 
 function statusTargets(statuses = []) {
-  return statuses.flatMap((status) =>
-    status?.reblog ? [status.reblog] : [status],
-  );
+  const targets = [];
+  const seen = new Set();
+  const collect = (status) => {
+    if (!status || seen.has(status)) return;
+    seen.add(status);
+    targets.push(status);
+    collect(status.reblog);
+    collect(status.quote?.quotedStatus);
+  };
+  statuses.forEach(collect);
+  return targets;
 }
 
 export async function hydrateReplyParentAccounts(statuses, agent) {
@@ -731,7 +739,9 @@ export function createAtprotoClient({
         const res = await agent.getPosts({ uris: [uri] });
         const post = res.data.posts?.[0];
         if (!post) throw new Error('Post not found');
-        return hydrateLegacyLinkQuote(postToStatus(post, agent));
+        const status = await hydrateLegacyLinkQuote(postToStatus(post, agent));
+        await hydrateReplyParentAccounts([status], agent);
+        return status;
       },
       context: {
         async fetch() {

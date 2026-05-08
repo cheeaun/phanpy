@@ -808,6 +808,14 @@ function Settings({ onClose }) {
                 >
                   @cheeaun
                 </a>
+                , forked for ATProto by{' '}
+                <a
+                  href="https://bsky.app/profile/alice.mosphere.at"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  @alice.mosphere.at
+                </a>
               </Trans>
             </div>
           </div>

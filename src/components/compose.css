@@ -8,57 +8,6 @@
     env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-.mention-autocomplete {
-  display: grid;
-  gap: 2px;
-  margin-top: 6px;
-  padding: 4px;
-  border: 1px solid var(--outline-color);
-  border-radius: 8px;
-  background-color: var(--bg-color);
-  box-shadow: 0 6px 20px var(--drop-shadow-color);
-
-  button {
-    display: grid;
-    grid-template-columns: 32px minmax(0, 1fr);
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    padding: 6px;
-    border: 0;
-    border-radius: 6px;
-    background: transparent;
-    color: inherit;
-    text-align: start;
-
-    &:is(:hover, :focus) {
-      background-color: var(--button-bg-blur-color);
-    }
-  }
-
-  img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: var(--img-bg-color);
-  }
-
-  span {
-    min-width: 0;
-  }
-
-  b,
-  small {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  small {
-    color: var(--text-insignificant-color);
-  }
-}
 #compose-container {
   margin: auto;
   width: var(--main-width);

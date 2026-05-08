@@ -228,8 +228,6 @@ function Compose({
   const [quoteSuggestion, setQuoteSuggestion] = useState(null);
   const [localQuoteStatus, setLocalQuoteStatus] = useState(quoteStatus);
   const [quoteCleared, setQuoteCleared] = useState(false);
-  const [mentionAutocomplete, setMentionAutocomplete] = useState(null);
-  const mentionAutocompleteRef = useRef({ id: 0, timeout: null });
 
   const prefs = getPreferences();
 
@@ -404,63 +402,6 @@ function Compose({
     targetElement.focus();
     targetElement.dispatchEvent(new Event('input'));
   };
-  const getActiveMention = (targetElement) => {
-    if (!targetElement) return null;
-    const { selectionStart, selectionEnd, value } = targetElement;
-    if (selectionStart !== selectionEnd) return null;
-    const beforeCursor = value.slice(0, selectionStart);
-    const match = beforeCursor.match(/(^|[\s([{])@([a-z0-9_.-]{1,})$/i);
-    if (!match) return null;
-    const query = match[2];
-    return {
-      query,
-      start: selectionStart - query.length - 1,
-      end: selectionStart,
-    };
-  };
-  const updateMentionAutocomplete = (targetElement) => {
-    const activeMention = getActiveMention(targetElement);
-    clearTimeout(mentionAutocompleteRef.current.timeout);
-    if (!activeMention) {
-      setMentionAutocomplete(null);
-      return;
-    }
-    const requestId = mentionAutocompleteRef.current.id + 1;
-    mentionAutocompleteRef.current.id = requestId;
-    mentionAutocompleteRef.current.timeout = setTimeout(async () => {
-      try {
-        const accounts = await masto.v1.accounts.search.list({
-          q: activeMention.query,
-          limit: 5,
-          resolve: false,
-        });
-        if (requestId !== mentionAutocompleteRef.current.id) return;
-        setMentionAutocomplete({
-          ...activeMention,
-          accounts,
-        });
-      } catch (e) {
-        console.error(e);
-        if (requestId === mentionAutocompleteRef.current.id) {
-          setMentionAutocomplete(null);
-        }
-      }
-    }, 150);
-  };
-  const applyMentionAutocomplete = (account) => {
-    const textarea = textareaRef.current;
-    if (!textarea || !mentionAutocomplete) return;
-    textarea.setRangeText(
-      `@${account.acct} `,
-      mentionAutocomplete.start,
-      mentionAutocomplete.end,
-      'end',
-    );
-    textarea.dispatchEvent(new Event('input', { bubbles: true }));
-    setMentionAutocomplete(null);
-    focusTextarea(textarea.selectionEnd);
-  };
-
   const lastFocusedFieldRef = useRef(null);
   const lastFocusedEmojiFieldRef = useRef(null);
   const focusLastFocusedField = () => {
@@ -1622,7 +1563,6 @@ function Compose({
               lang={language}
               onInput={() => {
                 updateCharCount();
-                updateMentionAutocomplete(textareaRef.current);
               }}
               maxCharacters={maxCharacters}
               onTrigger={(action) => {
@@ -1645,26 +1585,6 @@ function Compose({
                 }
               }}
             />
-            {!!mentionAutocomplete?.accounts?.length && (
-              <div class="mention-autocomplete" role="listbox">
-                {mentionAutocomplete.accounts.map((account) => (
-                  <button
-                    type="button"
-                    role="option"
-                    key={account.id}
-                    onClick={() => applyMentionAutocomplete(account)}
-                  >
-                    {!!account.avatarStatic && (
-                      <img src={account.avatarStatic} alt="" loading="lazy" />
-                    )}
-                    <span>
-                      <b>{account.displayName || account.username}</b>
-                      <small>@{account.acct}</small>
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
           {mediaAttachments?.length > 0 && (
             <div class="media-attachments">

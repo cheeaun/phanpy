@@ -62,8 +62,9 @@ test.describe('ATProto mention autocomplete', () => {
     const textarea = page.getByPlaceholder('What are you doing?');
     await textarea.click();
     await textarea.pressSequentially('@ali');
+    await expect(page.locator('.mention-autocomplete')).toHaveCount(0);
     await page
-      .locator('.mention-autocomplete [role="option"]')
+      .locator('.text-expander-menu [role="option"]')
       .filter({
         hasText: 'Alice Mention',
       })

@@ -51,6 +51,18 @@
   h1 {
     margin: 0;
     padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .wordmark {
+    font-size: clamp(3rem, 9vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text-color);
   }
 
   img {

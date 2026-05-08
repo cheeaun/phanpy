@@ -436,7 +436,7 @@ function App() {
       if (isAtprotoOAuthCallback) {
         try {
           const result = await initAtprotoOAuthClient();
-          if (result?.session && result.state != null) {
+          if (result?.session) {
             const accessToken = createAtprotoOAuthAccessToken(
               result.session.sub,
             );

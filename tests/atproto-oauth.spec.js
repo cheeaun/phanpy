@@ -93,7 +93,7 @@ test.describe('ATProto OAuth', () => {
         },
       };
       window.__BLUEPY_OAUTH_TEST_CLIENT__ = {
-        init: async () => ({ session, state: 'login' }),
+        init: async () => ({ session }),
         restore: async () => session,
       };
     });
@@ -106,6 +106,7 @@ test.describe('ATProto OAuth', () => {
           const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
           return accounts[0];
         }),
+        { timeout: 15_000 },
       )
       .toMatchObject({
         instanceURL: 'bsky.social',

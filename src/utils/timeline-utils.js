@@ -3,6 +3,7 @@ import { isFiltered } from './filters';
 import { extractTagsFromStatus, getFollowedTags } from './followed-tags';
 import pmem from './pmem';
 import { fetchRelationships } from './relationships';
+import { shouldFetchReplyContextForInstance } from './reply-context';
 import states, { saveStatus, statusKey } from './states';
 import store from './store';
 import { getCurrentAccountID } from './store-utils';
@@ -194,7 +195,11 @@ export function groupContext(items, instance) {
     }
 
     // PREPARE FOR REPLY HINTS
-    if (item.inReplyToId && item.inReplyToAccountId !== item.account.id) {
+    if (
+      shouldFetchReplyContextForInstance(instance) &&
+      item.inReplyToId &&
+      item.inReplyToAccountId !== item.account.id
+    ) {
       const sKey = statusKey(item.id, instance);
       if (!states.statusReply[sKey]) {
         // If it's a reply and not a thread

@@ -2,6 +2,10 @@ import { expect, test } from '@playwright/test';
 
 import { postToStatus } from '../src/utils/atproto-adapter.js';
 import { shouldShowReplyBadge } from '../src/utils/reply-badge.js';
+import {
+  shouldFetchReplyContextForInstance,
+  shouldFetchThreadParent,
+} from '../src/utils/reply-context.js';
 
 const parentUri = 'at://did:plc:parent/app.bsky.feed.post/root';
 const childUri = 'at://did:plc:child/app.bsky.feed.post/reply';
@@ -119,5 +123,19 @@ test.describe('ATProto reply mapping', () => {
         inReplyToAccountId: 'did:plc:parent',
       }),
     ).toBe(true);
+  });
+
+  test('does not fetch Bluesky reply context from timeline cards', () => {
+    expect(shouldFetchReplyContextForInstance('bsky.social')).toBe(false);
+    expect(
+      shouldFetchThreadParent({
+        instance: 'bsky.social',
+        status: {
+          inReplyToId: encodeURIComponent(parentUri),
+          inReplyToAccountId: 'did:plc:alice',
+          account: { id: 'did:plc:alice' },
+        },
+      }),
+    ).toBe(false);
   });
 });

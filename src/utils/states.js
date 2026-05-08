@@ -6,6 +6,7 @@ import { api } from './api';
 import isMastodonLinkMaybe from './isMastodonLinkMaybe';
 import pmem from './pmem';
 import rateLimit from './ratelimit';
+import { shouldFetchThreadParent } from './reply-context';
 import store from './store';
 import unfurlMastodonLink from './unfurl-link';
 
@@ -321,14 +322,10 @@ function _threadifyStatus(status, propInstance) {
   // Return all statuses in the thread, via inReplyToId, if inReplyToAccountId === account.id
   let fetchIndex = 0;
   async function traverse(status, index = 0) {
-    const { inReplyToId, inReplyToAccountId } = status;
-    if (!inReplyToId || inReplyToAccountId !== status.account.id) {
+    if (!shouldFetchThreadParent({ status, instance })) {
       return [status];
     }
-    if (inReplyToId && inReplyToAccountId !== status.account.id) {
-      throw 'Not a thread';
-      // Possibly thread of replies by multiple people?
-    }
+    const { inReplyToId } = status;
     const key = statusKey(inReplyToId, instance);
     let prevStatus = states.statuses[key];
     if (!prevStatus) {

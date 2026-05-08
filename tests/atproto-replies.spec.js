@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test';
 import {
   feedToStatuses,
   hydrateFeedReplyContext,
+  postProcessFollowingFeed,
   postToStatus,
 } from '../src/utils/atproto-adapter.js';
 import { shouldShowReplyBadge } from '../src/utils/reply-badge.js';
@@ -298,5 +299,107 @@ test.describe('ATProto reply mapping', () => {
       username: 'parent.test',
       avatar: 'https://cdn.example/avatar.jpg',
     });
+  });
+
+  test('hides Following replies to people the current user does not follow', () => {
+    const item = feedReply({
+      post: {
+        author: {
+          did: 'did:plc:child',
+          handle: 'child.test',
+          displayName: 'Child',
+          viewer: { following: 'at://did:plc:user/app.bsky.graph.follow/1' },
+        },
+      },
+      reply: {
+        parent: {
+          uri: parentUri,
+          cid: 'parent-cid',
+          author: {
+            did: 'did:plc:parent',
+            handle: 'parent.test',
+            displayName: 'Parent',
+          },
+          record: {
+            $type: 'app.bsky.feed.post',
+            text: 'parent text',
+            createdAt: '2026-05-08T00:00:00.000Z',
+          },
+        },
+      },
+    });
+
+    expect(postProcessFollowingFeed([item], 'did:plc:user')).toEqual([]);
+  });
+
+  test('keeps Following replies when the parent author is followed', () => {
+    const item = feedReply({
+      post: {
+        author: {
+          did: 'did:plc:child',
+          handle: 'child.test',
+          displayName: 'Child',
+          viewer: { following: 'at://did:plc:user/app.bsky.graph.follow/1' },
+        },
+      },
+      reply: {
+        parent: {
+          uri: parentUri,
+          cid: 'parent-cid',
+          author: {
+            did: 'did:plc:parent',
+            handle: 'parent.test',
+            displayName: 'Parent',
+            viewer: {
+              following: 'at://did:plc:user/app.bsky.graph.follow/2',
+            },
+          },
+          record: {
+            $type: 'app.bsky.feed.post',
+            text: 'parent text',
+            createdAt: '2026-05-08T00:00:00.000Z',
+          },
+        },
+      },
+    });
+
+    expect(postProcessFollowingFeed([item], 'did:plc:user')).toEqual([item]);
+  });
+
+  test('dedupes Following threads without hiding reposted replies', () => {
+    const root = {
+      post: {
+        ...feedReply().reply.parent,
+        uri: parentUri,
+      },
+    };
+    const reply = feedReply();
+    const repostedReply = feedReply({
+      post: { uri: `${childUri}-repost` },
+      reply: {
+        parent: {
+          ...feedReply().reply.parent,
+          author: {
+            ...feedReply().reply.parent.author,
+            viewer: {
+              following: 'at://did:plc:user/app.bsky.graph.follow/2',
+            },
+          },
+        },
+      },
+    });
+    repostedReply.reason = {
+      $type: 'app.bsky.feed.defs#reasonRepost',
+      by: {
+        did: 'did:plc:reposter',
+        handle: 'reposter.test',
+        displayName: 'Reposter',
+      },
+      indexedAt: '2026-05-08T00:03:00.000Z',
+    };
+
+    expect(
+      postProcessFollowingFeed([root, reply, repostedReply], 'did:plc:user'),
+    ).toEqual([root, repostedReply]);
   });
 });

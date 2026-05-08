@@ -443,6 +443,70 @@ export function feedToStatuses(feed, agent) {
   return feed.flatMap((item) => feedItemToStatuses(item, agent));
 }
 
+function feedItemRootURI(feedItem) {
+  return isPostView(feedItem?.reply?.root)
+    ? feedItem.reply.root.uri
+    : feedItem?.post?.uri;
+}
+
+function isSelfOrFollowing(profile, currentUserDid) {
+  return !!(
+    profile?.did &&
+    (profile.did === currentUserDid || profile.viewer?.following)
+  );
+}
+
+function shouldDisplayReplyInFollowing(feedItem, currentUserDid) {
+  const post = feedItem?.post;
+  const author = post?.author;
+  const parentAuthor = isPostView(feedItem?.reply?.parent)
+    ? feedItem.reply.parent.author
+    : undefined;
+  const grandparentAuthor = feedItem?.reply?.grandparentAuthor;
+  const rootAuthor = isPostView(feedItem?.reply?.root)
+    ? feedItem.reply.root.author
+    : undefined;
+
+  if (!isSelfOrFollowing(author, currentUserDid)) return false;
+  if (
+    (!parentAuthor || parentAuthor.did === author.did) &&
+    (!grandparentAuthor || grandparentAuthor.did === author.did) &&
+    (!rootAuthor || rootAuthor.did === author.did)
+  ) {
+    return true;
+  }
+  return [parentAuthor, grandparentAuthor, rootAuthor].some(
+    (profile) =>
+      profile?.did !== author?.did &&
+      isSelfOrFollowing(profile, currentUserDid),
+  );
+}
+
+export function postProcessFollowingFeed(feed, currentUserDid) {
+  const seenRootURIs = new Set();
+  return feed.filter((item) => {
+    const post = item?.post;
+    if (!post) return false;
+    if (post.viewer?.threadMuted) return false;
+
+    const isRepost = item?.reason?.$type === 'app.bsky.feed.defs#reasonRepost';
+    const isReply = !!post.record?.reply;
+
+    if (isReply && !isRepost) {
+      if (!item.reply || !isPostView(item.reply.parent)) return false;
+      if (!shouldDisplayReplyInFollowing(item, currentUserDid)) return false;
+    }
+
+    const rootURI = feedItemRootURI(item);
+    if (!isRepost && rootURI) {
+      if (seenRootURIs.has(rootURI)) return false;
+      seenRootURIs.add(rootURI);
+    }
+
+    return true;
+  });
+}
+
 export function postToStatus(feedItemOrPost, agent) {
   const post = feedItemOrPost?.post || feedItemOrPost;
   const record = post?.record || post?.value || {};
@@ -1445,9 +1509,10 @@ export function createAtprotoClient({
             return makeCollection(async (cursor) => {
               const res = await agent.getTimeline({ limit, cursor });
               const feed = await hydrateFeedReplyContext(res.data.feed, agent);
+              const processedFeed = postProcessFollowingFeed(feed, agent.did);
               return {
                 cursor: res.data.cursor,
-                items: feedToStatuses(feed, agent),
+                items: feedToStatuses(processedFeed, agent),
               };
             });
           },

@@ -1287,17 +1287,12 @@ export function createAtprotoClient({
           },
         },
         search: {
-          list({ q, limit = 10 } = {}) {
-            return makeCollection(async () => {
-              const res = await agent.searchActors({
-                term: q || '',
-                limit,
-              });
-              return {
-                cursor: undefined,
-                items: res.data.actors.map(actorToAccount),
-              };
+          async list({ q, limit = 10 } = {}) {
+            const res = await agent.searchActors({
+              term: q || '',
+              limit,
             });
+            return res.data.actors.map(actorToAccount);
           },
         },
       },

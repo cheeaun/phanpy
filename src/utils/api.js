@@ -6,6 +6,11 @@ import {
   BSKY_INSTANCE,
   createAtprotoClient,
 } from './atproto-adapter';
+import {
+  getCachedAtprotoOAuthSession,
+  parseAtprotoOAuthAccessToken,
+  restoreAtprotoOAuthSession,
+} from './atproto-oauth';
 import mem from '../utils/mem';
 
 import store from './store';
@@ -46,7 +51,9 @@ export function initClient({ instance, accessToken }) {
       .toLowerCase();
   }
   const atprotoSession = parseAtprotoSession(accessToken);
-  if (isAtprotoInstance(instance) || atprotoSession) {
+  const atprotoOAuthSession = parseAtprotoOAuthAccessToken(accessToken);
+  const oauthSession = getCachedAtprotoOAuthSession(atprotoOAuthSession?.sub);
+  if (isAtprotoInstance(instance) || atprotoSession || atprotoOAuthSession) {
     instance = BSKY_INSTANCE;
     let client;
     let persistedAccessToken = accessToken;
@@ -73,6 +80,7 @@ export function initClient({ instance, accessToken }) {
     };
     const masto = createAtprotoClient({
       session: atprotoSession?.session,
+      oauthSession,
       service: atprotoSession?.service,
       persistSession,
     });
@@ -127,6 +135,13 @@ function parseAtprotoSession(accessToken) {
   } catch (e) {
     return null;
   }
+}
+
+export async function hydrateAtprotoOAuthAccessToken(accessToken) {
+  const data = parseAtprotoOAuthAccessToken(accessToken);
+  if (!data) return accessToken;
+  await restoreAtprotoOAuthSession(data.sub);
+  return accessToken;
 }
 
 export function hasInstance(instance) {

@@ -60,11 +60,16 @@ import {
   api,
   hasInstance,
   hasPreferences,
+  hydrateAtprotoOAuthAccessToken,
   initAccount,
   initClient,
   initInstance,
   initPreferences,
 } from './utils/api';
+import {
+  createAtprotoOAuthAccessToken,
+  initAtprotoOAuthClient,
+} from './utils/atproto-oauth';
 import { getAccessToken } from './utils/auth';
 import { AuthProvider, useAuth } from './utils/auth-context';
 import focusDeck from './utils/focus-deck';
@@ -423,51 +428,84 @@ function App() {
   useLingui();
 
   useEffect(() => {
-    const instanceURL = store.local.get('instanceURL');
-    const code = decodeURIComponent(
-      (window.location.search.match(/code=([^&]+)/) || [, ''])[1],
-    );
-
-    if (code) {
-      console.log({ code });
-
-      const isPopup = window.opener && !window.opener.closed;
-
-      if (isPopup) {
+    (async () => {
+      const instanceURL = store.local.get('instanceURL');
+      const isAtprotoOAuthCallback =
+        !!window.location.search.match(/[?&]code=/) &&
+        !!window.location.search.match(/[?&]iss=/);
+      if (isAtprotoOAuthCallback) {
         try {
-          window.opener.postMessage(
-            {
-              type: 'oauth-callback',
-              code: code,
-            },
-            window.location.origin,
-          );
-          setTimeout(() => {
-            window.close();
-          }, 100);
+          const result = await initAtprotoOAuthClient();
+          if (result?.session && result.state != null) {
+            const accessToken = createAtprotoOAuthAccessToken(
+              result.session.sub,
+            );
+            const client = initClient({ instance: 'bsky.social', accessToken });
+            await initAccount(client, 'bsky.social', accessToken);
+            await Promise.allSettled([
+              initPreferences(client),
+              initInstance(client, 'bsky.social'),
+            ]);
+            initStates();
+            window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
+            setIsLoggedIn(true);
+            setUIState('default');
+            const redirectPath = store.session.get('loginRedirect');
+            if (redirectPath) {
+              store.session.del('loginRedirect');
+              window.location.hash = redirectPath;
+            }
+            __BENCHMARK.end('app-init');
+            return;
+          }
         } catch (e) {
-          console.error('Failed to send message to parent window:', e);
-          window.close();
+          console.error(e);
         }
-        return;
       }
 
-      // Clear the code from the URL
-      window.history.replaceState(
-        {},
-        document.title,
-        window.location.pathname || '/',
+      const code = decodeURIComponent(
+        (window.location.search.match(/code=([^&]+)/) || [, ''])[1],
       );
 
-      const {
-        client_id: clientID,
-        client_secret: clientSecret,
-        vapid_key,
-      } = getCredentialApplication(instanceURL) || {};
-      const vapidKey = getVapidKey(instanceURL) || vapid_key;
-      const verifier = store.sessionCookie.get('codeVerifier');
+      if (code) {
+        console.log({ code });
 
-      (async () => {
+        const isPopup = window.opener && !window.opener.closed;
+
+        if (isPopup) {
+          try {
+            window.opener.postMessage(
+              {
+                type: 'oauth-callback',
+                code: code,
+              },
+              window.location.origin,
+            );
+            setTimeout(() => {
+              window.close();
+            }, 100);
+          } catch (e) {
+            console.error('Failed to send message to parent window:', e);
+            window.close();
+          }
+          return;
+        }
+
+        // Clear the code from the URL
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname || '/',
+        );
+
+        const {
+          client_id: clientID,
+          client_secret: clientSecret,
+          vapid_key,
+        } = getCredentialApplication(instanceURL) || {};
+        const vapidKey = getVapidKey(instanceURL) || vapid_key;
+        const verifier = store.sessionCookie.get('codeVerifier');
+
         setUIState('loading');
         const { access_token: accessToken } = await getAccessToken({
           instanceURL,
@@ -500,36 +538,37 @@ function App() {
           setUIState('error');
         }
         __BENCHMARK.end('app-init');
-      })();
-    } else {
-      window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
-      const searchAccount = decodeURIComponent(
-        (window.location.search.match(/account=([^&]+)/) || [, ''])[1],
-      );
-      let account;
-      if (searchAccount) {
-        account = getAccount(searchAccount);
-        console.log('searchAccount', searchAccount, account);
+      } else {
+        window.__IGNORE_GET_ACCOUNT_ERROR__ = true;
+        const searchAccount = decodeURIComponent(
+          (window.location.search.match(/account=([^&]+)/) || [, ''])[1],
+        );
+        let account;
+        if (searchAccount) {
+          account = getAccount(searchAccount);
+          console.log('searchAccount', searchAccount, account);
+          if (account) {
+            setCurrentAccountID(account.info.id);
+            window.history.replaceState(
+              {},
+              document.title,
+              window.location.pathname || '/',
+            );
+          }
+        }
+        if (!account) {
+          account = getCurrentAccount();
+        }
         if (account) {
           setCurrentAccountID(account.info.id);
-          window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname || '/',
+          account.accessToken = await hydrateAtprotoOAuthAccessToken(
+            account.accessToken,
           );
-        }
-      }
-      if (!account) {
-        account = getCurrentAccount();
-      }
-      if (account) {
-        setCurrentAccountID(account.info.id);
-        const { client } = api({ account });
-        const { instance } = client;
-        // console.log('masto', masto);
-        initStates();
-        setUIState('loading');
-        (async () => {
+          const { client } = api({ account });
+          const { instance } = client;
+          // console.log('masto', masto);
+          initStates();
+          setUIState('loading');
           try {
             if (hasPreferences() && hasInstance(instance)) {
               // Non-blocking
@@ -547,17 +586,17 @@ function App() {
             setUIState('default');
             __BENCHMARK.end('app-init');
           }
-        })();
-      } else {
-        setUIState('default');
-        __BENCHMARK.end('app-init');
+        } else {
+          setUIState('default');
+          __BENCHMARK.end('app-init');
+        }
       }
-    }
 
-    // Cleanup
-    store.sessionCookie.del('clientID');
-    store.sessionCookie.del('clientSecret');
-    store.sessionCookie.del('codeVerifier');
+      // Cleanup
+      store.sessionCookie.del('clientID');
+      store.sessionCookie.del('clientSecret');
+      store.sessionCookie.del('codeVerifier');
+    })();
   }, []);
 
   let location = useLocation();

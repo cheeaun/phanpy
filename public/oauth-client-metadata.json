@@ -1,0 +1,14 @@
+{
+  "client_id": "https://bluepy.mosphere.at/oauth-client-metadata.json",
+  "client_name": "Bluepy",
+  "client_uri": "https://bluepy.mosphere.at/",
+  "logo_uri": "https://bluepy.mosphere.at/logo-512.png",
+  "policy_uri": "https://github.com/aliceisjustplaying/bluepy/blob/bluesky/PRIVACY.MD",
+  "redirect_uris": ["https://bluepy.mosphere.at/"],
+  "scope": "atproto transition:generic",
+  "grant_types": ["authorization_code", "refresh_token"],
+  "response_types": ["code"],
+  "token_endpoint_auth_method": "none",
+  "application_type": "web",
+  "dpop_bound_access_tokens": true
+}

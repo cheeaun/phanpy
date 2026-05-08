@@ -2,6 +2,7 @@ import { BskyAgent, RichText } from '@atproto/api';
 import { getPdsEndpoint } from '@atproto/common-web';
 
 import { encodeAtprotoID } from './atproto-route';
+import { createAtprotoOAuthAgent } from './atproto-oauth';
 import {
   BSKY_PDS,
   resolveAtprotoLoginService,
@@ -44,17 +45,19 @@ async function uploadVideoBlob(agent, file) {
   }
   if (!agent.did) throw new Error('Missing Bluesky session');
 
-  if (!agent.sessionManager.pdsUrl) {
+  if (agent.sessionManager && !agent.sessionManager.pdsUrl) {
     const session = await agent.com.atproto.server.getSession();
     const pdsEndpoint = session.data.didDoc
       ? getPdsEndpoint(session.data.didDoc)
       : null;
     if (pdsEndpoint) agent.sessionManager.pdsUrl = new URL(pdsEndpoint);
   }
+  const dispatchUrl =
+    agent.dispatchUrl || (await agent.sessionManager?.getTokenInfo?.())?.aud;
 
   const uploadToken = await getServiceAuthToken({
     agent,
-    aud: getServiceAuthAudFromUrl(agent.dispatchUrl),
+    aud: getServiceAuthAudFromUrl(dispatchUrl),
     lxm: 'com.atproto.repo.uploadBlob',
     exp: Date.now() / 1000 + 60 * 30,
   });
@@ -613,11 +616,15 @@ async function uploadProfileImage(agent, file) {
 
 export function createAtprotoClient({
   session,
+  oauthSession,
   service = BSKY_PDS,
   persistSession,
 }) {
-  const agent = new BskyAgent({ service, persistSession });
-  if (session) {
+  const agent = oauthSession
+    ? createAtprotoOAuthAgent(oauthSession)
+    : new BskyAgent({ service, persistSession });
+  if (!agent) throw new Error('Missing Bluesky OAuth session');
+  if (session && agent.sessionManager) {
     agent.sessionManager.session = session;
   }
   const uploadedMedia = new Map();

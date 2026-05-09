@@ -788,35 +788,33 @@ function Settings({ onClose }) {
                 @phanpy
               </a>
               <br />
-              <Trans>
-                <a
-                  href="https://github.com/cheeaun/phanpy"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  Built
-                </a>{' '}
-                by{' '}
-                <a
-                  href="https://mastodon.social/@cheeaun"
-                  // target="_blank"
-                  rel="noopener"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    states.showAccount = 'cheeaun@mastodon.social';
-                  }}
-                >
-                  @cheeaun
-                </a>
-                , forked for ATProto by{' '}
-                <a
-                  href="https://bsky.app/profile/alice.mosphere.at"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  @alice.mosphere.at
-                </a>
-              </Trans>
+              <a
+                href="https://github.com/cheeaun/phanpy"
+                target="_blank"
+                rel="noopener"
+              >
+                Built
+              </a>{' '}
+              by{' '}
+              <a
+                href="https://mastodon.social/@cheeaun"
+                // target="_blank"
+                rel="noopener"
+                onClick={(e) => {
+                  e.preventDefault();
+                  states.showAccount = 'cheeaun@mastodon.social';
+                }}
+              >
+                @cheeaun
+              </a>
+              , forked for ATProto by{' '}
+              <a
+                href="https://bsky.app/profile/alice.mosphere.at"
+                target="_blank"
+                rel="noopener"
+              >
+                @alice.mosphere.at
+              </a>
             </div>
           </div>
           <p>

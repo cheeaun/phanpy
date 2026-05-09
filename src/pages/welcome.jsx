@@ -226,27 +226,22 @@ function Welcome() {
           </p>
         )}
         <p>
-          <Trans>
-            <a href="https://github.com/cheeaun/phanpy" target="_blank">
-              Built
-            </a>{' '}
-            by{' '}
-            <a href="https://github.com/cheeaun" target="_blank">
-              @cheeaun
-            </a>
-            , forked for ATProto by{' '}
-            <a
-              href="https://bsky.app/profile/alice.mosphere.at"
-              target="_blank"
-            >
-              @alice.mosphere.at
-            </a>
-            .{' '}
-            <a href={PRIVACY_POLICY_URL} target="_blank">
-              Privacy Policy
-            </a>
-            .
-          </Trans>
+          <a href="https://github.com/cheeaun/phanpy" target="_blank">
+            Built
+          </a>{' '}
+          by{' '}
+          <a href="https://github.com/cheeaun" target="_blank">
+            @cheeaun
+          </a>
+          , forked for ATProto by{' '}
+          <a href="https://bsky.app/profile/alice.mosphere.at" target="_blank">
+            @alice.mosphere.at
+          </a>
+          .{' '}
+          <a href={PRIVACY_POLICY_URL} target="_blank">
+            <Trans>Privacy Policy</Trans>
+          </a>
+          .
         </p>
         <div>
           <LangSelector />

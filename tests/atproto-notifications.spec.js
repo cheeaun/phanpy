@@ -9,8 +9,7 @@ test.describe('ATProto notifications', () => {
   test('maps repost-via-repost to the original post', () => {
     const notification = {
       reason: 'repost-via-repost',
-      reasonSubject:
-        'at://did:plc:test/app.bsky.feed.repost/repost-record-key',
+      reasonSubject: 'at://did:plc:test/app.bsky.feed.repost/repost-record-key',
       record: {
         subject: {
           uri: 'at://did:plc:test/app.bsky.feed.post/post-record-key',

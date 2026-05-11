@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 
 import { encodeAtprotoID } from '../utils/atproto-route';
+
 import Status from './status';
 
 export default function StatusRoute() {

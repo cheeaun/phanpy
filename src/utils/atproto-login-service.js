@@ -5,11 +5,12 @@ export const BSKY_PDS = 'https://bsky.social';
 
 function normalizeAtprotoService(service) {
   if (!service) return null;
-  const normalized = service.trim().replace(/^at:\/\//, '').replace(/\/+$/, '');
+  const normalized = service
+    .trim()
+    .replace(/^at:\/\//, '')
+    .replace(/\/+$/, '');
   if (!normalized) return null;
-  return /^https?:\/\//.test(normalized)
-    ? normalized
-    : `https://${normalized}`;
+  return /^https?:\/\//.test(normalized) ? normalized : `https://${normalized}`;
 }
 
 function normalizeAtprotoIdentifier(identifier) {
@@ -19,7 +20,9 @@ function normalizeAtprotoIdentifier(identifier) {
 function isBskyHostedPds(service) {
   try {
     const { hostname } = new URL(service);
-    return hostname === 'bsky.social' || hostname.endsWith('.host.bsky.network');
+    return (
+      hostname === 'bsky.social' || hostname.endsWith('.host.bsky.network')
+    );
   } catch {
     return false;
   }

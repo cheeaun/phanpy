@@ -14,7 +14,9 @@ function getAssociatedRecord(value) {
 
 export async function fetchAtprotoLinkMetadata(uri, { fetcher = fetch } = {}) {
   if (!uri) return null;
-  const res = await fetcher(`${BSKY_LINK_META_PROXY}${encodeURIComponent(uri)}`);
+  const res = await fetcher(
+    `${BSKY_LINK_META_PROXY}${encodeURIComponent(uri)}`,
+  );
   if (!res.ok) return null;
   const metadata = await res.json();
   if (metadata?.error) return null;

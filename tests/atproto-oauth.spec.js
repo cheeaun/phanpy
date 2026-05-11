@@ -101,11 +101,14 @@ test.describe('ATProto OAuth', () => {
     await page.goto('/?code=oauth-test&state=login&iss=https%3A%2F%2Fpds.test');
 
     await expect
-      .poll(() =>
-        page.evaluate(() => {
-          const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
-          return accounts[0];
-        }),
+      .poll(
+        () =>
+          page.evaluate(() => {
+            const accounts = JSON.parse(
+              localStorage.getItem('accounts') || '[]',
+            );
+            return accounts[0];
+          }),
         { timeout: 15_000 },
       )
       .toMatchObject({

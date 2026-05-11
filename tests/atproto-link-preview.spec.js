@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('ATProto composer link preview', () => {
-  test('shows and removes cardyb previews while composing', async ({ page }) => {
+  test('shows and removes cardyb previews while composing', async ({
+    page,
+  }) => {
     await page.route('https://cardyb.bsky.app/v1/extract**', async (route) => {
       await route.fulfill({
         json: {

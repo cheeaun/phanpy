@@ -1,6 +1,7 @@
-import './instrument';
 import './index.css';
 import './cloak-mode.css';
+
+import './instrument';
 
 import './polyfills';
 

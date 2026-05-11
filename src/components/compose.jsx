@@ -11,6 +11,10 @@ import { useSnapshot } from 'valtio';
 
 import supportedLanguages from '../data/status-supported-languages';
 import { api, getPreferences } from '../utils/api';
+import {
+  fetchAtprotoLinkMetadata,
+  getFirstPostURL,
+} from '../utils/atproto-unfurl';
 import db from '../utils/db';
 import { getDtfLocale } from '../utils/dtf-locale';
 import haptics from '../utils/haptics';
@@ -26,10 +30,6 @@ import RTF from '../utils/relative-time-format';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
 import store from '../utils/store';
-import {
-  fetchAtprotoLinkMetadata,
-  getFirstPostURL,
-} from '../utils/atproto-unfurl';
 import {
   getAPIVersions,
   getCurrentAccount,
@@ -1664,7 +1664,9 @@ function Compose({
                     {!!linkPreview.metadata?.description && (
                       <small>{linkPreview.metadata.description}</small>
                     )}
-                    <small>{linkPreview.metadata?.url || linkPreview.url}</small>
+                    <small>
+                      {linkPreview.metadata?.url || linkPreview.url}
+                    </small>
                   </div>
                 </>
               )}

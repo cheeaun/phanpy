@@ -11,6 +11,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import floatingButtonUrl from '../assets/floating-button.svg';
+import multiColumnUrl from '../assets/multi-column.svg';
 import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
 
 import { api } from '../utils/api';
@@ -273,6 +274,11 @@ function ShortcutsSettings({ onClose }) {
               value: 'tab-menu-bar',
               label: t`Tab/Menu bar`,
               imgURL: tabMenuBarUrl,
+            },
+            {
+              value: 'multi-column',
+              label: t`Multi-column`,
+              imgURL: multiColumnUrl,
             },
           ].map(({ value, label, imgURL }) => {
             const checked =

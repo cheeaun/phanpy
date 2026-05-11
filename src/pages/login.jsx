@@ -12,10 +12,7 @@ import Link from '../components/link';
 import Loader from '../components/loader';
 import instancesListURL from '../data/instances.json?url';
 import { initClient, initInstance, initPreferences } from '../utils/api';
-import {
-  BSKY_INSTANCE,
-  loginAtproto,
-} from '../utils/atproto-adapter';
+import { BSKY_INSTANCE, loginAtproto } from '../utils/atproto-adapter';
 import { startAtprotoOAuthLogin } from '../utils/atproto-oauth';
 import {
   getAuthorizationURL,
@@ -320,17 +317,17 @@ function Login() {
           </div>
           <details class="bsky-advanced-login">
             <summary>Use app password</summary>
-          <label>
-            <p>App password</p>
-            <input
-              value={bskyPassword}
-              type="password"
-              class="large"
-              disabled={uiState === 'loading'}
-              autocomplete="current-password"
-              onInput={(e) => setBskyPassword(e.target.value)}
-            />
-          </label>
+            <label>
+              <p>App password</p>
+              <input
+                value={bskyPassword}
+                type="password"
+                class="large"
+                disabled={uiState === 'loading'}
+                autocomplete="current-password"
+                onInput={(e) => setBskyPassword(e.target.value)}
+              />
+            </label>
             <label>
               <p>PDS URL, optional</p>
               <input
@@ -346,16 +343,16 @@ function Login() {
                 onInput={(e) => setBskyService(e.target.value)}
               />
             </label>
-          <div>
-            <button
-              type="submit"
-              disabled={
-                uiState === 'loading' || !bskyIdentifier || !bskyPassword
-              }
-            >
-              Continue with app password
-            </button>
-          </div>
+            <div>
+              <button
+                type="submit"
+                disabled={
+                  uiState === 'loading' || !bskyIdentifier || !bskyPassword
+                }
+              >
+                Continue with app password
+              </button>
+            </div>
           </details>
         </section>
         {uiState === 'error' && (

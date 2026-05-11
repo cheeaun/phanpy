@@ -1,6 +1,8 @@
 import { compareVersions, satisfies, validate } from 'compare-versions';
 import { createRestAPIClient, createStreamingAPIClient } from 'masto';
 
+import mem from '../utils/mem';
+
 import {
   atprotoInstanceInfo,
   BSKY_INSTANCE,
@@ -11,8 +13,6 @@ import {
   parseAtprotoOAuthAccessToken,
   restoreAtprotoOAuthSession,
 } from './atproto-oauth';
-import mem from '../utils/mem';
-
 import store from './store';
 import {
   getAccount,
@@ -124,7 +124,9 @@ export function initClient({ instance, accessToken }) {
 }
 
 export function isAtprotoInstance(instance) {
-  return instance === BSKY_INSTANCE || instance === 'atproto' || instance === 'bsky';
+  return (
+    instance === BSKY_INSTANCE || instance === 'atproto' || instance === 'bsky'
+  );
 }
 
 function parseAtprotoSession(accessToken) {

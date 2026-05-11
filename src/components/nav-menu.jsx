@@ -378,7 +378,7 @@ function NavMenu(props) {
               >
                 <Icon icon="shortcut" size="l" />{' '}
                 <span>
-                  <Trans>Shortcuts…</Trans>
+                  <Trans>Shortcuts / Columns…</Trans>
                 </span>
               </MenuItem>
               <MenuItem

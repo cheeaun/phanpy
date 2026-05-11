@@ -1,6 +1,5 @@
-import { BrowserOAuthClient } from '@atproto/oauth-client-browser';
-
 import { Agent } from '@atproto/api';
+import { BrowserOAuthClient } from '@atproto/oauth-client-browser';
 
 import { BSKY_PDS } from './atproto-login-service';
 

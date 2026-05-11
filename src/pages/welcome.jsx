@@ -236,6 +236,10 @@ function Welcome() {
           , forked for ATProto by{' '}
           <a href="https://bsky.app/profile/alice.mosphere.at" target="_blank">
             @alice.mosphere.at
+          </a>{' '}
+          and{' '}
+          <a href="https://bsky.app/profile/quillmatiq.com" target="_blank">
+            Anuj Ahooja (@quillmatiq.com)
           </a>
           .{' '}
           <a href={PRIVACY_POLICY_URL} target="_blank">

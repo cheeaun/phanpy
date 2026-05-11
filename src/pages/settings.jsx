@@ -834,6 +834,14 @@ function Settings({ onClose }) {
                 rel="noopener"
               >
                 @alice.mosphere.at
+              </a>{' '}
+              and{' '}
+              <a
+                href="https://bsky.app/profile/quillmatiq.com"
+                target="_blank"
+                rel="noopener"
+              >
+                Anuj Ahooja (@quillmatiq.com)
               </a>
             </div>
           </div>

@@ -7,6 +7,8 @@ import { encodeAtprotoID } from './atproto-route';
 import { createAtprotoExternalEmbed, getFirstPostURL } from './atproto-unfurl';
 
 const BSKY_APPVIEW = 'https://public.api.bsky.app';
+const BSKY_APPVIEW_DID = 'did:web:api.bsky.app';
+const BSKY_APPVIEW_PROXY = `${BSKY_APPVIEW_DID}#bsky_appview`;
 export const BSKY_INSTANCE = 'bsky.social';
 const BSKY_DISCOVER_FEED =
   'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot';
@@ -813,6 +815,15 @@ async function uploadProfileImage(agent, file) {
   return res.data.blob;
 }
 
+function isBskyAppViewService(service) {
+  try {
+    const { hostname } = new URL(service);
+    return hostname === 'public.api.bsky.app' || hostname === 'api.bsky.app';
+  } catch {
+    return false;
+  }
+}
+
 export function createAtprotoClient({
   session,
   oauthSession,
@@ -823,6 +834,9 @@ export function createAtprotoClient({
     ? createAtprotoOAuthAgent(oauthSession)
     : new BskyAgent({ service, persistSession });
   if (!agent) throw new Error('Missing Bluesky OAuth session');
+  if (!isBskyAppViewService(service)) {
+    agent.configureProxy(BSKY_APPVIEW_PROXY);
+  }
   if (session && agent.sessionManager) {
     agent.sessionManager.session = session;
   }

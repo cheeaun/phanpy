@@ -262,6 +262,8 @@ export default function Modals() {
           <EmbedModal
             html={snapStates.showEmbedModal.html}
             url={snapStates.showEmbedModal.url}
+            iframeUrl={snapStates.showEmbedModal.iframeUrl}
+            title={snapStates.showEmbedModal.title}
             width={snapStates.showEmbedModal.width}
             height={snapStates.showEmbedModal.height}
             onClose={() => {

@@ -719,6 +719,26 @@ function Settings({ onClose }) {
                 </small>
               </div>
             </li>
+            <li class="block">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={snapStates.settings.noAnimations}
+                  onChange={(e) => {
+                    states.settings.noAnimations = e.target.checked;
+                  }}
+                />{' '}
+                <Trans>Disable all animations</Trans>
+              </label>
+              <div class="sub-section insignificant">
+                <small>
+                  <Trans>
+                    Removes all UI animations, transitions, and smooth
+                    scrolling. Useful if motion is distracting.
+                  </Trans>
+                </small>
+              </div>
+            </li>
             {authenticated && (
               <li>
                 <button

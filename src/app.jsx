@@ -361,6 +361,12 @@ subscribe(states, (changes) => {
       const $body = document.body;
       $body.classList.toggle('cloak', value);
     }
+
+    // Add/Remove no-animations class to body
+    if (path.join('.') === 'settings.noAnimations') {
+      const $body = document.body;
+      $body.classList.toggle('no-animations', value);
+    }
   }
 });
 

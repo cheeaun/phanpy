@@ -256,7 +256,7 @@ msgstr "Quotes"
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1596
 #: src/pages/catchup.jsx:2261
-#: src/pages/settings.jsx:1309
+#: src/pages/settings.jsx:1329
 #: src/pages/year-in-posts.jsx:1406
 msgid "Boosts"
 msgstr ""
@@ -680,7 +680,7 @@ msgid "Custom emojis are not available on this server."
 msgstr "Custom emojis are not available on this server."
 
 #: src/components/drafts.jsx:62
-#: src/pages/settings.jsx:732
+#: src/pages/settings.jsx:752
 msgid "Unsent drafts"
 msgstr ""
 
@@ -1397,7 +1397,7 @@ msgstr ""
 #: src/pages/mentions.jsx:25
 #: src/pages/mentions.jsx:256
 #: src/pages/notifications.jsx:933
-#: src/pages/settings.jsx:1301
+#: src/pages/settings.jsx:1321
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr ""
@@ -1444,7 +1444,7 @@ msgstr ""
 #: src/pages/catchup.jsx:2255
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1305
+#: src/pages/settings.jsx:1325
 msgid "Likes"
 msgstr ""
 
@@ -2981,7 +2981,7 @@ msgid "{index}/X"
 msgstr "{index}/X"
 
 #: src/components/timeline.jsx:555
-#: src/pages/settings.jsx:1329
+#: src/pages/settings.jsx:1349
 msgid "New posts"
 msgstr ""
 
@@ -3861,7 +3861,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
 #: src/pages/notifications.jsx:803
-#: src/pages/settings.jsx:1317
+#: src/pages/settings.jsx:1337
 msgid "Follow requests"
 msgstr ""
 
@@ -4225,107 +4225,115 @@ msgstr ""
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr ""
 
-#: src/pages/settings.jsx:744
+#: src/pages/settings.jsx:731
+msgid "Disable all animations"
+msgstr "Disable all animations"
+
+#: src/pages/settings.jsx:735
+msgid "Removes all UI animations, transitions, and smooth scrolling. Useful if motion is distracting."
+msgstr "Removes all UI animations, transitions, and smooth scrolling. Useful if motion is distracting."
+
+#: src/pages/settings.jsx:764
 msgid "Install {CLIENT_NAME}"
 msgstr "Install {CLIENT_NAME}"
 
-#: src/pages/settings.jsx:752
+#: src/pages/settings.jsx:772
 msgid "About"
 msgstr ""
 
-#: src/pages/settings.jsx:826
+#: src/pages/settings.jsx:846
 msgid "Sponsor"
 msgstr ""
 
-#: src/pages/settings.jsx:834
+#: src/pages/settings.jsx:854
 msgid "Donate"
 msgstr "Donate"
 
-#: src/pages/settings.jsx:850
+#: src/pages/settings.jsx:870
 msgid "What's new"
 msgstr "What's new"
 
-#: src/pages/settings.jsx:854
+#: src/pages/settings.jsx:874
 #: src/pages/welcome.jsx:242
 msgid "Privacy Policy"
 msgstr ""
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:861
+#: src/pages/settings.jsx:881
 msgid "<0>Site:</0> {0}"
 msgstr ""
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:868
+#: src/pages/settings.jsx:888
 msgid "<0>Version:</0> <1/> {0}"
 msgstr ""
 
-#: src/pages/settings.jsx:883
+#: src/pages/settings.jsx:903
 msgid "Version string copied"
 msgstr ""
 
-#: src/pages/settings.jsx:886
+#: src/pages/settings.jsx:906
 msgid "Unable to copy version string"
 msgstr ""
 
 #. Preview of one character, in largest size
 #. Preview of one character, in smallest size
-#: src/pages/settings.jsx:1030
-#: src/pages/settings.jsx:1054
+#: src/pages/settings.jsx:1050
+#: src/pages/settings.jsx:1074
 msgid "A"
 msgstr ""
 
-#: src/pages/settings.jsx:1214
-#: src/pages/settings.jsx:1219
+#: src/pages/settings.jsx:1234
+#: src/pages/settings.jsx:1239
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1225
+#: src/pages/settings.jsx:1245
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1232
+#: src/pages/settings.jsx:1252
 msgid "Push Notifications (beta)"
 msgstr ""
 
-#: src/pages/settings.jsx:1254
+#: src/pages/settings.jsx:1274
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1263
+#: src/pages/settings.jsx:1283
 msgid "Allow from <0>{0}</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:1272
+#: src/pages/settings.jsx:1292
 msgid "anyone"
 msgstr ""
 
-#: src/pages/settings.jsx:1276
+#: src/pages/settings.jsx:1296
 msgid "people I follow"
 msgstr ""
 
-#: src/pages/settings.jsx:1280
+#: src/pages/settings.jsx:1300
 msgid "followers"
 msgstr ""
 
-#: src/pages/settings.jsx:1313
+#: src/pages/settings.jsx:1333
 msgid "Follows"
 msgstr ""
 
-#: src/pages/settings.jsx:1321
+#: src/pages/settings.jsx:1341
 msgid "Polls"
 msgstr ""
 
-#: src/pages/settings.jsx:1325
+#: src/pages/settings.jsx:1345
 msgid "Post edits"
 msgstr ""
 
-#: src/pages/settings.jsx:1346
+#: src/pages/settings.jsx:1366
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1362
+#: src/pages/settings.jsx:1382
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr ""
 

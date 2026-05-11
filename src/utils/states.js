@@ -86,6 +86,7 @@ const states = proxy({
     mediaAltGenerator: false,
     composerGIFPicker: false,
     cloakMode: false,
+    noAnimations: false,
   },
 });
 
@@ -119,6 +120,12 @@ export function initStates() {
   states.settings.composerGIFPicker =
     store.account.get('settings-composerGIFPicker') ?? false;
   states.settings.cloakMode = store.account.get('settings-cloakMode') ?? false;
+  states.settings.noAnimations =
+    store.account.get('settings-noAnimations') ?? false;
+  // Apply persisted body classes on init (subscribe handlers only fire on change)
+  if (typeof document !== 'undefined' && document.body) {
+    document.body.classList.toggle('no-animations', states.settings.noAnimations);
+  }
 }
 
 subscribeKey(states, 'notificationsLast', (v) => {
@@ -170,6 +177,9 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.cloakMode') {
       store.account.set('settings-cloakMode', !!value);
+    }
+    if (path.join('.') === 'settings.noAnimations') {
+      store.account.set('settings-noAnimations', !!value);
     }
   }
 });

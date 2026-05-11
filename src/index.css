@@ -819,3 +819,32 @@ kbd {
   width: 100%;
   height: 100%;
 }
+
+/* ============================================================
+   BLUEPY: Global animation kill switch (opt-in)
+   ------------------------------------------------------------
+   Activated by toggling `body.no-animations` (Settings →
+   "Disable all animations"). Disables every CSS animation,
+   transition, view-transition, and smooth scroll.
+   Uses 0.001ms (not 0) so JS handlers that listen for
+   animationend / transitionend still fire.
+   ============================================================ */
+body.no-animations,
+body.no-animations *,
+body.no-animations *::before,
+body.no-animations *::after {
+  animation-duration: 0.001ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0s !important;
+  scroll-behavior: auto !important;
+}
+
+body.no-animations ::view-transition-group(*),
+body.no-animations ::view-transition-image-pair(*),
+body.no-animations ::view-transition-old(*),
+body.no-animations ::view-transition-new(*) {
+  animation-duration: 0.001ms !important;
+  animation-delay: 0s !important;
+}

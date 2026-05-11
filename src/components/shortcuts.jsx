@@ -79,7 +79,10 @@ function Shortcuts() {
   if (!shortcuts.length) {
     return null;
   }
-  const isMultiColumnMode = false;
+  const isMultiColumnMode =
+    (settings.shortcutsViewMode === 'multi-column' ||
+      (!settings.shortcutsViewMode && settings.shortcutsColumnsMode)) &&
+    !!shortcuts.length;
 
   const menuRef = useRef();
   const tabBarRef = useRef();

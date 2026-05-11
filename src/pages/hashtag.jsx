@@ -204,6 +204,9 @@ function Hashtags({ media: mediaView, columnMode, ...props }) {
           )
         }
         id="hashtag"
+        timelineKey={`hashtag-${instance || ''}-${hashtagTitle}-${
+          media ? 'media' : 'all'
+        }`}
         instance={instance}
         emptyText={
           isDisabled

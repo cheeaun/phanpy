@@ -26,7 +26,6 @@ import {
   splitListsAndFeeds,
 } from '../utils/lists';
 import states, { saveStatus } from '../utils/states';
-import store from '../utils/store';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -37,6 +36,7 @@ function List(props) {
   const { masto, instance } = api();
   const params = useParams();
   const id = props?.id || params?.id;
+  const timelineId = props?.timelineId || 'list';
   // const navigate = useNavigate();
   const latestItem = useRef();
   // const [reloadCount, reload] = useReducer((c) => c + 1, 0);
@@ -99,14 +99,6 @@ function List(props) {
       try {
         const list = await getList(id);
         setList(list);
-        if (isFeedList(list)) {
-          const homeTimeline = {
-            type: 'feed',
-            id: list.id,
-          };
-          store.account.set('homeTimeline', homeTimeline);
-          states.homeTimeline = homeTimeline;
-        }
         // setTitle(list.title);
       } catch (e) {
         console.error(e);
@@ -122,7 +114,8 @@ function List(props) {
       <Timeline
         key={id}
         title={list.title}
-        id="list"
+        id={timelineId}
+        timelineKey={`${timelineId}-${id}`}
         emptyText={t`Nothing yet.`}
         errorText={t`Unable to load posts.`}
         instance={instance}

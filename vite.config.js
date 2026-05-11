@@ -31,7 +31,36 @@ const {
   PHANPY_DISALLOW_ROBOTS: DISALLOW_ROBOTS,
   PHANPY_DEV,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
+const productionOrigin = (WEBSITE || 'https://bluepy.mosphere.at').replace(
+  /\/$/,
+  '',
+);
+const { PHANPY_WEBSITE: DEV_WEBSITE } = loadEnv(
+  'development',
+  process.cwd(),
+  allowedEnvPrefixes,
+);
+const devOrigin = DEV_WEBSITE?.replace(/\/$/, '') || null;
+const devHost = devOrigin ? new URL(devOrigin).hostname : null;
 const DEV_PORT = Number(process.env.PORT || process.env.VITE_PORT) || undefined;
+
+function oauthMetadata(origin) {
+  return {
+    client_id: `${origin}/oauth-client-metadata.json`,
+    client_name: 'Bluepy',
+    client_uri: `${origin}/`,
+    logo_uri: `${origin}/logo-512.png`,
+    policy_uri:
+      'https://github.com/aliceisjustplaying/bluepy/blob/bluesky/PRIVACY.MD',
+    redirect_uris: [`${origin}/`],
+    scope: 'atproto transition:generic',
+    grant_types: ['authorization_code', 'refresh_token'],
+    response_types: ['code'],
+    token_endpoint_auth_method: 'none',
+    application_type: 'web',
+    dpop_bound_access_tokens: true,
+  };
+}
 
 const now = new Date();
 let commitHash;
@@ -86,6 +115,7 @@ export default defineConfig({
   server: {
     host: true,
     port: DEV_PORT,
+    allowedHosts: devHost ? [devHost] : undefined,
     watch: {
       awaitWriteFinish: {
         pollInterval: 1000,
@@ -104,6 +134,21 @@ export default defineConfig({
     preprocessorMaxWorkers: 1,
   },
   plugins: [
+    devOrigin && {
+      name: 'dynamic-oauth-metadata',
+      configureServer(server) {
+        server.middlewares.use(
+          '/oauth-client-metadata.json',
+          (req, res, next) => {
+            const host = req.headers.host || '';
+            if (/^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host))
+              return next();
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(oauthMetadata(devOrigin)));
+          },
+        );
+      },
+    },
     preact({
       // Force use Babel instead of ESBuild due to this change: https://github.com/preactjs/preset-vite/pull/114
       // Else, a bug will happen with importing variables from import.meta.env
@@ -193,6 +238,11 @@ export default defineConfig({
           buildTime: now,
           commitHash,
         },
+      },
+      {
+        type: 'json',
+        output: './oauth-client-metadata.json',
+        data: oauthMetadata(productionOrigin),
       },
       ...(DISALLOW_ROBOTS
         ? [

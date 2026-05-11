@@ -716,23 +716,8 @@ const PrimaryRoutes = memo(() => {
   const primaryLocation = useMemo(() => {
     const { pathname } = location;
     if (pathname === '/' || isRootPath(pathname)) return location;
-
-    const isModalPage =
-      matchPath('/:instance/s/:id', pathname) || matchPath('/s/:id', pathname);
-    const prevLocation = states.prevLocation;
-    if (
-      isModalPage &&
-      (!prevLocation ||
-        prevLocation.pathname === '/' ||
-        isRootPath(prevLocation.pathname))
-    ) {
-      return prevLocation || { ...location, pathname: '/' };
-    }
-
-    return null;
+    return { ...location, pathname: '/' };
   }, [location]);
-
-  if (!primaryLocation) return null;
 
   return (
     <Routes location={primaryLocation}>

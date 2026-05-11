@@ -66,7 +66,7 @@ function Home() {
       {isMultiColumn ? (
         <Columns />
       ) : defaultFeedID ? (
-        <List id={defaultFeedID} />
+        <List id={defaultFeedID} timelineId="home" />
       ) : expTimeline2.current && !defaultFollowing ? (
         <Following2
           title={_(msg`Home`)}

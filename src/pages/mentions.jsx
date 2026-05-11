@@ -255,6 +255,7 @@ function Mentions({ columnMode, ...props }) {
     <Timeline
       title={t`Mentions`}
       id="mentions"
+      timelineKey={`mentions-${type}-${onlyFollowings}`}
       emptyText={t`No one mentioned you :(`}
       errorText={t`Unable to load mentions.`}
       instance={instance}

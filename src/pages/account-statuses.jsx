@@ -649,6 +649,13 @@ function AccountStatuses({ columnMode, ...props }) {
           </h1>
         }
         id="account-statuses"
+        timelineKey={`account-statuses-${instance}-${id}-${[
+          excludeReplies,
+          excludeBoosts,
+          tagged,
+          media,
+          month + account?.acct,
+        ].toString()}`}
         instance={instance}
         emptyText={t`Nothing to see here yet.`}
         errorText={t`Unable to load posts`}

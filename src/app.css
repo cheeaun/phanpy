@@ -1746,7 +1746,8 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
    visible even when the header auto-hides on scroll-down. Mobile keeps the
    original behavior to save screen real estate. */
 @media (hover: hover) and (min-width: 40em) {
-  .deck-container:has(header[hidden]) ~ #compose-button:not(.loading, [hidden]) {
+  .deck-container:has(header[hidden])
+    ~ #compose-button:not(.loading, [hidden]) {
     transform: none;
     pointer-events: auto;
     user-select: auto;

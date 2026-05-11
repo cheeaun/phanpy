@@ -43,6 +43,9 @@ const scrollIntoViewOptions = {
   behavior: 'instant',
 };
 
+const timelineCache = new Map();
+const TIMELINE_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 // paginationItemsSelector is for Timeline2
 const paginationPrevSelector =
   '.timeline-pagination button[data-pagination-trigger="prev"]';
@@ -224,6 +227,7 @@ function Timeline({
   title,
   titleComponent,
   id,
+  timelineKey,
   instance,
   emptyText,
   errorText,
@@ -245,12 +249,25 @@ function Timeline({
 }) {
   const { t } = useLingui();
   const snapStates = useSnapshot(states);
-  const [items, setItems] = useState([]);
-  const [uiState, setUIState] = useState('start');
-  const [showMore, setShowMore] = useState(false);
+
+  const cacheKey = timelineKey || id;
+  const [cachedData] = useState(() => {
+    const cached = timelineCache.get(cacheKey);
+    return cached && Date.now() - cached.ts <= TIMELINE_CACHE_TTL
+      ? cached
+      : null;
+  });
+
+  const [items, setItems] = useState(cachedData?.items || []);
+  const [uiState, setUIState] = useState(cachedData ? 'default' : 'start');
+  const [showMore, setShowMore] = useState(cachedData?.showMore ?? false);
   const [showNew, setShowNew] = useState(false);
   const [visible, setVisible] = useState(true);
   const scrollableRef = useRef();
+
+  // Updated every render so the cleanup fn always sees the latest values
+  const cachePayloadRef = useRef(null);
+  cachePayloadRef.current = { cacheKey, items, showMore };
 
   console.debug('RENDER Timeline', id, refresh);
   __BENCHMARK.start(`timeline-${id}-load`);
@@ -383,8 +400,24 @@ function Timeline({
   );
 
   useEffect(() => {
-    scrollableRef.current?.scrollTo({ top: 0 });
-    loadItems(true);
+    if (cachedData?.scrollTop) {
+      scrollableRef.current.scrollTop = cachedData.scrollTop;
+    } else {
+      scrollableRef.current?.scrollTo({ top: 0 });
+    }
+    if (!cachedData?.items?.length) loadItems(true);
+    return () => {
+      loadItems.cancel?.();
+      const { cacheKey, items, showMore } = cachePayloadRef.current;
+      if (items?.length) {
+        timelineCache.set(cacheKey, {
+          items,
+          showMore,
+          scrollTop: scrollableRef.current?.scrollTop ?? 0,
+          ts: Date.now(),
+        });
+      }
+    };
   }, []);
   const firstLoad = useRef(true);
   useEffect(() => {

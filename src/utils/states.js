@@ -124,7 +124,10 @@ export function initStates() {
     store.account.get('settings-noAnimations') ?? false;
   // Apply persisted body classes on init (subscribe handlers only fire on change)
   if (typeof document !== 'undefined' && document.body) {
-    document.body.classList.toggle('no-animations', states.settings.noAnimations);
+    document.body.classList.toggle(
+      'no-animations',
+      states.settings.noAnimations,
+    );
   }
 }
 

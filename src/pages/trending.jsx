@@ -447,6 +447,7 @@ function Trending({ columnMode, ...props }) {
         </h1>
       }
       id="trending"
+      timelineKey={`trending-${instance}-${currentLink || 'posts'}`}
       instance={instance}
       emptyText={t`No trending posts.`}
       errorText={t`Unable to load posts`}

@@ -4,24 +4,24 @@ import { BrowserOAuthClient } from '@atproto/oauth-client-browser';
 import { BSKY_PDS } from './atproto-login-service';
 
 export const ATPROTO_OAUTH_SCOPE = 'atproto transition:generic';
-export const ATPROTO_OAUTH_CLIENT_ID =
-  'https://bluepy.mosphere.at/oauth-client-metadata.json';
 
-export const ATPROTO_OAUTH_CLIENT_METADATA = {
-  client_id: ATPROTO_OAUTH_CLIENT_ID,
-  client_name: 'Bluepy',
-  client_uri: 'https://bluepy.mosphere.at/',
-  logo_uri: 'https://bluepy.mosphere.at/logo-512.png',
-  policy_uri:
-    'https://github.com/aliceisjustplaying/bluepy/blob/bluesky/PRIVACY.MD',
-  redirect_uris: ['https://bluepy.mosphere.at/'],
-  scope: ATPROTO_OAUTH_SCOPE,
-  grant_types: ['authorization_code', 'refresh_token'],
-  response_types: ['code'],
-  token_endpoint_auth_method: 'none',
-  application_type: 'web',
-  dpop_bound_access_tokens: true,
-};
+function buildClientMetadata(origin) {
+  return {
+    client_id: `${origin}/oauth-client-metadata.json`,
+    client_name: 'Bluepy',
+    client_uri: `${origin}/`,
+    logo_uri: `${origin}/logo-512.png`,
+    policy_uri:
+      'https://github.com/aliceisjustplaying/bluepy/blob/bluesky/PRIVACY.MD',
+    redirect_uris: [`${origin}/`],
+    scope: ATPROTO_OAUTH_SCOPE,
+    grant_types: ['authorization_code', 'refresh_token'],
+    response_types: ['code'],
+    token_endpoint_auth_method: 'none',
+    application_type: 'web',
+    dpop_bound_access_tokens: true,
+  };
+}
 
 const oauthSessions = new Map();
 let oauthClientPromise;
@@ -47,7 +47,7 @@ export function getAtprotoOAuthClientOptions(origin = location.origin) {
     responseMode: 'query',
     clientMetadata: isLoopbackOrigin(origin)
       ? undefined
-      : ATPROTO_OAUTH_CLIENT_METADATA,
+      : buildClientMetadata(origin),
   };
 }
 

@@ -119,6 +119,7 @@ function Public({ local, columnMode, ...props }) {
         </h1>
       }
       id="public"
+      timelineKey={`public-${instance}-${isLocal ? 'local' : 'federated'}`}
       instance={instance}
       emptyText={
         isDisabled

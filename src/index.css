@@ -26,7 +26,7 @@
     ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
     monospace;
 
-  --blue-color: royalblue;
+  --blue-color: #0085ff; /* Bluesky brand blue (blue3) */
   --purple-color: blueviolet;
   --purple-fg-color: color-mix(
     in srgb-linear,
@@ -63,9 +63,9 @@
   --text-color: #1c1e21;
   --text-insignificant-color: #1c1e2199;
   --link-color: var(--blue-color);
-  --link-bg-color: #4169e122;
-  --link-light-color: #4169e199;
-  --link-faded-color: #4169e155;
+  --link-bg-color: #0085ff22;
+  --link-light-color: #0085ff99;
+  --link-faded-color: #0085ff55;
   --link-bg-hover-color: #f0f2f599;
   --link-visited-color: mediumslateblue;
   --link-text-color: color-mix(
@@ -75,7 +75,7 @@
   );
   --focus-ring-color: var(--link-color);
   --button-bg-color: var(--blue-color);
-  --button-bg-blur-color: #4169e1aa;
+  --button-bg-blur-color: #0085ffaa;
   --button-text-color: white;
   --button-plain-bg-hover-color: rgba(128, 128, 128, 0.1);
   --reblog-color: var(--purple-color);
@@ -257,7 +257,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --blue-color: CornflowerBlue;
+    --blue-color: #52acfe; /* Bluesky brand blue, lighter for dark mode (blue2) */
     --purple-color: #b190f1;
     --green-color: lightgreen;
     --orange-color: orange;
@@ -268,8 +268,8 @@
     --bg-faded-blur-color: #18191a99;
     --text-color: #f0f2f5;
     --text-insignificant-color: #f0f2f599;
-    --link-light-color: #6494ed99;
-    --link-faded-color: #6494ed88;
+    --link-light-color: #52acfe99;
+    --link-faded-color: #52acfe88;
     --link-bg-hover-color: #34353799;
     --link-visited-color: color-mix(
       in lch,

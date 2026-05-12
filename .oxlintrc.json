@@ -46,11 +46,18 @@
     "reportUnusedDisableDirectives": "error"
   },
   "rules": {
+    "eslint/func-style": "off",
     "eslint/id-length": "off",
     "eslint/no-magic-numbers": "off",
+    "eslint/no-undefined": "off",
+    "import/no-default-export": "off",
+    "import/no-unassigned-import": "off",
+    "oxc/no-rest-spread-properties": "off",
     "oxc/no-optional-chaining": "off",
+    "react/jsx-filename-extension": "off",
     "react/jsx-max-depth": "off",
     "react/no-unknown-property": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "unicorn/prefer-ternary": "off"
   }
 }

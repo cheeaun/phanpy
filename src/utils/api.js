@@ -7,6 +7,7 @@ import {
   atprotoInstanceInfo,
   BSKY_INSTANCE,
   createAtprotoClient,
+  createPublicAtprotoClient,
 } from './atproto-adapter';
 import {
   getCachedAtprotoOAuthSession,
@@ -78,12 +79,15 @@ export function initClient({ instance, accessToken }) {
         accountApis[instance][nextAccessToken] = client;
       }
     };
-    const masto = createAtprotoClient({
-      session: atprotoSession?.session,
-      oauthSession,
-      service: atprotoSession?.service,
-      persistSession,
-    });
+    const masto =
+      atprotoSession || atprotoOAuthSession
+        ? createAtprotoClient({
+            session: atprotoSession?.session,
+            oauthSession,
+            service: atprotoSession?.service,
+            persistSession,
+          })
+        : createPublicAtprotoClient();
     client = {
       masto,
       instance,

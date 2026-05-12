@@ -34,9 +34,10 @@ const scrollIntoViewOptions = {
 function Search({ columnMode, ...props }) {
   const { t } = useLingui();
   const params = columnMode ? {} : useParams();
-  const { masto, instance, authenticated } = api({
+  const { masto, instance, authenticated, client } = api({
     instance: params.instance,
   });
+  const atproto = !!client?.atproto;
   const [uiState, setUIState] = useState('default');
   const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
   const searchFormRef = useRef();
@@ -64,8 +65,10 @@ function Search({ columnMode, ...props }) {
 
   const [showMore, setShowMore] = useState(false);
   const offsetRef = useRef(0);
+  const cursorRef = useRef({});
   useEffect(() => {
     offsetRef.current = 0;
+    cursorRef.current = {};
   }, [q, type]);
 
   const scrollableRef = useRef();
@@ -109,7 +112,7 @@ function Search({ columnMode, ...props }) {
       offsetRef.current = 0;
     }
 
-    if (!firstLoad && !authenticated) {
+    if (!firstLoad && !authenticated && !atproto) {
       // Search results pagination is only available to authenticated users
       return;
     }
@@ -130,18 +133,34 @@ function Search({ columnMode, ...props }) {
       if (type) {
         params.limit = LIMIT;
         params.type = type;
-        if (authenticated) params.offset = offsetRef.current;
+        if (atproto) {
+          const cursor = cursorRef.current[type];
+          if (!firstLoad && !cursor) {
+            setShowMore(false);
+            setUIState('default');
+            return;
+          }
+          if (cursor) params.cursor = cursor;
+        } else if (authenticated) {
+          params.offset = offsetRef.current;
+        }
       }
 
       try {
         const results = await masto.v2.search.list(params);
         console.log(results);
         if (type) {
+          const nextCursor = results._pagination?.[type];
           if (firstLoad) {
             setTypeResultsFunc[type](results[type]);
             const length = results[type]?.length;
             offsetRef.current = LIMIT;
-            setShowMore(!!length);
+            cursorRef.current[type] = nextCursor;
+            setShowMore(atproto ? !!nextCursor : !!length);
+          } else if (atproto) {
+            setTypeResultsFunc[type]((prev) => [...prev, ...results[type]]);
+            cursorRef.current[type] = nextCursor;
+            setShowMore(!!nextCursor);
           } else {
             // If first item is the same, it means API doesn't support offset
             // I know this is a very basic check, but it works for now
@@ -161,7 +180,7 @@ function Search({ columnMode, ...props }) {
           offsetRef.current = 0;
           setShowMore(false);
         }
-        loadRelationships(results.accounts);
+        if (authenticated) loadRelationships(results.accounts);
 
         setUIState('default');
       } catch (err) {

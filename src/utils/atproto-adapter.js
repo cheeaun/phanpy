@@ -1509,12 +1509,15 @@ export function createAtprotoClient({
           },
         },
         search: {
-          async list({ q, limit = 10 } = {}) {
+          async list({ q, limit = 10, cursor } = {}) {
             const res = await agent.searchActors({
-              term: q || '',
+              q: q || '',
               limit,
+              cursor,
             });
-            return res.data.actors.map(actorToAccount);
+            const accounts = res.data.actors.map(actorToAccount);
+            accounts._pagination = { cursor: res.data.cursor };
+            return accounts;
           },
         },
       },
@@ -2190,30 +2193,44 @@ export function createAtprotoClient({
         async fetch(params = {}) {
           return this.list(params);
         },
-        async list({ q = '', type, limit = 20 } = {}) {
+        async list({ q = '', type, limit = 20, cursor, sort } = {}) {
           const wanted = type ? [type] : ['accounts', 'statuses', 'hashtags'];
           const results = {
             accounts: [],
             statuses: [],
             hashtags: [],
+            _pagination: {},
           };
 
           if (wanted.includes('accounts')) {
-            const res = await agent.searchActors({
-              term: q,
-              limit,
-            });
-            results.accounts = res.data.actors.map(actorToAccount);
+            try {
+              const res = await agent.searchActors({
+                q,
+                limit,
+                cursor,
+              });
+              results.accounts = res.data.actors.map(actorToAccount);
+              results._pagination.accounts = res.data.cursor;
+            } catch (err) {
+              if (wanted.length === 1) throw err;
+            }
           }
 
           if (wanted.includes('statuses')) {
-            const res = await agent.app.bsky.feed.searchPosts({
-              q,
-              limit,
-            });
-            results.statuses = res.data.posts.map((post) =>
-              postToStatus(post, agent),
-            );
+            try {
+              const res = await agent.app.bsky.feed.searchPosts({
+                q,
+                limit,
+                cursor,
+                sort,
+              });
+              results.statuses = res.data.posts.map((post) =>
+                postToStatus(post, agent),
+              );
+              results._pagination.statuses = res.data.cursor;
+            } catch (err) {
+              if (wanted.length === 1) throw err;
+            }
           }
 
           if (wanted.includes('hashtags')) {

@@ -6,7 +6,7 @@ import {
   postProcessFollowingFeed,
   postToStatus,
 } from '../src/utils/atproto-adapter.js';
-import { shouldShowReplyBadge } from '../src/utils/reply-badge.js';
+import { shouldShowReplyBadge } from '../src/utils/reply-badge.ts';
 import {
   shouldFetchReplyContextForInstance,
   shouldFetchThreadParent,

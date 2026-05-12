@@ -1,0 +1,56 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "env": {
+    "browser": true,
+    "builtin": true,
+    "es2022": true,
+    "node": true,
+    "serviceworker": true
+  },
+  "plugins": [
+    "eslint",
+    "typescript",
+    "unicorn",
+    "oxc",
+    "import",
+    "jsx-a11y",
+    "react",
+    "react-perf",
+    "promise",
+    "node"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "pedantic": "error",
+    "perf": "error",
+    "style": "error",
+    "restriction": "error",
+    "nursery": "error"
+  },
+  "globals": {
+    "__BENCHMARK": "readonly",
+    "__BUILD_TIME__": "readonly",
+    "__COMMIT_HASH__": "readonly",
+    "__COMMIT_TIME__": "readonly",
+    "__FAKE_COMMIT_HASH__": "readonly"
+  },
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "src/locales/**"
+  ],
+  "options": {
+    "typeAware": true,
+    "typeCheck": true,
+    "reportUnusedDisableDirectives": "error"
+  },
+  "rules": {
+    "eslint/id-length": "off",
+    "eslint/no-magic-numbers": "off",
+    "oxc/no-optional-chaining": "off",
+    "react/jsx-max-depth": "off",
+    "react/no-unknown-property": "off",
+    "react/react-in-jsx-scope": "off"
+  }
+}

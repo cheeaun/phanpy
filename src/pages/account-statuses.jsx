@@ -662,7 +662,7 @@ function AccountStatuses({ columnMode, ...props }) {
         fetchItems={fetchAccountStatuses}
         useItemID
         view={media || mediaFirst ? 'media' : undefined}
-        boostsCarousel={!isSelf && snapStates.settings.boostsCarousel}
+        boostsCarousel={false}
         timelineStart={TimelineStart}
         refresh={[
           excludeReplies,

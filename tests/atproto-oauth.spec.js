@@ -16,7 +16,7 @@ test.describe('ATProto OAuth', () => {
 
     expect(metadata).toEqual(ATPROTO_OAUTH_CLIENT_METADATA);
     expect(metadata.scope).toBe(ATPROTO_OAUTH_SCOPE);
-    expect(metadata.redirect_uris).toContain('https://bluepy.mosphere.at/');
+    expect(metadata.redirect_uris).toContain('https://bluepy.social/');
     expect(metadata.dpop_bound_access_tokens).toBe(true);
     expect(metadata.token_endpoint_auth_method).toBe('none');
   });

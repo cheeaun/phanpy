@@ -31,7 +31,7 @@ const {
   PHANPY_DISALLOW_ROBOTS: DISALLOW_ROBOTS,
   PHANPY_DEV,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
-const productionOrigin = (WEBSITE || 'https://bluepy.mosphere.at').replace(
+const productionOrigin = (WEBSITE || 'https://bluepy.social').replace(
   /\/$/,
   '',
 );

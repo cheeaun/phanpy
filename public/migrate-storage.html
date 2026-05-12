@@ -1,0 +1,29 @@
+<!doctype html>
+<meta charset="utf-8" />
+<script>
+  (() => {
+    const allowedTargets = new Set(['https://bluepy.social']);
+    const target = new URLSearchParams(location.search).get('target');
+    if (!allowedTargets.has(target) || !window.parent) return;
+
+    function dump(storage) {
+      const entries = [];
+      for (let i = 0; i < storage.length; i += 1) {
+        const key = storage.key(i);
+        if (key) entries.push([key, storage.getItem(key)]);
+      }
+      return entries;
+    }
+
+    window.parent.postMessage(
+      {
+        type: 'bluepy:storage-export',
+        version: 1,
+        target,
+        localStorage: dump(localStorage),
+        sessionStorage: dump(sessionStorage),
+      },
+      target,
+    );
+  })();
+</script>

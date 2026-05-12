@@ -5,7 +5,7 @@ import {
   canReadCardInline,
   isLeafletUrl,
   isStandardSiteDocumentRecord,
-} from '../src/utils/standard-site.js';
+} from '../src/utils/standard-site.ts';
 
 function postWithEmbed(embed) {
   return {

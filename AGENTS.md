@@ -8,6 +8,10 @@ Production deploys from `fork/bluesky`, not feature branches. Use `/tmp/bluepy-b
 
 Always run `git status -sb` and `git diff --name-status` before staging. Never commit generated images unless explicitly requested in the current turn. Keep generated locale catalogs in separate commits.
 
+## Lint Rules
+
+Do not turn off lint rules without explicit permission in the current turn. If a rule blocks useful work, report the rule name, the concrete violation, and the smallest compliant change or ask for permission to change the rule.
+
 ## Package Manager
 
 Use Bun for installs and scripts: `bun install`, `bun run ...`, and `bunx ...`. Runtime remains browser/Cloudflare Workers, not Bun.

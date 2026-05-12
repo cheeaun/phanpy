@@ -15,9 +15,11 @@
 
   .embed-content {
     flex-grow: 1;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 16px 16px;
 
     iframe {
       pointer-events: auto;
@@ -26,6 +28,20 @@
       width: max(var(--width), var(--main-width));
       height: auto;
       aspect-ratio: var(--aspect-ratio);
+    }
+
+    &.iframe-content {
+      align-items: stretch;
+
+      iframe {
+        width: min(100%, 1100px);
+        height: 100%;
+        max-height: none;
+        aspect-ratio: auto;
+        border: 0;
+        border-radius: 12px;
+        background: Canvas;
+      }
     }
   }
 }

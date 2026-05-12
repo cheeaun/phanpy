@@ -4,7 +4,15 @@ import { Trans, useLingui } from '@lingui/react/macro';
 
 import Icon from './icon';
 
-function EmbedModal({ html, url, width, height, onClose = () => {} }) {
+function EmbedModal({
+  html,
+  url,
+  iframeUrl,
+  title,
+  width,
+  height,
+  onClose = () => {},
+}) {
   const { t } = useLingui();
   return (
     <div class="embed-modal-container">
@@ -21,15 +29,27 @@ function EmbedModal({ html, url, width, height, onClose = () => {} }) {
           </a>
         )}
       </div>
-      <div
-        class="embed-content"
-        dangerouslySetInnerHTML={{ __html: html }}
-        style={{
-          '--width': width + 'px',
-          '--height': height + 'px',
-          '--aspect-ratio': `${width}/${height}`,
-        }}
-      />
+      {iframeUrl ? (
+        <div class="embed-content iframe-content">
+          <iframe
+            src={iframeUrl}
+            title={title || 'Embedded content'}
+            sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+            allow="clipboard-write; fullscreen"
+            referrerpolicy="strict-origin-when-cross-origin"
+          />
+        </div>
+      ) : (
+        <div
+          class="embed-content"
+          dangerouslySetInnerHTML={{ __html: html }}
+          style={{
+            '--width': width + 'px',
+            '--height': height + 'px',
+            '--aspect-ratio': `${width}/${height}`,
+          }}
+        />
+      )}
     </div>
   );
 }

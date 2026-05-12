@@ -226,6 +226,7 @@ function embedToParts(embed, agent) {
       title: external.title || external.uri,
       description: external.description || '',
       image: external.thumb,
+      associatedRecord: external.associatedRecord || external.associated_record,
       type: 'link',
     };
   }

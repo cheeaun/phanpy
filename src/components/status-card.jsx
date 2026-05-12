@@ -6,6 +6,7 @@ import { useSnapshot } from 'valtio';
 
 import getDomain from '../utils/get-domain';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
+import { canReadCardInline } from '../utils/standard-site';
 import states from '../utils/states';
 import unfurlMastodonLink from '../utils/unfurl-link';
 
@@ -98,6 +99,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   if (snapStates.unfurledLinks[url]) return null;
 
   const hasIframeHTML = /<iframe/i.test(html);
+  const canReadInline = canReadCardInline(card);
   const handleClick = useCallback(
     (e) => {
       if (hasIframeHTML) {
@@ -108,9 +110,16 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           width,
           height,
         };
+      } else if (canReadInline) {
+        e.preventDefault();
+        states.showEmbedModal = {
+          iframeUrl: url,
+          url,
+          title: title || url,
+        };
       }
     },
-    [hasIframeHTML],
+    [canReadInline, hasIframeHTML],
   );
 
   const [blurhashImage, setBlurhashImage] = useState(null);
@@ -156,7 +165,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} ${
             blurhashImage ? '' : size
-          } ${hasIframeHTML ? 'can-show-embed' : ''}`}
+          } ${hasIframeHTML || canReadInline ? 'can-show-embed' : ''}`}
           style={{
             '--average-color':
               rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -264,7 +273,9 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
           rel="nofollow noopener"
-          class={`card link ${isPost ? 'card-post' : ''} no-image`}
+          class={`card link ${isPost ? 'card-post' : ''} no-image ${
+            hasIframeHTML || canReadInline ? 'can-show-embed' : ''
+          }`}
           lang={language}
           dir="auto"
           onClick={handleClick}

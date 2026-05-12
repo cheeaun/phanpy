@@ -1,3 +1,4 @@
+import { isLeafletUrl } from './standard-site';
 import states from './states';
 
 const supportsHover = window.matchMedia('(hover: hover)').matches;
@@ -42,6 +43,16 @@ function handleContentLinks(opts) {
     if (!e.currentTarget.contains(target)) return;
 
     const { href } = target;
+    if (isLeafletUrl(href)) {
+      e.preventDefault();
+      e.stopPropagation();
+      states.showEmbedModal = {
+        iframeUrl: href,
+        url: href,
+        title: target.innerText.trim() || href,
+      };
+      return;
+    }
 
     const prevText = target.previousSibling?.textContent;
     const textBeforeLinkIsAt =

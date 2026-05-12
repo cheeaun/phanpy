@@ -5,7 +5,7 @@
 
 Ensure you're on `typescript`; if absent, run `git fetch fork && git switch --track fork/typescript`. Before each slice, run `git fetch fork && git rebase fork/typescript` to stay current with the TypeScript migration branch. Do not rebase this work onto `fork/bluesky` unless explicitly instructed.
 
-Follow AGENTS.md exactly. Work in small leaves-first slices, usually under 300 changed lines. For each slice: inspect callers, convert only the cohesive boundary, run verification, use `claude -p --model opus --effort xhigh` for review, fix actionable findings, re-review if needed, then commit and push to `fork/typescript`.
+Follow AGENTS.md exactly. Work in small leaves-first slices, usually under 300 changed lines. For each slice: inspect callers, convert only the cohesive boundary, run verification, use `claude -p --model opus --effort xhigh` for review, fix actionable findings, then send the revised diff back to Claude. Repeat the fix/re-review loop until Claude reports no actionable findings before committing and pushing to `fork/typescript`.
 
 Do not disable lint/typecheck/build/test rules. If a rule blocks progress, use the AGENTS.md rule-change protocol. Avoid typing broken behavior as if it is correct; either fix behavior first or record follow-up debt.
 

@@ -9,6 +9,17 @@ declare module '*.po' {
   export const messages: Record<string, string>;
 }
 
+declare module 'punycode/' {
+  const punycode: {
+    toASCII(domain: string): string;
+    toUnicode(domain: string): string;
+  };
+
+  export function toASCII(domain: string): string;
+  export function toUnicode(domain: string): string;
+  export default punycode;
+}
+
 interface ImportMetaEnv {
   readonly PHANPY_APP_ERROR_LOGGING?: string;
   readonly PHANPY_CLIENT_NAME?: string;

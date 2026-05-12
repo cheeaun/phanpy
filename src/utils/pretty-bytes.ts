@@ -8,17 +8,18 @@ const BYTES_UNITS = [
   'gigabyte',
   'terabyte',
   'petabyte',
-];
-export default function prettyBytes(bytes) {
+] as const satisfies Intl.NumberFormatOptions['unit'][];
+
+export default function prettyBytes(bytes: number): string {
   const unitIndex = Math.min(
     Math.floor(Math.log2(bytes) / 10),
     BYTES_UNITS.length - 1,
   );
   const value = bytes / 1024 ** unitIndex;
   return i18n.number(value, {
+    maximumFractionDigits: 0,
     style: 'unit',
     unit: BYTES_UNITS[unitIndex],
     unitDisplay: 'narrow',
-    maximumFractionDigits: 0,
   });
 }

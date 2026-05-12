@@ -27,7 +27,7 @@ import { useEditHistory } from '../utils/edit-history-context';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
-import getHTMLText from '../utils/getHTMLText';
+import getHTMLText from '../utils/get-html-text';
 import haptics from '../utils/haptics';
 import htmlContentLength from '../utils/html-content-length';
 import localeMatch from '../utils/locale-match';

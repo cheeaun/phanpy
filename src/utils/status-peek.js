@@ -1,4 +1,4 @@
-import getHTMLText from './getHTMLText';
+import getHTMLText from './get-html-text';
 
 function statusPeek(status) {
   const { spoilerText, content, poll, mediaAttachments, quote } = status;

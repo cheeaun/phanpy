@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 
-import getHTMLText from '../utils/getHTMLText';
+import getHTMLText from '../utils/get-html-text';
 
 import Icon from './icon';
 import TranslationBlock from './translation-block';

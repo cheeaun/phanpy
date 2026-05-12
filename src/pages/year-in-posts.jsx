@@ -27,7 +27,7 @@ import Status from '../components/status';
 import { api } from '../utils/api';
 import DateTimeFormat from '../utils/date-time-format';
 import db from '../utils/db';
-import getHTMLText from '../utils/getHTMLText';
+import getHTMLText from '../utils/get-html-text';
 import niceDateTime from '../utils/nice-date-time';
 import prettyBytes from '../utils/pretty-bytes';
 import { supportsNativeQuote } from '../utils/quote-utils';

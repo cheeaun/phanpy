@@ -3,7 +3,7 @@ import { proxy, subscribe } from 'valtio';
 import { subscribeKey } from 'valtio/utils';
 
 import { api } from './api';
-import isMastodonLinkMaybe from './isMastodonLinkMaybe';
+import isMastodonLinkMaybe from './is-mastodon-link-maybe';
 import pmem from './pmem';
 import rateLimit from './ratelimit';
 import { shouldFetchThreadParent } from './reply-context';

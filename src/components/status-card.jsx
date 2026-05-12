@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import getDomain from '../utils/get-domain';
-import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
+import isMastodonLinkMaybe from '../utils/is-mastodon-link-maybe';
 import { canReadCardInline } from '../utils/standard-site';
 import states from '../utils/states';
 import unfurlMastodonLink from '../utils/unfurl-link';

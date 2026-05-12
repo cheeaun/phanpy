@@ -11,16 +11,16 @@ Goal: feature parity with upstream Phanpy where feasible, but as a fully client-
 - Test credentials are stored in `/home/agent/.secrets/phanpy-atproto-test.env`
 - Current working dev loop:
   - `cd /home/agent/phanpy`
-  - `npm run dev -- --host 127.0.0.1`
+  - `bun run dev -- --host 127.0.0.1`
   - app URL: `http://127.0.0.1:5173/`
-  - `npm test` passes after switching Playwright to Nix Chromium
+  - `bun run test` passes after switching Playwright to Nix Chromium
 - Use Chromium only. System Chromium is `/run/current-system/sw/bin/chromium`.
 - Use `agent-browser` for browser/UI smoke checks.
 
 ## Current Changes
 
 - `/home/agent/phanpy/playwright.config.js` points Playwright at Nix Chromium.
-- `package-lock.json` has npm metadata churn from `npm install`; inspect before committing.
+- `bun.lock` has package metadata churn from `bun install`; inspect before committing.
 
 ## Implementation Strategy
 
@@ -53,7 +53,7 @@ Use social-app's feed APIs as reference: `FollowingFeedAPI`, `CustomFeedAPI`, `L
 ## Verification Expectations
 
 - Prioritize E2E and smoke tests over unit tests. Unit tests are useful support, but the main confidence loop is real user flows in the browser.
-- Keep `npm test` green.
+- Keep `bun run test` green.
 - Use `agent-browser` against local Vite server for logged-out and logged-in smoke tests.
 - Use the saved test account only from env file; do not print credentials.
 - Build should pass before stopping if feasible.

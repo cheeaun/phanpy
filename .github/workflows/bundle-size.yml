@@ -15,10 +15,12 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: "npm"
-      - run: npm ci
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.13
+      - run: bun install --frozen-lockfile
       - name: Build and extract bundle sizes
-        run: npm run build:sizes --silent > bundle-sizes.md
+        run: bun --silent run build:sizes > bundle-sizes.md
       - name: Debug - show file content
         run: |
           echo "File size:"

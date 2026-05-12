@@ -1,6 +1,7 @@
 {
   "name": "phanpy",
   "version": "0.1.0",
+  "packageManager": "bun@1.3.13",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -8,8 +9,8 @@
     "build:sizes": "NO_COLOR=true vite build 2>&1 | grep '^dist/' | node scripts/bundle-sizes-to-md.js",
     "preview": "vite preview",
     "fetch-instances": "node scripts/fetch-instances-list.js",
-    "sourcemap": "npx source-map-explorer dist/assets/*.js",
-    "bundle-visualizer": "npx vite-bundle-visualizer",
+    "sourcemap": "bunx source-map-explorer dist/assets/*.js",
+    "bundle-visualizer": "bunx vite-bundle-visualizer",
     "messages:extract": "lingui extract",
     "messages:extract:clean": "lingui extract --locale en --clean",
     "messages:compile": "lingui compile",
@@ -148,11 +149,6 @@
       "photoshop": true,
       "thumbnail": true,
       "icc": true
-    }
-  },
-  "overrides": {
-    "vite-plugin-pwa": {
-      "vite": "$vite"
     }
   }
 }

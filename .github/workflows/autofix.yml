@@ -16,7 +16,10 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
-      - run: npm ci
-      - run: npm run formatting
-      - run: npm run messages:extract:clean
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.13
+      - run: bun install --frozen-lockfile
+      - run: bun run formatting
+      - run: bun run messages:extract:clean
       - uses: autofix-ci/action@v1

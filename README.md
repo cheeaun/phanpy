@@ -119,16 +119,16 @@ Everything is designed and engineered following my taste and vision. This is a p
 
 ## Development
 
-Prerequisites: Node.js 20+
+Prerequisites: Node.js 20+ and Bun 1.3+
 
-- `npm install` - Install dependencies
-- `npm run dev` - Start development server and `messages:extract` (`clean` + `watch`) in parallel
-- `npm run build` - Build for production
-- `npm run preview` - Preview the production build
-- `npm run fetch-instances` - Fetch instances list from [joinmastodon.org/servers](https://joinmastodon.org/servers), save it to `src/data/instances.json`
-- `npm run sourcemap` - Run `source-map-explorer` on the production build
-- `npm run messages:extract` - Extract messages from source files and update the locale message catalogs
-- `npm run git:po-filter` - Configure `git` to use `po-filter` for diffing `.po` files
+- `bun install` - Install dependencies
+- `bun run dev` - Start development server and `messages:extract` (`clean` + `watch`) in parallel
+- `bun run build` - Build for production
+- `bun run preview` - Preview the production build
+- `bun run fetch-instances` - Fetch instances list from [joinmastodon.org/servers](https://joinmastodon.org/servers), save it to `src/data/instances.json`
+- `bun run sourcemap` - Run `source-map-explorer` on the production build
+- `bun run messages:extract` - Extract messages from source files and update the locale message catalogs
+- `bun run git:po-filter` - Configure `git` to use `po-filter` for diffing `.po` files
 
 ## Tech stack
 
@@ -222,7 +222,7 @@ Go to [Releases](https://github.com/cheeaun/phanpy/releases) and download the la
 
 Requires [Node.js](https://nodejs.org/).
 
-Download or `git clone` this repository. Use `production` branch for *stable* releases, `main` for *latest*. Build it by running `npm run build` (after `npm install`). Serve the `dist` folder.
+Download or `git clone` this repository. Use `production` branch for *stable* releases, `main` for *latest*. Build it by running `bun run build` (after `bun install`). Serve the `dist` folder.
 
 > [!IMPORTANT]
 > Text translations connect to an **external service** (`translang.phanpy.social`). This can be configured with environment variables if you want to [self-host your own instance](#translang-api-hosting).
@@ -232,14 +232,14 @@ Customization can be done by passing environment variables to the build command.
 ```bash
 PHANPY_CLIENT_NAME="Phanpy Dev" \
     PHANPY_WEBSITE="https://dev.phanpy.social" \
-    npm run build
+    bun run build
 ```
 
 ```bash
 PHANPY_DEFAULT_INSTANCE=hachyderm.io \
     PHANPY_DEFAULT_INSTANCE_REGISTRATION_URL=https://hachyderm.io/auth/sign_up \
     PHANPY_PRIVACY_POLICY_URL=https://hachyderm.io/privacy-policy \
-    npm run build
+    bun run build
 ```
 
 It's also possible to set them in the `.env` file.

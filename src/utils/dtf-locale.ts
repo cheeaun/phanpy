@@ -3,19 +3,23 @@ import store from './store';
 
 const DTFLOCALE_CACHE_KEY = 'dtflocale';
 
-function _getDtfLocale() {
+function getDtfLocaleFromCache(): string | null {
   try {
     const cachedDtf = store.session.get(DTFLOCALE_CACHE_KEY);
-    if (cachedDtf) return cachedDtf;
+    if (cachedDtf !== null && cachedDtf !== '') {
+      return cachedDtf;
+    }
     const dtfLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
     store.session.set(DTFLOCALE_CACHE_KEY, dtfLocale);
     return dtfLocale;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
-export const getDtfLocale = mem(_getDtfLocale);
+const getDtfLocale = mem(getDtfLocaleFromCache);
 
-export function clearDtfLocaleCache() {
+function clearDtfLocaleCache(): void {
   store.session.del(DTFLOCALE_CACHE_KEY);
 }
+
+export { clearDtfLocaleCache, getDtfLocale };

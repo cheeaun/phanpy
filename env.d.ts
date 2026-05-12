@@ -47,10 +47,10 @@ interface BluepyBenchmark {
 declare const __BENCHMARK: BluepyBenchmark;
 
 interface Window {
-  __ACCOUNT_APIS__?: Record<string, Record<string, unknown>>;
+  __ACCOUNT_APIS__?: Record<string, Record<string, unknown> | undefined>;
   __API__?: {
     apis?: Record<string, unknown>;
-    accountApis?: Record<string, Record<string, unknown>>;
+    accountApis?: Record<string, Record<string, unknown> | undefined>;
   };
   __BENCH_RESULTS?: Map<string, unknown>;
   __BENCHMARK?: BluepyBenchmark;
@@ -61,6 +61,7 @@ interface Window {
   __generateCodeChallenge?: unknown;
   __IDLE__?: boolean;
   __IGNORE_GET_ACCOUNT_ERROR__?: boolean;
+  _memoize?: unknown;
   __nativeAlert?: typeof window.alert;
   __SHARED_DATA__?: unknown;
   __STATES__?: Record<string, unknown>;

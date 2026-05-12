@@ -2,8 +2,8 @@ const root = document.documentElement;
 const style = getComputedStyle(root);
 const defaultBoundingBoxPadding = 8;
 
-let safeAreaInsets = [0, 0, 0, 0];
-function getSafeAreaInsets() {
+let safeAreaInsets: number[] = [0, 0, 0, 0];
+function getSafeAreaInsets(): void {
   // Get safe area inset variables from root
   const safeAreaInsetTop = style.getPropertyValue('--sai-top');
   const safeAreaInsetRight = style.getPropertyValue('--sai-right');
@@ -19,7 +19,7 @@ function getSafeAreaInsets() {
 }
 requestAnimationFrame(getSafeAreaInsets);
 
-function safeBoundingBoxPadding(paddings = []) {
+function safeBoundingBoxPadding(paddings: readonly number[] = []): string {
   const str = safeAreaInsets
     .map((v, i) => (v || defaultBoundingBoxPadding) + (paddings[i] || 0))
     .join(' ');

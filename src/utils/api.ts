@@ -21,28 +21,11 @@ import {
   getCurrentAcc,
   saveAccount,
   setCurrentAccountID,
+  type AccountInfo,
+  type StoredAccount,
 } from './store-utils';
 
 type JsonRecord = Record<string, unknown>;
-
-interface AccountInfo {
-  readonly id: string;
-  readonly avatar?: string;
-  readonly avatar_static?: string;
-  readonly displayName?: string;
-  readonly [key: string]: unknown;
-}
-
-interface StoredAccount {
-  accessToken: string;
-  atproto?: boolean;
-  createdAt?: number;
-  info: AccountInfo;
-  instanceURL: string;
-  lastAccessedAt?: number;
-  updatedAt?: number;
-  vapidKey?: string | null;
-}
 
 interface AtprotoSession {
   readonly service?: string;
@@ -139,39 +122,6 @@ interface NodeInfoCandidate {
   readonly version: string;
 }
 
-interface StoreNamespace {
-  del(key: string): unknown;
-  get(key: string): unknown;
-  getJSON(key: string): unknown;
-  set(key: string, value: unknown): unknown;
-  setJSON(key: string, value: unknown): unknown;
-}
-
-type AccountStoreNamespace = Pick<StoreNamespace, 'del' | 'get' | 'set'>;
-
-interface Store {
-  readonly account: AccountStoreNamespace;
-  readonly local: StoreNamespace;
-}
-
-const typedStore = store as unknown as Store;
-const readAccount = getAccount as (
-  accountID?: string,
-) => StoredAccount | null | undefined;
-const readAccountByAccessToken = getAccountByAccessToken as (
-  accessToken: string,
-) => StoredAccount | null | undefined;
-const readAccountByInstance = getAccountByInstance as (
-  instance: string,
-) => StoredAccount | null | undefined;
-const readCurrentAccount = getCurrentAcc as () =>
-  | StoredAccount
-  | null
-  | undefined;
-const persistAccount = saveAccount as (account: StoredAccount) => void;
-const persistCurrentAccountID = setCurrentAccountID as (
-  accountID: string,
-) => void;
 const readAtprotoOAuthToken = parseAtprotoOAuthAccessToken as (
   accessToken?: string | null,
 ) => AtprotoOAuthToken | null | undefined;
@@ -255,7 +205,7 @@ export function initClient({
       if (!session || !persistedAccessToken) {
         return;
       }
-      const account = readAccountByAccessToken(persistedAccessToken);
+      const account = getAccountByAccessToken(persistedAccessToken);
       if (!account) {
         return;
       }
@@ -266,7 +216,7 @@ export function initClient({
       });
       account.accessToken = nextAccessToken;
       account.updatedAt = Date.now();
-      persistAccount(account);
+      saveAccount(account);
       const cachedAccountApis = accountApis[normalizedInstance];
       if (cachedAccountApis?.[persistedAccessToken] !== undefined) {
         delete cachedAccountApis[persistedAccessToken];
@@ -355,8 +305,7 @@ export async function hydrateAtprotoOAuthAccessToken(
 
 export function hasInstance(instance: string): boolean {
   const instances =
-    (typedStore.local.getJSON('instances') as Record<string, unknown> | null) ??
-    {};
+    store.local.getJSON<Record<string, unknown>>('instances') ?? {};
   return Boolean(instances[instance]);
 }
 
@@ -369,21 +318,15 @@ export async function initInstance(
   console.log('INIT INSTANCE', client, instance);
   if (client.atproto) {
     const instances =
-      (typedStore.local.getJSON('instances') as Record<
-        string,
-        unknown
-      > | null) ?? {};
+      store.local.getJSON<Record<string, unknown>>('instances') ?? {};
     instances[BSKY_INSTANCE] = atprotoInstanceInfo();
-    typedStore.local.setJSON('instances', instances);
+    store.local.setJSON('instances', instances);
     const nodeInfos =
-      (typedStore.local.getJSON('nodeInfos') as Record<
-        string,
-        unknown
-      > | null) ?? {};
+      store.local.getJSON<Record<string, unknown>>('nodeInfos') ?? {};
     nodeInfos[BSKY_INSTANCE] = {
       software: { name: 'mastodon', version: '4.4.0' },
     };
-    typedStore.local.setJSON('nodeInfos', nodeInfos);
+    store.local.setJSON('nodeInfos', nodeInfos);
     return;
   }
   const { accessToken, masto } = client;
@@ -417,8 +360,7 @@ export async function initInstance(
   } = info;
 
   const instances =
-    (typedStore.local.getJSON('instances') as Record<string, unknown> | null) ??
-    {};
+    store.local.getJSON<Record<string, unknown>>('instances') ?? {};
   const canonicalInstance = domain ?? uri;
   if (canonicalInstance) {
     instances[
@@ -431,7 +373,7 @@ export async function initInstance(
   if (instance) {
     instances[instance.toLowerCase()] = info;
   }
-  typedStore.local.setJSON('instances', instances);
+  store.local.setJSON('instances', instances);
 
   let nodeInfo: unknown;
   // GoToSocial requires we get the NodeInfo to identify server type
@@ -469,12 +411,11 @@ export async function initInstance(
     // NodeInfo is opportunistic metadata.
   }
   const nodeInfos =
-    (typedStore.local.getJSON('nodeInfos') as Record<string, unknown> | null) ??
-    {};
+    store.local.getJSON<Record<string, unknown>>('nodeInfos') ?? {};
   if (nodeInfo) {
     nodeInfos[instance.toLowerCase()] = nodeInfo;
   }
-  typedStore.local.setJSON('nodeInfos', nodeInfos);
+  store.local.setJSON('nodeInfos', nodeInfos);
 
   // This is a weird place to put this but here's updating the masto instance with the streaming API URL set in the configuration
   // Reason: Streaming WebSocket URL may change, unlike the standard API REST URLs
@@ -514,8 +455,8 @@ export async function initAccount(
 ): Promise<void> {
   if (client.atproto) {
     const atprotoAccount = await client.masto.v1.accounts.verifyCredentials();
-    persistCurrentAccountID(atprotoAccount.id);
-    persistAccount({
+    setCurrentAccountID(atprotoAccount.id);
+    saveAccount({
       accessToken,
       atproto: true,
       createdAt: Date.now(),
@@ -529,9 +470,9 @@ export async function initAccount(
   const mastoAccount = await masto.v1.accounts.verifyCredentials();
 
   console.log('CURRENTACCOUNT SET', mastoAccount.id);
-  persistCurrentAccountID(mastoAccount.id);
+  setCurrentAccountID(mastoAccount.id);
 
-  persistAccount({
+  saveAccount({
     accessToken,
     createdAt: Date.now(),
     info: mastoAccount,
@@ -541,7 +482,7 @@ export async function initAccount(
 }
 
 export const getPreferences = mem(
-  () => (typedStore.account.get('preferences') as JsonRecord | null) ?? {},
+  () => store.account.get<JsonRecord>('preferences') ?? {},
   {
     expires: 60 * 1000, // 1 minute
   },
@@ -549,7 +490,7 @@ export const getPreferences = mem(
 
 export function setPreferences(preferences: JsonRecord): void {
   getPreferences.cache.clear(); // Clear memo cache
-  typedStore.account.set('preferences', preferences);
+  store.account.set('preferences', preferences);
 }
 
 export function hasPreferences(): boolean {
@@ -613,7 +554,7 @@ export function api({
         };
       }
       console.log('X 3', accountApis, cachedInstance, accessToken);
-      const storedAccount = readAccountByAccessToken(accessToken);
+      const storedAccount = getAccountByAccessToken(accessToken);
       if (storedAccount) {
         const storedAccessToken = storedAccount.accessToken;
         const storedInstance = storedAccount.instanceURL.toLowerCase().trim();
@@ -636,7 +577,7 @@ export function api({
 
   // If account is provided, get the masto instance for that account
   if (account || accountID) {
-    const storedAccount = account ?? readAccount(accountID);
+    const storedAccount = account ?? getAccount(accountID);
     if (storedAccount) {
       const storedAccessToken = storedAccount.accessToken;
       const storedInstance = storedAccount.instanceURL.toLowerCase().trim();
@@ -658,7 +599,7 @@ export function api({
     throw new Error(`Account ${accountID} not found`);
   }
 
-  const currentAccount = readCurrentAccount();
+  const currentAccount = getCurrentAcc();
 
   // If only instance is provided, get the masto instance for that instance
   if (instance) {
@@ -686,7 +627,7 @@ export function api({
       };
     }
 
-    const instanceAccount = readAccountByInstance(instance);
+    const instanceAccount = getAccountByInstance(instance);
     if (instanceAccount) {
       const storedAccessToken = instanceAccount.accessToken;
       const client =

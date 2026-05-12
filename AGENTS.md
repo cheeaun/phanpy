@@ -22,7 +22,7 @@ Make small commits by concern. Push deploy-relevant commits to `fork/bluesky`. R
 
 ## TypeScript Migration OODA Loop
 
-When running a long TypeScript migration goal, work in reviewable batches. Prefer 2-5 tiny independent leaf files, one leaf utility cluster, one boundary module, or one cohesive import chain per batch. Aim for under 300 changed lines; split at 500. Prefer extensionless import-safe `.js -> .ts` and `.jsx -> .tsx` conversions first, because they avoid import churn.
+When running a long TypeScript migration goal, work in reviewable batches. Prefer 3-8 tiny independent leaf files, one leaf utility cluster, one boundary module, or one cohesive import chain per batch. Aim for under 300 changed lines; split at 500. Prefer extensionless import-safe `.js -> .ts` and `.jsx -> .tsx` conversions first, because they avoid import churn.
 
 For each batch:
 

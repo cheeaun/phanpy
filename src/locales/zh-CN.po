@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-14 06:56\n"
+"PO-Revision-Date: 2026-05-14 08:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -815,23 +815,23 @@ msgstr "是否删除此字段？"
 
 #: src/components/edit-profile-sheet.jsx:225
 msgid "Unable to remove profile picture."
-msgstr ""
+msgstr "无法删除头像。"
 
 #: src/components/edit-profile-sheet.jsx:245
 msgid "Unable to remove header picture."
-msgstr ""
+msgstr "无法删除横幅图片。"
 
 #: src/components/edit-profile-sheet.jsx:296
 msgid "Profile and header pictures have no descriptions. Continue?"
-msgstr ""
+msgstr "头像与横幅图片还没有文本描述。是否继续？"
 
 #: src/components/edit-profile-sheet.jsx:303
 msgid "Profile picture has no description. Continue?"
-msgstr ""
+msgstr "头像还没有文本描述。是否继续？"
 
 #: src/components/edit-profile-sheet.jsx:309
 msgid "Header picture has no description. Continue?"
-msgstr ""
+msgstr "横幅图片还没有文本描述。是否继续？"
 
 #: src/components/edit-profile-sheet.jsx:371
 msgid "Unable to update profile."
@@ -849,7 +849,7 @@ msgstr "图片描述"
 
 #: src/components/edit-profile-sheet.jsx:462
 msgid "Remove header picture?"
-msgstr ""
+msgstr "是否删除横幅图片？"
 
 #: src/components/edit-profile-sheet.jsx:473
 #: src/components/edit-profile-sheet.jsx:565
@@ -863,7 +863,7 @@ msgstr "头像"
 
 #: src/components/edit-profile-sheet.jsx:554
 msgid "Remove profile picture?"
-msgstr ""
+msgstr "是否删除头像？"
 
 #: src/components/edit-profile-sheet.jsx:574
 #: src/components/list-add-edit.jsx:106
@@ -876,7 +876,7 @@ msgstr "简介"
 
 #: src/components/edit-profile-sheet.jsx:607
 msgid "Custom fields"
-msgstr ""
+msgstr "自定义字段"
 
 #: src/components/edit-profile-sheet.jsx:613
 msgid "Label"
@@ -888,7 +888,7 @@ msgstr "内容"
 
 #: src/components/edit-profile-sheet.jsx:678
 msgid "Add field"
-msgstr ""
+msgstr "添加字段"
 
 #: src/components/edit-profile-sheet.jsx:695
 #: src/components/list-add-edit.jsx:152
@@ -3138,19 +3138,19 @@ msgstr "该账户的嘟文"
 
 #: src/pages/account-statuses.jsx:294
 msgid "Media posts tagged #{tagged} by {accountDisplay}"
-msgstr ""
+msgstr "来自 {accountDisplay} 的带有 #{tagged} 标签的媒体嘟文"
 
 #: src/pages/account-statuses.jsx:296
 msgid "Posts tagged #{tagged} by {accountDisplay}"
-msgstr ""
+msgstr "来自 {accountDisplay} 的带有 #{tagged} 标签的嘟文"
 
 #: src/pages/account-statuses.jsx:303
 msgid "Posts in {monthYear} by {accountDisplay}"
-msgstr ""
+msgstr "{accountDisplay} 在 {monthYear} 的嘟文"
 
 #: src/pages/account-statuses.jsx:305
 msgid "Media posts by {accountDisplay}"
-msgstr ""
+msgstr "{accountDisplay} 的媒体嘟文"
 
 #: src/pages/account-statuses.jsx:394
 #: src/pages/account-statuses.jsx:403
@@ -3160,19 +3160,19 @@ msgstr "重置过滤规则"
 
 #: src/pages/account-statuses.jsx:422
 msgid "Showing replies"
-msgstr ""
+msgstr "已显示回复"
 
 #: src/pages/account-statuses.jsx:424
 msgid "Hiding replies"
-msgstr ""
+msgstr "已隐藏回复"
 
 #: src/pages/account-statuses.jsx:438
 msgid "Showing boosts"
-msgstr ""
+msgstr "已显示转嘟"
 
 #: src/pages/account-statuses.jsx:440
 msgid "Hiding boosts"
-msgstr ""
+msgstr "已隐藏转嘟"
 
 #: src/pages/account-statuses.jsx:457
 msgid "Showing posts with media"
@@ -3263,7 +3263,7 @@ msgstr "是否退出 <0>@{0}</0>？"
 #. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:275
 msgid "Log out and remove <0>@{0}</0>"
-msgstr ""
+msgstr "登出并移除 <0>@{0}</0>"
 
 #: src/pages/accounts.jsx:287
 msgid "Log out…"
@@ -3272,11 +3272,11 @@ msgstr "登出…"
 #. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:297
 msgid "Remove <0>@{0}</0>?"
-msgstr ""
+msgstr "是否移除 <0>@{0}</0>？"
 
 #: src/pages/accounts.jsx:315
 msgid "Remove account…"
-msgstr ""
+msgstr "移除账户…"
 
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:323
@@ -3899,7 +3899,7 @@ msgstr "私信"
 
 #: src/pages/mentions.jsx:221
 msgid "Only followings"
-msgstr ""
+msgstr "仅粉丝"
 
 #: src/pages/mentions.jsx:247
 msgid "Private"
@@ -4225,19 +4225,19 @@ msgstr "已同步到你账号所在实例的设置。<0>前往你所在的实例
 
 #: src/pages/settings.jsx:375
 msgid "Wellbeing"
-msgstr ""
+msgstr "健康"
 
 #: src/pages/settings.jsx:388
 msgid "Hide Trending timeline"
-msgstr ""
+msgstr "隐藏热门时间线"
 
 #: src/pages/settings.jsx:400
 msgid "Hide Local timeline"
-msgstr ""
+msgstr "隐藏本站时间线"
 
 #: src/pages/settings.jsx:413
 msgid "Hide Federated timeline"
-msgstr ""
+msgstr "隐藏跨站时间线"
 
 #: src/pages/settings.jsx:421
 msgid "Experiments"
@@ -4282,11 +4282,11 @@ msgstr "自动显示时间线中的嘟文的翻译。仅适用于不含内容警
 
 #: src/pages/settings.jsx:625
 msgid "Paginated timeline (beta)"
-msgstr ""
+msgstr "时间线分页 (beta)"
 
 #: src/pages/settings.jsx:629
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
-msgstr ""
+msgstr "手动分页时间线嘟文，而非无限滚动。目前仅适用于“首页/关注”时间线。启用此功能后，自动刷新和转嘟轮播将无法使用。"
 
 #: src/pages/settings.jsx:649
 msgid "GIF Picker for composer"
@@ -4437,7 +4437,7 @@ msgstr "注意: 只能推送 <0>一个账户</0> 的通知。"
 
 #: src/pages/status.jsx:156
 msgid "Unable to load post."
-msgstr ""
+msgstr "无法加载嘟文。"
 
 #. js-lingui-explicit-id
 #: src/pages/status.jsx:800

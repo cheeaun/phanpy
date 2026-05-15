@@ -1,13 +1,13 @@
 import './settings.css';
 
+import '../components/button-install';
+
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useDebounce } from 'use-debounce';
 import { useSnapshot } from 'valtio';
 
 import logo from '../assets/logo.svg';
-
-import '../components/button-install';
 
 import Icon from '../components/icon';
 import LangSelector from '../components/lang-selector';
@@ -365,6 +365,54 @@ function Settings({ onClose }) {
             </p>
           </>
         )}
+        {authenticated && (
+          <>
+            <h3>
+              <Trans>Wellbeing</Trans>
+            </h3>
+            <section>
+              <ul>
+                <li class="block">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={snapStates.settings.hideTrendingTimeline}
+                      onChange={(e) => {
+                        states.settings.hideTrendingTimeline = e.target.checked;
+                      }}
+                    />{' '}
+                    <Trans>Hide Trending timeline</Trans>
+                  </label>
+                </li>
+                <li class="block">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={snapStates.settings.hideLocalTimeline}
+                      onChange={(e) => {
+                        states.settings.hideLocalTimeline = e.target.checked;
+                      }}
+                    />{' '}
+                    <Trans>Hide Local timeline</Trans>
+                  </label>
+                </li>
+                <li class="block">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={snapStates.settings.hideFederatedTimeline}
+                      onChange={(e) => {
+                        states.settings.hideFederatedTimeline =
+                          e.target.checked;
+                      }}
+                    />{' '}
+                    <Trans>Hide Federated timeline</Trans>
+                  </label>
+                </li>
+              </ul>
+            </section>
+          </>
+        )}
         <h3>
           <Trans>Experiments</Trans>
         </h3>
@@ -551,6 +599,30 @@ function Settings({ onClose }) {
                       </small>
                     </p>
                   </div>
+                </div>
+              </li>
+            )}
+            {authenticated && (
+              <li class="block">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={snapStates.settings.paginatedTimeline}
+                    onChange={(e) => {
+                      states.settings.paginatedTimeline = e.target.checked;
+                    }}
+                  />{' '}
+                  <Trans>Paginated timeline (beta)</Trans>
+                </label>
+                <div class="sub-section insignificant">
+                  <small>
+                    <Trans>
+                      Manual pagination of timeline posts instead of infinite
+                      scrolling. Only works for Home/Following timeline for now.
+                      Auto refresh and boosts carousel will not work when this
+                      is enabled.
+                    </Trans>
+                  </small>
                 </div>
               </li>
             )}

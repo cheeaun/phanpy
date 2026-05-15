@@ -4,6 +4,7 @@ import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import {
   useCallback,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -65,6 +66,21 @@ export const isMediaCaptionLong = mem((caption) =>
     : false,
 );
 
+// https://caniuse.com/http-live-streaming
+const isStreamingVideoSupported = (() => {
+  try {
+    const video = document.createElement('video');
+    if (!video.canPlayType) return false;
+    return (
+      video.canPlayType('application/vnd.apple.mpegurl') !== '' ||
+      video.canPlayType('application/x-mpegURL') !== '' ||
+      video.canPlayType('audio/mpegurl') !== ''
+    );
+  } catch (e) {
+    return false;
+  }
+})();
+
 function Media({
   class: className = '',
   media,
@@ -105,6 +121,7 @@ function Media({
   const remoteMediaURL = showOriginal
     ? remoteUrl
     : previewRemoteUrl || remoteUrl;
+
   const hasPreviewDimensions = small?.width && small?.height;
   const hasDimensions = width && height;
   const orientation = hasDimensions
@@ -181,16 +198,25 @@ function Media({
     type === 'unknown' &&
     remoteMediaURLObj &&
     /\.(mp4|m4r|m4v|mov|webm)$/i.test(remoteMediaURLObj.pathname);
+  const isStreamingVideoMaybe =
+    remoteMediaURLObj &&
+    /\.m3u8$/i.test(remoteMediaURLObj.pathname) &&
+    isStreamingVideoSupported;
   const isAudioMaybe =
     type === 'unknown' &&
     remoteMediaURLObj &&
     /\.(mp3|ogg|wav|m4a|m4p|m4b)$/i.test(remoteMediaURLObj.pathname);
   const isImage =
     type === 'image' ||
-    (type === 'unknown' && previewUrl && !isVideoMaybe && !isAudioMaybe);
+    (type === 'unknown' &&
+      previewUrl &&
+      !isVideoMaybe &&
+      !isStreamingVideoMaybe &&
+      !isAudioMaybe);
   const isPreviewVideoMaybe =
-    previewUrl &&
-    /\.(mp4|m4r|m4v|mov|webm)$/i.test(getURLObj(previewUrl).pathname);
+    (previewUrl &&
+      /\.(mp4|m4r|m4v|mov|webm)$/i.test(getURLObj(previewUrl).pathname)) ||
+    isStreamingVideoMaybe;
 
   const parentRef = useRef();
   const [imageSmallerThanParent, setImageSmallerThanParent] = useState(false);
@@ -309,6 +335,26 @@ function Media({
     },
     [mediaVTN, showOriginal, onClick],
   );
+
+  // Prevent media session lingering after unmount
+  useEffect(() => {
+    return () => {
+      const mediaElements =
+        parentRef.current?.querySelectorAll?.('video, audio');
+      if (mediaElements) {
+        mediaElements.forEach((el) => {
+          try {
+            el.pause();
+            el.src = '';
+            el.load();
+          } catch (e) {}
+        });
+      }
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'none';
+      }
+    };
+  }, []);
 
   if (isImage) {
     // Note: type: unknown might not have width/height
@@ -490,7 +536,12 @@ function Media({
         )}
       </Figure>
     );
-  } else if (type === 'gifv' || type === 'video' || isVideoMaybe) {
+  } else if (
+    type === 'gifv' ||
+    type === 'video' ||
+    isVideoMaybe ||
+    isStreamingVideoMaybe
+  ) {
     const hasDuration = original.duration > 0;
     const shortDuration = original.duration < 31;
     const isGIF = type === 'gifv' && shortDuration;
@@ -524,9 +575,10 @@ function Media({
       ></video>
   `;
 
+    const videoURL = isStreamingVideoMaybe ? remoteMediaURL : url;
     const videoHTML = `
       <video
-        src="${url}"
+        src="${videoURL}"
         poster="${previewUrl}"
         width="${width}"
         height="${height}"
@@ -687,7 +739,7 @@ function Media({
                 />
               ) : (
                 <video
-                  src={url + '#t=0.1'} // Make Safari show 1st-frame preview
+                  src={videoURL + '#t=0.1'} // Make Safari show 1st-frame preview
                   width={width}
                   height={height}
                   data-orientation={orientation}

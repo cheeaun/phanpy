@@ -35,6 +35,7 @@
   );
   --purple-bg-color: color-mix(in srgb, var(--purple-color) 10%, transparent);
   --green-color: darkgreen;
+  --green-bg-color: color-mix(in srgb, var(--green-color) 10%, transparent);
   --orange-color: darkorange;
   --orange-light-bg-color: color-mix(
     in srgb,
@@ -757,6 +758,34 @@ kbd {
   }
 }
 
+.lazy-render {
+  &:empty {
+    display: none;
+  }
+
+  overflow: clip;
+  will-change: opacity, height, margin-block, padding-block, border-block-width;
+  transition: 0.3s var(--timing-function) allow-discrete;
+  transition-property:
+    opacity, height, margin-block, padding-block, border-block-width;
+  &.hidden {
+    opacity: 0;
+    height: 0;
+    margin-block: 0;
+    padding-block: 0;
+    border-block-width: 0;
+  }
+  &:not(.hidden) {
+    @starting-style {
+      opacity: 0;
+      height: 0;
+      margin-block: 0;
+      padding-block: 0;
+      border-block-width: 0;
+    }
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -789,4 +818,43 @@ kbd {
 ::view-transition-new(status-card) {
   width: 100%;
   height: 100%;
+}
+
+/* WEB COMPONENTS */
+
+grapheme-input {
+  display: inline-block;
+  position: relative;
+
+  &:after {
+    pointer-events: none;
+    position: absolute;
+    inset-inline-end: 0;
+    --padding: 4px;
+    inset-block-end: calc((1em + var(--padding) + var(--padding) + 4px) * -1);
+    content: attr(current-length) '/' attr(maxlength);
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-insignificant-color);
+    background-color: var(--bg-blur-color);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    padding: var(--padding) calc(var(--padding) * 2);
+    line-height: 1;
+    z-index: 10;
+    box-shadow: inset 0 0 0 1px var(--bg-faded-color);
+    transition: all 0.05s ease-in-out;
+    opacity: 0;
+    transform: translateY(-4px);
+    font-weight: calc(
+      400 + (attr(current-length number) / attr(maxlength number)) * 400
+    );
+  }
+
+  &:focus-within:after {
+    opacity: 1;
+    transform: translateY(0);
+    transition-duration: 1s;
+    transition-delay: 0.3s;
+  }
 }

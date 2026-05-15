@@ -238,23 +238,6 @@ function RelatedActions({
               <span>{privateNote}</span>
             </button>
           )}
-          {currentAuthenticated && isSelf && (
-            <button
-              type="button"
-              class="plain"
-              onClick={() => {
-                states.showQrCodeModal = {
-                  text: url,
-                  arena: avatarStatic,
-                  backgroundMask: headerStatic,
-                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
-                  onScannerClick: handleScannerClick,
-                };
-              }}
-            >
-              <Icon icon="qrcode" alt={t`QR code`} />
-            </button>
-          )}
           <Menu2
             portal={{
               target: document.body,
@@ -840,24 +823,6 @@ function RelatedActions({
                 </MenuItem>
               </>
             )}
-            {currentAuthenticated &&
-              isSelf &&
-              standalone &&
-              supports('@mastodon/profile-edit') && (
-                <>
-                  <MenuDivider />
-                  <MenuItem
-                    onClick={() => {
-                      setShowEditProfile(true);
-                    }}
-                  >
-                    <Icon icon="pencil" />
-                    <span>
-                      <Trans>Edit profile</Trans>
-                    </span>
-                  </MenuItem>
-                </>
-              )}
             {import.meta.env.DEV && currentAuthenticated && isSelf && (
               <>
                 <MenuDivider />
@@ -880,103 +845,134 @@ function RelatedActions({
               </>
             )}
           </Menu2>
+          {currentAuthenticated && isSelf && (
+            <button
+              type="button"
+              class="plain"
+              onClick={() => {
+                states.showQrCodeModal = {
+                  text: url,
+                  arena: avatarStatic,
+                  backgroundMask: headerStatic,
+                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                  onScannerClick: handleScannerClick,
+                };
+              }}
+            >
+              <Icon icon="qrcode" alt={t`QR code`} />
+            </button>
+          )}
           {!relationship && relationshipUIState === 'loading' && (
             <Loader abrupt />
           )}
-          {!!relationship && !moved && (
-            <MenuConfirm
-              confirm={following || requested}
-              confirmLabel={
-                <span>
-                  {requested
-                    ? t`Withdraw follow request?`
-                    : t`Unfollow @${info.acct || info.username}?`}
-                </span>
-              }
-              menuItemClassName="danger"
-              align="end"
-              disabled={loading}
+          {currentAuthenticated && isSelf && standalone ? (
+            <button
+              type="button"
+              class="light"
               onClick={() => {
-                setRelationshipUIState('loading');
-                (async () => {
-                  try {
-                    let newRelationship;
-
-                    if (following || requested) {
-                      // const yes = confirm(
-                      //   requested
-                      //     ? 'Withdraw follow request?'
-                      //     : `Unfollow @${info.acct || info.username}?`,
-                      // );
-
-                      // if (yes) {
-                      newRelationship = await currentMasto.v1.accounts
-                        .$select(accountID.current)
-                        .unfollow();
-                      // }
-                    } else {
-                      newRelationship = await currentMasto.v1.accounts
-                        .$select(accountID.current)
-                        .follow();
-                    }
-
-                    if (newRelationship) {
-                      setRelationship(newRelationship);
-
-                      // Show endorsements if start following
-                      if (
-                        showEndorsements &&
-                        supportsEndorsements &&
-                        !renderEndorsements &&
-                        newRelationship.following
-                      ) {
-                        setRenderEndorsements('onlyOpenIfHasEndorsements');
-                      }
-                    }
-                    setRelationshipUIState('default');
-                  } catch (e) {
-                    alert(e);
-                    setRelationshipUIState('error');
-                  }
-                })();
+                setShowEditProfile(true);
               }}
             >
-              <button
-                type="button"
-                class={`${following || requested ? 'light swap' : ''}`}
-                data-swap-state={following || requested ? 'danger' : ''}
+              <Trans>Edit profile</Trans>
+            </button>
+          ) : (
+            !isSelf &&
+            !!relationship &&
+            !moved && (
+              <MenuConfirm
+                confirm={following || requested}
+                confirmLabel={
+                  <span>
+                    {requested
+                      ? t`Withdraw follow request?`
+                      : t`Unfollow @${info.acct || info.username}?`}
+                  </span>
+                }
+                menuItemClassName="danger"
+                align="end"
                 disabled={loading}
+                onClick={() => {
+                  setRelationshipUIState('loading');
+                  (async () => {
+                    try {
+                      let newRelationship;
+
+                      if (following || requested) {
+                        // const yes = confirm(
+                        //   requested
+                        //     ? 'Withdraw follow request?'
+                        //     : `Unfollow @${info.acct || info.username}?`,
+                        // );
+
+                        // if (yes) {
+                        newRelationship = await currentMasto.v1.accounts
+                          .$select(accountID.current)
+                          .unfollow();
+                        // }
+                      } else {
+                        newRelationship = await currentMasto.v1.accounts
+                          .$select(accountID.current)
+                          .follow();
+                      }
+
+                      if (newRelationship) {
+                        setRelationship(newRelationship);
+
+                        // Show endorsements if start following
+                        if (
+                          showEndorsements &&
+                          supportsEndorsements &&
+                          !renderEndorsements &&
+                          newRelationship.following
+                        ) {
+                          setRenderEndorsements('onlyOpenIfHasEndorsements');
+                        }
+                      }
+                      setRelationshipUIState('default');
+                    } catch (e) {
+                      alert(e);
+                      setRelationshipUIState('error');
+                    }
+                  })();
+                }}
               >
-                {following ? (
-                  <>
-                    <span>
-                      <Trans>Following</Trans>
-                    </span>
-                    <span>
-                      <Trans>Unfollow…</Trans>
-                    </span>
-                  </>
-                ) : requested ? (
-                  <>
-                    <span>
-                      <Trans>Requested</Trans>
-                    </span>
-                    <span>
-                      <Trans>Withdraw…</Trans>
-                    </span>
-                  </>
-                ) : locked ? (
-                  <>
-                    <Icon icon="lock" />{' '}
-                    <span>
-                      <Trans>Follow</Trans>
-                    </span>
-                  </>
-                ) : (
-                  t`Follow`
-                )}
-              </button>
-            </MenuConfirm>
+                <button
+                  type="button"
+                  class={`${following || requested ? 'light swap' : ''}`}
+                  data-swap-state={following || requested ? 'danger' : ''}
+                  disabled={loading}
+                >
+                  {following ? (
+                    <>
+                      <span>
+                        <Trans>Following</Trans>
+                      </span>
+                      <span>
+                        <Trans>Unfollow…</Trans>
+                      </span>
+                    </>
+                  ) : requested ? (
+                    <>
+                      <span>
+                        <Trans>Requested</Trans>
+                      </span>
+                      <span>
+                        <Trans>Withdraw…</Trans>
+                      </span>
+                    </>
+                  ) : locked ? (
+                    <>
+                      <Icon icon="lock" />{' '}
+                      <span>
+                        <Trans>Follow</Trans>
+                      </span>
+                    </>
+                  ) : (
+                    t`Follow`
+                  )}
+                </button>
+              </MenuConfirm>
+            )
           )}
         </span>
       </div>

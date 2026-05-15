@@ -9,6 +9,7 @@ import statusPeek from '../utils/status-peek';
 import { getCurrentAccID } from '../utils/store-utils';
 
 import Avatar from './avatar';
+import LazyRender from './lazy-render';
 
 function StatusCompact({ sKey }) {
   const snapStates = useSnapshot(states);
@@ -50,12 +51,15 @@ function StatusCompact({ sKey }) {
   const filterTitleStr = filterInfo?.titlesStr || '';
 
   return (
-    <article
-      class={`status compact-reply shazam ${
+    <LazyRender
+      as="article"
+      id={srKey}
+      class={`status compact-reply ${
         visibility === 'direct' ? 'visibility-direct' : ''
       }`}
       tabindex="-1"
       data-state-post-id={srKey}
+      renderIfHasChildren={false}
     >
       <Avatar url={avatarStatic || avatar} squircle={bot} />
       <div
@@ -75,7 +79,7 @@ function StatusCompact({ sKey }) {
           <span>{statusPeekText}</span>
         )}
       </div>
-    </article>
+    </LazyRender>
   );
 }
 

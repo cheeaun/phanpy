@@ -343,24 +343,30 @@ function NavMenu(props) {
               <Trans>Search</Trans>
             </span>
           </MenuLink>
-          <MenuLink to={`/${instance}/trending`}>
-            <Icon icon="chart" size="l" />{' '}
-            <span>
-              <Trans>Trending</Trans>
-            </span>
-          </MenuLink>
-          <MenuLink to={`/${instance}/p/l`}>
-            <Icon icon="building" size="l" />{' '}
-            <span>
-              <Trans>Local</Trans>
-            </span>
-          </MenuLink>
-          <MenuLink to={`/${instance}/p`}>
-            <Icon icon="earth" size="l" />{' '}
-            <span>
-              <Trans>Federated</Trans>
-            </span>
-          </MenuLink>
+          {!snapStates.settings.hideTrendingTimeline && (
+            <MenuLink to={`/${instance}/trending`}>
+              <Icon icon="chart" size="l" />{' '}
+              <span>
+                <Trans>Trending</Trans>
+              </span>
+            </MenuLink>
+          )}
+          {!snapStates.settings.hideLocalTimeline && (
+            <MenuLink to={`/${instance}/p/l`}>
+              <Icon icon="building" size="l" />{' '}
+              <span>
+                <Trans>Local</Trans>
+              </span>
+            </MenuLink>
+          )}
+          {!snapStates.settings.hideFederatedTimeline && (
+            <MenuLink to={`/${instance}/p`}>
+              <Icon icon="earth" size="l" />{' '}
+              <span>
+                <Trans>Federated</Trans>
+              </span>
+            </MenuLink>
+          )}
           {authenticated ? (
             <>
               <MenuDivider className="divider-grow" />

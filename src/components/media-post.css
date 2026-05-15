@@ -54,39 +54,49 @@
     backdrop-filter: blur(4px);
   }
 
+  overflow: hidden;
+  position: relative;
+  border-radius: var(--item-radius);
+
+  &:after {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    content: '';
+    border: 1px solid var(--outline-stronger-color);
+    outline: 1px solid var(--bg-blur-color);
+    outline-offset: -2px;
+    border-radius: inherit;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      --drop-shadow: var(--drop-shadow-color);
+      position: relative;
+      z-index: 1;
+      box-shadow:
+        0 0 1px var(--drop-shadow),
+        0 8px 16px -4px var(--drop-shadow),
+        0 4px 8px var(--drop-shadow) !important;
+
+      &:after {
+        outline: 0;
+        border: 0;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        --drop-shadow: var(--link-color);
+      }
+    }
+  }
+
   .media {
-    border-radius: var(--item-radius);
-    overflow: hidden;
-    position: relative;
     display: block;
     aspect-ratio: 1 !important;
-
-    &:before {
-      position: absolute;
-      inset: 0;
-      content: '';
-      border: 1px solid var(--outline-color);
-      border-radius: inherit;
-    }
 
     &:not(.media-audio) {
       background-color: var(--average-color, var(--media-bg-color));
       background-clip: padding-box;
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        --drop-shadow: var(--drop-shadow-color);
-        position: relative;
-        z-index: 1;
-        box-shadow:
-          0 8px 16px -4px var(--drop-shadow),
-          0 4px 8px var(--drop-shadow);
-
-        @media (prefers-color-scheme: dark) {
-          --drop-shadow: var(--link-color);
-        }
-      }
     }
 
     &:active:not(:has(button:active)) {

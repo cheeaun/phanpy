@@ -1,7 +1,7 @@
-import { pageCache } from 'workbox-recipes';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
 import * as navigationPreload from 'workbox-navigation-preload';
+import { pageCache } from 'workbox-recipes';
 import { RegExpRoute, registerRoute, Route } from 'workbox-routing';
 import {
   CacheFirst,

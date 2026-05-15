@@ -34,6 +34,7 @@ import groupNotifications, {
   massageNotifications2,
 } from '../utils/group-notifications';
 import handleContentLinks from '../utils/handle-content-links';
+import haptics from '../utils/haptics';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import { getRegistration } from '../utils/push-notifications';
@@ -198,7 +199,7 @@ function Notifications({ columnMode }) {
           })
           .catch(() => {});
 
-        analyzeNotifications(groupedNotifications);
+        if (!columnMode) analyzeNotifications(groupedNotifications);
       } else {
         states.notifications.push(...groupedNotifications);
       }
@@ -569,7 +570,12 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'j',
     },
   );
 
@@ -606,7 +612,12 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'k',
     },
   );
 
@@ -621,7 +632,36 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) => {
+        // 'enter' doesn't need key validation (physical key, layout-independent)
+        if (e.key === 'Enter') return false;
+        return (
+          e.metaKey ||
+          e.ctrlKey ||
+          e.altKey ||
+          e.shiftKey ||
+          e.key.toLowerCase() !== 'o'
+        );
+      },
+    },
+  );
+
+  const dotRef = useHotkeys(
+    '.',
+    () => {
+      loadNotifications(true);
+      scrollableRef.current?.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => {
+        // Allow '.' even with Shift (some keyboard layouts require Shift for '.')
+        if (e.key === '.') return false;
+        return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
+      },
     },
   );
 
@@ -643,6 +683,7 @@ function Notifications({ columnMode }) {
         jRef.current = node;
         kRef.current = node;
         oRef.current = node;
+        dotRef.current = node;
       }}
       tabIndex="-1"
     >
@@ -1305,6 +1346,7 @@ function NotificationRequestButtons({ request, onChange }) {
         type="button"
         disabled={uiState === 'loading' || hasRequestState}
         onClick={() => {
+          haptics.trigger('success');
           setUIState('loading');
           (async () => {
             try {
@@ -1335,6 +1377,7 @@ function NotificationRequestButtons({ request, onChange }) {
         disabled={uiState === 'loading' || hasRequestState}
         class="light danger"
         onClick={() => {
+          haptics.trigger('light');
           setUIState('loading');
           (async () => {
             try {

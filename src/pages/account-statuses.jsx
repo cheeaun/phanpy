@@ -59,6 +59,9 @@ function AccountStatuses({ columnMode, ...props }) {
     const params = profileSearchParamsRef.current;
     if (typeof objOrFn === 'function') {
       objOrFn(params);
+    } else if (objOrFn instanceof URLSearchParams) {
+      [...params.keys()].forEach((key) => params.delete(key));
+      objOrFn.forEach((value, key) => params.set(key, value));
     } else {
       Object.entries(objOrFn).forEach(([key, value]) => {
         if (value) {
@@ -75,16 +78,27 @@ function AccountStatuses({ columnMode, ...props }) {
     : useSearchParams();
   const clearAndSetParam = useCallback(
     (paramName, paramValue) => {
-      setSearchParams((params) => {
-        Array.from(params.keys()).forEach((key) => {
-          params.delete(key);
-        });
-        if (paramValue !== undefined) {
-          params.set(paramName, paramValue);
-        }
-      });
+      const params = new URLSearchParams(
+        columnMode ? { replies: 1 } : undefined,
+      );
+      if (paramValue !== undefined) {
+        params.set(paramName, paramValue);
+      }
+      setSearchParams(params);
     },
     [setSearchParams],
+  );
+  const toggleParam = useCallback(
+    (paramName, paramValue) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (params.get(paramName)) {
+        params.delete(paramName);
+      } else {
+        params.set(paramName, paramValue ?? '1');
+      }
+      setSearchParams(params);
+    },
+    [setSearchParams, searchParams],
   );
 
   const month = searchParams.get('month');
@@ -269,26 +283,26 @@ function AccountStatuses({ columnMode, ...props }) {
   }
 
   const [featuredTags, setFeaturedTags] = useState([]);
+
   let title = t`Account posts`;
   if (account?.acct) {
     const acctDisplay = (/@/.test(account.acct) ? '' : '@') + account.acct;
     const accountDisplay = account?.displayName
       ? `${account.displayName} (${acctDisplay})`
-      : `${acctDisplay}`;
-    if (!excludeReplies) {
-      title = t`${accountDisplay} (+ Replies)`;
-    } else if (excludeBoosts) {
-      title = t`${accountDisplay} (- Boosts)`;
+      : acctDisplay;
+    if (tagged && media) {
+      title = t`Media posts tagged #${tagged} by ${accountDisplay}`;
     } else if (tagged) {
-      title = t`${accountDisplay} (#${tagged})`;
-    } else if (media) {
-      title = t`${accountDisplay} (Media)`;
+      title = t`Posts tagged #${tagged} by ${accountDisplay}`;
     } else if (month) {
-      const monthYear = new Date(month).toLocaleString(i18n.locale, {
+      const [y, m] = month.split('-');
+      const monthYear = new Date(+y, +m - 1, 1).toLocaleString(i18n.locale, {
         month: 'long',
         year: 'numeric',
       });
-      title = t`${accountDisplay} (${monthYear})`;
+      title = t`Posts in ${monthYear} by ${accountDisplay}`;
+    } else if (media) {
+      title = t`Media posts by ${accountDisplay}`;
     } else {
       title = accountDisplay;
     }
@@ -333,9 +347,23 @@ function AccountStatuses({ columnMode, ...props }) {
 
   const filterBarRef = useRef();
   const TimelineStart = useMemo(() => {
+    const repliesFiltered = columnMode ? excludeReplies : !excludeReplies;
     const filtered =
-      !excludeReplies || excludeBoosts || tagged || media || !!month;
+      repliesFiltered || excludeBoosts || tagged || media || !!month;
     const cachedAccount = snapStates.accounts[`${id}@${instance}`];
+
+    const buildParamStr = (updates) => {
+      const params = new URLSearchParams(searchParams.toString());
+      for (const [key, val] of Object.entries(updates)) {
+        if (val == null) {
+          params.delete(key);
+        } else {
+          params.set(key, val);
+        }
+      }
+      const str = params.toString();
+      return str ? `?${str}` : '';
+    };
 
     return (
       <>
@@ -363,7 +391,7 @@ function AccountStatuses({ columnMode, ...props }) {
               <Link
                 to={`/${instance}/a/${id}`}
                 class="insignificant filter-clear"
-                title={t`Clear filters`}
+                title={t`Reset filters`}
                 key="clear-filters"
                 onClick={(e) => {
                   if (columnMode) {
@@ -372,7 +400,7 @@ function AccountStatuses({ columnMode, ...props }) {
                   }
                 }}
               >
-                <Icon icon="x" size="l" alt={t`Clear`} />
+                <Icon icon="x" size="l" alt={t`Reset filters`} />
               </Link>
             ) : (
               <Icon
@@ -382,54 +410,48 @@ function AccountStatuses({ columnMode, ...props }) {
                 alt={t`Filters`}
               />
             )}
+            <div class="filter-bar-group">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={!excludeReplies}
+                  disabled={!!month}
+                  onChange={() => {
+                    toggleParam('replies', '1');
+                    if (excludeReplies) {
+                      showToast(t`Showing replies`);
+                    } else {
+                      showToast(t`Hiding replies`);
+                    }
+                  }}
+                />
+                <Trans>Replies</Trans>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={!excludeBoosts}
+                  disabled={!!month}
+                  onChange={() => {
+                    toggleParam('boosts', '0');
+                    if (excludeBoosts) {
+                      showToast(t`Showing boosts`);
+                    } else {
+                      showToast(t`Hiding boosts`);
+                    }
+                  }}
+                />
+                <Trans>Boosts</Trans>
+              </label>
+            </div>
             <Link
-              to={`/${instance}/a/${id}${excludeReplies ? '?replies=1' : ''}`}
+              to={`/${instance}/a/${id}${buildParamStr({
+                media: media ? null : '1',
+              })}`}
               onClick={(e) => {
                 if (columnMode) {
                   e.preventDefault();
-                  if (excludeReplies) {
-                    clearAndSetParam('replies', '1');
-                  } else {
-                    clearAndSetParam();
-                  }
-                }
-                if (excludeReplies) {
-                  showToast(t`Showing post with replies`);
-                }
-              }}
-              class={excludeReplies ? '' : 'is-active'}
-            >
-              <Trans>+ Replies</Trans>
-            </Link>
-            <Link
-              to={`/${instance}/a/${id}${excludeBoosts ? '' : '?boosts=0'}`}
-              onClick={(e) => {
-                if (columnMode) {
-                  e.preventDefault();
-                  if (!excludeBoosts) {
-                    clearAndSetParam('boosts', '0');
-                  } else {
-                    clearAndSetParam();
-                  }
-                }
-                if (!excludeBoosts) {
-                  showToast(t`Showing posts without boosts`);
-                }
-              }}
-              class={!excludeBoosts ? '' : 'is-active'}
-            >
-              <Trans>- Boosts</Trans>
-            </Link>
-            <Link
-              to={`/${instance}/a/${id}${media ? '' : '?media=1'}`}
-              onClick={(e) => {
-                if (columnMode) {
-                  e.preventDefault();
-                  if (!media) {
-                    clearAndSetParam('media', '1');
-                  } else {
-                    clearAndSetParam();
-                  }
+                  toggleParam('media', '1');
                 }
                 if (!media) {
                   showToast(t`Showing posts with media`);
@@ -439,41 +461,51 @@ function AccountStatuses({ columnMode, ...props }) {
             >
               <Trans>Media</Trans>
             </Link>
-            {featuredTags.map((tag) => (
-              <Link
-                key={tag.id}
-                to={`/${instance}/a/${id}${
-                  tagged === tag.name
-                    ? ''
-                    : `?tagged=${encodeURIComponent(tag.name)}`
-                }`}
-                onClick={(e) => {
-                  if (columnMode) {
-                    e.preventDefault();
-                    if (tagged !== tag.name) {
-                      clearAndSetParam('tagged', tag.name);
-                    } else {
-                      clearAndSetParam();
-                    }
-                  }
-                  if (tagged !== tag.name) {
-                    showToast(t`Showing posts tagged with #${tag.name}`);
-                  }
-                }}
-                class={tagged === tag.name ? 'is-active' : ''}
-              >
-                <span>
-                  <span class="more-insignificant">#</span>
-                  {tag.name}
-                </span>
-                {
-                  // The count differs based on instance 😅
-                }
-                {/* <span class="filter-count">{tag.statusesCount}</span> */}
-              </Link>
-            ))}
+            {featuredTags.length > 0 && (
+              <div class="filter-bar-group">
+                {[...featuredTags]
+                  .sort((a, b) => {
+                    if (a.name === tagged) return -1;
+                    if (b.name === tagged) return 1;
+                    return 0;
+                  })
+                  .map((tag) => (
+                    <Link
+                      key={tag.id}
+                      to={`/${instance}/a/${id}${buildParamStr({
+                        tagged: tagged === tag.name ? null : tag.name,
+                      })}`}
+                      onClick={(e) => {
+                        if (columnMode) {
+                          e.preventDefault();
+                          const params = new URLSearchParams(
+                            searchParams.toString(),
+                          );
+                          if (params.get('tagged') === tag.name) {
+                            params.delete('tagged');
+                          } else {
+                            params.set('tagged', tag.name);
+                          }
+                          setSearchParams(params);
+                        }
+                        if (tagged !== tag.name) {
+                          showToast(t`Showing posts tagged with #${tag.name}`);
+                        }
+                      }}
+                      class={tagged === tag.name ? 'is-active' : ''}
+                    >
+                      <span>
+                        <span class="more-insignificant">#</span>
+                        {tag.name}
+                      </span>
+                      {/* <span class="filter-count">{tag.statusesCount}</span> */}
+                    </Link>
+                  ))}
+              </div>
+            )}
             {searchEnabled && !columnMode && (
               <>
+                <div class="filter-bar-separator" />
                 {supportsInputMonth() ? (
                   <label class={`filter-field ${month ? 'is-active' : ''}`}>
                     <Icon icon="month" size="l" />
@@ -565,17 +597,20 @@ function AccountStatuses({ columnMode, ...props }) {
   ]);
 
   useEffect(() => {
-    // Focus on .is-active
-    const active = filterBarRef.current?.querySelector('.is-active');
-    if (active) {
-      console.log('active', active, active.offsetLeft);
-      filterBarRef.current.scrollTo({
-        behavior: 'smooth',
-        left:
-          active.offsetLeft -
-          (filterBarRef.current.offsetWidth - active.offsetWidth) / 2,
-      });
-    }
+    const activeEls = [
+      ...(filterBarRef.current?.querySelectorAll('.is-active') ?? []),
+    ];
+    if (!activeEls.length) return;
+    const barWidth = filterBarRef.current.offsetWidth;
+    const left = Math.min(...activeEls.map((el) => el.offsetLeft));
+    const right = Math.max(
+      ...activeEls.map((el) => el.offsetLeft + el.offsetWidth),
+    );
+    const spanWidth = right - left;
+    filterBarRef.current.scrollTo({
+      behavior: 'smooth',
+      left: spanWidth >= barWidth ? left : left - (barWidth - spanWidth) / 2,
+    });
   }, [featuredTags, searchEnabled, ...allSearchParams]);
 
   const accountInstance = useMemo(() => {

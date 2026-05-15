@@ -43,6 +43,183 @@ const scrollIntoViewOptions = {
   behavior: 'instant',
 };
 
+// paginationItemsSelector is for Timeline2
+const paginationPrevSelector =
+  '.timeline-pagination button[data-pagination-trigger="prev"]';
+const paginationNextSelector =
+  '.timeline-pagination button[data-pagination-trigger="next"]';
+const itemsSelector = '.timeline-item, .timeline-item-alt';
+
+// Standalone hotkey hooks for timeline navigation
+export function useJHotkeys(scrollableRef) {
+  return useHotkeys(
+    'j, shift+j',
+    (e, handler) => {
+      // Fix bug: shift+j is fired even when j is pressed due to useKey: true
+      if (e.shiftKey !== handler.shift) return;
+
+      // focus on next status after active item
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current?.querySelectorAll(itemsSelector) || [],
+      ).filter((item) => !!item.offsetHeight);
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let nextItem = allItems[activeItemIndex + 1];
+        if (handler.shift) {
+          // get next status that's not .timeline-item-alt
+          nextItem = allItems.find(
+            (item, index) =>
+              index > activeItemIndex &&
+              !item.classList.contains('timeline-item-alt'),
+          );
+        }
+        if (nextItem) {
+          nextItem.focus();
+          nextItem.scrollIntoView(scrollIntoViewOptions);
+        } else {
+          const nextPaginationButton = scrollableRef.current.querySelector(
+            paginationNextSelector,
+          );
+          if (nextPaginationButton) {
+            nextPaginationButton.click();
+          }
+        }
+      } else {
+        // If active status is not in viewport, get the topmost status-link in viewport
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      }
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) =>
+        e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'j',
+    },
+  );
+}
+
+export function useKHotkeys(scrollableRef) {
+  return useHotkeys(
+    'k, shift+k',
+    (e, handler) => {
+      // Fix bug: shift+k is fired even when k is pressed due to useKey: true
+      if (e.shiftKey !== handler.shift) return;
+
+      const activeItem = document.activeElement.closest(itemsSelector);
+      const activeItemRect = activeItem?.getBoundingClientRect();
+      const allItems = Array.from(
+        scrollableRef.current?.querySelectorAll(itemsSelector) || [],
+      ).filter((item) => !!item.offsetHeight);
+      if (
+        activeItem &&
+        activeItemRect.top < scrollableRef.current.clientHeight &&
+        activeItemRect.bottom > 0
+      ) {
+        const activeItemIndex = allItems.indexOf(activeItem);
+        let prevItem = allItems[activeItemIndex - 1];
+        if (handler.shift) {
+          // get prev status that's not .timeline-item-alt
+          prevItem = allItems.findLast(
+            (item, index) =>
+              index < activeItemIndex &&
+              !item.classList.contains('timeline-item-alt'),
+          );
+        }
+        if (prevItem) {
+          prevItem.focus();
+          prevItem.scrollIntoView(scrollIntoViewOptions);
+        } else {
+          const prevPaginationButton = scrollableRef.current.querySelector(
+            paginationPrevSelector,
+          );
+          if (prevPaginationButton) {
+            prevPaginationButton.click();
+          }
+        }
+      } else {
+        // If active status is not in viewport, get the topmost status-link in viewport
+        const topmostItem = allItems.find((item) => {
+          const itemRect = item.getBoundingClientRect();
+          return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
+          return itemRect.top >= 44 && itemRect.left >= 0;
+        });
+        if (topmostItem) {
+          topmostItem.focus();
+          topmostItem.scrollIntoView(scrollIntoViewOptions);
+        }
+      }
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) =>
+        e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'k',
+    },
+  );
+}
+
+export function useOHotkeys() {
+  return useHotkeys(
+    ['enter', 'o'],
+    (e, handler) => {
+      // open active status
+      const activeItem = document.activeElement;
+      if (activeItem?.matches(itemsSelector)) {
+        // find first media link and click it (not inside status-card)
+        const isO = handler.keys.join('') === 'o';
+        if (isO) {
+          const mediaLink = activeItem.querySelector(
+            'a.media:not(.status-card a.media)',
+          );
+          if (mediaLink) {
+            // if link is ?media-only=1, change to media=1 and go to it
+            const url = mediaLink.getAttribute('href');
+            if (/media\-only=/i.test(url)) {
+              const newURL = url.replace(/media\-only=/i, 'media=');
+              setTimeout(() => {
+                // Need timeout to prevent propagate to the o key handler in pages/status.jsx
+                location.hash = newURL;
+              }, 100);
+            } else {
+              mediaLink.click();
+            }
+          } else {
+            activeItem.click();
+          }
+        } else {
+          activeItem.click();
+        }
+      }
+    },
+    {
+      useKey: true,
+      ignoreEventWhen: (e) => {
+        // 'enter' doesn't need key validation (physical key, layout-independent)
+        if (e.key === 'Enter') return false;
+        return (
+          e.metaKey ||
+          e.ctrlKey ||
+          e.altKey ||
+          e.shiftKey ||
+          e.key.toLowerCase() !== 'o'
+        );
+      },
+    },
+  );
+}
+
 function Timeline({
   title,
   titleComponent,
@@ -147,143 +324,9 @@ function Timeline({
     },
   );
 
-  const itemsSelector = '.timeline-item, .timeline-item-alt';
-
-  const jRef = useHotkeys(
-    'j, shift+j',
-    (e, handler) => {
-      // Fix bug: shift+j is fired even when j is pressed due to useKey: true
-      if (e.shiftKey !== handler.shift) return;
-
-      // focus on next status after active item
-      const activeItem = document.activeElement.closest(itemsSelector);
-      const activeItemRect = activeItem?.getBoundingClientRect();
-      const allItems = Array.from(
-        scrollableRef.current.querySelectorAll(itemsSelector),
-      ).filter((item) => !!item.offsetHeight);
-      if (
-        activeItem &&
-        activeItemRect.top < scrollableRef.current.clientHeight &&
-        activeItemRect.bottom > 0
-      ) {
-        const activeItemIndex = allItems.indexOf(activeItem);
-        let nextItem = allItems[activeItemIndex + 1];
-        if (handler.shift) {
-          // get next status that's not .timeline-item-alt
-          nextItem = allItems.find(
-            (item, index) =>
-              index > activeItemIndex &&
-              !item.classList.contains('timeline-item-alt'),
-          );
-        }
-        if (nextItem) {
-          nextItem.focus();
-          nextItem.scrollIntoView(scrollIntoViewOptions);
-        }
-      } else {
-        // If active status is not in viewport, get the topmost status-link in viewport
-        const topmostItem = allItems.find((item) => {
-          const itemRect = item.getBoundingClientRect();
-          return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
-        });
-        if (topmostItem) {
-          topmostItem.focus();
-          topmostItem.scrollIntoView(scrollIntoViewOptions);
-        }
-      }
-    },
-    {
-      useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
-    },
-  );
-
-  const kRef = useHotkeys(
-    'k, shift+k',
-    (e, handler) => {
-      // Fix bug: shift+k is fired even when k is pressed due to useKey: true
-      if (e.shiftKey !== handler.shift) return;
-
-      // focus on previous status after active item
-      const activeItem = document.activeElement.closest(itemsSelector);
-      const activeItemRect = activeItem?.getBoundingClientRect();
-      const allItems = Array.from(
-        scrollableRef.current.querySelectorAll(itemsSelector),
-      ).filter((item) => !!item.offsetHeight);
-      if (
-        activeItem &&
-        activeItemRect.top < scrollableRef.current.clientHeight &&
-        activeItemRect.bottom > 0
-      ) {
-        const activeItemIndex = allItems.indexOf(activeItem);
-        let prevItem = allItems[activeItemIndex - 1];
-        if (handler.shift) {
-          // get prev status that's not .timeline-item-alt
-          prevItem = allItems.findLast(
-            (item, index) =>
-              index < activeItemIndex &&
-              !item.classList.contains('timeline-item-alt'),
-          );
-        }
-        if (prevItem) {
-          prevItem.focus();
-          prevItem.scrollIntoView(scrollIntoViewOptions);
-        }
-      } else {
-        // If active status is not in viewport, get the topmost status-link in viewport
-        const topmostItem = allItems.find((item) => {
-          const itemRect = item.getBoundingClientRect();
-          return itemRect.top >= 44 && itemRect.left >= 0; // 44 is the magic number for header height, not real
-        });
-        if (topmostItem) {
-          topmostItem.focus();
-          topmostItem.scrollIntoView(scrollIntoViewOptions);
-        }
-      }
-    },
-    {
-      useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey,
-    },
-  );
-
-  const oRef = useHotkeys(
-    ['enter', 'o'],
-    (e, handler) => {
-      // open active status
-      const activeItem = document.activeElement;
-      if (activeItem?.matches(itemsSelector)) {
-        // find first media link and click it (not inside status-card)
-        const isO = handler.keys.join('') === 'o';
-        if (isO) {
-          const mediaLink = activeItem.querySelector(
-            'a.media:not(.status-card a.media)',
-          );
-          if (mediaLink) {
-            // if link is ?media-only=1, change to media=1 and go to it
-            const url = mediaLink.getAttribute('href');
-            if (/media\-only=/i.test(url)) {
-              const newURL = url.replace(/media\-only=/i, 'media=');
-              setTimeout(() => {
-                // Need timeout to prevent propagate to the o key handler in pages/status.jsx
-                location.hash = newURL;
-              }, 100);
-            } else {
-              mediaLink.click();
-            }
-          } else {
-            activeItem.click();
-          }
-        } else {
-          activeItem.click();
-        }
-      }
-    },
-    {
-      useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
-    },
-  );
+  const jRef = useJHotkeys(scrollableRef);
+  const kRef = useKHotkeys(scrollableRef);
+  const oRef = useOHotkeys();
 
   const showNewPostsIndicator =
     items.length > 0 && uiState !== 'loading' && showNew;
@@ -296,7 +339,11 @@ function Timeline({
   }, [loadItems, showNewPostsIndicator]);
   const dotRef = useHotkeys('.', handleLoadNewPosts, {
     useKey: true,
-    ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+    ignoreEventWhen: (e) => {
+      // Allow '.' even with Shift (some keyboard layouts require Shift for '.')
+      if (e.key === '.') return false;
+      return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
+    },
   });
 
   // const {
@@ -616,7 +663,7 @@ function Timeline({
   );
 }
 
-const TimelineItem = memo(
+export const TimelineItem = memo(
   ({
     status,
     instance,
@@ -970,7 +1017,7 @@ function StatusCarousel({ title, class: className, children }) {
   );
 }
 
-function TimelineStatusCompact({ status, instance, filterContext }) {
+export function TimelineStatusCompact({ status, instance, filterContext }) {
   const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const { id, visibility, language } = status;

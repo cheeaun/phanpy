@@ -203,4 +203,5 @@ export const ICONS = {
     module: () => import('../iconify-icons/mingcute/moon-line.js'),
     flip: 'horizontal',
   },
+  'arrow-up-top': () => import('../iconify-icons/mingcute/arrow-to-up-line.js'),
 };

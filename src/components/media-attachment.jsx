@@ -5,6 +5,7 @@ import { useDebouncedCallback } from 'use-debounce';
 
 import extractImageDescription from '../utils/extract-image-desc';
 import localeCode2Text from '../utils/localeCode2Text';
+import NF from '../utils/nf';
 import prettyBytes from '../utils/pretty-bytes';
 import showToast from '../utils/show-toast';
 import states from '../utils/states';
@@ -40,14 +41,34 @@ function MediaAttachment({
   const [uiState, setUIState] = useState('default');
   const supportsEdit =
     supports('@mastodon') || supports('@gotosocial/edit-media-attributes');
-  const { type, id, file } = attachment;
-  const url = useMemo(
-    () => (file ? URL.createObjectURL(file) : attachment.url),
-    [file, attachment.url],
-  );
+  const { type, id, fileData, fileName, file } = attachment;
+  const fileSize = attachment.size ?? file?.size;
+  const url = useMemo(() => {
+    let objectURL;
+    // Prioritize fileData so restored drafts get a fresh blob URL
+    if (fileData) {
+      const blob = new Blob([fileData], { type });
+      objectURL = URL.createObjectURL(blob);
+    } else if (file) {
+      objectURL = URL.createObjectURL(file);
+    }
+    if (objectURL) {
+      return objectURL;
+    }
+    return attachment.url || null;
+  }, [fileData, file, attachment.url, type]);
+
+  useEffect(() => {
+    return () => {
+      if (url && url !== attachment.url) {
+        URL.revokeObjectURL(url);
+      }
+    };
+  }, [url]);
+
   console.log({ attachment });
 
-  const checkMaxError = !!file?.size;
+  const checkMaxError = !!fileSize;
   const configuration = checkMaxError ? getCurrentInstanceConfiguration() : {};
   const {
     mediaAttachments: {
@@ -64,24 +85,24 @@ function MediaAttachment({
     if (
       type.startsWith('image') &&
       imageSizeLimit &&
-      file.size > imageSizeLimit
+      fileSize > imageSizeLimit
     ) {
       return {
         type: 'imageSizeLimit',
         details: {
-          imageSize: file.size,
+          imageSize: fileSize,
           imageSizeLimit,
         },
       };
     } else if (
       type.startsWith('video') &&
       videoSizeLimit &&
-      file.size > videoSizeLimit
+      fileSize > videoSizeLimit
     ) {
       return {
         type: 'videoSizeLimit',
         details: {
-          videoSize: file.size,
+          videoSize: fileSize,
           videoSizeLimit,
         },
       };
@@ -125,7 +146,13 @@ function MediaAttachment({
 
   // Extract description from images that's not uploaded yet
   useEffect(() => {
-    if (!file || !type.startsWith('image/') || id || attachment.description) {
+    const hasFileData = fileData || file;
+    if (
+      !hasFileData ||
+      !type.startsWith('image/') ||
+      id ||
+      attachment.description
+    ) {
       return;
     }
 
@@ -134,7 +161,11 @@ function MediaAttachment({
     (async () => {
       setUIState('loading');
       try {
-        const extractedDescription = await extractImageDescription(file);
+        // Reconstruct File from fileData, or fall back to legacy file object
+        const fileObj = fileData
+          ? new File([fileData], fileName || 'upload', { type })
+          : file;
+        const extractedDescription = await extractImageDescription(fileObj);
         if (!cancelled && extractedDescription) {
           setDescription(extractedDescription);
         }
@@ -258,11 +289,13 @@ function MediaAttachment({
           width,
           height,
         );
-        return t`Dimension too large. Uploading might encounter issues. Try reduce dimension from ${i18n.number(
+        return t`Dimension too large. Uploading might encounter issues. Try reduce dimension from ${NF(
+          i18n.locale,
+        ).format(
           width,
-        )}×${i18n.number(height)}px to ${i18n.number(newWidth)}×${i18n.number(
-          newHeight,
-        )}px.`;
+        )}×${NF(i18n.locale).format(height)}px to ${NF(i18n.locale).format(newWidth)}×${NF(
+          i18n.locale,
+        ).format(newHeight)}px.`;
       }
       case 'videoSizeLimit': {
         const { videoSize, videoSizeLimit } = details;
@@ -278,11 +311,13 @@ function MediaAttachment({
           width,
           height,
         );
-        return t`Dimension too large. Uploading might encounter issues. Try reduce dimension from ${i18n.number(
+        return t`Dimension too large. Uploading might encounter issues. Try reduce dimension from ${NF(
+          i18n.locale,
+        ).format(
           width,
-        )}×${i18n.number(height)}px to ${i18n.number(newWidth)}×${i18n.number(
-          newHeight,
-        )}px.`;
+        )}×${NF(i18n.locale).format(height)}px to ${NF(i18n.locale).format(newWidth)}×${NF(
+          i18n.locale,
+        ).format(newHeight)}px.`;
       }
       case 'videoFrameRateLimit': {
         // Not possible to detect this on client-side for now
@@ -443,7 +478,12 @@ function MediaAttachment({
                             (async function () {
                               try {
                                 const body = new FormData();
-                                body.append('image', file);
+                                const fileObj = fileData
+                                  ? new File([fileData], fileName || 'upload', {
+                                      type,
+                                    })
+                                  : file;
+                                body.append('image', fileObj);
                                 const response = await fetch(IMG_ALT_API_URL, {
                                   method: 'POST',
                                   body,
@@ -492,7 +532,14 @@ function MediaAttachment({
                               (async function () {
                                 try {
                                   const body = new FormData();
-                                  body.append('image', file);
+                                  const fileObj = fileData
+                                    ? new File(
+                                        [fileData],
+                                        fileName || 'upload',
+                                        { type },
+                                      )
+                                    : file;
+                                  body.append('image', fileObj);
                                   const params = `?lang=${lang}`;
                                   const response = await fetch(
                                     IMG_ALT_API_URL + params,

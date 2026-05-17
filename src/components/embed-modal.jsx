@@ -1,8 +1,7 @@
 import './embed-modal.css';
 
-import DOMPurify from 'dompurify';
-
 import { Trans, useLingui } from '@lingui/react/macro';
+import DOMPurify from 'dompurify';
 
 import Icon from './icon';
 

@@ -302,7 +302,8 @@ function Timeline({
             if (!value.length) done = true;
             setShowMore(!done);
           } else {
-            setShowMore(false);
+            // Iterator error state returns undefined - treat as error, not end of list
+            throw new Error('Timeline load failed');
           }
           setUIState('default');
           __BENCHMARK.end(`timeline-${id}-load`);

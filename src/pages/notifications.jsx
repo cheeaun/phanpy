@@ -125,7 +125,10 @@ function Notifications({ columnMode }) {
     useScroll({
       scrollableRef,
     });
-  const hiddenUI = scrollDirection === 'end' && !nearReachStart;
+  const hiddenUI =
+    snapStates.settings.autoHideBars &&
+    scrollDirection === 'end' &&
+    !nearReachStart;
   const [followRequests, setFollowRequests] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
 

@@ -243,6 +243,18 @@ function Settings({ onClose }) {
               </span>
               <LangSelector />
             </li>
+            <li class="block">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={!snapStates.settings.autoHideBars}
+                  onChange={(e) => {
+                    states.settings.autoHideBars = !e.target.checked;
+                  }}
+                />{' '}
+                <Trans>Keep navigation bars visible while scrolling</Trans>
+              </label>
+            </li>
           </ul>
         </section>
         {authenticated && (

@@ -12,6 +12,8 @@ jobs:
       group: rollbar-deploy
       cancel-in-progress: true
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v6
 

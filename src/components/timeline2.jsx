@@ -9,6 +9,7 @@ import {
   useState,
 } from 'preact/hooks';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
+import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import FilterContext from '../utils/filter-context';
@@ -97,6 +98,8 @@ function Timeline2({
   // clearWhenRefresh,
 }) {
   const { t } = useLingui();
+  const snapStates = useSnapshot(states);
+  const autoHideBars = snapStates.settings.autoHideBars;
   const { masto } = api({ instance });
 
   const cacheKey = `timeline2-${id}`;
@@ -279,6 +282,12 @@ function Timeline2({
 
           const { max_id, min_id } = params;
           let { value, originalValue, done } = result;
+
+          // Iterator error state returns undefined - treat as error, not end of list
+          if (value === undefined || value === null) {
+            throw new Error('Timeline load failed');
+          }
+
           const hasOlder = !done;
           const minIDValue = originalValue[0]?.id;
           const maxIDValue = originalValue[originalValue.length - 1]?.id;
@@ -396,12 +405,13 @@ function Timeline2({
           scrollDirection,
           nearReachStart,
         });
-        headerRef.current.hidden = scrollDirection === 'end' && !nearReachStart;
+        headerRef.current.hidden =
+          autoHideBars && scrollDirection === 'end' && !nearReachStart;
       }
       // Cache scroll position on scroll
       cacheScrollAnchor();
     },
-    [cacheScrollAnchor],
+    [cacheScrollAnchor, autoHideBars],
   );
   const { resetScrollDirection } = useScrollFn(
     {

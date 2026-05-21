@@ -158,8 +158,8 @@ function Shortcuts() {
       useKey: true,
       ignoreEventWhen: (e) => {
         // Allow number even with Shift (e.g. French AZERTY requires Shift for numbers)
-        if (/^[1-9]$/.test(e.key)) return false;
-        return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
+        const isDigit = /^[1-9]$/.test(e.key);
+        return e.metaKey || e.ctrlKey || e.altKey || (e.shiftKey && !isDigit);
       },
     },
   );

@@ -10,6 +10,8 @@ jobs:
   update-readme:
     if: github.repository == 'cheeaun/phanpy'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6

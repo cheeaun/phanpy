@@ -419,6 +419,16 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - ↕️ Preliminary support for vertical-lr writing mode
 - 🐛 Bug fixes
 
+## May 15, 2026
+
+📢 https://mastodon.social/@cheeaun/116578836866401369
+
+- 🔄 Experimental paginated timeline
+- 🪣 Multi-filters for profile posts
+- 🧘 Wellbeing: hide trending, local or federated timelines
+- 📱 Haptics
+- 🐛 Bug fixes
+
 <!--
 
 ## Next

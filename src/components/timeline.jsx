@@ -245,6 +245,7 @@ function Timeline({
 }) {
   const { t } = useLingui();
   const snapStates = useSnapshot(states);
+  const autoHideBars = snapStates.settings.autoHideBars;
   const [items, setItems] = useState([]);
   const [uiState, setUIState] = useState('start');
   const [showMore, setShowMore] = useState(false);
@@ -302,7 +303,8 @@ function Timeline({
             if (!value.length) done = true;
             setShowMore(!done);
           } else {
-            setShowMore(false);
+            // Iterator error state returns undefined - treat as error, not end of list
+            throw new Error('Timeline load failed');
           }
           setUIState('default');
           __BENCHMARK.end(`timeline-${id}-load`);
@@ -363,7 +365,8 @@ function Timeline({
   const scrollFnCallback = useCallback(
     ({ scrollDirection, nearReachStart, reachStart }) => {
       if (headerRef.current) {
-        const hiddenUI = scrollDirection === 'end' && !nearReachStart;
+        const hiddenUI =
+          autoHideBars && scrollDirection === 'end' && !nearReachStart;
         headerRef.current.hidden = hiddenUI;
       }
       setNearReachStart(nearReachStart);
@@ -371,7 +374,7 @@ function Timeline({
         loadItems(true);
       }
     },
-    [setNearReachStart, loadItems],
+    [setNearReachStart, loadItems, autoHideBars],
   );
   const { resetScrollDirection } = useScrollFn(
     {

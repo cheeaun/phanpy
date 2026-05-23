@@ -8,7 +8,12 @@ const MOCK_INSTANCE_RESPONSE = {
   version: '4.0.0',
   configuration: {
     statuses: { maxCharacters: 500, maxMediaAttachments: 4 },
-    polls: { maxOptions: 4, maxCharactersPerOption: 50, minExpiration: 300, maxExpiration: 86400 },
+    polls: {
+      maxOptions: 4,
+      maxCharactersPerOption: 50,
+      minExpiration: 300,
+      maxExpiration: 86400,
+    },
     urls: { streaming: 'wss://test.social' },
   },
 };
@@ -115,28 +120,42 @@ async function setupLoggedInEnv(page) {
     };
     localStorage.setItem('accounts', JSON.stringify([account]));
     sessionStorage.setItem('currentAccount', '1');
-    localStorage.setItem('preferences', JSON.stringify({
-      '1@test.social': { 'posting:default:visibility': 'public' },
-    }));
-    localStorage.setItem('instances', JSON.stringify({
-      'test.social': {
-        uri: 'test.social',
-        title: 'Test Social',
-        version: '4.0.0',
-        configuration: {
-          statuses: { maxCharacters: 500, maxMediaAttachments: 4 },
-          polls: { maxOptions: 4, maxCharactersPerOption: 50, minExpiration: 300, maxExpiration: 86400 },
-          urls: { streaming: 'wss://test.social' },
+    localStorage.setItem(
+      'preferences',
+      JSON.stringify({
+        '1@test.social': { 'posting:default:visibility': 'public' },
+      }),
+    );
+    localStorage.setItem(
+      'instances',
+      JSON.stringify({
+        'test.social': {
+          uri: 'test.social',
+          title: 'Test Social',
+          version: '4.0.0',
+          configuration: {
+            statuses: { maxCharacters: 500, maxMediaAttachments: 4 },
+            polls: {
+              maxOptions: 4,
+              maxCharactersPerOption: 50,
+              minExpiration: 300,
+              maxExpiration: 86400,
+            },
+            urls: { streaming: 'wss://test.social' },
+          },
         },
-      },
-    }));
-    localStorage.setItem('credentialApplications', JSON.stringify({
-      'test.social': {
-        client_id: 'mock-client-id',
-        client_secret: 'mock-client-secret',
-        vapid_key: 'mock-vapid-key',
-      },
-    }));
+      }),
+    );
+    localStorage.setItem(
+      'credentialApplications',
+      JSON.stringify({
+        'test.social': {
+          client_id: 'mock-client-id',
+          client_secret: 'mock-client-secret',
+          vapid_key: 'mock-vapid-key',
+        },
+      }),
+    );
   });
 
   await page.route('**/api/v2/instance', async (route) => {
@@ -248,7 +267,9 @@ test.describe('Keyboard Shortcuts', () => {
       expect(await wasAlertCalled(page)).toBe(true);
     });
 
-    test('1.6 Scoping: input focus blocks status shortcuts', async ({ page }) => {
+    test('1.6 Scoping: input focus blocks status shortcuts', async ({
+      page,
+    }) => {
       await focusInput(page);
       await page.keyboard.press('r');
       await page.waitForTimeout(500);
@@ -256,13 +277,17 @@ test.describe('Keyboard Shortcuts', () => {
       await cleanupInput(page);
     });
 
-    test('1.7 Scoping: modifier key blocks status shortcuts', async ({ page }) => {
+    test('1.7 Scoping: modifier key blocks status shortcuts', async ({
+      page,
+    }) => {
       await page.keyboard.press('Meta+r');
       await page.waitForTimeout(500);
       expect(await wasAlertCalled(page)).toBe(false);
     });
 
-    test('1.8 Focus scoping: reply fires only for focused status, not multiple', async ({ page }) => {
+    test('1.8 Focus scoping: reply fires only for focused status, not multiple', async ({
+      page,
+    }) => {
       expect(await getAlertCount(page)).toBe(0);
       await page.keyboard.press('r');
       await page.waitForTimeout(500);
@@ -270,7 +295,9 @@ test.describe('Keyboard Shortcuts', () => {
       expect(count).toBe(1);
     });
 
-    test('1.9 Focus scoping: favourite fires only for newly focused status', async ({ page }) => {
+    test('1.9 Focus scoping: favourite fires only for newly focused status', async ({
+      page,
+    }) => {
       await page.keyboard.press('f');
       await page.waitForTimeout(500);
       expect(await getAlertCount(page)).toBe(1);
@@ -294,7 +321,9 @@ test.describe('Keyboard Shortcuts', () => {
     test('2.1 Open compose (c) sets showCompose', async ({ page }) => {
       await page.keyboard.press('c');
       await page.waitForTimeout(300);
-      const showCompose = await page.evaluate(() => window.__STATES__?.showCompose);
+      const showCompose = await page.evaluate(
+        () => window.__STATES__?.showCompose,
+      );
       expect(showCompose).toBeTruthy();
     });
 
@@ -302,7 +331,9 @@ test.describe('Keyboard Shortcuts', () => {
       await focusInput(page);
       await page.keyboard.press('c');
       await page.waitForTimeout(300);
-      const showCompose = await page.evaluate(() => window.__STATES__?.showCompose);
+      const showCompose = await page.evaluate(
+        () => window.__STATES__?.showCompose,
+      );
       expect(showCompose).toBeFalsy();
       await cleanupInput(page);
     });
@@ -310,7 +341,9 @@ test.describe('Keyboard Shortcuts', () => {
     test('2.3 Scoping: modifier key blocks compose', async ({ page }) => {
       await page.keyboard.press('Meta+c');
       await page.waitForTimeout(300);
-      const showCompose = await page.evaluate(() => window.__STATES__?.showCompose);
+      const showCompose = await page.evaluate(
+        () => window.__STATES__?.showCompose,
+      );
       expect(showCompose).toBeFalsy();
     });
   });
@@ -328,7 +361,9 @@ test.describe('Keyboard Shortcuts', () => {
       expect(hash).toBe('#/');
     });
 
-    test('3.2 Scoping: modifier key blocks number shortcut', async ({ page }) => {
+    test('3.2 Scoping: modifier key blocks number shortcut', async ({
+      page,
+    }) => {
       const hashBefore = await page.evaluate(() => location.hash);
       await page.keyboard.press('Meta+1');
       await page.waitForTimeout(500);
@@ -345,22 +380,30 @@ test.describe('Keyboard Shortcuts', () => {
     test('4.1 Open help with ?', async ({ page }) => {
       await page.keyboard.press('?');
       await page.waitForTimeout(500);
-      await expect(page.locator('#keyboard-shortcuts-help-container')).toBeVisible();
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).toBeVisible();
     });
 
     test('4.2 Close help with Escape', async ({ page }) => {
       await page.keyboard.press('?');
       await page.waitForTimeout(500);
-      await expect(page.locator('#keyboard-shortcuts-help-container')).toBeVisible();
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).toBeVisible();
       await page.keyboard.press('Escape');
       await page.waitForTimeout(500);
-      await expect(page.locator('#keyboard-shortcuts-help-container')).not.toBeVisible();
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).not.toBeVisible();
     });
 
     test('4.3 Scoping: modifier key blocks help', async ({ page }) => {
       await page.keyboard.press('Meta+?');
       await page.waitForTimeout(500);
-      await expect(page.locator('#keyboard-shortcuts-help-container')).not.toBeVisible();
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).not.toBeVisible();
     });
   });
 
@@ -369,20 +412,31 @@ test.describe('Keyboard Shortcuts', () => {
       await setupMockHomeEnv(page);
     });
 
-    test('5.1 Open search with / removes hidden attribute', async ({ page }) => {
+    test('5.1 Open search with / removes hidden attribute', async ({
+      page,
+    }) => {
       await page.keyboard.press('/');
       await page.waitForTimeout(500);
-      await expect(page.locator('#search-command-container')).not.toHaveAttribute('hidden', '');
+      await expect(
+        page.locator('#search-command-container'),
+      ).not.toHaveAttribute('hidden', '');
     });
 
-    test('5.2 Close search with Escape adds hidden attribute', async ({ page }) => {
+    test('5.2 Close search with Escape adds hidden attribute', async ({
+      page,
+    }) => {
       await page.keyboard.press('/');
       await page.waitForTimeout(500);
-      const hiddenBefore = await page.locator('#search-command-container').getAttribute('hidden');
+      const hiddenBefore = await page
+        .locator('#search-command-container')
+        .getAttribute('hidden');
       expect(hiddenBefore).toBeNull();
       await page.keyboard.press('Escape');
       await page.waitForTimeout(500);
-      await expect(page.locator('#search-command-container')).toHaveAttribute('hidden', '');
+      await expect(page.locator('#search-command-container')).toHaveAttribute(
+        'hidden',
+        '',
+      );
     });
   });
 
@@ -394,7 +448,9 @@ test.describe('Keyboard Shortcuts', () => {
     test('6.1 Toggle cloak mode on', async ({ page }) => {
       await page.keyboard.press('Shift+Alt+k');
       await page.waitForTimeout(300);
-      const hasCloak = await page.evaluate(() => document.body.classList.contains('cloak'));
+      const hasCloak = await page.evaluate(() =>
+        document.body.classList.contains('cloak'),
+      );
       expect(hasCloak).toBe(true);
     });
 
@@ -403,14 +459,18 @@ test.describe('Keyboard Shortcuts', () => {
       await page.waitForTimeout(300);
       await page.keyboard.press('Shift+Alt+k');
       await page.waitForTimeout(300);
-      const hasCloak = await page.evaluate(() => document.body.classList.contains('cloak'));
+      const hasCloak = await page.evaluate(() =>
+        document.body.classList.contains('cloak'),
+      );
       expect(hasCloak).toBe(false);
     });
 
     test('6.3 Scoping: modifier key blocks cloak toggle', async ({ page }) => {
       await page.keyboard.press('Meta+Shift+Alt+k');
       await page.waitForTimeout(300);
-      const hasCloak = await page.evaluate(() => document.body.classList.contains('cloak'));
+      const hasCloak = await page.evaluate(() =>
+        document.body.classList.contains('cloak'),
+      );
       expect(hasCloak).toBe(false);
     });
   });
@@ -448,7 +508,9 @@ test.describe('Keyboard Shortcuts', () => {
       await page.waitForTimeout(100);
       await page.keyboard.press('s');
       await page.waitForTimeout(500);
-      const showSettings = await page.evaluate(() => window.__STATES__?.showSettings);
+      const showSettings = await page.evaluate(
+        () => window.__STATES__?.showSettings,
+      );
       expect(showSettings).toBe(true);
     });
 
@@ -465,7 +527,9 @@ test.describe('Keyboard Shortcuts', () => {
   test.describe('Section 8: Timeline Navigation (j/k) — needs auth', () => {
     test.beforeEach(async ({ page }) => {
       await setupLoggedInEnv(page);
-      const mockPosts = Array.from({ length: 5 }, (_, i) => createMockPost(100 + i, i));
+      const mockPosts = Array.from({ length: 5 }, (_, i) =>
+        createMockPost(100 + i, i),
+      );
       await page.route('**/api/v1/timelines/home**', async (route) => {
         await route.fulfill({ json: mockPosts });
       });
@@ -498,13 +562,15 @@ test.describe('Keyboard Shortcuts', () => {
       expect(activeItem).not.toBeNull();
     });
 
-    test('8.3 Scoping: input focus blocks j (default library behavior)', async ({ page }) => {
+    test('8.3 Scoping: input focus blocks j (default library behavior)', async ({
+      page,
+    }) => {
       await focusFirstStatus(page);
       await focusInput(page);
       await page.keyboard.press('j');
       await page.waitForTimeout(300);
-      const stillInInput = await page.evaluate(() =>
-        document.activeElement?.id === '__test-input__',
+      const stillInInput = await page.evaluate(
+        () => document.activeElement?.id === '__test-input__',
       );
       await cleanupInput(page);
       expect(stillInInput).toBe(true);
@@ -516,7 +582,10 @@ test.describe('Keyboard Shortcuts', () => {
       await page.waitForTimeout(300);
       const onFirstItem = await page.evaluate(() => {
         const ae = document.activeElement;
-        return ae?.closest('.timeline-item')?.classList.contains('timeline-item') === true;
+        return (
+          ae?.closest('.timeline-item')?.classList.contains('timeline-item') ===
+          true
+        );
       });
       expect(onFirstItem).toBe(true);
     });
@@ -530,19 +599,27 @@ test.describe('Keyboard Shortcuts', () => {
     test('9.1 Escape closes help modal', async ({ page }) => {
       await page.keyboard.press('?');
       await page.waitForTimeout(500);
-      await expect(page.locator('#keyboard-shortcuts-help-container')).toBeVisible();
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).toBeVisible();
       await page.keyboard.press('Escape');
       await page.waitForTimeout(500);
-      await expect(page.locator('#keyboard-shortcuts-help-container')).not.toBeVisible();
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).not.toBeVisible();
     });
 
     test('9.2 Scoping: modifier key does not close modal', async ({ page }) => {
       await page.keyboard.press('?');
       await page.waitForTimeout(500);
-      await expect(page.locator('#keyboard-shortcuts-help-container')).toBeVisible();
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).toBeVisible();
       await page.keyboard.press('Meta+Escape');
       await page.waitForTimeout(500);
-      await expect(page.locator('#keyboard-shortcuts-help-container')).toBeVisible();
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).toBeVisible();
     });
   });
 
@@ -559,7 +636,10 @@ test.describe('Keyboard Shortcuts', () => {
 
       await page.route('**/api/v1/statuses/123', async (route) => {
         await route.fulfill({
-          json: { ...createMockPost(123, 0), content: '<p>Status detail test post</p>' },
+          json: {
+            ...createMockPost(123, 0),
+            content: '<p>Status detail test post</p>',
+          },
         });
       });
       await page.route('**/api/v1/statuses/123/context', async (route) => {

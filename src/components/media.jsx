@@ -93,6 +93,7 @@ function Media({
   altIndex,
   checkAspectRatio = true,
   onClick,
+  autoplay = false,
 }) {
   let {
     id,
@@ -585,7 +586,7 @@ function Media({
         data-orientation="${orientation}"
         style="view-transition-name: ${mediaVTN}"
         preload="auto"
-        autoplay
+        ${autoplay ? 'autoplay' : ''}
         playsinline
         ${loopable ? 'loop' : ''}
         controls
@@ -801,11 +802,16 @@ function Media({
                 preload="metadata"
                 controls
                 controlsList="nofullscreen"
-                autoPlay
+                autoPlay={autoplay}
                 playsInline
               />
             ) : (
-              <audio src={remoteUrl || url} preload="none" controls autoPlay />
+              <audio
+                src={remoteUrl || url}
+                preload="none"
+                controls
+                autoPlay={autoplay}
+              />
             )
           ) : previewUrl ? (
             <img

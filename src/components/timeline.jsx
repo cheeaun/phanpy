@@ -270,7 +270,10 @@ function Timeline({
           const ts = (loadItemsTS.current = Date.now());
           let { done, value } = await fetchItems(firstLoad);
           if (ts !== loadItemsTS.current) return;
-          if (Array.isArray(value)) {
+          if (done) {
+            // Iterator has completed (no more pages)
+            setShowMore(false);
+          } else if (Array.isArray(value)) {
             // Avoid grouping for pinned posts
             const [pinnedPosts, otherPosts] = value.reduce(
               (acc, item) => {
@@ -303,7 +306,8 @@ function Timeline({
             if (!value.length) done = true;
             setShowMore(!done);
           } else {
-            // Iterator error state returns undefined - treat as error, not end of list
+            // Iterator returned unexpected data type
+            console.warn('Unexpected iterator result', { done, value });
             throw new Error('Timeline load failed');
           }
           setUIState('default');

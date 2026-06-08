@@ -72,7 +72,7 @@ function Icon({
           width={iconSize}
           height={iconSize}
           role={title ? 'img' : 'presentation'}
-          aria-labelledby={titleID}
+          aria-labelledby={title ? titleID : undefined}
           style={{
             transform: `${rotate ? `rotate(${rotate})` : ''} ${
               flip ? `scaleX(-1)` : ''

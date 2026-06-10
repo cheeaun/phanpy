@@ -1,6 +1,7 @@
 import './embed-modal.css';
 
 import { Trans, useLingui } from '@lingui/react/macro';
+import DOMPurify from 'dompurify';
 
 import Icon from './icon';
 
@@ -23,7 +24,7 @@ function EmbedModal({ html, url, width, height, onClose = () => {} }) {
       </div>
       <div
         class="embed-content"
-        dangerouslySetInnerHTML={{ __html: html }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }}
         style={{
           '--width': width + 'px',
           '--height': height + 'px',

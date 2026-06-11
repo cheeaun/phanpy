@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-19 15:00\n"
+"PO-Revision-Date: 2026-05-21 22:18\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -118,7 +118,7 @@ msgstr "Seguindo"
 #: src/components/account-info-mini.jsx:106
 #: src/components/account-info.jsx:879
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
-msgstr "{followingCount, plural, one {}other {<0>{0}</0> seguindo}}"
+msgstr "{followingCount, plural, other {<0>{0}</0> seguindo}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
@@ -203,7 +203,7 @@ msgstr "Em memória"
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #: src/components/account-info.jsx:960
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
-msgstr "{0} posts originais, {1} respostas, {2} citações, {3} impulsos"
+msgstr "{0} publicações originais, {1} respostas, {2} citações, {3} impulsos"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -418,7 +418,7 @@ msgstr "Adicionar"
 
 #: src/components/compose-poll.jsx:96
 msgid "Multiple choice"
-msgstr "Múltipla escolha"
+msgstr "Múltiplas opções"
 
 #: src/components/compose-poll.jsx:99
 msgid "Duration"
@@ -1084,7 +1084,7 @@ msgstr "Detalhes da publicação"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Open media or post details"
-msgstr "Abrir detalhes do post ou mídia"
+msgstr "Abrir detalhes da publicação ou mídia"
 
 #: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
@@ -1188,23 +1188,23 @@ msgstr "<0>Shift</0> + <1>Alt</1> + <2>k</2>"
 
 #: src/components/keyboard-shortcuts-help.jsx:210
 msgid "Go to Home"
-msgstr "Ir para página inicial"
+msgstr "Página inicial"
 
 #: src/components/keyboard-shortcuts-help.jsx:214
 msgid "Go to Notifications"
-msgstr "Ir para notificações"
+msgstr "Notificações"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr "Ir para configurações"
+msgstr "Opções"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
-msgstr "Ir para perfil"
+msgstr "Perfil"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
-msgstr "Ir aos Favoritos"
+msgstr "Favoritos"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1664,7 +1664,7 @@ msgstr "A enquete que você votou já acabou."
 
 #: src/components/notification.jsx:204
 msgid "{account} edited a post."
-msgstr "{account} editou um post."
+msgstr "{account} editou uma publicação."
 
 #: src/components/notification.jsx:206
 msgid "A post you interacted with has been edited."
@@ -1678,12 +1678,12 @@ msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{
 
 #: src/components/notification.jsx:258
 msgid "{account} edited a post you have quoted."
-msgstr "{account} editou um post que você citou."
+msgstr "{account} editou uma publicação citada."
 
 #. placeholder {0}: shortenNumber(count)
 #: src/components/notification.jsx:261
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
-msgstr "{count, plural, one {}=1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
+msgstr "{count, plural, =1 {{account} registrou-se.} other {<0><1>{0}</1>pessoas</0> registraram-se.}}"
 
 #: src/components/notification.jsx:275
 msgid "{account} reported {targetAccount}"
@@ -1793,7 +1793,7 @@ msgstr "Impossível copiar o link"
 
 #: src/components/open-link-sheet.jsx:56
 msgid "Open link?"
-msgstr "Abrir link?"
+msgstr "Acessar link?"
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
@@ -1811,7 +1811,7 @@ msgstr "Compartilhar…"
 
 #: src/components/open-link-sheet.jsx:92
 msgid "Open"
-msgstr "Abrir"
+msgstr "Acessar"
 
 #: src/components/poll.jsx:160
 msgid "{optionVotesCount, plural, one {# vote} other {# votes}}"
@@ -1832,11 +1832,11 @@ msgstr "Ocultar resultado"
 #: src/components/poll.jsx:290
 #: src/components/poll.jsx:306
 msgid "{0, plural, one {# choice} other {# choices}}"
-msgstr "{0, plural, one {# choice} other {# choices}}"
+msgstr "{0, plural, one {# opção} other {# opções}}"
 
 #: src/components/poll.jsx:222
 msgid "Unable to vote in poll"
-msgstr "Incapaz de votar na enquete"
+msgstr "Não foi possível votar na enquete"
 
 #: src/components/poll.jsx:279
 msgid "Vote"
@@ -1948,11 +1948,11 @@ msgstr "Nota: Esta prévia tem um estilo levemente padronizado."
 #: src/components/private-note-sheet.jsx:41
 #: src/components/related-actions.jsx:232
 msgid "Notes"
-msgstr "Anotações"
+msgstr "Notas"
 
 #: src/components/private-note-sheet.jsx:44
 msgid "Only visible to you"
-msgstr "Apenas visível para você"
+msgstr "Somente visível para você"
 
 #: src/components/private-note-sheet.jsx:69
 msgid "Unable to update private note."
@@ -1965,33 +1965,33 @@ msgstr "Salvar e fechar"
 #: src/components/qr-code-modal.jsx:26
 #: src/components/shortcuts-settings.jsx:849
 msgid "Scan QR code"
-msgstr "Escanear código QR"
+msgstr "Escanear QR code"
 
 #: src/components/qr-scanner-modal.jsx:263
 msgid "Unable to access camera. Please check permissions."
-msgstr "Incapaz de acessar a câmera. Por favor, cheque as permissões."
+msgstr "Não foi possível abrir a câmera. Verifique as permissões."
 
 #: src/components/quote-chain-modal.jsx:107
 msgid "Quote chain"
-msgstr "Sequência de citações"
+msgstr "Cadeia de citações"
 
 #: src/components/quote-chain-modal.jsx:151
 msgid "Failed to unwrap quote chain"
-msgstr "Falha ao desenrolar sequência de citações"
+msgstr "Falhou ao expandir cadeia de citações"
 
 #: src/components/quote-chain-modal.jsx:165
 msgid "Continue unwrapping…"
-msgstr "Continuar desenrolando…"
+msgstr "Expandir…"
 
 #: src/components/quote-settings-sheet.jsx:37
 #: src/pages/settings.jsx:341
 msgid "Quote settings updated"
-msgstr "Configurações de citação atualizadas"
+msgstr "Opções de citação atualizadas"
 
 #: src/components/quote-settings-sheet.jsx:47
 #: src/pages/settings.jsx:343
 msgid "Failed to update quote settings"
-msgstr "Falha na atualização de configurações de citação"
+msgstr "Falhou ao atualizar opções de citação"
 
 #: src/components/quote-settings-sheet.jsx:66
 msgid "Quote settings for this post"

@@ -106,6 +106,7 @@ function RelatedActions({
           currentID = id;
         } else if (!sameInstance && currentAuthenticated) {
           // Grab this account from my logged-in instance
+          setRelationshipUIState('loading');
           const acctHasInstance = info.acct.includes('@');
           try {
             const results = await currentMasto.v2.search.list({
@@ -124,11 +125,15 @@ function RelatedActions({
           }
         }
 
-        if (!currentID) return;
+        if (!currentID) {
+          setRelationshipUIState('default');
+          return;
+        }
 
         if (currentAccount === currentID) {
           // It's myself!
           setIsSelf(true);
+          setRelationshipUIState('default');
           return;
         }
 

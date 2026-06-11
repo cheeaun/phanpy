@@ -283,8 +283,14 @@ function Timeline2({
           const { max_id, min_id } = params;
           let { value, originalValue, done } = result;
 
-          // Iterator error state returns undefined - treat as error, not end of list
-          if (value === undefined || value === null) {
+          if (done && (value === undefined || value === null)) {
+            // Iterator has completed (no more pages)
+            setShowOlder(false);
+            setShowNewer(false);
+            setUIState('default');
+            __BENCHMARK.end(`timeline-${id}-load`);
+            return;
+          } else if (value === undefined || value === null) {
             throw new Error('Timeline load failed');
           }
 

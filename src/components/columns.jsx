@@ -1,4 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
+import { useLayoutEffect } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
 
@@ -15,6 +16,7 @@ import Search from '../pages/search';
 import Trending from '../pages/trending';
 import isRTL from '../utils/is-rtl';
 import states from '../utils/states';
+import store from '../utils/store';
 import { getCurrentAccountID } from '../utils/store-utils';
 import useTitle from '../utils/useTitle';
 
@@ -31,6 +33,17 @@ function Columns() {
   const { shortcuts } = snapStates;
 
   console.debug('RENDER Columns', shortcuts);
+
+  useLayoutEffect(() => {
+    const columnSize = store.local.get('columnSize');
+    if (!columnSize) return;
+    const col = document.getElementById('columns');
+    if (col) {
+      col.style.setProperty('--column-size', `${columnSize}px`);
+    } else {
+      console.warn('Failed to set column size: #columns not found');
+    }
+  }, []);
 
   const components = shortcuts.map((shortcut) => {
     if (!shortcut) return null;

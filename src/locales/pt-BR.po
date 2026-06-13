@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-13 22:30\n"
+"PO-Revision-Date: 2026-06-13 23:51\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2661,27 +2661,27 @@ msgstr "Atalhos brutos JSON"
 
 #: src/components/shortcuts-settings.jsx:1230
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr "Importar/exportar configurações do/para o servidor (Muito experimental)"
+msgstr "Importar/exportar opções do/no servidor (Bastante experimental)"
 
 #: src/components/status.jsx:292
 msgid "Private posts cannot be quoted"
-msgstr "Posts privados não podem ser citados"
+msgstr "Publicações privadas não podem ser citadas"
 
 #: src/components/status.jsx:293
 msgid "Request to quote"
-msgstr "Pedir para citar"
+msgstr "Solicitar citação"
 
 #: src/components/status.jsx:294
 msgid "Author will manually review"
-msgstr "O autor vai revisar manualmente"
+msgstr "O autor revisará manualmente"
 
 #: src/components/status.jsx:295
 msgid "Only followers can quote this post"
-msgstr "Apenas seguidores podem citar este post"
+msgstr "Somente seguidores podem citar esta publicação"
 
 #: src/components/status.jsx:296
 msgid "You are not allowed to quote this post"
-msgstr "Você não pode citar este post"
+msgstr "Você não pode citar esta publicação"
 
 #: src/components/status.jsx:372
 #: src/components/status.jsx:3258
@@ -2696,7 +2696,7 @@ msgstr "<0/> <1>impulsionou</1>"
 
 #: src/components/status.jsx:741
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
-msgstr "Desculpe, o seu servidor atualmente conectado não pode interagir com este post de outro servidor."
+msgstr "Desculpe, o servidor registrado não pode interagir com esta publicação de outro servidor."
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:931
@@ -2734,7 +2734,7 @@ msgstr "Responder…"
 #: src/components/status.jsx:1119
 #: src/components/status.jsx:1133
 msgid "Reply all"
-msgstr "Responder a todos"
+msgstr "Responder todos"
 
 #: src/components/status.jsx:1122
 msgid "{mentionsCount, plural, other {# mentions}}"
@@ -2778,7 +2778,7 @@ msgstr "Impulsionou a publicação de @{0}"
 #: src/components/status.jsx:1278
 #: src/components/status.jsx:3054
 msgid "Boost/Quote…"
-msgstr "Boost/Citação…"
+msgstr "Impulso/citação…"
 
 #: src/components/status.jsx:1279
 #: src/components/status.jsx:3054
@@ -2806,11 +2806,11 @@ msgstr "Desfavoritar"
 
 #: src/components/status.jsx:1336
 msgid "View Quotes"
-msgstr "Ver Citações"
+msgstr "Ver citações"
 
 #: src/components/status.jsx:1348
 msgid "Unwrap quote chain"
-msgstr "Desenrolar sequência de citações"
+msgstr "Expandir sequência de citações"
 
 #: src/components/status.jsx:1415
 msgid "Post text copied"
@@ -2888,7 +2888,7 @@ msgstr "Fixar ao perfil"
 #: src/components/status.jsx:1625
 #: src/pages/settings.jsx:315
 msgid "Quote settings"
-msgstr "Configurações de citações"
+msgstr "Opções de citação"
 
 #: src/components/status.jsx:1658
 msgid "Delete this post?"
@@ -2905,7 +2905,7 @@ msgstr "Impossível excluir publicação"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1702
 msgid "Remove my post from <0>@{0}</0>'s post?"
-msgstr "Remover meu post do post de <0>@{0}</0>?"
+msgstr "Remover minha publicação da publicação de <0>@{0}</0>?"
 
 #: src/components/status.jsx:1724
 msgid "Quote removed"
@@ -3000,15 +3000,15 @@ msgstr "Publicação removida pelo autor"
 
 #: src/components/status.jsx:3262
 msgid "Post hidden because you've blocked @{name}."
-msgstr "Publicação ocultada porquê você bloqueou @{name}."
+msgstr "Publicação oculta porquê você bloqueou @{name}."
 
 #: src/components/status.jsx:3264
 msgid "Post hidden because you've blocked {domain}."
-msgstr "Publicação ocultada porquê você bloqueou {domain}."
+msgstr "Publicação oculta porquê você bloqueou {domain}."
 
 #: src/components/status.jsx:3265
 msgid "Post hidden because you've muted @{name}."
-msgstr "Publicação ocultada porquê você silenciou @{name}."
+msgstr "Publicação oculta porquê você silenciou @{name}."
 
 #: src/components/status.jsx:3340
 msgid "Show anyway"
@@ -3040,12 +3040,12 @@ msgstr "Tópico"
 
 #: src/components/thread-badge.jsx:28
 msgid "Thread {index}/{total}"
-msgstr "Fio {index}/{total}"
+msgstr "Tópico {index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
 msgid "Thread {index}/X"
-msgstr "Fio {index}/X"
+msgstr "Tópico {index}/X"
 
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
@@ -3192,7 +3192,7 @@ msgstr "Exibindo publicações em {0}"
 #. placeholder {0}: account?.username
 #: src/pages/account-statuses.jsx:579
 msgid "Search @{0}'s posts"
-msgstr "Buscar posts de @{0}"
+msgstr "Buscar publicações de @{0}"
 
 #: src/pages/account-statuses.jsx:628
 #: src/pages/search.jsx:359
@@ -3218,11 +3218,11 @@ msgstr "Impossível obter informações da conta"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:702
 msgid "Switch to account's server {0}"
-msgstr "Mudar para o servidor da conta {0}"
+msgstr "Alterar para o servidor de {0}"
 
 #: src/pages/account-statuses.jsx:732
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr "Trocar para o meu servidor (<0>{currentInstance}</0>)"
+msgstr "Alterar para meu servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:805
 msgid "Month"
@@ -3264,7 +3264,7 @@ msgstr "Encerrar sessão <0>@{0}</0>?"
 #. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:275
 msgid "Log out and remove <0>@{0}</0>"
-msgstr "Desconectar e remover <0>@{0}</0>"
+msgstr "Sair e remover <0>@{0}</0>"
 
 #: src/pages/accounts.jsx:287
 msgid "Log out…"
@@ -3362,7 +3362,7 @@ msgstr "Grupos"
 
 #: src/pages/catchup.jsx:721
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} quotes {quotes} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Mostrando {selectedFilterCategory, select, all {todos os posts} original {posts originais} replies {respostas} boosts {boosts} quotes {citações} followedTags {etiquetas seguidas} groups {grupos} filtered {posts filtrados}}, {sortBy, select, createdAt {{sortOrder, select, asc {mais antigo} desc {mais recente}}} reblogsCount {{sortOrder, select, asc {menos boosts} desc {mais boosts}}} favouritesCount {{sortOrder, select, asc {menos likes} desc {mais likes}}} repliesCount {{sortOrder, select, asc {menos respostas} desc {mais respostas}}} density {{sortOrder, select, asc {menos denso} desc {mais denso}}}} primeiro{groupBy, select, account {, agrupado por autores} other {}}"
+msgstr "Exibindo {selectedFilterCategory, select, all {todas as publicações} original {publicações originais} replies {respostas} boosts {impulsos} quotes {citações} followedTags {etiquetas seguidas} groups {grupos} filtered {publicações filtradas}}, {sortBy, select, createdAt {{sortOrder, select, asc {mais antigo} desc {mais recente}}} reblogsCount {{sortOrder, select, asc {menos impulsos} desc {mais impulsos}}} favouritesCount {{sortOrder, select, asc {menos curtidas} desc {mais curtidas}}} repliesCount {{sortOrder, select, asc {menos respostas} desc {mais respostas}}} density {{sortOrder, select, asc {menos denso} desc {mais denso}}}} primeiro{groupBy, select, account {, agrupado por autores} other {}}"
 
 #: src/pages/catchup.jsx:1033
 #: src/pages/catchup.jsx:1057
@@ -3417,7 +3417,7 @@ msgstr "Até a última reacompanhada ({0})"
 
 #: src/pages/catchup.jsx:1178
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr "Nota: seu servidor pode mostrar apenas um máximo de 800 posts na linha do tempo Home independentemente do período. Poderia ser mais ou menos."
+msgstr "Nota: seu servidor talvez exiba um mínimo de 800 publicações na timeline inicial independente do período. Pode ser mais ou menos."
 
 #: src/pages/catchup.jsx:1188
 msgid "Previously…"
@@ -3730,12 +3730,12 @@ msgstr "{hashtagTitle}"
 #: src/pages/hashtag.jsx:210
 #: src/pages/public.jsx:125
 msgid "This timeline is disabled on this server."
-msgstr "Esta linha do tempo está desabilitada neste servidor."
+msgstr "Esta timeline está desativada neste servidor."
 
 #: src/pages/hashtag.jsx:212
 #: src/pages/public.jsx:127
 msgid "Login required to see posts from this server."
-msgstr "Login necessário para ver posts neste servidor."
+msgstr "É necessário registrar para ver as publicações deste servidor."
 
 #: src/pages/hashtag.jsx:213
 msgid "No one has posted anything with this tag yet."
@@ -3806,7 +3806,7 @@ msgstr "Adicionar aos atalhos"
 #: src/pages/public.jsx:172
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr "Insira um novo servidor, ex.: mastodon.com.br"
+msgstr "Insira um novo servidor, ex: \"mastodon.social\""
 
 #: src/pages/hashtag.jsx:524
 #: src/pages/public.jsx:175
@@ -3818,13 +3818,13 @@ msgstr "Servidor inválido"
 #: src/pages/public.jsx:189
 #: src/pages/trending.jsx:496
 msgid "Go to another server…"
-msgstr "Ir a outro servidor…"
+msgstr "Ir para outro servidor…"
 
 #: src/pages/hashtag.jsx:551
 #: src/pages/public.jsx:202
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr "Ir ao meu servidor (<0>{currentInstance}</0>)"
+msgstr "Ir para meu servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:233
 msgid "Unable to fetch notifications."
@@ -3880,7 +3880,7 @@ msgstr "ex. “mastodon.social”"
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr "O login falhou. Por favor tente novamente, ou em outro servidor."
+msgstr "Falhou ao registrar. Tente novamente ou tente em outro servidor."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4222,11 +4222,11 @@ msgstr "Visibilidade padrão atualizada"
 
 #: src/pages/settings.jsx:295
 msgid "Failed to update default visibility"
-msgstr "Falha na atualização da visibilidade padrão"
+msgstr "Falhou ao atualizar visibilidade padrão"
 
 #: src/pages/settings.jsx:366
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr "Sincronizado com as configurações do seu servidor. <0>Vá ao seu servidor ({instance}) para mais configurações.</0>"
+msgstr "Sincronizado com as opções do servidor. <0>Vá para seu servidor ({instance}) para mais opções.</0>"
 
 #: src/pages/settings.jsx:383
 msgid "Wellbeing"
@@ -4234,15 +4234,15 @@ msgstr "Bem-estar"
 
 #: src/pages/settings.jsx:396
 msgid "Hide Trending timeline"
-msgstr "Ocultar linha do tempo Em Alta"
+msgstr "Ocultar timeline Em Alta"
 
 #: src/pages/settings.jsx:408
 msgid "Hide Local timeline"
-msgstr "Ocultar linha do tempo Local"
+msgstr "Ocultar timeline Local"
 
 #: src/pages/settings.jsx:421
 msgid "Hide Federated timeline"
-msgstr "Ocultar linha do tempo Federada"
+msgstr "Ocultar timeline Federada"
 
 #: src/pages/settings.jsx:429
 msgid "Experiments"
@@ -4287,11 +4287,11 @@ msgstr "Exibe tradução automaticamente para publicações na timeline. Somente
 
 #: src/pages/settings.jsx:627
 msgid "Paginated timeline (beta)"
-msgstr "Linha do tempo paginada (beta)"
+msgstr "Timeline paginada (beta)"
 
 #: src/pages/settings.jsx:631
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
-msgstr "Paginação manual de posts na linha do tempo ao invés de rolagem infinita. Funciona apenas para Home e Seguindo por enquanto. Auto atualização e carrossel de boosts não vão funcionar quando isto está ligado."
+msgstr "Substituí a rolagem infinita por uma separação manual das publicações da timeline. No momento, só funciona para a timeline do Início/Seguindo. A atualização automática e carrossel de impulsos não funcionarão se isso estiver ativo."
 
 #: src/pages/settings.jsx:651
 msgid "GIF Picker for composer"
@@ -4323,7 +4323,7 @@ msgstr "⚠️⚠️⚠️ Muito experimental.<0/>Armazenado nas notas do seu pe
 
 #: src/pages/settings.jsx:740
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr "Nota: Este recurso utiliza o API do servidor conectado atualmente."
+msgstr "Nota: Este recurso usa a API do servidor que você está registrado."
 
 #: src/pages/settings.jsx:756
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4456,7 +4456,7 @@ msgstr "Você não está conectado. Interações como (respostas, impulsos, etc.
 
 #: src/pages/status.jsx:1117
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr "Este post é de outro servidor (<0>{instance}</0>). Interações (respostas, boosts etc.) não são possíveis."
+msgstr "Esta publicação é de outro servidor (<0>{instance}</0>). As interações (respostas, impulsos, etc) estão indisponíveis."
 
 #: src/pages/status.jsx:1145
 msgid "Error: {e}"
@@ -4464,7 +4464,7 @@ msgstr "Erro: {e}"
 
 #: src/pages/status.jsx:1152
 msgid "Switch to my server to enable interactions"
-msgstr "Mudar para o meu servidor para poder interagir"
+msgstr "Alterar para meu servidor para interagir"
 
 #: src/pages/status.jsx:1261
 msgid "Unable to load replies."
@@ -4515,11 +4515,11 @@ msgstr "Impossível alterar"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1664
 msgid "Switch to post's server ({0})"
-msgstr "Mudar para o servidor do post ({0})"
+msgstr "Alterar para o servidor da publicação ({0})"
 
 #: src/pages/status.jsx:1667
 msgid "Switch to post's server"
-msgstr "Mudar para o servidor do post"
+msgstr "Alterar para o servidor da publicação"
 
 #: src/pages/status.jsx:1680
 msgid "View Edit History Snapshots"
@@ -4593,11 +4593,11 @@ msgstr "Conecte com sua conta existente do Mastodon/Fediverse.<0/>Os seus creden
 
 #: src/pages/welcome.jsx:96
 msgid "Screenshot of Phanpy home timeline on mobile device"
-msgstr "Captura de tela da linha do tempo inicial do Phanpy em um dispositivo móvel"
+msgstr "Captura de tela da timeline inicial do Phanpy em um dispositivo móvel"
 
 #: src/pages/welcome.jsx:113
 msgid "Screenshot of Phanpy home timeline on tablet device"
-msgstr "Captura de tela da linha do tempo inicial do Phanpy em um dispositivo tablet"
+msgstr "Captura de tela da timeline inicial do Phanpy em um dispositivo tablet"
 
 #: src/pages/welcome.jsx:127
 msgid "Screenshot of Boosts Carousel"

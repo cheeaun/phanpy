@@ -933,7 +933,9 @@ function ImportExport({ shortcuts, onClose }) {
                       </span>
                       <span>
                         {_(TYPE_TEXT[shortcut.type])}
-                        {shortcut.type === 'list' && !!shortcut.id && ' ⚠️'}{' '}
+                        {shortcut.type === 'list' &&
+                          !!shortcut.id &&
+                          ' ⚠️'}{' '}
                         {TYPE_PARAMS[shortcut.type]?.map?.(
                           ({ text, name, type }) =>
                             shortcut[name] ? (

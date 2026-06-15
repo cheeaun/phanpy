@@ -209,13 +209,11 @@
       --month-reply-start: var(--month-original-pct);
       --month-reply-pct: calc(var(--month-reply-ratio) * 100%);
       --month-quote-start: calc(
-        var(--month-reply-start) +
-        var(--month-reply-pct)
+        var(--month-reply-start) + var(--month-reply-pct)
       );
       --month-quote-pct: calc(var(--month-quote-ratio) * 100%);
       --month-boost-start: calc(
-        var(--month-quote-start) +
-        var(--month-quote-pct)
+        var(--month-quote-start) + var(--month-quote-pct)
       );
       --month-boost-pct: calc(var(--month-boost-ratio) * 100%);
 
@@ -375,9 +373,8 @@
         */
         transform: scale(
           calc(
-            var(--min-scale) +
-            (var(--max-scale) - var(--min-scale)) *
-            var(--ratio)
+            var(--min-scale) + (var(--max-scale) - var(--min-scale)) *
+              var(--ratio)
           )
         );
       }
@@ -555,9 +552,8 @@
         );
 
       @supports (
-          (animation-timeline: scroll()) and
-          (animation-range: 0% 100%)
-        ) {
+        (animation-timeline: scroll()) and (animation-range: 0% 100%)
+      ) {
         background-color: transparent;
         animation: show-bg 1s linear both;
         animation-timeline: view(block);

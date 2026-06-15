@@ -22,15 +22,23 @@ function CameraCaptureInput({
       accept={filteredSupportedMimeTypes?.join(',')}
       capture="environment"
       disabled={disabled}
-      onChange={(e) => {
+      onChange={async (e) => {
         const files = e.target.files;
         if (!files) return;
         const mediaFile = Array.from(files)[0];
         if (!mediaFile) return;
+        let fileData;
+        try {
+          fileData = await mediaFile.arrayBuffer();
+        } catch (err) {
+          console.error('Failed to read file:', err);
+          return;
+        }
         setMediaAttachments((attachments) => [
           ...attachments,
           {
-            file: mediaFile,
+            fileData,
+            fileName: mediaFile.name,
             type: mediaFile.type,
             size: mediaFile.size,
             url: URL.createObjectURL(mediaFile),

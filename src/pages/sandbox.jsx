@@ -3,10 +3,10 @@ import './sandbox.css';
 import { useEffect, useState } from 'preact/hooks';
 import { uid } from 'uid/single';
 
-import testAudioURL from '../assets/sandbox/big-buck-bunny.mp3';
-import testVideoURL from '../assets/sandbox/big-buck-bunny.webm';
 import testGIFURL from '../assets/sandbox/big-buck-bunny-muted.webm';
 import testPreviewURL from '../assets/sandbox/big-buck-bunny-preview.png';
+import testAudioURL from '../assets/sandbox/big-buck-bunny.mp3';
+import testVideoURL from '../assets/sandbox/big-buck-bunny.webm';
 
 import Status from '../components/status';
 import { api, getPreferences } from '../utils/api';
@@ -51,6 +51,8 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     showTags,
     tagsCount,
     deleted,
+    showCollectionCard,
+    collectionAccountsCount,
   } = toggles;
 
   const shortContent = 'This is a test status with short text content.';
@@ -346,6 +348,29 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     base._deleted = true;
   }
 
+  // Add tagged collections if enabled
+  if (showCollectionCard) {
+    const accountsCount = Math.max(
+      0,
+      parseInt(collectionAccountsCount, 10) || 0,
+    );
+    base.taggedCollections = [
+      {
+        name: 'Sandbox Test Collection',
+        description:
+          'A sample collection for testing the CollectionCard component.',
+        url: 'https://example.com/collection/sandbox-test',
+        itemsCount: accountsCount,
+        items: Array(accountsCount)
+          .fill(0)
+          .map((_, i) => ({
+            accountId: `sandbox-collection-${i}`,
+          })),
+        accountId: base.account?.id || 'sandbox-creator',
+      },
+    ];
+  }
+
   console.log('Final base', base);
   return base;
 };
@@ -380,6 +405,8 @@ const INITIAL_STATE = {
   showTags: false, // New toggle for showing status tags
   tagsCount: 'few', // New option for tags count: 'few' (3) or 'many' (10)
   deleted: false, // Toggle to mark status as deleted
+  showCollectionCard: false, // Toggle to show collection card
+  collectionAccountsCount: '3', // Number of accounts in the collection
 };
 
 export default function Sandbox() {
@@ -507,6 +534,8 @@ export default function Sandbox() {
       showTags: toggleState.showTags, // Add showTags toggle
       tagsCount: toggleState.tagsCount, // Add tagsCount option
       deleted: toggleState.deleted, // Add deleted toggle
+      showCollectionCard: toggleState.showCollectionCard,
+      collectionAccountsCount: toggleState.collectionAccountsCount,
     },
   });
 
@@ -859,6 +888,42 @@ export default function Sandbox() {
       setToggleState({ ...INITIAL_STATE });
     }
   };
+
+  // Pre-populate states.accounts with collection account data
+  // This must happen synchronously during render so CollectionCard can read them
+  if (toggleState.showCollectionCard) {
+    const accountsCount = Math.max(
+      0,
+      parseInt(toggleState.collectionAccountsCount, 10) || 0,
+    );
+
+    // Add creator account
+    states.accounts['sandbox-creator'] = {
+      id: 'sandbox-creator',
+      username: 'sandbox-creator',
+      acct: `sandbox-creator@${currentInstance}`,
+      displayName: 'Sandbox Creator',
+      avatarStatic: `https://picsum.photos/seed/sandbox-creator/200`,
+      avatar: `https://picsum.photos/seed/sandbox-creator/200`,
+      bot: false,
+      url: `https://${currentInstance}/@sandbox-creator`,
+    };
+
+    // Add collection member accounts
+    for (let i = 0; i < accountsCount; i++) {
+      const id = `sandbox-collection-${i}`;
+      states.accounts[id] = {
+        id,
+        username: `collection${i}`,
+        acct: `collection${i}@${currentInstance}`,
+        displayName: `Collection User ${i}`,
+        avatarStatic: `https://picsum.photos/seed/sandbox-coll-${i}/200`,
+        avatar: `https://picsum.photos/seed/sandbox-coll-${i}/200`,
+        bot: i === 0,
+        url: `https://${currentInstance}/@collection${i}`,
+      };
+    }
+  }
 
   return (
     <main id="sandbox">
@@ -1659,6 +1724,45 @@ export default function Sandbox() {
                           </label>
                         </li>
                       </ul>
+                    </li>
+                  </ul>
+                )}
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.showCollectionCard}
+                    onChange={() =>
+                      updateToggles({
+                        showCollectionCard: !toggleState.showCollectionCard,
+                      })
+                    }
+                  />
+                  <span>Collection card</span>
+                </label>
+                {toggleState.showCollectionCard && (
+                  <ul>
+                    <li>
+                      <label>
+                        <span>Accounts count</span>
+                        <input
+                          type="number"
+                          min="0"
+                          max="25"
+                          value={toggleState.collectionAccountsCount}
+                          step="1"
+                          onChange={(e) => {
+                            const count = Math.max(
+                              0,
+                              parseInt(e.target.value, 10) || 0,
+                            );
+                            updateToggles({
+                              collectionAccountsCount: String(count),
+                            });
+                          }}
+                        />
+                      </label>
                     </li>
                   </ul>
                 )}

@@ -1,11 +1,12 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+
 import { _localeMatch as localeMatch } from '../src/utils/locale-match.js';
 
-// https://github.com/formatjs/formatjs/blob/cacd3182a590b6f373ca726b011a026a241f4740/packages/intl-localematcher/tests/index.test.ts
+// https://github.com/formatjs/formatjs/blob/d32fcf5071ae03a20a8ecee3b1461e7278adb8aa/packages/intl-localematcher/tests/index.test.ts
 test.describe('official formatjs test cases', () => {
   test('zh-HK', () => {
-    expect(localeMatch(['zh-HK'], ['zh', 'zh-HANT', 'en'], 'en')).toBe(
+    expect(localeMatch(['zh-HK'], ['zh', 'zh-Hant', 'en'], 'en')).toBe(
       'zh-Hant',
     );
   });
@@ -225,7 +226,7 @@ test.describe('official formatjs test cases', () => {
   });
 });
 
-// https://github.com/formatjs/formatjs/blob/cacd3182a590b6f373ca726b011a026a241f4740/packages/intl-localematcher/tests/BestFitMatcher.test.ts
+// https://github.com/formatjs/formatjs/blob/d32fcf5071ae03a20a8ecee3b1461e7278adb8aa/packages/intl-localematcher/tests/BestFitMatcher.test.ts
 test.describe('BestFitMatcher test cases', () => {
   test('BestFitMatcher basic', () => {
     expect(localeMatch(['fr-XX', 'en'], ['fr', 'en'], 'en')).toBe('fr');
@@ -262,7 +263,7 @@ test.describe('BestFitMatcher test cases', () => {
   });
 
   test('bestFitMatcher testing zh-HK', () => {
-    expect(localeMatch(['zh-HK'], ['zh-Hant', 'zh-MO'], 'en')).toBe('zh-Hant');
+    expect(localeMatch(['zh-HK'], ['zh-Hant', 'zh-MO'], 'en')).toBe('zh-MO');
   });
 
   test('bestFitMatcher testing en-CA', () => {
@@ -270,6 +271,6 @@ test.describe('BestFitMatcher test cases', () => {
   });
 
   test('bestFitMatcher testing es-KY Americas', () => {
-    expect(localeMatch(['es-KY'], ['es', 'en', 'es-419'], 'en')).toBe('es');
+    expect(localeMatch(['es-KY'], ['es', 'en', 'es-419'], 'en')).toBe('es-419');
   });
 });

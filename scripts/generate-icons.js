@@ -1,8 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { parseIconSet, validateIconSet } from '@iconify/utils';
 import { icons } from '@iconify-json/mingcute';
+import { parseIconSet, validateIconSet } from '@iconify/utils';
 
 validateIconSet(icons);
 

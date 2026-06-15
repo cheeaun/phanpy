@@ -13,6 +13,7 @@ import supportedLanguages from '../data/status-supported-languages';
 import { api, getPreferences } from '../utils/api';
 import db from '../utils/db';
 import { getDtfLocale } from '../utils/dtf-locale';
+import haptics from '../utils/haptics';
 import localeMatch from '../utils/locale-match';
 import localeCode2Text from '../utils/localeCode2Text';
 import mem from '../utils/mem';
@@ -260,7 +261,7 @@ function Compose({
     }
   };
 
-  const processFiles = (files) => {
+  const processFiles = async (files) => {
     const supportedFiles = [];
     const unsupportedFiles = [];
     for (const file of files || []) {
@@ -294,18 +295,21 @@ function Compose({
               other: 'You can only attach up to # files.',
             }),
           );
-          return null;
+          return;
         }
         allowedFiles = allowedFiles.slice(0, max);
       }
-      return allowedFiles.map((file) => ({
-        file,
-        type: file.type,
-        size: file.size,
-        url: URL.createObjectURL(file),
-        id: null,
-        description: null,
-      }));
+      return Promise.all(
+        allowedFiles.map(async (file) => ({
+          fileData: await file.arrayBuffer(),
+          fileName: file.name,
+          type: file.type,
+          size: file.size,
+          url: URL.createObjectURL(file),
+          id: null,
+          description: null,
+        })),
+      );
     }
     return null;
   };
@@ -621,10 +625,15 @@ function Compose({
       }
 
       if (files && files.length > 0) {
-        const mediaFiles = processFiles(files);
-        if (mediaFiles) {
-          setMediaAttachments(mediaFiles);
-        }
+        processFiles(files)
+          .then((mediaFiles) => {
+            if (mediaFiles) {
+              setMediaAttachments(mediaFiles);
+            }
+          })
+          .catch((err) => {
+            console.error('Failed to process file(s):', err);
+          });
       }
     }
   }, [sharedData]);
@@ -880,10 +889,15 @@ function Compose({
       if (files.length > 0) {
         e.preventDefault();
         e.stopPropagation();
-        const mediaFiles = processFiles(files);
-        if (mediaFiles) {
-          setMediaAttachments([...mediaAttachments, ...mediaFiles]);
-        }
+        processFiles(files)
+          .then((mediaFiles) => {
+            if (mediaFiles) {
+              setMediaAttachments((prev) => [...prev, ...mediaFiles]);
+            }
+          })
+          .catch((err) => {
+            console.error('Failed to process file(s):', err);
+          });
       }
     };
     window.addEventListener('paste', handleItems);
@@ -1330,14 +1344,19 @@ function Compose({
                 if (mediaAttachments.length > 0) {
                   // Upload media attachments first
                   const mediaPromises = mediaAttachments.map((attachment) => {
-                    const { file, description, id } = attachment;
+                    const { fileData, fileName, file, type, description, id } =
+                      attachment;
                     console.log('UPLOADING', attachment);
                     if (id) {
                       // If already uploaded
                       return attachment;
                     } else {
+                      // Reconstruct File from fileData, or fall back to legacy file object
+                      const fileObj = fileData
+                        ? new File([fileData], fileName || 'upload', { type })
+                        : file;
                       const params = removeNullUndefined({
-                        file,
+                        file: fileObj,
                         description,
                       });
                       return masto.v2.media.create(params).then((res) => {
@@ -1410,9 +1429,11 @@ function Compose({
                     );
                   }
                 } else {
-                  if (supportsNativeQuote() && currentQuoteStatus?.id) {
-                    params.quoted_status_id = currentQuoteStatus.id;
+                  if (supportsNativeQuote()) {
                     params.quote_approval_policy = quoteApprovalPolicy;
+                    if (currentQuoteStatus?.id) {
+                      params.quoted_status_id = currentQuoteStatus.id;
+                    }
                   }
                   params.visibility = visibility;
                   // params.inReplyToId = replyToStatus?.id || undefined;
@@ -2079,7 +2100,11 @@ function Compose({
                 })}
               </select>
             </label>{' '}
-            <button type="submit" disabled={uiState === 'loading'}>
+            <button
+              type="submit"
+              disabled={uiState === 'loading'}
+              onClick={() => haptics.trigger('medium')}
+            >
               {scheduledAt
                 ? t`Schedule`
                 : replyToStatus
@@ -2128,7 +2153,6 @@ function Compose({
           }}
         >
           <CustomEmojisModal
-            masto={masto}
             instance={instance}
             onClose={() => {
               setShowEmoji2Picker(false);
@@ -2175,19 +2199,15 @@ function Compose({
                   const blob = await fetch(url, {
                     referrerPolicy: 'no-referrer',
                   }).then((res) => res.blob());
-                  const file = new File(
-                    [blob],
-                    type === 'video/mp4' ? 'video.mp4' : 'image.gif',
-                    {
-                      type,
-                    },
-                  );
+                  const fileData = await blob.arrayBuffer();
                   const newMediaAttachments = [
                     ...mediaAttachments,
                     {
-                      file,
+                      fileData,
+                      fileName:
+                        type === 'video/mp4' ? 'video.mp4' : 'image.gif',
                       type,
-                      size: file.size,
+                      size: blob.size,
                       id: null,
                       description: alt_text || '',
                     },

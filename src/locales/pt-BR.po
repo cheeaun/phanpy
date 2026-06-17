@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-17 12:59\n"
+"PO-Revision-Date: 2026-06-17 20:53\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -29,7 +29,7 @@ msgstr "Publicações: {0}"
 
 #: src/components/account-block.jsx:209
 msgid "Last active: {date}"
-msgstr ""
+msgstr "Última atividade: {date}"
 
 #: src/components/account-block.jsx:227
 #: src/components/account-info.jsx:727
@@ -65,7 +65,7 @@ msgstr "Segue você"
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-block.jsx:281
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> seguidor} other {<1>{1}</1> seguidores}}"
 
 #: src/components/account-block.jsx:307
 #: src/components/account-info.jsx:775
@@ -144,7 +144,7 @@ msgstr "Ir à página da conta"
 #: src/components/timeline.jsx:663
 #: src/components/timeline2.jsx:701
 #: src/pages/home.jsx:237
-#: src/pages/notifications.jsx:1035
+#: src/pages/notifications.jsx:1066
 #: src/pages/status.jsx:1270
 #: src/pages/status.jsx:1746
 msgid "Try again"
@@ -279,7 +279,7 @@ msgstr "Ver estatísticas"
 #: src/components/add-remove-lists-sheet.jsx:45
 #: src/components/collection-add-account.jsx:133
 #: src/components/collection-add-edit.jsx:40
-#: src/components/collection-manage-accounts.jsx:112
+#: src/components/collection-manage-accounts.jsx:120
 #: src/components/compose.jsx:1127
 #: src/components/custom-emojis-modal.jsx:282
 #: src/components/drafts.jsx:57
@@ -316,7 +316,7 @@ msgstr "Ver estatísticas"
 #: src/pages/catchup.jsx:1731
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
-#: src/pages/notifications.jsx:1079
+#: src/pages/notifications.jsx:1110
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:100
 #: src/pages/status.jsx:1684
@@ -368,17 +368,17 @@ msgstr "Mais de <0/>"
 #: src/components/collection-account-actions.jsx:35
 #: src/pages/collection.jsx:398
 msgid "Remove me from this collection?"
-msgstr ""
+msgstr "Me remover desta coleção?"
 
 #: src/components/collection-account-actions.jsx:44
 #: src/pages/collection.jsx:407
 msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
-msgstr ""
+msgstr "Este curador não poderá re-adicioná-lo a esta coleção por 24 horas. Para impedir permanentemente que adicionem você às coleções, você pode bloqueá-los."
 
 #: src/components/collection-account-actions.jsx:69
 #: src/pages/collection.jsx:418
 msgid "Remove me…"
-msgstr ""
+msgstr "Me remover…"
 
 #: src/components/collection-account-actions.jsx:107
 #: src/components/related-actions.jsx:996
@@ -389,11 +389,11 @@ msgstr "Seguir"
 
 #: src/components/collection-add-account.jsx:92
 msgid "@{username} added to collection"
-msgstr ""
+msgstr "@{username} adicionado à coleção"
 
 #: src/components/collection-add-account.jsx:96
 msgid "Unable to add account"
-msgstr ""
+msgstr "Não foi possível adicionar conta"
 
 #: src/components/collection-add-account.jsx:148
 #: src/components/mention-modal.jsx:179
@@ -417,28 +417,28 @@ msgstr "Erro ao carregar contas"
 
 #: src/components/collection-add-account.jsx:231
 msgid "These accounts may have opted out of discovery or be on a server that doesn't support collections."
-msgstr ""
+msgstr "Estas contas talvez não permitem aparecer na página Descobrir ou talvez estejam em um servidor que não suporte coleções."
 
 #: src/components/collection-add-account.jsx:236
 msgid "These accounts review all follow requests. Followers can add them to collections."
-msgstr ""
+msgstr "Estas contas revisam as solicitações de seguidores. Seguidores podem adicioná-los às coleções."
 
 #: src/components/collection-add-edit.jsx:45
 #: src/pages/account-collections.jsx:179
 msgid "New collection"
-msgstr ""
+msgstr "Nova coleção"
 
 #: src/components/collection-add-edit.jsx:45
 msgid "Edit collection"
-msgstr ""
+msgstr "Editar coleção"
 
 #: src/components/collection-add-edit.jsx:97
 msgid "Unable to update collection."
-msgstr ""
+msgstr "Não foi possível atualizar coleção."
 
 #: src/components/collection-add-edit.jsx:98
 msgid "Unable to create collection."
-msgstr ""
+msgstr "Não é possível criar coleção."
 
 #: src/components/collection-add-edit.jsx:106
 #: src/components/edit-profile-sheet.jsx:574
@@ -448,15 +448,15 @@ msgstr "Nome"
 
 #: src/components/collection-add-edit.jsx:124
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #: src/components/collection-add-edit.jsx:146
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: src/components/collection-add-edit.jsx:169
 msgid "Mark as sensitive"
-msgstr ""
+msgstr "Marcar como sensível"
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2038
@@ -470,7 +470,7 @@ msgstr "Público"
 #: src/components/collection-card.jsx:201
 #: src/pages/collection.jsx:591
 msgid "Unlisted"
-msgstr ""
+msgstr "Não listado"
 
 #: src/components/collection-add-edit.jsx:192
 #: src/components/edit-profile-sheet.jsx:695
@@ -478,7 +478,7 @@ msgstr ""
 #: src/components/quote-settings-sheet.jsx:92
 #: src/components/shortcuts-settings.jsx:732
 #: src/pages/filters.jsx:572
-#: src/pages/notifications.jsx:1145
+#: src/pages/notifications.jsx:1176
 msgid "Save"
 msgstr "Salvar"
 
@@ -490,11 +490,11 @@ msgstr "Criar"
 
 #: src/components/collection-add-edit.jsx:199
 msgid "Delete this collection?"
-msgstr ""
+msgstr "Excluir esta coleção?"
 
 #: src/components/collection-add-edit.jsx:215
 msgid "Unable to delete collection."
-msgstr ""
+msgstr "Não é possível excluir coleção."
 
 #: src/components/collection-add-edit.jsx:225
 #: src/components/drafts.jsx:126
@@ -514,40 +514,40 @@ msgstr "Coleção de <0>@{username}</0>"
 #: src/components/collection-card.jsx:189
 #: src/pages/collection.jsx:579
 msgid "Last updated: <relativeTime/>"
-msgstr ""
+msgstr "Última atualização: <relativeTime/>"
 
-#: src/components/collection-manage-accounts.jsx:89
-msgid "@{username} removed from collection"
-msgstr ""
-
-#: src/components/collection-manage-accounts.jsx:93
+#: src/components/collection-manage-accounts.jsx:90
 msgid "Unable to remove account"
-msgstr ""
+msgstr "Não foi possível remover conta"
 
-#: src/components/collection-manage-accounts.jsx:116
+#: src/components/collection-manage-accounts.jsx:101
+msgid "@{username} removed from collection"
+msgstr "@{username} removido da coleção"
+
+#: src/components/collection-manage-accounts.jsx:124
 #: src/pages/collection.jsx:382
 msgid "Manage accounts"
-msgstr ""
+msgstr "Gerenciar contas"
 
-#: src/components/collection-manage-accounts.jsx:135
+#: src/components/collection-manage-accounts.jsx:143
 msgid "Pending"
-msgstr ""
+msgstr "Pendente"
 
-#: src/components/collection-manage-accounts.jsx:142
+#: src/components/collection-manage-accounts.jsx:150
 msgid "Remove <0>{username}</0> from this collection?"
-msgstr ""
+msgstr "Remover <0>{username}</0> desta coleção?"
 
-#: src/components/collection-manage-accounts.jsx:162
+#: src/components/collection-manage-accounts.jsx:170
 #: src/components/edit-profile-sheet.jsx:473
 #: src/components/edit-profile-sheet.jsx:565
 #: src/pages/list.jsx:388
 msgid "Remove…"
 msgstr "Excluir…"
 
-#: src/components/collection-manage-accounts.jsx:176
+#: src/components/collection-manage-accounts.jsx:184
 #: src/pages/collection.jsx:557
 msgid "Add account"
-msgstr ""
+msgstr "Adicionar conta"
 
 #: src/components/columns.jsx:29
 #: src/components/nav-menu.jsx:188
@@ -560,7 +560,7 @@ msgstr ""
 #: src/pages/followed-hashtags.jsx:41
 #: src/pages/home.jsx:55
 #: src/pages/home.jsx:63
-#: src/pages/notifications.jsx:712
+#: src/pages/notifications.jsx:743
 #: src/pages/scheduled-posts.jsx:74
 msgid "Home"
 msgstr "Início"
@@ -1056,7 +1056,7 @@ msgid "No featured profiles."
 msgstr "Nenhum destaque."
 
 #: src/components/follow-request-buttons.jsx:45
-#: src/pages/notifications.jsx:1129
+#: src/pages/notifications.jsx:1160
 msgid "Accept"
 msgstr "Aceitar"
 
@@ -1065,7 +1065,7 @@ msgid "Reject"
 msgstr "Rejeitar"
 
 #: src/components/follow-request-buttons.jsx:79
-#: src/pages/notifications.jsx:1415
+#: src/pages/notifications.jsx:1446
 msgid "Accepted"
 msgstr "Aceitado"
 
@@ -1074,7 +1074,7 @@ msgid "Rejected"
 msgstr "Rejeitado"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:493
+#: src/components/notification.jsx:502
 #: src/pages/accounts.jsx:51
 #: src/pages/search.jsx:124
 #: src/pages/search.jsx:462
@@ -1086,7 +1086,7 @@ msgstr "Contas"
 #: src/components/timeline.jsx:628
 #: src/pages/account-collections.jsx:232
 #: src/pages/list.jsx:321
-#: src/pages/notifications.jsx:1059
+#: src/pages/notifications.jsx:1090
 #: src/pages/search.jsx:550
 #: src/pages/status.jsx:1717
 msgid "Show more…"
@@ -1611,7 +1611,7 @@ msgstr "Reacompanhar"
 #: src/pages/home.jsx:249
 #: src/pages/mentions.jsx:25
 #: src/pages/mentions.jsx:256
-#: src/pages/notifications.jsx:936
+#: src/pages/notifications.jsx:967
 #: src/pages/settings.jsx:1345
 #: src/pages/trending.jsx:384
 msgid "Mentions"
@@ -1623,8 +1623,8 @@ msgstr "Menções"
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:95
 #: src/pages/home.jsx:207
-#: src/pages/notifications.jsx:112
-#: src/pages/notifications.jsx:716
+#: src/pages/notifications.jsx:143
+#: src/pages/notifications.jsx:747
 msgid "Notifications"
 msgstr "Notificações"
 
@@ -1669,7 +1669,7 @@ msgstr "Curtidas"
 #: src/pages/collection.jsx:242
 #: src/pages/search.jsx:163
 msgid "Collections"
-msgstr ""
+msgstr "Coleções"
 
 #: src/components/nav-menu.jsx:274
 #: src/pages/followed-hashtags.jsx:15
@@ -1762,167 +1762,167 @@ msgstr "Esta notificação é da sua outra conta."
 msgid "View all notifications"
 msgstr "Ver todas as notificações"
 
-#: src/components/notification.jsx:79
+#: src/components/notification.jsx:80
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr "{account} reagiu a sua publicação com {emojiObject}"
 
-#: src/components/notification.jsx:86
+#: src/components/notification.jsx:87
 msgid "{account} published a post."
 msgstr "{account} publicou algo."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:94
+#: src/components/notification.jsx:95
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou sua resposta.} other {{account} impulsionou sua publicação.}}} other {{account} impulsionou {postsCount} publicações suas.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou(aram) sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou(aram) sua publicação.}}}}"
 
 #. placeholder {0}: shortenNumber(count)
-#: src/components/notification.jsx:137
+#: src/components/notification.jsx:138
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr "{count, plural, =1 {{account} seguiu você.} other {<0><1>{0}</1> pessoa(s)</0> seguiu você.}}"
 
-#: src/components/notification.jsx:151
+#: src/components/notification.jsx:152
 msgid "{account} requested to follow you."
 msgstr "{account} pediu para seguir você."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:160
+#: src/components/notification.jsx:161
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} curtiu sua resposta.} other {{account} curtiu sua publicação.}}} other {{account} curtiu {postsCount} publicações suas.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> curtiu(ram) sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> curtiu(ram) sua publicação.}}}}"
 
-#: src/components/notification.jsx:202
+#: src/components/notification.jsx:203
 msgid "A poll you have voted in or created has ended."
 msgstr "A enquete que você votou ou criou já acabou."
 
-#: src/components/notification.jsx:203
+#: src/components/notification.jsx:204
 msgid "A poll you have created has ended."
 msgstr "A enquete que você criou já acabou."
 
-#: src/components/notification.jsx:204
+#: src/components/notification.jsx:205
 msgid "A poll you have voted in has ended."
 msgstr "A enquete que você votou já acabou."
 
-#: src/components/notification.jsx:207
+#: src/components/notification.jsx:208
 msgid "{account} edited a post."
 msgstr "{account} editou uma publicação."
 
-#: src/components/notification.jsx:209
+#: src/components/notification.jsx:210
 msgid "A post you interacted with has been edited."
 msgstr "Uma publicação que você interagiu foi editada."
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:218
+#: src/components/notification.jsx:219
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e curtiu sua resposta.} other {{account} impulsionou e curtiu sua publicação.}}} other {{account} impulsionou e curtiu {postsCount} publicações suas.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou(aram) e curtiu(ram) sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou(aram) e curtiu(ram) sua publicação.}}}}"
 
-#: src/components/notification.jsx:261
+#: src/components/notification.jsx:262
 msgid "{account} edited a post you have quoted."
 msgstr "{account} editou uma publicação citada."
 
 #. placeholder {0}: shortenNumber(count)
-#: src/components/notification.jsx:264
+#: src/components/notification.jsx:265
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
 msgstr "{count, plural, =1 {{account} registrou-se.} other {<0><1>{0}</1>pessoas</0> registraram-se.}}"
 
-#: src/components/notification.jsx:278
+#: src/components/notification.jsx:279
 msgid "{account} reported {targetAccount}"
 msgstr "{account} denunciou {targetAccount}"
 
-#: src/components/notification.jsx:283
+#: src/components/notification.jsx:284
 msgid "Lost connections with <0>{name}</0>."
 msgstr "Perdeu conexões com <0>{name}</0>."
 
-#: src/components/notification.jsx:289
+#: src/components/notification.jsx:290
 msgid "Moderation warning"
 msgstr "Aviso de moderação"
 
-#: src/components/notification.jsx:295
+#: src/components/notification.jsx:296
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "Seu #Wrapstodon {year} acaba de chegar!"
 
-#: src/components/notification.jsx:297
+#: src/components/notification.jsx:298
 msgid "{account} added you to a collection."
-msgstr ""
+msgstr "{account} adicionou você a uma coleção."
 
-#: src/components/notification.jsx:300
+#: src/components/notification.jsx:301
 msgid "{account} edited a collection you're in."
-msgstr ""
+msgstr "{account} editou uma coleção em que você está."
 
-#: src/components/notification.jsx:307
+#: src/components/notification.jsx:308
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Um administrador de <0>{from}</0> suspendeu <1>{targetName}</1></0>, O que significa que você não receberá atualizações ou interações deles."
 
-#: src/components/notification.jsx:313
+#: src/components/notification.jsx:314
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "Um administrador de <0>{from}</0> bloqueou <1>{targetName}</1>. Seguidores afetados: {followersCount}, seguindo: {followingCount}."
 
-#: src/components/notification.jsx:319
+#: src/components/notification.jsx:320
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Você bloqueou <0>{targetName}</0>.\n"
 "Seguidores removidos: {followersCount}, seguindo: {followingCount}."
 
-#: src/components/notification.jsx:327
+#: src/components/notification.jsx:328
 msgid "Your account has received a moderation warning."
 msgstr "Sua conta recebeu um aviso de moderação."
 
-#: src/components/notification.jsx:328
+#: src/components/notification.jsx:329
 msgid "Your account has been disabled."
 msgstr "Sua conta foi desativada."
 
-#: src/components/notification.jsx:329
+#: src/components/notification.jsx:330
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Algumas publicações suas foram marcadas como sensíveis."
 
-#: src/components/notification.jsx:330
+#: src/components/notification.jsx:331
 msgid "Some of your posts have been deleted."
 msgstr "Algumas publicações suas foram excluídas."
 
-#: src/components/notification.jsx:331
+#: src/components/notification.jsx:332
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "Suas publicações foram marcadas como sensível de agora em diante."
 
-#: src/components/notification.jsx:332
+#: src/components/notification.jsx:333
 msgid "Your account has been limited."
 msgstr "Sua conta foi limitada."
 
-#: src/components/notification.jsx:333
+#: src/components/notification.jsx:334
 msgid "Your account has been suspended."
 msgstr "Sua conta foi suspensa."
 
-#: src/components/notification.jsx:411
+#: src/components/notification.jsx:420
 msgid "[Unknown notification type: {type}]"
 msgstr "[Tipo de notificação desconhecida: {type}]"
 
-#: src/components/notification.jsx:489
+#: src/components/notification.jsx:498
 #: src/components/status.jsx:1315
 #: src/components/status.jsx:1325
 msgid "Boosted/Liked by…"
 msgstr "Impulsionado/Curtido por…"
 
-#: src/components/notification.jsx:490
+#: src/components/notification.jsx:499
 msgid "Liked by…"
 msgstr "Curtido por…"
 
-#: src/components/notification.jsx:491
+#: src/components/notification.jsx:500
 msgid "Boosted by…"
 msgstr "Impulsionado por…"
 
-#: src/components/notification.jsx:492
+#: src/components/notification.jsx:501
 msgid "Followed by…"
 msgstr "Seguido por…"
 
-#: src/components/notification.jsx:636
-#: src/components/notification.jsx:652
+#: src/components/notification.jsx:645
+#: src/components/notification.jsx:661
 msgid "Learn more <0/>"
 msgstr "Saiba mais <0/>"
 
-#: src/components/notification.jsx:661
+#: src/components/notification.jsx:670
 msgid "View #Wrapstodon"
 msgstr "Ver #Wrapstodon"
 
-#: src/components/notification.jsx:862
+#: src/components/notification.jsx:894
 #: src/components/quote-chain-modal.jsx:18
 #: src/components/status.jsx:263
 msgid "Read more →"
@@ -2293,7 +2293,7 @@ msgstr "Exibir destaques"
 #: src/components/related-actions.jsx:468
 #: src/components/related-actions.jsx:528
 msgid "Show collections"
-msgstr ""
+msgstr "Ver coleções"
 
 #: src/components/related-actions.jsx:509
 #: src/pages/account-statuses.jsx:576
@@ -2408,19 +2408,19 @@ msgstr "{0}h"
 
 #: src/components/report-collection.jsx:25
 msgid "Report Collection"
-msgstr ""
+msgstr "Denunciar coleção"
 
 #: src/components/report-collection.jsx:60
 msgid "Collection reported"
-msgstr ""
+msgstr "Coleção denunciada"
 
 #: src/components/report-collection.jsx:65
 msgid "Unable to report collection"
-msgstr ""
+msgstr "Não foi possível denunciar coleção"
 
 #: src/components/report-collection.jsx:73
 msgid "Additional comments"
-msgstr ""
+msgstr "Comentários adicionais"
 
 #: src/components/report-collection.jsx:94
 #: src/components/report-modal.jsx:299
@@ -3307,36 +3307,36 @@ msgstr "Voltar ao início"
 
 #: src/pages/account-collections.jsx:71
 msgid "Collections featuring you"
-msgstr ""
+msgstr "Coleções com você presente"
 
 #: src/pages/account-collections.jsx:74
 msgid "Collections by {username}"
-msgstr ""
+msgstr "Coleções de {username}"
 
 #: src/pages/account-collections.jsx:190
 msgid "Created by you"
-msgstr ""
+msgstr "Criadas por você"
 
 #: src/pages/account-collections.jsx:196
 msgid "Featuring you"
-msgstr ""
+msgstr "Com você presente"
 
 #. placeholder {0}: collections.length
 #: src/pages/account-collections.jsx:239
 msgid "{0, plural, one {# collection} other {# collections}}"
-msgstr ""
+msgstr "{0, plural, one {# coleção} other {# coleções}}"
 
 #: src/pages/account-collections.jsx:254
 msgid "Unable to load collections."
-msgstr ""
+msgstr "Não foi possível carregar coleções."
 
 #: src/pages/account-collections.jsx:263
 msgid "No collections featuring you yet."
-msgstr ""
+msgstr "Nenhuma coleção com você presente ainda."
 
 #: src/pages/account-collections.jsx:264
 msgid "No collections yet."
-msgstr ""
+msgstr "Não há coleções ainda."
 
 #: src/pages/account-statuses.jsx:285
 msgid "Account posts"
@@ -3756,59 +3756,59 @@ msgstr "Subir"
 
 #: src/pages/collection.jsx:56
 msgid "Date added"
-msgstr ""
+msgstr "Data adicionada"
 
 #. Sort by name
 #. js-lingui-explicit-id
 #: src/pages/collection.jsx:59
 msgid "sort.name"
-msgstr ""
+msgstr "sort.name"
 
 #: src/pages/collection.jsx:61
 msgid "Last active"
-msgstr ""
+msgstr "Última atividade"
 
 #: src/pages/collection.jsx:62
 msgid "Most followers"
-msgstr ""
+msgstr "Mais seguidores"
 
 #: src/pages/collection.jsx:146
 #: src/pages/collection.jsx:147
 #: src/pages/collection.jsx:251
 msgid "Collection"
-msgstr ""
+msgstr "Coleção"
 
 #: src/pages/collection.jsx:182
 msgid "Removed from collection"
-msgstr ""
+msgstr "Removido da coleção"
 
 #: src/pages/collection.jsx:185
 msgid "Unable to remove from collection"
-msgstr ""
+msgstr "Não foi possível remover da coleção"
 
 #: src/pages/collection.jsx:291
 msgid "Post collection"
-msgstr ""
+msgstr "Coleção de publicações"
 
 #: src/pages/collection.jsx:430
 msgid "Report collection…"
-msgstr ""
+msgstr "Denunciar coleção…"
 
 #: src/pages/collection.jsx:446
 msgid "Unable to load collection."
-msgstr ""
+msgstr "Não foi possível carregar coleção."
 
 #: src/pages/collection.jsx:464
 msgid "<link><icon/> Collection</link> by <name/>"
-msgstr ""
+msgstr "<link><icon/> Coleção</link> por <name/>"
 
 #: src/pages/collection.jsx:541
 msgid "No accounts in this collection yet."
-msgstr ""
+msgstr "Não há contas nesta coleção ainda."
 
 #: src/pages/collection.jsx:604
 msgid "Marked as sensitive"
-msgstr ""
+msgstr "Marcada como sensível"
 
 #: src/pages/favourites.jsx:28
 msgid "No likes yet. Go like something!"
@@ -4176,133 +4176,133 @@ msgstr "Ninguém mencionou você :("
 msgid "Unable to load mentions."
 msgstr "Impossível carregar menções."
 
-#: src/pages/notifications.jsx:103
+#: src/pages/notifications.jsx:134
 msgid "You don't follow"
 msgstr "Você não segue"
 
-#: src/pages/notifications.jsx:104
+#: src/pages/notifications.jsx:135
 msgid "Who don't follow you"
 msgstr "Quem não segue você"
 
-#: src/pages/notifications.jsx:105
+#: src/pages/notifications.jsx:136
 msgid "With a new account"
 msgstr "Com uma conta nova"
 
-#: src/pages/notifications.jsx:106
+#: src/pages/notifications.jsx:137
 msgid "Who unsolicitedly private mention you"
 msgstr "Quem mencionou você privadamente sem solicitar"
 
-#: src/pages/notifications.jsx:107
+#: src/pages/notifications.jsx:138
 msgid "Who are limited by server moderators"
 msgstr "Quem está limitado por moderadores do servidor"
 
-#: src/pages/notifications.jsx:730
-#: src/pages/notifications.jsx:1083
+#: src/pages/notifications.jsx:761
+#: src/pages/notifications.jsx:1114
 msgid "Notifications settings"
 msgstr "Opções de notificação"
 
-#: src/pages/notifications.jsx:748
+#: src/pages/notifications.jsx:779
 msgid "New notifications"
 msgstr "Novas notificações"
 
 #. placeholder {0}: announcements.length
-#: src/pages/notifications.jsx:759
+#: src/pages/notifications.jsx:790
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Anúncio} other {Anúncios}}"
 
-#: src/pages/notifications.jsx:806
+#: src/pages/notifications.jsx:837
 #: src/pages/settings.jsx:1361
 msgid "Follow requests"
 msgstr "Solicitações de seguimento"
 
 #. placeholder {0}: followRequests.length
-#: src/pages/notifications.jsx:811
+#: src/pages/notifications.jsx:842
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr "{0, plural, one {# solicitação de seguimento} other {# solicitações de seguimento}}"
 
 #. placeholder {0}: notificationsPolicy.summary.pendingRequestsCount
-#: src/pages/notifications.jsx:866
+#: src/pages/notifications.jsx:897
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr "{0, plural, one {Notificações filtradas de # pessoa} other {Notificações filtradas de # pessoas}}"
 
-#: src/pages/notifications.jsx:949
+#: src/pages/notifications.jsx:980
 msgid "Only mentions"
 msgstr "Apenas menções"
 
-#: src/pages/notifications.jsx:955
+#: src/pages/notifications.jsx:986
 msgid "Today"
 msgstr "Hoje"
 
-#: src/pages/notifications.jsx:960
+#: src/pages/notifications.jsx:991
 msgid "You're all caught up."
 msgstr "Está tudo em dia."
 
-#: src/pages/notifications.jsx:983
+#: src/pages/notifications.jsx:1014
 msgid "Yesterday"
 msgstr "Ontem"
 
-#: src/pages/notifications.jsx:1031
+#: src/pages/notifications.jsx:1062
 msgid "Unable to load notifications"
 msgstr "Impossível carregar notificações"
 
-#: src/pages/notifications.jsx:1110
+#: src/pages/notifications.jsx:1141
 msgid "Notifications settings updated"
 msgstr "Opções de notificação atualizada"
 
-#: src/pages/notifications.jsx:1118
+#: src/pages/notifications.jsx:1149
 msgid "Filter out notifications from people:"
 msgstr "Filtrar notificações de pessoas:"
 
-#: src/pages/notifications.jsx:1132
+#: src/pages/notifications.jsx:1163
 msgid "Filter"
 msgstr "Filtrar"
 
-#: src/pages/notifications.jsx:1135
+#: src/pages/notifications.jsx:1166
 msgid "Ignore"
 msgstr "Ignorar"
 
 #. placeholder {0}: niceDateTime(updatedAtDate)
-#: src/pages/notifications.jsx:1208
+#: src/pages/notifications.jsx:1239
 msgid "Updated <0>{0}</0>"
 msgstr "Atualizado <0>{0}</0>"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1276
+#: src/pages/notifications.jsx:1307
 msgid "View notifications from <0>@{0}</0>"
 msgstr "Ver notificações de <0>@{0}</0>"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1297
+#: src/pages/notifications.jsx:1328
 msgid "Notifications from <0>@{0}</0>"
 msgstr "Notificações de <0>@{0}</0>"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1366
+#: src/pages/notifications.jsx:1397
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr "As notificações de @{0} não serão mais filtradas."
 
-#: src/pages/notifications.jsx:1371
+#: src/pages/notifications.jsx:1402
 msgid "Unable to accept notification request"
 msgstr "Impossível aceitar pedido de notificação"
 
-#: src/pages/notifications.jsx:1376
+#: src/pages/notifications.jsx:1407
 msgid "Allow"
 msgstr "Permitir"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1397
+#: src/pages/notifications.jsx:1428
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "As notificações de @{0} não aparecerá em notificações filtradas."
 
-#: src/pages/notifications.jsx:1402
+#: src/pages/notifications.jsx:1433
 msgid "Unable to dismiss notification request"
 msgstr "Impossível descartar pedido de notificação"
 
-#: src/pages/notifications.jsx:1407
+#: src/pages/notifications.jsx:1438
 msgid "Dismiss"
 msgstr "Descartar"
 
-#: src/pages/notifications.jsx:1422
+#: src/pages/notifications.jsx:1453
 msgid "Dismissed"
 msgstr "Descartado"
 

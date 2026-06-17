@@ -4,6 +4,7 @@ import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 
 import { api } from '../utils/api';
+import enhanceContent from '../utils/enhance-content';
 import { isFiltered } from '../utils/filters';
 import shortenNumber from '../utils/shorten-number';
 import states, { statusKey } from '../utils/states';
@@ -405,6 +406,14 @@ function Notification({
     text = contentText[isSelf ? 'poll-self' : isVoted ? 'poll-voted' : 'poll'];
   } else if (contentText[type]) {
     text = contentText[type];
+  } else if (notification.fallback?.title) {
+    text = (
+      <span
+        dangerouslySetInnerHTML={{
+          __html: enhanceContent(notification.fallback.title),
+        }}
+      />
+    );
   } else {
     // Anticipate unhandled notification types, possibly from Mastodon forks or non-Mastodon instances
     // This surfaces the error to the user, hoping that users will report it
@@ -662,6 +671,29 @@ function Notification({
                 </Link>
               </div>
             )}
+            {!!notification.fallback?.summary &&
+              (!!notification.fallback?.details ? (
+                <details class="notification-fallback-details">
+                  <summary
+                    dangerouslySetInnerHTML={{
+                      __html: enhanceContent(notification.fallback.summary),
+                    }}
+                  />
+                  <div
+                    class="notification-fallback-details-content"
+                    dangerouslySetInnerHTML={{
+                      __html: enhanceContent(notification.fallback.details),
+                    }}
+                  />
+                </details>
+              ) : (
+                <div
+                  class="notification-fallback-details"
+                  dangerouslySetInnerHTML={{
+                    __html: enhanceContent(notification.fallback.summary),
+                  }}
+                />
+              ))}
             {!!collection && (
               <CollectionCard collection={collection} instance={instance} />
             )}

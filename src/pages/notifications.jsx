@@ -52,6 +52,25 @@ const NOTIFICATIONS_LIMIT = 80;
 const NOTIFICATIONS_GROUPED_LIMIT = 20;
 const emptySearchParams = new URLSearchParams();
 
+const SUPPORTED_NOTIFICATION_TYPES = [
+  'mention',
+  'status',
+  'reblog',
+  'follow',
+  'follow_request',
+  'favourite',
+  'poll',
+  'update',
+  'admin.sign_up',
+  'admin.report',
+  'severed_relationships',
+  'moderation_warning',
+  'quote',
+  'quoted_update',
+  'added_to_collection',
+  'collection_update',
+];
+
 const scrollIntoViewOptions = {
   block: 'start',
   inline: 'center',
@@ -65,17 +84,29 @@ const memSupportsGroupedNotifications = mem(
   },
 );
 
+const memSupportsFallbackNotifications = mem(
+  () => getAPIVersions()?.mastodon >= 10,
+  {
+    expires: 1000 * 60 * 5, // 5 minutes
+  },
+);
+
 function mastoFetchNotificationsIterable(opts = {}) {
   const { masto } = api();
+  const supportedTypes = memSupportsFallbackNotifications()
+    ? SUPPORTED_NOTIFICATION_TYPES
+    : undefined;
   if (memSupportsGroupedNotifications()) {
     // https://github.com/mastodon/mastodon/pull/29889
     return masto.v2.notifications.list({
       limit: NOTIFICATIONS_GROUPED_LIMIT,
+      supportedTypes,
       ...opts,
     });
   } else {
     return masto.v1.notifications.list({
       limit: NOTIFICATIONS_LIMIT,
+      supportedTypes,
       ...opts,
     });
   }

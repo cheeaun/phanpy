@@ -1,13 +1,28 @@
 .collection-card {
   display: flex;
   flex-direction: column;
-  margin-top: 8px;
-  border-radius: 16px;
-  box-shadow:
+  /* margin-top: 8px; */
+  --collection-card-radius: 16px;
+  border-radius: var(--collection-card-radius);
+  @supports (corner-shape: squircle) {
+    border-radius: calc(var(--collection-card-radius) * 2);
+    corner-shape: squircle;
+  }
+  /* box-shadow:
     inset 0 0 0 1px var(--outline-color),
     inset 0 -1px 0 1px var(--bg-color),
     inset 0 -8px 16px -8px var(--outline-color),
-    inset 0 8px 16px var(--bg-color);
+    inset 0 8px 16px var(--bg-color); */
+  box-shadow:
+    inset 0 0 0 1px var(--bg-color),
+    inset 0 4px 6px -3px var(--outline-color),
+    inset 0 -6px 8px -4px var(--outline-color),
+    inset 0 0 32px var(--bg-color),
+    inset 0 0 64px var(--bg-color),
+    1px 0 var(--outline-stronger-color),
+    -1px 0 var(--outline-stronger-color),
+    0 0 2px var(--outline-stronger-color),
+    0 4px 12px -6px var(--drop-shadow-color);
   overflow: hidden;
   color: inherit;
   align-items: stretch;
@@ -20,12 +35,17 @@
     0 1px var(--bg-color),
     0 0 5px var(--bg-color);
   text-wrap: pretty;
-  transition:
+  /* transition:
     background-color 1s ease-in-out,
-    box-shadow 0.3s ease-in-out;
+    box-shadow 0.3s ease-in-out; */
+  outline: 1px solid transparent;
+  transition: var(--spring-timing-duration) var(--spring-timing-function);
+  transition-property: outline-color, transform;
 
   &:not(:active):is(:hover, :focus) {
-    box-shadow: inset 0 0 0 1px var(--outline-hover-color);
+    /* box-shadow: inset 0 0 0 1px var(--outline-hover-color); */
+    outline-color: var(--outline-hover-color);
+    transform: scale(1.01) rotateX(12.5deg);
   }
   &:active {
     transform: scale(0.98);
@@ -49,7 +69,7 @@
       padding-top: 8px;
     }
 
-    .status.large & {
+    :is(.collection-card.large, .status.large) & {
       font-size: 1.1em;
     }
   }
@@ -60,6 +80,7 @@
     min-height: 24px;
     white-space: nowrap;
     box-sizing: content-box;
+    overflow: hidden;
     -webkit-box-reflect: below 0
       linear-gradient(
         transparent calc(100% - 32px),
@@ -67,7 +88,7 @@
         rgba(0, 0, 0, 0.2)
       );
 
-    .status.large & {
+    :is(.collection-card.large, .status.large) & {
       min-height: 50px;
     }
 
@@ -76,7 +97,7 @@
       transition: opacity 2s var(--timing-function) 1s;
       filter: drop-shadow(0 0 8px var(--drop-shadow-color));
 
-      .status.large & {
+      :is(.collection-card.large, .status.large) & {
         width: 50px !important;
         height: 50px !important;
       }
@@ -89,9 +110,29 @@
       &:nth-child(n + 2) {
         margin-inline-start: -4px;
 
-        .status.large & {
+        :is(.collection-card.large, .status.large) & {
           margin-inline-start: -8px;
         }
+      }
+    }
+
+    .avatar-spacer {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+
+      &:nth-child(n + 2) {
+        margin-inline-start: -4px;
+
+        :is(.collection-card.large, .status.large) & {
+          margin-inline-start: -8px;
+        }
+      }
+
+      :is(.collection-card.large, .status.large) & {
+        width: 50px;
+        height: 50px;
       }
     }
 
@@ -104,6 +145,48 @@
 
       @starting-style {
         opacity: 0;
+      }
+    }
+  }
+
+  &.sensitive {
+    .collection-accounts {
+      -webkit-box-reflect: initial;
+
+      .avatar-placeholder {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        background-image: linear-gradient(
+          var(--bg-blur-color),
+          var(--bg-color)
+        );
+        border: 2px dashed var(--outline-color);
+        border-radius: 50%;
+        box-sizing: border-box;
+        vertical-align: middle;
+
+        :is(.collection-card.large, .status.large) & {
+          width: 50px;
+          height: 50px;
+        }
+
+        /* 2nd onwards */
+        &:nth-child(n + 2) {
+          margin-inline-start: -4px;
+
+          :is(.collection-card.large, .status.large) & {
+            margin-inline-start: -8px;
+          }
+        }
+
+        .icon {
+          color: var(--text-insignificant-color);
+          pointer-events: none;
+        }
       }
     }
   }
@@ -145,7 +228,7 @@
     font-size: 0.8em;
     color: var(--text-insignificant-color);
 
-    .status.large & {
+    :is(.collection-card.large, .status.large) & {
       -webkit-line-clamp: 5;
       line-clamp: 5;
     }
@@ -159,19 +242,25 @@
     display: flex;
     justify-content: center;
     z-index: 0;
+    opacity: 0.2;
     filter: blur(48px) saturate(3);
     transform: rotate(-5deg);
-    mask-image: radial-gradient(
+    /* mask-image: radial-gradient(
       125% 50% at center,
       transparent,
       rgba(0, 0, 0, 0.1) 50%,
       rgba(0, 0, 0, 0.5) 90%,
       black
+    ); */
+    mask-image: radial-gradient(
+      circle at bottom center,
+      transparent 30%,
+      black 60%
     );
 
-    .status.large & {
+    /* :is(.collection-card.large, .status.large) & {
       animation: rotate-card-bg 20s ease-in-out infinite alternate;
-    }
+    } */
 
     transition: 1s opacity var(--timing-function) 1.5s;
     /* Stop delay background when ALL avatars loaded */
@@ -195,4 +284,11 @@
   to {
     transform: rotate(5deg);
   }
+}
+
+.collections-container {
+  margin-top: 4px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+  gap: 12px;
 }

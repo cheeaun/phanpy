@@ -363,7 +363,7 @@ function _threadifyStatus(status, propInstance) {
       if (fetchIndex++ > 3) throw 'Too many fetches for thread'; // Some people revive old threads
       await new Promise((r) => setTimeout(r, 500 * fetchIndex)); // Be nice to rate limits
       // prevStatus = await masto.v1.statuses.$.select(inReplyToId).fetch();
-      prevStatus = await fetchStatus(inReplyToId, masto);
+      prevStatus = await fetchStatus(inReplyToId, instance);
       saveStatus(prevStatus, instance, { skipThreading: true });
     }
     // Prepend so that first status in thread will be index 0
@@ -427,6 +427,7 @@ export function unfurlStatus(status, instance) {
   }
 }
 
-const fetchStatus = pmem((statusID, masto) => {
+const fetchStatus = pmem((statusID, instance) => {
+  const { masto } = api({ instance });
   return masto.v1.statuses.$select(statusID).fetch();
 });

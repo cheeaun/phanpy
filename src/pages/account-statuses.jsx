@@ -177,12 +177,10 @@ function AccountStatuses({ columnMode, ...props }) {
         beforeStr,
       });
 
-      let limit;
+      let limit = LIMIT + 1;
       if (firstLoad) {
-        limit = LIMIT + 1;
         searchOffsetRef.current = 0;
       } else {
-        limit = LIMIT + searchOffsetRef.current + 1;
         searchOffsetRef.current += LIMIT;
       }
 
@@ -851,10 +849,10 @@ function MonthPicker(props) {
   );
 }
 
-function fetchAccount(id, masto) {
+export function fetchAccount(id, masto) {
   return masto.v1.accounts.$select(id).fetch();
 }
-const memFetchAccount = pmem(fetchAccount, {
+export const memFetchAccount = pmem(fetchAccount, {
   expires: 30 * 60 * 1000, // 30 minutes
 });
 

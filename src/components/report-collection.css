@@ -1,0 +1,120 @@
+.report-collection-container {
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 40em;
+  background-color: var(--bg-color);
+  box-shadow: 0 16px 32px -8px var(--drop-shadow-color);
+  overflow-y: auto;
+  animation: slide-up-smooth 0.3s ease-in-out;
+  position: relative;
+
+  @media (min-width: 40em) {
+    max-height: calc(100% - 32px);
+  }
+
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .top-controls {
+    position: sticky;
+    top: var(--sai-top, 0);
+    z-index: 1;
+    background-color: var(--bg-blur-color);
+    backdrop-filter: blur(16px);
+    padding: 16px;
+    padding: calc(var(--sai-top, 0) + 16px) calc(var(--sai-right, 0) + 16px)
+      16px calc(var(--sai-left, 0) + 16px);
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    pointer-events: auto;
+    align-items: center;
+
+    h1 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  main {
+    padding: 0 16px 16px;
+    padding: 0 calc(var(--sai-right, 0) + 16px)
+      calc(var(--sai-bottom, 0) + 16px) calc(var(--sai-left, 0) + 16px);
+  }
+
+  p {
+    margin-block: 0.5em;
+  }
+
+  .report-preview {
+    background-color: var(--bg-color);
+    border-radius: 24px;
+    border: 2px dashed var(--red-color);
+    box-shadow: inset 0 0 16px -4px var(--red-bg-color);
+    padding: 8px;
+    user-select: none;
+    pointer-events: none;
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+    filter: grayscale(0.5);
+    max-width: 480px;
+  }
+
+  .report-comment {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 1em;
+
+    p {
+      margin: 0;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: calc(2lh + 8px);
+      max-height: 50vh;
+    }
+  }
+
+  .report-forward-section {
+    margin-top: 1em;
+
+    label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      cursor: pointer;
+
+      input {
+        margin-inline: 0;
+      }
+    }
+  }
+
+  footer {
+    margin-top: 1em;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    button {
+      border-radius: 8px !important;
+      align-self: stretch;
+    }
+  }
+
+  .report-thanks {
+    text-align: center;
+    padding: 2em 0;
+
+    p {
+      margin-bottom: 1.5em;
+    }
+  }
+}

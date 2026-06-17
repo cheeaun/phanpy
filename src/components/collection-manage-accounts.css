@@ -1,0 +1,23 @@
+#collection-manage-accounts-container ul {
+  display: block;
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+
+  li {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  .account-block-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+}

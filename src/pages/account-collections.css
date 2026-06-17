@@ -1,0 +1,35 @@
+#account-collections-page {
+  .collections-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 16px;
+
+    > li:only-child {
+      grid-column: span 2;
+    }
+
+    > li {
+      @media (max-width: 480px) {
+        grid-column: span 2;
+
+        .collection-card {
+          max-width: none;
+        }
+      }
+
+      display: flex;
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+
+      .collection-card {
+        flex-grow: 1;
+        height: 100%;
+      }
+    }
+  }
+}

@@ -27,6 +27,7 @@ const SUPPORTED_IMAGE_FORMATS = [
   'image/png',
   'image/gif',
   'image/webp',
+  'image/jxl',
 ];
 const SUPPORTED_IMAGE_FORMATS_STR = SUPPORTED_IMAGE_FORMATS.join(',');
 

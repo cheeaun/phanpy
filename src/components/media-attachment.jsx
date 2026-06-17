@@ -445,7 +445,7 @@ function MediaAttachment({
                 {descTextarea}
                 <footer>
                   {suffixType === 'image' &&
-                    /^(png|jpe?g|gif|webp)$/i.test(subtype) &&
+                    /^(png|jpe?g|gif|webp|jxl)$/i.test(subtype) &&
                     !!states.settings.mediaAltGenerator &&
                     !!IMG_ALT_API_URL && (
                       <Menu2

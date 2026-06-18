@@ -34,6 +34,7 @@ import AccountBlock from './account-block';
 import AccountHandleInfo from './account-handle-info';
 import Avatar from './avatar';
 import EditProfileSheet from './edit-profile-sheet';
+import EmailSubscriptionForm from './email-subscription-form';
 import EmojiText from './emoji-text';
 import Endorsements from './endorsements';
 import Icon from './icon';
@@ -1138,6 +1139,13 @@ function AccountInfo({
           )
         )}
       </div>
+      {
+        /* import.meta.env.DEV || */ !moved &&
+          info?.emailSubscriptions === true &&
+          !isSelf && (
+            <EmailSubscriptionForm accountId={id} instance={instance} />
+          )
+      }
       {!!showEditProfile && (
         <Modal
           onClose={() => {

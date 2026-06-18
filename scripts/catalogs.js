@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
 // Dependency from Lingui, not listed in package.json
-import PO from 'pofile';
+import { parsePo } from 'pofile-ts';
 
 let listedLocales = [];
 try {
@@ -18,7 +18,7 @@ const catalogs = {};
 
 const enCatalog = files.find((file) => file.endsWith('en.po'));
 const enContent = fs.readFileSync(`src/locales/${enCatalog}`, 'utf8');
-const enPo = PO.parse(enContent);
+const enPo = parsePo(enContent);
 const total = enPo.items.length;
 console.log('Total strings:', total);
 
@@ -31,7 +31,7 @@ files.forEach((file) => {
     const code = file.replace(/\.po$/, '');
     if (IGNORE_LANGS.includes(code)) return;
     const content = fs.readFileSync(`src/locales/${file}`, 'utf8');
-    const po = PO.parse(content);
+    const po = parsePo(content);
     const { items } = po;
     // Percentage of translated strings
     const translated = items.filter(

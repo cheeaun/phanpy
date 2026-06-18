@@ -8,7 +8,7 @@ msgstr ""
 "Language: ca\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-18 06:58\n"
+"PO-Revision-Date: 2026-06-18 14:51\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -29,7 +29,7 @@ msgstr "Publicacions: {0}"
 
 #: src/components/account-block.jsx:209
 msgid "Last active: {date}"
-msgstr ""
+msgstr "Darrera activitat: {date}"
 
 #: src/components/account-block.jsx:227
 #: src/components/account-info.jsx:727
@@ -65,7 +65,7 @@ msgstr "Et segueix"
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-block.jsx:281
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> seguidor} other {<1>{1}</1> seguidors}}"
 
 #: src/components/account-block.jsx:307
 #: src/components/account-info.jsx:775
@@ -368,17 +368,17 @@ msgstr "Més de <0/>"
 #: src/components/collection-account-actions.jsx:35
 #: src/pages/collection.jsx:398
 msgid "Remove me from this collection?"
-msgstr ""
+msgstr "Voleu ser eliminat d'aquesta col·lecció?"
 
 #: src/components/collection-account-actions.jsx:44
 #: src/pages/collection.jsx:407
 msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
-msgstr ""
+msgstr "L'autor no podrà tornar-te a afegir a aquesta col·lecció durant 24 hores. Bloqueja'l per evitar que t'afegeixi a cap col·lecció."
 
 #: src/components/collection-account-actions.jsx:69
 #: src/pages/collection.jsx:418
 msgid "Remove me…"
-msgstr ""
+msgstr "Esborreu-me…"
 
 #: src/components/collection-account-actions.jsx:107
 #: src/components/related-actions.jsx:996
@@ -389,11 +389,11 @@ msgstr "Segueix"
 
 #: src/components/collection-add-account.jsx:92
 msgid "@{username} added to collection"
-msgstr ""
+msgstr "@{username} s'ha afegit a la col·lecció"
 
 #: src/components/collection-add-account.jsx:96
 msgid "Unable to add account"
-msgstr ""
+msgstr "No s'ha pogut afegir el compte"
 
 #: src/components/collection-add-account.jsx:148
 #: src/components/mention-modal.jsx:179
@@ -417,28 +417,28 @@ msgstr "S'ha produït un error en carregar els comptes"
 
 #: src/components/collection-add-account.jsx:231
 msgid "These accounts may have opted out of discovery or be on a server that doesn't support collections."
-msgstr ""
+msgstr "És possible que aquests comptes hagin desactivat la detecció o que estiguin en un servidor que no admet les col·leccions."
 
 #: src/components/collection-add-account.jsx:236
 msgid "These accounts review all follow requests. Followers can add them to collections."
-msgstr ""
+msgstr "Aquests comptes revisen totes les sol·licituds de seguiment. Els seguidors poden afegir-los a col·leccions."
 
 #: src/components/collection-add-edit.jsx:45
 #: src/pages/account-collections.jsx:179
 msgid "New collection"
-msgstr ""
+msgstr "Nova col·lecció"
 
 #: src/components/collection-add-edit.jsx:45
 msgid "Edit collection"
-msgstr ""
+msgstr "Edita col·lecció"
 
 #: src/components/collection-add-edit.jsx:97
 msgid "Unable to update collection."
-msgstr ""
+msgstr "No s'ha pogut actualitzar la col·lecció."
 
 #: src/components/collection-add-edit.jsx:98
 msgid "Unable to create collection."
-msgstr ""
+msgstr "No s'ha pogut crear la col·lecció."
 
 #: src/components/collection-add-edit.jsx:106
 #: src/components/edit-profile-sheet.jsx:574
@@ -448,15 +448,15 @@ msgstr "Nom"
 
 #: src/components/collection-add-edit.jsx:124
 msgid "Description"
-msgstr ""
+msgstr "Descripció"
 
 #: src/components/collection-add-edit.jsx:146
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: src/components/collection-add-edit.jsx:169
 msgid "Mark as sensitive"
-msgstr ""
+msgstr "Marca com a sensible"
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2038
@@ -470,7 +470,7 @@ msgstr "Públic"
 #: src/components/collection-card.jsx:201
 #: src/pages/collection.jsx:591
 msgid "Unlisted"
-msgstr ""
+msgstr "Sense llistar"
 
 #: src/components/collection-add-edit.jsx:192
 #: src/components/edit-profile-sheet.jsx:695
@@ -490,11 +490,11 @@ msgstr "Crea"
 
 #: src/components/collection-add-edit.jsx:199
 msgid "Delete this collection?"
-msgstr ""
+msgstr "Voleu suprimir aquesta col·lecció?"
 
 #: src/components/collection-add-edit.jsx:215
 msgid "Unable to delete collection."
-msgstr ""
+msgstr "No s'ha pogut esborrar la col·lecció."
 
 #: src/components/collection-add-edit.jsx:225
 #: src/components/drafts.jsx:126
@@ -514,28 +514,28 @@ msgstr "Col·lecció de <0>@{username}</0>"
 #: src/components/collection-card.jsx:189
 #: src/pages/collection.jsx:579
 msgid "Last updated: <relativeTime/>"
-msgstr ""
+msgstr "Darrera actualització: <relativeTime/>"
 
 #: src/components/collection-manage-accounts.jsx:90
 msgid "Unable to remove account"
-msgstr ""
+msgstr "No es pot eliminar el compte"
 
 #: src/components/collection-manage-accounts.jsx:101
 msgid "@{username} removed from collection"
-msgstr ""
+msgstr "S'ha eliminat @{username} de la col·lecció"
 
 #: src/components/collection-manage-accounts.jsx:124
 #: src/pages/collection.jsx:382
 msgid "Manage accounts"
-msgstr ""
+msgstr "Gestiona els comptes"
 
 #: src/components/collection-manage-accounts.jsx:143
 msgid "Pending"
-msgstr ""
+msgstr "Pendent"
 
 #: src/components/collection-manage-accounts.jsx:150
 msgid "Remove <0>{username}</0> from this collection?"
-msgstr ""
+msgstr "Voleu suprimir a <0>@{username}</0> de la col·lecció?"
 
 #: src/components/collection-manage-accounts.jsx:170
 #: src/components/edit-profile-sheet.jsx:473
@@ -547,7 +547,7 @@ msgstr "Suprimeix…"
 #: src/components/collection-manage-accounts.jsx:184
 #: src/pages/collection.jsx:557
 msgid "Add account"
-msgstr ""
+msgstr "Afegeix un compte"
 
 #: src/components/columns.jsx:29
 #: src/components/nav-menu.jsx:188
@@ -1669,7 +1669,7 @@ msgstr "\"M'agrada\""
 #: src/pages/collection.jsx:242
 #: src/pages/search.jsx:163
 msgid "Collections"
-msgstr ""
+msgstr "Col·leccions"
 
 #: src/components/nav-menu.jsx:274
 #: src/pages/followed-hashtags.jsx:15
@@ -1845,11 +1845,11 @@ msgstr "Ja teniu aquí el vostre #Wrapstodon {year}!"
 
 #: src/components/notification.jsx:298
 msgid "{account} added you to a collection."
-msgstr ""
+msgstr "{account} t'ha afegit a una col·lecció."
 
 #: src/components/notification.jsx:301
 msgid "{account} edited a collection you're in."
-msgstr ""
+msgstr "{account} ha editat una col·lecció on apareixes."
 
 #: src/components/notification.jsx:308
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
@@ -2293,7 +2293,7 @@ msgstr "Mostra els perfils destacats"
 #: src/components/related-actions.jsx:468
 #: src/components/related-actions.jsx:528
 msgid "Show collections"
-msgstr ""
+msgstr "Mostra les col·leccions"
 
 #: src/components/related-actions.jsx:509
 #: src/pages/account-statuses.jsx:576
@@ -2408,19 +2408,19 @@ msgstr "{0}h"
 
 #: src/components/report-collection.jsx:25
 msgid "Report Collection"
-msgstr ""
+msgstr "Denuncia la col·lecció"
 
 #: src/components/report-collection.jsx:60
 msgid "Collection reported"
-msgstr ""
+msgstr "Col·lecció denunciada"
 
 #: src/components/report-collection.jsx:65
 msgid "Unable to report collection"
-msgstr ""
+msgstr "No s'ha pogut denunciar la col·lecció"
 
 #: src/components/report-collection.jsx:73
 msgid "Additional comments"
-msgstr ""
+msgstr "Comentaris addicionals"
 
 #: src/components/report-collection.jsx:94
 #: src/components/report-modal.jsx:299
@@ -3307,36 +3307,36 @@ msgstr "Ves a la pàgina d'inici"
 
 #: src/pages/account-collections.jsx:71
 msgid "Collections featuring you"
-msgstr ""
+msgstr "Col·leccions on aparegueu"
 
 #: src/pages/account-collections.jsx:74
 msgid "Collections by {username}"
-msgstr ""
+msgstr "Col·leccions de {username}"
 
 #: src/pages/account-collections.jsx:190
 msgid "Created by you"
-msgstr ""
+msgstr "Creades per vos"
 
 #: src/pages/account-collections.jsx:196
 msgid "Featuring you"
-msgstr ""
+msgstr "Apareixeu en elles"
 
 #. placeholder {0}: collections.length
 #: src/pages/account-collections.jsx:239
 msgid "{0, plural, one {# collection} other {# collections}}"
-msgstr ""
+msgstr "{0, plural, one {# col·lecció} other {# col·leccions}}"
 
 #: src/pages/account-collections.jsx:254
 msgid "Unable to load collections."
-msgstr ""
+msgstr "No s'ha pogut carregar les col·leccions."
 
 #: src/pages/account-collections.jsx:263
 msgid "No collections featuring you yet."
-msgstr ""
+msgstr "Encara no hi ha cap col·lecció on aparegueu."
 
 #: src/pages/account-collections.jsx:264
 msgid "No collections yet."
-msgstr ""
+msgstr "Encara no hi ha col·leccions."
 
 #: src/pages/account-statuses.jsx:285
 msgid "Account posts"
@@ -3756,59 +3756,59 @@ msgstr "Torna a dalt"
 
 #: src/pages/collection.jsx:56
 msgid "Date added"
-msgstr ""
+msgstr "Data d'addició"
 
 #. Sort by name
 #. js-lingui-explicit-id
 #: src/pages/collection.jsx:59
 msgid "sort.name"
-msgstr ""
+msgstr "Ordena per nom"
 
 #: src/pages/collection.jsx:61
 msgid "Last active"
-msgstr ""
+msgstr "Darrera activitat"
 
 #: src/pages/collection.jsx:62
 msgid "Most followers"
-msgstr ""
+msgstr "Més seguidors"
 
 #: src/pages/collection.jsx:146
 #: src/pages/collection.jsx:147
 #: src/pages/collection.jsx:251
 msgid "Collection"
-msgstr ""
+msgstr "Col·lecció"
 
 #: src/pages/collection.jsx:182
 msgid "Removed from collection"
-msgstr ""
+msgstr "S'ha eliminat de la col·lecció"
 
 #: src/pages/collection.jsx:185
 msgid "Unable to remove from collection"
-msgstr ""
+msgstr "No s'ha pogut eliminar de la col·lecció"
 
 #: src/pages/collection.jsx:291
 msgid "Post collection"
-msgstr ""
+msgstr "Publica la col·lecció"
 
 #: src/pages/collection.jsx:430
 msgid "Report collection…"
-msgstr ""
+msgstr "Denuncia la col·lecció…"
 
 #: src/pages/collection.jsx:446
 msgid "Unable to load collection."
-msgstr ""
+msgstr "No s'ha pogut carregar la col·lecció."
 
 #: src/pages/collection.jsx:464
 msgid "<link><icon/> Collection</link> by <name/>"
-msgstr ""
+msgstr "<link><icon/> Col·lecció</link> de <name/>"
 
 #: src/pages/collection.jsx:541
 msgid "No accounts in this collection yet."
-msgstr ""
+msgstr "Encara no hi ha cap compte en aquesta col·lecció."
 
 #: src/pages/collection.jsx:604
 msgid "Marked as sensitive"
-msgstr ""
+msgstr "Marcat com a sensible"
 
 #: src/pages/favourites.jsx:28
 msgid "No likes yet. Go like something!"
@@ -4178,27 +4178,27 @@ msgstr "No ha estat possible carregar les mencions."
 
 #: src/pages/notifications.jsx:135
 msgid "People you don't follow"
-msgstr ""
+msgstr "Persones que no seguiu"
 
 #: src/pages/notifications.jsx:136
 msgid "People not following you"
-msgstr ""
+msgstr "Persones que no us segueixen"
 
 #: src/pages/notifications.jsx:137
 msgid "New accounts"
-msgstr ""
+msgstr "Comptes nous"
 
 #: src/pages/notifications.jsx:138
 msgid "Unsolicited private mentions"
-msgstr ""
+msgstr "Mencions privades no sol·licitades"
 
 #: src/pages/notifications.jsx:139
 msgid "Moderated accounts"
-msgstr ""
+msgstr "Comptes moderats"
 
 #: src/pages/notifications.jsx:140
 msgid "Bot accounts"
-msgstr ""
+msgstr "Comptes bot"
 
 #: src/pages/notifications.jsx:764
 #: src/pages/notifications.jsx:1117
@@ -4255,7 +4255,7 @@ msgstr "S’ha actualitzat la configuració de notificacions"
 
 #: src/pages/notifications.jsx:1156
 msgid "Filter notifications from:"
-msgstr ""
+msgstr "Filtreu les notificacions de:"
 
 #: src/pages/notifications.jsx:1172
 msgid "Filter"

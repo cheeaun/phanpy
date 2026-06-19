@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-18 12:13\n"
+"PO-Revision-Date: 2026-06-19 17:52\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -32,12 +32,12 @@ msgid "Last active: {date}"
 msgstr "Última atividade: {date}"
 
 #: src/components/account-block.jsx:227
-#: src/components/account-info.jsx:727
+#: src/components/account-info.jsx:728
 msgid "Automated"
 msgstr "Automático"
 
 #: src/components/account-block.jsx:234
-#: src/components/account-info.jsx:732
+#: src/components/account-info.jsx:733
 #: src/components/status.jsx:610
 msgid "Group"
 msgstr "Grupo"
@@ -68,14 +68,14 @@ msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> foll
 msgstr "{followersCount, plural, one {<0>{0}</0> seguidor} other {<1>{1}</1> seguidores}}"
 
 #: src/components/account-block.jsx:307
-#: src/components/account-info.jsx:775
+#: src/components/account-info.jsx:776
 msgid "Verified"
 msgstr "Verificado"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:323
-#: src/components/account-info.jsx:914
+#: src/components/account-info.jsx:915
 msgid "Joined <0>{0}</0>"
 msgstr "Juntou-se em <0>{0}</0>"
 
@@ -88,7 +88,7 @@ msgid "server domain name"
 msgstr "domínio do servidor"
 
 #: src/components/account-info-mini.jsx:57
-#: src/components/account-info.jsx:797
+#: src/components/account-info.jsx:798
 #: src/components/compose.jsx:2050
 #: src/pages/settings.jsx:308
 #: src/utils/visibility-text.jsx:7
@@ -97,50 +97,50 @@ msgstr "Seguidores"
 
 #: src/components/account-info-mini.jsx:61
 #: src/components/account-info-mini.jsx:100
-#: src/components/account-info.jsx:804
-#: src/components/account-info.jsx:862
+#: src/components/account-info.jsx:805
+#: src/components/account-info.jsx:863
 msgid "This user has chosen to not make this information available."
 msgstr "O usuário privou esta informação."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info-mini.jsx:67
-#: src/components/account-info.jsx:824
+#: src/components/account-info.jsx:825
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> seguidor} other {<1>{1}</1> seguidores}}"
 
 #. js-lingui-explicit-id
 #: src/components/account-info-mini.jsx:93
-#: src/components/account-info.jsx:852
+#: src/components/account-info.jsx:853
 msgid "following.stats"
 msgstr "Seguindo"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info-mini.jsx:106
-#: src/components/account-info.jsx:868
+#: src/components/account-info.jsx:869
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, other {<0>{0}</0> seguindo}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info-mini.jsx:119
-#: src/components/account-info.jsx:892
+#: src/components/account-info.jsx:893
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> publicação} other {<1>{1}</1> publicações}}"
 
-#: src/components/account-info.jsx:117
+#: src/components/account-info.jsx:118
 msgid "View profile"
 msgstr "Ver perfil"
 
-#: src/components/account-info.jsx:385
+#: src/components/account-info.jsx:386
 msgid "Unable to load account."
 msgstr "Impossível carregar a conta."
 
-#: src/components/account-info.jsx:400
+#: src/components/account-info.jsx:401
 msgid "Go to account page"
 msgstr "Ir à página da conta"
 
-#: src/components/account-info.jsx:406
+#: src/components/account-info.jsx:407
 #: src/components/timeline.jsx:663
 #: src/components/timeline2.jsx:701
 #: src/pages/home.jsx:237
@@ -150,51 +150,51 @@ msgstr "Ir à página da conta"
 msgid "Try again"
 msgstr "Tentar novamente"
 
-#: src/components/account-info.jsx:460
+#: src/components/account-info.jsx:461
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> disse que a nova conta é:"
 
-#: src/components/account-info.jsx:616
+#: src/components/account-info.jsx:617
 #: src/components/related-actions.jsx:542
 msgid "Handle copied"
 msgstr "Usuário copiado"
 
-#: src/components/account-info.jsx:619
+#: src/components/account-info.jsx:620
 #: src/components/related-actions.jsx:545
 msgid "Unable to copy handle"
 msgstr "Impossível copiar o usuário"
 
-#: src/components/account-info.jsx:625
+#: src/components/account-info.jsx:626
 #: src/components/related-actions.jsx:551
 msgid "Copy handle"
 msgstr "Copiar usuário"
 
-#: src/components/account-info.jsx:643
+#: src/components/account-info.jsx:644
 #: src/components/related-actions.jsx:616
 #: src/components/related-actions.jsx:891
 #: src/components/shortcuts-settings.jsx:1099
 msgid "QR code"
 msgstr "QR code"
 
-#: src/components/account-info.jsx:649
+#: src/components/account-info.jsx:650
 msgid "Go to original profile page"
 msgstr "Ir à página original do perfil"
 
-#: src/components/account-info.jsx:668
+#: src/components/account-info.jsx:669
 msgid "View profile image"
 msgstr "Ver foto de perfil"
 
-#: src/components/account-info.jsx:687
+#: src/components/account-info.jsx:688
 msgid "View profile header"
 msgstr "Ver banner de perfil"
 
-#: src/components/account-info.jsx:703
+#: src/components/account-info.jsx:704
 #: src/components/edit-profile-sheet.jsx:267
 #: src/components/related-actions.jsx:905
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: src/components/account-info.jsx:722
+#: src/components/account-info.jsx:723
 msgid "In Memoriam"
 msgstr "Em memória"
 
@@ -202,14 +202,14 @@ msgstr "Em memória"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:949
+#: src/components/account-info.jsx:950
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} publicações originais, {1} respostas, {2} citações, {3} impulsos"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:966
+#: src/components/account-info.jsx:967
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} publicações originais, {1} respostas, {2} impulsos"
 
@@ -220,23 +220,23 @@ msgstr "{0} publicações originais, {1} respostas, {2} impulsos"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:983
+#: src/components/account-info.jsx:984
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {Última publicação no último dia} other {Última publicação nos últimos {2} dias}}} other {{3, plural, one {Últimas {4} publicações no último dia} other {Últimas {5} publicações nos últimos {6} dias}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:999
+#: src/components/account-info.jsx:1000
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Última publicação no(s) ano(s) passado(s)} other {Últimas {1} publicações no(s) ano(s) passado(s)}}"
 
-#: src/components/account-info.jsx:1057
+#: src/components/account-info.jsx:1058
 #: src/pages/catchup.jsx:73
 #: src/pages/year-in-posts.jsx:1390
 msgid "Original"
 msgstr "Original"
 
-#: src/components/account-info.jsx:1061
+#: src/components/account-info.jsx:1062
 #: src/components/status.jsx:2817
 #: src/pages/account-statuses.jsx:426
 #: src/pages/catchup.jsx:74
@@ -248,7 +248,7 @@ msgstr "Original"
 msgid "Replies"
 msgstr "Respostas"
 
-#: src/components/account-info.jsx:1066
+#: src/components/account-info.jsx:1067
 #: src/components/quotes-modal.jsx:81
 #: src/components/status.jsx:2822
 #: src/pages/catchup.jsx:75
@@ -257,7 +257,7 @@ msgstr "Respostas"
 msgid "Quotes"
 msgstr "Citações"
 
-#: src/components/account-info.jsx:1071
+#: src/components/account-info.jsx:1072
 #: src/pages/account-statuses.jsx:442
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1596
@@ -267,11 +267,11 @@ msgstr "Citações"
 msgid "Boosts"
 msgstr "Impulsos"
 
-#: src/components/account-info.jsx:1077
+#: src/components/account-info.jsx:1078
 msgid "Post stats unavailable."
 msgstr "Estatísticas indisponíveis."
 
-#: src/components/account-info.jsx:1104
+#: src/components/account-info.jsx:1105
 msgid "View post stats"
 msgstr "Ver estatísticas"
 
@@ -366,17 +366,17 @@ msgid "More from <0/>"
 msgstr "Mais de <0/>"
 
 #: src/components/collection-account-actions.jsx:35
-#: src/pages/collection.jsx:398
+#: src/pages/collection.jsx:421
 msgid "Remove me from this collection?"
 msgstr "Me remover desta coleção?"
 
 #: src/components/collection-account-actions.jsx:44
-#: src/pages/collection.jsx:407
+#: src/pages/collection.jsx:430
 msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
 msgstr "Este curador não poderá re-adicioná-lo a esta coleção por 24 horas. Para impedir permanentemente que adicionem você às coleções, você pode bloqueá-los."
 
 #: src/components/collection-account-actions.jsx:69
-#: src/pages/collection.jsx:418
+#: src/pages/collection.jsx:441
 msgid "Remove me…"
 msgstr "Me remover…"
 
@@ -460,7 +460,7 @@ msgstr "Marcar como sensível"
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2038
-#: src/pages/collection.jsx:597
+#: src/pages/collection.jsx:683
 #: src/pages/settings.jsx:302
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
@@ -468,7 +468,7 @@ msgstr "Público"
 
 #: src/components/collection-add-edit.jsx:186
 #: src/components/collection-card.jsx:201
-#: src/pages/collection.jsx:591
+#: src/pages/collection.jsx:677
 msgid "Unlisted"
 msgstr "Não listado"
 
@@ -512,7 +512,7 @@ msgid "Collection by <0>@{username}</0>"
 msgstr "Coleção de <0>@{username}</0>"
 
 #: src/components/collection-card.jsx:189
-#: src/pages/collection.jsx:579
+#: src/pages/collection.jsx:665
 msgid "Last updated: <relativeTime/>"
 msgstr "Última atualização: <relativeTime/>"
 
@@ -525,7 +525,7 @@ msgid "@{username} removed from collection"
 msgstr "@{username} removido da coleção"
 
 #: src/components/collection-manage-accounts.jsx:124
-#: src/pages/collection.jsx:382
+#: src/pages/collection.jsx:404
 msgid "Manage accounts"
 msgstr "Gerenciar contas"
 
@@ -545,7 +545,7 @@ msgid "Remove…"
 msgstr "Excluir…"
 
 #: src/components/collection-manage-accounts.jsx:184
-#: src/pages/collection.jsx:557
+#: src/pages/collection.jsx:643
 msgid "Add account"
 msgstr "Adicionar conta"
 
@@ -950,7 +950,7 @@ msgstr "Sair"
 #: src/components/status.jsx:3123
 #: src/pages/account-statuses.jsx:674
 #: src/pages/accounts.jsx:149
-#: src/pages/collection.jsx:261
+#: src/pages/collection.jsx:283
 #: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:147
@@ -1166,7 +1166,7 @@ msgstr "Exportar"
 #. placeholder {0}: accounts.length
 #. placeholder {0}: sortedItems.length
 #: src/components/import-export-accounts.jsx:155
-#: src/pages/collection.jsx:570
+#: src/pages/collection.jsx:656
 msgid "{0, plural, one {# account} other {# accounts}}"
 msgstr "{0, plural, one {# conta} other {# contas}}"
 
@@ -1666,7 +1666,7 @@ msgstr "Curtidas"
 #: src/pages/account-collections.jsx:68
 #: src/pages/account-collections.jsx:147
 #: src/pages/account-collections.jsx:169
-#: src/pages/collection.jsx:242
+#: src/pages/collection.jsx:264
 #: src/pages/search.jsx:163
 msgid "Collections"
 msgstr "Coleções"
@@ -1931,14 +1931,14 @@ msgstr "Ler mais →"
 #: src/components/open-link-sheet.jsx:30
 #: src/components/related-actions.jsx:568
 #: src/components/status.jsx:1489
-#: src/pages/collection.jsx:302
+#: src/pages/collection.jsx:324
 msgid "Link copied"
 msgstr "Link copiado"
 
 #: src/components/open-link-sheet.jsx:33
 #: src/components/related-actions.jsx:571
 #: src/components/status.jsx:1492
-#: src/pages/collection.jsx:305
+#: src/pages/collection.jsx:327
 msgid "Unable to copy link"
 msgstr "Impossível copiar o link"
 
@@ -1951,14 +1951,14 @@ msgstr "Acessar link?"
 #: src/components/related-actions.jsx:577
 #: src/components/shortcuts-settings.jsx:1175
 #: src/components/status.jsx:1498
-#: src/pages/collection.jsx:311
+#: src/pages/collection.jsx:333
 msgid "Copy"
 msgstr "Copiar"
 
 #: src/components/open-link-sheet.jsx:82
 #: src/components/related-actions.jsx:598
 #: src/components/status.jsx:1520
-#: src/pages/collection.jsx:328
+#: src/pages/collection.jsx:350
 msgid "Share…"
 msgstr "Compartilhar…"
 
@@ -2642,7 +2642,7 @@ msgstr "Indisponível no modo de vista atual"
 
 #: src/components/shortcuts-settings.jsx:396
 #: src/components/status.jsx:1647
-#: src/pages/collection.jsx:373
+#: src/pages/collection.jsx:395
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "Editar"
@@ -3132,7 +3132,7 @@ msgstr "Editado"
 
 #: src/components/status.jsx:2517
 #: src/components/status.jsx:2579
-#: src/pages/collection.jsx:497
+#: src/pages/collection.jsx:583
 msgid "Show content"
 msgstr "Mostrar conteúdo"
 
@@ -3426,6 +3426,7 @@ msgid "Switch to account's server {0}"
 msgstr "Alterar para o servidor de {0}"
 
 #: src/pages/account-statuses.jsx:730
+#: src/pages/collection.jsx:497
 msgid "Switch to my server (<0>{currentInstance}</0>)"
 msgstr "Alterar para meu servidor (<0>{currentInstance}</0>)"
 
@@ -3681,7 +3682,7 @@ msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural, one {# autor} other {# autores}}"
 
 #: src/pages/catchup.jsx:1563
-#: src/pages/collection.jsx:335
+#: src/pages/collection.jsx:357
 msgid "Sort"
 msgstr "Ordenar"
 
@@ -3754,59 +3755,73 @@ msgstr "Autor anterior"
 msgid "Scroll to top"
 msgstr "Subir"
 
-#: src/pages/collection.jsx:56
+#: src/pages/collection.jsx:57
 msgid "Date added"
 msgstr "Data adicionada"
 
 #. Sort by name
 #. js-lingui-explicit-id
-#: src/pages/collection.jsx:59
+#: src/pages/collection.jsx:60
 msgid "sort.name"
 msgstr "sort.name"
 
-#: src/pages/collection.jsx:61
+#: src/pages/collection.jsx:62
 msgid "Last active"
 msgstr "Última atividade"
 
-#: src/pages/collection.jsx:62
+#: src/pages/collection.jsx:63
 msgid "Most followers"
 msgstr "Mais seguidores"
 
-#: src/pages/collection.jsx:146
-#: src/pages/collection.jsx:147
-#: src/pages/collection.jsx:251
+#: src/pages/collection.jsx:168
+#: src/pages/collection.jsx:169
+#: src/pages/collection.jsx:273
 msgid "Collection"
 msgstr "Coleção"
 
-#: src/pages/collection.jsx:182
+#: src/pages/collection.jsx:204
 msgid "Removed from collection"
 msgstr "Removido da coleção"
 
-#: src/pages/collection.jsx:185
+#: src/pages/collection.jsx:207
 msgid "Unable to remove from collection"
 msgstr "Não foi possível remover da coleção"
 
-#: src/pages/collection.jsx:291
+#: src/pages/collection.jsx:313
 msgid "Post collection"
 msgstr "Coleção de publicações"
 
-#: src/pages/collection.jsx:430
+#: src/pages/collection.jsx:453
 msgid "Report collection…"
 msgstr "Denunciar coleção…"
 
-#: src/pages/collection.jsx:446
+#: src/pages/collection.jsx:463
+#: src/pages/status.jsx:1648
+msgid "Experimental"
+msgstr "Experimental"
+
+#: src/pages/collection.jsx:489
+#: src/pages/status.jsx:1145
+msgid "Error: {e}"
+msgstr "Erro: {e}"
+
+#: src/pages/collection.jsx:508
+msgid "Switch to collection's server ({serverDomain})"
+msgstr ""
+
+#: src/pages/collection.jsx:532
 msgid "Unable to load collection."
 msgstr "Não foi possível carregar coleção."
 
-#: src/pages/collection.jsx:464
+#: src/pages/collection.jsx:550
 msgid "<link><icon/> Collection</link> by <name/>"
 msgstr "<link><icon/> Coleção</link> por <name/>"
 
-#: src/pages/collection.jsx:541
+#: src/pages/collection.jsx:627
 msgid "No accounts in this collection yet."
 msgstr "Não há contas nesta coleção ainda."
 
-#: src/pages/collection.jsx:604
+#: src/pages/collection.jsx:690
 msgid "Marked as sensitive"
 msgstr "Marcada como sensível"
 
@@ -4722,10 +4737,6 @@ msgstr "Você não está conectado. Interações como (respostas, impulsos, etc.
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr "Esta publicação é de outro servidor (<0>{instance}</0>). As interações (respostas, impulsos, etc) estão indisponíveis."
 
-#: src/pages/status.jsx:1145
-msgid "Error: {e}"
-msgstr "Erro: {e}"
-
 #: src/pages/status.jsx:1152
 msgid "Switch to my server to enable interactions"
 msgstr "Alterar para meu servidor para interagir"
@@ -4767,10 +4778,6 @@ msgstr "Alterar para vista completa"
 #: src/pages/status.jsx:1643
 msgid "Show all sensitive content"
 msgstr "Mostrar conteúdo sensível"
-
-#: src/pages/status.jsx:1648
-msgid "Experimental"
-msgstr "Experimental"
 
 #: src/pages/status.jsx:1657
 msgid "Unable to switch"

@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-19 17:53\n"
+"PO-Revision-Date: 2026-06-19 20:19\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -2721,7 +2721,7 @@ msgstr "Coller les raccourcis ici"
 
 #: src/components/shortcuts-settings.jsx:860
 msgid "Downloading saved shortcuts from server…"
-msgstr ""
+msgstr "Téléchargement des raccourcis sauvegardés depuis le serveur…"
 
 #: src/components/shortcuts-settings.jsx:888
 msgid "Unable to download shortcuts"
@@ -2794,7 +2794,7 @@ msgstr "Les raccourcis n’ont pas pu être copiés."
 
 #: src/components/shortcuts-settings.jsx:1136
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Sauvegarde des raccourcis vers le serveur…"
 
 #: src/components/shortcuts-settings.jsx:1143
 msgid "Shortcuts saved"
@@ -2806,7 +2806,7 @@ msgstr "Les raccourcis n’ont pas pu être sauvegardés."
 
 #: src/components/shortcuts-settings.jsx:1151
 msgid "Sync to server"
-msgstr ""
+msgstr "Synchroniser vers le serveur"
 
 #: src/components/shortcuts-settings.jsx:1166
 msgid "Shortcut settings copied"
@@ -2835,7 +2835,7 @@ msgstr ""
 
 #: src/components/status.jsx:292
 msgid "Private posts cannot be quoted"
-msgstr ""
+msgstr "Les messages privés ne peuvent pas être cités"
 
 #: src/components/status.jsx:293
 msgid "Request to quote"
@@ -2858,7 +2858,7 @@ msgstr "Vous n'êtes pas autorisé à citer ce message"
 #: src/components/status.jsx:3266
 #: src/components/status.jsx:3267
 msgid "Post unavailable"
-msgstr ""
+msgstr "Publication indisponible"
 
 #: src/components/status.jsx:634
 msgid "<0/> <1>boosted</1>"
@@ -2908,13 +2908,13 @@ msgstr ""
 
 #: src/components/status.jsx:1122
 msgid "{mentionsCount, plural, other {# mentions}}"
-msgstr ""
+msgstr "{mentionsCount, plural, one {}other {# mentions}}"
 
 #. placeholder {0}: mentionsCount - 1
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:1136
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
-msgstr ""
+msgstr "{0, plural, one {}other {<0>@{1}</0> d'abord, # autres ci-dessous}}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1158
@@ -3163,7 +3163,7 @@ msgstr ""
 
 #: src/components/status.jsx:3264
 msgid "Post pending"
-msgstr ""
+msgstr "Publication en attente"
 
 #: src/components/status.jsx:3268
 msgid "Post removed by author"
@@ -3171,15 +3171,15 @@ msgstr ""
 
 #: src/components/status.jsx:3269
 msgid "Post hidden because you've blocked @{name}."
-msgstr ""
+msgstr "Publication masquée parce que vous avez bloqué @{name}."
 
 #: src/components/status.jsx:3271
 msgid "Post hidden because you've blocked {domain}."
-msgstr ""
+msgstr "Publication masquée parce que vous avez bloqué {domain}."
 
 #: src/components/status.jsx:3272
 msgid "Post hidden because you've muted @{name}."
-msgstr ""
+msgstr "Publication masquée parce que vous avez bloqué @{name}."
 
 #: src/components/status.jsx:3347
 msgid "Show anyway"
@@ -3211,22 +3211,22 @@ msgstr "Fils"
 
 #: src/components/thread-badge.jsx:28
 msgid "Thread {index}/{total}"
-msgstr ""
+msgstr "Fil {index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:32
 msgid "Thread {index}/X"
-msgstr ""
+msgstr "Fil {index}/X"
 
 #. index/total posts in a thread
 #: src/components/thread-badge.jsx:41
 msgid "{index}/{total}"
-msgstr ""
+msgstr "{index}/{total}"
 
 #. X is the unspecified total number of posts in a thread
 #: src/components/thread-badge.jsx:46
 msgid "{index}/X"
-msgstr ""
+msgstr "{index}/X"
 
 #: src/components/timeline.jsx:562
 #: src/pages/settings.jsx:1373
@@ -3310,7 +3310,7 @@ msgstr ""
 
 #: src/pages/account-collections.jsx:74
 msgid "Collections by {username}"
-msgstr ""
+msgstr "Collections de {username}"
 
 #: src/pages/account-collections.jsx:190
 msgid "Created by you"
@@ -3335,7 +3335,7 @@ msgstr ""
 
 #: src/pages/account-collections.jsx:264
 msgid "No collections yet."
-msgstr ""
+msgstr "Aucune collection pour le moment."
 
 #: src/pages/account-statuses.jsx:285
 msgid "Account posts"
@@ -3355,7 +3355,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:303
 msgid "Media posts by {accountDisplay}"
-msgstr ""
+msgstr "Publications média par {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:392
 #: src/pages/account-statuses.jsx:401
@@ -3377,7 +3377,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:438
 msgid "Hiding boosts"
-msgstr ""
+msgstr "Cacher les boosts"
 
 #: src/pages/account-statuses.jsx:455
 msgid "Showing posts with media"
@@ -3422,12 +3422,12 @@ msgstr "Les informations sur le compte n’ont pas pu être chargés."
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:700
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "Basculer vers le serveur du compte {0}"
 
 #: src/pages/account-statuses.jsx:730
 #: src/pages/collection.jsx:497
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Basculer vers mon serveur (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:803
 msgid "Month"
@@ -3439,7 +3439,7 @@ msgstr "Actuel"
 
 #: src/pages/accounts.jsx:135
 msgid "Logged out"
-msgstr ""
+msgstr " Déconnecté "
 
 #: src/pages/accounts.jsx:141
 msgid "Default"
@@ -3469,7 +3469,7 @@ msgstr "Se déconnecter de <0>@{0}</0> ?"
 #. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:275
 msgid "Log out and remove <0>@{0}</0>"
-msgstr ""
+msgstr "Se déconnecter et supprimer <0>@{0}</0>"
 
 #: src/pages/accounts.jsx:287
 msgid "Log out…"
@@ -3478,7 +3478,7 @@ msgstr "Se déconnecter…"
 #. placeholder {0}: account.info.acct
 #: src/pages/accounts.jsx:297
 msgid "Remove <0>@{0}</0>?"
-msgstr ""
+msgstr "Supprimer <0>@{0}</0> ?"
 
 #: src/pages/accounts.jsx:315
 msgid "Remove account…"
@@ -3487,7 +3487,7 @@ msgstr ""
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:323
 msgid "Connected on {0} (<0/>)"
-msgstr ""
+msgstr "Connecté sur {0} (<0/>)"
 
 #: src/pages/accounts.jsx:340
 msgid "Add an existing account"
@@ -4508,19 +4508,19 @@ msgstr ""
 
 #: src/pages/settings.jsx:383
 msgid "Wellbeing"
-msgstr ""
+msgstr "Bien-être"
 
 #: src/pages/settings.jsx:396
 msgid "Hide Trending timeline"
-msgstr ""
+msgstr "Cacher le fil de tendance"
 
 #: src/pages/settings.jsx:408
 msgid "Hide Local timeline"
-msgstr ""
+msgstr "Masquer la chronologie locale"
 
 #: src/pages/settings.jsx:421
 msgid "Hide Federated timeline"
-msgstr ""
+msgstr "Cacher la chronologie fédérée"
 
 #: src/pages/settings.jsx:429
 msgid "Experiments"
@@ -4553,7 +4553,7 @@ msgstr "{0, plural, one {}=0 {Masquer le bouton \"Traduire\" pour:} other {Masqu
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
-msgstr ""
+msgstr "Remarque : Cette fonctionnalité utilise des services de traduction externes, propulsés par <0>{TRANSLATION_API_NAME}</0>."
 
 #: src/pages/settings.jsx:602
 msgid "Auto inline translation"
@@ -4565,7 +4565,7 @@ msgstr "Affiche automatiquement la traduction des messages sur le fil d’actual
 
 #: src/pages/settings.jsx:627
 msgid "Paginated timeline (beta)"
-msgstr ""
+msgstr "Chronologie paginée (bêta)"
 
 #: src/pages/settings.jsx:631
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
@@ -4601,7 +4601,7 @@ msgstr "⚠️⚠️⚠️ Très expérimental.<0/>Enregistré dans les notes pe
 
 #: src/pages/settings.jsx:740
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "Note : Cette fonctionnalité utilise l'API du serveur actuellement connectée."
 
 #: src/pages/settings.jsx:756
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4613,7 +4613,7 @@ msgstr "Masque le texte avec des rectangles, pratique pour prendre des captures 
 
 #: src/pages/settings.jsx:794
 msgid "Install {CLIENT_NAME}"
-msgstr ""
+msgstr "Installer {CLIENT_NAME}"
 
 #: src/pages/settings.jsx:802
 msgid "About"
@@ -4633,7 +4633,7 @@ msgstr "Faire un don"
 
 #: src/pages/settings.jsx:894
 msgid "What's new"
-msgstr ""
+msgstr "Nouveautés"
 
 #: src/pages/settings.jsx:898
 msgid "Privacy Policy"

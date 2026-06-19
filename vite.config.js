@@ -25,10 +25,11 @@ const {
   PHANPY_DISALLOW_ROBOTS: DISALLOW_ROBOTS,
   PHANPY_COMMIT_HASH: COMMIT_HASH,
   PHANPY_COMMIT_TIME: COMMIT_TIME,
+  PHANPY_NOW: NOW,
   PHANPY_DEV,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
 
-const now = new Date();
+const now = NOW ? new Date(NOW) : new Date();
 let commitHash;
 let commitTime;
 let fakeCommitHash = false;
@@ -57,7 +58,11 @@ if (COMMIT_HASH && COMMIT_TIME) {
   }
 }
 console.log(
-  `  commit hash: ${commitHash}\n  commit time: ${commitTime.toISOString()}`,
+  [
+    `  commit hash: ${commitHash}`,
+    `  commit time: ${commitTime.toISOString()}`,
+    `  build time:  ${now.toISOString()}`,
+  ].join('\n'),
 );
 
 let rollbarCode = fs.readFileSync(resolve(__dirname, './rollbar.js'), 'utf-8');

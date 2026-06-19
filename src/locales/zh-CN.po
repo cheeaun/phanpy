@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-18 06:59\n"
+"PO-Revision-Date: 2026-06-19 00:33\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -29,7 +29,7 @@ msgstr "嘟文: {0}"
 
 #: src/components/account-block.jsx:209
 msgid "Last active: {date}"
-msgstr ""
+msgstr "上次活跃: {date}"
 
 #: src/components/account-block.jsx:227
 #: src/components/account-info.jsx:727
@@ -65,7 +65,7 @@ msgstr "关注了你"
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-block.jsx:281
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> 粉丝} other {<1>{1}</1> followers}}"
 
 #: src/components/account-block.jsx:307
 #: src/components/account-info.jsx:775
@@ -368,17 +368,17 @@ msgstr "<0/> 的更多内容"
 #: src/components/collection-account-actions.jsx:35
 #: src/pages/collection.jsx:398
 msgid "Remove me from this collection?"
-msgstr ""
+msgstr "是否把自己从合集中移除？"
 
 #: src/components/collection-account-actions.jsx:44
 #: src/pages/collection.jsx:407
 msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
-msgstr ""
+msgstr "创建人在 24 小时内无法将你重新添加到此合集中。若要阻止对方把你添加到任意合集中，请屏蔽。"
 
 #: src/components/collection-account-actions.jsx:69
 #: src/pages/collection.jsx:418
 msgid "Remove me…"
-msgstr ""
+msgstr "将我移除…"
 
 #: src/components/collection-account-actions.jsx:107
 #: src/components/related-actions.jsx:996
@@ -389,11 +389,11 @@ msgstr "关注"
 
 #: src/components/collection-add-account.jsx:92
 msgid "@{username} added to collection"
-msgstr ""
+msgstr "@{username} 被添加到合集"
 
 #: src/components/collection-add-account.jsx:96
 msgid "Unable to add account"
-msgstr ""
+msgstr "无法添加账户"
 
 #: src/components/collection-add-account.jsx:148
 #: src/components/mention-modal.jsx:179
@@ -417,28 +417,28 @@ msgstr "加载账户时出错"
 
 #: src/components/collection-add-account.jsx:231
 msgid "These accounts may have opted out of discovery or be on a server that doesn't support collections."
-msgstr ""
+msgstr "这些账户可能已经退出发现功能，或其所在的站点不支持合集。"
 
 #: src/components/collection-add-account.jsx:236
 msgid "These accounts review all follow requests. Followers can add them to collections."
-msgstr ""
+msgstr "这些账号会手动审核所有关注请求。只有粉丝可以将其加入合集。"
 
 #: src/components/collection-add-edit.jsx:45
 #: src/pages/account-collections.jsx:179
 msgid "New collection"
-msgstr ""
+msgstr "新建合集"
 
 #: src/components/collection-add-edit.jsx:45
 msgid "Edit collection"
-msgstr ""
+msgstr "编辑合集"
 
 #: src/components/collection-add-edit.jsx:97
 msgid "Unable to update collection."
-msgstr ""
+msgstr "无法更新合集。"
 
 #: src/components/collection-add-edit.jsx:98
 msgid "Unable to create collection."
-msgstr ""
+msgstr "无法创建合集。"
 
 #: src/components/collection-add-edit.jsx:106
 #: src/components/edit-profile-sheet.jsx:574
@@ -448,15 +448,15 @@ msgstr "名称"
 
 #: src/components/collection-add-edit.jsx:124
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: src/components/collection-add-edit.jsx:146
 msgid "Language"
-msgstr ""
+msgstr "语言"
 
 #: src/components/collection-add-edit.jsx:169
 msgid "Mark as sensitive"
-msgstr ""
+msgstr "标记为敏感内容"
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2038
@@ -470,7 +470,7 @@ msgstr "公开"
 #: src/components/collection-card.jsx:201
 #: src/pages/collection.jsx:591
 msgid "Unlisted"
-msgstr ""
+msgstr "不列出"
 
 #: src/components/collection-add-edit.jsx:192
 #: src/components/edit-profile-sheet.jsx:695
@@ -490,11 +490,11 @@ msgstr "创建"
 
 #: src/components/collection-add-edit.jsx:199
 msgid "Delete this collection?"
-msgstr ""
+msgstr "是否删除此合集？"
 
 #: src/components/collection-add-edit.jsx:215
 msgid "Unable to delete collection."
-msgstr ""
+msgstr "无法删除合集。"
 
 #: src/components/collection-add-edit.jsx:225
 #: src/components/drafts.jsx:126
@@ -514,28 +514,28 @@ msgstr "<0>@{username}</0> 的合集"
 #: src/components/collection-card.jsx:189
 #: src/pages/collection.jsx:579
 msgid "Last updated: <relativeTime/>"
-msgstr ""
+msgstr "上次更新于: <relativeTime/>"
 
 #: src/components/collection-manage-accounts.jsx:90
 msgid "Unable to remove account"
-msgstr ""
+msgstr "无法移除账号"
 
 #: src/components/collection-manage-accounts.jsx:101
 msgid "@{username} removed from collection"
-msgstr ""
+msgstr "@{username} 被从合集中移除"
 
 #: src/components/collection-manage-accounts.jsx:124
 #: src/pages/collection.jsx:382
 msgid "Manage accounts"
-msgstr ""
+msgstr "管理账号"
 
 #: src/components/collection-manage-accounts.jsx:143
 msgid "Pending"
-msgstr ""
+msgstr "待批准"
 
 #: src/components/collection-manage-accounts.jsx:150
 msgid "Remove <0>{username}</0> from this collection?"
-msgstr ""
+msgstr "是否嫁给你 <0>{username}</0> 从合集中移除？"
 
 #: src/components/collection-manage-accounts.jsx:170
 #: src/components/edit-profile-sheet.jsx:473
@@ -547,7 +547,7 @@ msgstr "移除…"
 #: src/components/collection-manage-accounts.jsx:184
 #: src/pages/collection.jsx:557
 msgid "Add account"
-msgstr ""
+msgstr "添加账号"
 
 #: src/components/columns.jsx:29
 #: src/components/nav-menu.jsx:188
@@ -1669,7 +1669,7 @@ msgstr "点赞列表"
 #: src/pages/collection.jsx:242
 #: src/pages/search.jsx:163
 msgid "Collections"
-msgstr ""
+msgstr "合集"
 
 #: src/components/nav-menu.jsx:274
 #: src/pages/followed-hashtags.jsx:15
@@ -1844,11 +1844,11 @@ msgstr "你的 {year} #Wrapstodon 年度回顾在此！"
 
 #: src/components/notification.jsx:298
 msgid "{account} added you to a collection."
-msgstr ""
+msgstr "{account} 把你添加到了一个合集中。"
 
 #: src/components/notification.jsx:301
 msgid "{account} edited a collection you're in."
-msgstr ""
+msgstr "{account} 编辑了你所在的一个合集。"
 
 #: src/components/notification.jsx:308
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
@@ -2292,7 +2292,7 @@ msgstr "展示精选账户列表"
 #: src/components/related-actions.jsx:468
 #: src/components/related-actions.jsx:528
 msgid "Show collections"
-msgstr ""
+msgstr "显示合集"
 
 #: src/components/related-actions.jsx:509
 #: src/pages/account-statuses.jsx:576
@@ -2407,19 +2407,19 @@ msgstr "{0} 小时"
 
 #: src/components/report-collection.jsx:25
 msgid "Report Collection"
-msgstr ""
+msgstr "举报合集"
 
 #: src/components/report-collection.jsx:60
 msgid "Collection reported"
-msgstr ""
+msgstr "已举报合集"
 
 #: src/components/report-collection.jsx:65
 msgid "Unable to report collection"
-msgstr ""
+msgstr "无法举报合集"
 
 #: src/components/report-collection.jsx:73
 msgid "Additional comments"
-msgstr ""
+msgstr "附言"
 
 #: src/components/report-collection.jsx:94
 #: src/components/report-modal.jsx:299
@@ -3306,36 +3306,36 @@ msgstr "返回主页"
 
 #: src/pages/account-collections.jsx:71
 msgid "Collections featuring you"
-msgstr ""
+msgstr "包含你的合集"
 
 #: src/pages/account-collections.jsx:74
 msgid "Collections by {username}"
-msgstr ""
+msgstr "{username} 的合集"
 
 #: src/pages/account-collections.jsx:190
 msgid "Created by you"
-msgstr ""
+msgstr "由你创建"
 
 #: src/pages/account-collections.jsx:196
 msgid "Featuring you"
-msgstr ""
+msgstr "包含你"
 
 #. placeholder {0}: collections.length
 #: src/pages/account-collections.jsx:239
 msgid "{0, plural, one {# collection} other {# collections}}"
-msgstr ""
+msgstr "{0, plural, other {# 合集}}"
 
 #: src/pages/account-collections.jsx:254
 msgid "Unable to load collections."
-msgstr ""
+msgstr "无法加载合集。"
 
 #: src/pages/account-collections.jsx:263
 msgid "No collections featuring you yet."
-msgstr ""
+msgstr "还没有包含你的合集。"
 
 #: src/pages/account-collections.jsx:264
 msgid "No collections yet."
-msgstr ""
+msgstr "还没有合集。"
 
 #: src/pages/account-statuses.jsx:285
 msgid "Account posts"
@@ -3755,59 +3755,59 @@ msgstr "返回顶部"
 
 #: src/pages/collection.jsx:56
 msgid "Date added"
-msgstr ""
+msgstr "添加日期"
 
 #. Sort by name
 #. js-lingui-explicit-id
 #: src/pages/collection.jsx:59
 msgid "sort.name"
-msgstr ""
+msgstr "按名称排序"
 
 #: src/pages/collection.jsx:61
 msgid "Last active"
-msgstr ""
+msgstr "上次活跃"
 
 #: src/pages/collection.jsx:62
 msgid "Most followers"
-msgstr ""
+msgstr "粉丝数降序"
 
 #: src/pages/collection.jsx:146
 #: src/pages/collection.jsx:147
 #: src/pages/collection.jsx:251
 msgid "Collection"
-msgstr ""
+msgstr "合集"
 
 #: src/pages/collection.jsx:182
 msgid "Removed from collection"
-msgstr ""
+msgstr "已从合集中移除"
 
 #: src/pages/collection.jsx:185
 msgid "Unable to remove from collection"
-msgstr ""
+msgstr "无法从合集中移除"
 
 #: src/pages/collection.jsx:291
 msgid "Post collection"
-msgstr ""
+msgstr "发布合集"
 
 #: src/pages/collection.jsx:430
 msgid "Report collection…"
-msgstr ""
+msgstr "举报合集…"
 
 #: src/pages/collection.jsx:446
 msgid "Unable to load collection."
-msgstr ""
+msgstr "无法加载合集。"
 
 #: src/pages/collection.jsx:464
 msgid "<link><icon/> Collection</link> by <name/>"
-msgstr ""
+msgstr "<icon/><name/> 创建的<link>合集</link>"
 
 #: src/pages/collection.jsx:541
 msgid "No accounts in this collection yet."
-msgstr ""
+msgstr "此合集中还没有账号。"
 
 #: src/pages/collection.jsx:604
 msgid "Marked as sensitive"
-msgstr ""
+msgstr "已标记为敏感内容"
 
 #: src/pages/favourites.jsx:28
 msgid "No likes yet. Go like something!"
@@ -4177,27 +4177,27 @@ msgstr "无法加载提及列表。"
 
 #: src/pages/notifications.jsx:135
 msgid "People you don't follow"
-msgstr ""
+msgstr "你没有关注的人"
 
 #: src/pages/notifications.jsx:136
 msgid "People not following you"
-msgstr ""
+msgstr "没有关注你的人"
 
 #: src/pages/notifications.jsx:137
 msgid "New accounts"
-msgstr ""
+msgstr "新账号"
 
 #: src/pages/notifications.jsx:138
 msgid "Unsolicited private mentions"
-msgstr ""
+msgstr "不请自来的提及"
 
 #: src/pages/notifications.jsx:139
 msgid "Moderated accounts"
-msgstr ""
+msgstr "受限账号"
 
 #: src/pages/notifications.jsx:140
 msgid "Bot accounts"
-msgstr ""
+msgstr "机器人账号"
 
 #: src/pages/notifications.jsx:764
 #: src/pages/notifications.jsx:1117
@@ -4254,7 +4254,7 @@ msgstr "通知设置已更新"
 
 #: src/pages/notifications.jsx:1156
 msgid "Filter notifications from:"
-msgstr ""
+msgstr "过滤以下通知："
 
 #: src/pages/notifications.jsx:1172
 msgid "Filter"
@@ -4463,7 +4463,7 @@ msgstr "贡献翻译"
 
 #: src/pages/settings.jsx:255
 msgid "Keep navigation bars visible while scrolling"
-msgstr ""
+msgstr "滚动时保持导航栏可见"
 
 #: src/pages/settings.jsx:263
 msgid "Posting"

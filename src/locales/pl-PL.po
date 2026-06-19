@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-18 06:59\n"
+"PO-Revision-Date: 2026-06-19 11:43\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -29,7 +29,7 @@ msgstr "Wpisy: {0}"
 
 #: src/components/account-block.jsx:209
 msgid "Last active: {date}"
-msgstr ""
+msgstr "Ostatnia aktywność: {date}"
 
 #: src/components/account-block.jsx:227
 #: src/components/account-info.jsx:727
@@ -65,7 +65,7 @@ msgstr "Obserwuje cię"
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-block.jsx:281
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> obserwujący} few {<1>{1}</1> obserwujących} many {<1>{1}</1> obserwujących} other {<1>{1}</1> obserwujących}}"
 
 #: src/components/account-block.jsx:307
 #: src/components/account-info.jsx:775
@@ -368,17 +368,17 @@ msgstr "Więcej od <0/>"
 #: src/components/collection-account-actions.jsx:35
 #: src/pages/collection.jsx:398
 msgid "Remove me from this collection?"
-msgstr ""
+msgstr "Czy chcesz usunąć się z tej kolekcji?"
 
 #: src/components/collection-account-actions.jsx:44
 #: src/pages/collection.jsx:407
 msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
-msgstr ""
+msgstr "Kurator nie będzie mógł dodać Cię do tej kolekcji przez 25 godziny. Zablokuj go, żeby nie mógł dodać Cię także do żadnej innej kolekcji."
 
 #: src/components/collection-account-actions.jsx:69
 #: src/pages/collection.jsx:418
 msgid "Remove me…"
-msgstr ""
+msgstr "Usuń…"
 
 #: src/components/collection-account-actions.jsx:107
 #: src/components/related-actions.jsx:996
@@ -389,11 +389,11 @@ msgstr "Obserwuj"
 
 #: src/components/collection-add-account.jsx:92
 msgid "@{username} added to collection"
-msgstr ""
+msgstr "Dodano @{username} do kolekcji"
 
 #: src/components/collection-add-account.jsx:96
 msgid "Unable to add account"
-msgstr ""
+msgstr "Nie udało się dodać konta"
 
 #: src/components/collection-add-account.jsx:148
 #: src/components/mention-modal.jsx:179
@@ -417,28 +417,28 @@ msgstr "Błąd ładowania kont"
 
 #: src/components/collection-add-account.jsx:231
 msgid "These accounts may have opted out of discovery or be on a server that doesn't support collections."
-msgstr ""
+msgstr "To konto mogło zablokować funkcję odkrywania lub jest na serwerze nie obsługującym kolekcji."
 
 #: src/components/collection-add-account.jsx:236
 msgid "These accounts review all follow requests. Followers can add them to collections."
-msgstr ""
+msgstr "Te konta muszą zatwierdzić prośby o obserwowanie. Obserwujący mogą dodawać je do kolekcji."
 
 #: src/components/collection-add-edit.jsx:45
 #: src/pages/account-collections.jsx:179
 msgid "New collection"
-msgstr ""
+msgstr "Nowa kolekcja"
 
 #: src/components/collection-add-edit.jsx:45
 msgid "Edit collection"
-msgstr ""
+msgstr "Edytuj kolekcję"
 
 #: src/components/collection-add-edit.jsx:97
 msgid "Unable to update collection."
-msgstr ""
+msgstr "Nie udało się zaktualizować kolekcji."
 
 #: src/components/collection-add-edit.jsx:98
 msgid "Unable to create collection."
-msgstr ""
+msgstr "Nie udało się utworzyć kolekcji."
 
 #: src/components/collection-add-edit.jsx:106
 #: src/components/edit-profile-sheet.jsx:574
@@ -448,15 +448,15 @@ msgstr "Nazwa"
 
 #: src/components/collection-add-edit.jsx:124
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #: src/components/collection-add-edit.jsx:146
 msgid "Language"
-msgstr ""
+msgstr "Język"
 
 #: src/components/collection-add-edit.jsx:169
 msgid "Mark as sensitive"
-msgstr ""
+msgstr "Oznacz jako \"wrażliwe\""
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2038
@@ -490,11 +490,11 @@ msgstr "Utwórz"
 
 #: src/components/collection-add-edit.jsx:199
 msgid "Delete this collection?"
-msgstr ""
+msgstr "Usunąć tą kolekcję?"
 
 #: src/components/collection-add-edit.jsx:215
 msgid "Unable to delete collection."
-msgstr ""
+msgstr "Kolekcji nie udało się usunąć."
 
 #: src/components/collection-add-edit.jsx:225
 #: src/components/drafts.jsx:126
@@ -514,28 +514,28 @@ msgstr "Kolekcja autorstwa: <0>@{username}</0>"
 #: src/components/collection-card.jsx:189
 #: src/pages/collection.jsx:579
 msgid "Last updated: <relativeTime/>"
-msgstr ""
+msgstr "Ostatnia aktualizacja: <relativeTime/>"
 
 #: src/components/collection-manage-accounts.jsx:90
 msgid "Unable to remove account"
-msgstr ""
+msgstr "Nie udało się usunąć konta"
 
 #: src/components/collection-manage-accounts.jsx:101
 msgid "@{username} removed from collection"
-msgstr ""
+msgstr "Usunięto @{username} z kolekcji"
 
 #: src/components/collection-manage-accounts.jsx:124
 #: src/pages/collection.jsx:382
 msgid "Manage accounts"
-msgstr ""
+msgstr "Zarządzaj kontami"
 
 #: src/components/collection-manage-accounts.jsx:143
 msgid "Pending"
-msgstr ""
+msgstr "Oczekuje"
 
 #: src/components/collection-manage-accounts.jsx:150
 msgid "Remove <0>{username}</0> from this collection?"
-msgstr ""
+msgstr "Usunąć <0>{username}</0> z tej kolekcji?"
 
 #: src/components/collection-manage-accounts.jsx:170
 #: src/components/edit-profile-sheet.jsx:473
@@ -547,7 +547,7 @@ msgstr "Usuń…"
 #: src/components/collection-manage-accounts.jsx:184
 #: src/pages/collection.jsx:557
 msgid "Add account"
-msgstr ""
+msgstr "Dodaj konto"
 
 #: src/components/columns.jsx:29
 #: src/components/nav-menu.jsx:188
@@ -1669,7 +1669,7 @@ msgstr "Polubienia"
 #: src/pages/collection.jsx:242
 #: src/pages/search.jsx:163
 msgid "Collections"
-msgstr ""
+msgstr "Kolekcje"
 
 #: src/components/nav-menu.jsx:274
 #: src/pages/followed-hashtags.jsx:15
@@ -1844,11 +1844,11 @@ msgstr "Twój #Wrapstodon {year} jest już dostępny!"
 
 #: src/components/notification.jsx:298
 msgid "{account} added you to a collection."
-msgstr ""
+msgstr "Dodano Cię do kolekcji przez {account}."
 
 #: src/components/notification.jsx:301
 msgid "{account} edited a collection you're in."
-msgstr ""
+msgstr "Kolekcja, w której się znajdujesz została wyedytowana przez {account}."
 
 #: src/components/notification.jsx:308
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
@@ -2292,7 +2292,7 @@ msgstr "Pokaż wyróżnione profile"
 #: src/components/related-actions.jsx:468
 #: src/components/related-actions.jsx:528
 msgid "Show collections"
-msgstr ""
+msgstr "Pokaż kolekcje"
 
 #: src/components/related-actions.jsx:509
 #: src/pages/account-statuses.jsx:576
@@ -2407,19 +2407,19 @@ msgstr "{0}g"
 
 #: src/components/report-collection.jsx:25
 msgid "Report Collection"
-msgstr ""
+msgstr "Zgłoś kolekcję"
 
 #: src/components/report-collection.jsx:60
 msgid "Collection reported"
-msgstr ""
+msgstr "Kolekcja została zgłoszona"
 
 #: src/components/report-collection.jsx:65
 msgid "Unable to report collection"
-msgstr ""
+msgstr "Nie udało się zgłosić kolekcji"
 
 #: src/components/report-collection.jsx:73
 msgid "Additional comments"
-msgstr ""
+msgstr "Dodaktowe komentarze"
 
 #: src/components/report-collection.jsx:94
 #: src/components/report-modal.jsx:299
@@ -3306,36 +3306,36 @@ msgstr "Idź na stronę główną"
 
 #: src/pages/account-collections.jsx:71
 msgid "Collections featuring you"
-msgstr ""
+msgstr "Kolekcje, w których Cię wyróżniono"
 
 #: src/pages/account-collections.jsx:74
 msgid "Collections by {username}"
-msgstr ""
+msgstr "Kolekcje {username}"
 
 #: src/pages/account-collections.jsx:190
 msgid "Created by you"
-msgstr ""
+msgstr "Stworzone przez Ciebie"
 
 #: src/pages/account-collections.jsx:196
 msgid "Featuring you"
-msgstr ""
+msgstr "Wyróżnia Cię"
 
 #. placeholder {0}: collections.length
 #: src/pages/account-collections.jsx:239
 msgid "{0, plural, one {# collection} other {# collections}}"
-msgstr ""
+msgstr "{0, plural, one {# kolekcja} few {# kolekcji} many {# kolekcji} other {# kolekcji}}"
 
 #: src/pages/account-collections.jsx:254
 msgid "Unable to load collections."
-msgstr ""
+msgstr "Nie udało się załadować kolekcji."
 
 #: src/pages/account-collections.jsx:263
 msgid "No collections featuring you yet."
-msgstr ""
+msgstr "Nie ma kolekcji, w których Cię wyróżniono."
 
 #: src/pages/account-collections.jsx:264
 msgid "No collections yet."
-msgstr ""
+msgstr "Brak kolekcji."
 
 #: src/pages/account-statuses.jsx:285
 msgid "Account posts"
@@ -3755,39 +3755,39 @@ msgstr "Przewiń na górę"
 
 #: src/pages/collection.jsx:56
 msgid "Date added"
-msgstr ""
+msgstr "Data dodania"
 
 #. Sort by name
 #. js-lingui-explicit-id
 #: src/pages/collection.jsx:59
 msgid "sort.name"
-msgstr ""
+msgstr "sort.name"
 
 #: src/pages/collection.jsx:61
 msgid "Last active"
-msgstr ""
+msgstr "Ostatnia aktywność"
 
 #: src/pages/collection.jsx:62
 msgid "Most followers"
-msgstr ""
+msgstr "Najwięcej obserwujących"
 
 #: src/pages/collection.jsx:146
 #: src/pages/collection.jsx:147
 #: src/pages/collection.jsx:251
 msgid "Collection"
-msgstr ""
+msgstr "Kolekcja"
 
 #: src/pages/collection.jsx:182
 msgid "Removed from collection"
-msgstr ""
+msgstr "Usunięto z kolekcji"
 
 #: src/pages/collection.jsx:185
 msgid "Unable to remove from collection"
-msgstr ""
+msgstr "Nie udało się usunąć z kolekcji"
 
 #: src/pages/collection.jsx:291
 msgid "Post collection"
-msgstr ""
+msgstr "Opublikuj kolekcję"
 
 #: src/pages/collection.jsx:430
 msgid "Report collection…"

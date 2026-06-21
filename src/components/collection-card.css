@@ -296,3 +296,26 @@
   grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
   gap: 12px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .collection-card {
+    transition-timing-function: ease;
+    transition-duration: 0.1s;
+
+    .collection-accounts .avatar {
+      transition-timing-function: ease;
+      transition-duration: 0.2s;
+      transition-delay: 0s;
+    }
+
+    .account-overflow-count {
+      transition-timing-function: ease;
+      transition-duration: 0.2s;
+      transition-delay: 0s;
+    }
+
+    .collection-card-bg {
+      transition: none;
+    }
+  }
+}

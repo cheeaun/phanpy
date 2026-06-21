@@ -64,10 +64,12 @@
     }
 
     @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
-      > header .header-grid {
-        animation: peekaboo-header-full 1s linear both;
-        animation-timeline: scroll();
-        animation-range: 0 150px;
+      @media (prefers-reduced-motion: no-preference) {
+        > header .header-grid {
+          animation: peekaboo-header-full 1s linear both;
+          animation-timeline: scroll();
+          animation-range: 0 150px;
+        }
       }
     }
   }
@@ -318,5 +320,30 @@
   to {
     opacity: 0.25;
     scale: 0.95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #collection-page-bg {
+    transition: none;
+  }
+
+  #collection-page {
+    .collection-meta {
+      transition-timing-function: ease;
+      transition-duration: 0.2s;
+    }
+
+    .accounts-list {
+      transition-timing-function: ease;
+      transition-duration: 0.2s;
+      transition-delay: 0s;
+
+      > li {
+        animation: none;
+        transition-timing-function: ease;
+        transition-duration: 0.1s;
+      }
+    }
   }
 }

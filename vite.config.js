@@ -104,9 +104,7 @@ export default defineConfig(({ command }) => {
         babel: {
           plugins: ['@lingui/babel-plugin-lingui-macro'],
         },
-      }).filter(
-        (plugin) => !isBuild || plugin.name !== 'preact:devtools',
-      ),
+      }).filter((plugin) => !isBuild || plugin.name !== 'preact:devtools'),
       lingui(),
       run({
         silent: false,
@@ -211,7 +209,10 @@ export default defineConfig(({ command }) => {
             const links = cssFiles
               .map((file) => `  Link: <${file}>; rel=preload; as=style`)
               .join('\n');
-            fs.writeFileSync(resolve(__dirname, 'dist/_headers'), `/\n${links}`);
+            fs.writeFileSync(
+              resolve(__dirname, 'dist/_headers'),
+              `/\n${links}`,
+            );
           }
         },
       },
@@ -297,7 +298,7 @@ export default defineConfig(({ command }) => {
               return '';
             },
           );
-  
+
           // Try to place before first <link> tag, fallback to after last <meta> tag
           const linkRegex = /<link[^>]*>/;
           if (linkRegex.test(html)) {
@@ -328,7 +329,7 @@ export default defineConfig(({ command }) => {
           // manualChunks: (id, { getModuleInfo }) => {
           //   // if (id.includes('@formatjs/intl-segmenter/polyfill')) return 'intl-segmenter-polyfill';
           //   if (/tiny.*light/.test(id)) return 'tinyld-light';
-  
+
           //   // Implement logic similar to splitVendorChunkPlugin
           //   if (id.includes('node_modules')) {
           //     // Check if this module is dynamically imported
@@ -381,7 +382,7 @@ export default defineConfig(({ command }) => {
               Object.keys(bundle).forEach((fileName) => {
                 const shouldRemoveSourcemap =
                   fileName.includes('locales/') || fileName.includes('icons/');
-  
+
                 if (fileName.endsWith('.js.map') && shouldRemoveSourcemap) {
                   delete bundle[fileName];
                 } else if (fileName.endsWith('.js') && shouldRemoveSourcemap) {
@@ -401,5 +402,4 @@ export default defineConfig(({ command }) => {
       },
     },
   };
-
 });

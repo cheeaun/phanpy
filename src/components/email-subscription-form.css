@@ -3,6 +3,7 @@
   --stripe-gap: 6px;
 
   display: flex;
+  flex-direction: column;
   gap: 8px;
   margin: 0 0 16px;
   padding: 16px;
@@ -42,5 +43,9 @@
 
   button {
     border-radius: 0;
+  }
+
+  @media (min-width: 22em) {
+    flex-direction: row;
   }
 }

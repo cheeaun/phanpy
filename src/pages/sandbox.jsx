@@ -52,6 +52,7 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     tagsCount,
     deleted,
     showCollectionCard,
+    collectionCardsCount,
     collectionAccountsCount,
   } = toggles;
 
@@ -81,6 +82,7 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     // Random ID to un-memoize Status
     id: hashID(toggles),
     account: {
+      id: 'sandbox-account',
       username: 'test',
       name: 'Test',
       // avatar: 'https://picsum.photos/seed/avatar/200',
@@ -350,25 +352,34 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
 
   // Add tagged collections if enabled
   if (showCollectionCard) {
+    const cardsCount = Math.min(
+      6,
+      Math.max(1, parseInt(collectionCardsCount, 10) || 1),
+    );
     const accountsCount = Math.max(
       0,
       parseInt(collectionAccountsCount, 10) || 0,
     );
-    base.taggedCollections = [
-      {
-        name: 'Sandbox Test Collection',
+    base.taggedCollections = Array(cardsCount)
+      .fill(0)
+      .map((_, j) => ({
+        id: `sandbox-collection-${j}`,
+        name: `Sandbox Test Collection ${j + 1}`,
         description:
           'A sample collection for testing the CollectionCard component.',
-        url: 'https://example.com/collection/sandbox-test',
+        url: `https://example.com/collection/sandbox-test-${j}`,
         itemsCount: accountsCount,
         items: Array(accountsCount)
           .fill(0)
           .map((_, i) => ({
-            accountId: `sandbox-collection-${i}`,
+            accountId: `sandbox-collection-${j}-${i}`,
           })),
         accountId: base.account?.id || 'sandbox-creator',
-      },
-    ];
+        language: 'en',
+        updatedAt: new Date().toISOString(),
+        discoverable: true,
+        sensitive: false,
+      }));
   }
 
   console.log('Final base', base);
@@ -406,7 +417,8 @@ const INITIAL_STATE = {
   tagsCount: 'few', // New option for tags count: 'few' (3) or 'many' (10)
   deleted: false, // Toggle to mark status as deleted
   showCollectionCard: false, // Toggle to show collection card
-  collectionAccountsCount: '3', // Number of accounts in the collection
+  collectionCardsCount: '1', // Number of collection cards (max 6)
+  collectionAccountsCount: '3', // Number of accounts in each collection
 };
 
 export default function Sandbox() {
@@ -535,6 +547,7 @@ export default function Sandbox() {
       tagsCount: toggleState.tagsCount, // Add tagsCount option
       deleted: toggleState.deleted, // Add deleted toggle
       showCollectionCard: toggleState.showCollectionCard,
+      collectionCardsCount: toggleState.collectionCardsCount,
       collectionAccountsCount: toggleState.collectionAccountsCount,
     },
   });
@@ -892,6 +905,10 @@ export default function Sandbox() {
   // Pre-populate states.accounts with collection account data
   // This must happen synchronously during render so CollectionCard can read them
   if (toggleState.showCollectionCard) {
+    const cardsCount = Math.min(
+      6,
+      Math.max(1, parseInt(toggleState.collectionCardsCount, 10) || 1),
+    );
     const accountsCount = Math.max(
       0,
       parseInt(toggleState.collectionAccountsCount, 10) || 0,
@@ -908,20 +925,34 @@ export default function Sandbox() {
       bot: false,
       url: `https://${currentInstance}/@sandbox-creator`,
     };
-
-    // Add collection member accounts
-    for (let i = 0; i < accountsCount; i++) {
-      const id = `sandbox-collection-${i}`;
-      states.accounts[id] = {
-        id,
-        username: `collection${i}`,
-        acct: `collection${i}@${currentInstance}`,
-        displayName: `Collection User ${i}`,
-        avatarStatic: `https://picsum.photos/seed/sandbox-coll-${i}/200`,
-        avatar: `https://picsum.photos/seed/sandbox-coll-${i}/200`,
-        bot: i === 0,
-        url: `https://${currentInstance}/@collection${i}`,
+    if (!states.accounts['sandbox-account']) {
+      states.accounts['sandbox-account'] = {
+        id: 'sandbox-account',
+        username: 'test',
+        acct: `test@${currentInstance}`,
+        displayName: 'Test',
+        avatarStatic: '/logo-192.png',
+        avatar: '/logo-192.png',
+        bot: false,
+        url: `https://${currentInstance}/@test`,
       };
+    }
+
+    // Add collection member accounts for all collections
+    for (let j = 0; j < cardsCount; j++) {
+      for (let i = 0; i < accountsCount; i++) {
+        const id = `sandbox-collection-${j}-${i}`;
+        states.accounts[id] = {
+          id,
+          username: `collection${j}-${i}`,
+          acct: `collection${j}-${i}@${currentInstance}`,
+          displayName: `Collection ${j + 1} User ${i}`,
+          avatarStatic: `https://picsum.photos/seed/sandbox-coll-${j}-${i}/200`,
+          avatar: `https://picsum.photos/seed/sandbox-coll-${j}-${i}/200`,
+          bot: i === 0,
+          url: `https://${currentInstance}/@collection${j}-${i}`,
+        };
+      }
     }
   }
 
@@ -1740,6 +1771,23 @@ export default function Sandbox() {
                     }
                   />
                   <span>Collection card</span>
+                  <input
+                    type="number"
+                    min="1"
+                    max="6"
+                    value={toggleState.collectionCardsCount}
+                    step="1"
+                    onChange={(e) => {
+                      const count = Math.min(
+                        6,
+                        Math.max(1, parseInt(e.target.value, 10) || 1),
+                      );
+                      updateToggles({
+                        collectionCardsCount: String(count),
+                      });
+                    }}
+                    disabled={!toggleState.showCollectionCard}
+                  />
                 </label>
                 {toggleState.showCollectionCard && (
                   <ul>

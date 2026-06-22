@@ -43,12 +43,15 @@ export default function HttpRoute() {
           limit: 1,
           resolve: true,
         });
-        if (result.statuses.length) {
+        if (result.statuses?.length) {
           const status = result.statuses[0];
           window.location.hash = `/${currentInstance}/s/${status.id}?view=full`;
-        } else if (result.accounts.length) {
+        } else if (result.accounts?.length) {
           const account = result.accounts[0];
           window.location.hash = `/${currentInstance}/a/${account.id}`;
+        } else if (result.collections?.length) {
+          const collection = result.collections[0];
+          window.location.hash = `/${currentInstance}/c/${collection.id}`;
         } else if (statusURL) {
           // Fallback to original URL, which will probably show error
           window.location.hash = statusURL + '?view=full';

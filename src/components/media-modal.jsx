@@ -113,6 +113,27 @@ function MediaModal({
     };
   }, []);
 
+  const prevIndexRef = useRef(currentIndex);
+  useEffect(() => {
+    const prevIndex = prevIndexRef.current;
+    prevIndexRef.current = currentIndex;
+    if (prevIndex === currentIndex) return;
+
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    carousel.querySelectorAll('video, audio').forEach((el) => {
+      if (el.muted) return;
+      const item = el.closest('.carousel-item');
+      if (item) {
+        const idx = Array.from(item.parentNode.children).indexOf(item);
+        if (idx !== currentIndex) {
+          el.pause();
+        }
+      }
+    });
+  }, [currentIndex]);
+
   useEffect(() => {
     let timer = setTimeout(() => {
       carouselRef.current?.focus?.();
@@ -319,7 +340,12 @@ function MediaModal({
                   </span>
                 </button>
               )}
-              <Media media={media} showOriginal lang={lang} />
+              <Media
+                media={media}
+                showOriginal
+                lang={lang}
+                autoplay={i === index}
+              />
             </div>
           );
         })}

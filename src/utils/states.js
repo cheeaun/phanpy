@@ -3,11 +3,12 @@ import { proxy, subscribe } from 'valtio';
 import { subscribeKey } from 'valtio/utils';
 
 import { api } from './api';
+import extractCollectionsPageInfo from './collections-url';
 import isMastodonLinkMaybe from './isMastodonLinkMaybe';
 import pmem from './pmem';
 import rateLimit from './ratelimit';
 import store from './store';
-import unfurlMastodonLink from './unfurl-link';
+import unfurlMastodonLink, { unfurlCollectionLink } from './unfurl-link';
 
 // Restore prevLocation from sessionStorage for page reload persistence
 function restorePrevLocation() {
@@ -363,7 +364,7 @@ function _threadifyStatus(status, propInstance) {
       if (fetchIndex++ > 3) throw 'Too many fetches for thread'; // Some people revive old threads
       await new Promise((r) => setTimeout(r, 500 * fetchIndex)); // Be nice to rate limits
       // prevStatus = await masto.v1.statuses.$.select(inReplyToId).fetch();
-      prevStatus = await fetchStatus(inReplyToId, masto);
+      prevStatus = await fetchStatus(inReplyToId, instance);
       saveStatus(prevStatus, instance, { skipThreading: true });
     }
     // Prepend so that first status in thread will be index 0
@@ -403,30 +404,35 @@ export function unfurlStatus(status, instance) {
         return !isPostItself && isMastodonLinkMaybe(url);
       })
       .forEach((a, i) => {
-        unfurlMastodonLink(currentInstance, a.href).then((result) => {
-          if (!result) return;
-          if (!sKey) return;
-          if (result?.id === status.id) {
-            // Unfurled post is the post itself???
-            // Scenario:
-            // 1. Post with [URL]
-            // 2. Unfurl [URL], API returns the same post that contains [URL]
-            // 3. 💥 Recursive quote posts 💥
-            // Note: Mastodon search doesn't return posts that contains [URL], it's actually used to *resolve* the URL
-            // But some non-Mastodon servers, their search API will eventually search posts that contains [URL] and return them
-            return;
-          }
-          if (!Array.isArray(states.statusQuotes[sKey])) {
-            states.statusQuotes[sKey] = [];
-          }
-          if (!states.statusQuotes[sKey][i]) {
-            states.statusQuotes[sKey].splice(i, 0, result);
-          }
-        });
+        if (extractCollectionsPageInfo(a.href)) {
+          unfurlCollectionLink(currentInstance, a.href);
+        } else {
+          unfurlMastodonLink(currentInstance, a.href).then((result) => {
+            if (!result) return;
+            if (!sKey) return;
+            if (result?.id === status.id) {
+              // Unfurled post is the post itself???
+              // Scenario:
+              // 1. Post with [URL]
+              // 2. Unfurl [URL], API returns the same post that contains [URL]
+              // 3. 💥 Recursive quote posts 💥
+              // Note: Mastodon search doesn't return posts that contains [URL], it's actually used to *resolve* the URL
+              // But some non-Mastodon servers, their search API will eventually search posts that contains [URL] and return them
+              return;
+            }
+            if (!Array.isArray(states.statusQuotes[sKey])) {
+              states.statusQuotes[sKey] = [];
+            }
+            if (!states.statusQuotes[sKey][i]) {
+              states.statusQuotes[sKey].splice(i, 0, result);
+            }
+          });
+        }
       });
   }
 }
 
-const fetchStatus = pmem((statusID, masto) => {
+const fetchStatus = pmem((statusID, instance) => {
+  const { masto } = api({ instance });
   return masto.v1.statuses.$select(statusID).fetch();
 });

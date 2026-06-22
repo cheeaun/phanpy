@@ -14,6 +14,7 @@ import {
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
+import { memFetchFamiliarFollowers } from '../utils/familiar-followers';
 import getDomain from '../utils/get-domain';
 import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
@@ -33,6 +34,7 @@ import AccountBlock from './account-block';
 import AccountHandleInfo from './account-handle-info';
 import Avatar from './avatar';
 import EditProfileSheet from './edit-profile-sheet';
+import EmailSubscriptionForm from './email-subscription-form';
 import EmojiText from './emoji-text';
 import Endorsements from './endorsements';
 import Icon from './icon';
@@ -44,15 +46,6 @@ import RelatedActions from './related-actions';
 const LIMIT = 80;
 
 const ACCOUNT_INFO_MAX_AGE = 1000 * 60 * 10; // 10 mins
-
-function fetchFamiliarFollowers(currentID, masto) {
-  return masto.v1.accounts.familiarFollowers.fetch({
-    id: [currentID],
-  });
-}
-const memFetchFamiliarFollowers = pmem(fetchFamiliarFollowers, {
-  expires: ACCOUNT_INFO_MAX_AGE,
-});
 
 async function fetchPostingStats(accountID, masto) {
   const fetchStatuses = masto.v1.accounts
@@ -144,7 +137,7 @@ function AccountInfo({
   const { masto, authenticated: currentAuthenticated } = api({
     instance,
   });
-  const { masto: currentMasto, instance: currentInstance } = api();
+  const { instance: currentInstance } = api();
   const [uiState, setUIState] = useState('default');
   const isString = typeof account === 'string';
   const [info, setInfo] = useState(isString ? null : account);
@@ -322,13 +315,10 @@ function AccountInfo({
 
   const renderFamiliarFollowers = async (currentID) => {
     try {
-      const followers = await memFetchFamiliarFollowers(
-        currentID,
-        currentMasto,
-      );
+      const followers = await memFetchFamiliarFollowers(currentID);
       console.log('fetched familiar followers', followers);
       setFamiliarFollowers(
-        followers[0].accounts.slice(0, FAMILIAR_FOLLOWERS_LIMIT),
+        followers[0]?.accounts?.slice(0, FAMILIAR_FOLLOWERS_LIMIT) || [],
       );
     } catch (e) {
       console.error(e);
@@ -1149,6 +1139,13 @@ function AccountInfo({
           )
         )}
       </div>
+      {
+        /* import.meta.env.DEV || */ !moved &&
+          info?.emailSubscriptions === true &&
+          !isSelf && (
+            <EmailSubscriptionForm accountId={id} instance={instance} />
+          )
+      }
       {!!showEditProfile && (
         <Modal
           onClose={() => {

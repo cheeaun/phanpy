@@ -66,24 +66,30 @@ export default memo(function BackgroundService() {
     let sub;
     let streamTimeout;
     let pollNotifications;
+    let cancelled = false;
     if (isLoggedIn && visible) {
       const { masto, streaming, instance } = api();
       (async () => {
         // 1. Get the latest notification
         await checkLatestNotification(masto, instance);
 
-        let hasStreaming = false;
-        // 2. Start streaming
+        const startPolling = () => {
+          if (cancelled) return;
+          console.log('🎏 Fallback to polling');
+          pollNotifications = setInterval(() => {
+            checkLatestNotification(masto, instance, true);
+          }, POLL_INTERVAL);
+        };
+
+        // 2. Start streaming or fall back to polling
         if (streaming) {
           streamTimeout = setTimeout(() => {
             (async () => {
               try {
-                hasStreaming = true;
                 sub = streaming.user.notification.subscribe();
                 console.log('🎏 Streaming notification', sub);
                 for await (const entry of sub) {
-                  if (!sub) break;
-                  if (!visible) break;
+                  if (cancelled || !sub) break;
                   console.log('🔔🔔 Notification entry', entry);
                   if (entry.event === 'notification') {
                     console.log('🔔🔔 Notification', entry);
@@ -95,22 +101,20 @@ export default memo(function BackgroundService() {
                 }
                 console.log('💥 Streaming notification loop STOPPED');
               } catch (e) {
-                hasStreaming = false;
-                console.error(e);
+                console.error('💥 Streaming error', e);
               }
 
-              if (!hasStreaming) {
-                console.log('🎏 Streaming failed, fallback to polling');
-                pollNotifications = setInterval(() => {
-                  checkLatestNotification(masto, instance, true);
-                }, POLL_INTERVAL);
-              }
+              startPolling();
             })();
           }, STREAMING_TIMEOUT);
+        } else {
+          console.log('🎏 No streaming available, polling directly');
+          startPolling();
         }
       })();
     }
     return () => {
+      cancelled = true;
       sub?.unsubscribe?.();
       sub = null;
       clearTimeout(streamTimeout);

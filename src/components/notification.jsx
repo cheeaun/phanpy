@@ -4,6 +4,7 @@ import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 
 import { api } from '../utils/api';
+import enhanceContent from '../utils/enhance-content';
 import { isFiltered } from '../utils/filters';
 import shortenNumber from '../utils/shorten-number';
 import states, { statusKey } from '../utils/states';
@@ -11,6 +12,7 @@ import { getCurrentAccountID } from '../utils/store-utils';
 import useTruncated from '../utils/useTruncated';
 
 import Avatar from './avatar';
+import CollectionCard from './collection-card';
 import CustomEmoji from './custom-emoji';
 import FollowRequestButtons from './follow-request-buttons';
 import Icon from './icon';
@@ -37,6 +39,8 @@ const NOTIFICATION_ICONS = {
   annual_report: 'celebrate',
   quote: 'quote',
   quoted_update: 'pencil',
+  added_to_collection: 'collections',
+  collection_update: 'collections',
 };
 
 /*
@@ -290,6 +294,12 @@ const contentText = {
   reaction: emojiText,
   'pleroma:emoji_reaction': emojiText,
   annual_report: ({ year }) => <Trans>Your {year} #Wrapstodon is here!</Trans>,
+  added_to_collection: ({ account }) => (
+    <Trans>{account} added you to a collection.</Trans>
+  ),
+  collection_update: ({ account }) => (
+    <Trans>{account} edited a collection you're in.</Trans>
+  ),
 };
 
 // account_suspension, domain_block, user_domain_block
@@ -342,6 +352,7 @@ function Notification({
     event,
     moderation_warning,
     annualReport,
+    collection,
     // Client-side grouped notification
     _ids,
     _accounts,
@@ -395,6 +406,14 @@ function Notification({
     text = contentText[isSelf ? 'poll-self' : isVoted ? 'poll-voted' : 'poll'];
   } else if (contentText[type]) {
     text = contentText[type];
+  } else if (notification.fallback?.title) {
+    text = (
+      <span
+        dangerouslySetInnerHTML={{
+          __html: enhanceContent(notification.fallback.title),
+        }}
+      />
+    );
   } else {
     // Anticipate unhandled notification types, possibly from Mastodon forks or non-Mastodon instances
     // This surfaces the error to the user, hoping that users will report it
@@ -651,6 +670,32 @@ function Notification({
                   <Trans>View #Wrapstodon</Trans>
                 </Link>
               </div>
+            )}
+            {!!notification.fallback?.summary &&
+              (!!notification.fallback?.details ? (
+                <details class="notification-fallback-details">
+                  <summary
+                    dangerouslySetInnerHTML={{
+                      __html: enhanceContent(notification.fallback.summary),
+                    }}
+                  />
+                  <div
+                    class="notification-fallback-details-content"
+                    dangerouslySetInnerHTML={{
+                      __html: enhanceContent(notification.fallback.details),
+                    }}
+                  />
+                </details>
+              ) : (
+                <div
+                  class="notification-fallback-details"
+                  dangerouslySetInnerHTML={{
+                    __html: enhanceContent(notification.fallback.summary),
+                  }}
+                />
+              ))}
+            {!!collection && (
+              <CollectionCard collection={collection} instance={instance} />
             )}
           </>
         )}

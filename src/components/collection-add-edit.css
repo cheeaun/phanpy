@@ -1,0 +1,71 @@
+.collection-add-edit-form {
+  padding: 8px 0;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+
+  :is(input[type='text'], textarea) {
+    width: 100%;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: calc(1lh + 4px);
+    max-height: 50vh;
+    field-sizing: content;
+  }
+
+  grapheme-input {
+    display: block;
+    margin-top: 4px;
+  }
+
+  .label-block {
+    display: flex;
+    padding: 8px 0;
+    gap: 4px;
+  }
+
+  #collection-language {
+    max-width: 15em;
+    width: 100%;
+  }
+
+  .collection-toolbar {
+    padding: 8px;
+    background-color: var(--bg-faded-color);
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 90%;
+
+    .collection-option {
+      padding: 8px;
+      background-color: var(--bg-blur-color);
+      border-radius: 8px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+
+      &:has(select) {
+        padding-block: 4px;
+        padding-inline-end: 4px;
+      }
+
+      select {
+        padding: 4px;
+      }
+    }
+  }
+
+  footer {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+
+    button[type='submit'] {
+      padding-inline: 24px;
+    }
+  }
+}

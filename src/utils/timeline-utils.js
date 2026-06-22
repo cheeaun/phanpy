@@ -239,7 +239,7 @@ export function groupContext(items, instance) {
         for (let i = 0; i < inReplyToIds.length; i++) {
           const { sKey, inReplyToId } = inReplyToIds[i];
           try {
-            const replyToStatus = await fetchStatus(inReplyToId, masto);
+            const replyToStatus = await fetchStatus(inReplyToId, instance);
             saveStatus(replyToStatus, instance, {
               skipThreading: true,
             });
@@ -296,7 +296,8 @@ export function groupContext(items, instance) {
   return newItems;
 }
 
-const fetchStatus = pmem((statusID, masto) => {
+const fetchStatus = pmem((statusID, instance) => {
+  const { masto } = api({ instance });
   return masto.v1.statuses.$select(statusID).fetch();
 });
 

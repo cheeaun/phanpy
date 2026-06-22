@@ -1860,16 +1860,12 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
       0 -8px 16px -8px var(--drop-shadow-color);
   }
 }
-.sheet-modal {
-  margin: 16px;
-  border-radius: 16px;
-  align-self: safe center;
-
+.sheet {
   main:has(+ footer) {
     padding-block-end: 0;
   }
 
-  footer {
+  main + footer {
     padding: 8px 16px 16px;
     padding-left: max(16px, env(safe-area-inset-left));
     padding-right: max(16px, env(safe-area-inset-right));
@@ -1989,6 +1985,11 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 .sheet header + main {
   padding-top: 0;
   mask-image: linear-gradient(to bottom, transparent 0%, black 10px);
+}
+.sheet-modal {
+  margin: 16px;
+  border-radius: 16px;
+  align-self: safe center;
 }
 
 /* ICON */
@@ -2379,9 +2380,9 @@ body > .szh-menu-container {
 }
 
 .szh-menu
-  .szh-menu__item--type-checkbox:not(.szh-menu__item--disabled):not(
-    .szh-menu__item--hover
-  ) {
+  :is(.szh-menu__item--type-checkbox, .szh-menu__item--type-radio):not(
+    .szh-menu__item--disabled
+  ):not(.szh-menu__item--hover) {
   .icon {
     opacity: 0.15;
   }
@@ -2615,11 +2616,8 @@ body > .szh-menu-container {
 @keyframes peekaboo-header {
   from {
     opacity: 0;
-    transform: translateY(10%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(8px) scale(0.95);
+    filter: blur(8px);
   }
 }
 
@@ -2645,7 +2643,7 @@ ul.link-list li {
   padding: 0;
   margin: 0;
 }
-ul.link-list li a {
+ul.link-list li > a {
   --radius: 8px;
   display: block;
   background-color: var(--bg-faded-color);
@@ -3209,6 +3207,10 @@ ul.link-list li a .icon {
   }
   .timeline:not(.flat) > li {
     --item-radius: 16px;
+    @supports (corner-shape: squircle) {
+      --item-radius: 32px;
+      corner-shape: squircle;
+    }
     border: 1px solid var(--divider-color);
     margin: 16px 0;
     background-color: var(--bg-color);
@@ -3224,6 +3226,7 @@ ul.link-list li a .icon {
   }
   .timeline:not(.flat) > li > a {
     border-radius: inherit;
+    corner-shape: inherit;
   }
   .timeline:not(.flat) > li:not(:has(.status-carousel)) {
     transform: translate3d(0, 0, 0);
@@ -3233,6 +3236,9 @@ ul.link-list li a .icon {
       .status-badge:not(:empty)
     ) {
     border-start-end-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-start-end-radius: 16px;
+    }
   }
   .timeline:not(.flat) > li:has(.status-link.is-active) {
     transition: var(--back-transition);

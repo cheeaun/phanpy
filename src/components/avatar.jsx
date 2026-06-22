@@ -1,8 +1,7 @@
 import './avatar.css';
 
+import { memo } from 'preact/compat';
 import { useRef } from 'preact/hooks';
-
-import mem from '../utils/mem';
 
 const SIZES = {
   s: 16,
@@ -112,4 +111,4 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
   );
 }
 
-export default mem(Avatar);
+export default memo(Avatar);

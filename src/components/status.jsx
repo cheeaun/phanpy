@@ -2066,8 +2066,7 @@ function Status({
       ? forceShowQuoteCount(quotesCount)
       : forceShowQuoteCount && quotesCount > 0;
 
-  const _taggedCollections = taggedCollections;
-  const collectionForCard = _taggedCollections?.find((c) => {
+  const collectionForCard = taggedCollections?.find((c) => {
     return isSameURL(c.url, card?.url);
   });
 
@@ -2776,6 +2775,7 @@ function Status({
                           ? status.account
                           : undefined
                       }
+                      size={size}
                     />
                   ) : !!card && /^https/i.test(card?.url) ? (
                     <StatusCard
@@ -2788,16 +2788,23 @@ function Status({
                       )}
                       instance={currentInstance}
                     />
-                  ) : _taggedCollections?.length ? (
-                    <CollectionCard
-                      collection={_taggedCollections[0]}
-                      instance={currentInstance}
-                      creatorAccount={
-                        _taggedCollections[0].accountId === accountId
-                          ? status.account
-                          : undefined
-                      }
-                    />
+                  ) : taggedCollections?.length ? (
+                    <div class="collections-container">
+                      {/* Limit to 4, for now. */}
+                      {taggedCollections.slice(0, 4).map((collection) => (
+                        <CollectionCard
+                          key={collection.id}
+                          collection={collection}
+                          instance={currentInstance}
+                          creatorAccount={
+                            collection.accountId === accountId
+                              ? status.account
+                              : undefined
+                          }
+                          size={size}
+                        />
+                      ))}
+                    </div>
                   ) : null)}
                 {size !== 's' && <StatusTags tags={tags} content={content} />}
               </>

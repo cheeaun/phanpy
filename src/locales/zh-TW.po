@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-19 09:38\n"
+"PO-Revision-Date: 2026-06-19 17:53\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -18,63 +18,64 @@ msgstr ""
 "X-Crowdin-File: /main/src/locales/en.po\n"
 "X-Crowdin-File-ID: 18\n"
 
-#: src/components/account-block.jsx:145
+#: src/components/account-block.jsx:196
 msgid "Locked"
 msgstr "已鎖定"
 
 #. placeholder {0}: shortenNumber(statusesCount)
-#: src/components/account-block.jsx:152
+#: src/components/account-block.jsx:203
 msgid "Posts: {0}"
 msgstr "嘟文： {0}"
 
-#. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
-#: src/components/account-block.jsx:157
-msgid "Last posted: {0}"
-msgstr "最新嘟文：{0}"
+#: src/components/account-block.jsx:209
+msgid "Last active: {date}"
+msgstr ""
 
-#: src/components/account-block.jsx:172
-#: src/components/account-info.jsx:738
+#: src/components/account-block.jsx:227
+#: src/components/account-info.jsx:728
 msgid "Automated"
 msgstr "機器人"
 
-#: src/components/account-block.jsx:179
-#: src/components/account-info.jsx:743
+#: src/components/account-block.jsx:234
+#: src/components/account-info.jsx:733
 #: src/components/status.jsx:610
 msgid "Group"
 msgstr "群組"
 
-#: src/components/account-block.jsx:189
+#: src/components/account-block.jsx:244
 msgid "Mutual"
 msgstr "互相關注"
 
-#: src/components/account-block.jsx:193
-#: src/components/related-actions.jsx:957
+#: src/components/account-block.jsx:248
+#: src/components/related-actions.jsx:986
 msgid "Requested"
 msgstr "已請求"
 
-#: src/components/account-block.jsx:197
-#: src/components/related-actions.jsx:948
+#: src/components/account-block.jsx:252
+#: src/components/related-actions.jsx:977
 msgid "Following"
 msgstr "跟隨"
 
-#: src/components/account-block.jsx:201
-#: src/components/related-actions.jsx:200
+#: src/components/account-block.jsx:256
+#: src/components/related-actions.jsx:209
 msgid "Follows you"
 msgstr "跟隨了你"
 
-#: src/components/account-block.jsx:209
-msgid "{followersCount, plural, one {# follower} other {# followers}}"
-msgstr "{followersCount, plural, other {# 跟隨者}}"
+#. placeholder {0}: shortenNumber(followersCount)
+#. placeholder {1}: shortenNumber(followersCount)
+#: src/components/account-block.jsx:281
+msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
+msgstr ""
 
-#: src/components/account-block.jsx:218
-#: src/components/account-info.jsx:786
+#: src/components/account-block.jsx:307
+#: src/components/account-info.jsx:776
 msgid "Verified"
 msgstr "已驗證"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
-#: src/components/account-block.jsx:233
-#: src/components/account-info.jsx:925
+#: src/components/account-block.jsx:323
+#: src/components/account-info.jsx:915
 msgid "Joined <0>{0}</0>"
 msgstr "加入於 <0>{0}</0>"
 
@@ -87,7 +88,7 @@ msgid "server domain name"
 msgstr "伺服器域名"
 
 #: src/components/account-info-mini.jsx:57
-#: src/components/account-info.jsx:808
+#: src/components/account-info.jsx:798
 #: src/components/compose.jsx:2050
 #: src/pages/settings.jsx:308
 #: src/utils/visibility-text.jsx:7
@@ -96,104 +97,104 @@ msgstr "粉絲"
 
 #: src/components/account-info-mini.jsx:61
 #: src/components/account-info-mini.jsx:100
-#: src/components/account-info.jsx:815
-#: src/components/account-info.jsx:873
+#: src/components/account-info.jsx:805
+#: src/components/account-info.jsx:863
 msgid "This user has chosen to not make this information available."
 msgstr "此用戶選擇不提供資訊。"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info-mini.jsx:67
-#: src/components/account-info.jsx:835
+#: src/components/account-info.jsx:825
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> 跟隨者} other {<1>{1}</1> 跟隨者}}"
 
 #. js-lingui-explicit-id
 #: src/components/account-info-mini.jsx:93
-#: src/components/account-info.jsx:863
+#: src/components/account-info.jsx:853
 msgid "following.stats"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info-mini.jsx:106
-#: src/components/account-info.jsx:879
+#: src/components/account-info.jsx:869
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, other {<0>{0}</0> 正在跟隨}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info-mini.jsx:119
-#: src/components/account-info.jsx:903
+#: src/components/account-info.jsx:893
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr ""
 
-#: src/components/account-info.jsx:125
+#: src/components/account-info.jsx:118
 msgid "View profile"
 msgstr "查看個人資訊"
 
-#: src/components/account-info.jsx:396
+#: src/components/account-info.jsx:386
 msgid "Unable to load account."
 msgstr "無法載入帳號"
 
-#: src/components/account-info.jsx:411
+#: src/components/account-info.jsx:401
 msgid "Go to account page"
 msgstr "前往帳號頁"
 
-#: src/components/account-info.jsx:417
-#: src/components/timeline.jsx:659
-#: src/components/timeline2.jsx:695
+#: src/components/account-info.jsx:407
+#: src/components/timeline.jsx:663
+#: src/components/timeline2.jsx:701
 #: src/pages/home.jsx:237
-#: src/pages/notifications.jsx:1035
+#: src/pages/notifications.jsx:1069
 #: src/pages/status.jsx:1270
 #: src/pages/status.jsx:1746
 msgid "Try again"
 msgstr ""
 
-#: src/components/account-info.jsx:471
+#: src/components/account-info.jsx:461
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> 他們的新帳號現在是："
 
-#: src/components/account-info.jsx:627
-#: src/components/related-actions.jsx:513
+#: src/components/account-info.jsx:617
+#: src/components/related-actions.jsx:542
 msgid "Handle copied"
 msgstr "已複製用戶名"
 
-#: src/components/account-info.jsx:630
-#: src/components/related-actions.jsx:516
+#: src/components/account-info.jsx:620
+#: src/components/related-actions.jsx:545
 msgid "Unable to copy handle"
 msgstr "無法複製用戶名"
 
-#: src/components/account-info.jsx:636
-#: src/components/related-actions.jsx:522
+#: src/components/account-info.jsx:626
+#: src/components/related-actions.jsx:551
 msgid "Copy handle"
 msgstr "複製用戶名"
 
-#: src/components/account-info.jsx:654
-#: src/components/related-actions.jsx:587
-#: src/components/related-actions.jsx:862
+#: src/components/account-info.jsx:644
+#: src/components/related-actions.jsx:616
+#: src/components/related-actions.jsx:891
 #: src/components/shortcuts-settings.jsx:1099
 msgid "QR code"
 msgstr "QR 碼"
 
-#: src/components/account-info.jsx:660
+#: src/components/account-info.jsx:650
 msgid "Go to original profile page"
 msgstr "前往原始帳號頁面"
 
-#: src/components/account-info.jsx:679
+#: src/components/account-info.jsx:669
 msgid "View profile image"
 msgstr "查看頭像"
 
-#: src/components/account-info.jsx:698
+#: src/components/account-info.jsx:688
 msgid "View profile header"
 msgstr "查看個人資料標題"
 
-#: src/components/account-info.jsx:714
+#: src/components/account-info.jsx:704
 #: src/components/edit-profile-sheet.jsx:267
-#: src/components/related-actions.jsx:876
+#: src/components/related-actions.jsx:905
 msgid "Edit profile"
 msgstr "編輯個人資料"
 
-#: src/components/account-info.jsx:733
+#: src/components/account-info.jsx:723
 msgid "In Memoriam"
 msgstr "紀念帳戶"
 
@@ -201,14 +202,14 @@ msgstr "紀念帳戶"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:960
+#: src/components/account-info.jsx:950
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr ""
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:977
+#: src/components/account-info.jsx:967
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} 原創嘟文，{1} 回覆，{2} 轉嘟"
 
@@ -219,25 +220,25 @@ msgstr "{0} 原創嘟文，{1} 回覆，{2} 轉嘟"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:994
+#: src/components/account-info.jsx:984
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, other {{3, plural, other {最近 {6} 天內的 {5} 條嘟文}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:1010
+#: src/components/account-info.jsx:1000
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr ""
 
-#: src/components/account-info.jsx:1068
+#: src/components/account-info.jsx:1058
 #: src/pages/catchup.jsx:73
 #: src/pages/year-in-posts.jsx:1390
 msgid "Original"
 msgstr "原文"
 
-#: src/components/account-info.jsx:1072
-#: src/components/status.jsx:2810
-#: src/pages/account-statuses.jsx:428
+#: src/components/account-info.jsx:1062
+#: src/components/status.jsx:2817
+#: src/pages/account-statuses.jsx:426
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1594
 #: src/pages/catchup.jsx:2249
@@ -247,17 +248,17 @@ msgstr "原文"
 msgid "Replies"
 msgstr "回覆"
 
-#: src/components/account-info.jsx:1077
+#: src/components/account-info.jsx:1067
 #: src/components/quotes-modal.jsx:81
-#: src/components/status.jsx:2815
+#: src/components/status.jsx:2822
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1597
 #: src/pages/year-in-posts.jsx:1400
 msgid "Quotes"
 msgstr "引用"
 
-#: src/components/account-info.jsx:1082
-#: src/pages/account-statuses.jsx:444
+#: src/components/account-info.jsx:1072
+#: src/pages/account-statuses.jsx:442
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1596
 #: src/pages/catchup.jsx:2261
@@ -266,16 +267,19 @@ msgstr "引用"
 msgid "Boosts"
 msgstr "轉嘟"
 
-#: src/components/account-info.jsx:1088
+#: src/components/account-info.jsx:1078
 msgid "Post stats unavailable."
 msgstr ""
 
-#: src/components/account-info.jsx:1115
+#: src/components/account-info.jsx:1105
 msgid "View post stats"
 msgstr "查看貼文統計"
 
 #: src/components/account-sheet.jsx:38
 #: src/components/add-remove-lists-sheet.jsx:45
+#: src/components/collection-add-account.jsx:133
+#: src/components/collection-add-edit.jsx:40
+#: src/components/collection-manage-accounts.jsx:120
 #: src/components/compose.jsx:1127
 #: src/components/custom-emojis-modal.jsx:282
 #: src/components/drafts.jsx:57
@@ -289,7 +293,7 @@ msgstr "查看貼文統計"
 #: src/components/list-add-edit.jsx:37
 #: src/components/media-alt-modal.jsx:43
 #: src/components/media-attachment.jsx:420
-#: src/components/media-modal.jsx:336
+#: src/components/media-modal.jsx:362
 #: src/components/mention-modal.jsx:162
 #: src/components/notification-service.jsx:157
 #: src/components/open-link-sheet.jsx:51
@@ -300,18 +304,19 @@ msgstr "查看貼文統計"
 #: src/components/quote-chain-modal.jsx:102
 #: src/components/quote-settings-sheet.jsx:61
 #: src/components/quotes-modal.jsx:76
+#: src/components/report-collection.jsx:33
 #: src/components/report-modal.jsx:118
 #: src/components/shortcuts-settings.jsx:247
 #: src/components/shortcuts-settings.jsx:600
 #: src/components/shortcuts-settings.jsx:801
-#: src/components/status.jsx:3480
-#: src/components/status.jsx:3692
+#: src/components/status.jsx:3487
+#: src/components/status.jsx:3699
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:46
 #: src/pages/catchup.jsx:1731
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
-#: src/pages/notifications.jsx:1079
+#: src/pages/notifications.jsx:1113
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:100
 #: src/pages/status.jsx:1684
@@ -319,8 +324,8 @@ msgid "Close"
 msgstr "關閉"
 
 #: src/components/add-remove-lists-sheet.jsx:50
-#: src/components/related-actions.jsx:463
-#: src/components/related-actions.jsx:473
+#: src/components/related-actions.jsx:482
+#: src/components/related-actions.jsx:492
 msgid "Add/Remove from Lists"
 msgstr "從列表中新增/刪除"
 
@@ -347,11 +352,11 @@ msgstr "沒有清單。"
 msgid "New list"
 msgstr "新增列表"
 
-#: src/components/background-service.jsx:160
+#: src/components/background-service.jsx:164
 msgid "Cloak mode disabled"
 msgstr "已停用隱藏模式"
 
-#: src/components/background-service.jsx:160
+#: src/components/background-service.jsx:164
 msgid "Cloak mode enabled"
 msgstr "已啟用隱藏模式"
 
@@ -360,21 +365,202 @@ msgstr "已啟用隱藏模式"
 msgid "More from <0/>"
 msgstr ""
 
-#: src/components/collection-card.jsx:140
+#: src/components/collection-account-actions.jsx:35
+#: src/pages/collection.jsx:421
+msgid "Remove me from this collection?"
+msgstr ""
+
+#: src/components/collection-account-actions.jsx:44
+#: src/pages/collection.jsx:430
+msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
+msgstr ""
+
+#: src/components/collection-account-actions.jsx:69
+#: src/pages/collection.jsx:441
+msgid "Remove me…"
+msgstr ""
+
+#: src/components/collection-account-actions.jsx:107
+#: src/components/related-actions.jsx:996
+#: src/components/related-actions.jsx:1000
+#: src/pages/hashtag.jsx:294
+msgid "Follow"
+msgstr "跟隨"
+
+#: src/components/collection-add-account.jsx:92
+msgid "@{username} added to collection"
+msgstr ""
+
+#: src/components/collection-add-account.jsx:96
+msgid "Unable to add account"
+msgstr ""
+
+#: src/components/collection-add-account.jsx:148
+#: src/components/mention-modal.jsx:179
+msgid "Search accounts"
+msgstr "搜索帳號"
+
+#: src/components/collection-add-account.jsx:197
+#: src/components/compose-poll.jsx:80
+#: src/components/compose.jsx:1758
+#: src/components/mention-modal.jsx:221
+#: src/components/shortcuts-settings.jsx:732
+#: src/pages/list.jsx:388
+msgid "Add"
+msgstr "新增"
+
+#: src/components/collection-add-account.jsx:220
+#: src/components/generic-accounts.jsx:236
+#: src/components/mention-modal.jsx:234
+msgid "Error loading accounts"
+msgstr "載入帳戶時發生錯誤"
+
+#: src/components/collection-add-account.jsx:231
+msgid "These accounts may have opted out of discovery or be on a server that doesn't support collections."
+msgstr ""
+
+#: src/components/collection-add-account.jsx:236
+msgid "These accounts review all follow requests. Followers can add them to collections."
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:45
+#: src/pages/account-collections.jsx:179
+msgid "New collection"
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:45
+msgid "Edit collection"
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:97
+msgid "Unable to update collection."
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:98
+msgid "Unable to create collection."
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:106
+#: src/components/edit-profile-sheet.jsx:574
+#: src/components/list-add-edit.jsx:106
+msgid "Name"
+msgstr "名稱"
+
+#: src/components/collection-add-edit.jsx:124
+msgid "Description"
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:146
+msgid "Language"
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:169
+msgid "Mark as sensitive"
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:183
+#: src/components/compose.jsx:2038
+#: src/pages/collection.jsx:683
+#: src/pages/settings.jsx:302
+#: src/utils/visibility-text.jsx:4
+msgid "Public"
+msgstr "公開"
+
+#: src/components/collection-add-edit.jsx:186
+#: src/components/collection-card.jsx:201
+#: src/pages/collection.jsx:677
+msgid "Unlisted"
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:192
+#: src/components/edit-profile-sheet.jsx:695
+#: src/components/list-add-edit.jsx:152
+#: src/components/quote-settings-sheet.jsx:92
+#: src/components/shortcuts-settings.jsx:732
+#: src/pages/filters.jsx:572
+#: src/pages/notifications.jsx:1185
+msgid "Save"
+msgstr "儲存"
+
+#: src/components/collection-add-edit.jsx:192
+#: src/components/list-add-edit.jsx:152
+#: src/pages/filters.jsx:572
+msgid "Create"
+msgstr "建立"
+
+#: src/components/collection-add-edit.jsx:199
+msgid "Delete this collection?"
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:215
+msgid "Unable to delete collection."
+msgstr ""
+
+#: src/components/collection-add-edit.jsx:225
+#: src/components/drafts.jsx:126
+#: src/components/edit-profile-sheet.jsx:108
+#: src/components/edit-profile-sheet.jsx:120
+#: src/components/list-add-edit.jsx:188
+#: src/components/status.jsx:1685
+#: src/pages/filters.jsx:605
+#: src/pages/scheduled-posts.jsx:398
+msgid "Delete…"
+msgstr "移除..."
+
+#: src/components/collection-card.jsx:178
 msgid "Collection by <0>@{username}</0>"
 msgstr ""
 
+#: src/components/collection-card.jsx:189
+#: src/pages/collection.jsx:665
+msgid "Last updated: <relativeTime/>"
+msgstr ""
+
+#: src/components/collection-manage-accounts.jsx:90
+msgid "Unable to remove account"
+msgstr ""
+
+#: src/components/collection-manage-accounts.jsx:101
+msgid "@{username} removed from collection"
+msgstr ""
+
+#: src/components/collection-manage-accounts.jsx:124
+#: src/pages/collection.jsx:404
+msgid "Manage accounts"
+msgstr ""
+
+#: src/components/collection-manage-accounts.jsx:143
+msgid "Pending"
+msgstr ""
+
+#: src/components/collection-manage-accounts.jsx:150
+msgid "Remove <0>{username}</0> from this collection?"
+msgstr ""
+
+#: src/components/collection-manage-accounts.jsx:170
+#: src/components/edit-profile-sheet.jsx:473
+#: src/components/edit-profile-sheet.jsx:565
+#: src/pages/list.jsx:388
+msgid "Remove…"
+msgstr ""
+
+#: src/components/collection-manage-accounts.jsx:184
+#: src/pages/collection.jsx:643
+msgid "Add account"
+msgstr ""
+
 #: src/components/columns.jsx:29
-#: src/components/nav-menu.jsx:187
+#: src/components/nav-menu.jsx:188
 #: src/components/shortcuts-settings.jsx:142
-#: src/components/timeline.jsx:542
-#: src/components/timeline2.jsx:574
+#: src/components/timeline.jsx:546
+#: src/components/timeline2.jsx:580
+#: src/pages/account-collections.jsx:140
 #: src/pages/catchup.jsx:1027
 #: src/pages/filters.jsx:90
 #: src/pages/followed-hashtags.jsx:41
 #: src/pages/home.jsx:55
 #: src/pages/home.jsx:63
-#: src/pages/notifications.jsx:712
+#: src/pages/notifications.jsx:746
 #: src/pages/scheduled-posts.jsx:74
 msgid "Home"
 msgstr "主頁"
@@ -385,7 +571,7 @@ msgid "Compose"
 msgstr "撰寫"
 
 #: src/components/compose-button.jsx:181
-#: src/components/nav-menu.jsx:271
+#: src/components/nav-menu.jsx:280
 #: src/pages/scheduled-posts.jsx:31
 #: src/pages/scheduled-posts.jsx:78
 msgid "Scheduled Posts"
@@ -407,14 +593,6 @@ msgstr "選擇 {0}"
 #: src/pages/filters.jsx:415
 msgid "Remove"
 msgstr "刪除"
-
-#: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1758
-#: src/components/mention-modal.jsx:221
-#: src/components/shortcuts-settings.jsx:732
-#: src/pages/list.jsx:388
-msgid "Add"
-msgstr "新增"
 
 #: src/components/compose-poll.jsx:96
 msgid "Multiple choice"
@@ -529,8 +707,8 @@ msgid "Attachment #{i} failed"
 msgstr ""
 
 #: src/components/compose.jsx:1514
-#: src/components/status.jsx:2555
-#: src/components/timeline.jsx:1068
+#: src/components/status.jsx:2554
+#: src/components/timeline.jsx:1062
 msgid "Content warning"
 msgstr "內容警告"
 
@@ -593,14 +771,8 @@ msgstr "只有你可以引用"
 msgid "Quotes can't be embedded in private mentions."
 msgstr "引用嘟文無法被內嵌於私訊中。"
 
-#: src/components/compose.jsx:2038
-#: src/pages/settings.jsx:302
-#: src/utils/visibility-text.jsx:4
-msgid "Public"
-msgstr "公開"
-
 #: src/components/compose.jsx:2043
-#: src/components/nav-menu.jsx:358
+#: src/components/nav-menu.jsx:367
 #: src/components/shortcuts-settings.jsx:168
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
@@ -613,7 +785,7 @@ msgid "Quiet public"
 msgstr "不於公開時間軸顯示"
 
 #: src/components/compose.jsx:2053
-#: src/components/status.jsx:2434
+#: src/components/status.jsx:2433
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "私人訊息"
@@ -626,10 +798,10 @@ msgstr "排程"
 #: src/components/keyboard-shortcuts-help.jsx:165
 #: src/components/status.jsx:1106
 #: src/components/status.jsx:1155
+#: src/components/status.jsx:2185
 #: src/components/status.jsx:2186
-#: src/components/status.jsx:2187
-#: src/components/status.jsx:2942
-#: src/components/status.jsx:2954
+#: src/components/status.jsx:2949
+#: src/components/status.jsx:2961
 msgid "Reply"
 msgstr "回覆"
 
@@ -704,16 +876,6 @@ msgstr "是否刪除此草稿？"
 msgid "Error deleting draft! Please try again."
 msgstr ""
 
-#: src/components/drafts.jsx:126
-#: src/components/edit-profile-sheet.jsx:108
-#: src/components/edit-profile-sheet.jsx:120
-#: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1685
-#: src/pages/filters.jsx:605
-#: src/pages/scheduled-posts.jsx:398
-msgid "Delete…"
-msgstr "移除..."
-
 #: src/components/drafts.jsx:147
 msgid "Error fetching reply-to status!"
 msgstr ""
@@ -744,7 +906,7 @@ msgid "Poll"
 msgstr "投票"
 
 #: src/components/drafts.jsx:279
-#: src/pages/account-statuses.jsx:462
+#: src/pages/account-statuses.jsx:460
 msgid "Media"
 msgstr "媒體"
 
@@ -760,15 +922,15 @@ msgstr ""
 
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:208
-#: src/components/media-modal.jsx:478
-#: src/components/timeline.jsx:981
+#: src/components/media-modal.jsx:504
+#: src/components/timeline.jsx:975
 msgid "Previous"
 msgstr "上一個"
 
 #: src/components/edit-history-controls.jsx:47
 #: src/components/gif-picker-modal.jsx:226
-#: src/components/media-modal.jsx:497
-#: src/components/timeline.jsx:998
+#: src/components/media-modal.jsx:523
+#: src/components/timeline.jsx:992
 msgid "Next"
 msgstr "下一個"
 
@@ -779,15 +941,16 @@ msgstr "退出"
 #: src/components/edit-profile-sheet.jsx:87
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-attachment.jsx:465
-#: src/components/media-modal.jsx:372
-#: src/components/related-actions.jsx:256
-#: src/components/status.jsx:2211
-#: src/components/status.jsx:2228
-#: src/components/status.jsx:2360
-#: src/components/status.jsx:3113
-#: src/components/status.jsx:3116
-#: src/pages/account-statuses.jsx:676
+#: src/components/media-modal.jsx:398
+#: src/components/related-actions.jsx:265
+#: src/components/status.jsx:2210
+#: src/components/status.jsx:2227
+#: src/components/status.jsx:2359
+#: src/components/status.jsx:3120
+#: src/components/status.jsx:3123
+#: src/pages/account-statuses.jsx:674
 #: src/pages/accounts.jsx:149
+#: src/pages/collection.jsx:283
 #: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:147
@@ -851,12 +1014,6 @@ msgstr "圖片說明"
 msgid "Remove header picture?"
 msgstr ""
 
-#: src/components/edit-profile-sheet.jsx:473
-#: src/components/edit-profile-sheet.jsx:565
-#: src/pages/list.jsx:388
-msgid "Remove…"
-msgstr ""
-
 #: src/components/edit-profile-sheet.jsx:481
 msgid "Profile picture"
 msgstr "個人資料照片"
@@ -864,11 +1021,6 @@ msgstr "個人資料照片"
 #: src/components/edit-profile-sheet.jsx:554
 msgid "Remove profile picture?"
 msgstr ""
-
-#: src/components/edit-profile-sheet.jsx:574
-#: src/components/list-add-edit.jsx:106
-msgid "Name"
-msgstr "名稱"
 
 #: src/components/edit-profile-sheet.jsx:590
 msgid "Bio"
@@ -890,15 +1042,6 @@ msgstr "內容"
 msgid "Add field"
 msgstr ""
 
-#: src/components/edit-profile-sheet.jsx:695
-#: src/components/list-add-edit.jsx:152
-#: src/components/quote-settings-sheet.jsx:92
-#: src/components/shortcuts-settings.jsx:732
-#: src/pages/filters.jsx:572
-#: src/pages/notifications.jsx:1145
-msgid "Save"
-msgstr "儲存"
-
 #: src/components/embed-modal.jsx:18
 msgid "Open in new window"
 msgstr "在新視窗中開啟"
@@ -913,7 +1056,7 @@ msgid "No featured profiles."
 msgstr ""
 
 #: src/components/follow-request-buttons.jsx:45
-#: src/pages/notifications.jsx:1129
+#: src/pages/notifications.jsx:1169
 msgid "Accept"
 msgstr "同意"
 
@@ -922,7 +1065,7 @@ msgid "Reject"
 msgstr "拒絕"
 
 #: src/components/follow-request-buttons.jsx:79
-#: src/pages/notifications.jsx:1415
+#: src/pages/notifications.jsx:1455
 msgid "Accepted"
 msgstr "已同意"
 
@@ -931,19 +1074,20 @@ msgid "Rejected"
 msgstr "已拒絕"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:483
+#: src/components/notification.jsx:502
 #: src/pages/accounts.jsx:51
-#: src/pages/search.jsx:349
-#: src/pages/search.jsx:382
+#: src/pages/search.jsx:124
+#: src/pages/search.jsx:462
 msgid "Accounts"
 msgstr "帳號"
 
 #: src/components/generic-accounts.jsx:214
 #: src/components/quotes-modal.jsx:129
-#: src/components/timeline.jsx:624
+#: src/components/timeline.jsx:628
+#: src/pages/account-collections.jsx:232
 #: src/pages/list.jsx:321
-#: src/pages/notifications.jsx:1059
-#: src/pages/search.jsx:576
+#: src/pages/notifications.jsx:1093
+#: src/pages/search.jsx:550
 #: src/pages/status.jsx:1717
 msgid "Show more…"
 msgstr "顯示更多…"
@@ -951,16 +1095,11 @@ msgstr "顯示更多…"
 #: src/components/generic-accounts.jsx:219
 #: src/components/quote-chain-modal.jsx:169
 #: src/components/quotes-modal.jsx:133
-#: src/components/timeline.jsx:629
-#: src/components/timeline2.jsx:673
-#: src/pages/search.jsx:581
+#: src/components/timeline.jsx:633
+#: src/components/timeline2.jsx:679
+#: src/pages/search.jsx:555
 msgid "The end."
 msgstr "結尾"
-
-#: src/components/generic-accounts.jsx:236
-#: src/components/mention-modal.jsx:234
-msgid "Error loading accounts"
-msgstr "載入帳戶時發生錯誤"
 
 #: src/components/generic-accounts.jsx:240
 msgid "Nothing to show"
@@ -1025,7 +1164,9 @@ msgid "Export"
 msgstr "匯出"
 
 #. placeholder {0}: accounts.length
+#. placeholder {0}: sortedItems.length
 #: src/components/import-export-accounts.jsx:155
+#: src/pages/collection.jsx:656
 msgid "{0, plural, one {# account} other {# accounts}}"
 msgstr ""
 
@@ -1038,7 +1179,7 @@ msgid "<0>{key1}</0> then <1>{key2}</1>"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:57
-#: src/components/nav-menu.jsx:380
+#: src/components/nav-menu.jsx:389
 #: src/pages/catchup.jsx:1769
 msgid "Keyboard shortcuts"
 msgstr "鍵盤快捷鍵"
@@ -1135,12 +1276,12 @@ msgid "<0>Ctrl</0> + <1>Enter</1> or <2>⌘</2> + <3>Enter</3>"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:161
-#: src/components/nav-menu.jsx:343
+#: src/components/nav-menu.jsx:352
 #: src/components/search-form.jsx:208
 #: src/components/shortcuts-settings.jsx:54
 #: src/components/shortcuts-settings.jsx:182
-#: src/pages/search.jsx:47
-#: src/pages/search.jsx:331
+#: src/pages/search.jsx:55
+#: src/pages/search.jsx:444
 msgid "Search"
 msgstr "搜尋"
 
@@ -1162,8 +1303,8 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:186
 #: src/components/status.jsx:1198
-#: src/components/status.jsx:2991
-#: src/components/status.jsx:3057
+#: src/components/status.jsx:2998
+#: src/components/status.jsx:3064
 msgid "Boost"
 msgstr "轉發"
 
@@ -1173,8 +1314,8 @@ msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:198
 #: src/components/status.jsx:1301
-#: src/components/status.jsx:3089
-#: src/components/status.jsx:3090
+#: src/components/status.jsx:3096
+#: src/components/status.jsx:3097
 msgid "Bookmark"
 msgstr "書籤"
 
@@ -1233,11 +1374,6 @@ msgstr ""
 #: src/components/list-add-edit.jsx:146
 msgid "Hide posts on this list from Home/Following"
 msgstr ""
-
-#: src/components/list-add-edit.jsx:152
-#: src/pages/filters.jsx:572
-msgid "Create"
-msgstr "建立"
 
 #: src/components/list-add-edit.jsx:159
 msgid "Delete this list?"
@@ -1375,27 +1511,27 @@ msgstr "({0}) <0>— 實驗性</0>"
 msgid "Done"
 msgstr "完成"
 
-#: src/components/media-modal.jsx:383
+#: src/components/media-modal.jsx:409
 msgid "Open original media in new window"
 msgstr "在新視窗打開原始媒體檔"
 
-#: src/components/media-modal.jsx:387
+#: src/components/media-modal.jsx:413
 msgid "Open original media"
 msgstr "打開原始媒體檔"
 
-#: src/components/media-modal.jsx:403
+#: src/components/media-modal.jsx:429
 msgid "Attempting to describe image. Please wait…"
 msgstr "嘗試描述圖片中，請稍等…"
 
-#: src/components/media-modal.jsx:418
+#: src/components/media-modal.jsx:444
 msgid "Failed to describe image"
 msgstr "描述圖片失敗"
 
-#: src/components/media-modal.jsx:428
+#: src/components/media-modal.jsx:454
 msgid "Describe image…"
 msgstr "描述圖像…"
 
-#: src/components/media-modal.jsx:452
+#: src/components/media-modal.jsx:478
 msgid "View post"
 msgstr "查看貼文"
 
@@ -1409,21 +1545,17 @@ msgstr ""
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:74
-#: src/components/status.jsx:3618
-#: src/components/status.jsx:3696
-#: src/components/timeline.jsx:1057
+#: src/components/status.jsx:3625
+#: src/components/status.jsx:3703
+#: src/components/timeline.jsx:1051
 #: src/pages/catchup.jsx:79
 #: src/pages/catchup.jsx:2052
 msgid "Filtered"
 msgstr ""
 
-#: src/components/media.jsx:532
+#: src/components/media.jsx:533
 msgid "Open file"
 msgstr ""
-
-#: src/components/mention-modal.jsx:179
-msgid "Search accounts"
-msgstr "搜索帳號"
 
 #: src/components/modals.jsx:93
 msgid "Post scheduled"
@@ -1445,20 +1577,20 @@ msgstr "回覆已發佈，請查看。"
 msgid "Post updated. Check it out."
 msgstr "貼文已發佈，請查看。"
 
-#: src/components/nav-menu.jsx:129
+#: src/components/nav-menu.jsx:130
 msgid "Menu"
 msgstr "選單"
 
-#: src/components/nav-menu.jsx:165
+#: src/components/nav-menu.jsx:166
 msgid "Reload page now to update?"
 msgstr "現在重新整理以套用更新？"
 
-#: src/components/nav-menu.jsx:177
+#: src/components/nav-menu.jsx:178
 msgid "New update available…"
 msgstr "有可用的更新…"
 
 #. js-lingui-explicit-id
-#: src/components/nav-menu.jsx:196
+#: src/components/nav-menu.jsx:197
 #: src/components/shortcuts-settings.jsx:143
 #: src/pages/following.jsx:23
 #: src/pages/following.jsx:156
@@ -1467,46 +1599,46 @@ msgstr "有可用的更新…"
 msgid "following.title"
 msgstr ""
 
-#: src/components/nav-menu.jsx:203
+#: src/components/nav-menu.jsx:204
 #: src/pages/catchup.jsx:1022
 #: src/pages/welcome.jsx:154
 msgid "Catch-up"
 msgstr ""
 
-#: src/components/nav-menu.jsx:210
+#: src/components/nav-menu.jsx:211
 #: src/components/shortcuts-settings.jsx:60
 #: src/components/shortcuts-settings.jsx:149
 #: src/pages/home.jsx:249
 #: src/pages/mentions.jsx:25
 #: src/pages/mentions.jsx:256
-#: src/pages/notifications.jsx:936
+#: src/pages/notifications.jsx:970
 #: src/pages/settings.jsx:1345
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr ""
 
-#: src/components/nav-menu.jsx:217
+#: src/components/nav-menu.jsx:218
 #: src/components/shortcuts-settings.jsx:51
 #: src/components/shortcuts-settings.jsx:155
 #: src/pages/filters.jsx:24
 #: src/pages/home.jsx:95
 #: src/pages/home.jsx:207
-#: src/pages/notifications.jsx:112
-#: src/pages/notifications.jsx:716
+#: src/pages/notifications.jsx:145
+#: src/pages/notifications.jsx:750
 msgid "Notifications"
 msgstr "通知"
 
-#: src/components/nav-menu.jsx:220
+#: src/components/nav-menu.jsx:221
 msgid "New"
 msgstr ""
 
-#: src/components/nav-menu.jsx:231
+#: src/components/nav-menu.jsx:232
 #: src/components/shortcuts-settings.jsx:61
 #: src/components/shortcuts-settings.jsx:192
 msgid "Profile"
 msgstr "個人檔案"
 
-#: src/components/nav-menu.jsx:239
+#: src/components/nav-menu.jsx:240
 #: src/components/shortcuts-settings.jsx:56
 #: src/components/shortcuts-settings.jsx:212
 #: src/pages/bookmarks.jsx:12
@@ -1514,12 +1646,12 @@ msgstr "個人檔案"
 msgid "Bookmarks"
 msgstr "書籤"
 
-#: src/components/nav-menu.jsx:250
+#: src/components/nav-menu.jsx:251
 #: src/components/text-expander.jsx:215
 msgid "More…"
 msgstr "更多…"
 
-#: src/components/nav-menu.jsx:259
+#: src/components/nav-menu.jsx:260
 #: src/components/shortcuts-settings.jsx:57
 #: src/components/shortcuts-settings.jsx:218
 #: src/pages/catchup.jsx:1595
@@ -1530,41 +1662,50 @@ msgstr "更多…"
 msgid "Likes"
 msgstr "喜歡"
 
-#: src/components/nav-menu.jsx:265
+#: src/components/nav-menu.jsx:267
+#: src/pages/account-collections.jsx:68
+#: src/pages/account-collections.jsx:147
+#: src/pages/account-collections.jsx:169
+#: src/pages/collection.jsx:264
+#: src/pages/search.jsx:163
+msgid "Collections"
+msgstr ""
+
+#: src/components/nav-menu.jsx:274
 #: src/pages/followed-hashtags.jsx:15
 #: src/pages/followed-hashtags.jsx:45
 msgid "Followed Hashtags"
 msgstr "已跟隨的主題標籤"
 
-#: src/components/nav-menu.jsx:279
-#: src/pages/account-statuses.jsx:410
+#: src/components/nav-menu.jsx:288
+#: src/pages/account-statuses.jsx:408
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
 #: src/pages/hashtag.jsx:373
 msgid "Filters"
 msgstr "篩選條件"
 
-#: src/components/nav-menu.jsx:287
+#: src/components/nav-menu.jsx:296
 msgid "Muted users"
 msgstr "已靜音的使用者"
 
-#: src/components/nav-menu.jsx:295
+#: src/components/nav-menu.jsx:304
 msgid "Muted users…"
 msgstr "已靜音的使用者…"
 
-#: src/components/nav-menu.jsx:302
+#: src/components/nav-menu.jsx:311
 msgid "Blocked users"
 msgstr "已封鎖用戶"
 
-#: src/components/nav-menu.jsx:310
+#: src/components/nav-menu.jsx:319
 msgid "Blocked users…"
 msgstr "已封鎖用戶…"
 
-#: src/components/nav-menu.jsx:322
+#: src/components/nav-menu.jsx:331
 msgid "Accounts…"
 msgstr "帳號…"
 
-#: src/components/nav-menu.jsx:332
+#: src/components/nav-menu.jsx:341
 #: src/pages/login.jsx:33
 #: src/pages/login.jsx:227
 #: src/pages/status.jsx:1110
@@ -1572,29 +1713,29 @@ msgstr "帳號…"
 msgid "Log in"
 msgstr "登入"
 
-#: src/components/nav-menu.jsx:350
+#: src/components/nav-menu.jsx:359
 #: src/components/shortcuts-settings.jsx:59
 #: src/components/shortcuts-settings.jsx:175
 #: src/pages/trending.jsx:444
 msgid "Trending"
 msgstr "趨勢"
 
-#: src/components/nav-menu.jsx:366
+#: src/components/nav-menu.jsx:375
 #: src/components/shortcuts-settings.jsx:168
 msgid "Federated"
 msgstr "聯邦宇宙"
 
-#: src/components/nav-menu.jsx:390
+#: src/components/nav-menu.jsx:399
 msgid "Shortcuts / Columns…"
 msgstr ""
 
-#: src/components/nav-menu.jsx:400
-#: src/components/nav-menu.jsx:414
+#: src/components/nav-menu.jsx:409
+#: src/components/nav-menu.jsx:423
 msgid "Settings…"
 msgstr "設定…"
 
-#: src/components/nav-menu.jsx:444
-#: src/components/nav-menu.jsx:479
+#: src/components/nav-menu.jsx:453
+#: src/components/nav-menu.jsx:488
 #: src/components/shortcuts-settings.jsx:52
 #: src/components/shortcuts-settings.jsx:161
 #: src/pages/list.jsx:127
@@ -1603,7 +1744,7 @@ msgstr "設定…"
 msgid "Lists"
 msgstr "清單"
 
-#: src/components/nav-menu.jsx:452
+#: src/components/nav-menu.jsx:461
 #: src/components/shortcuts.jsx:32
 #: src/pages/list.jsx:139
 msgid "All Lists"
@@ -1621,172 +1762,182 @@ msgstr ""
 msgid "View all notifications"
 msgstr "查看所有通知"
 
-#: src/components/notification.jsx:76
+#: src/components/notification.jsx:80
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr ""
 
-#: src/components/notification.jsx:83
+#: src/components/notification.jsx:87
 msgid "{account} published a post."
 msgstr ""
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:91
+#: src/components/notification.jsx:95
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(count)
-#: src/components/notification.jsx:134
+#: src/components/notification.jsx:138
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr ""
 
-#: src/components/notification.jsx:148
+#: src/components/notification.jsx:152
 msgid "{account} requested to follow you."
 msgstr ""
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:157
+#: src/components/notification.jsx:161
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:199
+#: src/components/notification.jsx:203
 msgid "A poll you have voted in or created has ended."
 msgstr "你參與或創立的投票已結束"
 
-#: src/components/notification.jsx:200
+#: src/components/notification.jsx:204
 msgid "A poll you have created has ended."
 msgstr "你創立的投票已結束"
 
-#: src/components/notification.jsx:201
+#: src/components/notification.jsx:205
 msgid "A poll you have voted in has ended."
 msgstr "你參與的投票已結束"
 
-#: src/components/notification.jsx:204
+#: src/components/notification.jsx:208
 msgid "{account} edited a post."
 msgstr ""
 
-#: src/components/notification.jsx:206
+#: src/components/notification.jsx:210
 msgid "A post you interacted with has been edited."
 msgstr ""
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:215
+#: src/components/notification.jsx:219
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr ""
 
-#: src/components/notification.jsx:258
+#: src/components/notification.jsx:262
 msgid "{account} edited a post you have quoted."
 msgstr ""
 
 #. placeholder {0}: shortenNumber(count)
-#: src/components/notification.jsx:261
+#: src/components/notification.jsx:265
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
 msgstr ""
 
-#: src/components/notification.jsx:275
+#: src/components/notification.jsx:279
 msgid "{account} reported {targetAccount}"
 msgstr ""
 
-#: src/components/notification.jsx:280
+#: src/components/notification.jsx:284
 msgid "Lost connections with <0>{name}</0>."
 msgstr "與 <0>{name}</0> 失去連線"
 
-#: src/components/notification.jsx:286
+#: src/components/notification.jsx:290
 msgid "Moderation warning"
 msgstr ""
 
-#: src/components/notification.jsx:292
+#: src/components/notification.jsx:296
 msgid "Your {year} #Wrapstodon is here!"
 msgstr ""
 
 #: src/components/notification.jsx:298
+msgid "{account} added you to a collection."
+msgstr ""
+
+#: src/components/notification.jsx:301
+msgid "{account} edited a collection you're in."
+msgstr ""
+
+#: src/components/notification.jsx:308
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr ""
 
-#: src/components/notification.jsx:304
+#: src/components/notification.jsx:314
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr ""
 
-#: src/components/notification.jsx:310
+#: src/components/notification.jsx:320
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr ""
 
-#: src/components/notification.jsx:318
+#: src/components/notification.jsx:328
 msgid "Your account has received a moderation warning."
 msgstr ""
 
-#: src/components/notification.jsx:319
+#: src/components/notification.jsx:329
 msgid "Your account has been disabled."
 msgstr "您的帳號已被停用。"
 
-#: src/components/notification.jsx:320
+#: src/components/notification.jsx:330
 msgid "Some of your posts have been marked as sensitive."
 msgstr "您的某些嘟文已被標記為敏感內容。"
 
-#: src/components/notification.jsx:321
+#: src/components/notification.jsx:331
 msgid "Some of your posts have been deleted."
 msgstr "您的某些嘟文已被刪除。"
 
-#: src/components/notification.jsx:322
+#: src/components/notification.jsx:332
 msgid "Your posts will be marked as sensitive from now on."
 msgstr ""
 
-#: src/components/notification.jsx:323
+#: src/components/notification.jsx:333
 msgid "Your account has been limited."
 msgstr "您的帳號已被限制。"
 
-#: src/components/notification.jsx:324
+#: src/components/notification.jsx:334
 msgid "Your account has been suspended."
 msgstr "您的帳號已被停用"
 
-#: src/components/notification.jsx:401
+#: src/components/notification.jsx:420
 msgid "[Unknown notification type: {type}]"
 msgstr ""
 
-#: src/components/notification.jsx:479
+#: src/components/notification.jsx:498
 #: src/components/status.jsx:1315
 #: src/components/status.jsx:1325
 msgid "Boosted/Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:480
+#: src/components/notification.jsx:499
 msgid "Liked by…"
 msgstr ""
 
-#: src/components/notification.jsx:481
+#: src/components/notification.jsx:500
 msgid "Boosted by…"
 msgstr "被誰轉貼…"
 
-#: src/components/notification.jsx:482
+#: src/components/notification.jsx:501
 msgid "Followed by…"
 msgstr ""
 
-#: src/components/notification.jsx:626
-#: src/components/notification.jsx:642
+#: src/components/notification.jsx:645
+#: src/components/notification.jsx:661
 msgid "Learn more <0/>"
 msgstr "了解更多<0/>"
 
-#: src/components/notification.jsx:651
+#: src/components/notification.jsx:670
 msgid "View #Wrapstodon"
 msgstr "檢視 #Wrapstodon"
 
-#: src/components/notification.jsx:849
+#: src/components/notification.jsx:894
 #: src/components/quote-chain-modal.jsx:18
 #: src/components/status.jsx:263
 msgid "Read more →"
 msgstr "查看更多 →"
 
 #: src/components/open-link-sheet.jsx:30
-#: src/components/related-actions.jsx:539
+#: src/components/related-actions.jsx:568
 #: src/components/status.jsx:1489
+#: src/pages/collection.jsx:324
 msgid "Link copied"
 msgstr "連結已複製"
 
 #: src/components/open-link-sheet.jsx:33
-#: src/components/related-actions.jsx:542
+#: src/components/related-actions.jsx:571
 #: src/components/status.jsx:1492
+#: src/pages/collection.jsx:327
 msgid "Unable to copy link"
 msgstr "無法複製連結"
 
@@ -1796,15 +1947,17 @@ msgstr "開啟連結？"
 
 #: src/components/open-link-sheet.jsx:78
 #: src/components/post-embed-modal.jsx:232
-#: src/components/related-actions.jsx:548
+#: src/components/related-actions.jsx:577
 #: src/components/shortcuts-settings.jsx:1175
 #: src/components/status.jsx:1498
+#: src/pages/collection.jsx:333
 msgid "Copy"
 msgstr "複製"
 
 #: src/components/open-link-sheet.jsx:82
-#: src/components/related-actions.jsx:569
+#: src/components/related-actions.jsx:598
 #: src/components/status.jsx:1520
+#: src/pages/collection.jsx:350
 msgid "Share…"
 msgstr "分享…"
 
@@ -1945,7 +2098,7 @@ msgid "Note: This preview is lightly styled."
 msgstr ""
 
 #: src/components/private-note-sheet.jsx:41
-#: src/components/related-actions.jsx:232
+#: src/components/related-actions.jsx:241
 msgid "Notes"
 msgstr ""
 
@@ -2037,203 +2190,202 @@ msgstr "全部清除"
 msgid "Clear"
 msgstr "清除"
 
-#: src/components/related-actions.jsx:40
+#: src/components/related-actions.jsx:43
 msgid "Forever"
 msgstr "永久"
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
-#: src/components/related-actions.jsx:204
+#: src/components/related-actions.jsx:213
 msgid "Last post: <0>{0}</0>"
 msgstr ""
 
-#: src/components/related-actions.jsx:218
+#: src/components/related-actions.jsx:227
 msgid "Muted"
 msgstr "已靜音"
 
-#: src/components/related-actions.jsx:223
+#: src/components/related-actions.jsx:232
 msgid "Blocked"
 msgstr "已封鎖"
 
-#: src/components/related-actions.jsx:289
+#: src/components/related-actions.jsx:298
 msgid "Mention <0>@{username}</0>"
 msgstr "提及 <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:302
+#: src/components/related-actions.jsx:311
 msgid "Search <0>@{username}</0>'s posts"
 msgstr ""
 
-#: src/components/related-actions.jsx:316
+#: src/components/related-actions.jsx:325
 msgid "Translate bio"
 msgstr "翻譯簡介"
 
-#: src/components/related-actions.jsx:326
+#: src/components/related-actions.jsx:335
 msgid "Edit notes"
 msgstr ""
 
-#: src/components/related-actions.jsx:326
+#: src/components/related-actions.jsx:335
 msgid "Add notes"
 msgstr ""
 
-#: src/components/related-actions.jsx:345
+#: src/components/related-actions.jsx:354
 msgid "Notifications enabled for @{username}'s posts."
 msgstr "已開啟 @{username} 的貼文通知"
 
-#: src/components/related-actions.jsx:346
+#: src/components/related-actions.jsx:355
 msgid " Notifications disabled for @{username}'s posts."
 msgstr "已關閉 @{username} 的貼文通知"
 
-#: src/components/related-actions.jsx:358
+#: src/components/related-actions.jsx:367
 msgid "Disable notifications"
 msgstr "關閉通知"
 
-#: src/components/related-actions.jsx:359
+#: src/components/related-actions.jsx:368
 msgid "Enable notifications"
 msgstr "開啟通知"
 
-#: src/components/related-actions.jsx:376
+#: src/components/related-actions.jsx:385
 msgid "Boosts from @{username} enabled."
 msgstr "觀看 @{username} 的轉嘟"
 
-#: src/components/related-actions.jsx:377
+#: src/components/related-actions.jsx:386
 msgid "Boosts from @{username} disabled."
 msgstr "取消觀看 @{username} 的轉嘟"
 
-#: src/components/related-actions.jsx:388
+#: src/components/related-actions.jsx:397
 msgid "Disable boosts"
 msgstr "停用轉嘟"
 
-#: src/components/related-actions.jsx:388
+#: src/components/related-actions.jsx:397
 msgid "Enable boosts"
 msgstr "啟用轉嘟"
 
-#: src/components/related-actions.jsx:407
+#: src/components/related-actions.jsx:416
 msgid "@{username} is no longer featured on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:417
+#: src/components/related-actions.jsx:426
 msgid "@{username} is now featured on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:425
+#: src/components/related-actions.jsx:434
 msgid "Unable to unfeature @{username} on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:429
+#: src/components/related-actions.jsx:438
 msgid "Unable to feature @{username} on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:438
+#: src/components/related-actions.jsx:447
 msgid "Don't feature on profile"
 msgstr ""
 
-#: src/components/related-actions.jsx:439
+#: src/components/related-actions.jsx:448
 #: src/pages/hashtag.jsx:362
 msgid "Feature on profile"
 msgstr ""
 
-#: src/components/related-actions.jsx:448
-#: src/components/related-actions.jsx:498
+#: src/components/related-actions.jsx:457
+#: src/components/related-actions.jsx:517
 msgid "Show featured profiles"
 msgstr ""
 
-#: src/components/related-actions.jsx:490
-#: src/pages/account-statuses.jsx:578
+#: src/components/related-actions.jsx:468
+#: src/components/related-actions.jsx:528
+msgid "Show collections"
+msgstr ""
+
+#: src/components/related-actions.jsx:509
+#: src/pages/account-statuses.jsx:576
 msgid "Search my posts"
 msgstr ""
 
-#: src/components/related-actions.jsx:563
+#: src/components/related-actions.jsx:592
 #: src/components/shortcuts-settings.jsx:1193
 #: src/components/status.jsx:1514
 msgid "Sharing doesn't seem to work."
 msgstr ""
 
-#: src/components/related-actions.jsx:605
+#: src/components/related-actions.jsx:634
 msgid "Unmuted @{username}"
 msgstr ""
 
-#: src/components/related-actions.jsx:617
+#: src/components/related-actions.jsx:646
 msgid "Unmute <0>@{username}</0>"
 msgstr ""
 
-#: src/components/related-actions.jsx:633
+#: src/components/related-actions.jsx:662
 msgid "Mute <0>@{username}</0>…"
 msgstr "靜音 <0>@{username}</0>…"
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:665
+#: src/components/related-actions.jsx:694
 msgid "Muted @{username} for {0}"
 msgstr "已將 @{username} 靜音 {0}"
 
-#: src/components/related-actions.jsx:677
+#: src/components/related-actions.jsx:706
 msgid "Unable to mute @{username}"
 msgstr "無法靜音 @{username}"
 
-#: src/components/related-actions.jsx:698
+#: src/components/related-actions.jsx:727
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "要把 <0>@{username}</0> 從跟隨者中移除嗎？"
 
-#: src/components/related-actions.jsx:718
+#: src/components/related-actions.jsx:747
 msgid "@{username} removed from followers"
 msgstr "已把 @{username} 從跟隨者中移除"
 
-#: src/components/related-actions.jsx:730
+#: src/components/related-actions.jsx:759
 msgid "Remove follower…"
 msgstr "移除跟隨者..."
 
-#: src/components/related-actions.jsx:741
+#: src/components/related-actions.jsx:770
 msgid "Block <0>@{username}</0>?"
 msgstr "封鎖 <0>@{username}</0>？"
 
-#: src/components/related-actions.jsx:765
+#: src/components/related-actions.jsx:794
 msgid "Unblocked @{username}"
 msgstr "取消封鎖 @{username}"
 
-#: src/components/related-actions.jsx:773
+#: src/components/related-actions.jsx:802
 msgid "Blocked @{username}"
 msgstr "已把 @{username} 封鎖"
 
-#: src/components/related-actions.jsx:781
+#: src/components/related-actions.jsx:810
 msgid "Unable to unblock @{username}"
 msgstr "無法取消封鎖 @{username}"
 
-#: src/components/related-actions.jsx:783
+#: src/components/related-actions.jsx:812
 msgid "Unable to block @{username}"
 msgstr "無法封鎖 @{username}"
 
-#: src/components/related-actions.jsx:793
+#: src/components/related-actions.jsx:822
 msgid "Unblock <0>@{username}</0>"
 msgstr "取消封鎖 <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:802
+#: src/components/related-actions.jsx:831
 msgid "Block <0>@{username}</0>…"
 msgstr "封鎖 <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:819
+#: src/components/related-actions.jsx:848
 msgid "Report <0>@{username}</0>…"
 msgstr "檢舉 <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:887
+#: src/components/related-actions.jsx:916
 msgid "Withdraw follow request?"
 msgstr "收回跟隨請求？"
 
 #. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:888
+#: src/components/related-actions.jsx:917
 msgid "Unfollow @{0}?"
 msgstr "取消跟隨 @{0}？"
 
-#: src/components/related-actions.jsx:951
+#: src/components/related-actions.jsx:980
 msgid "Unfollow…"
 msgstr "取消跟隨…"
 
-#: src/components/related-actions.jsx:960
+#: src/components/related-actions.jsx:989
 msgid "Withdraw…"
 msgstr "丟棄…"
-
-#: src/components/related-actions.jsx:967
-#: src/components/related-actions.jsx:971
-#: src/pages/hashtag.jsx:294
-msgid "Follow"
-msgstr "跟隨"
 
 #. Relative time in seconds, as short as possible
 #. placeholder {0}: seconds < 1 ? 1 : Math.floor(seconds)
@@ -2252,6 +2404,32 @@ msgstr "{0}分"
 #: src/components/relative-time.jsx:55
 msgid "{0}h"
 msgstr "{0}小時"
+
+#: src/components/report-collection.jsx:25
+msgid "Report Collection"
+msgstr ""
+
+#: src/components/report-collection.jsx:60
+msgid "Collection reported"
+msgstr ""
+
+#: src/components/report-collection.jsx:65
+msgid "Unable to report collection"
+msgstr ""
+
+#: src/components/report-collection.jsx:73
+msgid "Additional comments"
+msgstr ""
+
+#: src/components/report-collection.jsx:94
+#: src/components/report-modal.jsx:299
+msgid "Forward to <0>{domain}</0>"
+msgstr ""
+
+#: src/components/report-collection.jsx:103
+#: src/components/report-modal.jsx:309
+msgid "Send Report"
+msgstr ""
 
 #: src/components/report-modal.jsx:30
 msgid "Spam"
@@ -2327,14 +2505,6 @@ msgstr ""
 
 #: src/components/report-modal.jsx:276
 msgid "Additional info"
-msgstr ""
-
-#: src/components/report-modal.jsx:299
-msgid "Forward to <0>{domain}</0>"
-msgstr ""
-
-#: src/components/report-modal.jsx:309
-msgid "Send Report"
 msgstr ""
 
 #: src/components/report-modal.jsx:318
@@ -2471,6 +2641,7 @@ msgstr ""
 
 #: src/components/shortcuts-settings.jsx:396
 #: src/components/status.jsx:1647
+#: src/pages/collection.jsx:395
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "編輯"
@@ -2683,9 +2854,9 @@ msgid "You are not allowed to quote this post"
 msgstr ""
 
 #: src/components/status.jsx:372
-#: src/components/status.jsx:3258
-#: src/components/status.jsx:3259
-#: src/components/status.jsx:3260
+#: src/components/status.jsx:3265
+#: src/components/status.jsx:3266
+#: src/components/status.jsx:3267
 msgid "Post unavailable"
 msgstr ""
 
@@ -2752,13 +2923,13 @@ msgstr ""
 
 #: src/components/status.jsx:1198
 #: src/components/status.jsx:1276
-#: src/components/status.jsx:2991
-#: src/components/status.jsx:3055
+#: src/components/status.jsx:2998
+#: src/components/status.jsx:3062
 msgid "Unboost"
 msgstr "取消轉發"
 
 #: src/components/status.jsx:1237
-#: src/components/status.jsx:3040
+#: src/components/status.jsx:3047
 msgid "Quote with link"
 msgstr ""
 
@@ -2775,31 +2946,31 @@ msgid "Boosted @{0}'s post"
 msgstr ""
 
 #: src/components/status.jsx:1278
-#: src/components/status.jsx:3054
+#: src/components/status.jsx:3061
 msgid "Boost/Quote…"
 msgstr ""
 
 #: src/components/status.jsx:1279
-#: src/components/status.jsx:3054
+#: src/components/status.jsx:3061
 msgid "Boost…"
 msgstr "轉發…"
 
 #: src/components/status.jsx:1291
-#: src/components/status.jsx:2201
-#: src/components/status.jsx:3074
+#: src/components/status.jsx:2200
+#: src/components/status.jsx:3081
 msgid "Unlike"
 msgstr "取消喜愛"
 
 #: src/components/status.jsx:1292
+#: src/components/status.jsx:2200
 #: src/components/status.jsx:2201
-#: src/components/status.jsx:2202
-#: src/components/status.jsx:3074
-#: src/components/status.jsx:3075
+#: src/components/status.jsx:3081
+#: src/components/status.jsx:3082
 msgid "Like"
 msgstr "喜愛"
 
 #: src/components/status.jsx:1301
-#: src/components/status.jsx:3089
+#: src/components/status.jsx:3096
 msgid "Unbookmark"
 msgstr "取消書籤"
 
@@ -2922,111 +3093,112 @@ msgstr ""
 msgid "Report post…"
 msgstr ""
 
-#: src/components/status.jsx:2202
-#: src/components/status.jsx:2238
-#: src/components/status.jsx:3075
+#: src/components/status.jsx:2201
+#: src/components/status.jsx:2237
+#: src/components/status.jsx:3082
 msgid "Liked"
 msgstr ""
 
-#: src/components/status.jsx:2235
-#: src/components/status.jsx:3057
+#: src/components/status.jsx:2234
+#: src/components/status.jsx:3064
 msgid "Boosted"
 msgstr ""
 
-#: src/components/status.jsx:2245
-#: src/components/status.jsx:3090
+#: src/components/status.jsx:2244
+#: src/components/status.jsx:3097
 msgid "Bookmarked"
 msgstr ""
 
-#: src/components/status.jsx:2249
+#: src/components/status.jsx:2248
 msgid "Pinned"
 msgstr ""
 
-#: src/components/status.jsx:2306
-#: src/components/status.jsx:2825
+#: src/components/status.jsx:2305
+#: src/components/status.jsx:2832
 msgid "Deleted"
 msgstr ""
 
-#: src/components/status.jsx:2344
-#: src/components/status.jsx:2411
+#: src/components/status.jsx:2343
+#: src/components/status.jsx:2410
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr ""
 
-#: src/components/status.jsx:2356
-#: src/components/status.jsx:2423
-#: src/components/status.jsx:2857
+#: src/components/status.jsx:2355
+#: src/components/status.jsx:2422
+#: src/components/status.jsx:2864
 msgid "Edited"
 msgstr ""
 
-#: src/components/status.jsx:2518
-#: src/components/status.jsx:2580
-#: src/components/status.jsx:2687
-msgid "Show less"
+#: src/components/status.jsx:2517
+#: src/components/status.jsx:2579
+#: src/pages/collection.jsx:583
+msgid "Show content"
 msgstr ""
 
-#: src/components/status.jsx:2518
-#: src/components/status.jsx:2580
-msgid "Show content"
+#: src/components/status.jsx:2517
+#: src/components/status.jsx:2579
+#: src/components/status.jsx:2686
+msgid "Show less"
 msgstr ""
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2683
+#: src/components/status.jsx:2682
 #: src/pages/catchup.jsx:2051
 msgid "Filtered: {0}"
 msgstr ""
 
-#: src/components/status.jsx:2687
+#: src/components/status.jsx:2686
 msgid "Show media"
 msgstr ""
 
-#: src/components/status.jsx:2943
-#: src/components/status.jsx:2955
+#: src/components/status.jsx:2950
+#: src/components/status.jsx:2962
 msgid "Comments"
 msgstr ""
 
-#: src/components/status.jsx:3256
+#: src/components/status.jsx:3263
 msgid "Post hidden by your filters"
 msgstr ""
 
-#: src/components/status.jsx:3257
+#: src/components/status.jsx:3264
 msgid "Post pending"
 msgstr ""
 
-#: src/components/status.jsx:3261
+#: src/components/status.jsx:3268
 msgid "Post removed by author"
 msgstr ""
 
-#: src/components/status.jsx:3262
+#: src/components/status.jsx:3269
 msgid "Post hidden because you've blocked @{name}."
 msgstr ""
 
-#: src/components/status.jsx:3264
+#: src/components/status.jsx:3271
 msgid "Post hidden because you've blocked {domain}."
 msgstr ""
 
-#: src/components/status.jsx:3265
+#: src/components/status.jsx:3272
 msgid "Post hidden because you've muted @{name}."
 msgstr ""
 
-#: src/components/status.jsx:3340
+#: src/components/status.jsx:3347
 msgid "Show anyway"
 msgstr ""
 
-#: src/components/status.jsx:3485
+#: src/components/status.jsx:3492
 msgid "Edit History"
 msgstr ""
 
-#: src/components/status.jsx:3489
+#: src/components/status.jsx:3496
 msgid "Failed to load history"
 msgstr ""
 
-#: src/components/status.jsx:3494
+#: src/components/status.jsx:3501
 msgid "Loading…"
 msgstr ""
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3626
+#: src/components/status.jsx:3633
 msgid "<0/> <1/> boosted"
 msgstr ""
 
@@ -3056,22 +3228,22 @@ msgstr ""
 msgid "{index}/X"
 msgstr ""
 
-#: src/components/timeline.jsx:558
+#: src/components/timeline.jsx:562
 #: src/pages/settings.jsx:1373
 msgid "New posts"
 msgstr ""
 
 #. placeholder {0}: fItems.length
-#: src/components/timeline.jsx:694
+#: src/components/timeline.jsx:698
 msgid "{0, plural, one {# Boost} other {# Boosts}}"
 msgstr ""
 
-#: src/components/timeline.jsx:699
+#: src/components/timeline.jsx:703
 msgid "Pinned posts"
 msgstr ""
 
 #. placeholder {0}: filterInfo.titlesStr
-#: src/components/timeline.jsx:1052
+#: src/components/timeline.jsx:1046
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr ""
 
@@ -3127,103 +3299,137 @@ msgstr "需要登入"
 
 #: src/compose.jsx:96
 #: src/pages/annual-report.jsx:186
-#: src/pages/http-route.jsx:91
+#: src/pages/http-route.jsx:94
 #: src/pages/login.jsx:309
 msgid "Go home"
 msgstr "回到主頁"
 
-#: src/pages/account-statuses.jsx:287
+#: src/pages/account-collections.jsx:71
+msgid "Collections featuring you"
+msgstr ""
+
+#: src/pages/account-collections.jsx:74
+msgid "Collections by {username}"
+msgstr ""
+
+#: src/pages/account-collections.jsx:190
+msgid "Created by you"
+msgstr ""
+
+#: src/pages/account-collections.jsx:196
+msgid "Featuring you"
+msgstr ""
+
+#. placeholder {0}: collections.length
+#: src/pages/account-collections.jsx:239
+msgid "{0, plural, one {# collection} other {# collections}}"
+msgstr ""
+
+#: src/pages/account-collections.jsx:254
+msgid "Unable to load collections."
+msgstr ""
+
+#: src/pages/account-collections.jsx:263
+msgid "No collections featuring you yet."
+msgstr ""
+
+#: src/pages/account-collections.jsx:264
+msgid "No collections yet."
+msgstr ""
+
+#: src/pages/account-statuses.jsx:285
 msgid "Account posts"
 msgstr "帳號貼文"
 
-#: src/pages/account-statuses.jsx:294
+#: src/pages/account-statuses.jsx:292
 msgid "Media posts tagged #{tagged} by {accountDisplay}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:296
+#: src/pages/account-statuses.jsx:294
 msgid "Posts tagged #{tagged} by {accountDisplay}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:303
+#: src/pages/account-statuses.jsx:301
 msgid "Posts in {monthYear} by {accountDisplay}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:305
+#: src/pages/account-statuses.jsx:303
 msgid "Media posts by {accountDisplay}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:394
-#: src/pages/account-statuses.jsx:403
+#: src/pages/account-statuses.jsx:392
+#: src/pages/account-statuses.jsx:401
 #: src/pages/catchup.jsx:1290
 msgid "Reset filters"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:422
+#: src/pages/account-statuses.jsx:420
 msgid "Showing replies"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:424
+#: src/pages/account-statuses.jsx:422
 msgid "Hiding replies"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:438
+#: src/pages/account-statuses.jsx:436
 msgid "Showing boosts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:440
+#: src/pages/account-statuses.jsx:438
 msgid "Hiding boosts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:457
+#: src/pages/account-statuses.jsx:455
 msgid "Showing posts with media"
 msgstr ""
 
 #. placeholder {0}: tag.name
-#: src/pages/account-statuses.jsx:492
+#: src/pages/account-statuses.jsx:490
 msgid "Showing posts tagged with #{0}"
 msgstr ""
 
 #. placeholder {0}: date.toLocaleString( i18n.locale, { month: 'long', year: 'numeric', }, )
-#: src/pages/account-statuses.jsx:532
+#: src/pages/account-statuses.jsx:530
 msgid "Showing posts in {0}"
 msgstr ""
 
 #. placeholder {0}: account?.username
-#: src/pages/account-statuses.jsx:579
+#: src/pages/account-statuses.jsx:577
 msgid "Search @{0}'s posts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:628
-#: src/pages/search.jsx:359
-#: src/pages/search.jsx:506
+#: src/pages/account-statuses.jsx:626
+#: src/pages/search.jsx:175
+#: src/pages/search.jsx:472
 msgid "Posts"
 msgstr "嘟文"
 
-#: src/pages/account-statuses.jsx:653
+#: src/pages/account-statuses.jsx:651
 msgid "Nothing to see here yet."
 msgstr ""
 
-#: src/pages/account-statuses.jsx:654
+#: src/pages/account-statuses.jsx:652
 #: src/pages/public.jsx:130
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:695
-#: src/pages/account-statuses.jsx:725
+#: src/pages/account-statuses.jsx:693
+#: src/pages/account-statuses.jsx:723
 msgid "Unable to fetch account info"
 msgstr ""
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:702
+#: src/pages/account-statuses.jsx:700
 msgid "Switch to account's server {0}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:732
+#: src/pages/account-statuses.jsx:730
+#: src/pages/collection.jsx:497
 msgid "Switch to my server (<0>{currentInstance}</0>)"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:805
+#: src/pages/account-statuses.jsx:803
 msgid "Month"
 msgstr ""
 
@@ -3465,7 +3671,7 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1466
 #: src/pages/mentions.jsx:235
-#: src/pages/search.jsx:344
+#: src/pages/search.jsx:457
 msgid "All"
 msgstr ""
 
@@ -3475,6 +3681,7 @@ msgid "{0, plural, one {# author} other {# authors}}"
 msgstr ""
 
 #: src/pages/catchup.jsx:1563
+#: src/pages/collection.jsx:357
 msgid "Sort"
 msgstr ""
 
@@ -3545,6 +3752,76 @@ msgstr ""
 
 #: src/pages/catchup.jsx:1834
 msgid "Scroll to top"
+msgstr ""
+
+#: src/pages/collection.jsx:57
+msgid "Date added"
+msgstr ""
+
+#. Sort by name
+#. js-lingui-explicit-id
+#: src/pages/collection.jsx:60
+msgid "sort.name"
+msgstr ""
+
+#: src/pages/collection.jsx:62
+msgid "Last active"
+msgstr ""
+
+#: src/pages/collection.jsx:63
+msgid "Most followers"
+msgstr ""
+
+#: src/pages/collection.jsx:168
+#: src/pages/collection.jsx:169
+#: src/pages/collection.jsx:273
+msgid "Collection"
+msgstr ""
+
+#: src/pages/collection.jsx:204
+msgid "Removed from collection"
+msgstr ""
+
+#: src/pages/collection.jsx:207
+msgid "Unable to remove from collection"
+msgstr ""
+
+#: src/pages/collection.jsx:313
+msgid "Post collection"
+msgstr ""
+
+#: src/pages/collection.jsx:453
+msgid "Report collection…"
+msgstr ""
+
+#: src/pages/collection.jsx:463
+#: src/pages/status.jsx:1648
+msgid "Experimental"
+msgstr ""
+
+#: src/pages/collection.jsx:489
+#: src/pages/status.jsx:1145
+msgid "Error: {e}"
+msgstr ""
+
+#: src/pages/collection.jsx:508
+msgid "Switch to collection's server ({serverDomain})"
+msgstr ""
+
+#: src/pages/collection.jsx:532
+msgid "Unable to load collection."
+msgstr ""
+
+#: src/pages/collection.jsx:550
+msgid "<link><icon/> Collection</link> by <name/>"
+msgstr ""
+
+#: src/pages/collection.jsx:627
+msgid "No accounts in this collection yet."
+msgstr ""
+
+#: src/pages/collection.jsx:690
+msgid "Marked as sensitive"
 msgstr ""
 
 #: src/pages/favourites.jsx:28
@@ -3833,11 +4110,11 @@ msgstr ""
 msgid "<0>New</0> <1>Follow Requests</1>"
 msgstr ""
 
-#: src/pages/http-route.jsx:68
+#: src/pages/http-route.jsx:71
 msgid "Resolving…"
 msgstr ""
 
-#: src/pages/http-route.jsx:79
+#: src/pages/http-route.jsx:82
 msgid "Unable to resolve URL"
 msgstr ""
 
@@ -3913,133 +4190,137 @@ msgstr ""
 msgid "Unable to load mentions."
 msgstr ""
 
-#: src/pages/notifications.jsx:103
-msgid "You don't follow"
+#: src/pages/notifications.jsx:135
+msgid "People you don't follow"
 msgstr ""
 
-#: src/pages/notifications.jsx:104
-msgid "Who don't follow you"
+#: src/pages/notifications.jsx:136
+msgid "People not following you"
 msgstr ""
 
-#: src/pages/notifications.jsx:105
-msgid "With a new account"
+#: src/pages/notifications.jsx:137
+msgid "New accounts"
 msgstr ""
 
-#: src/pages/notifications.jsx:106
-msgid "Who unsolicitedly private mention you"
+#: src/pages/notifications.jsx:138
+msgid "Unsolicited private mentions"
 msgstr ""
 
-#: src/pages/notifications.jsx:107
-msgid "Who are limited by server moderators"
+#: src/pages/notifications.jsx:139
+msgid "Moderated accounts"
 msgstr ""
 
-#: src/pages/notifications.jsx:730
-#: src/pages/notifications.jsx:1083
+#: src/pages/notifications.jsx:140
+msgid "Bot accounts"
+msgstr ""
+
+#: src/pages/notifications.jsx:764
+#: src/pages/notifications.jsx:1117
 msgid "Notifications settings"
 msgstr ""
 
-#: src/pages/notifications.jsx:748
+#: src/pages/notifications.jsx:782
 msgid "New notifications"
 msgstr ""
 
 #. placeholder {0}: announcements.length
-#: src/pages/notifications.jsx:759
+#: src/pages/notifications.jsx:793
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
-#: src/pages/notifications.jsx:806
+#: src/pages/notifications.jsx:840
 #: src/pages/settings.jsx:1361
 msgid "Follow requests"
 msgstr ""
 
 #. placeholder {0}: followRequests.length
-#: src/pages/notifications.jsx:811
+#: src/pages/notifications.jsx:845
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr ""
 
 #. placeholder {0}: notificationsPolicy.summary.pendingRequestsCount
-#: src/pages/notifications.jsx:866
+#: src/pages/notifications.jsx:900
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr ""
 
-#: src/pages/notifications.jsx:949
+#: src/pages/notifications.jsx:983
 msgid "Only mentions"
 msgstr ""
 
-#: src/pages/notifications.jsx:955
+#: src/pages/notifications.jsx:989
 msgid "Today"
 msgstr ""
 
-#: src/pages/notifications.jsx:960
+#: src/pages/notifications.jsx:994
 msgid "You're all caught up."
 msgstr ""
 
-#: src/pages/notifications.jsx:983
+#: src/pages/notifications.jsx:1017
 msgid "Yesterday"
 msgstr ""
 
-#: src/pages/notifications.jsx:1031
+#: src/pages/notifications.jsx:1065
 msgid "Unable to load notifications"
 msgstr ""
 
-#: src/pages/notifications.jsx:1110
+#: src/pages/notifications.jsx:1148
 msgid "Notifications settings updated"
 msgstr ""
 
-#: src/pages/notifications.jsx:1118
-msgid "Filter out notifications from people:"
+#: src/pages/notifications.jsx:1156
+msgid "Filter notifications from:"
 msgstr ""
 
-#: src/pages/notifications.jsx:1132
+#: src/pages/notifications.jsx:1172
 msgid "Filter"
 msgstr ""
 
-#: src/pages/notifications.jsx:1135
+#: src/pages/notifications.jsx:1175
 msgid "Ignore"
 msgstr ""
 
 #. placeholder {0}: niceDateTime(updatedAtDate)
-#: src/pages/notifications.jsx:1208
+#: src/pages/notifications.jsx:1248
 msgid "Updated <0>{0}</0>"
 msgstr ""
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1276
+#: src/pages/notifications.jsx:1316
 msgid "View notifications from <0>@{0}</0>"
 msgstr ""
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1297
+#: src/pages/notifications.jsx:1337
 msgid "Notifications from <0>@{0}</0>"
 msgstr ""
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1366
+#: src/pages/notifications.jsx:1406
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr ""
 
-#: src/pages/notifications.jsx:1371
+#: src/pages/notifications.jsx:1411
 msgid "Unable to accept notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1376
+#: src/pages/notifications.jsx:1416
 msgid "Allow"
 msgstr "允許"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1397
+#: src/pages/notifications.jsx:1437
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr ""
 
-#: src/pages/notifications.jsx:1402
+#: src/pages/notifications.jsx:1442
 msgid "Unable to dismiss notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1407
+#: src/pages/notifications.jsx:1447
 msgid "Dismiss"
 msgstr ""
 
-#: src/pages/notifications.jsx:1422
+#: src/pages/notifications.jsx:1462
 msgid "Dismissed"
 msgstr ""
 
@@ -4110,58 +4391,56 @@ msgstr ""
 msgid "Failed to delete scheduled post"
 msgstr ""
 
-#: src/pages/search.jsx:51
+#: src/pages/search.jsx:59
 msgid "Search: {q} (Posts)"
 msgstr ""
 
-#: src/pages/search.jsx:54
+#: src/pages/search.jsx:62
 msgid "Search: {q} (Accounts)"
 msgstr ""
 
-#: src/pages/search.jsx:57
+#: src/pages/search.jsx:65
 msgid "Search: {q} (Hashtags)"
 msgstr ""
 
-#: src/pages/search.jsx:60
+#: src/pages/search.jsx:68
 msgid "Search: {q}"
 msgstr ""
 
-#: src/pages/search.jsx:354
-#: src/pages/search.jsx:436
-msgid "Hashtags"
-msgstr ""
-
-#: src/pages/search.jsx:386
-#: src/pages/search.jsx:440
-#: src/pages/search.jsx:510
-msgid "See more"
-msgstr ""
-
-#: src/pages/search.jsx:412
+#: src/pages/search.jsx:125
 msgid "See more accounts"
 msgstr ""
 
-#: src/pages/search.jsx:426
+#: src/pages/search.jsx:126
 msgid "No accounts found."
 msgstr ""
 
-#: src/pages/search.jsx:482
+#: src/pages/search.jsx:142
+#: src/pages/search.jsx:467
+msgid "Hashtags"
+msgstr ""
+
+#: src/pages/search.jsx:143
 msgid "See more hashtags"
 msgstr ""
 
-#: src/pages/search.jsx:496
+#: src/pages/search.jsx:144
 msgid "No hashtags found."
 msgstr ""
 
-#: src/pages/search.jsx:540
+#: src/pages/search.jsx:176
 msgid "See more posts"
 msgstr ""
 
-#: src/pages/search.jsx:554
+#: src/pages/search.jsx:177
 msgid "No posts found."
 msgstr ""
 
-#: src/pages/search.jsx:599
+#: src/pages/search.jsx:500
+msgid "See more"
+msgstr ""
+
+#: src/pages/search.jsx:573
 msgid "Enter your search term or paste a URL above to get started."
 msgstr ""
 
@@ -4457,10 +4736,6 @@ msgstr ""
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
 msgstr ""
 
-#: src/pages/status.jsx:1145
-msgid "Error: {e}"
-msgstr ""
-
 #: src/pages/status.jsx:1152
 msgid "Switch to my server to enable interactions"
 msgstr ""
@@ -4501,10 +4776,6 @@ msgstr ""
 
 #: src/pages/status.jsx:1643
 msgid "Show all sensitive content"
-msgstr ""
-
-#: src/pages/status.jsx:1648
-msgid "Experimental"
 msgstr ""
 
 #: src/pages/status.jsx:1657

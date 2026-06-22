@@ -9,14 +9,23 @@ import { api } from '../utils/api';
 import states from '../utils/states';
 
 import Avatar from './avatar';
+import Icon from './icon';
+import RelativeTime from './relative-time';
 
 const ACCOUNT_ITEMS_LIMIT = 5;
 const ACCOUNT_ROTATION_INTERVAL = 300_000; // 5 min in ms
 
-function CollectionCard({ collection, instance, sensitive, creatorAccount }) {
+function CollectionCard({
+  collection,
+  instance,
+  creatorAccount,
+  size,
+  showMeta,
+}) {
   const snapStates = useSnapshot(states);
   const { i18n } = useLingui();
   const {
+    id,
     name,
     description,
     url,
@@ -24,6 +33,9 @@ function CollectionCard({ collection, instance, sensitive, creatorAccount }) {
     itemsCount,
     accountId,
     language,
+    updatedAt,
+    discoverable,
+    sensitive,
   } = collection;
 
   // Rotate start index by 1 every interval when items exceed the limit
@@ -87,6 +99,7 @@ function CollectionCard({ collection, instance, sensitive, creatorAccount }) {
     };
   }, [selectedItems, instance]);
 
+  const visibleCount = Math.min(selectedItems.length, ACCOUNT_ITEMS_LIMIT);
   const overflowCount = (itemsCount || items.length) - ACCOUNT_ITEMS_LIMIT;
 
   return (
@@ -94,10 +107,20 @@ function CollectionCard({ collection, instance, sensitive, creatorAccount }) {
       href={url}
       target="_blank"
       rel="nofollow noopener"
-      class={`collection-card ${sensitive ? 'sensitive' : ''}`}
+      class={`collection-card ${sensitive ? 'sensitive' : ''} ${size === 'l' ? 'large' : ''}`}
       lang={language || undefined}
+      onClick={(e) => {
+        if (!id) return;
+        // If cmd/ctrl/shift/alt key is pressed or middle-click, let the browser handle it
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.which === 2) {
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        location.hash = `#${instance ? `/${instance}` : ''}/c/${id}`;
+      }}
     >
-      {accountItems.length > 0 && (
+      {!sensitive && accountItems.length > 0 && (
         <div class="collection-card-bg" aria-hidden="true">
           {bgAccounts.map((a) => (
             <img
@@ -112,15 +135,30 @@ function CollectionCard({ collection, instance, sensitive, creatorAccount }) {
       )}
       {items.length > 0 && (
         <div class="collection-accounts">
-          {accountItems.map((account) => (
-            <Avatar
-              key={account.id}
-              url={account.avatarStatic || account.avatar}
-              size="l"
-              alt={account.displayName || account.username || ''}
-              squircle={account.bot}
-            />
-          ))}
+          {sensitive ? (
+            <>
+              {Array.from({ length: visibleCount }, (_, i) => (
+                <div key={i} class="avatar-placeholder">
+                  {i === 0 && <Icon icon="alert" />}
+                </div>
+              ))}
+            </>
+          ) : (
+            Array.from({ length: visibleCount }, (_, i) => {
+              const account = snapStates.accounts[selectedItems[i].accountId];
+              return account ? (
+                <Avatar
+                  key={account.id}
+                  url={account.avatarStatic || account.avatar}
+                  size="l"
+                  alt={account.displayName || account.username || ''}
+                  squircle={account.bot}
+                />
+              ) : (
+                <div key={selectedItems[i].accountId} class="avatar-spacer" />
+              );
+            })
+          )}
           {overflowCount > 0 && (
             <span class="account-overflow-count">+{overflowCount}</span>
           )}
@@ -143,6 +181,26 @@ function CollectionCard({ collection, instance, sensitive, creatorAccount }) {
                 @{ph({ username: creator.acct })}
               </span>
             </Trans>
+          </p>
+        )}
+        {showMeta && (
+          <p class="meta" dir="auto">
+            {updatedAt && (
+              <Trans>
+                Last updated:{' '}
+                <RelativeTime
+                  _t="relativeTime"
+                  datetime={updatedAt}
+                  format="micro"
+                />
+              </Trans>
+            )}
+            {discoverable === false && (
+              <>
+                {updatedAt && ' · '}
+                <Trans>Unlisted</Trans>
+              </>
+            )}
           </p>
         )}
       </div>

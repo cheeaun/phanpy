@@ -137,6 +137,7 @@ export const ICONS = {
   },
   alert: () => import('../iconify-icons/mingcute/alert-line.js'),
   round: () => import('../iconify-icons/mingcute/round-fill.js'),
+  'round-line': () => import('../iconify-icons/mingcute/round-line.js'),
   'arrow-up-circle': () =>
     import('../iconify-icons/mingcute/arrow-up-circle-line.js'),
   'arrow-down-circle': () =>
@@ -204,4 +205,5 @@ export const ICONS = {
     flip: 'horizontal',
   },
   'arrow-up-top': () => import('../iconify-icons/mingcute/arrow-to-up-line.js'),
+  collections: () => import('../iconify-icons/mingcute/board-line.js'),
 };

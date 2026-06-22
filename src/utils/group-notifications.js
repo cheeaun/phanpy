@@ -1,4 +1,9 @@
 // This is like very lame "type-checking" lol
+const notificationTypeKeys2 = {
+  // `collection` is gone if it's deleted *after* these actions
+  added_to_collection: ['sampleAccounts', 'collection'],
+  collection_update: ['sampleAccounts', 'collection'],
+};
 const notificationTypeKeys = {
   mention: ['account', 'status'],
   quote: ['account', 'status'],
@@ -9,10 +14,27 @@ const notificationTypeKeys = {
   favourite: ['account', 'status'],
   poll: ['status'],
   update: ['status'],
+  added_to_collection: ['account', 'collection'],
+  collection_update: ['account', 'collection'],
 };
 
 const GROUP_TYPES = ['favourite', 'reblog', 'follow', 'admin.sign_up'];
 const groupable = (type) => GROUP_TYPES.includes(type);
+
+export function fixNotifications2(notifications) {
+  return notifications.filter((notification) => {
+    const { type } = notification;
+    if (!type) {
+      console.warn('Notification missing type', notification);
+      return false;
+    }
+    const keys = notificationTypeKeys2[type];
+    if (keys?.length) {
+      return keys.every((key) => !!notification[key]);
+    }
+    return true;
+  });
+}
 
 export function fixNotifications(notifications) {
   return notifications.filter((notification) => {
@@ -56,6 +78,9 @@ export function massageNotifications2(notifications) {
 }
 
 export function groupNotifications2(groupNotifications) {
+  // Filter out invalid notifications
+  groupNotifications = fixNotifications2(groupNotifications);
+
   // Make grouped notifications to look like faux grouped notifications
   const newGroupNotifications = groupNotifications.map((gn) => {
     const {

@@ -1,0 +1,51 @@
+.email-subscription-form {
+  --stripe-width: 8px;
+  --stripe-gap: 6px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px var(--drop-shadow-color);
+  border: 8px solid;
+  border-image: repeating-linear-gradient(
+      -45deg,
+      var(--red-color) 0,
+      var(--red-color) var(--stripe-width),
+      #fff var(--stripe-width),
+      #fff calc(var(--stripe-width) + var(--stripe-gap)),
+      var(--blue-color) calc(var(--stripe-width) + var(--stripe-gap)),
+      var(--blue-color)
+        calc(var(--stripe-width) + var(--stripe-gap) + var(--stripe-width)),
+      #fff calc(var(--stripe-width) + var(--stripe-gap) + var(--stripe-width)),
+      #fff
+        calc(
+          var(--stripe-width) + var(--stripe-gap) + var(--stripe-width) +
+            var(--stripe-gap)
+        )
+    )
+    8;
+  background-color: var(--bg-color);
+  font-family:
+    'Segoe Print', 'Bradley Hand', Chilanka, TSCu_Comic, casual, cursive;
+  font-weight: normal;
+
+  input {
+    flex: 1;
+    border: 0;
+    border-bottom: 1px solid var(--text-color);
+
+    &:focus {
+      outline-offset: 2px;
+    }
+  }
+
+  button {
+    border-radius: 0;
+  }
+
+  @media (min-width: 22em) {
+    flex-direction: row;
+  }
+}

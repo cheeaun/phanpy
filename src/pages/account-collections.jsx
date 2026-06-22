@@ -234,7 +234,7 @@ function AccountCollections() {
                   </div>
                 ))}
               {collections.length > 1 && (
-                <p class="ui-state insignificant">
+                <footer class="ui-state insignificant">
                   <small>
                     <Plural
                       value={collections.length}
@@ -242,7 +242,7 @@ function AccountCollections() {
                       other="# collections"
                     />
                   </small>
-                </p>
+                </footer>
               )}
             </>
           ) : uiState === 'loading' ? (

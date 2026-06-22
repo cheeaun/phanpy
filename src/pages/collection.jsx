@@ -1,6 +1,6 @@
 import './collection.css';
 
-import { msg } from '@lingui/core/macro';
+import { msg, ph } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import {
   MenuDivider,
@@ -21,6 +21,7 @@ import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
 import MenuConfirm from '../components/menu-confirm';
+import MenuLink from '../components/menu-link';
 import Menu2 from '../components/menu2';
 import Modal from '../components/modal';
 import NameText from '../components/name-text';
@@ -28,6 +29,7 @@ import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
 import ReportCollection from '../components/report-collection';
 import { api } from '../utils/api';
+import { isSupported as collectionsSupported } from '../utils/collections';
 import { fetchRelationships } from '../utils/relationships';
 import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
@@ -73,7 +75,11 @@ function Collection() {
     useState(false);
 
   const { masto, instance } = api({ instance: targetInstance });
-  const { instance: currentInstance, authenticated } = api();
+  const {
+    masto: currentMasto,
+    instance: currentInstance,
+    authenticated,
+  } = api();
   const sameInstance = instance === currentInstance;
 
   const [data, setData] = useState();
@@ -140,10 +146,27 @@ function Collection() {
   }, [accounts]);
 
   const curator = accountsMap[collection.accountId] || null;
+  const collectionURLInfo = useMemo(() => {
+    const u = URL.parse(collection?.url);
+    if (!u) return {};
+    const path = u.pathname;
+    const match = path.match(/\/collections\/([^/]+)/i);
+    if (match) return { hostname: u.hostname, id: match[1] };
+    return {};
+  }, [collection?.url]);
+
+  const curatorAcct = useMemo(() => {
+    if (!curator?.acct) return '';
+    if (curator.acct.includes('@')) return curator.acct;
+    const curatorURL = URL.parse(curator?.url);
+    const domain =
+      curatorURL?.hostname || collectionURLInfo?.hostname || instance;
+    return domain ? `${curator.acct}@${domain}` : curator.acct;
+  }, [curator?.acct, curator?.url, collectionURLInfo?.hostname, instance]);
 
   useTitle(
-    curator?.acct
-      ? `${collection?.name || t`Collection`} — @${curator.acct}`
+    curatorAcct
+      ? `${collection?.name || t`Collection`} — @${curatorAcct}`
       : collection?.name || t`Collection`,
     '/:instance?/c/:id',
   );
@@ -384,9 +407,10 @@ function Collection() {
                       </MenuItem>
                     </>
                   )}
-                  {!isCurator && (ownCollectionItem || authenticated) && (
-                    <MenuDivider />
-                  )}
+                  {!isCurator &&
+                    (ownCollectionItem || (authenticated && sameInstance)) && (
+                      <MenuDivider />
+                    )}
                   {ownCollectionItem && !isCurator && (
                     <MenuConfirm
                       subMenu
@@ -419,7 +443,7 @@ function Collection() {
                       </span>
                     </MenuConfirm>
                   )}
-                  {!isCurator && authenticated && (
+                  {!isCurator && authenticated && sameInstance && (
                     <MenuItem
                       className="danger"
                       disabled={uiState === 'loading'}
@@ -431,6 +455,71 @@ function Collection() {
                       </span>
                     </MenuItem>
                   )}
+                  {authenticated &&
+                    (!sameInstance ||
+                      collectionURLInfo?.hostname !== instance) && (
+                      <>
+                        <MenuDivider />
+                        <MenuHeader className="plain">
+                          <Trans>Experimental</Trans>
+                        </MenuHeader>
+                        {!sameInstance ? (
+                          <MenuItem
+                            disabled={
+                              uiState === 'loading' || !collectionsSupported()
+                            }
+                            onClick={() => {
+                              setUIState('loading');
+                              (async () => {
+                                try {
+                                  const results =
+                                    await currentMasto.v2.search.list({
+                                      q: collection.url,
+                                      resolve: true,
+                                      limit: 1,
+                                    });
+                                  if (results?.collections?.length) {
+                                    const collectionResult =
+                                      results.collections[0];
+                                    location.hash = currentInstance
+                                      ? `/${currentInstance}/c/${collectionResult.id}`
+                                      : `/c/${collectionResult.id}`;
+                                  } else {
+                                    throw new Error('No results');
+                                  }
+                                } catch (e) {
+                                  setUIState('default');
+                                  showToast(t`Error: ${e}`);
+                                  console.error(e);
+                                }
+                              })();
+                            }}
+                          >
+                            <Icon icon="transfer" />
+                            <small class="menu-double-lines">
+                              <Trans>
+                                Switch to my server (<b>{currentInstance}</b>)
+                              </Trans>
+                            </small>
+                          </MenuItem>
+                        ) : (
+                          <MenuLink
+                            to={`/${collectionURLInfo.hostname}/c/${collectionURLInfo.id}`}
+                          >
+                            <Icon icon="transfer" />
+                            <small class="menu-double-lines">
+                              <Trans>
+                                Switch to collection's server (
+                                {ph({
+                                  serverDomain: collectionURLInfo.hostname,
+                                })}
+                                )
+                              </Trans>
+                            </small>
+                          </MenuLink>
+                        )}
+                      </>
+                    )}
                 </Menu2>
               </div>
             </div>
@@ -475,7 +564,7 @@ function Collection() {
                           by{' '}
                           <NameText
                             _t="name"
-                            account={curator}
+                            account={{ ...curator, acct: curatorAcct }}
                             instance={instance}
                             showAvatar
                           />

@@ -240,7 +240,12 @@
 .status-card {
   font-size: calc(var(--text-size) * 0.9);
   /* margin: 1em 0 0; */
-  border-radius: 16px;
+  --card-radius: 16px;
+  @supports (corner-shape: squircle) {
+    --card-radius: 32px;
+    corner-shape: squircle;
+  }
+  border-radius: var(--card-radius);
   padding: 12px;
   border: 1px solid var(--outline-color);
   background-color: var(--bg-color);
@@ -250,7 +255,10 @@
   max-width: none !important;
 
   .quote-post-native > & {
-    border-radius: 8px;
+    --card-radius: 8px;
+    @supports (corner-shape: squircle) {
+      --card-radius: 16px;
+    }
   }
 
   .status-card {

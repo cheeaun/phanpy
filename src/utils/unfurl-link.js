@@ -2,6 +2,7 @@ import PQueue from 'p-queue';
 import { snapshot } from 'valtio/vanilla';
 
 import { api } from './api';
+import extractCollectionsPageInfo from './collections-url';
 import getDomain from './get-domain';
 import states, { saveStatus } from './states';
 
@@ -27,6 +28,39 @@ function getStatusID(path) {
 
 const denylistDomains = /(twitter|github)\.com/i;
 const failedUnfurls = {};
+
+function _unfurlCollectionLink(_instance, url) {
+  const info = extractCollectionsPageInfo(url);
+  if (!info) return;
+
+  const { domain, acct } = info;
+  const key = `${acct}@${domain}`;
+  if (states.accounts[key]) {
+    const account = states.accounts[key];
+    states.unfurledLinks[url] = {
+      id: account.id,
+      instance: domain,
+      url: `/${domain}/a/${account.id}/c`,
+      collections: true,
+    };
+    return Promise.resolve(states.unfurledLinks[url]);
+  }
+
+  const { masto } = api({ instance: domain });
+  return masto.v1.accounts
+    .lookup({ acct })
+    .then((account) => {
+      states.accounts[key] = account;
+      states.unfurledLinks[url] = {
+        id: account.id,
+        instance: domain,
+        url: `/${domain}/a/${account.id}/c`,
+        collections: true,
+      };
+      return states.unfurledLinks[url];
+    })
+    .catch(() => {});
+}
 function _unfurlMastodonLink(instance, url) {
   const snapStates = snapshot(states);
   if (denylistDomains.test(url)) {
@@ -160,4 +194,8 @@ function _unfurlMastodonLink(instance, url) {
 
 const unfurlMastodonLink = (instance, url, signal) =>
   unfurlQueue.add(() => _unfurlMastodonLink(instance, url), { signal });
+const unfurlCollectionLink = (instance, url) =>
+  unfurlQueue.add(() => _unfurlCollectionLink(instance, url));
+
 export default unfurlMastodonLink;
+export { unfurlCollectionLink };

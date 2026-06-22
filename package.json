@@ -25,7 +25,7 @@
     "formatting": "oxfmt --check || oxfmt",
     "formatting-check": "oxfmt --check",
     "git:po-filter": "git config --local diff.po-filter.textconv \"sed 's/:[0-9]*$//'\"",
-    "postinstall": "node scripts/generate-icons.js",
+    "postinstall": "node scripts/generate-icons.js && npx exifreader build",
     "generate-icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
@@ -41,7 +41,7 @@
     "chroma-js": "~3.2.0",
     "compare-versions": "~6.1.1",
     "exifreader": "~4.41.0",
-    "fast-blurhash": "~1.1.4",
+    "fast-blurhash": "~1.2.0",
     "fast-equals": "~6.0.0",
     "flexsearch": "~0.8.212",
     "fuse.js": "~7.4.2",
@@ -52,7 +52,7 @@
     "js-cookie": "~3.0.8",
     "just-debounce-it": "~3.2.0",
     "lz-string": "~1.5.0",
-    "masto": "~7.11.1",
+    "masto": "~7.12.0",
     "micro-memoize": "~5.1.1",
     "p-queue": "~9.3.0",
     "p-retry": "~8.0.0",
@@ -84,7 +84,7 @@
     "@lingui/vite-plugin": "~6.4.0",
     "@playwright/test": "~1.61.0",
     "@preact/preset-vite": "~2.10.5",
-    "@types/node": "~25.9.3",
+    "@types/node": "~26.0.0",
     "oxfmt": "~0.55.0",
     "postcss": "~8.5.15",
     "postcss-dark-theme-class": "~2.0.0",
@@ -145,5 +145,10 @@
       "thumbnail": true,
       "icc": true
     }
+  },
+  "allowScripts": {
+    "core-js@2.6.12": true,
+    "exifreader@4.41.0": true,
+    "esbuild@0.25.12": true
   }
 }

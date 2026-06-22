@@ -3326,3 +3326,16 @@ ul.link-list li a .icon {
     padding-block-start: 0;
   }
 }
+
+html.is-plain .timeline:not(.flat) > li {
+  --item-radius: 0;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+  border-inline: none;
+  border-top: none;
+}
+
+html.is-plain .deck > header {
+  border: 1px solid var(--divider-color);
+}

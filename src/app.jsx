@@ -313,7 +313,7 @@ if (isIOS) {
     document.documentElement.classList.add(`is-${theme}`);
     document
       .querySelector('meta[name="color-scheme"]')
-      .setAttribute('content', theme || 'light dark');
+      .setAttribute('content', theme === 'plain' ? 'light' : theme || 'light dark');
 
     // Enable manual theme <meta>
     const $manualMeta = document.querySelector(
@@ -322,9 +322,9 @@ if (isIOS) {
     if ($manualMeta) {
       $manualMeta.name = 'theme-color';
       $manualMeta.content =
-        theme === 'light'
-          ? $manualMeta.dataset.themeLightColor
-          : $manualMeta.dataset.themeDarkColor;
+        theme === 'dark'
+          ? $manualMeta.dataset.themeDarkColor
+          : $manualMeta.dataset.themeLightColor;
     }
     // Disable auto theme <meta>s
     const $autoMetas = document.querySelectorAll(

@@ -132,7 +132,7 @@ function Settings({ onClose }) {
                     const html = document.documentElement;
 
                     if (theme === 'auto') {
-                      html.classList.remove('is-light', 'is-dark');
+                      html.classList.remove('is-light', 'is-dark', 'is-plain');
 
                       // Disable manual theme <meta>
                       const $manualMeta = document.querySelector(
@@ -151,6 +151,7 @@ function Settings({ onClose }) {
                     } else {
                       html.classList.toggle('is-light', theme === 'light');
                       html.classList.toggle('is-dark', theme === 'dark');
+                      html.classList.toggle('is-plain', theme === 'plain');
 
                       // Enable manual theme <meta>
                       const $manualMeta = document.querySelector(
@@ -159,9 +160,9 @@ function Settings({ onClose }) {
                       if ($manualMeta) {
                         $manualMeta.name = 'theme-color';
                         $manualMeta.content =
-                          theme === 'light'
-                            ? $manualMeta.dataset.themeLightColor
-                            : $manualMeta.dataset.themeDarkColor;
+                          theme === 'dark'
+                            ? $manualMeta.dataset.themeDarkColor
+                            : $manualMeta.dataset.themeLightColor;
                       }
                       // Disable auto theme <meta>s
                       const $autoMetas = document.querySelectorAll(
@@ -175,7 +176,11 @@ function Settings({ onClose }) {
                       .querySelector('meta[name="color-scheme"]')
                       .setAttribute(
                         'content',
-                        theme === 'auto' ? 'light dark' : theme,
+                        theme === 'auto'
+                          ? 'light dark'
+                          : theme === 'plain'
+                            ? 'light'
+                            : theme,
                       );
 
                     if (theme === 'auto') {
@@ -214,11 +219,24 @@ function Settings({ onClose }) {
                         name="theme"
                         value="auto"
                         defaultChecked={
-                          currentTheme !== 'light' && currentTheme !== 'dark'
+                          currentTheme !== 'light' &&
+                          currentTheme !== 'dark' &&
+                          currentTheme !== 'plain'
                         }
                       />
                       <span>
                         <Trans>Auto</Trans>
+                      </span>
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="theme"
+                        value="plain"
+                        defaultChecked={currentTheme === 'plain'}
+                      />
+                      <span>
+                        <Trans>Plain</Trans>
                       </span>
                     </label>
                   </div>

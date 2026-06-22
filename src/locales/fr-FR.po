@@ -8,7 +8,7 @@ msgstr ""
 "Language: fr\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-19 20:19\n"
+"PO-Revision-Date: 2026-06-22 20:02\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -279,7 +279,7 @@ msgstr "Afficher les statistiques du message"
 #: src/components/add-remove-lists-sheet.jsx:45
 #: src/components/collection-add-account.jsx:133
 #: src/components/collection-add-edit.jsx:40
-#: src/components/collection-manage-accounts.jsx:120
+#: src/components/collection-manage-accounts.jsx:111
 #: src/components/compose.jsx:1127
 #: src/components/custom-emojis-modal.jsx:282
 #: src/components/drafts.jsx:57
@@ -366,17 +366,17 @@ msgid "More from <0/>"
 msgstr "Davantage de <0/>"
 
 #: src/components/collection-account-actions.jsx:35
-#: src/pages/collection.jsx:421
+#: src/pages/collection.jsx:422
 msgid "Remove me from this collection?"
 msgstr "Me retirer de cette collection ?"
 
 #: src/components/collection-account-actions.jsx:44
-#: src/pages/collection.jsx:430
+#: src/pages/collection.jsx:431
 msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
 msgstr "L'auteur ne pourra pas vous re-ajouter à cette collection pendant 24 heures. Bloquez-le pour l'empêcher de vous ajouter aux collections."
 
 #: src/components/collection-account-actions.jsx:69
-#: src/pages/collection.jsx:441
+#: src/pages/collection.jsx:442
 msgid "Remove me…"
 msgstr "Retirez-moi…"
 
@@ -460,7 +460,7 @@ msgstr "Marque comme sensible"
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2038
-#: src/pages/collection.jsx:683
+#: src/pages/collection.jsx:686
 #: src/pages/settings.jsx:302
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
@@ -468,7 +468,7 @@ msgstr "Public"
 
 #: src/components/collection-add-edit.jsx:186
 #: src/components/collection-card.jsx:201
-#: src/pages/collection.jsx:677
+#: src/pages/collection.jsx:680
 msgid "Unlisted"
 msgstr "Non-listé"
 
@@ -512,40 +512,40 @@ msgid "Collection by <0>@{username}</0>"
 msgstr "Collection de <0>@{username}</0>"
 
 #: src/components/collection-card.jsx:189
-#: src/pages/collection.jsx:665
+#: src/pages/collection.jsx:668
 msgid "Last updated: <relativeTime/>"
 msgstr "Dernière mise à jour : <relativeTime/>"
 
-#: src/components/collection-manage-accounts.jsx:90
-msgid "Unable to remove account"
-msgstr "Retrait du compte impossible"
-
-#: src/components/collection-manage-accounts.jsx:101
+#: src/components/collection-manage-accounts.jsx:89
 msgid "@{username} removed from collection"
 msgstr "@{username} retiré de la collection"
 
-#: src/components/collection-manage-accounts.jsx:124
-#: src/pages/collection.jsx:404
+#: src/components/collection-manage-accounts.jsx:93
+msgid "Unable to remove account"
+msgstr "Retrait du compte impossible"
+
+#: src/components/collection-manage-accounts.jsx:115
+#: src/pages/collection.jsx:405
 msgid "Manage accounts"
 msgstr "Gestion des comptes"
 
-#: src/components/collection-manage-accounts.jsx:143
+#: src/components/collection-manage-accounts.jsx:134
 msgid "Pending"
 msgstr "En attente"
 
-#: src/components/collection-manage-accounts.jsx:150
+#: src/components/collection-manage-accounts.jsx:141
 msgid "Remove <0>{username}</0> from this collection?"
 msgstr "Retirer <0>{username}</0> de cette collection ?"
 
-#: src/components/collection-manage-accounts.jsx:170
+#: src/components/collection-manage-accounts.jsx:161
 #: src/components/edit-profile-sheet.jsx:473
 #: src/components/edit-profile-sheet.jsx:565
 #: src/pages/list.jsx:388
 msgid "Remove…"
 msgstr "Retirer…"
 
-#: src/components/collection-manage-accounts.jsx:184
-#: src/pages/collection.jsx:643
+#: src/components/collection-manage-accounts.jsx:175
+#: src/pages/collection.jsx:646
 msgid "Add account"
 msgstr "Ajouter un compte"
 
@@ -950,7 +950,7 @@ msgstr "Quitter"
 #: src/components/status.jsx:3123
 #: src/pages/account-statuses.jsx:674
 #: src/pages/accounts.jsx:149
-#: src/pages/collection.jsx:283
+#: src/pages/collection.jsx:284
 #: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:147
@@ -1166,7 +1166,7 @@ msgstr "Exporter"
 #. placeholder {0}: accounts.length
 #. placeholder {0}: sortedItems.length
 #: src/components/import-export-accounts.jsx:155
-#: src/pages/collection.jsx:656
+#: src/pages/collection.jsx:659
 msgid "{0, plural, one {# account} other {# accounts}}"
 msgstr "{0, plural, one {# compte} other {# comptes}}"
 
@@ -1666,7 +1666,7 @@ msgstr "Favoris"
 #: src/pages/account-collections.jsx:68
 #: src/pages/account-collections.jsx:147
 #: src/pages/account-collections.jsx:169
-#: src/pages/collection.jsx:264
+#: src/pages/collection.jsx:265
 #: src/pages/search.jsx:163
 msgid "Collections"
 msgstr "Collections"
@@ -1930,14 +1930,14 @@ msgstr "Lire la suite →"
 #: src/components/open-link-sheet.jsx:30
 #: src/components/related-actions.jsx:568
 #: src/components/status.jsx:1489
-#: src/pages/collection.jsx:324
+#: src/pages/collection.jsx:325
 msgid "Link copied"
 msgstr "Lien copié"
 
 #: src/components/open-link-sheet.jsx:33
 #: src/components/related-actions.jsx:571
 #: src/components/status.jsx:1492
-#: src/pages/collection.jsx:327
+#: src/pages/collection.jsx:328
 msgid "Unable to copy link"
 msgstr "Le lien n’a pas pu être copié."
 
@@ -1950,14 +1950,14 @@ msgstr "Ouvrir le lien ?"
 #: src/components/related-actions.jsx:577
 #: src/components/shortcuts-settings.jsx:1175
 #: src/components/status.jsx:1498
-#: src/pages/collection.jsx:333
+#: src/pages/collection.jsx:334
 msgid "Copy"
 msgstr "Copier"
 
 #: src/components/open-link-sheet.jsx:82
 #: src/components/related-actions.jsx:598
 #: src/components/status.jsx:1520
-#: src/pages/collection.jsx:350
+#: src/pages/collection.jsx:351
 msgid "Share…"
 msgstr "Partager…"
 
@@ -2641,7 +2641,7 @@ msgstr "Non disponible dans le mode d'affichage actuel"
 
 #: src/components/shortcuts-settings.jsx:396
 #: src/components/status.jsx:1647
-#: src/pages/collection.jsx:395
+#: src/pages/collection.jsx:396
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "Modifier"
@@ -2729,7 +2729,7 @@ msgstr "Les raccourcis n’ont pas pu être chargés."
 
 #: src/components/shortcuts-settings.jsx:891
 msgid "Download shortcuts from server"
-msgstr ""
+msgstr "Télécharger les raccourcis depuis le serveur"
 
 #: src/components/shortcuts-settings.jsx:960
 msgid "* Exists in current shortcuts"
@@ -2831,7 +2831,7 @@ msgstr "Raccourcis JSON bruts"
 
 #: src/components/shortcuts-settings.jsx:1230
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr ""
+msgstr "Importer/exporter les paramètres de/vers le serveur (Très expérimental)"
 
 #: src/components/status.jsx:292
 msgid "Private posts cannot be quoted"
@@ -2843,7 +2843,7 @@ msgstr "Requête de citation"
 
 #: src/components/status.jsx:294
 msgid "Author will manually review"
-msgstr ""
+msgstr "L'auteur vérifiera manuellement"
 
 #: src/components/status.jsx:295
 msgid "Only followers can quote this post"
@@ -3083,7 +3083,7 @@ msgstr "Citation retirée"
 
 #: src/components/status.jsx:1728
 msgid "Unable to remove quote"
-msgstr ""
+msgstr "Impossible de supprimer la citation"
 
 #: src/components/status.jsx:1734
 msgid "Remove quote…"
@@ -3131,7 +3131,7 @@ msgstr "Modifié"
 
 #: src/components/status.jsx:2517
 #: src/components/status.jsx:2579
-#: src/pages/collection.jsx:583
+#: src/pages/collection.jsx:586
 msgid "Show content"
 msgstr "Afficher le contenu"
 
@@ -3159,7 +3159,7 @@ msgstr "Commentaires"
 
 #: src/components/status.jsx:3263
 msgid "Post hidden by your filters"
-msgstr ""
+msgstr "Publication masquée par vos filtres"
 
 #: src/components/status.jsx:3264
 msgid "Post pending"
@@ -3167,7 +3167,7 @@ msgstr "Publication en attente"
 
 #: src/components/status.jsx:3268
 msgid "Post removed by author"
-msgstr ""
+msgstr "Publication supprimée par son auteur"
 
 #: src/components/status.jsx:3269
 msgid "Post hidden because you've blocked @{name}."
@@ -3183,7 +3183,7 @@ msgstr "Publication masquée parce que vous avez bloqué @{name}."
 
 #: src/components/status.jsx:3347
 msgid "Show anyway"
-msgstr ""
+msgstr "Montrer quand même"
 
 #: src/components/status.jsx:3492
 msgid "Edit History"
@@ -3306,7 +3306,7 @@ msgstr "Retour à l’accueil"
 
 #: src/pages/account-collections.jsx:71
 msgid "Collections featuring you"
-msgstr ""
+msgstr "Collections qui vous incluent"
 
 #: src/pages/account-collections.jsx:74
 msgid "Collections by {username}"
@@ -3425,7 +3425,7 @@ msgid "Switch to account's server {0}"
 msgstr "Basculer vers le serveur du compte {0}"
 
 #: src/pages/account-statuses.jsx:730
-#: src/pages/collection.jsx:497
+#: src/pages/collection.jsx:500
 msgid "Switch to my server (<0>{currentInstance}</0>)"
 msgstr "Basculer vers mon serveur (<0>{currentInstance}</0>)"
 
@@ -3681,7 +3681,7 @@ msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural, one {# personne} other {# personnes}}"
 
 #: src/pages/catchup.jsx:1563
-#: src/pages/collection.jsx:357
+#: src/pages/collection.jsx:358
 msgid "Sort"
 msgstr "Classer"
 
@@ -3754,73 +3754,73 @@ msgstr "Personne précédente"
 msgid "Scroll to top"
 msgstr "Remonter"
 
-#: src/pages/collection.jsx:57
+#: src/pages/collection.jsx:58
 msgid "Date added"
 msgstr ""
 
 #. Sort by name
 #. js-lingui-explicit-id
-#: src/pages/collection.jsx:60
+#: src/pages/collection.jsx:61
 msgid "sort.name"
 msgstr ""
 
-#: src/pages/collection.jsx:62
+#: src/pages/collection.jsx:63
 msgid "Last active"
 msgstr ""
 
-#: src/pages/collection.jsx:63
+#: src/pages/collection.jsx:64
 msgid "Most followers"
 msgstr ""
 
-#: src/pages/collection.jsx:168
 #: src/pages/collection.jsx:169
-#: src/pages/collection.jsx:273
+#: src/pages/collection.jsx:170
+#: src/pages/collection.jsx:274
 msgid "Collection"
 msgstr "Collection"
 
-#: src/pages/collection.jsx:204
+#: src/pages/collection.jsx:205
 msgid "Removed from collection"
 msgstr "Retiré de la collection"
 
-#: src/pages/collection.jsx:207
+#: src/pages/collection.jsx:208
 msgid "Unable to remove from collection"
 msgstr ""
 
-#: src/pages/collection.jsx:313
+#: src/pages/collection.jsx:314
 msgid "Post collection"
 msgstr "Publier la collection"
 
-#: src/pages/collection.jsx:453
+#: src/pages/collection.jsx:454
 msgid "Report collection…"
 msgstr "Signaler la collection…"
 
-#: src/pages/collection.jsx:463
+#: src/pages/collection.jsx:464
 #: src/pages/status.jsx:1648
 msgid "Experimental"
 msgstr "Expérimental"
 
-#: src/pages/collection.jsx:489
+#: src/pages/collection.jsx:492
 #: src/pages/status.jsx:1145
 msgid "Error: {e}"
 msgstr "Erreur : {e}"
 
-#: src/pages/collection.jsx:508
+#: src/pages/collection.jsx:511
 msgid "Switch to collection's server ({serverDomain})"
 msgstr ""
 
-#: src/pages/collection.jsx:532
+#: src/pages/collection.jsx:535
 msgid "Unable to load collection."
 msgstr ""
 
-#: src/pages/collection.jsx:550
+#: src/pages/collection.jsx:553
 msgid "<link><icon/> Collection</link> by <name/>"
 msgstr "<link><icon/> Collection</link> par <name/>"
 
-#: src/pages/collection.jsx:627
+#: src/pages/collection.jsx:630
 msgid "No accounts in this collection yet."
 msgstr "Pas encore de comptes dans cette collection."
 
-#: src/pages/collection.jsx:690
+#: src/pages/collection.jsx:693
 msgid "Marked as sensitive"
 msgstr "Marqué comme sensible"
 
@@ -4478,7 +4478,7 @@ msgstr "Traductions bénévoles"
 
 #: src/pages/settings.jsx:255
 msgid "Keep navigation bars visible while scrolling"
-msgstr ""
+msgstr "Barres de défilement toujours visible pendant le défilement"
 
 #: src/pages/settings.jsx:263
 msgid "Posting"
@@ -4496,7 +4496,7 @@ msgstr "Synchronisé"
 
 #: src/pages/settings.jsx:293
 msgid "Default visibility updated"
-msgstr ""
+msgstr "Visibilité par défaut mise à jour"
 
 #: src/pages/settings.jsx:295
 msgid "Failed to update default visibility"
@@ -4504,7 +4504,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:366
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr ""
+msgstr "Synchronisé avec les paramètres de votre serveur. <0>Allez sur votre serveur ({instance}) pour plus de paramètres.</0>"
 
 #: src/pages/settings.jsx:383
 msgid "Wellbeing"
@@ -4720,7 +4720,7 @@ msgstr "NOTE : Les notifications Push ne fonctionnent que pour <0>un compte</0>.
 
 #: src/pages/status.jsx:156
 msgid "Unable to load post."
-msgstr ""
+msgstr "La publication n'a pas pu être récupérée."
 
 #. js-lingui-explicit-id
 #: src/pages/status.jsx:800
@@ -4738,7 +4738,7 @@ msgstr ""
 
 #: src/pages/status.jsx:1152
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Basculer vers mon instance pour pouvoir interagir"
 
 #: src/pages/status.jsx:1261
 msgid "Unable to load replies."
@@ -4883,7 +4883,7 @@ msgstr "Distingue visuellement les messages de vos abonnements et les messages p
 
 #: src/pages/welcome.jsx:147
 msgid "Screenshot of Catch-up"
-msgstr ""
+msgstr "Capture d'écran du Rattrapage"
 
 #: src/pages/welcome.jsx:157
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."

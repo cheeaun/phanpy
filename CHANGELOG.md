@@ -429,6 +429,14 @@ Recap: Mastodon v4.3 features (https://github.com/mastodon/mastodon/releases/tag
 - 📱 Haptics
 - 🐛 Bug fixes
 
+## June 22, 2026
+
+📢 https://mastodon.social/@cheeaun/116793733342092207
+
+- 🗂️ Collections (Mastodon v4.6)
+- 🤖 Filter notifications from bots (Mastodon v4.6)
+- 🐛 Bug fixes
+
 <!--
 
 ## Next

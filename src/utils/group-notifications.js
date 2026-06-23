@@ -22,7 +22,7 @@ const GROUP_TYPES = ['favourite', 'reblog', 'follow', 'admin.sign_up'];
 const groupable = (type) => GROUP_TYPES.includes(type);
 
 export function fixNotifications2(notifications) {
-  return notifications.filter((notification) => {
+  return notifications.filter((notification, index) => {
     const { type } = notification;
     if (!type) {
       console.warn('Notification missing type', notification);
@@ -31,6 +31,15 @@ export function fixNotifications2(notifications) {
     const keys = notificationTypeKeys2[type];
     if (keys?.length) {
       return keys.every((key) => !!notification[key]);
+    }
+    // Deduplicate quote notifications with same status ID
+    // Related issue: https://github.com/mastodon/mastodon/issues/36776
+    if (type === 'quote' && notification.statusId) {
+      return (
+        notifications.findIndex(
+          (n) => n.type === 'quote' && n.statusId === notification.statusId,
+        ) === index
+      );
     }
     return true;
   });

@@ -174,15 +174,17 @@
       transition: var(--spring-timing-duration) var(--spring-timing-function);
       transition-property: background-color, transform, box-shadow, opacity;
 
-      view-timeline-name: --revealing-card;
-      view-timeline-axis: block;
-      animation:
-        fade-in linear both,
-        fade-out linear forwards;
-      animation-timeline: --revealing-card, --revealing-card;
-      animation-range:
-        entry 0px entry 44px,
-        exit calc(100% - 44px) exit 100%;
+      @supports (animation-timeline: scroll()) {
+        view-timeline-name: --revealing-card;
+        view-timeline-axis: block;
+        animation:
+          collection-card-fade-in linear forwards,
+          collection-card-fade-out linear forwards;
+        animation-timeline: --revealing-card, --revealing-card;
+        animation-range:
+          entry 0px entry 44px,
+          exit calc(100% - 44px) exit 100%;
+      }
 
       @supports (corner-shape: squircle) {
         border-radius: calc(var(--collection-card-radius) * 2);
@@ -301,7 +303,7 @@
   }
 }
 
-@keyframes fade-in {
+@keyframes collection-card-fade-in {
   from {
     opacity: 0;
     scale: 0.9;
@@ -312,7 +314,7 @@
   }
 }
 
-@keyframes fade-out {
+@keyframes collection-card-fade-out {
   from {
     opacity: 1;
     scale: 1;

@@ -89,6 +89,7 @@ import TranslationBlock from './translation-block';
 
 const SHOW_COMMENT_COUNT_LIMIT = 280;
 const INLINE_TRANSLATE_LIMIT = 140;
+const MAX_COLLECTIONS = 4;
 
 const accountQueue = new PQueue({
   concurrency: 1,
@@ -2066,9 +2067,18 @@ function Status({
       ? forceShowQuoteCount(quotesCount)
       : forceShowQuoteCount && quotesCount > 0;
 
-  const collectionForCard = taggedCollections?.find((c) => {
-    return isSameURL(c.url, card?.url);
-  });
+  const collectionsWithCard = useMemo(() => {
+    const tc = taggedCollections ?? [];
+    const cardUrl = card?.url;
+    const matchIndex = tc.findIndex((c) => isSameURL(c.url, cardUrl));
+
+    if (matchIndex === -1) return [];
+
+    const matched = tc[matchIndex];
+    const others = tc.filter((_, i) => i !== matchIndex);
+
+    return [matched, ...others].slice(0, MAX_COLLECTIONS);
+  }, [taggedCollections, card?.url]);
 
   return (
     <StatusParent>
@@ -2766,17 +2776,22 @@ function Status({
                 {!poll &&
                   !mediaAttachments.length &&
                   !snapStates.statusQuotes[sKey] &&
-                  (collectionForCard ? (
-                    <CollectionCard
-                      collection={collectionForCard}
-                      instance={currentInstance}
-                      creatorAccount={
-                        collectionForCard.accountId === accountId
-                          ? status.account
-                          : undefined
-                      }
-                      size={size}
-                    />
+                  (collectionsWithCard.length ? (
+                    <div class="collections-container">
+                      {collectionsWithCard.map((collection) => (
+                        <CollectionCard
+                          key={collection.id}
+                          collection={collection}
+                          instance={currentInstance}
+                          creatorAccount={
+                            collection.accountId === accountId
+                              ? status.account
+                              : undefined
+                          }
+                          size={size}
+                        />
+                      ))}
+                    </div>
                   ) : !!card && /^https/i.test(card?.url) ? (
                     <StatusCard
                       card={card}

@@ -317,7 +317,6 @@ export default defineConfig(({ command }) => {
       sourcemap: true,
       cssCodeSplit: false,
       rolldownOptions: {
-        treeshake: false,
         external: ['@xmldom/xmldom'], // exifreader's optional dependency, not needed
         input: {
           main: resolve(__dirname, 'index.html'),

@@ -553,7 +553,10 @@ function RelatedActions({
                 <Trans>Copy handle</Trans>
                 <br />
                 <span class="more-insignificant bidi-isolate">
-                  @{currentInfo?.acct || acctWithInstance}
+                  @
+                  {currentInfo?.acct
+                    ? punycode.toUnicode(currentInfo.acct)
+                    : acctWithInstance}
                 </span>
               </small>
             </MenuItem>
@@ -916,7 +919,7 @@ function RelatedActions({
                   <span>
                     {requested
                       ? t`Withdraw follow request?`
-                      : t`Unfollow @${info.acct || info.username}?`}
+                      : t`Unfollow @${info.acct ? punycode.toUnicode(info.acct) : info.username}?`}
                   </span>
                 }
                 menuItemClassName="danger"

@@ -96,7 +96,9 @@ function RelatedActions({
   const [currentInfo, setCurrentInfo] = useState(null);
   const [isSelf, setIsSelf] = useState(false);
 
-  const acctWithInstance = acct.includes('@') ? acct : `${acct}@${instance}`;
+  const acctWithInstance = punycode.toUnicode(
+    acct.includes('@') ? acct : `${acct}@${instance}`,
+  );
 
   const supportsEndorsements = supports('@mastodon/endorsements');
   const supportsCollections = collectionsSupported();
@@ -606,7 +608,7 @@ function RelatedActions({
                   text: url,
                   arena: avatarStatic,
                   backgroundMask: headerStatic,
-                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                  caption: acctWithInstance,
                   onScannerClick: handleScannerClick,
                 };
               }}
@@ -883,7 +885,7 @@ function RelatedActions({
                   text: url,
                   arena: avatarStatic,
                   backgroundMask: headerStatic,
-                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                  caption: acctWithInstance,
                   onScannerClick: handleScannerClick,
                 };
               }}

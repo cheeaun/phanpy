@@ -263,45 +263,47 @@ function AccountBlock(props) {
             )}
             {((!hasRelationship && !!familiarFollowers?.length) ||
               !!followersCount) && (
-              <span class="shazam-container-horizontal">
-                <span class="shazam-container-inner">
-                  {!hasRelationship && !!familiarFollowers?.length && (
-                    <span class="stats-avatars-bunch">
-                      {familiarFollowers.slice(0, 3).map((follower) => (
-                        <Avatar
-                          url={follower.avatarStatic}
-                          size="s"
-                          alt={`${follower.displayName} @${follower.acct}`}
-                          squircle={follower.bot}
-                          key={follower.id}
-                        />
-                      ))}
+              <span class="ib">
+                {!hasRelationship && !!familiarFollowers?.length && (
+                  <span class="shazam-container-horizontal">
+                    <span class="shazam-container-inner">
+                      <span class="stats-avatars-bunch">
+                        {familiarFollowers.slice(0, 3).map((follower) => (
+                          <Avatar
+                            url={follower.avatarStatic}
+                            size="s"
+                            alt={`${follower.displayName} @${follower.acct}`}
+                            squircle={follower.bot}
+                            key={follower.id}
+                          />
+                        ))}
+                      </span>
                     </span>
-                  )}{' '}
-                  {!!followersCount && (
-                    <span class="ib">
-                      <Plural
-                        value={followersCount}
-                        one={
-                          <Trans>
-                            <span title={followersCount}>
-                              {shortenNumber(followersCount)}
-                            </span>{' '}
-                            follower
-                          </Trans>
-                        }
-                        other={
-                          <Trans>
-                            <span title={followersCount}>
-                              {shortenNumber(followersCount)}
-                            </span>{' '}
-                            followers
-                          </Trans>
-                        }
-                      />
-                    </span>
-                  )}
-                </span>
+                  </span>
+                )}{' '}
+                {!!followersCount && (
+                  <span class="ib">
+                    <Plural
+                      value={followersCount}
+                      one={
+                        <Trans>
+                          <span title={followersCount}>
+                            {shortenNumber(followersCount)}
+                          </span>{' '}
+                          follower
+                        </Trans>
+                      }
+                      other={
+                        <Trans>
+                          <span title={followersCount}>
+                            {shortenNumber(followersCount)}
+                          </span>{' '}
+                          followers
+                        </Trans>
+                      }
+                    />
+                  </span>
+                )}
               </span>
             )}
             {!!verifiedField && (

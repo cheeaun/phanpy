@@ -1,8 +1,8 @@
 import 'temml/dist/Temml-Local.css';
-import temmlUrl from 'temml/dist/temml.min.js?url';
 
 import { useLingui } from '@lingui/react/macro';
 import { useCallback, useState } from 'preact/hooks';
+import temmlUrl from 'temml/dist/temml.min.js?url';
 
 import showToast from '../utils/show-toast';
 

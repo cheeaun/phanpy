@@ -8,7 +8,7 @@ msgstr ""
 "Language: de\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 14:11\n"
+"PO-Revision-Date: 2026-06-27 17:56\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -29,7 +29,7 @@ msgstr "Posts: {0}"
 
 #: src/components/account-block.jsx:211
 msgid "Last active: {date}"
-msgstr ""
+msgstr "Zuletzt aktiv: {date}"
 
 #: src/components/account-block.jsx:229
 #: src/components/account-info.jsx:730
@@ -63,18 +63,18 @@ msgstr "Folgt Ihnen"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-block.jsx:283
+#: src/components/account-block.jsx:286
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
 msgstr ""
 
-#: src/components/account-block.jsx:309
+#: src/components/account-block.jsx:311
 #: src/components/account-info.jsx:778
 msgid "Verified"
 msgstr "Verifiziert"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
-#: src/components/account-block.jsx:325
+#: src/components/account-block.jsx:327
 #: src/components/account-info.jsx:917
 msgid "Joined <0>{0}</0>"
 msgstr "Beigetreten: <0>{0}</0>"
@@ -1389,21 +1389,21 @@ msgstr "Liste konnte nicht gelöscht werden."
 msgid "Posts on this list are hidden from Home/Following"
 msgstr "Beiträge auf dieser Liste sind ausgeblendet Home/Folgen"
 
-#: src/components/math-block.jsx:132
+#: src/components/math-block.jsx:141
 msgid "Unable to format math"
 msgstr ""
 
-#: src/components/math-block.jsx:146
+#: src/components/math-block.jsx:155
 msgid "Math expressions found."
 msgstr ""
 
 #. Action to switch from rendered math back to raw (LaTeX) markup
-#: src/components/math-block.jsx:149
+#: src/components/math-block.jsx:158
 msgid "Show markup"
 msgstr ""
 
 #. Action to render math expressions from raw (LaTeX) markup
-#: src/components/math-block.jsx:154
+#: src/components/math-block.jsx:163
 msgid "Format math"
 msgstr ""
 
@@ -1553,7 +1553,7 @@ msgstr "Gefiltert: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Gefiltert"
 
-#: src/components/media.jsx:533
+#: src/components/media.jsx:547
 msgid "Open file"
 msgstr "Datei öffnen"
 

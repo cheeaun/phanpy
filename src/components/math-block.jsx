@@ -1,4 +1,5 @@
 import 'temml/dist/Temml-Local.css';
+import temmlUrl from 'temml/dist/temml.min.js?url';
 
 import { useLingui } from '@lingui/react/macro';
 import { useCallback, useState } from 'preact/hooks';
@@ -108,9 +109,17 @@ const MathBlock = ({ content, contentRef, onRevert }) => {
       } else {
         // Render math
         try {
-          // This needs global because the codebase inside temml is calling a function from global.temml 🤦‍♂️
-          const temml =
-            window.temml || (window.temml = (await import('temml'))?.default);
+          // Load temml.min.js as a <script> — the IIFE sets window.temml automatically
+          if (!window.temml) {
+            await new Promise((resolve, reject) => {
+              const script = document.createElement('script');
+              script.src = temmlUrl;
+              script.onload = resolve;
+              script.onerror = () => reject(new Error('Failed to load temml'));
+              document.head.appendChild(script);
+            });
+          }
+          const temml = window.temml;
 
           cleanDOMForTemml(contentRef.current);
           const originalContentRefHTML = contentRef.current.innerHTML;

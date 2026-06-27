@@ -8,7 +8,7 @@ msgstr ""
 "Language: de\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 14:11\n"
+"PO-Revision-Date: 2026-06-27 19:04\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -29,7 +29,7 @@ msgstr "Posts: {0}"
 
 #: src/components/account-block.jsx:211
 msgid "Last active: {date}"
-msgstr ""
+msgstr "Zuletzt aktiv: {date}"
 
 #: src/components/account-block.jsx:229
 #: src/components/account-info.jsx:730
@@ -63,18 +63,18 @@ msgstr "Folgt Ihnen"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-block.jsx:283
+#: src/components/account-block.jsx:286
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Follower}}"
 
-#: src/components/account-block.jsx:309
+#: src/components/account-block.jsx:311
 #: src/components/account-info.jsx:778
 msgid "Verified"
 msgstr "Verifiziert"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
-#: src/components/account-block.jsx:325
+#: src/components/account-block.jsx:327
 #: src/components/account-info.jsx:917
 msgid "Joined <0>{0}</0>"
 msgstr "Beigetreten: <0>{0}</0>"
@@ -368,17 +368,17 @@ msgstr "Mehr von <0/>"
 #: src/components/collection-account-actions.jsx:35
 #: src/pages/collection.jsx:422
 msgid "Remove me from this collection?"
-msgstr ""
+msgstr "Aus dieser Sammlung entfernen?"
 
 #: src/components/collection-account-actions.jsx:44
 #: src/pages/collection.jsx:431
 msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
-msgstr ""
+msgstr "Der Kurator kann dich für 24 Stunden nicht wieder zu dieser Sammlung hinzufügen. Blockiere ihn, um zu verhindern, dass er dich zu irgendwelchen Sammlungen hinzufügen."
 
 #: src/components/collection-account-actions.jsx:69
 #: src/pages/collection.jsx:442
 msgid "Remove me…"
-msgstr ""
+msgstr "Entferne mich…"
 
 #: src/components/collection-account-actions.jsx:107
 #: src/components/related-actions.jsx:1001
@@ -389,11 +389,11 @@ msgstr "Folgen"
 
 #: src/components/collection-add-account.jsx:92
 msgid "@{username} added to collection"
-msgstr ""
+msgstr "@{username} zur Sammlung hinzugefügt"
 
 #: src/components/collection-add-account.jsx:96
 msgid "Unable to add account"
-msgstr ""
+msgstr "Konto konnte nicht hinzugefügt werden"
 
 #: src/components/collection-add-account.jsx:148
 #: src/components/mention-modal.jsx:179
@@ -417,28 +417,28 @@ msgstr "Fehler beim Laden der Konten"
 
 #: src/components/collection-add-account.jsx:231
 msgid "These accounts may have opted out of discovery or be on a server that doesn't support collections."
-msgstr ""
+msgstr "Diese Konten haben sich möglicherweise von der Auffindbarkeit abgemeldet oder befinden sich auf einem Server, der keine Sammlungen unterstützt."
 
 #: src/components/collection-add-account.jsx:236
 msgid "These accounts review all follow requests. Followers can add them to collections."
-msgstr ""
+msgstr "Diese Konten überprüfen ihre Follower-Anfragen manuell. Follower können sie zu Sammlungen hinzufügen."
 
 #: src/components/collection-add-edit.jsx:45
 #: src/pages/account-collections.jsx:181
 msgid "New collection"
-msgstr ""
+msgstr "Neue Sammlung"
 
 #: src/components/collection-add-edit.jsx:45
 msgid "Edit collection"
-msgstr ""
+msgstr "Sammlung bearbeiten"
 
 #: src/components/collection-add-edit.jsx:97
 msgid "Unable to update collection."
-msgstr ""
+msgstr "Sammlung konnte nicht aktualisiert werden."
 
 #: src/components/collection-add-edit.jsx:98
 msgid "Unable to create collection."
-msgstr ""
+msgstr "Sammlung konnte nicht erstellt werden."
 
 #: src/components/collection-add-edit.jsx:106
 #: src/components/edit-profile-sheet.jsx:574
@@ -448,15 +448,15 @@ msgstr "Name"
 
 #: src/components/collection-add-edit.jsx:124
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: src/components/collection-add-edit.jsx:146
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: src/components/collection-add-edit.jsx:169
 msgid "Mark as sensitive"
-msgstr ""
+msgstr "Mit Inhaltswarnung versehen"
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2043
@@ -470,7 +470,7 @@ msgstr "Öffentlich"
 #: src/components/collection-card.jsx:201
 #: src/pages/collection.jsx:680
 msgid "Unlisted"
-msgstr ""
+msgstr "Nicht gelistet"
 
 #: src/components/collection-add-edit.jsx:192
 #: src/components/edit-profile-sheet.jsx:695
@@ -490,11 +490,11 @@ msgstr "Erstellen"
 
 #: src/components/collection-add-edit.jsx:199
 msgid "Delete this collection?"
-msgstr ""
+msgstr "Diese Sammlung löschen?"
 
 #: src/components/collection-add-edit.jsx:215
 msgid "Unable to delete collection."
-msgstr ""
+msgstr "Sammlung konnte nicht gelöscht werden."
 
 #: src/components/collection-add-edit.jsx:225
 #: src/components/drafts.jsx:126
@@ -509,33 +509,33 @@ msgstr "Löschen…"
 
 #: src/components/collection-card.jsx:178
 msgid "Collection by <0>@{username}</0>"
-msgstr ""
+msgstr "Sammlung von <0>@{username}</0>"
 
 #: src/components/collection-card.jsx:189
 #: src/pages/collection.jsx:668
 msgid "Last updated: <relativeTime/>"
-msgstr ""
+msgstr "Zuletzt aktualisiert: <relativeTime/>"
 
 #: src/components/collection-manage-accounts.jsx:89
 msgid "@{username} removed from collection"
-msgstr ""
+msgstr "@{username} aus der Sammlung entfernt"
 
 #: src/components/collection-manage-accounts.jsx:93
 msgid "Unable to remove account"
-msgstr ""
+msgstr "Konto konnte nicht entfernt werden"
 
 #: src/components/collection-manage-accounts.jsx:115
 #: src/pages/collection.jsx:405
 msgid "Manage accounts"
-msgstr ""
+msgstr "Konten verwalten"
 
 #: src/components/collection-manage-accounts.jsx:134
 msgid "Pending"
-msgstr ""
+msgstr "Noch nicht genehmigt"
 
 #: src/components/collection-manage-accounts.jsx:141
 msgid "Remove <0>{username}</0> from this collection?"
-msgstr ""
+msgstr "<0>{username}</0> aus dieser Sammlung entfernen?"
 
 #: src/components/collection-manage-accounts.jsx:161
 #: src/components/edit-profile-sheet.jsx:473
@@ -547,7 +547,7 @@ msgstr "Entferne…"
 #: src/components/collection-manage-accounts.jsx:175
 #: src/pages/collection.jsx:646
 msgid "Add account"
-msgstr ""
+msgstr "Konto hinzufügen"
 
 #: src/components/columns.jsx:29
 #: src/components/nav-menu.jsx:188
@@ -918,7 +918,7 @@ msgstr "Zitieren"
 
 #: src/components/edit-history-controls.jsx:21
 msgid "Edit History Snapshots"
-msgstr ""
+msgstr "Schnappschüsse vom Bearbeitungsverlauf"
 
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:208
@@ -974,27 +974,27 @@ msgstr "Nach unten"
 
 #: src/components/edit-profile-sheet.jsx:115
 msgid "Delete this field?"
-msgstr ""
+msgstr "Dieses Feld löschen?"
 
 #: src/components/edit-profile-sheet.jsx:225
 msgid "Unable to remove profile picture."
-msgstr ""
+msgstr "Profilbild konnte nicht entfernt werden."
 
 #: src/components/edit-profile-sheet.jsx:245
 msgid "Unable to remove header picture."
-msgstr ""
+msgstr "Titelbild konnte nicht entfernt werden."
 
 #: src/components/edit-profile-sheet.jsx:296
 msgid "Profile and header pictures have no descriptions. Continue?"
-msgstr ""
+msgstr "Profil- und Titelbilder haben keine Beschreibungen. Fortfahren?"
 
 #: src/components/edit-profile-sheet.jsx:303
 msgid "Profile picture has no description. Continue?"
-msgstr ""
+msgstr "Profilbild hat keine Beschreibung. Fortfahren?"
 
 #: src/components/edit-profile-sheet.jsx:309
 msgid "Header picture has no description. Continue?"
-msgstr ""
+msgstr "Titelbild hat keine Beschreibung. Fortfahren?"
 
 #: src/components/edit-profile-sheet.jsx:371
 msgid "Unable to update profile."
@@ -1012,7 +1012,7 @@ msgstr "Bildbeschreibung"
 
 #: src/components/edit-profile-sheet.jsx:462
 msgid "Remove header picture?"
-msgstr ""
+msgstr "Titelbild entfernen?"
 
 #: src/components/edit-profile-sheet.jsx:481
 msgid "Profile picture"
@@ -1020,7 +1020,7 @@ msgstr "Profilbild"
 
 #: src/components/edit-profile-sheet.jsx:554
 msgid "Remove profile picture?"
-msgstr ""
+msgstr "Profilbild entfernen?"
 
 #: src/components/edit-profile-sheet.jsx:590
 msgid "Bio"
@@ -1028,7 +1028,7 @@ msgstr "Bio"
 
 #: src/components/edit-profile-sheet.jsx:607
 msgid "Custom fields"
-msgstr ""
+msgstr "Benutzerdefinierte Felder"
 
 #: src/components/edit-profile-sheet.jsx:613
 msgid "Label"
@@ -1040,7 +1040,7 @@ msgstr "Inhalt"
 
 #: src/components/edit-profile-sheet.jsx:678
 msgid "Add field"
-msgstr ""
+msgstr "Feld hinzufügen"
 
 #: src/components/embed-modal.jsx:18
 msgid "Open in new window"
@@ -1135,7 +1135,7 @@ msgstr "Bestehende"
 
 #: src/components/import-accounts-selection.jsx:183
 msgid "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
-msgstr ""
+msgstr "{selectedCount, plural, one {Importiere # Konto} other {Importiere # Konten}}"
 
 #: src/components/import-export-accounts.jsx:52
 msgid "Export failed"
@@ -1168,7 +1168,7 @@ msgstr "Exportieren"
 #: src/components/import-export-accounts.jsx:155
 #: src/pages/collection.jsx:659
 msgid "{0, plural, one {# account} other {# accounts}}"
-msgstr ""
+msgstr "{0, plural, one {# Konto} other {# Konten}}"
 
 #: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
@@ -1225,7 +1225,7 @@ msgstr "Postdetails öffnen"
 
 #: src/components/keyboard-shortcuts-help.jsx:101
 msgid "Open media or post details"
-msgstr ""
+msgstr "Medien oder Beitragsdetails öffnen"
 
 #: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
@@ -1337,15 +1337,15 @@ msgstr "Zu den Benachrichtigungen"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr ""
+msgstr "Zu den Einstellungen"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
-msgstr ""
+msgstr "Zum Profil"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
-msgstr ""
+msgstr "Zu den Lesezeichen"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1389,23 +1389,23 @@ msgstr "Liste konnte nicht gelöscht werden."
 msgid "Posts on this list are hidden from Home/Following"
 msgstr "Beiträge auf dieser Liste sind ausgeblendet Home/Folgen"
 
-#: src/components/math-block.jsx:132
+#: src/components/math-block.jsx:141
 msgid "Unable to format math"
 msgstr ""
 
-#: src/components/math-block.jsx:146
+#: src/components/math-block.jsx:155
 msgid "Math expressions found."
-msgstr ""
+msgstr "Mathematische Ausdrücke gefunden."
 
 #. Action to switch from rendered math back to raw (LaTeX) markup
-#: src/components/math-block.jsx:149
+#: src/components/math-block.jsx:158
 msgid "Show markup"
-msgstr ""
+msgstr "Markup anzeigen"
 
 #. Action to render math expressions from raw (LaTeX) markup
-#: src/components/math-block.jsx:154
+#: src/components/math-block.jsx:163
 msgid "Format math"
-msgstr ""
+msgstr "Mathematischen Ausdruck formatieren"
 
 #: src/components/media-alt-modal.jsx:48
 #: src/components/media.jsx:52
@@ -1553,7 +1553,7 @@ msgstr "Gefiltert: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Gefiltert"
 
-#: src/components/media.jsx:533
+#: src/components/media.jsx:547
 msgid "Open file"
 msgstr "Datei öffnen"
 
@@ -2292,7 +2292,7 @@ msgstr "Empfohlene Profile anzeigen"
 #: src/components/related-actions.jsx:470
 #: src/components/related-actions.jsx:530
 msgid "Show collections"
-msgstr ""
+msgstr "Sammlungen anzeigen"
 
 #: src/components/related-actions.jsx:511
 #: src/pages/account-statuses.jsx:578
@@ -2407,15 +2407,15 @@ msgstr "{0}h"
 
 #: src/components/report-collection.jsx:25
 msgid "Report Collection"
-msgstr ""
+msgstr "Sammlung melden"
 
 #: src/components/report-collection.jsx:60
 msgid "Collection reported"
-msgstr ""
+msgstr "Sammlung gemeldet"
 
 #: src/components/report-collection.jsx:65
 msgid "Unable to report collection"
-msgstr ""
+msgstr "Konnte Sammlung nicht melden"
 
 #: src/components/report-collection.jsx:73
 msgid "Additional comments"
@@ -2585,7 +2585,7 @@ msgstr "Nur Lokal"
 #: src/components/shortcuts-settings.jsx:125
 #: src/pages/login.jsx:231
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 #: src/components/shortcuts-settings.jsx:81
 #: src/components/shortcuts-settings.jsx:90
@@ -2914,7 +2914,7 @@ msgstr "{mentionsCount, plural, other {# Erwähnungen}}"
 #. placeholder {1}: username || acct
 #: src/components/status.jsx:1137
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
-msgstr ""
+msgstr "{0, plural, one {}other {<0>@{1}</0> zuerst, # weitere darunter}}"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1159
@@ -2980,7 +2980,7 @@ msgstr "Quotes anzeigen"
 
 #: src/components/status.jsx:1349
 msgid "Unwrap quote chain"
-msgstr ""
+msgstr "Zitatkette auspacken"
 
 #: src/components/status.jsx:1416
 msgid "Post text copied"
@@ -3463,11 +3463,11 @@ msgstr "Als Standard festlegen"
 
 #: src/pages/accounts.jsx:251
 msgid "Log out <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "<0>@{unicodeAcct}</0> abmelden?"
 
 #: src/pages/accounts.jsx:279
 msgid "Log out and remove <0>@{unicodeAcct}</0>"
-msgstr ""
+msgstr "<0>@{unicodeAcct}</0> abmelden und entfernen"
 
 #: src/pages/accounts.jsx:291
 msgid "Log out…"
@@ -3475,11 +3475,11 @@ msgstr "Abmelden…"
 
 #: src/pages/accounts.jsx:301
 msgid "Remove <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "<0>@{unicodeAcct}</0> entfernen?"
 
 #: src/pages/accounts.jsx:319
 msgid "Remove account…"
-msgstr ""
+msgstr "Konto entfernen…"
 
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:327
@@ -3619,7 +3619,7 @@ msgstr "Bis zum letzten Aufholen ({0})"
 
 #: src/pages/catchup.jsx:1178
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Hinweis: Deine Instanz zeigt ggf. höchstens 800 Beiträge in deiner Home-Timeline an, unabhängig vom Zeitrahmen. Könnte variieren."
 
 #: src/pages/catchup.jsx:1188
 msgid "Previously…"
@@ -3637,12 +3637,12 @@ msgstr "Dieses Aufholen entfernen?"
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1219
 msgid "Removing Catch-up {0}"
-msgstr ""
+msgstr "Entfernen des Aufholvorgangs {0}"
 
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1223
 msgid "Catch-up {0} removed"
-msgstr ""
+msgstr "Aufholung {0} entfernt"
 
 #: src/pages/catchup.jsx:1237
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3753,7 +3753,7 @@ msgstr "Zum Anfang scrollen"
 
 #: src/pages/collection.jsx:58
 msgid "Date added"
-msgstr ""
+msgstr "Hinzugefügt am"
 
 #. Sort by name
 #. js-lingui-explicit-id
@@ -3763,25 +3763,25 @@ msgstr ""
 
 #: src/pages/collection.jsx:63
 msgid "Last active"
-msgstr ""
+msgstr "Zuletzt aktiv"
 
 #: src/pages/collection.jsx:64
 msgid "Most followers"
-msgstr ""
+msgstr "Meiste Follower"
 
 #: src/pages/collection.jsx:169
 #: src/pages/collection.jsx:170
 #: src/pages/collection.jsx:274
 msgid "Collection"
-msgstr ""
+msgstr "Sammlung"
 
 #: src/pages/collection.jsx:205
 msgid "Removed from collection"
-msgstr ""
+msgstr "Aus Sammlung entfernt"
 
 #: src/pages/collection.jsx:208
 msgid "Unable to remove from collection"
-msgstr ""
+msgstr "Konnte nicht aus der Sammlung entfernt werden"
 
 #: src/pages/collection.jsx:314
 msgid "Post collection"
@@ -3789,7 +3789,7 @@ msgstr ""
 
 #: src/pages/collection.jsx:454
 msgid "Report collection…"
-msgstr ""
+msgstr "Sammlung melden…"
 
 #: src/pages/collection.jsx:464
 #: src/pages/status.jsx:1648
@@ -3803,11 +3803,11 @@ msgstr "Fehler: {e}"
 
 #: src/pages/collection.jsx:511
 msgid "Switch to collection's server ({serverDomain})"
-msgstr ""
+msgstr "Zum Server der Sammlung wechseln ({serverDomain})"
 
 #: src/pages/collection.jsx:535
 msgid "Unable to load collection."
-msgstr ""
+msgstr "Konnte Sammlung nicht laden."
 
 #: src/pages/collection.jsx:553
 msgid "<link><icon/> Collection</link> by <name/>"
@@ -4505,19 +4505,19 @@ msgstr ""
 
 #: src/pages/settings.jsx:383
 msgid "Wellbeing"
-msgstr ""
+msgstr "Wohlbefinden"
 
 #: src/pages/settings.jsx:396
 msgid "Hide Trending timeline"
-msgstr ""
+msgstr "Angesagte Zeitleiste ausblenden"
 
 #: src/pages/settings.jsx:408
 msgid "Hide Local timeline"
-msgstr ""
+msgstr "Lokale Zeitleiste ausblenden"
 
 #: src/pages/settings.jsx:421
 msgid "Hide Federated timeline"
-msgstr ""
+msgstr "Föderierte Zeitleiste ausblenden"
 
 #: src/pages/settings.jsx:429
 msgid "Experiments"
@@ -4550,7 +4550,7 @@ msgstr "{0, plural, =0 {Verstecke „Übersetzen“-Button für:} other {Verstec
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
-msgstr ""
+msgstr "Hinweis: Diese Funktion verwendet externe Übersetzungsdienste, die mit <0>{TRANSLATION_API_NAME}</0> betrieben werden."
 
 #: src/pages/settings.jsx:602
 msgid "Auto inline translation"
@@ -4562,11 +4562,11 @@ msgstr "Übersetzung für Beiträge automatisch in der Zeitleiste anzeigen. Funk
 
 #: src/pages/settings.jsx:627
 msgid "Paginated timeline (beta)"
-msgstr ""
+msgstr "Zeitleiste mit Paginierung (Beta)"
 
 #: src/pages/settings.jsx:631
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
-msgstr ""
+msgstr "Manuelle Paginierung von Zeitleisten-Beiträgen anstelle von unendlichem Scrollen. Funktioniert nur für Home/Folgende Timeline. Auto-Aktualisieren und Boost Karussell wird nicht funktionieren, wenn dies aktiviert ist."
 
 #: src/pages/settings.jsx:651
 msgid "GIF Picker for composer"

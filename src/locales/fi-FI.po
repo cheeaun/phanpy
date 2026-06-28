@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-28 21:43\n"
+"PO-Revision-Date: 2026-06-28 22:51\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -29,7 +29,7 @@ msgstr "Julkaisut: {0}"
 
 #: src/components/account-block.jsx:211
 msgid "Last active: {date}"
-msgstr ""
+msgstr "Viimeksi aktiivinen: {date}"
 
 #: src/components/account-block.jsx:229
 #: src/components/account-info.jsx:730
@@ -389,7 +389,7 @@ msgstr "Seuraa"
 
 #: src/components/collection-add-account.jsx:92
 msgid "@{username} added to collection"
-msgstr ""
+msgstr "@{username} lisätty kokoelmaan"
 
 #: src/components/collection-add-account.jsx:96
 msgid "Unable to add account"
@@ -518,7 +518,7 @@ msgstr "Päivitetty viimeksi: <relativeTime/>"
 
 #: src/components/collection-manage-accounts.jsx:89
 msgid "@{username} removed from collection"
-msgstr ""
+msgstr "@{username} poistettu kokoelmasta"
 
 #: src/components/collection-manage-accounts.jsx:93
 msgid "Unable to remove account"
@@ -3463,11 +3463,11 @@ msgstr "Aseta oletukseksi"
 
 #: src/pages/accounts.jsx:251
 msgid "Log out <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "Kirjataanko <0>@{unicodeAcct}</0> ulos?"
 
 #: src/pages/accounts.jsx:279
 msgid "Log out and remove <0>@{unicodeAcct}</0>"
-msgstr ""
+msgstr "Kirjaa ulos ja poista <0>@{unicodeAcct}</0>"
 
 #: src/pages/accounts.jsx:291
 msgid "Log out…"
@@ -3475,7 +3475,7 @@ msgstr "Kirjaa ulos…"
 
 #: src/pages/accounts.jsx:301
 msgid "Remove <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "Poistetaanko <0>@{unicodeAcct}</0>?"
 
 #: src/pages/accounts.jsx:319
 msgid "Remove account…"
@@ -3763,7 +3763,7 @@ msgstr ""
 
 #: src/pages/collection.jsx:63
 msgid "Last active"
-msgstr "Viimeksi aktiivisena"
+msgstr "Viimeksi aktiivinen"
 
 #: src/pages/collection.jsx:64
 msgid "Most followers"
@@ -3773,7 +3773,7 @@ msgstr "Eniten seuraajia"
 #: src/pages/collection.jsx:170
 #: src/pages/collection.jsx:274
 msgid "Collection"
-msgstr ""
+msgstr "Kokoelma"
 
 #: src/pages/collection.jsx:205
 msgid "Removed from collection"
@@ -3781,11 +3781,11 @@ msgstr "Poistettu kokoelmasta"
 
 #: src/pages/collection.jsx:208
 msgid "Unable to remove from collection"
-msgstr ""
+msgstr "Kokoelmasta ei voitu poistaa"
 
 #: src/pages/collection.jsx:314
 msgid "Post collection"
-msgstr ""
+msgstr "Julkaise kokoelma"
 
 #: src/pages/collection.jsx:454
 msgid "Report collection…"
@@ -3803,7 +3803,7 @@ msgstr "Virhe: {e}"
 
 #: src/pages/collection.jsx:511
 msgid "Switch to collection's server ({serverDomain})"
-msgstr ""
+msgstr "Vaihda kokoelman palvelimelle ({serverDomain})"
 
 #: src/pages/collection.jsx:535
 msgid "Unable to load collection."
@@ -3819,7 +3819,7 @@ msgstr ""
 
 #: src/pages/collection.jsx:693
 msgid "Marked as sensitive"
-msgstr ""
+msgstr "Merkitty arkaluonteiseksi"
 
 #: src/pages/favourites.jsx:28
 msgid "No likes yet. Go like something!"
@@ -4189,27 +4189,27 @@ msgstr "Mainintoja ei voitu ladata."
 
 #: src/pages/notifications.jsx:135
 msgid "People you don't follow"
-msgstr ""
+msgstr "Käyttäjät, joita et seuraa"
 
 #: src/pages/notifications.jsx:136
 msgid "People not following you"
-msgstr ""
+msgstr "Käyttäjät, jotka eivät seuraa sinua"
 
 #: src/pages/notifications.jsx:137
 msgid "New accounts"
-msgstr ""
+msgstr "Uudet tilit"
 
 #: src/pages/notifications.jsx:138
 msgid "Unsolicited private mentions"
-msgstr ""
+msgstr "Pyytämättömät yksityismaininnat"
 
 #: src/pages/notifications.jsx:139
 msgid "Moderated accounts"
-msgstr ""
+msgstr "Moderoidut tilit"
 
 #: src/pages/notifications.jsx:140
 msgid "Bot accounts"
-msgstr ""
+msgstr "Bottitilit"
 
 #: src/pages/notifications.jsx:764
 #: src/pages/notifications.jsx:1117
@@ -4266,7 +4266,7 @@ msgstr "Päivitetty ilmoitusasetukset"
 
 #: src/pages/notifications.jsx:1156
 msgid "Filter notifications from:"
-msgstr ""
+msgstr "Suodata ilmoitukset pois:"
 
 #: src/pages/notifications.jsx:1172
 msgid "Filter"

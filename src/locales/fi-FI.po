@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 14:11\n"
+"PO-Revision-Date: 2026-06-28 21:43\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -63,18 +63,18 @@ msgstr "Seuraa sinua"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-block.jsx:283
+#: src/components/account-block.jsx:286
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
-msgstr ""
+msgstr "{followersCount, plural, one {<0>{0}</0> seuraaja} other {<1>{1}</1> seuraajaa}}"
 
-#: src/components/account-block.jsx:309
+#: src/components/account-block.jsx:311
 #: src/components/account-info.jsx:778
 msgid "Verified"
 msgstr "Vahvistettu"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
-#: src/components/account-block.jsx:325
+#: src/components/account-block.jsx:327
 #: src/components/account-info.jsx:917
 msgid "Joined <0>{0}</0>"
 msgstr "Liittynyt <0>{0}</0>"
@@ -368,7 +368,7 @@ msgstr "Lisää tekijältä <0/>"
 #: src/components/collection-account-actions.jsx:35
 #: src/pages/collection.jsx:422
 msgid "Remove me from this collection?"
-msgstr ""
+msgstr "Poistetaanko minut tästä kokoelmasta?"
 
 #: src/components/collection-account-actions.jsx:44
 #: src/pages/collection.jsx:431
@@ -378,7 +378,7 @@ msgstr ""
 #: src/components/collection-account-actions.jsx:69
 #: src/pages/collection.jsx:442
 msgid "Remove me…"
-msgstr ""
+msgstr "Poista minut…"
 
 #: src/components/collection-account-actions.jsx:107
 #: src/components/related-actions.jsx:1001
@@ -393,7 +393,7 @@ msgstr ""
 
 #: src/components/collection-add-account.jsx:96
 msgid "Unable to add account"
-msgstr ""
+msgstr "Tiliä ei voitu lisätä"
 
 #: src/components/collection-add-account.jsx:148
 #: src/components/mention-modal.jsx:179
@@ -426,19 +426,19 @@ msgstr ""
 #: src/components/collection-add-edit.jsx:45
 #: src/pages/account-collections.jsx:181
 msgid "New collection"
-msgstr ""
+msgstr "Uusi kokoelma"
 
 #: src/components/collection-add-edit.jsx:45
 msgid "Edit collection"
-msgstr ""
+msgstr "Muokkaa kokoelmaa"
 
 #: src/components/collection-add-edit.jsx:97
 msgid "Unable to update collection."
-msgstr ""
+msgstr "Kokoelmaa ei voitu päivittää."
 
 #: src/components/collection-add-edit.jsx:98
 msgid "Unable to create collection."
-msgstr ""
+msgstr "Kokoelmaa ei voitu luoda."
 
 #: src/components/collection-add-edit.jsx:106
 #: src/components/edit-profile-sheet.jsx:574
@@ -448,15 +448,15 @@ msgstr "Nimi"
 
 #: src/components/collection-add-edit.jsx:124
 msgid "Description"
-msgstr ""
+msgstr "Kuvaus"
 
 #: src/components/collection-add-edit.jsx:146
 msgid "Language"
-msgstr ""
+msgstr "Kieli"
 
 #: src/components/collection-add-edit.jsx:169
 msgid "Mark as sensitive"
-msgstr ""
+msgstr "Merkitse arkaluonteiseksi"
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2043
@@ -470,7 +470,7 @@ msgstr "Julkinen"
 #: src/components/collection-card.jsx:201
 #: src/pages/collection.jsx:680
 msgid "Unlisted"
-msgstr ""
+msgstr "Listaamaton"
 
 #: src/components/collection-add-edit.jsx:192
 #: src/components/edit-profile-sheet.jsx:695
@@ -490,11 +490,11 @@ msgstr "Luo"
 
 #: src/components/collection-add-edit.jsx:199
 msgid "Delete this collection?"
-msgstr ""
+msgstr "Poistetaanko tämä kokoelma?"
 
 #: src/components/collection-add-edit.jsx:215
 msgid "Unable to delete collection."
-msgstr ""
+msgstr "Kokoelmaa ei voitu poistaa."
 
 #: src/components/collection-add-edit.jsx:225
 #: src/components/drafts.jsx:126
@@ -514,7 +514,7 @@ msgstr "Kokoelma käyttäjältä <0>@{username}</0>"
 #: src/components/collection-card.jsx:189
 #: src/pages/collection.jsx:668
 msgid "Last updated: <relativeTime/>"
-msgstr ""
+msgstr "Päivitetty viimeksi: <relativeTime/>"
 
 #: src/components/collection-manage-accounts.jsx:89
 msgid "@{username} removed from collection"
@@ -522,12 +522,12 @@ msgstr ""
 
 #: src/components/collection-manage-accounts.jsx:93
 msgid "Unable to remove account"
-msgstr ""
+msgstr "Tiliä ei voitu poistaa"
 
 #: src/components/collection-manage-accounts.jsx:115
 #: src/pages/collection.jsx:405
 msgid "Manage accounts"
-msgstr ""
+msgstr "Hallitse tilejä"
 
 #: src/components/collection-manage-accounts.jsx:134
 msgid "Pending"
@@ -535,7 +535,7 @@ msgstr ""
 
 #: src/components/collection-manage-accounts.jsx:141
 msgid "Remove <0>{username}</0> from this collection?"
-msgstr ""
+msgstr "Poistetaanko <0>{username}</0> kokoelmasta?"
 
 #: src/components/collection-manage-accounts.jsx:161
 #: src/components/edit-profile-sheet.jsx:473
@@ -547,7 +547,7 @@ msgstr "Poista…"
 #: src/components/collection-manage-accounts.jsx:175
 #: src/pages/collection.jsx:646
 msgid "Add account"
-msgstr ""
+msgstr "Lisää tili"
 
 #: src/components/columns.jsx:29
 #: src/components/nav-menu.jsx:188
@@ -1389,21 +1389,21 @@ msgstr "Listaa ei voitu poistaa."
 msgid "Posts on this list are hidden from Home/Following"
 msgstr "Tämän listan julkaisut on piilotettu Koti‐ ja Seurattavat‐näkymistä"
 
-#: src/components/math-block.jsx:132
+#: src/components/math-block.jsx:141
 msgid "Unable to format math"
 msgstr "Matemaattista lauseketta ei voitu muotoilla"
 
-#: src/components/math-block.jsx:146
+#: src/components/math-block.jsx:155
 msgid "Math expressions found."
 msgstr "Löytyi matemaattisia lausekkeita."
 
 #. Action to switch from rendered math back to raw (LaTeX) markup
-#: src/components/math-block.jsx:149
+#: src/components/math-block.jsx:158
 msgid "Show markup"
 msgstr "Näytä merkintäkieli"
 
 #. Action to render math expressions from raw (LaTeX) markup
-#: src/components/math-block.jsx:154
+#: src/components/math-block.jsx:163
 msgid "Format math"
 msgstr "Muotoile matemaattinen lauseke"
 
@@ -1553,7 +1553,7 @@ msgstr "Suodatettu: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Suodatettu"
 
-#: src/components/media.jsx:533
+#: src/components/media.jsx:547
 msgid "Open file"
 msgstr "Avaa tiedosto"
 
@@ -1669,7 +1669,7 @@ msgstr "Tykkäykset"
 #: src/pages/collection.jsx:265
 #: src/pages/search.jsx:163
 msgid "Collections"
-msgstr ""
+msgstr "Kokoelmat"
 
 #: src/components/nav-menu.jsx:274
 #: src/pages/followed-hashtags.jsx:15
@@ -1844,11 +1844,11 @@ msgstr "Vuotesi {year} #Wrapstodon on täällä!"
 
 #: src/components/notification.jsx:298
 msgid "{account} added you to a collection."
-msgstr ""
+msgstr "{account} lisäsi sinut kokoelmaan."
 
 #: src/components/notification.jsx:301
 msgid "{account} edited a collection you're in."
-msgstr ""
+msgstr "{account} muokkasi kokoelmaa, jossa olet."
 
 #: src/components/notification.jsx:308
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
@@ -2292,7 +2292,7 @@ msgstr "Näytä esille nostetut profiilit"
 #: src/components/related-actions.jsx:470
 #: src/components/related-actions.jsx:530
 msgid "Show collections"
-msgstr ""
+msgstr "Näytä kokoelmat"
 
 #: src/components/related-actions.jsx:511
 #: src/pages/account-statuses.jsx:578
@@ -2407,19 +2407,19 @@ msgstr "{0} t"
 
 #: src/components/report-collection.jsx:25
 msgid "Report Collection"
-msgstr ""
+msgstr "Raportoi kokoelma"
 
 #: src/components/report-collection.jsx:60
 msgid "Collection reported"
-msgstr ""
+msgstr "Kokoelma raportoitu"
 
 #: src/components/report-collection.jsx:65
 msgid "Unable to report collection"
-msgstr ""
+msgstr "Kokoelmaa ei voitu raportoida"
 
 #: src/components/report-collection.jsx:73
 msgid "Additional comments"
-msgstr ""
+msgstr "Lisäkommentit"
 
 #: src/components/report-collection.jsx:94
 #: src/components/report-modal.jsx:299
@@ -3306,36 +3306,36 @@ msgstr "Siirry etusivulle"
 
 #: src/pages/account-collections.jsx:73
 msgid "Collections featuring you"
-msgstr ""
+msgstr "Sinua esittelevät kokoelmat"
 
 #: src/pages/account-collections.jsx:76
 msgid "Collections by {username}"
-msgstr ""
+msgstr "Kokoelmat käyttäjältä {username}"
 
 #: src/pages/account-collections.jsx:192
 msgid "Created by you"
-msgstr ""
+msgstr "Itse luomasi"
 
 #: src/pages/account-collections.jsx:198
 msgid "Featuring you"
-msgstr ""
+msgstr "Esittelevät sinua"
 
 #. placeholder {0}: collections.length
 #: src/pages/account-collections.jsx:241
 msgid "{0, plural, one {# collection} other {# collections}}"
-msgstr ""
+msgstr "{0, plural, one {# kokoelma} other {# kokoelmaa}}"
 
 #: src/pages/account-collections.jsx:256
 msgid "Unable to load collections."
-msgstr ""
+msgstr "Kokoelmia ei voitu ladata."
 
 #: src/pages/account-collections.jsx:265
 msgid "No collections featuring you yet."
-msgstr ""
+msgstr "Ei vielä sinua esitteleviä kokoelmia."
 
 #: src/pages/account-collections.jsx:266
 msgid "No collections yet."
-msgstr ""
+msgstr "Ei vielä kokoelmia."
 
 #: src/pages/account-statuses.jsx:287
 msgid "Account posts"
@@ -3753,7 +3753,7 @@ msgstr "Vieritä ylös"
 
 #: src/pages/collection.jsx:58
 msgid "Date added"
-msgstr ""
+msgstr "Lisäyspäivä"
 
 #. Sort by name
 #. js-lingui-explicit-id
@@ -3763,11 +3763,11 @@ msgstr ""
 
 #: src/pages/collection.jsx:63
 msgid "Last active"
-msgstr ""
+msgstr "Viimeksi aktiivisena"
 
 #: src/pages/collection.jsx:64
 msgid "Most followers"
-msgstr ""
+msgstr "Eniten seuraajia"
 
 #: src/pages/collection.jsx:169
 #: src/pages/collection.jsx:170
@@ -3777,7 +3777,7 @@ msgstr ""
 
 #: src/pages/collection.jsx:205
 msgid "Removed from collection"
-msgstr ""
+msgstr "Poistettu kokoelmasta"
 
 #: src/pages/collection.jsx:208
 msgid "Unable to remove from collection"
@@ -3789,7 +3789,7 @@ msgstr ""
 
 #: src/pages/collection.jsx:454
 msgid "Report collection…"
-msgstr ""
+msgstr "Raportoi kokoelma…"
 
 #: src/pages/collection.jsx:464
 #: src/pages/status.jsx:1648
@@ -3807,11 +3807,11 @@ msgstr ""
 
 #: src/pages/collection.jsx:535
 msgid "Unable to load collection."
-msgstr ""
+msgstr "Kokoelmaa ei voitu ladata."
 
 #: src/pages/collection.jsx:553
 msgid "<link><icon/> Collection</link> by <name/>"
-msgstr ""
+msgstr "<link><icon/> Kokoelma</link> käyttäjältä <name/>"
 
 #: src/pages/collection.jsx:630
 msgid "No accounts in this collection yet."

@@ -3336,6 +3336,45 @@ html.is-plain .timeline:not(.flat) > li {
   border-top: none;
 }
 
+html.is-plain .deck {
+  width: 100%;
+  margin-inline: 0;
+}
+
+html.is-plain .deck-backdrop .deck {
+  width: var(--main-width);
+  margin-inline: auto;
+}
+
 html.is-plain .deck > header {
-  border: 1px solid var(--divider-color);
+  border-inline: none;
+  border-top: none;
+}
+
+html.is-plain .timeline-deck > header {
+  --margin-top: 0px;
+  margin-inline: 0;
+}
+
+html.is-plain .timeline-deck > header .header-grid {
+  border-radius: 0;
+  border-bottom: var(--hairline-width) solid var(--divider-color);
+  background-color: var(--bg-color);
+  backdrop-filter: none;
+  min-height: 3em;
+}
+
+html.is-plain .timeline.contextual,
+html.is-plain .timeline:not(.flat) > li.timeline-item-container {
+  --avatar-size: 32px;
+  --line-start: 31px;
+}
+
+html.is-plain .timeline .status .avatar {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+html.is-plain .status.compact-thread .status-thread-badge-container {
+  min-width: 32px;
 }

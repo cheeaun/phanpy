@@ -3378,3 +3378,73 @@ html.is-plain .timeline .status .avatar {
 html.is-plain .status.compact-thread .status-thread-badge-container {
   min-width: 32px;
 }
+
+/* Fix hero post elements that use hardcoded -50px margin for smaller avatar */
+html.is-plain .status.large > .container > .content-container,
+html.is-plain .status.large .extra-meta,
+html.is-plain .status.large .emoji-reactions,
+html.is-plain .status.large .actions {
+  margin-inline-start: calc(-1 * (var(--avatar-size, 50px) + 16px));
+}
+
+/* Reddit-style nesting for contextual timeline (post overlay) in plain theme */
+html.is-plain .timeline.contextual > li {
+  background-image: none;
+}
+html.is-plain .timeline.contextual > li.descendant:not(.thread):before,
+html.is-plain .timeline.contextual > li .replies li:not(.content li):before,
+html.is-plain .timeline.contextual > li.thread .replies li:not(.content li):before {
+  display: none;
+}
+html.is-plain .timeline.contextual > li.descendant.thread:after {
+  display: none !important;
+}
+html.is-plain .timeline.contextual > li .replies li:not(.content li) {
+  background-image: none;
+}
+html.is-plain .timeline.contextual > li.descendant,
+html.is-plain .timeline.contextual .replies {
+  margin-inline-start: 20px;
+  border-inline-start: 2px solid var(--divider-color);
+  padding-inline-start: 4px;
+}
+html.is-plain .timeline.contextual
+  > li.descendant:not(.thread)
+  > :is(.status-link, .status-focus),
+html.is-plain .timeline.contextual
+  > li.descendant.thread
+  > :is(.status-link, .status-focus)
+  + .replies
+  :is(.status-link, .status-focus),
+html.is-plain .timeline.contextual
+  > li.descendant:not(.thread)
+  > :is(.status-link, .status-focus)
+  + .replies
+  :is(.status-link, .status-focus) {
+  padding-inline-start: 0;
+}
+html.is-plain .timeline.contextual > li.ancestor .replies-link,
+html.is-plain
+  .timeline.contextual
+  > li.thread
+  > :is(.status-link, .status-focus)
+  .replies-link,
+html.is-plain
+  .timeline.contextual
+  > li.descendant.thread
+  > :is(.status-link, .status-focus)
+  + .replies
+  .replies-summary,
+html.is-plain
+  .timeline.contextual
+  > li.descendant:not(.thread)
+  > :is(.status-link, .status-focus)
+  + .replies
+  .replies-summary {
+  margin-inline-start: 0;
+}
+@media (min-width: 40em) {
+  html.is-plain #columns > * {
+    padding-inline: 0;
+  }
+}

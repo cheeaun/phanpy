@@ -35,7 +35,8 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
     url = staticUrl;
     staticUrl = undefined;
   }
-  size = SIZES[size] || size || SIZES.m;
+  const sizeAuto = size === 'auto';
+  size = sizeAuto ? null : SIZES[size] || size || SIZES.m;
   const avatarRef = useRef();
   const isMissing = MISSING_IMAGE_PATH_REGEX.test(url);
   return (
@@ -44,10 +45,7 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
       class={`avatar ${squircle ? 'squircle' : ''} ${
         alphaCache.get(url) ? 'has-alpha' : ''
       }`}
-      style={{
-        width: size,
-        height: size,
-      }}
+      style={size ? { width: size, height: size } : undefined}
       title={alt}
       {...props}
     >

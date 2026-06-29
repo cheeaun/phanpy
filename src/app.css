@@ -3364,19 +3364,16 @@ html.is-plain .timeline-deck > header .header-grid {
   min-height: 3em;
 }
 
-html.is-plain .timeline.contextual,
-html.is-plain .timeline:not(.flat) > li.timeline-item-container {
-  --avatar-size: 32px;
-  --line-start: 31px;
+html.is-plain .name-text .avatar {
+  transform: none;
 }
 
-html.is-plain .timeline .status .avatar {
-  width: 32px !important;
-  height: 32px !important;
+html.is-plain .status > .container > .meta {
+  margin-bottom: 4px;
 }
 
 html.is-plain .status.compact-thread .status-thread-badge-container {
-  min-width: 32px;
+  min-width: 20px;
 }
 
 /* Hero post: no avatar column in plain mode, so reset the negative margins that span it */

@@ -500,6 +500,18 @@ function Settings({ onClose }) {
                 <Trans>Hide link previews</Trans>
               </label>
             </li>
+            <li class="block">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={snapStates.settings.hideMediaPreviews}
+                  onChange={(e) => {
+                    states.settings.hideMediaPreviews = e.target.checked;
+                  }}
+                />{' '}
+                <Trans>Hide media previews</Trans>
+              </label>
+            </li>
             {!!TRANSLANG_INSTANCES && (
               <li class="block">
                 <label>

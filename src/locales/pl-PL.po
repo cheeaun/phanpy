@@ -8,7 +8,7 @@ msgstr ""
 "Language: pl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 14:11\n"
+"PO-Revision-Date: 2026-06-29 23:52\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -63,18 +63,18 @@ msgstr "Obserwuje cię"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-block.jsx:283
+#: src/components/account-block.jsx:286
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> obserwujący} few {<1>{1}</1> obserwujących} many {<1>{1}</1> obserwujących} other {<1>{1}</1> obserwujących}}"
 
-#: src/components/account-block.jsx:309
+#: src/components/account-block.jsx:311
 #: src/components/account-info.jsx:778
 msgid "Verified"
 msgstr "Zweryfikowano"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
-#: src/components/account-block.jsx:325
+#: src/components/account-block.jsx:327
 #: src/components/account-info.jsx:917
 msgid "Joined <0>{0}</0>"
 msgstr "Jest tutaj od <0>{0}</0>"
@@ -1389,21 +1389,21 @@ msgstr "Nie można skasować listy."
 msgid "Posts on this list are hidden from Home/Following"
 msgstr "Wpisy z tej listy są ukryte na osi głównej/obserwowanych"
 
-#: src/components/math-block.jsx:132
+#: src/components/math-block.jsx:141
 msgid "Unable to format math"
 msgstr "Nie udało się sformatować wyrażenia matematycznego"
 
-#: src/components/math-block.jsx:146
+#: src/components/math-block.jsx:155
 msgid "Math expressions found."
 msgstr "Znaleziono wyrażenie matematyczne."
 
 #. Action to switch from rendered math back to raw (LaTeX) markup
-#: src/components/math-block.jsx:149
+#: src/components/math-block.jsx:158
 msgid "Show markup"
 msgstr "Pokaż znaczniki formatowania"
 
 #. Action to render math expressions from raw (LaTeX) markup
-#: src/components/math-block.jsx:154
+#: src/components/math-block.jsx:163
 msgid "Format math"
 msgstr "Formatowanie wyrażeń matematycznych"
 
@@ -1553,7 +1553,7 @@ msgstr "Odfiltrowano: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Odfiltrowane"
 
-#: src/components/media.jsx:533
+#: src/components/media.jsx:547
 msgid "Open file"
 msgstr "Otwórz plik"
 
@@ -3463,11 +3463,11 @@ msgstr "Ustaw jako domyślne"
 
 #: src/pages/accounts.jsx:251
 msgid "Log out <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "Wylogować <0>@{unicodeAcct}</0>?"
 
 #: src/pages/accounts.jsx:279
 msgid "Log out and remove <0>@{unicodeAcct}</0>"
-msgstr ""
+msgstr "Wyloguj i usuń <0>@{unicodeAcct}</0>"
 
 #: src/pages/accounts.jsx:291
 msgid "Log out…"
@@ -3475,7 +3475,7 @@ msgstr "Wyloguj…"
 
 #: src/pages/accounts.jsx:301
 msgid "Remove <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "Usunąć <0>@{unicodeAcct}</0>?"
 
 #: src/pages/accounts.jsx:319
 msgid "Remove account…"
@@ -3803,7 +3803,7 @@ msgstr "Błąd: {e}"
 
 #: src/pages/collection.jsx:511
 msgid "Switch to collection's server ({serverDomain})"
-msgstr ""
+msgstr "Przełącz na serwer kolekcji: ({serverDomain})"
 
 #: src/pages/collection.jsx:535
 msgid "Unable to load collection."

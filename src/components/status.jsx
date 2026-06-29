@@ -32,6 +32,7 @@ import haptics from '../utils/haptics';
 import htmlContentLength from '../utils/html-content-length';
 import isSameURL from '../utils/is-same-url';
 import localeMatch from '../utils/locale-match';
+import store from '../utils/store';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import openCompose from '../utils/open-compose';
@@ -514,6 +515,8 @@ function Status({
   if (filterInfo?.action === 'hide') {
     return null;
   }
+
+  const plainMode = store.local.get('plainMode');
 
   console.debug('RENDER Status', id, status?.account?.displayName, quoted);
 
@@ -2259,7 +2262,7 @@ function Status({
             )}
           </div>
         )}
-        {size !== 's' && (
+        {size !== 's' && !plainMode && (
           <a
             href={accountURL}
             tabindex="-1"
@@ -2289,7 +2292,7 @@ function Status({
                 <NameText
                   account={status.account}
                   instance={instance}
-                  showAvatar={size === 's'}
+                  showAvatar={size === 's' || plainMode}
                   showAcct={isSizeLarge}
                 />
               </span>

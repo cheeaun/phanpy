@@ -3379,12 +3379,12 @@ html.is-plain .status.compact-thread .status-thread-badge-container {
   min-width: 32px;
 }
 
-/* Fix hero post elements that use hardcoded -50px margin for smaller avatar */
+/* Hero post: no avatar column in plain mode, so reset the negative margins that span it */
 html.is-plain .status.large > .container > .content-container,
 html.is-plain .status.large .extra-meta,
 html.is-plain .status.large .emoji-reactions,
 html.is-plain .status.large .actions {
-  margin-inline-start: calc(-1 * (var(--avatar-size, 50px) + 16px));
+  margin-inline-start: 0;
 }
 
 /* Reddit-style nesting for contextual timeline (post overlay) in plain theme */
@@ -3447,4 +3447,13 @@ html.is-plain
   html.is-plain #columns > * {
     padding-inline: 0;
   }
+}
+html.is-plain .status:not(.small) > .container {
+  padding-inline-start: 0;
+}
+html.is-plain .status.compact-reply::before {
+  display: none;
+}
+html.is-plain .timeline:not(.flat) > li.timeline-item-container {
+  background-image: none;
 }

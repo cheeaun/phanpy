@@ -59,6 +59,7 @@ function Settings({ onClose }) {
   const { t } = useLingui();
   const snapStates = useSnapshot(states);
   const currentTheme = store.local.get('theme') || 'auto';
+  const currentPlainMode = store.local.get('plainMode') ?? false;
   const themeFormRef = useRef();
   const targetLanguage =
     snapStates.settings.contentTranslationTargetLanguage || null;
@@ -132,7 +133,7 @@ function Settings({ onClose }) {
                     const html = document.documentElement;
 
                     if (theme === 'auto') {
-                      html.classList.remove('is-light', 'is-dark', 'is-plain');
+                      html.classList.remove('is-light', 'is-dark');
 
                       // Disable manual theme <meta>
                       const $manualMeta = document.querySelector(
@@ -151,7 +152,6 @@ function Settings({ onClose }) {
                     } else {
                       html.classList.toggle('is-light', theme === 'light');
                       html.classList.toggle('is-dark', theme === 'dark');
-                      html.classList.toggle('is-plain', theme === 'plain');
 
                       // Enable manual theme <meta>
                       const $manualMeta = document.querySelector(
@@ -176,11 +176,7 @@ function Settings({ onClose }) {
                       .querySelector('meta[name="color-scheme"]')
                       .setAttribute(
                         'content',
-                        theme === 'auto'
-                          ? 'light dark'
-                          : theme === 'plain'
-                            ? 'light'
-                            : theme,
+                        theme === 'auto' ? 'light dark' : theme,
                       );
 
                     if (theme === 'auto') {
@@ -219,29 +215,34 @@ function Settings({ onClose }) {
                         name="theme"
                         value="auto"
                         defaultChecked={
-                          currentTheme !== 'light' &&
-                          currentTheme !== 'dark' &&
-                          currentTheme !== 'plain'
+                          currentTheme !== 'light' && currentTheme !== 'dark'
                         }
                       />
                       <span>
                         <Trans>Auto</Trans>
                       </span>
                     </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="theme"
-                        value="plain"
-                        defaultChecked={currentTheme === 'plain'}
-                      />
-                      <span>
-                        <Trans>Plain</Trans>
-                      </span>
-                    </label>
                   </div>
                 </form>
               </div>
+            </li>
+            <li class="block">
+              <label>
+                <input
+                  type="checkbox"
+                  defaultChecked={currentPlainMode}
+                  onChange={(e) => {
+                    const plain = e.target.checked;
+                    document.documentElement.classList.toggle('is-plain', plain);
+                    if (plain) {
+                      store.local.set('plainMode', true);
+                    } else {
+                      store.local.del('plainMode');
+                    }
+                  }}
+                />{' '}
+                <Trans>Plain mode</Trans>
+              </label>
             </li>
             <li>
               <div>

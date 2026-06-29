@@ -306,14 +306,20 @@ if (isIOS) {
 }
 
 {
-  const theme = store.local.get('theme');
+  let theme = store.local.get('theme');
+  // Migrate old plain theme setting to separate plainMode setting
+  if (theme === 'plain') {
+    store.local.del('theme');
+    store.local.set('plainMode', true);
+    theme = null;
+  }
   // If there's a theme, it's NOT auto
   if (theme) {
     // dark | light
     document.documentElement.classList.add(`is-${theme}`);
     document
       .querySelector('meta[name="color-scheme"]')
-      .setAttribute('content', theme === 'plain' ? 'light' : theme || 'light dark');
+      .setAttribute('content', theme || 'light dark');
 
     // Enable manual theme <meta>
     const $manualMeta = document.querySelector(
@@ -333,6 +339,10 @@ if (isIOS) {
     $autoMetas.forEach((m) => {
       m.name = '';
     });
+  }
+  const plainMode = store.local.get('plainMode');
+  if (plainMode) {
+    document.documentElement.classList.add('is-plain');
   }
   const textSize = store.local.get('textSize');
   if (textSize) {

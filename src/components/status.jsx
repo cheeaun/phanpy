@@ -595,7 +595,6 @@ function Status({
     previewMode ||
     (readingExpandMedia === 'show_all' && filterInfo?.action !== 'blur') ||
     !!snapStates.spoilersMedia[id];
-
   if (reblog) {
     // If has statusID, means useItemID (cached in states)
 
@@ -688,8 +687,18 @@ function Status({
   // const targetLanguage = getTranslateTargetLanguage(true);
   // const contentTranslationHideLanguages =
   //   snapStates.settings.contentTranslationHideLanguages || [];
-  const { contentTranslation, contentTranslationAutoInline, hideLinkPreviews } =
-    snapStates.settings;
+  const {
+    contentTranslation,
+    contentTranslationAutoInline,
+    hideLinkPreviews,
+    hideMediaPreviews,
+  } = snapStates.settings;
+  const hidingMediaPreview =
+    hideMediaPreviews &&
+    !showSpoilerMedia &&
+    (sensitive ||
+      filterInfo?.action === 'blur' ||
+      readingExpandMedia === 'hide_all');
   if (!contentTranslation) enableTranslate = false;
   const inlineTranslate = useMemo(() => {
     if (
@@ -2519,12 +2528,14 @@ function Status({
                     </button>
                   </>
                 )}
-                <MediaFirstContainer
-                  mediaAttachments={mediaAttachments}
-                  language={language}
-                  postID={id}
-                  instance={instance}
-                />
+                {!hidingMediaPreview && (
+                  <MediaFirstContainer
+                    mediaAttachments={mediaAttachments}
+                    language={language}
+                    postID={id}
+                    instance={instance}
+                  />
+                )}
                 {!!content && (
                   <div class="media-first-content content" ref={contentRef}>
                     <PostContent
@@ -2688,7 +2699,8 @@ function Status({
                       </span>
                     </button>
                   )}
-                {!!mediaAttachments.length &&
+                {!hidingMediaPreview &&
+                  !!mediaAttachments.length &&
                   (mediaAttachments.length > 1 &&
                   (isSizeLarge || (withinContext && size === 'm')) ? (
                     <div class="media-large-container">

@@ -86,6 +86,7 @@ const states = proxy({
     composerGIFPicker: false,
     cloakMode: false,
     hideLinkPreviews: false,
+    hideMediaPreviews: false,
     hideTrendingTimeline: false,
     hideLocalTimeline: false,
     hideFederatedTimeline: false,
@@ -127,6 +128,8 @@ export function initStates() {
   states.settings.cloakMode = store.account.get('settings-cloakMode') ?? false;
   states.settings.hideLinkPreviews =
     store.account.get('settings-hideLinkPreviews') ?? false;
+  states.settings.hideMediaPreviews =
+    store.account.get('settings-hideMediaPreviews') ?? false;
   states.settings.hideTrendingTimeline =
     store.account.get('settings-hideTrendingTimeline') ?? false;
   states.settings.hideLocalTimeline =
@@ -188,6 +191,9 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.hideLinkPreviews') {
       store.account.set('settings-hideLinkPreviews', !!value);
+    }
+    if (path.join('.') === 'settings.hideMediaPreviews') {
+      store.account.set('settings-hideMediaPreviews', !!value);
     }
     if (path.join('.') === 'settings.hideTrendingTimeline') {
       store.account.set('settings-hideTrendingTimeline', !!value);

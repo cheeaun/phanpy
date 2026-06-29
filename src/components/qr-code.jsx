@@ -72,15 +72,16 @@ export default function QrCode({
 
   if (!text) return null;
 
-  const qrData = useMemo(
-    () =>
-      encodeQR(text, 'raw', {
-        ecc: 'high',
-        border: 0,
-        scale: 1,
-      }),
-    [text],
-  );
+  const qrData = useMemo(() => {
+    const raw = encodeQR(text, 'raw', {
+      ecc: 'high',
+      border: 1,
+      scale: 1,
+    });
+    // Strip the 1-cell border added by the QR library, since we
+    // handle padding ourselves in the SVG rendering
+    return raw.slice(1, -1).map((row) => row.slice(1, -1));
+  }, [text]);
   const gridSize = qrData.length;
 
   const centerExcludeSize = arenaLoaded ? Math.ceil(gridSize * 0.3) : 0;

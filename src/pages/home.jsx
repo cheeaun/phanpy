@@ -20,6 +20,7 @@ import states, { saveStatus } from '../utils/states';
 import { getCurrentAccountNS } from '../utils/store-utils';
 
 import Following from './following';
+import Following2 from './following2';
 import {
   getGroupedNotifications,
   mastoFetchNotifications,
@@ -49,6 +50,14 @@ function Home() {
           snapStates.settings.shortcutsColumnsMode)) &&
       !!snapStates.shortcuts?.length ? (
         <Columns />
+      ) : snapStates.settings.paginatedTimeline ? (
+        <Following2
+          title={_(msg`Home`)}
+          path="/"
+          id="home"
+          headerStart={false}
+          headerEnd={<NotificationsLink />}
+        />
       ) : (
         <Following
           title={_(msg`Home`)}

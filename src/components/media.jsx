@@ -4,12 +4,13 @@ import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
 import {
   useCallback,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from 'preact/hooks';
-import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 import formatDuration from '../utils/format-duration';
 import mem from '../utils/mem';
@@ -65,6 +66,21 @@ export const isMediaCaptionLong = mem((caption) =>
     : false,
 );
 
+// https://caniuse.com/http-live-streaming
+const isStreamingVideoSupported = (() => {
+  try {
+    const video = document.createElement('video');
+    if (!video.canPlayType) return false;
+    return (
+      video.canPlayType('application/vnd.apple.mpegurl') !== '' ||
+      video.canPlayType('application/x-mpegURL') !== '' ||
+      video.canPlayType('audio/mpegurl') !== ''
+    );
+  } catch (e) {
+    return false;
+  }
+})();
+
 function Media({
   class: className = '',
   media,
@@ -77,6 +93,7 @@ function Media({
   altIndex,
   checkAspectRatio = true,
   onClick,
+  autoplay = false,
 }) {
   let {
     id,
@@ -105,6 +122,7 @@ function Media({
   const remoteMediaURL = showOriginal
     ? remoteUrl
     : previewRemoteUrl || remoteUrl;
+
   const hasPreviewDimensions = small?.width && small?.height;
   const hasDimensions = width && height;
   const orientation = hasDimensions
@@ -130,43 +148,6 @@ function Media({
   }
 
   const mediaRef = useRef();
-  const onUpdate = useCallback(({ x, y, scale }) => {
-    const { current: media } = mediaRef;
-
-    if (media) {
-      const value = make3dTransformValue({ x, y, scale });
-
-      if (scale === 1) {
-        media.style.removeProperty('transform');
-      } else {
-        media.style.setProperty('transform', value);
-      }
-
-      media.closest('.media-zoom').style.touchAction =
-        scale <= 1.01 ? 'pan-x' : '';
-    }
-  }, []);
-
-  const [pinchZoomEnabled, setPinchZoomEnabled] = useState(false);
-  const quickPinchZoomProps = {
-    enabled: pinchZoomEnabled,
-    draggableUnZoomed: false,
-    inertiaFriction: 0.9,
-    tapZoomFactor: 2,
-    doubleTapToggleZoom: true,
-    containerProps: {
-      className: 'media-zoom',
-      style: {
-        overflow: 'visible',
-        //   width: 'inherit',
-        //   height: 'inherit',
-        //   justifyContent: 'inherit',
-        //   alignItems: 'inherit',
-        //   display: 'inherit',
-      },
-    },
-    onUpdate,
-  };
 
   const [mediaLoadError, setMediaLoadError] = useState(false);
 
@@ -181,16 +162,25 @@ function Media({
     type === 'unknown' &&
     remoteMediaURLObj &&
     /\.(mp4|m4r|m4v|mov|webm)$/i.test(remoteMediaURLObj.pathname);
+  const isStreamingVideoMaybe =
+    remoteMediaURLObj &&
+    /\.m3u8$/i.test(remoteMediaURLObj.pathname) &&
+    isStreamingVideoSupported;
   const isAudioMaybe =
     type === 'unknown' &&
     remoteMediaURLObj &&
     /\.(mp3|ogg|wav|m4a|m4p|m4b)$/i.test(remoteMediaURLObj.pathname);
   const isImage =
     type === 'image' ||
-    (type === 'unknown' && previewUrl && !isVideoMaybe && !isAudioMaybe);
+    (type === 'unknown' &&
+      previewUrl &&
+      !isVideoMaybe &&
+      !isStreamingVideoMaybe &&
+      !isAudioMaybe);
   const isPreviewVideoMaybe =
-    previewUrl &&
-    /\.(mp4|m4r|m4v|mov|webm)$/i.test(getURLObj(previewUrl).pathname);
+    (previewUrl &&
+      /\.(mp4|m4r|m4v|mov|webm)$/i.test(getURLObj(previewUrl).pathname)) ||
+    isStreamingVideoMaybe;
 
   const parentRef = useRef();
   const [imageSmallerThanParent, setImageSmallerThanParent] = useState(false);
@@ -310,10 +300,76 @@ function Media({
     [mediaVTN, showOriginal, onClick],
   );
 
-  if (isImage) {
-    // Note: type: unknown might not have width/height
-    quickPinchZoomProps.containerProps.style.display = 'inherit';
+  // Prevent media session lingering after unmount
+  useEffect(() => {
+    return () => {
+      const mediaElements =
+        parentRef.current?.querySelectorAll?.('video, audio');
+      if (mediaElements) {
+        mediaElements.forEach((el) => {
+          try {
+            el.pause();
+            el.src = '';
+            el.load();
+          } catch (e) {}
+        });
+      }
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'none';
+      }
+    };
+  }, []);
 
+  const [pinchZoomEnabled, setPinchZoomEnabled] = useState(false);
+  const onTransform = useCallback((ref, { scale }) => {
+    if (ref.instance?.wrapperComponent) {
+      const touchAction = scale <= 1.01 ? 'pan-x' : '';
+      if (ref.instance.wrapperComponent.style.touchAction !== touchAction) {
+        ref.instance.wrapperComponent.style.touchAction = touchAction;
+      }
+    }
+    if (ref.instance?.setup?.panning) {
+      ref.instance.setup.panning.disabled = scale <= 1.01;
+    }
+    if (ref.instance?.setup?.trackPadPanning) {
+      ref.instance.setup.trackPadPanning.disabled = scale <= 1.01;
+    }
+  }, []);
+  const transformWrapperProps = {
+    smooth: false,
+    centerZoomedOut: true,
+    doubleClick: {
+      mode: 'toggle',
+      step: 1,
+    },
+    wheel: {
+      wheelDisabled: true,
+      step: 0.05,
+    },
+    velocityAnimation: {
+      inertia: 0.9,
+    },
+    panning: {
+      disabled: true,
+      allowMiddleClickPan: false,
+      allowRightClickPan: false,
+    },
+    trackPadPanning: {
+      disabled: true,
+    },
+    onTransform,
+  };
+  const transformComponentProps = {
+    wrapperClass: 'media-zoom',
+    wrapperStyle: {
+      touchAction: 'pan-x',
+      overflow: 'visible',
+      // Note: type: unknown might not have width/height
+      display: isImage ? 'inherit' : undefined,
+    },
+  };
+
+  if (isImage) {
     useLayoutEffect(() => {
       if (!isSafari) return;
       if (!showOriginal) return;
@@ -349,41 +405,46 @@ function Media({
           }
         >
           {showOriginal ? (
-            <QuickPinchZoom {...quickPinchZoomProps}>
-              <img
-                ref={mediaRef}
-                src={mediaURL}
-                alt={description}
-                width={width}
-                height={height}
-                data-orientation={orientation}
-                loading="eager"
-                decoding="sync"
-                style={{
-                  'view-transition-name': mediaVTN,
-                }}
-                onLoad={(e) => {
-                  const el = e.target;
-                  const mediaImage = el.closest('.media-image');
-                  if (mediaImage) {
-                    mediaImage.style.backgroundImage = `url(${el.src})`;
-                    mediaImage.style.removeProperty('--bg-image');
-                  }
-                  el.closest('.media-zoom').style.display = '';
-                  setPinchZoomEnabled(true);
-                }}
-                onError={(e) => {
-                  const { src } = e.target;
-                  if (
-                    src === mediaURL &&
-                    remoteMediaURL &&
-                    mediaURL !== remoteMediaURL
-                  ) {
-                    e.target.src = remoteMediaURL;
-                  }
-                }}
-              />
-            </QuickPinchZoom>
+            <TransformWrapper
+              {...transformWrapperProps}
+              disabled={!pinchZoomEnabled}
+            >
+              <TransformComponent {...transformComponentProps}>
+                <img
+                  ref={mediaRef}
+                  src={mediaURL}
+                  alt={description}
+                  width={width}
+                  height={height}
+                  data-orientation={orientation}
+                  loading="eager"
+                  decoding="sync"
+                  style={{
+                    'view-transition-name': mediaVTN,
+                  }}
+                  onLoad={(e) => {
+                    const el = e.target;
+                    const mediaImage = el.closest('.media-image');
+                    if (mediaImage) {
+                      mediaImage.style.backgroundImage = `url(${el.src})`;
+                      mediaImage.style.removeProperty('--bg-image');
+                    }
+                    el.closest('.media-zoom').style.display = '';
+                    setPinchZoomEnabled(true);
+                  }}
+                  onError={(e) => {
+                    const { src } = e.target;
+                    if (
+                      src === mediaURL &&
+                      remoteMediaURL &&
+                      mediaURL !== remoteMediaURL
+                    ) {
+                      e.target.src = remoteMediaURL;
+                    }
+                  }}
+                />
+              </TransformComponent>
+            </TransformWrapper>
           ) : (
             <>
               <img
@@ -490,7 +551,12 @@ function Media({
         )}
       </Figure>
     );
-  } else if (type === 'gifv' || type === 'video' || isVideoMaybe) {
+  } else if (
+    type === 'gifv' ||
+    type === 'video' ||
+    isVideoMaybe ||
+    isStreamingVideoMaybe
+  ) {
     const hasDuration = original.duration > 0;
     const shortDuration = original.duration < 31;
     const isGIF = type === 'gifv' && shortDuration;
@@ -524,16 +590,17 @@ function Media({
       ></video>
   `;
 
+    const videoURL = isStreamingVideoMaybe ? remoteMediaURL : url;
     const videoHTML = `
       <video
-        src="${url}"
+        src="${videoURL}"
         poster="${previewUrl}"
         width="${width}"
         height="${height}"
         data-orientation="${orientation}"
         style="view-transition-name: ${mediaVTN}"
         preload="auto"
-        autoplay
+        ${autoplay ? 'autoplay' : ''}
         playsinline
         ${loopable ? 'loop' : ''}
         controls
@@ -599,14 +666,15 @@ function Media({
         >
           {showOriginal || autoGIFAnimate ? (
             isGIF && showOriginal ? (
-              <QuickPinchZoom {...quickPinchZoomProps} enabled>
-                <div
-                  ref={mediaRef}
-                  dangerouslySetInnerHTML={{
-                    __html: gifHTML,
-                  }}
-                />
-              </QuickPinchZoom>
+              <TransformWrapper {...transformWrapperProps}>
+                <TransformComponent {...transformComponentProps}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: gifHTML,
+                    }}
+                  />
+                </TransformComponent>
+              </TransformWrapper>
             ) : isGIF ? (
               <div
                 class="video-container"
@@ -687,7 +755,7 @@ function Media({
                 />
               ) : (
                 <video
-                  src={url + '#t=0.1'} // Make Safari show 1st-frame preview
+                  src={videoURL + '#t=0.1'} // Make Safari show 1st-frame preview
                   width={width}
                   height={height}
                   data-orientation={orientation}
@@ -749,11 +817,16 @@ function Media({
                 preload="metadata"
                 controls
                 controlsList="nofullscreen"
-                autoPlay
+                autoPlay={autoplay}
                 playsInline
               />
             ) : (
-              <audio src={remoteUrl || url} preload="none" controls autoPlay />
+              <audio
+                src={remoteUrl || url}
+                preload="none"
+                controls
+                autoPlay={autoplay}
+              />
             )
           ) : previewUrl ? (
             <img

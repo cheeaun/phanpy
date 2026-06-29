@@ -1,8 +1,7 @@
 import './avatar.css';
 
+import { memo } from 'preact/compat';
 import { useRef } from 'preact/hooks';
-
-import mem from '../utils/mem';
 
 const SIZES = {
   s: 16,
@@ -13,7 +12,7 @@ const SIZES = {
   xxxl: 64,
 };
 
-const alphaCache = {};
+const alphaCache = new Map();
 
 const canvas = window.OffscreenCanvas
   ? new OffscreenCanvas(1, 1)
@@ -22,6 +21,11 @@ const ctx = canvas.getContext('2d', {
   willReadFrequently: true,
 });
 ctx.imageSmoothingEnabled = false;
+
+const scheduleTask =
+  typeof requestIdleCallback === 'function'
+    ? (fn) => requestIdleCallback(fn, { timeout: 500 })
+    : (fn) => setTimeout(fn, 1);
 
 const MISSING_IMAGE_PATH_REGEX = /missing\.png$/;
 
@@ -37,7 +41,7 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
     <picture
       ref={avatarRef}
       class={`avatar ${squircle ? 'squircle' : ''} ${
-        alphaCache[url] ? 'has-alpha' : ''
+        alphaCache.get(url) ? 'has-alpha' : ''
       }`}
       style={{
         width: size,
@@ -59,9 +63,7 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
           decoding="async"
           fetchPriority="low"
           crossOrigin={
-            alphaCache[url] === undefined && !isMissing
-              ? 'anonymous'
-              : undefined
+            !alphaCache.has(url) && !isMissing ? 'anonymous' : undefined
           }
           onError={(e) => {
             if (e.target.crossOrigin) {
@@ -71,34 +73,44 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
           }}
           onLoad={(e) => {
             if (avatarRef.current) avatarRef.current.dataset.loaded = true;
-            if (alphaCache[url] !== undefined) return;
+            if (alphaCache.has(url)) return;
             if (isMissing) return;
-            setTimeout(() => {
+            const img = e.target;
+            const loadedSrc = img.currentSrc || img.src;
+            scheduleTask(async () => {
               try {
+                // <img> nodes can be reused; bail without caching if src changed
+                if ((img.currentSrc || img.src) !== loadedSrc) return;
+                await img.decode();
+                if ((img.currentSrc || img.src) !== loadedSrc) return;
+                if (!img.complete || !img.naturalWidth) return;
                 // Check if image has alpha channel
-                const { width, height } = e.target;
-                if (canvas.width !== width) canvas.width = width;
-                if (canvas.height !== height) canvas.height = height;
-                ctx.drawImage(e.target, 0, 0);
-                const allPixels = ctx.getImageData(0, 0, width, height);
-                // At least 10% of pixels have alpha <= 128
-                const hasAlpha =
-                  allPixels.data.filter(
-                    (pixel, i) => i % 4 === 3 && pixel <= 128,
-                  ).length /
-                    (allPixels.data.length / 4) >
-                  0.1;
-                if (hasAlpha) {
-                  // console.log('hasAlpha', hasAlpha, allPixels.data);
-                  avatarRef.current.classList.add('has-alpha');
+                // Sample at reduced resolution to avoid processing large images
+                const { naturalWidth: nw, naturalHeight: nh } = img;
+                const scale = Math.min(1, SIZES.xxxl / Math.max(nw, nh));
+                const sampleW = Math.max(1, Math.round(nw * scale));
+                const sampleH = Math.max(1, Math.round(nh * scale));
+                if (canvas.width !== sampleW) canvas.width = sampleW;
+                if (canvas.height !== sampleH) canvas.height = sampleH;
+                ctx.drawImage(img, 0, 0, sampleW, sampleH);
+                const { data } = ctx.getImageData(0, 0, sampleW, sampleH);
+                // Early-exit loop: stop once 10% of pixels have alpha <= 128
+                const totalPixels = data.length / 4;
+                const threshold = totalPixels * 0.1;
+                let alphaCount = 0;
+                for (let i = 3; i < data.length; i += 4) {
+                  if (data[i] <= 128 && ++alphaCount > threshold) break;
                 }
-                alphaCache[url] = hasAlpha;
-                ctx.clearRect(0, 0, width, height);
+                const hasAlpha = alphaCount > threshold;
+                if (hasAlpha) {
+                  avatarRef.current?.classList.add('has-alpha');
+                }
+                alphaCache.set(url, hasAlpha);
               } catch (e) {
                 // Silent fail
-                alphaCache[url] = false;
+                alphaCache.set(url, false);
               }
-            }, 1);
+            });
           }}
         />
       )}
@@ -106,4 +118,4 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
   );
 }
 
-export default mem(Avatar);
+export default memo(Avatar);

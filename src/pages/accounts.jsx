@@ -4,6 +4,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useReducer } from 'preact/hooks';
+import punycode from 'punycode/';
 
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
@@ -15,6 +16,7 @@ import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import { api } from '../utils/api';
 import { revokeAccessToken } from '../utils/auth';
+import haptics from '../utils/haptics';
 import niceDateTime from '../utils/nice-date-time';
 import states from '../utils/states';
 import store from '../utils/store';
@@ -57,6 +59,9 @@ function Accounts({ onClose }) {
               const isCurrent = account.info.id === currentAccount;
               const isDefault = i === 0; // first account is always default
               const isLoggedOut = !account.accessToken;
+              const unicodeAcct = account.info.acct
+                ? punycode.toUnicode(account.info.acct)
+                : account.info.acct;
 
               const removeAccount = () => {
                 accounts.splice(i, 1);
@@ -115,6 +120,7 @@ function Accounts({ onClose }) {
                       }
                       showAcct
                       onClick={() => {
+                        haptics.trigger('medium');
                         if (isLoggedOut) {
                           location.href = `/#/login?instance=${account.instanceURL}`;
                           onClose();
@@ -245,7 +251,7 @@ function Accounts({ onClose }) {
                                 <Trans>
                                   Log out{' '}
                                   <span class="bidi-isolate">
-                                    @{account.info.acct}
+                                    @{unicodeAcct}
                                   </span>
                                   ?
                                 </Trans>
@@ -273,7 +279,7 @@ function Accounts({ onClose }) {
                                 <Trans>
                                   Log out and remove{' '}
                                   <span class="bidi-isolate">
-                                    @{account.info.acct}
+                                    @{unicodeAcct}
                                   </span>
                                 </Trans>
                               </span>
@@ -295,7 +301,7 @@ function Accounts({ onClose }) {
                                 <Trans>
                                   Remove{' '}
                                   <span class="bidi-isolate">
-                                    @{account.info.acct}
+                                    @{unicodeAcct}
                                   </span>
                                   ?
                                 </Trans>

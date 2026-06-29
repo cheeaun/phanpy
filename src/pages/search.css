@@ -96,6 +96,38 @@ ul.link-list.hashtag-list li a {
   }
 }
 
+#search-page ul.collections-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 8px 16px;
+
+  > li:only-child {
+    grid-column: span 2;
+  }
+
+  > li {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+
+    .collection-card {
+      flex-grow: 1;
+      height: 100%;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  #search-page ul.collections-list > li {
+    grid-column: span 2;
+  }
+}
+
 .search-popover-container {
   position: relative;
 }

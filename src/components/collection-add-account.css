@@ -1,0 +1,124 @@
+#collection-add-account-sheet {
+  height: 50vh;
+
+  main {
+    padding-inline: 0;
+
+    &:has(+ footer) {
+      padding-bottom: 0;
+    }
+  }
+
+  footer {
+    font-size: 0.85em;
+    color: var(--text-insignificant-color);
+
+    ol {
+      margin: 0;
+      padding-inline-start: 1.5em;
+
+      li {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .accounts-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    --list-gap: 1px;
+    list-style: none;
+    margin: 0;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--list-gap);
+
+    &.loading {
+      opacity: 0.5;
+    }
+
+    li {
+      display: flex;
+      flex-grow: 1;
+      margin: 0;
+      padding: 8px;
+      gap: 8px;
+      position: relative;
+      justify-content: space-between;
+      border-radius: 8px;
+
+      &.disabled {
+        .account-block {
+          opacity: 0.5;
+        }
+      }
+
+      &:not(.disabled):hover {
+        background-image: linear-gradient(
+          var(--to-forward),
+          transparent 75%,
+          var(--link-bg-color)
+        );
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        border-top: var(--hairline-width) solid var(--divider-color);
+        position: absolute;
+        bottom: 0;
+        inset-inline-start: 58px;
+        inset-inline-end: 0;
+      }
+
+      > button {
+        border-radius: 4px;
+        align-self: stretch;
+        flex-shrink: 0;
+
+        &:not(:disabled):hover {
+          outline: 2px solid var(--button-bg-blur-color);
+        }
+        &:disabled {
+          color: var(--text-insignificant-color);
+        }
+
+        .loader-container {
+          margin: 0;
+          width: 24px;
+          height: 24px;
+          place-content: center;
+        }
+      }
+
+      .dummy-button-wrap {
+        display: flex;
+        align-self: stretch;
+        padding: 8px 12px;
+
+        .dummy-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+
+          .dummy-button-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75em;
+            font-weight: bold;
+            border: 1px solid var(--outline-color, #ccc);
+            color: var(--text-insignificant-color);
+          }
+        }
+      }
+    }
+  }
+}

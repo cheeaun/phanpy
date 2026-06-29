@@ -52,10 +52,10 @@
   }
 }
 .notification-type:is(
-    .notification-mention,
-    .notification-quote,
-    .notification-mention\+quote
-  ) {
+  .notification-mention,
+  .notification-quote,
+  .notification-mention\+quote
+) {
   padding-top: 16px;
 }
 .only-mentions .notification:not(.notification-mention),
@@ -267,6 +267,15 @@
   margin-top: 0;
   margin-bottom: 8px;
   text-wrap: pretty;
+}
+
+.notification-fallback-details {
+  margin-top: 4px;
+  color: var(--text-insignificant-color);
+
+  .notification-fallback-details-content {
+    margin-top: 4px;
+  }
 }
 
 .notification-group-statuses {

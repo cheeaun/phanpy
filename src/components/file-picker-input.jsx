@@ -18,18 +18,27 @@ function FilePickerInput({
         maxMediaAttachments - mediaAttachments >= 2
       }
       disabled={disabled}
-      onChange={(e) => {
+      onChange={async (e) => {
         const files = e.target.files;
         if (!files) return;
 
-        const mediaFiles = Array.from(files).map((file) => ({
-          file,
-          type: file.type,
-          size: file.size,
-          url: URL.createObjectURL(file),
-          id: null, // indicate uploaded state
-          description: null,
-        }));
+        let mediaFiles;
+        try {
+          mediaFiles = await Promise.all(
+            Array.from(files).map(async (file) => ({
+              fileData: await file.arrayBuffer(),
+              fileName: file.name,
+              type: file.type,
+              size: file.size,
+              url: URL.createObjectURL(file),
+              id: null, // indicate uploaded state
+              description: null,
+            })),
+          );
+        } catch (err) {
+          console.error('Failed to read file(s):', err);
+          return;
+        }
         console.log('MEDIA ATTACHMENTS', files, mediaFiles);
 
         // Validate max media attachments

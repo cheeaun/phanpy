@@ -1,5 +1,6 @@
 import './index.css';
 import './app.css';
+
 import './polyfills';
 
 import { i18n } from '@lingui/core';

@@ -15,6 +15,9 @@ const config = {
   ],
   // compileNamespace: 'es',
   orderBy: 'origin',
+  macro: {
+    jsxPlaceholderAttribute: '_t',
+  },
 };
 
 export default config;

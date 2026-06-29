@@ -57,6 +57,7 @@ export function groupBoosts(values) {
   }
 }
 
+const BOOSTS_LIMIT = 100;
 export function dedupeBoosts(items, instance) {
   const boostedStatusIDs = store.account.get('boostedStatusIDs') || {};
   const filteredItems = items.filter((item) => {
@@ -75,10 +76,10 @@ export function dedupeBoosts(items, instance) {
     }
     return true;
   });
-  // Limit to 50
+  // Limit to BOOSTS_LIMIT
   const keys = Object.keys(boostedStatusIDs);
-  if (keys.length > 50) {
-    keys.slice(0, keys.length - 50).forEach((key) => {
+  if (keys.length > BOOSTS_LIMIT) {
+    keys.slice(0, keys.length - BOOSTS_LIMIT).forEach((key) => {
       delete boostedStatusIDs[key];
     });
   }
@@ -229,7 +230,7 @@ export function groupContext(items, instance) {
 
   // FETCH AND SHOW REPLY HINTS
   if (inReplyToIds?.length) {
-    queueMicrotask(() => {
+    setTimeout(() => {
       const { masto } = api({ instance });
       console.log('REPLYHINT', inReplyToIds);
 
@@ -238,7 +239,7 @@ export function groupContext(items, instance) {
         for (let i = 0; i < inReplyToIds.length; i++) {
           const { sKey, inReplyToId } = inReplyToIds[i];
           try {
-            const replyToStatus = await fetchStatus(inReplyToId, masto);
+            const replyToStatus = await fetchStatus(inReplyToId, instance);
             saveStatus(replyToStatus, instance, {
               skipThreading: true,
             });
@@ -289,13 +290,14 @@ export function groupContext(items, instance) {
       } else {
         fallbackFetch();
       }
-    });
+    }, 10);
   }
 
   return newItems;
 }
 
-const fetchStatus = pmem((statusID, masto) => {
+const fetchStatus = pmem((statusID, instance) => {
+  const { masto } = api({ instance });
   return masto.v1.statuses.$select(statusID).fetch();
 });
 

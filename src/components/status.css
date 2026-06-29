@@ -240,7 +240,12 @@
 .status-card {
   font-size: calc(var(--text-size) * 0.9);
   /* margin: 1em 0 0; */
-  border-radius: 16px;
+  --card-radius: 16px;
+  @supports (corner-shape: squircle) {
+    --card-radius: 32px;
+    corner-shape: squircle;
+  }
+  border-radius: var(--card-radius);
   padding: 12px;
   border: 1px solid var(--outline-color);
   background-color: var(--bg-color);
@@ -250,7 +255,10 @@
   max-width: none !important;
 
   .quote-post-native > & {
-    border-radius: 8px;
+    --card-radius: 8px;
+    @supports (corner-shape: squircle) {
+      --card-radius: 16px;
+    }
   }
 
   .status-card {
@@ -479,6 +487,11 @@
   background-repeat: no-repeat;
   background-size: 100% calc(100% - var(--top-padding) / 2);
 
+  &.hidden {
+    padding-top: 0;
+    margin-bottom: 0;
+  }
+
   &.visibility-direct {
     background-image: var(--yellow-stripes);
   }
@@ -502,10 +515,7 @@
     inset-inline-start: var(--line-start);
     width: var(--line-width);
     height: calc(
-      100% -
-      var(--top-padding) -
-      var(--avatar-size) +
-      (var(--top-padding) / 2)
+      100% - var(--top-padding) - var(--avatar-size) + (var(--top-padding) / 2)
     );
     background-color: var(--comment-line-color);
     z-index: 0;
@@ -801,6 +811,10 @@
     ruby {
       filter: contrast(0);
       background-color: #000;
+    }
+    .title,
+    .meta {
+      background-color: currentColor;
     }
     * {
       text-decoration-color: inherit;
@@ -1547,7 +1561,11 @@ body:has(#modal-container .carousel) .status .media img:hover {
   height: 100%;
   min-height: var(--min-dimension);
   background-image:
-    radial-gradient(circle at center center, transparent, var(--bg-faded-color)),
+    radial-gradient(
+      circle at center center,
+      transparent,
+      var(--bg-faded-color)
+    ),
     repeating-radial-gradient(
       circle at center center,
       transparent,
@@ -2277,7 +2295,7 @@ a.card:is(:hover, :focus):visited {
 
     .poll-options.truncated & {
       content-visibility: auto;
-      content-intrinsic-size: auto 1.5lh;
+      content-intrinsic-size: auto 2rem;
     }
 
     &:has(> label) {

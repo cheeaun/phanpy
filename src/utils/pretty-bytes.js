@@ -1,5 +1,7 @@
 import { i18n } from '@lingui/core';
 
+import NF from './nf';
+
 // https://tc39.es/ecma402/#table-sanctioned-single-unit-identifiers
 const BYTES_UNITS = [
   'byte',
@@ -15,10 +17,10 @@ export default function prettyBytes(bytes) {
     BYTES_UNITS.length - 1,
   );
   const value = bytes / 1024 ** unitIndex;
-  return i18n.number(value, {
+  return NF(i18n.locale, {
     style: 'unit',
     unit: BYTES_UNITS[unitIndex],
     unitDisplay: 'narrow',
     maximumFractionDigits: 0,
-  });
+  }).format(value);
 }

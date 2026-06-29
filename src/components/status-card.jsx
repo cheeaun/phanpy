@@ -7,7 +7,7 @@ import { useSnapshot } from 'valtio';
 import getDomain from '../utils/get-domain';
 import isMastodonLinkMaybe from '../utils/isMastodonLinkMaybe';
 import states from '../utils/states';
-import unfurlMastodonLink from '../utils/unfurl-link';
+import unfurlMastodonLink, { unfurlCollectionLink } from '../utils/unfurl-link';
 
 import Byline from './byline';
 import Icon from './icon';
@@ -83,6 +83,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
       //   setCardStatusID(id);
       // })();
     });
+    unfurlCollectionLink(instance, url);
 
     return () => {
       abortController.abort();
@@ -95,11 +96,24 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   //   );
   // }
 
-  if (snapStates.unfurledLinks[url]) return null;
+  if (
+    snapStates.unfurledLinks[url]?.url &&
+    !snapStates.unfurledLinks[url].collections
+  )
+    // Hide card after unfurling a regular status;
+    // keep it for account collections pages so it's clickable
+    return null;
 
   const hasIframeHTML = /<iframe/i.test(html);
   const handleClick = useCallback(
     (e) => {
+      const unfurled = states.unfurledLinks[url];
+      if (unfurled?.url) {
+        e.preventDefault();
+        e.stopPropagation();
+        location.hash = '#' + unfurled.url;
+        return;
+      }
       if (hasIframeHTML) {
         e.preventDefault();
         states.showEmbedModal = {
@@ -110,7 +124,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
         };
       }
     },
-    [hasIframeHTML],
+    [hasIframeHTML, url],
   );
 
   const [blurhashImage, setBlurhashImage] = useState(null);

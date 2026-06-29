@@ -2,12 +2,20 @@ import './search.css';
 
 import { useAutoAnimate } from '@formkit/auto-animate/preact';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
+import { Fragment } from 'preact';
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { InView } from 'react-intersection-observer';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import AccountBlock from '../components/account-block';
+import CollectionCard from '../components/collection-card';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
@@ -64,6 +72,7 @@ function Search({ columnMode, ...props }) {
 
   const [showMore, setShowMore] = useState(false);
   const offsetRef = useRef(0);
+  const searchIdRef = useRef(0);
   useEffect(() => {
     offsetRef.current = 0;
   }, [q, type]);
@@ -76,20 +85,24 @@ function Search({ columnMode, ...props }) {
   const [statusResults, setStatusResults] = useState([]);
   const [accountResults, setAccountResults] = useState([]);
   const [hashtagResults, setHashtagResults] = useState([]);
+  const [collectionResults, setCollectionResults] = useState([]);
   useEffect(() => {
     setStatusResults([]);
     setAccountResults([]);
     setHashtagResults([]);
+    setCollectionResults([]);
   }, [q]);
   const typeResults = {
     statuses: statusResults,
     accounts: accountResults,
     hashtags: hashtagResults,
+    collections: collectionResults,
   };
   const setTypeResultsFunc = {
     statuses: setStatusResults,
     accounts: setAccountResults,
     hashtags: setHashtagResults,
+    collections: setCollectionResults,
   };
 
   const [relationshipsMap, setRelationshipsMap] = useState({});
@@ -97,12 +110,104 @@ function Search({ columnMode, ...props }) {
     if (!accounts?.length) return;
     const relationships = await fetchRelationships(accounts, relationshipsMap);
     if (relationships) {
-      setRelationshipsMap({
-        ...relationshipsMap,
+      setRelationshipsMap((prev) => ({
+        ...prev,
         ...relationships,
-      });
+      }));
     }
   };
+
+  const sortedSections = useMemo(() => {
+    const sections = [
+      {
+        key: 'accounts',
+        label: t`Accounts`,
+        seeMoreLabel: t`See more accounts`,
+        emptyLabel: t`No accounts found.`,
+        listClass: 'timeline flat accounts-list',
+        results: accountResults,
+        renderItem: (item) => (
+          <li key={item.id}>
+            <AccountBlock
+              account={item}
+              instance={instance}
+              showStats
+              relationship={relationshipsMap[item.id]}
+            />
+          </li>
+        ),
+      },
+      {
+        key: 'hashtags',
+        label: t`Hashtags`,
+        seeMoreLabel: t`See more hashtags`,
+        emptyLabel: t`No hashtags found.`,
+        listClass: 'link-list hashtag-list',
+        results: hashtagResults,
+        renderItem: (item) => {
+          const { name, history } = item;
+          const total = history?.reduce?.((acc, cur) => acc + +cur.uses, 0);
+          return (
+            <li key={name}>
+              <Link to={instance ? `/${instance}/t/${name}` : `/t/${name}`}>
+                <Icon icon="hashtag" alt="#" />
+                <span>{name}</span>
+                {!!total && <span class="count">{shortenNumber(total)}</span>}
+              </Link>
+            </li>
+          );
+        },
+      },
+      {
+        key: 'collections',
+        label: t`Collections`,
+        emptyLabel: null,
+        listClass: 'collections-list',
+        results: collectionResults,
+        renderItem: (item) => (
+          <li key={item.id}>
+            <CollectionCard collection={item} instance={instance} size="l" />
+          </li>
+        ),
+      },
+      {
+        key: 'statuses',
+        label: t`Posts`,
+        seeMoreLabel: t`See more posts`,
+        emptyLabel: t`No posts found.`,
+        listClass: 'timeline',
+        results: statusResults,
+        renderItem: (item) => (
+          <li key={item.id}>
+            <Link
+              class="status-link"
+              to={instance ? `/${instance}/s/${item.id}` : `/s/${item.id}`}
+            >
+              <Status status={item} />
+            </Link>
+          </li>
+        ),
+      },
+    ];
+
+    return [...sections]
+      .filter((s) => !type || s.key === type)
+      .filter((s) => s.key !== 'collections' || s.results.length > 0)
+      .sort((a, b) => {
+        if (type) return 0;
+        if (a.results.length > 0 && b.results.length === 0) return -1;
+        if (a.results.length === 0 && b.results.length > 0) return 1;
+        return 0;
+      });
+  }, [
+    type,
+    accountResults,
+    hashtagResults,
+    collectionResults,
+    statusResults,
+    instance,
+    relationshipsMap,
+  ]);
 
   function loadResults(firstLoad) {
     if (firstLoad) {
@@ -119,7 +224,10 @@ function Search({ columnMode, ...props }) {
       setStatusResults(statusResults.slice(0, SHORT_LIMIT));
       setAccountResults(accountResults.slice(0, SHORT_LIMIT));
       setHashtagResults(hashtagResults.slice(0, SHORT_LIMIT));
+      setCollectionResults(collectionResults.slice(0, SHORT_LIMIT));
     }
+
+    const searchId = ++searchIdRef.current;
 
     (async () => {
       const params = {
@@ -135,7 +243,9 @@ function Search({ columnMode, ...props }) {
 
       try {
         const results = await masto.v2.search.list(params);
-        console.log(results);
+
+        if (searchIdRef.current !== searchId) return;
+
         if (type) {
           if (firstLoad) {
             setTypeResultsFunc[type](results[type]);
@@ -158,6 +268,7 @@ function Search({ columnMode, ...props }) {
           setStatusResults(results.statuses || []);
           setAccountResults(results.accounts || []);
           setHashtagResults(results.hashtags || []);
+          setCollectionResults(results.collections || []);
           offsetRef.current = 0;
           setShowMore(false);
         }
@@ -165,6 +276,7 @@ function Search({ columnMode, ...props }) {
 
         setUIState('default');
       } catch (err) {
+        if (searchIdRef.current !== searchId) return;
         console.error(err);
         setUIState('error');
       }
@@ -207,11 +319,16 @@ function Search({ columnMode, ...props }) {
     {
       useKey: true,
       preventDefault: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) => {
+        // Allow '/' even with Shift (e.g. German keyboards)
+        if (e.key === '/') return false;
+        return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
+      },
     },
   );
 
-  const itemsSelector = '.timeline > li > a, .hashtag-list > li > a';
+  const itemsSelector =
+    '.timeline > li > a, .hashtag-list > li > a, .collections-list > li > a';
   const jRef = useHotkeys(
     'j',
     () => {
@@ -244,7 +361,12 @@ function Search({ columnMode, ...props }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'j',
     },
   );
 
@@ -281,7 +403,12 @@ function Search({ columnMode, ...props }) {
     },
     {
       useKey: true,
-      ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
+      ignoreEventWhen: (e) =>
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey ||
+        e.key.toLowerCase() !== 'k',
     },
   );
 
@@ -361,188 +488,49 @@ function Search({ columnMode, ...props }) {
           )}
           {!!q ? (
             <>
-              {(!type || type === 'accounts') && (
-                <>
-                  {type !== 'accounts' && (
+              {sortedSections.map((section) => (
+                <Fragment key={section.key}>
+                  {!type && (
                     <h2 class="timeline-header">
-                      <Trans>Accounts</Trans>{' '}
-                      <Link
-                        to={`/search?q=${encodeURIComponent(q)}&type=accounts`}
-                      >
-                        <Icon icon="arrow-right" size="l" alt={t`See more`} />
-                      </Link>
+                      {section.label}{' '}
+                      {section.seeMoreLabel && (
+                        <Link
+                          to={`/search?q=${encodeURIComponent(q)}&type=${section.key}`}
+                        >
+                          <Icon icon="arrow-right" size="l" alt={t`See more`} />
+                        </Link>
+                      )}
                     </h2>
                   )}
-                  {accountResults.length > 0 ? (
+                  {section.results.length > 0 ? (
                     <>
-                      <ul class="timeline flat accounts-list">
-                        {accountResults.map((account) => (
-                          <li key={account.id}>
-                            <AccountBlock
-                              account={account}
-                              instance={instance}
-                              showStats
-                              relationship={relationshipsMap[account.id]}
-                            />
-                          </li>
-                        ))}
+                      <ul class={section.listClass}>
+                        {section.results.map(section.renderItem)}
                       </ul>
-                      {type !== 'accounts' && (
+                      {!type && section.seeMoreLabel && (
                         <div class="ui-state">
                           <Link
                             class="plain button"
-                            to={`/search?q=${encodeURIComponent(
-                              q,
-                            )}&type=accounts`}
+                            to={`/search?q=${encodeURIComponent(q)}&type=${section.key}`}
                           >
-                            <Trans>See more accounts</Trans>{' '}
-                            <Icon icon="arrow-right" />
+                            {section.seeMoreLabel} <Icon icon="arrow-right" />
                           </Link>
                         </div>
                       )}
                     </>
                   ) : (
                     !type &&
+                    section.emptyLabel &&
                     (uiState === 'loading' ? (
                       <p class="ui-state">
                         <Loader abrupt />
                       </p>
                     ) : (
-                      <p class="ui-state">
-                        <Trans>No accounts found.</Trans>
-                      </p>
+                      <p class="ui-state">{section.emptyLabel}</p>
                     ))
                   )}
-                </>
-              )}
-              {(!type || type === 'hashtags') && (
-                <>
-                  {type !== 'hashtags' && (
-                    <h2 class="timeline-header">
-                      <Trans>Hashtags</Trans>{' '}
-                      <Link
-                        to={`/search?q=${encodeURIComponent(q)}&type=hashtags`}
-                      >
-                        <Icon icon="arrow-right" size="l" alt={t`See more`} />
-                      </Link>
-                    </h2>
-                  )}
-                  {hashtagResults.length > 0 ? (
-                    <>
-                      <ul class="link-list hashtag-list">
-                        {hashtagResults.map((hashtag) => {
-                          const { name, history } = hashtag;
-                          const total = history?.reduce?.(
-                            (acc, cur) => acc + +cur.uses,
-                            0,
-                          );
-                          return (
-                            <li key={`${name}-${total}`}>
-                              <Link
-                                to={
-                                  instance
-                                    ? `/${instance}/t/${name}`
-                                    : `/t/${name}`
-                                }
-                              >
-                                <Icon icon="hashtag" alt="#" />
-                                <span>{name}</span>
-                                {!!total && (
-                                  <span class="count">
-                                    {shortenNumber(total)}
-                                  </span>
-                                )}
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                      {type !== 'hashtags' && (
-                        <div class="ui-state">
-                          <Link
-                            class="plain button"
-                            to={`/search?q=${encodeURIComponent(
-                              q,
-                            )}&type=hashtags`}
-                          >
-                            <Trans>See more hashtags</Trans>{' '}
-                            <Icon icon="arrow-right" />
-                          </Link>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    !type &&
-                    (uiState === 'loading' ? (
-                      <p class="ui-state">
-                        <Loader abrupt />
-                      </p>
-                    ) : (
-                      <p class="ui-state">
-                        <Trans>No hashtags found.</Trans>
-                      </p>
-                    ))
-                  )}
-                </>
-              )}
-              {(!type || type === 'statuses') && (
-                <>
-                  {type !== 'statuses' && (
-                    <h2 class="timeline-header">
-                      <Trans>Posts</Trans>{' '}
-                      <Link
-                        to={`/search?q=${encodeURIComponent(q)}&type=statuses`}
-                      >
-                        <Icon icon="arrow-right" size="l" alt={t`See more`} />
-                      </Link>
-                    </h2>
-                  )}
-                  {statusResults.length > 0 ? (
-                    <>
-                      <ul class="timeline">
-                        {statusResults.map((status) => (
-                          <li key={status.id}>
-                            <Link
-                              class="status-link"
-                              to={
-                                instance
-                                  ? `/${instance}/s/${status.id}`
-                                  : `/s/${status.id}`
-                              }
-                            >
-                              <Status status={status} />
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                      {type !== 'statuses' && (
-                        <div class="ui-state">
-                          <Link
-                            class="plain button"
-                            to={`/search?q=${encodeURIComponent(
-                              q,
-                            )}&type=statuses`}
-                          >
-                            <Trans>See more posts</Trans>{' '}
-                            <Icon icon="arrow-right" />
-                          </Link>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    !type &&
-                    (uiState === 'loading' ? (
-                      <p class="ui-state">
-                        <Loader abrupt />
-                      </p>
-                    ) : (
-                      <p class="ui-state">
-                        <Trans>No posts found.</Trans>
-                      </p>
-                    ))
-                  )}
-                </>
-              )}
+                </Fragment>
+              ))}
               {!!type &&
                 (uiState === 'default' ? (
                   showMore ? (

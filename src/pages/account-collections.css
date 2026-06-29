@@ -1,0 +1,56 @@
+#account-collections-page ~ #compose-button {
+  display: none;
+}
+
+#account-collections-page {
+  .collections-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 16px;
+
+    @media (min-width: calc(480px * 2)) {
+      &:has(> :nth-child(7)) {
+        /* 3-column layout when 7+ items */
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 95vw;
+        max-width: calc(320px * 3.3);
+        transform: translateX(calc(-50% + var(--main-width) / 2));
+        &:dir(rtl) {
+          transform: translateX(calc(50% - var(--main-width) / 2));
+        }
+      }
+    }
+
+    > li:only-child {
+      grid-column: span 2;
+    }
+
+    > li {
+      @media (max-width: 480px) {
+        grid-column: span 2;
+
+        .collection-card {
+          max-width: none;
+        }
+      }
+
+      display: flex;
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+
+      .collection-card {
+        flex-grow: 1;
+        height: 100%;
+      }
+    }
+  }
+
+  footer {
+    margin-bottom: 3em;
+  }
+}

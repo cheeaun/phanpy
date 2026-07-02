@@ -54,7 +54,7 @@ jobs:
       - name: Generate diff report
         env:
           REF_TAG: ${{ steps.latest-tag.outputs.tag }}
-        run: node scripts/bundle-sizes-diff-md.js tag-sizes.txt pr-sizes.txt > bundle-sizes.md
+        run: node pr-build/scripts/bundle-sizes-diff-md.js tag-sizes.txt pr-sizes.txt > bundle-sizes.md
 
       - name: Comment on PR
         uses: marocchino/sticky-pull-request-comment@v2

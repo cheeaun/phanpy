@@ -52,7 +52,7 @@ function parseBytes(str) {
   return null;
 }
 
-function formatBytes(diff) {
+function formatBytes(diff, estimated) {
   if (diff === 0) return '—';
   const abs = Math.abs(diff);
   let s;
@@ -63,8 +63,8 @@ function formatBytes(diff) {
   } else {
     s = abs.toFixed(0) + ' B';
   }
-  const sign = diff > 0 ? '+' : '-';
-  return `**${sign}${s}**`;
+  const prefix = estimated ? '~' : diff > 0 ? '+' : '-';
+  return `**${prefix}${s}**`;
 }
 
 function normalizeName(file) {
@@ -73,6 +73,25 @@ function normalizeName(file) {
 
 const refRows = parseSizes(refFile);
 const curRows = parseSizes(curFile);
+
+let gzipRatio = 0;
+const ratioSamples = [];
+for (const r of [...refRows, ...curRows]) {
+  const sb = parseBytes(r.size);
+  const gb = parseBytes(r.gzip);
+  if (sb !== null && gb !== null && sb > 0) {
+    ratioSamples.push(gb / sb);
+  }
+}
+if (ratioSamples.length > 0) {
+  gzipRatio = ratioSamples.reduce((a, b) => a + b, 0) / ratioSamples.length;
+}
+
+function estimateGzip(sizeStr) {
+  const sb = parseBytes(sizeStr);
+  if (sb === null) return null;
+  return Math.round(sb * gzipRatio);
+}
 
 if (refRows.length === 0 && curRows.length === 0) {
   console.log('## 📦 Bundle Size Report');
@@ -114,7 +133,7 @@ for (const key of allKeys) {
   const cur = curMap[key];
 
   const curSize = cur ? cur.size : ref ? ref.size : '—';
-  const curGzip = cur && cur.gzip ? cur.gzip : ref && ref.gzip ? ref.gzip : '—';
+  let curGzip = cur && cur.gzip ? cur.gzip : ref && ref.gzip ? ref.gzip : '—';
 
   let fileCol;
   let gzipDelta;
@@ -132,16 +151,32 @@ for (const key of allKeys) {
     if (gzipDelta !== '—') hasChange = true;
   } else if (cur && !ref) {
     fileCol = `<ins>\`${key}\`</ins>`;
-    const cg = parseBytes(cur.gzip);
-    gzipDelta = cg !== null ? formatBytes(cg) : '—';
+    let cg = parseBytes(cur.gzip);
+    let estimated = false;
+    if (cg === null) {
+      cg = estimateGzip(cur.size);
+      estimated = true;
+    }
+    gzipDelta = cg !== null ? formatBytes(cg, estimated) : '—';
     hasChange = true;
-    if (cg !== null) addedGzipBytes += cg;
+    if (cg !== null) {
+      addedGzipBytes += cg;
+      if (estimated) curGzip = `~${(cg / 1024).toFixed(2)} kB`;
+    }
   } else {
     fileCol = `<del>\`${key}\`</del>`;
-    const rg = parseBytes(ref.gzip);
-    gzipDelta = rg !== null ? formatBytes(-rg) : '—';
+    let rg = parseBytes(ref.gzip);
+    let estimated = false;
+    if (rg === null) {
+      rg = estimateGzip(ref.size);
+      estimated = true;
+    }
+    gzipDelta = rg !== null ? formatBytes(-rg, estimated) : '—';
     hasChange = true;
-    if (rg !== null) removedGzipBytes += rg;
+    if (rg !== null) {
+      removedGzipBytes += rg;
+      if (estimated) curGzip = `~${(rg / 1024).toFixed(2)} kB`;
+    }
   }
 
   if (hasChange) {

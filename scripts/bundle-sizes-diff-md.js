@@ -113,13 +113,15 @@ for (const key of allKeys) {
   const ref = refMap[key];
   const cur = curMap[key];
 
-  const curSize = cur ? cur.size : '—';
-  const curGzip = cur && cur.gzip ? cur.gzip : '—';
+  const curSize = cur ? cur.size : ref ? ref.size : '—';
+  const curGzip = cur && cur.gzip ? cur.gzip : ref && ref.gzip ? ref.gzip : '—';
 
+  let fileCol;
   let gzipDelta;
   let hasChange = false;
 
   if (cur && ref) {
+    fileCol = `\`${key}\``;
     const cg = parseBytes(cur.gzip);
     const rg = parseBytes(ref.gzip);
     const gdiff = cg !== null && rg !== null ? cg - rg : null;
@@ -129,20 +131,21 @@ for (const key of allKeys) {
         : '—';
     if (gzipDelta !== '—') hasChange = true;
   } else if (cur && !ref) {
-    gzipDelta = '**NEW**';
-    hasChange = true;
+    fileCol = `<ins>\`${key}\`</ins>`;
     const cg = parseBytes(cur.gzip);
+    gzipDelta = cg !== null ? formatBytes(cg) : '—';
+    hasChange = true;
     if (cg !== null) addedGzipBytes += cg;
   } else {
-    gzipDelta = '**REMOVED**';
-    hasChange = true;
+    fileCol = `<del>\`${key}\`</del>`;
     const rg = parseBytes(ref.gzip);
+    gzipDelta = rg !== null ? formatBytes(-rg) : '—';
+    hasChange = true;
     if (rg !== null) removedGzipBytes += rg;
   }
 
   if (hasChange) {
-    const displayName = cur ? key : `~~${key}~~`;
-    changedRows.push({ displayName, curSize, curGzip, gzipDelta });
+    changedRows.push({ fileCol, curSize, curGzip, gzipDelta });
   }
 }
 
@@ -172,7 +175,7 @@ if (changedRows.length > 0) {
   console.log('|------|------|------|--------|');
   for (const row of changedRows) {
     console.log(
-      `| \`${row.displayName}\` | ${row.curSize} | ${row.curGzip} | ${row.gzipDelta} |`,
+      `| ${row.fileCol} | ${row.curSize} | ${row.curGzip} | ${row.gzipDelta} |`,
     );
   }
 } else {

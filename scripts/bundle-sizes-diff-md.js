@@ -113,6 +113,7 @@ for (const key of allKeys) {
   const ref = refMap[key];
   const cur = curMap[key];
 
+  const curSize = cur ? cur.size : '—';
   const curGzip = cur && cur.gzip ? cur.gzip : '—';
 
   let gzipDelta;

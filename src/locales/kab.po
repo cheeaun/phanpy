@@ -8,7 +8,7 @@ msgstr ""
 "Language: kab\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 09:25\n"
+"PO-Revision-Date: 2026-07-02 09:44\n"
 "Last-Translator: \n"
 "Language-Team: Kabyle\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -18,64 +18,64 @@ msgstr ""
 "X-Crowdin-File: /main/src/locales/en.po\n"
 "X-Crowdin-File-ID: 18\n"
 
-#: src/components/account-block.jsx:196
+#: src/components/account-block.jsx:198
 msgid "Locked"
 msgstr "Isekkeṛ"
 
 #. placeholder {0}: shortenNumber(statusesCount)
-#: src/components/account-block.jsx:203
+#: src/components/account-block.jsx:205
 msgid "Posts: {0}"
 msgstr "Tisuffaɣ: {0}"
 
-#: src/components/account-block.jsx:209
+#: src/components/account-block.jsx:211
 msgid "Last active: {date}"
 msgstr "Armud aneggaru: {date}"
 
-#: src/components/account-block.jsx:227
-#: src/components/account-info.jsx:728
+#: src/components/account-block.jsx:229
+#: src/components/account-info.jsx:730
 msgid "Automated"
 msgstr "Awurman"
 
-#: src/components/account-block.jsx:234
-#: src/components/account-info.jsx:733
+#: src/components/account-block.jsx:236
+#: src/components/account-info.jsx:735
 #: src/components/status.jsx:611
 msgid "Group"
 msgstr "Agraw"
 
-#: src/components/account-block.jsx:244
+#: src/components/account-block.jsx:246
 msgid "Mutual"
 msgstr "Temṭafaṛem"
 
-#: src/components/account-block.jsx:248
-#: src/components/related-actions.jsx:986
+#: src/components/account-block.jsx:250
+#: src/components/related-actions.jsx:991
 msgid "Requested"
 msgstr "Yettwasra"
 
-#: src/components/account-block.jsx:252
-#: src/components/related-actions.jsx:977
+#: src/components/account-block.jsx:254
+#: src/components/related-actions.jsx:982
 msgid "Following"
 msgstr "Yeṭṭafar"
 
-#: src/components/account-block.jsx:256
-#: src/components/related-actions.jsx:209
+#: src/components/account-block.jsx:258
+#: src/components/related-actions.jsx:211
 msgid "Follows you"
 msgstr "Yeṭṭafaṛ-ik·ikem"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-block.jsx:281
+#: src/components/account-block.jsx:286
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
 msgstr ""
 
-#: src/components/account-block.jsx:307
-#: src/components/account-info.jsx:776
+#: src/components/account-block.jsx:311
+#: src/components/account-info.jsx:778
 msgid "Verified"
 msgstr "Yettwasenqed"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
-#: src/components/account-block.jsx:323
-#: src/components/account-info.jsx:915
+#: src/components/account-block.jsx:327
+#: src/components/account-info.jsx:917
 msgid "Joined <0>{0}</0>"
 msgstr "Yerna-d ass <0>{0}</0>"
 
@@ -88,8 +88,8 @@ msgid "server domain name"
 msgstr "isem n taɣult n uqeddac"
 
 #: src/components/account-info-mini.jsx:57
-#: src/components/account-info.jsx:798
-#: src/components/compose.jsx:2050
+#: src/components/account-info.jsx:800
+#: src/components/compose.jsx:2055
 #: src/pages/settings.jsx:308
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -97,50 +97,50 @@ msgstr "Imeḍfaṛen"
 
 #: src/components/account-info-mini.jsx:61
 #: src/components/account-info-mini.jsx:100
-#: src/components/account-info.jsx:805
-#: src/components/account-info.jsx:863
+#: src/components/account-info.jsx:807
+#: src/components/account-info.jsx:865
 msgid "This user has chosen to not make this information available."
 msgstr "Aseqdac-a yefren ur tettili ara telɣut-a."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info-mini.jsx:67
-#: src/components/account-info.jsx:825
+#: src/components/account-info.jsx:827
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/account-info-mini.jsx:93
-#: src/components/account-info.jsx:853
+#: src/components/account-info.jsx:855
 msgid "following.stats"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info-mini.jsx:106
-#: src/components/account-info.jsx:869
+#: src/components/account-info.jsx:871
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr ""
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info-mini.jsx:119
-#: src/components/account-info.jsx:893
+#: src/components/account-info.jsx:895
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> n tsuffeɣt} other {<1>{1}</1> n tsuffaɣ}}"
 
-#: src/components/account-info.jsx:118
+#: src/components/account-info.jsx:119
 msgid "View profile"
 msgstr "Wali amaɣnu"
 
-#: src/components/account-info.jsx:386
+#: src/components/account-info.jsx:388
 msgid "Unable to load account."
 msgstr "Yegguma ad d-yali umiḍan."
 
-#: src/components/account-info.jsx:401
+#: src/components/account-info.jsx:403
 msgid "Go to account page"
 msgstr "Ddu ɣer usebter n umiḍan"
 
-#: src/components/account-info.jsx:407
+#: src/components/account-info.jsx:409
 #: src/components/timeline.jsx:663
 #: src/components/timeline2.jsx:701
 #: src/pages/home.jsx:237
@@ -150,51 +150,51 @@ msgstr "Ddu ɣer usebter n umiḍan"
 msgid "Try again"
 msgstr "Ɛreḍ tikkelt-nniḍen"
 
-#: src/components/account-info.jsx:461
+#: src/components/account-info.jsx:463
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> ɣur-s tura amiḍan-a amaynut:"
 
-#: src/components/account-info.jsx:617
-#: src/components/related-actions.jsx:542
+#: src/components/account-info.jsx:619
+#: src/components/related-actions.jsx:544
 msgid "Handle copied"
 msgstr "Isem n useqdac yettwanɣel"
 
-#: src/components/account-info.jsx:620
-#: src/components/related-actions.jsx:545
+#: src/components/account-info.jsx:622
+#: src/components/related-actions.jsx:547
 msgid "Unable to copy handle"
 msgstr "D awezɣi anɣal n yisem n useqdac"
 
-#: src/components/account-info.jsx:626
-#: src/components/related-actions.jsx:551
+#: src/components/account-info.jsx:628
+#: src/components/related-actions.jsx:553
 msgid "Copy handle"
 msgstr "Nɣel isem n useqdac"
 
-#: src/components/account-info.jsx:644
-#: src/components/related-actions.jsx:616
-#: src/components/related-actions.jsx:891
+#: src/components/account-info.jsx:646
+#: src/components/related-actions.jsx:621
+#: src/components/related-actions.jsx:896
 #: src/components/shortcuts-settings.jsx:1099
 msgid "QR code"
 msgstr "Angalt QR"
 
-#: src/components/account-info.jsx:650
+#: src/components/account-info.jsx:652
 msgid "Go to original profile page"
 msgstr "Ddu ɣer usebter n umaɣnu"
 
-#: src/components/account-info.jsx:669
+#: src/components/account-info.jsx:671
 msgid "View profile image"
 msgstr "Wali tugna n umaɣnu"
 
-#: src/components/account-info.jsx:688
+#: src/components/account-info.jsx:690
 msgid "View profile header"
 msgstr "Wali aqerru n umaɣnu"
 
-#: src/components/account-info.jsx:704
+#: src/components/account-info.jsx:706
 #: src/components/edit-profile-sheet.jsx:267
-#: src/components/related-actions.jsx:905
+#: src/components/related-actions.jsx:910
 msgid "Edit profile"
 msgstr "Ẓreg amaɣnu"
 
-#: src/components/account-info.jsx:723
+#: src/components/account-info.jsx:725
 msgid "In Memoriam"
 msgstr "In Memoriam"
 
@@ -202,14 +202,14 @@ msgstr "In Memoriam"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:950
+#: src/components/account-info.jsx:952
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr ""
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:967
+#: src/components/account-info.jsx:969
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} tisuffaɣ tiɣbula, {1} tiririyin, {2} izuzar"
 
@@ -220,25 +220,25 @@ msgstr "{0} tisuffaɣ tiɣbula, {1} tiririyin, {2} izuzar"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:984
+#: src/components/account-info.jsx:986
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {Tasuffeɣt taneggurt i wass-a} other {Tasuffeɣt taneggarut deg {2} wussan-a yezrin}}} other {{3, plural, one {{4} tsuffaɣ tineggura i wass-a} other {{5} tsuffaɣ tineggura deg {6} wussan-a yezrin}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:1000
+#: src/components/account-info.jsx:1002
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {1 tsuffeɣt taneggarut deg yiseggasen-a ineggura} other {{1} tsuffaɣ deg yiseggasen-a ineggura}}"
 
-#: src/components/account-info.jsx:1058
+#: src/components/account-info.jsx:1060
 #: src/pages/catchup.jsx:73
 #: src/pages/year-in-posts.jsx:1390
 msgid "Original"
 msgstr "Aɣbalu"
 
-#: src/components/account-info.jsx:1062
+#: src/components/account-info.jsx:1064
 #: src/components/status.jsx:2832
-#: src/pages/account-statuses.jsx:426
+#: src/pages/account-statuses.jsx:428
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1594
 #: src/pages/catchup.jsx:2249
@@ -248,7 +248,7 @@ msgstr "Aɣbalu"
 msgid "Replies"
 msgstr "Tiririt"
 
-#: src/components/account-info.jsx:1067
+#: src/components/account-info.jsx:1069
 #: src/components/quotes-modal.jsx:81
 #: src/components/status.jsx:2837
 #: src/pages/catchup.jsx:75
@@ -257,8 +257,8 @@ msgstr "Tiririt"
 msgid "Quotes"
 msgstr "Tinebdurin"
 
-#: src/components/account-info.jsx:1072
-#: src/pages/account-statuses.jsx:442
+#: src/components/account-info.jsx:1074
+#: src/pages/account-statuses.jsx:444
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1596
 #: src/pages/catchup.jsx:2261
@@ -267,11 +267,11 @@ msgstr "Tinebdurin"
 msgid "Boosts"
 msgstr "Izuzar"
 
-#: src/components/account-info.jsx:1078
+#: src/components/account-info.jsx:1080
 msgid "Post stats unavailable."
 msgstr "Tidaddanin n yizen-a ulac-itent."
 
-#: src/components/account-info.jsx:1105
+#: src/components/account-info.jsx:1107
 msgid "View post stats"
 msgstr "Wali tidaddanin n tsuffeɣt"
 
@@ -280,7 +280,7 @@ msgstr "Wali tidaddanin n tsuffeɣt"
 #: src/components/collection-add-account.jsx:133
 #: src/components/collection-add-edit.jsx:40
 #: src/components/collection-manage-accounts.jsx:111
-#: src/components/compose.jsx:1127
+#: src/components/compose.jsx:1128
 #: src/components/custom-emojis-modal.jsx:282
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:262
@@ -297,7 +297,7 @@ msgstr "Wali tidaddanin n tsuffeɣt"
 #: src/components/mention-modal.jsx:162
 #: src/components/notification-service.jsx:157
 #: src/components/open-link-sheet.jsx:51
-#: src/components/post-embed-modal.jsx:196
+#: src/components/post-embed-modal.jsx:197
 #: src/components/private-note-sheet.jsx:36
 #: src/components/qr-code-modal.jsx:33
 #: src/components/qr-scanner-modal.jsx:257
@@ -312,7 +312,7 @@ msgstr "Wali tidaddanin n tsuffeɣt"
 #: src/components/status.jsx:3502
 #: src/components/status.jsx:3714
 #: src/components/translated-bio-sheet.jsx:21
-#: src/pages/accounts.jsx:46
+#: src/pages/accounts.jsx:47
 #: src/pages/catchup.jsx:1731
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
@@ -324,8 +324,8 @@ msgid "Close"
 msgstr "Mdel"
 
 #: src/components/add-remove-lists-sheet.jsx:50
-#: src/components/related-actions.jsx:482
-#: src/components/related-actions.jsx:492
+#: src/components/related-actions.jsx:484
+#: src/components/related-actions.jsx:494
 msgid "Add/Remove from Lists"
 msgstr "Rnu/Kkes seg tebdarin"
 
@@ -381,8 +381,8 @@ msgid "Remove me…"
 msgstr "Kkes-iyi…"
 
 #: src/components/collection-account-actions.jsx:107
-#: src/components/related-actions.jsx:996
-#: src/components/related-actions.jsx:1000
+#: src/components/related-actions.jsx:1001
+#: src/components/related-actions.jsx:1005
 #: src/pages/hashtag.jsx:294
 msgid "Follow"
 msgstr "Ḍfeṛ"
@@ -402,7 +402,7 @@ msgstr "Nadi imiḍanen"
 
 #: src/components/collection-add-account.jsx:197
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1758
+#: src/components/compose.jsx:1763
 #: src/components/mention-modal.jsx:221
 #: src/components/shortcuts-settings.jsx:732
 #: src/pages/list.jsx:388
@@ -424,7 +424,7 @@ msgid "These accounts review all follow requests. Followers can add them to coll
 msgstr ""
 
 #: src/components/collection-add-edit.jsx:45
-#: src/pages/account-collections.jsx:179
+#: src/pages/account-collections.jsx:181
 msgid "New collection"
 msgstr "Talkensit tamaynut"
 
@@ -459,7 +459,7 @@ msgid "Mark as sensitive"
 msgstr ""
 
 #: src/components/collection-add-edit.jsx:183
-#: src/components/compose.jsx:2038
+#: src/components/compose.jsx:2043
 #: src/pages/collection.jsx:686
 #: src/pages/settings.jsx:302
 #: src/utils/visibility-text.jsx:4
@@ -554,7 +554,7 @@ msgstr "Rnu amiḍan"
 #: src/components/shortcuts-settings.jsx:142
 #: src/components/timeline.jsx:546
 #: src/components/timeline2.jsx:580
-#: src/pages/account-collections.jsx:140
+#: src/pages/account-collections.jsx:142
 #: src/pages/catchup.jsx:1027
 #: src/pages/filters.jsx:90
 #: src/pages/followed-hashtags.jsx:41
@@ -606,114 +606,114 @@ msgstr "Tanzagt"
 msgid "Remove poll"
 msgstr "Kkes afmiḍi"
 
-#: src/components/compose.jsx:123
+#: src/components/compose.jsx:124
 msgid "Take photo or video"
 msgstr "Ṭṭef tawlaft neɣ tavidyut"
 
-#: src/components/compose.jsx:124
+#: src/components/compose.jsx:125
 msgid "Add media"
 msgstr "Rnu amidya"
 
-#: src/components/compose.jsx:125
+#: src/components/compose.jsx:126
 msgid "Add custom emoji"
 msgstr "Timerna n imuji udmawan"
 
-#: src/components/compose.jsx:126
+#: src/components/compose.jsx:127
 msgid "Add GIF"
 msgstr "Rnu tugna GIF"
 
-#: src/components/compose.jsx:127
+#: src/components/compose.jsx:128
 msgid "Add poll"
 msgstr "Rnu asisten"
 
-#: src/components/compose.jsx:128
+#: src/components/compose.jsx:129
 msgid "Add content warning"
 msgstr "Rnu alɣu ɣef ugbur"
 
-#: src/components/compose.jsx:129
+#: src/components/compose.jsx:130
 msgid "Schedule post"
 msgstr "Sɣiwes tasuffeɣt"
 
 #. placeholder {0}: unsupportedFiles.length
 #. placeholder {1}: unsupportedFiles[0].name
 #. placeholder {2}: lf.format( unsupportedFiles.map((f) => f.name), )
-#: src/components/compose.jsx:277
+#: src/components/compose.jsx:278
 msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 msgstr ""
 
-#: src/components/compose.jsx:293
-#: src/components/compose.jsx:2184
+#: src/components/compose.jsx:294
+#: src/components/compose.jsx:2189
 #: src/components/file-picker-input.jsx:47
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr "{maxMediaAttachments, plural, one {Tzemreḍ ad tsedduḍ 1 ufaylu kan.} other {Tzemreḍ ad tsedduḍ # yifuyla.}}"
 
-#: src/components/compose.jsx:651
+#: src/components/compose.jsx:652
 msgid "You have unsaved changes. Discard this post?"
 msgstr "Ɣur-k isenfal ur yettwaskelsen ara. Sefsex tasuffeɣt-a?"
 
-#: src/components/compose.jsx:1107
+#: src/components/compose.jsx:1108
 msgid "Pop out"
 msgstr "Ldi deg ufaylu udhim"
 
-#: src/components/compose.jsx:1115
+#: src/components/compose.jsx:1116
 msgid "Minimize"
 msgstr "Semẓẓi"
 
-#: src/components/compose.jsx:1151
+#: src/components/compose.jsx:1152
 msgid "Looks like you closed the parent window."
 msgstr "Waqil tmedleḍ asfaylu amaraw."
 
-#: src/components/compose.jsx:1158
+#: src/components/compose.jsx:1159
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Yettban-d ɣur-k yakan urti ideg turiḍ yeldi deg usfaylu amaraw, ha-t-an ad t-id-tessuffɣeḍ. Ttxil-k, ṛǧu ad yemmed syen εreḍ ticki."
 
-#: src/components/compose.jsx:1163
+#: src/components/compose.jsx:1164
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Yettban tesεiḍ yakan urti ideg turiḍ yeldi deg usfaylu amaraw. Tiririt n usfaylu-a ad issefsex tira n tsuffeɣt deg usfaylu-a war asekles. Kemmel?"
 
-#: src/components/compose.jsx:1209
+#: src/components/compose.jsx:1210
 msgid "Pop in"
 msgstr "Err-d seg usfaylu agejdan"
 
-#. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
+#. placeholder {0}: replyToStatus.account.acct ? punycode.toUnicode(replyToStatus.account.acct) : replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1219
+#: src/components/compose.jsx:1220
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr "Tiririt ɣef tsuffeɣt n @{0} (<0>{1}</0>)"
 
-#. placeholder {0}: replyToStatus.account.acct || replyToStatus.account.username
-#: src/components/compose.jsx:1229
+#. placeholder {0}: replyToStatus.account.acct ? punycode.toUnicode(replyToStatus.account.acct) : replyToStatus.account.username
+#: src/components/compose.jsx:1232
 msgid "Replying to @{0}’s post"
 msgstr "Tiririt ɣef tsuffeɣt n @{0}"
 
-#: src/components/compose.jsx:1242
+#: src/components/compose.jsx:1247
 msgid "Editing source post"
 msgstr "Aẓrag n tsuffeɣt n uɣbalu"
 
-#: src/components/compose.jsx:1311
+#: src/components/compose.jsx:1316
 msgid "Poll must have at least 2 options"
 msgstr "Asisten ilaq ad yesεu ma drus snat textiṛiyin"
 
-#: src/components/compose.jsx:1315
+#: src/components/compose.jsx:1320
 msgid "Some poll choices are empty"
 msgstr "Kra n yifranen n usisten d ilmawen"
 
-#: src/components/compose.jsx:1328
+#: src/components/compose.jsx:1333
 msgid "Some media have no descriptions. Continue?"
 msgstr "Kra yimidyaten ulac ɣer-sen aglam. Kemmel?"
 
-#: src/components/compose.jsx:1385
+#: src/components/compose.jsx:1390
 msgid "Attachment #{i} failed"
 msgstr "Amedday #{i} yecceḍ"
 
-#: src/components/compose.jsx:1514
+#: src/components/compose.jsx:1519
 #: src/components/status.jsx:2564
 #: src/components/timeline.jsx:1062
 msgid "Content warning"
 msgstr "Yir agbur"
 
-#: src/components/compose.jsx:1546
-#: src/components/compose.jsx:1692
+#: src/components/compose.jsx:1551
+#: src/components/compose.jsx:1697
 #: src/components/edit-profile-sheet.jsx:692
 #: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
@@ -722,79 +722,79 @@ msgstr "Yir agbur"
 msgid "Cancel"
 msgstr "Sefsex"
 
-#: src/components/compose.jsx:1554
+#: src/components/compose.jsx:1559
 msgid "Post your reply"
 msgstr "Suffeɣ tiririt-ik·im"
 
-#: src/components/compose.jsx:1556
+#: src/components/compose.jsx:1561
 msgid "Edit your post"
 msgstr "Ẓreg tasuffeɣt-ik·im"
 
-#: src/components/compose.jsx:1558
+#: src/components/compose.jsx:1563
 msgid "Ask a question"
 msgstr "Efk-d asteqsi"
 
-#: src/components/compose.jsx:1559
+#: src/components/compose.jsx:1564
 msgid "What are you doing?"
 msgstr "Acu i txeddmeḍ?"
 
-#: src/components/compose.jsx:1632
+#: src/components/compose.jsx:1637
 msgid "Mark media as sensitive"
 msgstr "Creḍ allal n teywalt d anafri"
 
-#: src/components/compose.jsx:1672
+#: src/components/compose.jsx:1677
 msgid "Posting on <0/>"
 msgstr "Teffɣed ass n <0/>"
 
-#: src/components/compose.jsx:1970
+#: src/components/compose.jsx:1975
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:301
 #: src/pages/settings.jsx:350
 msgid "Anyone can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1973
+#: src/components/compose.jsx:1978
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:302
 #: src/pages/settings.jsx:353
 msgid "Your followers can quote"
 msgstr ""
 
-#: src/components/compose.jsx:1976
+#: src/components/compose.jsx:1981
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:303
 #: src/pages/settings.jsx:356
 msgid "Only you can quote"
 msgstr ""
 
-#: src/components/compose.jsx:2016
+#: src/components/compose.jsx:2021
 msgid "Quotes can't be embedded in private mentions."
 msgstr ""
 
-#: src/components/compose.jsx:2043
+#: src/components/compose.jsx:2048
 #: src/components/nav-menu.jsx:367
 #: src/components/shortcuts-settings.jsx:168
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr "Adigan"
 
-#: src/components/compose.jsx:2047
+#: src/components/compose.jsx:2052
 #: src/pages/settings.jsx:305
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "Azayez asusam"
 
-#: src/components/compose.jsx:2053
+#: src/components/compose.jsx:2058
 #: src/components/status.jsx:2443
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Abdar uslig"
 
-#: src/components/compose.jsx:2109
+#: src/components/compose.jsx:2114
 msgid "Schedule"
 msgstr "Sɣiwes"
 
-#: src/components/compose.jsx:2111
+#: src/components/compose.jsx:2116
 #: src/components/keyboard-shortcuts-help.jsx:165
 #: src/components/status.jsx:1107
 #: src/components/status.jsx:1156
@@ -805,20 +805,20 @@ msgstr "Sɣiwes"
 msgid "Reply"
 msgstr "Err"
 
-#: src/components/compose.jsx:2113
+#: src/components/compose.jsx:2118
 msgid "Update"
 msgstr "Leqqem"
 
-#: src/components/compose.jsx:2114
+#: src/components/compose.jsx:2119
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Suffeɣ"
 
-#: src/components/compose.jsx:2196
+#: src/components/compose.jsx:2201
 msgid "Downloading GIF…"
 msgstr "Asader n GIF…"
 
-#: src/components/compose.jsx:2220
+#: src/components/compose.jsx:2225
 msgid "Failed to download GIF"
 msgstr "Yecceḍ usader n GIF"
 
@@ -906,7 +906,7 @@ msgid "Poll"
 msgstr "Asisten"
 
 #: src/components/drafts.jsx:279
-#: src/pages/account-statuses.jsx:460
+#: src/pages/account-statuses.jsx:462
 msgid "Media"
 msgstr "Amidya"
 
@@ -942,14 +942,14 @@ msgstr "Ffeɣ"
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-attachment.jsx:465
 #: src/components/media-modal.jsx:398
-#: src/components/related-actions.jsx:265
+#: src/components/related-actions.jsx:267
 #: src/components/status.jsx:2220
 #: src/components/status.jsx:2237
 #: src/components/status.jsx:2369
 #: src/components/status.jsx:3135
 #: src/components/status.jsx:3138
-#: src/pages/account-statuses.jsx:674
-#: src/pages/accounts.jsx:149
+#: src/pages/account-statuses.jsx:676
+#: src/pages/accounts.jsx:153
 #: src/pages/collection.jsx:284
 #: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
@@ -962,13 +962,13 @@ msgstr "Ugar"
 
 #: src/components/edit-profile-sheet.jsx:94
 #: src/components/shortcuts-settings.jsx:368
-#: src/pages/accounts.jsx:219
+#: src/pages/accounts.jsx:223
 msgid "Move up"
 msgstr "Nkez d asawen"
 
 #: src/components/edit-profile-sheet.jsx:100
 #: src/components/shortcuts-settings.jsx:384
-#: src/pages/accounts.jsx:234
+#: src/pages/accounts.jsx:238
 msgid "Move down"
 msgstr "Nkez d akessar"
 
@@ -1075,7 +1075,7 @@ msgstr "Yettwagi"
 
 #: src/components/generic-accounts.jsx:154
 #: src/components/notification.jsx:502
-#: src/pages/accounts.jsx:51
+#: src/pages/accounts.jsx:52
 #: src/pages/search.jsx:124
 #: src/pages/search.jsx:462
 msgid "Accounts"
@@ -1084,7 +1084,7 @@ msgstr "Imiḍanen"
 #: src/components/generic-accounts.jsx:214
 #: src/components/quotes-modal.jsx:129
 #: src/components/timeline.jsx:628
-#: src/pages/account-collections.jsx:232
+#: src/pages/account-collections.jsx:234
 #: src/pages/list.jsx:321
 #: src/pages/notifications.jsx:1093
 #: src/pages/search.jsx:550
@@ -1147,7 +1147,7 @@ msgstr "Akter ur yeddi ara"
 
 #: src/components/import-export-accounts.jsx:113
 msgid "Import/Export <0>Accounts</0>"
-msgstr ""
+msgstr "Kter/Sifeḍ <0>Imiḍanen</0>"
 
 #: src/components/import-export-accounts.jsx:128
 #: src/components/shortcuts-settings.jsx:816
@@ -1389,21 +1389,21 @@ msgstr "D awezɣi tukksa n tebdart."
 msgid "Posts on this list are hidden from Home/Following"
 msgstr ""
 
-#: src/components/math-block.jsx:132
+#: src/components/math-block.jsx:141
 msgid "Unable to format math"
 msgstr ""
 
-#: src/components/math-block.jsx:146
+#: src/components/math-block.jsx:155
 msgid "Math expressions found."
 msgstr ""
 
 #. Action to switch from rendered math back to raw (LaTeX) markup
-#: src/components/math-block.jsx:149
+#: src/components/math-block.jsx:158
 msgid "Show markup"
 msgstr ""
 
 #. Action to render math expressions from raw (LaTeX) markup
-#: src/components/math-block.jsx:154
+#: src/components/math-block.jsx:163
 msgid "Format math"
 msgstr ""
 
@@ -1553,7 +1553,7 @@ msgstr "Yettwasizdeg: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Tettwasizdeg"
 
-#: src/components/media.jsx:533
+#: src/components/media.jsx:547
 msgid "Open file"
 msgstr "Ldi afaylu"
 
@@ -1663,9 +1663,9 @@ msgid "Likes"
 msgstr "Ayen tḥemmleḍ"
 
 #: src/components/nav-menu.jsx:267
-#: src/pages/account-collections.jsx:68
-#: src/pages/account-collections.jsx:147
-#: src/pages/account-collections.jsx:169
+#: src/pages/account-collections.jsx:70
+#: src/pages/account-collections.jsx:149
+#: src/pages/account-collections.jsx:171
 #: src/pages/collection.jsx:265
 #: src/pages/search.jsx:163
 msgid "Collections"
@@ -1678,7 +1678,7 @@ msgid "Followed Hashtags"
 msgstr "Ihacṭagen yettwaḍfaren"
 
 #: src/components/nav-menu.jsx:288
-#: src/pages/account-statuses.jsx:408
+#: src/pages/account-statuses.jsx:410
 #: src/pages/filters.jsx:55
 #: src/pages/filters.jsx:94
 #: src/pages/hashtag.jsx:373
@@ -1928,14 +1928,14 @@ msgid "Read more →"
 msgstr "Γer ugar →"
 
 #: src/components/open-link-sheet.jsx:30
-#: src/components/related-actions.jsx:568
+#: src/components/related-actions.jsx:573
 #: src/components/status.jsx:1490
 #: src/pages/collection.jsx:325
 msgid "Link copied"
 msgstr "Yettwanɣel wasaɣ"
 
 #: src/components/open-link-sheet.jsx:33
-#: src/components/related-actions.jsx:571
+#: src/components/related-actions.jsx:576
 #: src/components/status.jsx:1493
 #: src/pages/collection.jsx:328
 msgid "Unable to copy link"
@@ -1946,8 +1946,8 @@ msgid "Open link?"
 msgstr "Ad teldiḍ aseɣwen-a?"
 
 #: src/components/open-link-sheet.jsx:78
-#: src/components/post-embed-modal.jsx:232
-#: src/components/related-actions.jsx:577
+#: src/components/post-embed-modal.jsx:233
+#: src/components/related-actions.jsx:582
 #: src/components/shortcuts-settings.jsx:1175
 #: src/components/status.jsx:1499
 #: src/pages/collection.jsx:334
@@ -1955,7 +1955,7 @@ msgid "Copy"
 msgstr "Nɣel"
 
 #: src/components/open-link-sheet.jsx:82
-#: src/components/related-actions.jsx:598
+#: src/components/related-actions.jsx:603
 #: src/components/status.jsx:1521
 #: src/pages/collection.jsx:351
 msgid "Share…"
@@ -2035,70 +2035,70 @@ msgstr "Sken igmaḍ"
 msgid "Refresh"
 msgstr "Smiren"
 
-#: src/components/post-embed-modal.jsx:201
+#: src/components/post-embed-modal.jsx:202
 #: src/components/status.jsx:1534
 msgid "Embed post"
 msgstr "Sidef tasuffeɣt"
 
-#: src/components/post-embed-modal.jsx:206
+#: src/components/post-embed-modal.jsx:207
 msgid "HTML Code"
 msgstr "Tangalt HTML"
 
-#: src/components/post-embed-modal.jsx:223
+#: src/components/post-embed-modal.jsx:224
 msgid "HTML code copied"
 msgstr "Tangalt HTML tettwanɣal"
 
-#: src/components/post-embed-modal.jsx:226
+#: src/components/post-embed-modal.jsx:227
 msgid "Unable to copy HTML code"
 msgstr "D awezɣi anɣal n tengalt HTML"
 
-#: src/components/post-embed-modal.jsx:238
+#: src/components/post-embed-modal.jsx:239
 msgid "Media attachments:"
 msgstr "Imeddayen n umidya:"
 
-#: src/components/post-embed-modal.jsx:260
+#: src/components/post-embed-modal.jsx:261
 msgid "Account Emojis:"
 msgstr "Imujiṭen n umiḍan:"
 
-#: src/components/post-embed-modal.jsx:291
-#: src/components/post-embed-modal.jsx:336
+#: src/components/post-embed-modal.jsx:292
+#: src/components/post-embed-modal.jsx:337
 msgid "static URL"
 msgstr "URL n tdaddanin"
 
-#: src/components/post-embed-modal.jsx:305
+#: src/components/post-embed-modal.jsx:306
 msgid "Emojis:"
 msgstr "Imujiten:"
 
-#: src/components/post-embed-modal.jsx:350
+#: src/components/post-embed-modal.jsx:351
 msgid "Notes:"
 msgstr "Tizmilin:"
 
-#: src/components/post-embed-modal.jsx:354
+#: src/components/post-embed-modal.jsx:355
 msgid "This is static, unstyled and scriptless. You may need to apply your own styles and edit as needed."
 msgstr "Tidaddanin-a war talɣa, war tira. Ahat yessefk ad tesnaseḍ talɣiwin-ik, ad ten-tbeddleḍ melmi i tebɣiḍ."
 
-#: src/components/post-embed-modal.jsx:360
+#: src/components/post-embed-modal.jsx:361
 msgid "Polls are not interactive, becomes a list with vote counts."
 msgstr "Isestanen ur myigawen ara, ttuɣalen d tabdart s umḍan n ufran."
 
-#: src/components/post-embed-modal.jsx:365
+#: src/components/post-embed-modal.jsx:366
 msgid "Media attachments can be images, videos, audios or any file types."
 msgstr "Imeddayen n umidya zemren ad ilin d tugniwin, d tividyutin, d iseklasen imeslawen neɣ kra n wawan n ufaylu."
 
-#: src/components/post-embed-modal.jsx:371
+#: src/components/post-embed-modal.jsx:372
 msgid "Post could be edited or deleted later."
 msgstr "Tasuffeɣt tezmer ad tettwaẓrag neɣ ad tettwakkes ticki."
 
-#: src/components/post-embed-modal.jsx:377
+#: src/components/post-embed-modal.jsx:378
 msgid "Preview"
 msgstr "Askan"
 
-#: src/components/post-embed-modal.jsx:386
+#: src/components/post-embed-modal.jsx:387
 msgid "Note: This preview is lightly styled."
 msgstr "Tamawt: Taskant-a tettufeṣṣel s wudem afessas."
 
 #: src/components/private-note-sheet.jsx:41
-#: src/components/related-actions.jsx:241
+#: src/components/related-actions.jsx:243
 msgid "Notes"
 msgstr "Tizmilin"
 
@@ -2195,195 +2195,195 @@ msgid "Forever"
 msgstr "I lebda"
 
 #. placeholder {0}: niceDateTime(lastStatusAt, { hideTime: true, })
-#: src/components/related-actions.jsx:213
+#: src/components/related-actions.jsx:215
 msgid "Last post: <0>{0}</0>"
 msgstr "Tasuffeɣt taneggarut: <0>{0}</0>"
 
-#: src/components/related-actions.jsx:227
+#: src/components/related-actions.jsx:229
 msgid "Muted"
 msgstr "Yettwasgugem"
 
-#: src/components/related-actions.jsx:232
+#: src/components/related-actions.jsx:234
 msgid "Blocked"
 msgstr "Yettusewḥel"
 
-#: src/components/related-actions.jsx:298
+#: src/components/related-actions.jsx:300
 msgid "Mention <0>@{username}</0>"
 msgstr "Bder <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:311
+#: src/components/related-actions.jsx:313
 msgid "Search <0>@{username}</0>'s posts"
 msgstr "Nadi iznan n <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:325
+#: src/components/related-actions.jsx:327
 msgid "Translate bio"
 msgstr "Suqel tudert"
 
-#: src/components/related-actions.jsx:335
+#: src/components/related-actions.jsx:337
 msgid "Edit notes"
 msgstr "Ẓreg tizmilin"
 
-#: src/components/related-actions.jsx:335
+#: src/components/related-actions.jsx:337
 msgid "Add notes"
 msgstr "Rnu tizmilin"
 
-#: src/components/related-actions.jsx:354
+#: src/components/related-actions.jsx:356
 msgid "Notifications enabled for @{username}'s posts."
 msgstr ""
 
-#: src/components/related-actions.jsx:355
+#: src/components/related-actions.jsx:357
 msgid " Notifications disabled for @{username}'s posts."
 msgstr ""
 
-#: src/components/related-actions.jsx:367
+#: src/components/related-actions.jsx:369
 msgid "Disable notifications"
 msgstr "Sens ulɣuten"
 
-#: src/components/related-actions.jsx:368
+#: src/components/related-actions.jsx:370
 msgid "Enable notifications"
 msgstr "Rmed ulɣuten"
 
-#: src/components/related-actions.jsx:385
+#: src/components/related-actions.jsx:387
 msgid "Boosts from @{username} enabled."
 msgstr "Izuzar s-ɣur @{username} ttwaremden."
 
-#: src/components/related-actions.jsx:386
+#: src/components/related-actions.jsx:388
 msgid "Boosts from @{username} disabled."
 msgstr "Izuzar s-ɣur @{username} ttwasensen."
 
-#: src/components/related-actions.jsx:397
+#: src/components/related-actions.jsx:399
 msgid "Disable boosts"
 msgstr "Sens izuzar"
 
-#: src/components/related-actions.jsx:397
+#: src/components/related-actions.jsx:399
 msgid "Enable boosts"
 msgstr "Sermed izuzar"
 
-#: src/components/related-actions.jsx:416
+#: src/components/related-actions.jsx:418
 msgid "@{username} is no longer featured on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:426
+#: src/components/related-actions.jsx:428
 msgid "@{username} is now featured on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:434
+#: src/components/related-actions.jsx:436
 msgid "Unable to unfeature @{username} on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:438
+#: src/components/related-actions.jsx:440
 msgid "Unable to feature @{username} on your profile."
 msgstr ""
 
-#: src/components/related-actions.jsx:447
+#: src/components/related-actions.jsx:449
 msgid "Don't feature on profile"
 msgstr "Ur ttwellih ara fell-as deg umaɣnu-inek"
 
-#: src/components/related-actions.jsx:448
+#: src/components/related-actions.jsx:450
 #: src/pages/hashtag.jsx:362
 msgid "Feature on profile"
 msgstr "Welleh fell-as deg umaɣnu-k⋅m"
 
-#: src/components/related-actions.jsx:457
-#: src/components/related-actions.jsx:517
+#: src/components/related-actions.jsx:459
+#: src/components/related-actions.jsx:519
 msgid "Show featured profiles"
 msgstr ""
 
-#: src/components/related-actions.jsx:468
-#: src/components/related-actions.jsx:528
+#: src/components/related-actions.jsx:470
+#: src/components/related-actions.jsx:530
 msgid "Show collections"
 msgstr "Sken-d tilkensa"
 
-#: src/components/related-actions.jsx:509
-#: src/pages/account-statuses.jsx:576
+#: src/components/related-actions.jsx:511
+#: src/pages/account-statuses.jsx:578
 msgid "Search my posts"
 msgstr "Nadi deg yiznan-iw"
 
-#: src/components/related-actions.jsx:592
+#: src/components/related-actions.jsx:597
 #: src/components/shortcuts-settings.jsx:1193
 #: src/components/status.jsx:1515
 msgid "Sharing doesn't seem to work."
 msgstr "Beṭṭu yettban ur yeddi ara."
 
-#: src/components/related-actions.jsx:634
+#: src/components/related-actions.jsx:639
 msgid "Unmuted @{username}"
 msgstr "Yettwakkes usgugem ɣef @{username}"
 
-#: src/components/related-actions.jsx:646
+#: src/components/related-actions.jsx:651
 msgid "Unmute <0>@{username}</0>"
 msgstr "Kkes asgugem ɣef <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:662
+#: src/components/related-actions.jsx:667
 msgid "Mute <0>@{username}</0>…"
 msgstr "Sgugem <0>@{username}</0>…"
 
 #. placeholder {0}: typeof MUTE_DURATIONS_LABELS[duration] === 'function' ? MUTE_DURATIONS_LABELS[duration]() : _(MUTE_DURATIONS_LABELS[duration])
-#: src/components/related-actions.jsx:694
+#: src/components/related-actions.jsx:699
 msgid "Muted @{username} for {0}"
 msgstr "Sgugem @{username} i {0}"
 
-#: src/components/related-actions.jsx:706
+#: src/components/related-actions.jsx:711
 msgid "Unable to mute @{username}"
 msgstr "D awezɣi asgugem n @{username}"
 
-#: src/components/related-actions.jsx:727
+#: src/components/related-actions.jsx:732
 msgid "Remove <0>@{username}</0> from followers?"
 msgstr "Kkes <0>@{username}</0> seg yineḍfaren?"
 
-#: src/components/related-actions.jsx:747
+#: src/components/related-actions.jsx:752
 msgid "@{username} removed from followers"
 msgstr "@{username} yettwakkes seg yineḍfaren"
 
-#: src/components/related-actions.jsx:759
+#: src/components/related-actions.jsx:764
 msgid "Remove follower…"
 msgstr "Kkes aneḍfar…"
 
-#: src/components/related-actions.jsx:770
+#: src/components/related-actions.jsx:775
 msgid "Block <0>@{username}</0>?"
 msgstr "Sewḥel <0>@{username}</0>?"
 
-#: src/components/related-actions.jsx:794
+#: src/components/related-actions.jsx:799
 msgid "Unblocked @{username}"
 msgstr "Yettwakkes usewḥel ɣef @{username}"
 
-#: src/components/related-actions.jsx:802
+#: src/components/related-actions.jsx:807
 msgid "Blocked @{username}"
 msgstr "Yettusewḥel @{username}"
 
-#: src/components/related-actions.jsx:810
+#: src/components/related-actions.jsx:815
 msgid "Unable to unblock @{username}"
 msgstr "D awezɣi tukksa n usewḥel ɣef @{username}"
 
-#: src/components/related-actions.jsx:812
+#: src/components/related-actions.jsx:817
 msgid "Unable to block @{username}"
 msgstr "D awezɣi asewḥel n @{username}"
 
-#: src/components/related-actions.jsx:822
+#: src/components/related-actions.jsx:827
 msgid "Unblock <0>@{username}</0>"
 msgstr "Kkes asewḥel <0>@{username}</0>"
 
-#: src/components/related-actions.jsx:831
+#: src/components/related-actions.jsx:836
 msgid "Block <0>@{username}</0>…"
 msgstr "Sewḥel <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:848
+#: src/components/related-actions.jsx:853
 msgid "Report <0>@{username}</0>…"
 msgstr "Cetki ɣef <0>@{username}</0>…"
 
-#: src/components/related-actions.jsx:916
+#: src/components/related-actions.jsx:921
 msgid "Withdraw follow request?"
 msgstr "Aggwi assuter n uḍfar?"
 
-#. placeholder {0}: info.acct || info.username
-#: src/components/related-actions.jsx:917
+#. placeholder {0}: info.acct ? punycode.toUnicode(info.acct) : info.username
+#: src/components/related-actions.jsx:922
 msgid "Unfollow @{0}?"
 msgstr "Ur ṭṭafar ara @{0}?"
 
-#: src/components/related-actions.jsx:980
+#: src/components/related-actions.jsx:985
 msgid "Unfollow…"
 msgstr "Ur ṭṭafar ara…"
 
-#: src/components/related-actions.jsx:989
+#: src/components/related-actions.jsx:994
 msgid "Withdraw…"
 msgstr "Kkes…"
 
@@ -2671,7 +2671,7 @@ msgid "Max {SHORTCUTS_LIMIT} shortcuts"
 msgstr "Ugar n {SHORTCUTS_LIMIT} yinegzumen"
 
 #: src/components/shortcuts-settings.jsx:475
-#: src/pages/accounts.jsx:360
+#: src/pages/accounts.jsx:364
 msgid "Import/export"
 msgstr "Kter/sifeḍ"
 
@@ -2794,7 +2794,7 @@ msgstr "D awezɣi anɣal n yinegzumen"
 
 #: src/components/shortcuts-settings.jsx:1136
 msgid "Saving shortcuts to server…"
-msgstr ""
+msgstr "Asekles n unegzum ar uqeddac…"
 
 #: src/components/shortcuts-settings.jsx:1143
 msgid "Shortcuts saved"
@@ -3304,196 +3304,193 @@ msgstr "Tuqqna tettwasra."
 msgid "Go home"
 msgstr "Uɣal ɣer ugejdan"
 
-#: src/pages/account-collections.jsx:71
+#: src/pages/account-collections.jsx:73
 msgid "Collections featuring you"
 msgstr ""
 
-#: src/pages/account-collections.jsx:74
+#: src/pages/account-collections.jsx:76
 msgid "Collections by {username}"
 msgstr "Tilkensa sɣur {username}"
 
-#: src/pages/account-collections.jsx:190
+#: src/pages/account-collections.jsx:192
 msgid "Created by you"
 msgstr "D-tesnulfaḍ kečč⋅kemm"
 
-#: src/pages/account-collections.jsx:196
+#: src/pages/account-collections.jsx:198
 msgid "Featuring you"
 msgstr "Yid-k⋅m"
 
 #. placeholder {0}: collections.length
-#: src/pages/account-collections.jsx:239
+#: src/pages/account-collections.jsx:241
 msgid "{0, plural, one {# collection} other {# collections}}"
 msgstr "{0, plural, one {# n telkensit} other {# n tilkensa}}"
 
-#: src/pages/account-collections.jsx:254
+#: src/pages/account-collections.jsx:256
 msgid "Unable to load collections."
 msgstr ""
 
-#: src/pages/account-collections.jsx:263
+#: src/pages/account-collections.jsx:265
 msgid "No collections featuring you yet."
 msgstr ""
 
-#: src/pages/account-collections.jsx:264
+#: src/pages/account-collections.jsx:266
 msgid "No collections yet."
 msgstr ""
 
-#: src/pages/account-statuses.jsx:285
+#: src/pages/account-statuses.jsx:287
 msgid "Account posts"
 msgstr "Tisuffaɣ n umiḍan"
 
-#: src/pages/account-statuses.jsx:292
+#: src/pages/account-statuses.jsx:294
 msgid "Media posts tagged #{tagged} by {accountDisplay}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:294
+#: src/pages/account-statuses.jsx:296
 msgid "Posts tagged #{tagged} by {accountDisplay}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:301
+#: src/pages/account-statuses.jsx:303
 msgid "Posts in {monthYear} by {accountDisplay}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:303
+#: src/pages/account-statuses.jsx:305
 msgid "Media posts by {accountDisplay}"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:392
-#: src/pages/account-statuses.jsx:401
+#: src/pages/account-statuses.jsx:394
+#: src/pages/account-statuses.jsx:403
 #: src/pages/catchup.jsx:1290
 msgid "Reset filters"
 msgstr "Wennez imsizedgen"
 
-#: src/pages/account-statuses.jsx:420
+#: src/pages/account-statuses.jsx:422
 msgid "Showing replies"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:422
+#: src/pages/account-statuses.jsx:424
 msgid "Hiding replies"
 msgstr "Ffer tiririyin"
 
-#: src/pages/account-statuses.jsx:436
+#: src/pages/account-statuses.jsx:438
 msgid "Showing boosts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:438
+#: src/pages/account-statuses.jsx:440
 msgid "Hiding boosts"
 msgstr ""
 
-#: src/pages/account-statuses.jsx:455
+#: src/pages/account-statuses.jsx:457
 msgid "Showing posts with media"
 msgstr "Askan n tisuffaɣ s umidya"
 
 #. placeholder {0}: tag.name
-#: src/pages/account-statuses.jsx:490
+#: src/pages/account-statuses.jsx:492
 msgid "Showing posts tagged with #{0}"
 msgstr "Askan n tsuffaɣ yettwabdaren s #{0}"
 
 #. placeholder {0}: date.toLocaleString( i18n.locale, { month: 'long', year: 'numeric', }, )
-#: src/pages/account-statuses.jsx:530
+#: src/pages/account-statuses.jsx:532
 msgid "Showing posts in {0}"
 msgstr ""
 
 #. placeholder {0}: account?.username
-#: src/pages/account-statuses.jsx:577
+#: src/pages/account-statuses.jsx:579
 msgid "Search @{0}'s posts"
 msgstr "Nadi iznan n @{0}"
 
-#: src/pages/account-statuses.jsx:626
+#: src/pages/account-statuses.jsx:628
 #: src/pages/search.jsx:175
 #: src/pages/search.jsx:472
 msgid "Posts"
 msgstr "Tisuffaɣ"
 
-#: src/pages/account-statuses.jsx:651
+#: src/pages/account-statuses.jsx:653
 msgid "Nothing to see here yet."
 msgstr "Ulac acu ara twaliḍ dagi akka ar tura."
 
-#: src/pages/account-statuses.jsx:652
+#: src/pages/account-statuses.jsx:654
 #: src/pages/public.jsx:130
 #: src/pages/trending.jsx:452
 msgid "Unable to load posts"
 msgstr "D awezɣi alluy n tsuffaɣ"
 
-#: src/pages/account-statuses.jsx:693
-#: src/pages/account-statuses.jsx:723
+#: src/pages/account-statuses.jsx:695
+#: src/pages/account-statuses.jsx:725
 msgid "Unable to fetch account info"
 msgstr "D awezɣi tiririt n telɣut n umiḍan"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
-#: src/pages/account-statuses.jsx:700
+#: src/pages/account-statuses.jsx:702
 msgid "Switch to account's server {0}"
 msgstr "Uɣal ɣer uqeddac n {0}"
 
-#: src/pages/account-statuses.jsx:730
+#: src/pages/account-statuses.jsx:732
 #: src/pages/collection.jsx:500
 msgid "Switch to my server (<0>{currentInstance}</0>)"
 msgstr "Uɣal ɣer uqeddac-iw (<0>{currentInstance}</0>)"
 
-#: src/pages/account-statuses.jsx:803
+#: src/pages/account-statuses.jsx:805
 msgid "Month"
 msgstr "Ayyur"
 
-#: src/pages/accounts.jsx:86
+#: src/pages/accounts.jsx:90
 msgid "Current"
 msgstr "Melmi kan"
 
-#: src/pages/accounts.jsx:135
+#: src/pages/accounts.jsx:139
 msgid "Logged out"
 msgstr "Ffeɣ"
 
-#: src/pages/accounts.jsx:141
+#: src/pages/accounts.jsx:145
 msgid "Default"
 msgstr "Amezwer"
 
-#: src/pages/accounts.jsx:163
+#: src/pages/accounts.jsx:167
 msgid "Switch to this account"
 msgstr "Uɣal ɣer umiḍan-a"
 
-#: src/pages/accounts.jsx:172
+#: src/pages/accounts.jsx:176
 msgid "Switch in new tab/window"
 msgstr "Uɣal ɣer yiccer/usfaylu amaynut"
 
-#: src/pages/accounts.jsx:186
+#: src/pages/accounts.jsx:190
 msgid "View profile…"
 msgstr "Wali amaɣnu…"
 
-#: src/pages/accounts.jsx:204
+#: src/pages/accounts.jsx:208
 msgid "Set as default"
 msgstr "Sbadu-t d amezwer"
 
-#. placeholder {0}: account.info.acct
-#: src/pages/accounts.jsx:247
-msgid "Log out <0>@{0}</0>?"
-msgstr "Ffeɣ <0>@{0}</0>?"
+#: src/pages/accounts.jsx:251
+msgid "Log out <0>@{unicodeAcct}</0>?"
+msgstr "Tuffɣa seg <0>@{unicodeAcct}</0>?"
 
-#. placeholder {0}: account.info.acct
-#: src/pages/accounts.jsx:275
-msgid "Log out and remove <0>@{0}</0>"
-msgstr "Gzem tuqqna syin kkes <0>@{0}</0>"
+#: src/pages/accounts.jsx:279
+msgid "Log out and remove <0>@{unicodeAcct}</0>"
+msgstr ""
 
-#: src/pages/accounts.jsx:287
+#: src/pages/accounts.jsx:291
 msgid "Log out…"
 msgstr "Ffeɣ…"
 
-#. placeholder {0}: account.info.acct
-#: src/pages/accounts.jsx:297
-msgid "Remove <0>@{0}</0>?"
-msgstr "Ad teskkseḍ <0>@{0}</0>?"
+#: src/pages/accounts.jsx:301
+msgid "Remove <0>@{unicodeAcct}</0>?"
+msgstr "Tukksa n <0>@{unicodeAcct}</0>?"
 
-#: src/pages/accounts.jsx:315
+#: src/pages/accounts.jsx:319
 msgid "Remove account…"
 msgstr "Kkes amiḍan…"
 
 #. placeholder {0}: niceDateTime(account.createdAt)
-#: src/pages/accounts.jsx:323
+#: src/pages/accounts.jsx:327
 msgid "Connected on {0} (<0/>)"
 msgstr "D uqqin ɣef {0} (<0/>)"
 
-#: src/pages/accounts.jsx:340
+#: src/pages/accounts.jsx:344
 msgid "Add an existing account"
 msgstr "Rnu amiḍan yellan yakan"
 
-#: src/pages/accounts.jsx:347
+#: src/pages/accounts.jsx:351
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr "Tamawt: Amiḍan <0>amezwer</0> ad yezg yettwaseqdac deg usali amezwaru. Imiḍanen yettwasneflen ad qqimen ɣef teɣzi n tɣimit."
 

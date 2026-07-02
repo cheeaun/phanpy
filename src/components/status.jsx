@@ -2264,7 +2264,7 @@ function Status({
             href={accountURL}
             tabindex="-1"
             // target="_blank"
-            title={`@${acct}`}
+            title={`@${punycode.toUnicode(acct)}`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();

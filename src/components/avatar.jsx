@@ -75,17 +75,24 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
             if (avatarRef.current) avatarRef.current.dataset.loaded = true;
             if (alphaCache.has(url)) return;
             if (isMissing) return;
-            scheduleTask(() => {
+            const img = e.target;
+            const loadedSrc = img.currentSrc || img.src;
+            scheduleTask(async () => {
               try {
+                // <img> nodes can be reused; bail without caching if src changed
+                if ((img.currentSrc || img.src) !== loadedSrc) return;
+                await img.decode();
+                if ((img.currentSrc || img.src) !== loadedSrc) return;
+                if (!img.complete || !img.naturalWidth) return;
                 // Check if image has alpha channel
                 // Sample at reduced resolution to avoid processing large images
-                const { naturalWidth: nw, naturalHeight: nh } = e.target;
+                const { naturalWidth: nw, naturalHeight: nh } = img;
                 const scale = Math.min(1, SIZES.xxxl / Math.max(nw, nh));
                 const sampleW = Math.max(1, Math.round(nw * scale));
                 const sampleH = Math.max(1, Math.round(nh * scale));
                 if (canvas.width !== sampleW) canvas.width = sampleW;
                 if (canvas.height !== sampleH) canvas.height = sampleH;
-                ctx.drawImage(e.target, 0, 0, sampleW, sampleH);
+                ctx.drawImage(img, 0, 0, sampleW, sampleH);
                 const { data } = ctx.getImageData(0, 0, sampleW, sampleH);
                 // Early-exit loop: stop once 10% of pixels have alpha <= 128
                 const totalPixels = data.length / 4;

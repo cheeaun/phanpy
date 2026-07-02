@@ -1012,8 +1012,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline:not(.flat) {
   > li.timeline-item-container-type-thread.timeline-item-container-middle:not(
-      .timeline-item-diff-author
-    ) {
+    .timeline-item-diff-author
+  ) {
     > :is(.status-link, .status-focus) {
       > .status > .container {
         > .meta {
@@ -1100,8 +1100,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   }
 }
 .status-link:active:not(
-    :has(:is(.media, .poll, .card, .status-card-link, button):active)
-  ) {
+  :has(:is(.media, .poll, .card, .status-card-link, button):active)
+) {
   filter: brightness(0.95);
 }
 
@@ -2625,7 +2625,7 @@ body > .szh-menu-container {
   .header-account {
     animation: peekaboo-header 1s linear both;
     animation-timeline: scroll();
-    animation-range: 0 150px;
+    animation-range: 0 5%;
   }
 }
 

@@ -794,13 +794,13 @@
 }
 .status .content-container.has-spoiler:not(.show-spoiler) .spoiler-button {
   ~ *:not(
-      .content.truncated,
-      .media-container,
-      .media-first-container,
-      .card,
-      .media-figure-multiple,
-      .spoiler-media-button
-    ),
+    .content.truncated,
+    .media-container,
+    .media-first-container,
+    .card,
+    .media-figure-multiple,
+    .spoiler-media-button
+  ),
   ~ .card .meta-container {
     opacity: 0.2;
     text-decoration-thickness: 1.5em;
@@ -824,12 +824,12 @@
   }
 
   ~ *:not(
-      .media-container,
-      .media-first-container,
-      .card,
-      .media-figure-multiple,
-      .spoiler-media-button
-    ),
+    .media-container,
+    .media-first-container,
+    .card,
+    .media-figure-multiple,
+    .spoiler-media-button
+  ),
   ~ .card .meta-container {
     img,
     video {
@@ -1214,7 +1214,7 @@
     .media-gt2
   ) {
   /* 50px = avatar size */
-  margin-inline-start: calc(-1 * ((50px / 2)));
+  margin-inline-start: calc(-1 * (50px / 2));
   /*
     outer padding = 16px
     gap = 12px

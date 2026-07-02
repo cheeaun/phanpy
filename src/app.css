@@ -1012,8 +1012,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline:not(.flat) {
   > li.timeline-item-container-type-thread.timeline-item-container-middle:not(
-      .timeline-item-diff-author
-    ) {
+    .timeline-item-diff-author
+  ) {
     > :is(.status-link, .status-focus) {
       > .status > .container {
         > .meta {
@@ -1100,8 +1100,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   }
 }
 .status-link:active:not(
-    :has(:is(.media, .poll, .card, .status-card-link, button):active)
-  ) {
+  :has(:is(.media, .poll, .card, .status-card-link, button):active)
+) {
   filter: brightness(0.95);
 }
 

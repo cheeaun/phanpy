@@ -2,6 +2,8 @@
 
 import { readFileSync, existsSync } from 'fs';
 
+const GZIP_NOISE_THRESHOLD = 100;
+
 const refFile = process.argv[2];
 const curFile = process.argv[3];
 
@@ -101,6 +103,48 @@ allKeys.sort((a, b) => {
   return Math.max(bCur, bRef) - Math.max(aCur, aRef);
 });
 
+const changedRows = [];
+let addedGzipBytes = 0;
+let removedGzipBytes = 0;
+
+for (const key of allKeys) {
+  if (key.includes('.map')) continue;
+
+  const ref = refMap[key];
+  const cur = curMap[key];
+
+  const curGzip = cur && cur.gzip ? cur.gzip : '—';
+
+  let gzipDelta;
+  let hasChange = false;
+
+  if (cur && ref) {
+    const cg = parseBytes(cur.gzip);
+    const rg = parseBytes(ref.gzip);
+    const gdiff = cg !== null && rg !== null ? cg - rg : null;
+    gzipDelta =
+      gdiff !== null && Math.abs(gdiff) >= GZIP_NOISE_THRESHOLD
+        ? formatBytes(gdiff)
+        : '—';
+    if (gzipDelta !== '—') hasChange = true;
+  } else if (cur && !ref) {
+    gzipDelta = '**NEW**';
+    hasChange = true;
+    const cg = parseBytes(cur.gzip);
+    if (cg !== null) addedGzipBytes += cg;
+  } else {
+    gzipDelta = '**REMOVED**';
+    hasChange = true;
+    const rg = parseBytes(ref.gzip);
+    if (rg !== null) removedGzipBytes += rg;
+  }
+
+  if (hasChange) {
+    const displayName = cur ? key : `~~${key}~~`;
+    changedRows.push({ displayName, curSize, curGzip, gzipDelta });
+  }
+}
+
 console.log('## 📦 Bundle Size Report');
 console.log();
 
@@ -110,81 +154,28 @@ if (refRows.length > 0) {
   console.log();
 }
 
-console.log('| File | Size | Δ Size | Gzip | Δ Gzip |');
-console.log('|------|------|--------|------|--------|');
-
-let totalRef = 0;
-let totalCur = 0;
-const changedRows = [];
-
-for (const key of allKeys) {
-  if (key.includes('.map')) continue;
-
-  const ref = refMap[key];
-  const cur = curMap[key];
-
-  const curSize = cur ? cur.size : '—';
-  const curGzip = cur && cur.gzip ? cur.gzip : '—';
-
-  let sizeDelta, gzipDelta;
-  let hasChange = false;
-
-  if (cur && ref) {
-    const cb = parseBytes(cur.size);
-    const rb = parseBytes(ref.size);
-    const diff = cb !== null && rb !== null ? cb - rb : null;
-
-    if (cb !== null) totalCur += cb;
-    if (rb !== null) totalRef += rb;
-
-    if (diff !== null && diff !== 0) {
-      sizeDelta = formatBytes(diff);
-      hasChange = true;
-    } else {
-      sizeDelta = '—';
-    }
-
-    const cg = parseBytes(cur.gzip);
-    const rg = parseBytes(ref.gzip);
-    const gdiff = cg !== null && rg !== null ? cg - rg : null;
-    gzipDelta = gdiff !== null && gdiff !== 0 ? formatBytes(gdiff) : '—';
-  } else if (cur && !ref) {
-    sizeDelta = '**NEW**';
-    gzipDelta = '**NEW**';
-    hasChange = true;
-    const cb = parseBytes(cur.size);
-    if (cb !== null) totalCur += cb;
-  } else {
-    sizeDelta = '**REMOVED**';
-    gzipDelta = '**REMOVED**';
-    hasChange = true;
-    const rb = parseBytes(ref.size);
-    if (rb !== null) totalRef += rb;
-  }
-
-  if (hasChange) {
-    const displayName = cur ? key : `~~${key}~~`;
-    changedRows.push({ displayName, curSize, sizeDelta, curGzip, gzipDelta });
-  }
-}
-
 if (changedRows.length > 0) {
+  const summaryParts = [];
+  if (addedGzipBytes > 0) {
+    summaryParts.push(`+${(addedGzipBytes / 1024).toFixed(1)} kB (gzip)`);
+  }
+  if (removedGzipBytes > 0) {
+    summaryParts.push(`-${(removedGzipBytes / 1024).toFixed(1)} kB (gzip)`);
+  }
+  if (summaryParts.length > 0) {
+    console.log(summaryParts.join(' | '));
+    console.log();
+  }
+
+  console.log('| File | Size | Gzip | ± Gzip |');
+  console.log('|------|------|------|--------|');
   for (const row of changedRows) {
     console.log(
-      `| \`${row.displayName}\` | ${row.curSize} | ${row.sizeDelta} | ${row.curGzip} | ${row.gzipDelta} |`,
+      `| \`${row.displayName}\` | ${row.curSize} | ${row.curGzip} | ${row.gzipDelta} |`,
     );
   }
-
-  if (refRows.length > 0) {
-    const totalDiff = totalCur - totalRef;
-    if (totalDiff !== 0) {
-      console.log(
-        `| **Total** | **${totalCur.toFixed(0)} B** | ${formatBytes(totalDiff)} | | |`,
-      );
-    }
-  }
 } else {
-  console.log('| _No bundle size changes_ | | | | |');
+  console.log('_No bundle size changes_');
 }
 
 console.log();

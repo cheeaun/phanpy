@@ -6,7 +6,9 @@ const refFile = process.argv[2];
 const curFile = process.argv[3];
 
 if (!refFile || !curFile) {
-  console.error('Usage: bundle-sizes-diff-md.js <reference-sizes.txt> <current-sizes.txt>');
+  console.error(
+    'Usage: bundle-sizes-diff-md.js <reference-sizes.txt> <current-sizes.txt>',
+  );
   process.exit(1);
 }
 
@@ -168,13 +170,17 @@ for (const key of allKeys) {
 
 if (changedRows.length > 0) {
   for (const row of changedRows) {
-    console.log(`| \`${row.displayName}\` | ${row.curSize} | ${row.sizeDelta} | ${row.curGzip} | ${row.gzipDelta} |`);
+    console.log(
+      `| \`${row.displayName}\` | ${row.curSize} | ${row.sizeDelta} | ${row.curGzip} | ${row.gzipDelta} |`,
+    );
   }
 
   if (refRows.length > 0) {
     const totalDiff = totalCur - totalRef;
     if (totalDiff !== 0) {
-      console.log(`| **Total** | **${totalCur.toFixed(0)} B** | ${formatBytes(totalDiff)} | | |`);
+      console.log(
+        `| **Total** | **${totalCur.toFixed(0)} B** | ${formatBytes(totalDiff)} | | |`,
+      );
     }
   }
 } else {
@@ -188,7 +194,9 @@ console.log();
 console.log('| File | Size | Gzip | Map |');
 console.log('|------|------|------|-----|');
 for (const row of curRows) {
-  console.log(`| \`${row.file}\` | ${row.size} | ${row.gzip || '—'} | ${row.map || '—'} |`);
+  console.log(
+    `| \`${row.file}\` | ${row.size} | ${row.gzip || '—'} | ${row.map || '—'} |`,
+  );
 }
 console.log();
 console.log('</details>');

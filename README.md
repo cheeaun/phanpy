@@ -320,7 +320,6 @@ Changelog available here: [CHANGELOG.md](CHANGELOG.md)
 
 These are self-hosted by other wonderful folks.
 
-- [ferengi.one](https://m.ferengi.one/) by [@david@weaknotes.com](https://weaknotes.com/@david)
 - [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@suigow.xyz](https://suigow.xyz/@mookie)
 - [phanpy.app](https://phanpy.app) by [@bumble@ibe.social](https://ibe.social/@bumble)
 - [phanpy.bauxite.tech](https://phanpy.bauxite.tech) by [@b4ux1t3@hachyderm.io](https://hachyderm.io/@b4ux1t3)

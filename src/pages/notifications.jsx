@@ -1000,7 +1000,11 @@ function Notifications({ columnMode }) {
               // This is leaked from Notifications popover
               .filter((n) => n.type !== 'follow_request')
               .map((notification) => {
-                if (onlyMentions && notification.type !== 'mention') {
+                if (
+                  onlyMentions &&
+                  notification.type !== 'mention' &&
+                  notification.type !== 'quote'
+                ) {
                   return null;
                 }
                 const notificationDay = new Date(notification.createdAt);

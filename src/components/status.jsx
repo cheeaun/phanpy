@@ -2109,7 +2109,7 @@ function Status({
           !withinContext && inReplyToId && inReplyToAccount
             ? 'status-reply-to'
             : ''
-        } visibility-${visibility} ${_pinned ? 'status-pinned' : ''} ${
+        } ${quote ? 'status-quote' : ''} visibility-${visibility} ${_pinned ? 'status-pinned' : ''} ${
           SIZE_CLASS[size]
         } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''} ${
           isContextMenuOpen ? 'status-menu-open' : ''

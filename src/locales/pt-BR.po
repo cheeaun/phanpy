@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 15:11\n"
+"PO-Revision-Date: 2026-07-05 15:54\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -63,18 +63,18 @@ msgstr "Segue você"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-block.jsx:283
+#: src/components/account-block.jsx:286
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> seguidor} other {<1>{1}</1> seguidores}}"
 
-#: src/components/account-block.jsx:309
+#: src/components/account-block.jsx:311
 #: src/components/account-info.jsx:778
 msgid "Verified"
 msgstr "Verificado"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
-#: src/components/account-block.jsx:325
+#: src/components/account-block.jsx:327
 #: src/components/account-info.jsx:917
 msgid "Joined <0>{0}</0>"
 msgstr "Juntou-se em <0>{0}</0>"
@@ -144,7 +144,7 @@ msgstr "Ir à página da conta"
 #: src/components/timeline.jsx:663
 #: src/components/timeline2.jsx:701
 #: src/pages/home.jsx:237
-#: src/pages/notifications.jsx:1069
+#: src/pages/notifications.jsx:1073
 #: src/pages/status.jsx:1270
 #: src/pages/status.jsx:1746
 msgid "Try again"
@@ -316,7 +316,7 @@ msgstr "Ver estatísticas"
 #: src/pages/catchup.jsx:1731
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
-#: src/pages/notifications.jsx:1113
+#: src/pages/notifications.jsx:1117
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:100
 #: src/pages/status.jsx:1684
@@ -478,7 +478,7 @@ msgstr "Não listado"
 #: src/components/quote-settings-sheet.jsx:92
 #: src/components/shortcuts-settings.jsx:732
 #: src/pages/filters.jsx:572
-#: src/pages/notifications.jsx:1185
+#: src/pages/notifications.jsx:1189
 msgid "Save"
 msgstr "Salvar"
 
@@ -1056,7 +1056,7 @@ msgid "No featured profiles."
 msgstr "Nenhum destaque."
 
 #: src/components/follow-request-buttons.jsx:45
-#: src/pages/notifications.jsx:1169
+#: src/pages/notifications.jsx:1173
 msgid "Accept"
 msgstr "Aceitar"
 
@@ -1065,7 +1065,7 @@ msgid "Reject"
 msgstr "Rejeitar"
 
 #: src/components/follow-request-buttons.jsx:79
-#: src/pages/notifications.jsx:1455
+#: src/pages/notifications.jsx:1459
 msgid "Accepted"
 msgstr "Aceitado"
 
@@ -1086,7 +1086,7 @@ msgstr "Contas"
 #: src/components/timeline.jsx:628
 #: src/pages/account-collections.jsx:234
 #: src/pages/list.jsx:321
-#: src/pages/notifications.jsx:1093
+#: src/pages/notifications.jsx:1097
 #: src/pages/search.jsx:550
 #: src/pages/status.jsx:1717
 msgid "Show more…"
@@ -1389,21 +1389,21 @@ msgstr "Impossível excluir lista."
 msgid "Posts on this list are hidden from Home/Following"
 msgstr "Publicações desta lista estão ocultas do Início/Seguindo"
 
-#: src/components/math-block.jsx:132
+#: src/components/math-block.jsx:141
 msgid "Unable to format math"
 msgstr "Incapaz de formatar matemática"
 
-#: src/components/math-block.jsx:146
+#: src/components/math-block.jsx:155
 msgid "Math expressions found."
 msgstr "Encontrado expressões matemáticas."
 
 #. Action to switch from rendered math back to raw (LaTeX) markup
-#: src/components/math-block.jsx:149
+#: src/components/math-block.jsx:158
 msgid "Show markup"
 msgstr "Exibir marcação"
 
 #. Action to render math expressions from raw (LaTeX) markup
-#: src/components/math-block.jsx:154
+#: src/components/math-block.jsx:163
 msgid "Format math"
 msgstr "Formatar matemática"
 
@@ -1553,7 +1553,7 @@ msgstr "Filtrado: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Filtrado"
 
-#: src/components/media.jsx:533
+#: src/components/media.jsx:547
 msgid "Open file"
 msgstr "Abrir arquivo"
 
@@ -3332,7 +3332,7 @@ msgstr "Não foi possível carregar coleções."
 
 #: src/pages/account-collections.jsx:265
 msgid "No collections featuring you yet."
-msgstr "Nenhuma coleção com você presente ainda."
+msgstr "Você não está presente em nenhuma coleção ainda."
 
 #: src/pages/account-collections.jsx:266
 msgid "No collections yet."
@@ -3344,11 +3344,11 @@ msgstr "Publicações da conta"
 
 #: src/pages/account-statuses.jsx:294
 msgid "Media posts tagged #{tagged} by {accountDisplay}"
-msgstr "Publicações com mídia etiquetadas de #{tagged} por {accountDisplay}"
+msgstr "Publicações com mídia marcadas com #{tagged} por {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:296
 msgid "Posts tagged #{tagged} by {accountDisplay}"
-msgstr "Publicações etiquetadas de #{tagged} por {accountDisplay}"
+msgstr "Publicações marcadas com #{tagged} por {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:303
 msgid "Posts in {monthYear} by {accountDisplay}"
@@ -4213,7 +4213,7 @@ msgid "Bot accounts"
 msgstr "Contas automáticas"
 
 #: src/pages/notifications.jsx:764
-#: src/pages/notifications.jsx:1117
+#: src/pages/notifications.jsx:1121
 msgid "Notifications settings"
 msgstr "Opções de notificação"
 
@@ -4253,72 +4253,72 @@ msgstr "Hoje"
 msgid "You're all caught up."
 msgstr "Está tudo em dia."
 
-#: src/pages/notifications.jsx:1017
+#: src/pages/notifications.jsx:1021
 msgid "Yesterday"
 msgstr "Ontem"
 
-#: src/pages/notifications.jsx:1065
+#: src/pages/notifications.jsx:1069
 msgid "Unable to load notifications"
 msgstr "Impossível carregar notificações"
 
-#: src/pages/notifications.jsx:1148
+#: src/pages/notifications.jsx:1152
 msgid "Notifications settings updated"
 msgstr "Opções de notificação atualizada"
 
-#: src/pages/notifications.jsx:1156
+#: src/pages/notifications.jsx:1160
 msgid "Filter notifications from:"
 msgstr "Filtrar notificações de:"
 
-#: src/pages/notifications.jsx:1172
+#: src/pages/notifications.jsx:1176
 msgid "Filter"
 msgstr "Filtrar"
 
-#: src/pages/notifications.jsx:1175
+#: src/pages/notifications.jsx:1179
 msgid "Ignore"
 msgstr "Ignorar"
 
 #. placeholder {0}: niceDateTime(updatedAtDate)
-#: src/pages/notifications.jsx:1248
+#: src/pages/notifications.jsx:1252
 msgid "Updated <0>{0}</0>"
 msgstr "Atualizado <0>{0}</0>"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1316
+#: src/pages/notifications.jsx:1320
 msgid "View notifications from <0>@{0}</0>"
 msgstr "Ver notificações de <0>@{0}</0>"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1337
+#: src/pages/notifications.jsx:1341
 msgid "Notifications from <0>@{0}</0>"
 msgstr "Notificações de <0>@{0}</0>"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1406
+#: src/pages/notifications.jsx:1410
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr "As notificações de @{0} não serão mais filtradas."
 
-#: src/pages/notifications.jsx:1411
+#: src/pages/notifications.jsx:1415
 msgid "Unable to accept notification request"
 msgstr "Impossível aceitar pedido de notificação"
 
-#: src/pages/notifications.jsx:1416
+#: src/pages/notifications.jsx:1420
 msgid "Allow"
 msgstr "Permitir"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1437
+#: src/pages/notifications.jsx:1441
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "As notificações de @{0} não aparecerá em notificações filtradas."
 
-#: src/pages/notifications.jsx:1442
+#: src/pages/notifications.jsx:1446
 msgid "Unable to dismiss notification request"
 msgstr "Impossível descartar pedido de notificação"
 
-#: src/pages/notifications.jsx:1447
+#: src/pages/notifications.jsx:1451
 msgid "Dismiss"
 msgstr "Descartar"
 
-#: src/pages/notifications.jsx:1462
+#: src/pages/notifications.jsx:1466
 msgid "Dismissed"
 msgstr "Descartado"
 

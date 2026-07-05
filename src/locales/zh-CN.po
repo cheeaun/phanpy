@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 14:12\n"
+"PO-Revision-Date: 2026-07-02 16:50\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -63,18 +63,18 @@ msgstr "关注了你"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-block.jsx:283
+#: src/components/account-block.jsx:286
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> 粉丝} other {<1>{1}</1> followers}}"
 
-#: src/components/account-block.jsx:309
+#: src/components/account-block.jsx:311
 #: src/components/account-info.jsx:778
 msgid "Verified"
 msgstr "已认证"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
-#: src/components/account-block.jsx:325
+#: src/components/account-block.jsx:327
 #: src/components/account-info.jsx:917
 msgid "Joined <0>{0}</0>"
 msgstr "加入于 <0>{0}</0>"
@@ -1389,21 +1389,21 @@ msgstr "无法删除列表。"
 msgid "Posts on this list are hidden from Home/Following"
 msgstr "此列表中的嘟文不会出现在首页/关注时间线中"
 
-#: src/components/math-block.jsx:132
+#: src/components/math-block.jsx:141
 msgid "Unable to format math"
 msgstr "无法渲染数学公式"
 
-#: src/components/math-block.jsx:146
+#: src/components/math-block.jsx:155
 msgid "Math expressions found."
 msgstr "检测到数学公式。"
 
 #. Action to switch from rendered math back to raw (LaTeX) markup
-#: src/components/math-block.jsx:149
+#: src/components/math-block.jsx:158
 msgid "Show markup"
 msgstr "显示 LaTeX 标记"
 
 #. Action to render math expressions from raw (LaTeX) markup
-#: src/components/math-block.jsx:154
+#: src/components/math-block.jsx:163
 msgid "Format math"
 msgstr "渲染公式"
 
@@ -1553,7 +1553,7 @@ msgstr "已过滤: {filterTitleStr}"
 msgid "Filtered"
 msgstr "已过滤"
 
-#: src/components/media.jsx:533
+#: src/components/media.jsx:547
 msgid "Open file"
 msgstr "打开文件"
 
@@ -3439,7 +3439,7 @@ msgstr "当前账号"
 
 #: src/pages/accounts.jsx:139
 msgid "Logged out"
-msgstr "已登出"
+msgstr "已退出登录"
 
 #: src/pages/accounts.jsx:145
 msgid "Default"
@@ -3463,19 +3463,19 @@ msgstr "设为默认账号"
 
 #: src/pages/accounts.jsx:251
 msgid "Log out <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "是否退出登录 <0>@{unicodeAcct}</0>？"
 
 #: src/pages/accounts.jsx:279
 msgid "Log out and remove <0>@{unicodeAcct}</0>"
-msgstr ""
+msgstr "退出登录并移除 <0>@{unicodeAcct}</0>"
 
 #: src/pages/accounts.jsx:291
 msgid "Log out…"
-msgstr "登出…"
+msgstr "退出…"
 
 #: src/pages/accounts.jsx:301
 msgid "Remove <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "是否移除 <0>@{unicodeAcct}</0>？"
 
 #: src/pages/accounts.jsx:319
 msgid "Remove account…"
@@ -4727,7 +4727,7 @@ msgstr "嘟文"
 
 #: src/pages/status.jsx:1097
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."
-msgstr "你尚未登录。互动 ()"
+msgstr "你尚未登录，无法进行互动 (回复、转嘟等)。"
 
 #: src/pages/status.jsx:1117
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."

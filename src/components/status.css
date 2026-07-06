@@ -671,6 +671,10 @@
   background: var(--bg-color);
   border: 1px solid var(--reply-to-color);
   border-radius: 4px;
+  @supports (corner-shape: squircle) {
+    border-radius: 8px;
+    corner-shape: squircle;
+  }
   padding: 4px;
   font-size: 10px;
   line-height: 1;
@@ -706,6 +710,10 @@
   background-color: var(--bg-color);
   border: 1px solid var(--reply-to-text-color);
   border-radius: 4px;
+  @supports (corner-shape: squircle) {
+    border-radius: 8px;
+    corner-shape: squircle;
+  }
   padding: 4px;
   font-size: 10px;
   line-height: 1;
@@ -721,6 +729,10 @@
   /* border: var(--hairline-width) solid var(--bg-color); */
   border: var(--hairline-width) dashed var(--text-insignificant-color);
   border-radius: 4px;
+  @supports (corner-shape: squircle) {
+    border-radius: 8px;
+    corner-shape: squircle;
+  }
   padding: 4px;
   font-size: 10px;
   line-height: 1;
@@ -1232,6 +1244,11 @@
   --media-border-width: 1px;
   --media-radius: 16px;
   --media-radius-inner: 4px;
+  @supports (corner-shape: squircle) {
+    --media-radius: 32px;
+    --media-radius-inner: 8px;
+    corner-shape: squircle;
+  }
   border-radius: var(--media-radius);
   overflow: hidden;
   min-height: 80px;
@@ -1294,6 +1311,9 @@
 
   &[data-has-natural-aspect-ratio] {
     --media-radius: 4px;
+    @supports (corner-shape: squircle) {
+      --media-radius: 8px;
+    }
   }
 }
 .status .media-container.media-eq1 .media[data-orientation='portrait'] {
@@ -2019,6 +2039,10 @@ body:has(#modal-container .carousel) .status .media img:hover {
   display: flex;
   margin-top: 8px;
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   border: 1px solid var(--outline-color);
   overflow: hidden;
   color: inherit;
@@ -2242,6 +2266,10 @@ a.card:is(:hover, :focus):visited {
   transition: opacity 0.2s ease-in-out;
   margin-top: 8px;
   border-radius: 16px;
+  @supports (corner-shape: squircle) {
+    border-radius: 32px;
+    corner-shape: squircle;
+  }
   border: 1px solid var(--outline-color);
   background-color: var(--bg-faded-color);
   background-image: linear-gradient(
@@ -2315,6 +2343,10 @@ a.card:is(:hover, :focus):visited {
       position: absolute;
       inset: 0;
       border-radius: 4px;
+      @supports (corner-shape: squircle) {
+        border-radius: 8px;
+        corner-shape: squircle;
+      }
       background-color: var(--link-bg-color);
       opacity: 0;
       pointer-events: none;
@@ -2333,6 +2365,10 @@ a.card:is(:hover, :focus):visited {
     &:first-child:after {
       border-start-start-radius: 12px;
       border-start-end-radius: 12px;
+      @supports (corner-shape: squircle) {
+        border-start-start-radius: 24px;
+        border-start-end-radius: 24px;
+      }
     }
     &.poll-result:after {
       width: var(--percentage);
@@ -2636,6 +2672,10 @@ a.card:is(:hover, :focus):visited {
 
 .status .content pre {
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   padding: 8px;
   margin: 8px 0;
   overflow: auto;
@@ -2663,6 +2703,10 @@ a.card:is(:hover, :focus):visited {
   inset-inline-end: 8px;
   background-color: var(--bg-color);
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   z-index: 1;
   border: 1px solid var(--outline-color);
   box-shadow: 0 2px 6px -3px var(--drop-shadow-color);
@@ -2688,6 +2732,10 @@ a.card:is(:hover, :focus):visited {
     backdrop-filter: none;
     padding: 10px;
     border-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-radius: 16px;
+      corner-shape: squircle;
+    }
     outline-offset: -5px;
     outline: 1px solid transparent;
 
@@ -3139,6 +3187,10 @@ a.card:is(:hover, :focus):visited {
   border: var(--hairline-width) solid var(--media-outline-color);
   /* mix-blend-mode: luminosity; */
   border-radius: 4px;
+  @supports (corner-shape: squircle) {
+    border-radius: 8px;
+    corner-shape: squircle;
+  }
   padding: 4px;
   opacity: 0.65;
 

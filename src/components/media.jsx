@@ -335,6 +335,19 @@ function Media({
       ref.instance.setup.trackPadPanning.disabled = scale <= 1.01;
     }
   }, []);
+  const onZoom = useCallback((context) => {
+    // Prevent synthetic mousedown from cancelling zoom animation
+    if (context.instance?.setup?.panning) {
+      context.instance.setup.panning.allowLeftClickPan = false;
+    }
+  }, []);
+  const onZoomStop = useCallback((context) => {
+    // Restore left-click panning based on zoom level
+    if (context.instance?.setup?.panning) {
+      context.instance.setup.panning.allowLeftClickPan =
+        context.state.scale > 1.01;
+    }
+  }, []);
   const transformWrapperProps = {
     smooth: false,
     centerZoomedOut: true,
@@ -358,6 +371,8 @@ function Media({
       disabled: true,
     },
     onTransform,
+    onZoom,
+    onZoomStop,
   };
   const transformComponentProps = {
     wrapperClass: 'media-zoom',

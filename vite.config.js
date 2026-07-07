@@ -25,11 +25,13 @@ const {
   PHANPY_DISALLOW_ROBOTS: DISALLOW_ROBOTS,
   PHANPY_COMMIT_HASH: COMMIT_HASH,
   PHANPY_COMMIT_TIME: COMMIT_TIME,
-  PHANPY_NOW: NOW,
+  PHANPY_BUILD_TIME: BUILD_TIME,
   PHANPY_DEV,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
 
-const now = NOW ? new Date(NOW) : new Date();
+const now = new Date();
+const buildTime = BUILD_TIME ? new Date(BUILD_TIME) : now;
+
 let commitHash;
 let commitTime;
 let fakeCommitHash = false;
@@ -57,13 +59,9 @@ if (COMMIT_HASH && COMMIT_TIME) {
     fakeCommitHash = true;
   }
 }
-console.log(
-  [
-    `  commit hash: ${commitHash}`,
-    `  commit time: ${commitTime.toISOString()}`,
-    `  build time:  ${now.toISOString()}`,
-  ].join('\n'),
-);
+console.log(`commit hash: ${commitHash}`);
+console.log(`commit time: ${commitTime.toISOString()}`);
+console.log(`build time:  ${buildTime.toISOString()}`);
 
 let rollbarCode = fs.readFileSync(resolve(__dirname, './rollbar.js'), 'utf-8');
 rollbarCode = rollbarCode.replace('__PHANPY_COMMIT_HASH__', `'${commitHash}'`);
@@ -93,7 +91,7 @@ export default defineConfig({
   appType: 'mpa',
   mode: NODE_ENV,
   define: {
-    __BUILD_TIME__: JSON.stringify(now),
+    __BUILD_TIME__: JSON.stringify(buildTime),
     __COMMIT_HASH__: JSON.stringify(commitHash),
     __COMMIT_TIME__: JSON.stringify(commitTime),
     __FAKE_COMMIT_HASH__: fakeCommitHash,
@@ -204,7 +202,7 @@ export default defineConfig({
         type: 'json',
         output: './version.json',
         data: {
-          buildTime: now,
+          buildTime,
           commitHash,
         },
       },

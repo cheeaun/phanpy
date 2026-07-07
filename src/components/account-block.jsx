@@ -3,6 +3,7 @@ import './account-block.css';
 import { ph } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useState } from 'preact/hooks';
+import punycode from 'punycode/';
 
 // import { useNavigate } from 'react-router-dom';
 import { api } from '../utils/api';
@@ -89,9 +90,10 @@ function AccountBlock(props) {
     locked,
     roles,
   } = account;
-  let [_, acct1, acct2] = acct.match(/([^@]+)(@.+)/i) || [, acct];
+  const unicodeAcct = punycode.toUnicode(acct);
+  let [_, acct1, acct2] = unicodeAcct.match(/([^@]+)(@.+)/i) || [, unicodeAcct];
   if (accountInstance) {
-    acct2 = `@${accountInstance}`;
+    acct2 = `@${punycode.toUnicode(accountInstance)}`;
   }
 
   const verifiedField = fields?.find((f) => !!f.verifiedAt && !!f.value);
@@ -144,7 +146,7 @@ function AccountBlock(props) {
       class="account-block"
       href={url}
       target={external ? '_blank' : null}
-      title={acct2 ? acct : `@${acct}`}
+      title={acct2 ? unicodeAcct : `@${unicodeAcct}`}
       onClick={(e) => {
         if (external) return;
         e.preventDefault();
@@ -261,45 +263,47 @@ function AccountBlock(props) {
             )}
             {((!hasRelationship && !!familiarFollowers?.length) ||
               !!followersCount) && (
-              <span class="shazam-container-horizontal">
-                <span class="shazam-container-inner">
-                  {!hasRelationship && !!familiarFollowers?.length && (
-                    <span class="stats-avatars-bunch">
-                      {familiarFollowers.slice(0, 3).map((follower) => (
-                        <Avatar
-                          url={follower.avatarStatic}
-                          size="s"
-                          alt={`${follower.displayName} @${follower.acct}`}
-                          squircle={follower.bot}
-                          key={follower.id}
-                        />
-                      ))}
+              <span class="ib">
+                {!hasRelationship && !!familiarFollowers?.length && (
+                  <span class="shazam-container-horizontal">
+                    <span class="shazam-container-inner">
+                      <span class="stats-avatars-bunch">
+                        {familiarFollowers.slice(0, 3).map((follower) => (
+                          <Avatar
+                            url={follower.avatarStatic}
+                            size="s"
+                            alt={`${follower.displayName} @${follower.acct}`}
+                            squircle={follower.bot}
+                            key={follower.id}
+                          />
+                        ))}
+                      </span>
                     </span>
-                  )}{' '}
-                  {!!followersCount && (
-                    <span class="ib">
-                      <Plural
-                        value={followersCount}
-                        one={
-                          <Trans>
-                            <span title={followersCount}>
-                              {shortenNumber(followersCount)}
-                            </span>{' '}
-                            follower
-                          </Trans>
-                        }
-                        other={
-                          <Trans>
-                            <span title={followersCount}>
-                              {shortenNumber(followersCount)}
-                            </span>{' '}
-                            followers
-                          </Trans>
-                        }
-                      />
-                    </span>
-                  )}
-                </span>
+                  </span>
+                )}{' '}
+                {!!followersCount && (
+                  <span class="ib">
+                    <Plural
+                      value={followersCount}
+                      one={
+                        <Trans>
+                          <span title={followersCount}>
+                            {shortenNumber(followersCount)}
+                          </span>{' '}
+                          follower
+                        </Trans>
+                      }
+                      other={
+                        <Trans>
+                          <span title={followersCount}>
+                            {shortenNumber(followersCount)}
+                          </span>{' '}
+                          followers
+                        </Trans>
+                      }
+                    />
+                  </span>
+                )}
               </span>
             )}
             {!!verifiedField && (

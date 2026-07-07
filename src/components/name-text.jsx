@@ -1,6 +1,7 @@
 import './name-text.css';
 
 import { useLingui } from '@lingui/react';
+import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import mem from '../utils/mem';
@@ -49,7 +50,8 @@ function NameText({
     username,
     roles,
   } = account;
-  const [_, acct1, acct2] = acct.match(ACCT_REGEX) || [, acct];
+  const unicodeAcct = punycode.toUnicode(acct);
+  const [_, acct1, acct2] = unicodeAcct.match(ACCT_REGEX) || [, unicodeAcct];
 
   if (!instance) instance = api().instance;
 
@@ -81,8 +83,8 @@ function NameText({
       target={external ? '_blank' : null}
       title={
         displayName
-          ? `${displayName} (${acct2 ? '' : '@'}${acct})`
-          : `${acct2 ? '' : '@'}${acct}`
+          ? `${displayName} (${acct2 ? '' : '@'}${unicodeAcct})`
+          : `${acct2 ? '' : '@'}${unicodeAcct}`
       }
       onClick={(e) => {
         if (external) return;

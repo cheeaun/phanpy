@@ -74,23 +74,11 @@ const CollectionManageAccounts = forwardRef(function CollectionManageAccounts(
     if (removingItems.has(item.id)) return;
     setRemovingItems((prev) => new Set([...prev, item.id]));
     (async () => {
-      let success = false;
       try {
         await masto.v1.collections
           .$select(collection.id)
           .items.$select(item.id)
           .remove();
-        success = true;
-      } catch (e) {
-        // Work around masto.js failing to parse 200 OK empty-body DELETE responses
-        if (e?.name === 'MastoUnexpectedError') {
-          success = true;
-        } else {
-          console.error(e);
-          showToast(t`Unable to remove account`);
-        }
-      }
-      if (success) {
         const newItems = collectionItems.filter((i) => i.id !== item.id);
         setCollectionItems(newItems);
         onDataChange({
@@ -100,6 +88,9 @@ const CollectionManageAccounts = forwardRef(function CollectionManageAccounts(
         showToast(
           t`@${ph({ username: account.username })} removed from collection`,
         );
+      } catch (e) {
+        console.error(e);
+        showToast(t`Unable to remove account`);
       }
       setRemovingItems((prev) => {
         const next = new Set(prev);

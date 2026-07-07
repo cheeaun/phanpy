@@ -68,6 +68,10 @@
 }
 #compose-container .status-preview {
   border-radius: 16px 16px 0 0;
+  @supports (corner-shape: squircle) {
+    border-radius: 32px 32px 0 0;
+    corner-shape: squircle;
+  }
   max-height: 160px;
   background-color: var(--bg-color);
   margin: 0 8px;
@@ -159,6 +163,12 @@
     border-radius: 16px;
     border-start-start-radius: 8px;
     border-start-end-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-radius: 32px;
+      border-start-start-radius: 16px;
+      border-start-end-radius: 16px;
+      corner-shape: squircle;
+    }
   }
 }
 #compose-container .status-preview ~ form {
@@ -191,6 +201,10 @@
   @media (min-width: 40em) {
     max-height: 65vh;
     border-radius: 4px;
+    @supports (corner-shape: squircle) {
+      border-radius: 8px;
+      corner-shape: squircle;
+    }
   }
 }
 
@@ -217,6 +231,10 @@
   background-color: transparent;
   padding: 0 8px;
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   min-height: 2.4em;
   min-width: 2.6em;
   text-align: center;
@@ -364,6 +382,10 @@
   border: 1px solid var(--outline-color);
   box-shadow: 0 4px 24px var(--drop-shadow-color);
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   overflow: hidden;
   z-index: 100;
   min-width: 10em;
@@ -441,6 +463,10 @@
 
   @media (min-width: 40em) {
     border-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-radius: 16px;
+      corner-shape: squircle;
+    }
   }
 }
 #compose-container .media-attachment {
@@ -455,6 +481,10 @@
     border: 1.5px dashed transparent;
     line-height: 1;
     border-radius: 4px;
+    @supports (corner-shape: squircle) {
+      border-radius: 8px;
+      corner-shape: squircle;
+    }
     display: flex;
 
     &:is(:hover, :focus) {
@@ -467,6 +497,10 @@
   flex-shrink: 0;
   border: 1px solid var(--outline-color);
   border-radius: 4px;
+  @supports (corner-shape: squircle) {
+    border-radius: 8px;
+    corner-shape: squircle;
+  }
   overflow: hidden;
   width: 80px;
   height: 80px;
@@ -541,6 +575,10 @@
   padding: 8px;
   background-color: var(--bg-blur-color);
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   cursor: pointer;
 }
 #compose-container .media-sensitive > * {
@@ -558,6 +596,10 @@
 
   @media (min-width: 40em) {
     border-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-radius: 16px;
+      corner-shape: squircle;
+    }
   }
 }
 
@@ -596,6 +638,10 @@
 }
 #compose-container .multiple .poll-button {
   border-radius: 4px;
+  @supports (corner-shape: squircle) {
+    border-radius: 8px;
+    corner-shape: squircle;
+  }
 }
 
 #compose-container .poll-toolbar {
@@ -628,6 +674,10 @@
   padding: 8px;
   background-color: var(--bg-blur-color);
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   width: fit-content;
 }
 
@@ -640,12 +690,20 @@
   padding-inline-start: 8px;
   background-color: var(--bg-blur-color);
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   width: fit-content;
 }
 
 #compose-container {
   .quote-status {
     border-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-radius: 16px;
+      corner-shape: squircle;
+    }
     border: 1px solid var(--outline-color);
     background-color: var(--bg-color);
     box-shadow: inset 0 0 2px var(--outline-color);
@@ -682,6 +740,10 @@
 
     @media (min-width: 40em) {
       border-radius: 8px;
+      @supports (corner-shape: squircle) {
+        border-radius: 16px;
+        corner-shape: squircle;
+      }
     }
 
     input[type='datetime-local'] {
@@ -728,6 +790,10 @@
 
 #compose-container button[type='submit'] {
   border-radius: 9px;
+  @supports (corner-shape: squircle) {
+    border-radius: 18px;
+    corner-shape: squircle;
+  }
   align-self: stretch;
 
   /* @media (min-width: 480px) {
@@ -784,6 +850,10 @@
 #media-sheet .media-preview {
   border: 2px solid var(--outline-color);
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   overflow: hidden;
   box-shadow: 0 2px 16px var(--img-bg-color);
   /* checkerboard background */
@@ -851,6 +921,10 @@
       position: relative;
       justify-content: space-between;
       border-radius: 8px;
+      @supports (corner-shape: squircle) {
+        border-radius: 16px;
+        corner-shape: squircle;
+      }
       /* align-items: center; */
 
       &:hover {
@@ -886,6 +960,10 @@
 
       > button {
         border-radius: 4px;
+        @supports (corner-shape: squircle) {
+          border-radius: 8px;
+          corner-shape: squircle;
+        }
         &:hover {
           outline: 2px solid var(--button-bg-blur-color);
         }
@@ -1014,6 +1092,10 @@
     .compose-highlight-exceeded {
       mix-blend-mode: multiply;
       border-radius: 4px;
+      @supports (corner-shape: squircle) {
+        border-radius: 8px;
+        corner-shape: squircle;
+      }
       box-shadow: 0 0 0 1px;
     }
     .compose-highlight-mention {
@@ -1179,6 +1261,10 @@
           color: inherit;
           cursor: pointer;
           border-radius: 8px;
+          @supports (corner-shape: squircle) {
+            border-radius: 16px;
+            corner-shape: squircle;
+          }
           background-color: var(--bg-faded-color);
 
           @media (min-height: 480px) {
@@ -1217,6 +1303,10 @@
         img {
           background-color: var(--img-bg-color);
           border-radius: 4px;
+          @supports (corner-shape: squircle) {
+            border-radius: 8px;
+            corner-shape: squircle;
+          }
           vertical-align: top;
           object-fit: contain;
         }

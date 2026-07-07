@@ -3,8 +3,8 @@ import punycode from 'punycode/';
 
 function AccountHandleInfo({ acct, instance }) {
   // acct = username or username@server
-  let [username, server] = acct.split('@');
-  if (!server) server = instance;
+  const fullAcct = acct.includes('@') ? acct : `${acct}@${instance}`;
+  let [username, server] = punycode.toUnicode(fullAcct).split('@');
   const encodedAcct = punycode.toASCII(acct);
   return (
     <div class="handle-info">

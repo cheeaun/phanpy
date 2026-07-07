@@ -27,6 +27,7 @@ function EmailSubscriptionForm({ accountId, instance }) {
         .$select(accountId)
         .emailSubscriptions.create({ email });
       showToast('Check your inbox');
+      setEmail('');
     } catch (err) {
       console.error(err);
       showToast('Unable to subscribe');

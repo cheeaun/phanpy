@@ -29,6 +29,7 @@ import NavMenu from '../components/nav-menu';
 import RelativeTime from '../components/relative-time';
 import ReportCollection from '../components/report-collection';
 import { api } from '../utils/api';
+import { isSupported as collectionsSupported } from '../utils/collections';
 import { fetchRelationships } from '../utils/relationships';
 import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
@@ -464,7 +465,9 @@ function Collection() {
                         </MenuHeader>
                         {!sameInstance ? (
                           <MenuItem
-                            disabled={uiState === 'loading'}
+                            disabled={
+                              uiState === 'loading' || !collectionsSupported()
+                            }
                             onClick={() => {
                               setUIState('loading');
                               (async () => {

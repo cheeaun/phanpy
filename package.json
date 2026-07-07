@@ -25,7 +25,7 @@
     "formatting": "oxfmt --check || oxfmt",
     "formatting-check": "oxfmt --check",
     "git:po-filter": "git config --local diff.po-filter.textconv \"sed 's/:[0-9]*$//'\"",
-    "postinstall": "node scripts/generate-icons.js",
+    "postinstall": "node scripts/generate-icons.js && npx exifreader build",
     "generate-icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
@@ -41,28 +41,28 @@
     "chroma-js": "~3.2.0",
     "compare-versions": "~6.1.1",
     "exifreader": "~4.41.0",
-    "fast-blurhash": "~1.1.4",
+    "fast-blurhash": "~1.2.0",
     "fast-equals": "~6.0.0",
     "flexsearch": "~0.8.212",
     "fuse.js": "~7.4.2",
     "gifuct-js": "~2.1.2",
     "html-prettify": "~1.0.7",
-    "idb-keyval": "~6.2.5",
+    "idb-keyval": "~6.2.6",
     "intl-locale-textinfo-polyfill": "~3.0.0",
     "js-cookie": "~3.0.8",
     "just-debounce-it": "~3.2.0",
     "lz-string": "~1.5.0",
-    "masto": "~7.11.1",
+    "masto": "~7.12.0",
     "micro-memoize": "~5.1.1",
     "p-queue": "~9.3.0",
     "p-retry": "~8.0.0",
-    "preact": "10.29.2",
+    "preact": "10.29.3",
     "punycode": "~2.3.1",
     "qr": "~0.6.0",
     "react-hotkeys-hook": "~5.2.4",
     "react-intersection-observer": "~10.0.3",
-    "react-quick-pinch-zoom": "~5.1.1",
     "react-router-dom": "6.6.2",
+    "react-zoom-pan-pinch": "~4.0.3",
     "swiped-events": "~1.2.0",
     "temml": "~0.13.3",
     "tinyld": "~1.3.4",
@@ -75,24 +75,22 @@
     "web-haptics": "~0.0.6"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.29.0",
     "@emnapi/core": "~1.11.1",
     "@emnapi/runtime": "~1.11.1",
     "@iconify/utils": "~3.1.3",
     "@lingui/babel-plugin-lingui-macro": "~6.4.0",
     "@lingui/cli": "~6.4.0",
     "@lingui/vite-plugin": "~6.4.0",
-    "@playwright/test": "~1.61.0",
+    "@playwright/test": "~1.61.1",
     "@preact/preset-vite": "~2.10.5",
-    "@types/node": "~25.9.3",
-    "oxfmt": "~0.55.0",
-    "postcss": "~8.5.15",
+    "@types/node": "~26.1.0",
+    "oxfmt": "~0.57.0",
+    "postcss": "~8.5.16",
     "postcss-dark-theme-class": "~2.0.0",
-    "postcss-preset-env": "~11.3.1",
-    "prop-types": "^15.8.1",
+    "postcss-preset-env": "~11.3.2",
     "sonda": "~0.13.1",
     "twitter-text": "~3.1.0",
-    "vite": "~8.0.16",
+    "vite": "~8.1.2",
     "vite-plugin-generate-file": "~0.3.1",
     "vite-plugin-html-config": "~2.0.2",
     "vite-plugin-pwa": "~1.3.0",
@@ -107,9 +105,7 @@
   },
   "//notes": [
     "@emnapi/core and @emnapi/runtime are temporary fixes for https://github.com/napi-rs/napi-rs/issues/3174",
-    "react-quick-pinch-zoom requires prop-types",
-    "playwright uses @types/node",
-    "@babel/plugin-transform-runtime fixes peer dep conflict from @lingui/vite-plugin pulling in babel 8"
+    "playwright uses @types/node"
   ],
   "postcss": {
     "plugins": {
@@ -145,5 +141,12 @@
       "thumbnail": true,
       "icc": true
     }
+  },
+  "allowScripts": {
+    "core-js@2.6.12": true,
+    "exifreader@4.41.0": true,
+    "esbuild@0.25.12": true,
+    "fsevents@2.3.2": true,
+    "fsevents@2.3.3": true
   }
 }

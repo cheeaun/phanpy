@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
-import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 import formatDuration from '../utils/format-duration';
 import mem from '../utils/mem';
@@ -148,43 +148,6 @@ function Media({
   }
 
   const mediaRef = useRef();
-  const onUpdate = useCallback(({ x, y, scale }) => {
-    const { current: media } = mediaRef;
-
-    if (media) {
-      const value = make3dTransformValue({ x, y, scale });
-
-      if (scale === 1) {
-        media.style.removeProperty('transform');
-      } else {
-        media.style.setProperty('transform', value);
-      }
-
-      media.closest('.media-zoom').style.touchAction =
-        scale <= 1.01 ? 'pan-x' : '';
-    }
-  }, []);
-
-  const [pinchZoomEnabled, setPinchZoomEnabled] = useState(false);
-  const quickPinchZoomProps = {
-    enabled: pinchZoomEnabled,
-    draggableUnZoomed: false,
-    inertiaFriction: 0.9,
-    tapZoomFactor: 2,
-    doubleTapToggleZoom: true,
-    containerProps: {
-      className: 'media-zoom',
-      style: {
-        overflow: 'visible',
-        //   width: 'inherit',
-        //   height: 'inherit',
-        //   justifyContent: 'inherit',
-        //   alignItems: 'inherit',
-        //   display: 'inherit',
-      },
-    },
-    onUpdate,
-  };
 
   const [mediaLoadError, setMediaLoadError] = useState(false);
 
@@ -357,10 +320,71 @@ function Media({
     };
   }, []);
 
-  if (isImage) {
-    // Note: type: unknown might not have width/height
-    quickPinchZoomProps.containerProps.style.display = 'inherit';
+  const [pinchZoomEnabled, setPinchZoomEnabled] = useState(false);
+  const onTransform = useCallback((ref, { scale }) => {
+    if (ref.instance?.wrapperComponent) {
+      const touchAction = scale <= 1.01 ? 'pan-x' : '';
+      if (ref.instance.wrapperComponent.style.touchAction !== touchAction) {
+        ref.instance.wrapperComponent.style.touchAction = touchAction;
+      }
+    }
+    if (ref.instance?.setup?.panning) {
+      ref.instance.setup.panning.disabled = scale <= 1.01;
+    }
+    if (ref.instance?.setup?.trackPadPanning) {
+      ref.instance.setup.trackPadPanning.disabled = scale <= 1.01;
+    }
+  }, []);
+  const onZoom = useCallback((context) => {
+    // Prevent synthetic mousedown from cancelling zoom animation
+    if (context.instance?.setup?.panning) {
+      context.instance.setup.panning.allowLeftClickPan = false;
+    }
+  }, []);
+  const onZoomStop = useCallback((context) => {
+    // Restore left-click panning based on zoom level
+    if (context.instance?.setup?.panning) {
+      context.instance.setup.panning.allowLeftClickPan =
+        context.state.scale > 1.01;
+    }
+  }, []);
+  const transformWrapperProps = {
+    smooth: false,
+    centerZoomedOut: true,
+    doubleClick: {
+      mode: 'toggle',
+      step: 1,
+    },
+    wheel: {
+      wheelDisabled: true,
+      step: 0.05,
+    },
+    velocityAnimation: {
+      inertia: 0.9,
+    },
+    panning: {
+      disabled: true,
+      allowMiddleClickPan: false,
+      allowRightClickPan: false,
+    },
+    trackPadPanning: {
+      disabled: true,
+    },
+    onTransform,
+    onZoom,
+    onZoomStop,
+  };
+  const transformComponentProps = {
+    wrapperClass: 'media-zoom',
+    wrapperStyle: {
+      touchAction: 'pan-x',
+      overflow: 'visible',
+      // Note: type: unknown might not have width/height
+      display: isImage ? 'inherit' : undefined,
+    },
+  };
 
+  if (isImage) {
     useLayoutEffect(() => {
       if (!isSafari) return;
       if (!showOriginal) return;
@@ -396,41 +420,46 @@ function Media({
           }
         >
           {showOriginal ? (
-            <QuickPinchZoom {...quickPinchZoomProps}>
-              <img
-                ref={mediaRef}
-                src={mediaURL}
-                alt={description}
-                width={width}
-                height={height}
-                data-orientation={orientation}
-                loading="eager"
-                decoding="sync"
-                style={{
-                  'view-transition-name': mediaVTN,
-                }}
-                onLoad={(e) => {
-                  const el = e.target;
-                  const mediaImage = el.closest('.media-image');
-                  if (mediaImage) {
-                    mediaImage.style.backgroundImage = `url(${el.src})`;
-                    mediaImage.style.removeProperty('--bg-image');
-                  }
-                  el.closest('.media-zoom').style.display = '';
-                  setPinchZoomEnabled(true);
-                }}
-                onError={(e) => {
-                  const { src } = e.target;
-                  if (
-                    src === mediaURL &&
-                    remoteMediaURL &&
-                    mediaURL !== remoteMediaURL
-                  ) {
-                    e.target.src = remoteMediaURL;
-                  }
-                }}
-              />
-            </QuickPinchZoom>
+            <TransformWrapper
+              {...transformWrapperProps}
+              disabled={!pinchZoomEnabled}
+            >
+              <TransformComponent {...transformComponentProps}>
+                <img
+                  ref={mediaRef}
+                  src={mediaURL}
+                  alt={description}
+                  width={width}
+                  height={height}
+                  data-orientation={orientation}
+                  loading="eager"
+                  decoding="sync"
+                  style={{
+                    'view-transition-name': mediaVTN,
+                  }}
+                  onLoad={(e) => {
+                    const el = e.target;
+                    const mediaImage = el.closest('.media-image');
+                    if (mediaImage) {
+                      mediaImage.style.backgroundImage = `url(${el.src})`;
+                      mediaImage.style.removeProperty('--bg-image');
+                    }
+                    el.closest('.media-zoom').style.display = '';
+                    setPinchZoomEnabled(true);
+                  }}
+                  onError={(e) => {
+                    const { src } = e.target;
+                    if (
+                      src === mediaURL &&
+                      remoteMediaURL &&
+                      mediaURL !== remoteMediaURL
+                    ) {
+                      e.target.src = remoteMediaURL;
+                    }
+                  }}
+                />
+              </TransformComponent>
+            </TransformWrapper>
           ) : (
             <>
               <img
@@ -652,14 +681,15 @@ function Media({
         >
           {showOriginal || autoGIFAnimate ? (
             isGIF && showOriginal ? (
-              <QuickPinchZoom {...quickPinchZoomProps} enabled>
-                <div
-                  ref={mediaRef}
-                  dangerouslySetInnerHTML={{
-                    __html: gifHTML,
-                  }}
-                />
-              </QuickPinchZoom>
+              <TransformWrapper {...transformWrapperProps}>
+                <TransformComponent {...transformComponentProps}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: gifHTML,
+                    }}
+                  />
+                </TransformComponent>
+              </TransformWrapper>
             ) : isGIF ? (
               <div
                 class="video-container"

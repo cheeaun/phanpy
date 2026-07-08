@@ -23,25 +23,45 @@ const {
   PHANPY_APP_ERROR_LOGGING: ERROR_LOGGING,
   PHANPY_REFERRER_POLICY: REFERRER_POLICY,
   PHANPY_DISALLOW_ROBOTS: DISALLOW_ROBOTS,
+  PHANPY_COMMIT_HASH: COMMIT_HASH,
+  PHANPY_COMMIT_TIME: COMMIT_TIME,
+  PHANPY_BUILD_TIME: BUILD_TIME,
   PHANPY_DEV,
 } = loadEnv('production', process.cwd(), allowedEnvPrefixes);
 
 const now = new Date();
+const buildTime = BUILD_TIME ? new Date(BUILD_TIME) : now;
+
 let commitHash;
 let commitTime;
 let fakeCommitHash = false;
-try {
-  const gitResult = execSync('git log -1 --format="%h %cI"').toString().trim();
-  const [hash, time] = gitResult.split(' ');
-  commitHash = hash;
-  commitTime = new Date(time);
-} catch (error) {
-  // If error, means git is not installed or not a git repo (could be downloaded instead of git cloned)
-  // Fallback to random hash which should be different on every build run 🤞
-  commitHash = uid();
-  commitTime = now;
-  fakeCommitHash = true;
+if (COMMIT_HASH && COMMIT_TIME) {
+  console.log('Using provided commit hash and timestamp');
+  commitHash = COMMIT_HASH;
+  commitTime = new Date(COMMIT_TIME);
+} else {
+  try {
+    console.log('Fetching commit hash and timestamp from Git');
+    const gitResult = execSync('git log -1 --format="%h %cI"')
+      .toString()
+      .trim();
+    const [hash, time] = gitResult.split(' ');
+    commitHash = hash;
+    commitTime = new Date(time);
+  } catch (error) {
+    // If error, means git is not installed or not a git repo (could be downloaded instead of git cloned)
+    // Fallback to random hash which should be different on every build run 🤞
+    console.log(
+      'Falling back to randomly-generated commit hash, and current timestamp',
+    );
+    commitHash = uid();
+    commitTime = now;
+    fakeCommitHash = true;
+  }
 }
+console.log(`commit hash: ${commitHash}`);
+console.log(`commit time: ${commitTime.toISOString()}`);
+console.log(`build time:  ${buildTime.toISOString()}`);
 
 let rollbarCode = fs.readFileSync(resolve(__dirname, './rollbar.js'), 'utf-8');
 rollbarCode = rollbarCode.replace('__PHANPY_COMMIT_HASH__', `'${commitHash}'`);
@@ -73,7 +93,7 @@ export default defineConfig(({ command }) => {
     appType: 'mpa',
     mode: NODE_ENV,
     define: {
-      __BUILD_TIME__: JSON.stringify(now),
+      __BUILD_TIME__: JSON.stringify(buildTime),
       __COMMIT_HASH__: JSON.stringify(commitHash),
       __COMMIT_TIME__: JSON.stringify(commitTime),
       __FAKE_COMMIT_HASH__: fakeCommitHash,
@@ -184,7 +204,7 @@ export default defineConfig(({ command }) => {
           type: 'json',
           output: './version.json',
           data: {
-            buildTime: now,
+            buildTime,
             commitHash,
           },
         },

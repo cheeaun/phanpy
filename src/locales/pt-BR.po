@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-05 15:54\n"
+"PO-Revision-Date: 2026-07-12 17:33\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1553,7 +1553,7 @@ msgstr "Filtrado: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Filtrado"
 
-#: src/components/media.jsx:547
+#: src/components/media.jsx:562
 msgid "Open file"
 msgstr "Abrir arquivo"
 
@@ -3356,7 +3356,7 @@ msgstr "Publicações em {monthYear} por {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:305
 msgid "Media posts by {accountDisplay}"
-msgstr "Publicações com mídia por {accountDisplay}"
+msgstr "Publicações com mídia de {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:394
 #: src/pages/account-statuses.jsx:403
@@ -3423,12 +3423,12 @@ msgstr "Impossível obter informações da conta"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:702
 msgid "Switch to account's server {0}"
-msgstr "Alterar para o servidor de {0}"
+msgstr "Mudar para o servidor de {0}"
 
 #: src/pages/account-statuses.jsx:732
 #: src/pages/collection.jsx:500
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr "Alterar para meu servidor (<0>{currentInstance}</0>)"
+msgstr "Mudar para meu servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:805
 msgid "Month"
@@ -3565,7 +3565,7 @@ msgstr "Grupos"
 
 #: src/pages/catchup.jsx:721
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} quotes {quotes} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr "Exibindo {selectedFilterCategory, select, all {todas as publicações} original {publicações originais} replies {respostas} boosts {impulsos} quotes {citações} followedTags {etiquetas seguidas} groups {grupos} filtered {publicações filtradas}}, {sortBy, select, createdAt {{sortOrder, select, asc {mais antigo} desc {mais recente}}} reblogsCount {{sortOrder, select, asc {menos impulsos} desc {mais impulsos}}} favouritesCount {{sortOrder, select, asc {menos curtidas} desc {mais curtidas}}} repliesCount {{sortOrder, select, asc {menos respostas} desc {mais respostas}}} density {{sortOrder, select, asc {menos denso} desc {mais denso}}}} primeiro{groupBy, select, account {, agrupado por autores} other {}}"
+msgstr "Exibindo {selectedFilterCategory, select, all {todas as publicações} original {publicações originais} replies {respostas} boosts {impulsos} quotes {citações} followedTags {marcações seguidas} groups {grupos} filtered {publicações filtradas}}, {sortBy, select, createdAt {{sortOrder, select, asc {mais antigo} desc {mais recente}}} reblogsCount {{sortOrder, select, asc {menos impulsos} desc {mais impulsos}}} favouritesCount {{sortOrder, select, asc {menos curtidas} desc {mais curtidas}}} repliesCount {{sortOrder, select, asc {menos respostas} desc {mais respostas}}} density {{sortOrder, select, asc {menos denso} desc {mais denso}}}} primeiro{groupBy, select, account {, agrupado por autores} other {}}"
 
 #: src/pages/catchup.jsx:1033
 #: src/pages/catchup.jsx:1057
@@ -3760,7 +3760,7 @@ msgstr "Data adicionada"
 #. js-lingui-explicit-id
 #: src/pages/collection.jsx:61
 msgid "sort.name"
-msgstr "sort.name"
+msgstr "Ordenar por nome"
 
 #: src/pages/collection.jsx:63
 msgid "Last active"
@@ -3786,7 +3786,7 @@ msgstr "Não foi possível remover da coleção"
 
 #: src/pages/collection.jsx:314
 msgid "Post collection"
-msgstr "Coleção de publicações"
+msgstr "Publicar coleção"
 
 #: src/pages/collection.jsx:454
 msgid "Report collection…"
@@ -3804,7 +3804,7 @@ msgstr "Erro: {e}"
 
 #: src/pages/collection.jsx:511
 msgid "Switch to collection's server ({serverDomain})"
-msgstr "Alterar para o servidor da coleção ({serverDomain})"
+msgstr "Mudar para o servidor da coleção ({serverDomain})"
 
 #: src/pages/collection.jsx:535
 msgid "Unable to load collection."
@@ -3812,11 +3812,11 @@ msgstr "Não foi possível carregar coleção."
 
 #: src/pages/collection.jsx:553
 msgid "<link><icon/> Collection</link> by <name/>"
-msgstr "<link><icon/> Coleção</link> por <name/>"
+msgstr "<link><icon/> Coleção</link> de <name/>"
 
 #: src/pages/collection.jsx:630
 msgid "No accounts in this collection yet."
-msgstr "Não há contas nesta coleção ainda."
+msgstr "Não há contas nesta coleção."
 
 #: src/pages/collection.jsx:693
 msgid "Marked as sensitive"

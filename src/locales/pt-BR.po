@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-12 17:33\n"
+"PO-Revision-Date: 2026-07-12 18:50\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -174,7 +174,7 @@ msgstr "Copiar usuário"
 #: src/components/related-actions.jsx:896
 #: src/components/shortcuts-settings.jsx:1099
 msgid "QR code"
-msgstr "QR Code"
+msgstr "QR code"
 
 #: src/components/account-info.jsx:652
 msgid "Go to original profile page"
@@ -196,7 +196,7 @@ msgstr "Editar perfil"
 
 #: src/components/account-info.jsx:725
 msgid "In Memoriam"
-msgstr "Em memória"
+msgstr "Memorial"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
@@ -692,11 +692,11 @@ msgstr "Editando publicação original"
 
 #: src/components/compose.jsx:1316
 msgid "Poll must have at least 2 options"
-msgstr "A enquete precisa ter ao menos 2 opções"
+msgstr "A enquete precisa ter pelo menos 2 escolhas"
 
 #: src/components/compose.jsx:1320
 msgid "Some poll choices are empty"
-msgstr "Certas opções estão vazias"
+msgstr "Certas escolhas da enquete estão vazias"
 
 #: src/components/compose.jsx:1333
 msgid "Some media have no descriptions. Continue?"
@@ -736,7 +736,7 @@ msgstr "Perguntar"
 
 #: src/components/compose.jsx:1564
 msgid "What are you doing?"
-msgstr "O que você está fazendo?"
+msgstr "O que está fazendo?"
 
 #: src/components/compose.jsx:1637
 msgid "Mark media as sensitive"
@@ -782,7 +782,7 @@ msgstr "Local"
 #: src/pages/settings.jsx:305
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
-msgstr "Publicar silencioso"
+msgstr "Silencioso"
 
 #: src/components/compose.jsx:2058
 #: src/components/status.jsx:2443
@@ -1337,7 +1337,7 @@ msgstr "Notificações"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr "Opções"
+msgstr "Configurações"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
@@ -1732,7 +1732,7 @@ msgstr "Atalhos / Colunas…"
 #: src/components/nav-menu.jsx:409
 #: src/components/nav-menu.jsx:423
 msgid "Settings…"
-msgstr "Opções…"
+msgstr "Configurações…"
 
 #: src/components/nav-menu.jsx:453
 #: src/components/nav-menu.jsx:488
@@ -2139,16 +2139,16 @@ msgstr "Expandir…"
 #: src/components/quote-settings-sheet.jsx:37
 #: src/pages/settings.jsx:341
 msgid "Quote settings updated"
-msgstr "Opções de citação atualizadas"
+msgstr "Ajustes de citação atualizadas"
 
 #: src/components/quote-settings-sheet.jsx:47
 #: src/pages/settings.jsx:343
 msgid "Failed to update quote settings"
-msgstr "Falhou ao atualizar opções de citação"
+msgstr "Falhou ao atualizar ajustes de citação"
 
 #: src/components/quote-settings-sheet.jsx:66
 msgid "Quote settings for this post"
-msgstr "Opções de citação para esta publicação"
+msgstr "Ajustes de citação para esta publicação"
 
 #: src/components/quote-suggestion.jsx:19
 msgid "Turn link into a quote?"
@@ -2674,7 +2674,7 @@ msgstr "Máximo {SHORTCUTS_LIMIT} atalhos"
 #: src/components/shortcuts-settings.jsx:475
 #: src/pages/accounts.jsx:364
 msgid "Import/export"
-msgstr "Importar/Exportar"
+msgstr "Importar/exportar"
 
 #: src/components/shortcuts-settings.jsx:485
 msgid "Add column…"
@@ -2714,7 +2714,7 @@ msgstr "Lista"
 
 #: src/components/shortcuts-settings.jsx:806
 msgid "Import/Export <0>Shortcuts</0>"
-msgstr "Importar/Exportar <0>atalhos</0>"
+msgstr "Importar/exportar <0>atalhos</0>"
 
 #: src/components/shortcuts-settings.jsx:824
 msgid "Paste shortcuts here"
@@ -2758,7 +2758,7 @@ msgstr "Não há atalhos novos para importar"
 
 #: src/components/shortcuts-settings.jsx:1023
 msgid "Shortcuts imported. Exceeded max {SHORTCUTS_LIMIT}, so the rest are not imported."
-msgstr "Atalhos importados. Máximo excedido {SHORTCUTS_LIMIT}, então o resto não será importado."
+msgstr "Atalhos importados. Limite máximo de {SHORTCUTS_LIMIT} excedido, os restantes não serão importados."
 
 #: src/components/shortcuts-settings.jsx:1024
 #: src/components/shortcuts-settings.jsx:1048
@@ -2811,11 +2811,11 @@ msgstr "Sincronizar com o servidor"
 
 #: src/components/shortcuts-settings.jsx:1166
 msgid "Shortcut settings copied"
-msgstr "Opções de atalhos copiados"
+msgstr "Ajustes de atalho copiado"
 
 #: src/components/shortcuts-settings.jsx:1169
 msgid "Unable to copy shortcut settings"
-msgstr "Impossível copiar opções de atalho"
+msgstr "Não foi possível copiar ajustes de atalho"
 
 #: src/components/shortcuts-settings.jsx:1199
 msgid "Share"
@@ -2832,7 +2832,7 @@ msgstr "Atalhos brutos JSON"
 
 #: src/components/shortcuts-settings.jsx:1230
 msgid "Import/export settings from/to server (Very experimental)"
-msgstr "Importar/exportar opções do/no servidor (Bastante experimental)"
+msgstr "Importar/exportar configurações do/no servidor (Bastante experimental)"
 
 #: src/components/status.jsx:293
 msgid "Private posts cannot be quoted"
@@ -3059,7 +3059,7 @@ msgstr "Fixar ao perfil"
 #: src/components/status.jsx:1626
 #: src/pages/settings.jsx:315
 msgid "Quote settings"
-msgstr "Opções de citação"
+msgstr "Ajustes de citação"
 
 #: src/components/status.jsx:1659
 msgid "Delete this post?"
@@ -4215,7 +4215,7 @@ msgstr "Contas automáticas"
 #: src/pages/notifications.jsx:764
 #: src/pages/notifications.jsx:1121
 msgid "Notifications settings"
-msgstr "Opções de notificação"
+msgstr "Notificações"
 
 #: src/pages/notifications.jsx:782
 msgid "New notifications"
@@ -4263,7 +4263,7 @@ msgstr "Impossível carregar notificações"
 
 #: src/pages/notifications.jsx:1152
 msgid "Notifications settings updated"
-msgstr "Opções de notificação atualizada"
+msgstr "Notificações atualizadas"
 
 #: src/pages/notifications.jsx:1160
 msgid "Filter notifications from:"
@@ -4444,7 +4444,7 @@ msgstr "Insira o termo de sua busca ou copie um URL acima para iniciar."
 
 #: src/pages/settings.jsx:105
 msgid "Settings"
-msgstr "Opções"
+msgstr "Configurações"
 
 #: src/pages/settings.jsx:114
 msgid "Appearance"
@@ -4472,7 +4472,7 @@ msgstr "Idioma de exibição"
 
 #: src/pages/settings.jsx:240
 msgid "Volunteer translations"
-msgstr "Traduzido por voluntários!"
+msgstr "Traduzido por voluntários"
 
 #: src/pages/settings.jsx:255
 msgid "Keep navigation bars visible while scrolling"
@@ -4480,7 +4480,7 @@ msgstr "Manter barras de navegação enquanto rola"
 
 #: src/pages/settings.jsx:263
 msgid "Posting"
-msgstr "Publicando"
+msgstr "Ao publicar"
 
 #: src/pages/settings.jsx:269
 msgid "Default visibility"
@@ -4502,7 +4502,7 @@ msgstr "Falhou ao atualizar visibilidade padrão"
 
 #: src/pages/settings.jsx:366
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
-msgstr "Sincronizado com as opções do servidor. <0>Vá para seu servidor ({instance}) para mais opções.</0>"
+msgstr "Sincronizado com as configurações do seu servidor. <0>Vá para {instance} para mais configurações.</0>"
 
 #: src/pages/settings.jsx:383
 msgid "Wellbeing"
@@ -4534,7 +4534,7 @@ msgstr "Carrossel de impulsos"
 
 #: src/pages/settings.jsx:471
 msgid "Post translation"
-msgstr "Tradução da publicação"
+msgstr "Tradução das publicações"
 
 #: src/pages/settings.jsx:482
 msgid "Translate to "
@@ -4547,7 +4547,7 @@ msgstr "Idioma do sistema ({systemTargetLanguageText})"
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
 #: src/pages/settings.jsx:519
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
-msgstr "{0, plural, =0 {Ocultar o botão de \"Traduzir\" em:} other {Ocultar o botão de \"Traduzir\" por (#):}}"
+msgstr "{0, plural, =0 {Ocultar botão de tradução em:} other {Ocultar botão de tradução em #:}}"
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
@@ -4555,11 +4555,11 @@ msgstr "Nota: este recurso usa serviços de tradução externa, feito por <0>{TR
 
 #: src/pages/settings.jsx:602
 msgid "Auto inline translation"
-msgstr "Tradução automática"
+msgstr "Tradução automática inline"
 
 #: src/pages/settings.jsx:606
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Exibe tradução automaticamente para publicações na timeline. Somente funciona para publicações <0>curtas</0>, sem aviso de conteúdo, mídia ou enquete."
+msgstr "Traduz automaticamente as publicações da timeline. Só funciona para publicações <0>curtas</0> sem alerta de conteúdo, mídia ou enquete."
 
 #: src/pages/settings.jsx:627
 msgid "Paginated timeline (beta)"
@@ -4591,11 +4591,11 @@ msgstr "Nota: Esse recurso usa serviços externos IA, desenvolvido por <0>img-al
 
 #: src/pages/settings.jsx:724
 msgid "\"Cloud\" import/export for shortcuts settings"
-msgstr "Opções de exportação/importação \"nuvem\" para atalhos"
+msgstr "Exportação/importação na \"nuvem\" para ajustes de atalho"
 
 #: src/pages/settings.jsx:729
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
-msgstr "⚠️⚠️⚠️ Muito experimental.<0/>Armazenado nas notas do seu perfil. Notas (privadas) do perfil são mais usadas para outros perfis, e oculto para o próprio perfil."
+msgstr "⚠️⚠️⚠️ Bastante experimental.<0/>Armazenado nas notas do seu perfil. Notas (privadas) do perfil são normalmente usadas para outros perfis e ocultas para o próprio perfil."
 
 #: src/pages/settings.jsx:740
 msgid "Note: This feature uses currently-logged-in server API."

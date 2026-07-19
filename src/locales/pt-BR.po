@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-19 17:49\n"
+"PO-Revision-Date: 2026-07-19 19:34\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -608,7 +608,7 @@ msgstr "Excluir enquete"
 
 #: src/components/compose.jsx:124
 msgid "Take photo or video"
-msgstr "Captar foto ou vídeo"
+msgstr "Tirar foto ou vídeo"
 
 #: src/components/compose.jsx:125
 msgid "Add media"
@@ -688,7 +688,7 @@ msgstr "Respondendo à publicação de @{0}"
 
 #: src/components/compose.jsx:1247
 msgid "Editing source post"
-msgstr "Editando publicação original"
+msgstr "Editando a publicação original"
 
 #: src/components/compose.jsx:1316
 msgid "Poll must have at least 2 options"
@@ -710,7 +710,7 @@ msgstr "Anexo #{i} falhou"
 #: src/components/status.jsx:2564
 #: src/components/timeline.jsx:1062
 msgid "Content warning"
-msgstr "Aviso de conteúdo"
+msgstr "Alerta de conteúdo"
 
 #: src/components/compose.jsx:1551
 #: src/components/compose.jsx:1697
@@ -820,7 +820,7 @@ msgstr "Baixando GIF…"
 
 #: src/components/compose.jsx:2225
 msgid "Failed to download GIF"
-msgstr "Houve um erro ao baixar GIF"
+msgstr "Falhou ao baixar GIF"
 
 #. placeholder {0}: NF(i18n.locale).format(emojis.length - max)
 #: src/components/custom-emojis-modal.jsx:106
@@ -918,7 +918,7 @@ msgstr "Citar"
 
 #: src/components/edit-history-controls.jsx:21
 msgid "Edit History Snapshots"
-msgstr "Editar histórico de instantâneos"
+msgstr "Editar histórico de snapshots"
 
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:208
@@ -1229,7 +1229,7 @@ msgstr "Abrir detalhes da publicação ou mídia"
 
 #: src/components/keyboard-shortcuts-help.jsx:106
 msgid "Expand content warning or<0/>toggle expanded/collapsed thread"
-msgstr "Expandir aviso de conteúdo ou<0/>alternar tópico expandido/colapsado"
+msgstr "Expandir alerta de conteúdo ou<0/>alternar tópico expandido/colapsado"
 
 #: src/components/keyboard-shortcuts-help.jsx:115
 msgid "Close post or dialogs"
@@ -1485,11 +1485,11 @@ msgstr "Gerando descrição. Por favor, espere…"
 #. placeholder {0}: e.message
 #: src/components/media-attachment.jsx:499
 msgid "Failed to generate description: {0}"
-msgstr "Houve um erro ao gerar descrição: {0}"
+msgstr "Falhou ao gerar descrição: {0}"
 
 #: src/components/media-attachment.jsx:500
 msgid "Failed to generate description"
-msgstr "Houve um erro ao gerar descrição"
+msgstr "Falhou ao gerar descrição"
 
 #: src/components/media-attachment.jsx:512
 #: src/components/media-attachment.jsx:518
@@ -1500,7 +1500,7 @@ msgstr "Gerar descrição…"
 #. placeholder {0}: e?.message ? `: ${e.message}` : ''
 #: src/components/media-attachment.jsx:558
 msgid "Failed to generate description{0}"
-msgstr "Houve um erro ao gerar descrição{0}"
+msgstr "Falhou ao gerar descrição{0}"
 
 #. placeholder {0}: localeCode2Text(lang)
 #: src/components/media-attachment.jsx:573
@@ -1525,7 +1525,7 @@ msgstr "Tentando descrever imagem. Por favor, espere…"
 
 #: src/components/media-modal.jsx:444
 msgid "Failed to describe image"
-msgstr "Houve um erro ao descrever imagem"
+msgstr "Falhou ao descrever imagem"
 
 #: src/components/media-modal.jsx:454
 msgid "Describe image…"
@@ -3192,7 +3192,7 @@ msgstr "Histórico de edições"
 
 #: src/components/status.jsx:3511
 msgid "Failed to load history"
-msgstr "Houve um erro ao carregar histórico"
+msgstr "Falhou ao carregar histórico"
 
 #: src/components/status.jsx:3516
 msgid "Loading…"
@@ -3275,7 +3275,7 @@ msgstr "Auto ({0})"
 
 #: src/components/translation-block.jsx:310
 msgid "Failed to translate"
-msgstr "Houve um erro ao traduzir"
+msgstr "Falhou ao traduzir"
 
 #: src/compose.jsx:38
 msgid "Editing source status"
@@ -4142,7 +4142,7 @@ msgstr "Não há listas ainda."
 #: src/pages/login.jsx:125
 #: src/pages/login.jsx:137
 msgid "Failed to register application"
-msgstr "Houve um erro ao registrar aplicação"
+msgstr "Falhou ao registrar aplicação"
 
 #: src/pages/login.jsx:246
 msgid "server domain"
@@ -4665,11 +4665,11 @@ msgstr "A"
 #: src/pages/settings.jsx:1258
 #: src/pages/settings.jsx:1263
 msgid "Failed to update subscription. Please try again."
-msgstr "Houve um erro ao atualizar inscrição. Tente novamente."
+msgstr "Falhou ao atualizar inscrição. Tente novamente."
 
 #: src/pages/settings.jsx:1269
 msgid "Failed to remove subscription. Please try again."
-msgstr "Houve um erro ao cancelar inscrição. Tente novamente."
+msgstr "Falhou ao cancelar inscrição. Tente novamente."
 
 #: src/pages/settings.jsx:1276
 msgid "Push Notifications (beta)"
@@ -4732,7 +4732,7 @@ msgstr "Você não está conectado. Interações como (respostas, impulsos, etc.
 
 #: src/pages/status.jsx:1117
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr "Esta publicação é de outro servidor (<0>{instance}</0>). As interações (respostas, impulsos, etc) estão indisponíveis."
+msgstr "Esta publicação é de outro servidor (<0>{instance}</0>). As interações (respostas, impulsos, etc.) estão indisponíveis."
 
 #: src/pages/status.jsx:1152
 msgid "Switch to my server to enable interactions"
@@ -4885,7 +4885,7 @@ msgstr "Captura de tela do Acompanhamento"
 
 #: src/pages/welcome.jsx:157
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
-msgstr "Uma linha de tempo separada para seu seguindo. Uma interface inspirada em e-mails para ordenar e filtrar publicações."
+msgstr "Uma timeline separada para contas seguidas. Uma interface inspirada em emails para ordenar e filtrar publicações."
 
 #: src/pages/welcome.jsx:167
 msgid "Screenshot of nested comments thread"

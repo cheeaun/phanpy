@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-19 15:29\n"
+"PO-Revision-Date: 2026-07-19 17:49\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1563,7 +1563,7 @@ msgstr "Publicação agendada"
 
 #: src/components/modals.jsx:94
 msgid "Post published. Check it out."
-msgstr "Publicado. Dê uma conferida."
+msgstr "Publicado com sucesso. Dê uma olhada."
 
 #: src/components/modals.jsx:96
 msgid "Reply scheduled"
@@ -1571,11 +1571,11 @@ msgstr "Resposta agendada"
 
 #: src/components/modals.jsx:97
 msgid "Reply posted. Check it out."
-msgstr "Resposta publicada. Dê uma conferida."
+msgstr "Reposta publicada com sucesso. Dê uma olhada."
 
 #: src/components/modals.jsx:98
 msgid "Post updated. Check it out."
-msgstr "Publicação atualizada. Dê uma conferida."
+msgstr "Publicação atualizada com sucesso. Dê uma olhada."
 
 #: src/components/nav-menu.jsx:130
 msgid "Menu"
@@ -1899,7 +1899,7 @@ msgstr "[Tipo de notificação desconhecida: {type}]"
 #: src/components/status.jsx:1316
 #: src/components/status.jsx:1326
 msgid "Boosted/Liked by…"
-msgstr "Impulsionado/Curtido por…"
+msgstr "Impulsionado/curtido por…"
 
 #: src/components/notification.jsx:499
 msgid "Liked by…"
@@ -1940,7 +1940,7 @@ msgstr "Link copiado"
 #: src/components/status.jsx:1493
 #: src/pages/collection.jsx:328
 msgid "Unable to copy link"
-msgstr "Impossível copiar o link"
+msgstr "Não foi possível copiar link"
 
 #: src/components/open-link-sheet.jsx:56
 msgid "Open link?"
@@ -2051,7 +2051,7 @@ msgstr "Código HTML copiado"
 
 #: src/components/post-embed-modal.jsx:227
 msgid "Unable to copy HTML code"
-msgstr "Impossível copiar código HTML"
+msgstr "Não foi possível copiar código HTML"
 
 #: src/components/post-embed-modal.jsx:239
 msgid "Media attachments:"
@@ -2109,7 +2109,7 @@ msgstr "Somente visível para você"
 
 #: src/components/private-note-sheet.jsx:69
 msgid "Unable to update private note."
-msgstr "Impossível atualizar nota privada."
+msgstr "Não foi possível atualizar nota privada."
 
 #: src/components/private-note-sheet.jsx:97
 msgid "Save & close"
@@ -2325,7 +2325,7 @@ msgstr "@{username} silenciado até {0}"
 
 #: src/components/related-actions.jsx:711
 msgid "Unable to mute @{username}"
-msgstr "Impossível silenciar @{username}"
+msgstr "Não foi possível silenciar @{username}"
 
 #: src/components/related-actions.jsx:732
 msgid "Remove <0>@{username}</0> from followers?"
@@ -2353,11 +2353,11 @@ msgstr "@{username} bloqueado"
 
 #: src/components/related-actions.jsx:815
 msgid "Unable to unblock @{username}"
-msgstr "Impossível desbloquear @{username}"
+msgstr "Não foi possível desbloquear @{username}"
 
 #: src/components/related-actions.jsx:817
 msgid "Unable to block @{username}"
-msgstr "Impossível bloquear @{username}"
+msgstr "Não foi possível bloquear @{username}"
 
 #: src/components/related-actions.jsx:827
 msgid "Unblock <0>@{username}</0>"
@@ -2438,7 +2438,7 @@ msgstr "Spam"
 
 #: src/components/report-modal.jsx:31
 msgid "Malicious links, fake engagement, or repetitive replies"
-msgstr "Links falsos, interações falsas, ou respostas repetitivas"
+msgstr "Links maliciosos, interações falsas ou respostas repetitivas"
 
 #: src/components/report-modal.jsx:34
 msgid "Illegal"
@@ -2446,15 +2446,15 @@ msgstr "Ilegal"
 
 #: src/components/report-modal.jsx:35
 msgid "Violates the law of your or the server's country"
-msgstr "Viola a lei do servidor ou da sua região"
+msgstr "Viola a lei do seu país ou do país do servidor"
 
 #: src/components/report-modal.jsx:38
 msgid "Server rule violation"
-msgstr "Regra de violação do servidor"
+msgstr "Violação de regra do servidor"
 
 #: src/components/report-modal.jsx:39
 msgid "Breaks specific server rules"
-msgstr "Quebra regras específicas do servidor"
+msgstr "Viola regras específicas do servidor"
 
 #: src/components/report-modal.jsx:40
 msgid "Violation"
@@ -2466,7 +2466,7 @@ msgstr "Outro"
 
 #: src/components/report-modal.jsx:44
 msgid "Issue doesn't fit other categories"
-msgstr "Nenhuma das listadas"
+msgstr "O problema não se encaixa em nenhuma categoria"
 
 #: src/components/report-modal.jsx:111
 msgid "Report Post"
@@ -2490,19 +2490,19 @@ msgstr "Perfil denunciado"
 
 #: src/components/report-modal.jsx:197
 msgid "Unable to report post"
-msgstr "Impossível denunciar publicação"
+msgstr "Não foi possível denunciar publicação"
 
 #: src/components/report-modal.jsx:198
 msgid "Unable to report profile"
-msgstr "Impossível denunciar perfil"
+msgstr "Não foi possível denunciar perfil"
 
 #: src/components/report-modal.jsx:206
 msgid "What's the issue with this post?"
-msgstr "O que tem de errado com a publicação?"
+msgstr "O que há de errado com a publicação?"
 
 #: src/components/report-modal.jsx:207
 msgid "What's the issue with this profile?"
-msgstr "O que tem de errado com o perfil?"
+msgstr "O que há de errado com o perfil?"
 
 #: src/components/report-modal.jsx:276
 msgid "Additional info"
@@ -2510,11 +2510,11 @@ msgstr "Informações adicionais"
 
 #: src/components/report-modal.jsx:318
 msgid "Muted {username}"
-msgstr "Silenciou {username}"
+msgstr "{username} silenciado"
 
 #: src/components/report-modal.jsx:321
 msgid "Unable to mute {username}"
-msgstr "Impossível silenciar {username}"
+msgstr "Não foi possível silenciar {username}"
 
 #: src/components/report-modal.jsx:326
 msgid "Send Report <0>+ Mute profile</0>"
@@ -2526,7 +2526,7 @@ msgstr "{username} bloqueado"
 
 #: src/components/report-modal.jsx:340
 msgid "Unable to block {username}"
-msgstr "Impossível bloquear {username}"
+msgstr "Não foi possível bloquear {username}"
 
 #: src/components/report-modal.jsx:345
 msgid "Send Report <0>+ Block profile</0>"
@@ -2726,7 +2726,7 @@ msgstr "Baixando atalhos salvos do servidor…"
 
 #: src/components/shortcuts-settings.jsx:888
 msgid "Unable to download shortcuts"
-msgstr "Impossível baixar atalhos"
+msgstr "Não foi possível baixar atalhos"
 
 #: src/components/shortcuts-settings.jsx:891
 msgid "Download shortcuts from server"
@@ -2791,7 +2791,7 @@ msgstr "Atalhos copiados"
 
 #: src/components/shortcuts-settings.jsx:1084
 msgid "Unable to copy shortcuts"
-msgstr "Impossível copiar atalhos"
+msgstr "Não foi possível copiar atalhos"
 
 #: src/components/shortcuts-settings.jsx:1136
 msgid "Saving shortcuts to server…"
@@ -2803,7 +2803,7 @@ msgstr "Atalhos salvos"
 
 #: src/components/shortcuts-settings.jsx:1148
 msgid "Unable to save shortcuts"
-msgstr "Impossível salvar atalhos"
+msgstr "Não foi possível salvar atalhos"
 
 #: src/components/shortcuts-settings.jsx:1151
 msgid "Sync to server"
@@ -3018,11 +3018,11 @@ msgstr "Conversa silenciada"
 
 #: src/components/status.jsx:1557
 msgid "Unable to unmute conversation"
-msgstr "Impossível dessilenciar conversa"
+msgstr "Não foi possível dessilenciar conversa"
 
 #: src/components/status.jsx:1558
 msgid "Unable to mute conversation"
-msgstr "Impossível silenciar conversa"
+msgstr "Não foi possível silenciar conversa"
 
 #: src/components/status.jsx:1567
 msgid "Unmute conversation"
@@ -3042,11 +3042,11 @@ msgstr "Publicação fixada no perfil"
 
 #: src/components/status.jsx:1597
 msgid "Unable to unpin post"
-msgstr "Impossível desafixar publicação"
+msgstr "Não foi possível desafixar publicação"
 
 #: src/components/status.jsx:1597
 msgid "Unable to pin post"
-msgstr "Impossível fixar publicação"
+msgstr "Não foi possível fixar publicação"
 
 #: src/components/status.jsx:1606
 msgid "Unpin from profile"
@@ -3071,7 +3071,7 @@ msgstr "Publicação excluída"
 
 #: src/components/status.jsx:1678
 msgid "Unable to delete post"
-msgstr "Impossível excluir publicação"
+msgstr "Não foi possível excluir publicação"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1703
@@ -3418,7 +3418,7 @@ msgstr "Não foi possível carregar publicações"
 #: src/pages/account-statuses.jsx:695
 #: src/pages/account-statuses.jsx:725
 msgid "Unable to fetch account info"
-msgstr "Impossível obter informações da conta"
+msgstr "Não foi possível obter informações da conta"
 
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:702
@@ -3501,7 +3501,7 @@ msgstr "Não há favoritos ainda. Favorite algo primeiramente!"
 
 #: src/pages/bookmarks.jsx:29
 msgid "Unable to load bookmarks."
-msgstr "Impossível carregar favoritos."
+msgstr "Não foi possível carregar favoritos."
 
 #: src/pages/catchup.jsx:57
 msgid "last 1 hour"
@@ -3828,7 +3828,7 @@ msgstr "Não há curtidas ainda. Curta algo primeiramente!"
 
 #: src/pages/favourites.jsx:29
 msgid "Unable to load likes."
-msgstr "Impossível carregar curtidas."
+msgstr "Não foi possível carregar curtidas."
 
 #: src/pages/filters.jsx:23
 msgid "Home and lists"
@@ -3862,7 +3862,7 @@ msgstr "{0, plural, one {# filtro} other {# filtros}}"
 
 #: src/pages/filters.jsx:167
 msgid "Unable to load filters."
-msgstr "Impossível carregar filtros."
+msgstr "Não foi possível carregar filtros."
 
 #: src/pages/filters.jsx:171
 msgid "No filters yet."
@@ -3878,11 +3878,11 @@ msgstr "Editar filtro"
 
 #: src/pages/filters.jsx:346
 msgid "Unable to edit filter"
-msgstr "Impossível editar filtro"
+msgstr "Não foi possível editar filtro"
 
 #: src/pages/filters.jsx:347
 msgid "Unable to create filter"
-msgstr "Impossível criar filtro"
+msgstr "Não foi possível criar filtro"
 
 #: src/pages/filters.jsx:356
 msgid "Title"
@@ -3947,7 +3947,7 @@ msgstr "Excluir filtro?"
 
 #: src/pages/filters.jsx:594
 msgid "Unable to delete filter."
-msgstr "Impossível excluir filtro."
+msgstr "Não foi possível excluir filtro."
 
 #: src/pages/filters.jsx:627
 msgid "Expired"
@@ -3983,7 +3983,7 @@ msgstr "Nada para ver aqui."
 #: src/pages/following2.jsx:136
 #: src/pages/list.jsx:109
 msgid "Unable to load posts."
-msgstr "Impossível carregar publicações."
+msgstr "Não foi possível carregar publicações."
 
 #: src/pages/hashtag.jsx:57
 msgid "{hashtagTitle} (Media only) on {instance}"
@@ -4041,7 +4041,7 @@ msgstr "Não destacado no perfil"
 
 #: src/pages/hashtag.jsx:330
 msgid "Unable to unfeature on profile"
-msgstr "Impossível remover destaque do perfil"
+msgstr "Não foi possível remover destaque do perfil"
 
 #: src/pages/hashtag.jsx:339
 #: src/pages/hashtag.jsx:355
@@ -4062,7 +4062,7 @@ msgstr "Excluir hashtag"
 
 #: src/pages/hashtag.jsx:477
 msgid "{SHORTCUTS_LIMIT, plural, one {Max # shortcut reached. Unable to add shortcut.} other {Max # shortcuts reached. Unable to add shortcut.}}"
-msgstr "{SHORTCUTS_LIMIT, plural, one {Máx. # atalho alcançado. Impossível adicionar atalho.} other {Máx. # atalhos alcançados. Impossível adicionar atalhos.}}"
+msgstr "{SHORTCUTS_LIMIT, plural, one {Limite máximo de # atalho alcançado. Não foi possível adicionar atalho.} other {Limite máximo de # atalhos alcançado. Não foi possível adicionar atalhos.}}"
 
 #: src/pages/hashtag.jsx:506
 msgid "This shortcut already exists"
@@ -4102,7 +4102,7 @@ msgstr "Ir para meu servidor (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:233
 msgid "Unable to fetch notifications."
-msgstr "Impossível obter notificações."
+msgstr "Não foi possível obter notificações."
 
 #: src/pages/home.jsx:254
 msgid "<0>New</0> <1>Follow Requests</1>"
@@ -4114,7 +4114,7 @@ msgstr "Resolvendo…"
 
 #: src/pages/http-route.jsx:82
 msgid "Unable to resolve URL"
-msgstr "Impossível resolver URL"
+msgstr "Não foi possível resolver URL"
 
 #: src/pages/list.jsx:108
 msgid "Nothing yet."
@@ -4186,7 +4186,7 @@ msgstr "Ninguém mencionou você :("
 
 #: src/pages/mentions.jsx:259
 msgid "Unable to load mentions."
-msgstr "Impossível carregar menções."
+msgstr "Não foi possível carregar menções."
 
 #: src/pages/notifications.jsx:135
 msgid "People you don't follow"
@@ -4259,7 +4259,7 @@ msgstr "Ontem"
 
 #: src/pages/notifications.jsx:1069
 msgid "Unable to load notifications"
-msgstr "Impossível carregar notificações"
+msgstr "Não foi possível carregar notificações"
 
 #: src/pages/notifications.jsx:1152
 msgid "Notifications settings updated"
@@ -4299,7 +4299,7 @@ msgstr "As notificações de @{0} não serão mais filtradas."
 
 #: src/pages/notifications.jsx:1415
 msgid "Unable to accept notification request"
-msgstr "Impossível aceitar pedido de notificação"
+msgstr "Não foi possível aceitar solicitação de notificação"
 
 #: src/pages/notifications.jsx:1420
 msgid "Allow"
@@ -4312,7 +4312,7 @@ msgstr "As notificações de @{0} não aparecerá em notificações filtradas."
 
 #: src/pages/notifications.jsx:1446
 msgid "Unable to dismiss notification request"
-msgstr "Impossível descartar pedido de notificação"
+msgstr "Não foi possível descartar solicitação de notificação"
 
 #: src/pages/notifications.jsx:1451
 msgid "Dismiss"
@@ -4653,7 +4653,7 @@ msgstr "Versão copiada"
 
 #: src/pages/settings.jsx:930
 msgid "Unable to copy version string"
-msgstr "Impossível copiar versão"
+msgstr "Não foi possível copiar versão"
 
 #. Preview of one character, in largest size
 #. Preview of one character, in smallest size
@@ -4740,7 +4740,7 @@ msgstr "Alterar para meu servidor para interagir"
 
 #: src/pages/status.jsx:1261
 msgid "Unable to load replies."
-msgstr "Impossível carregar respostas."
+msgstr "Não foi possível carregar respostas."
 
 #: src/pages/status.jsx:1320
 msgid "{months, plural, one {# month later} other {# months later}}"
@@ -4778,7 +4778,7 @@ msgstr "Mostrar conteúdo sensível"
 
 #: src/pages/status.jsx:1657
 msgid "Unable to switch"
-msgstr "Impossível alterar"
+msgstr "Não foi possível alterar"
 
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1664
@@ -4795,7 +4795,7 @@ msgstr "Ver histórico de edição de snapshots"
 
 #: src/pages/status.jsx:1737
 msgid "Unable to load post"
-msgstr "Impossível carregar publicação"
+msgstr "Não foi possível carregar publicação"
 
 #. placeholder {0}: replies.length
 #. placeholder {1}: shortenNumber(replies.length)

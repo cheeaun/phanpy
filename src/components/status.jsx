@@ -2109,7 +2109,7 @@ function Status({
           !withinContext && inReplyToId && inReplyToAccount
             ? 'status-reply-to'
             : ''
-        } visibility-${visibility} ${_pinned ? 'status-pinned' : ''} ${
+        } ${quote ? 'status-quote' : ''} visibility-${visibility} ${_pinned ? 'status-pinned' : ''} ${
           SIZE_CLASS[size]
         } ${_deleted ? 'status-deleted' : ''} ${quoted ? 'status-card' : ''} ${
           isContextMenuOpen ? 'status-menu-open' : ''
@@ -2264,7 +2264,7 @@ function Status({
             href={accountURL}
             tabindex="-1"
             // target="_blank"
-            title={`@${acct}`}
+            title={`@${punycode.toUnicode(acct)}`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();

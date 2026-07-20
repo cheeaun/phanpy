@@ -211,6 +211,10 @@ body.exp-tab-bar-v2 {
     content: '';
     position: absolute;
     border-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-radius: 16px;
+      corner-shape: squircle;
+    }
     z-index: -1;
     transform: scale(0.5);
     opacity: 0;

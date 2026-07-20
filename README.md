@@ -320,7 +320,6 @@ Changelog available here: [CHANGELOG.md](CHANGELOG.md)
 
 These are self-hosted by other wonderful folks.
 
-- [ferengi.one](https://m.ferengi.one/) by [@david@weaknotes.com](https://weaknotes.com/@david)
 - [halo.mookiesplace.com](https://halo.mookiesplace.com) by [@mookie@suigow.xyz](https://suigow.xyz/@mookie)
 - [phanpy.app](https://phanpy.app) by [@bumble@ibe.social](https://ibe.social/@bumble)
 - [phanpy.bauxite.tech](https://phanpy.bauxite.tech) by [@b4ux1t3@hachyderm.io](https://hachyderm.io/@b4ux1t3)
@@ -430,9 +429,11 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13422319/medium/66632a98d73d48e36753d94ebcec9d4f.png" alt="" width="16" height="16" /> rwmpelstilzchen (Esperanto, Hebrew)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16538605/medium/bcdb6e3286b7d6237923f3a9383eed29.png" alt="" width="16" height="16" /> SadmL (Russian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539171/medium/0ce95ef6b3b0566136191fbedc1563d0.png" alt="" width="16" height="16" /> SadmL_AI (Russian)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15285836/medium/793574d70dfda01f351cd05b16a3ac20_default.png" alt="" width="16" height="16" /> scaglio (Italian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16121928/medium/b1dd34dc3e93b64b93b94aedca0c5b7d.jpg" alt="" width="16" height="16" /> Schishka71 (Russian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17206524/medium/1b0a8f9eafe7326be6968c6aed14c872.png" alt="" width="16" height="16" /> seizeheures (Esperanto)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12381015/medium/35e3557fd61d85f9a5b84545d9e3feb4.png" alt="" width="16" height="16" /> shuuji3 (Japanese)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17774255/medium/ab9f642314f34d68e9c1b0f13a769bfa.png" alt="" width="16" height="16" /> Six-Fifteenths (Chinese Simplified)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14565190/medium/79100599131b7776e9803e4b696915a3_default.png" alt="" width="16" height="16" /> Sky_NiniKo (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17757587/medium/c0dfea339a3c1e4853dc2fa11b611789.jpeg" alt="" width="16" height="16" /> SoleneGK (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17237304/medium/7954dfd36547e9d1f13266a52e9aa1b5_default.png" alt="" width="16" height="16" /> StasZin4 (Ukrainian)
@@ -447,6 +448,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14427566/medium/ab733b5044c21867fc5a9d1b22cd2c03.png" alt="" width="16" height="16" /> Vac31. (Lithuanian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16026914/medium/35f400b0799c35e8e5f4556a7fa63544.jpg" alt="" width="16" height="16" /> valtlai (Finnish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16608515/medium/dee237c31a735318507e5a5b1b2b7c1d.png" alt="" width="16" height="16" /> Vasirion (Polish)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/2439/medium/338b9110f89490c66475aed41fedfce1.png" alt="" width="16" height="16" /> vinzv (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16355626/medium/a10a29f0016c6beb94e8219d50e8b8d7.jpeg" alt="" width="16" height="16" /> voitech (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16563757/medium/af4556c13862d1fd593b51084a159b75_default.png" alt="" width="16" height="16" /> voyagercy (Chinese Traditional)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15982109/medium/9c03062bdc1d3c6d384dbfead97c26ba.jpeg" alt="" width="16" height="16" /> xabi_itzultzaile (Basque)

@@ -18,6 +18,10 @@
     border-top: var(--hairline-width) solid var(--outline-color);
     border-bottom: var(--hairline-width) solid var(--outline-color);
     border-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-radius: 16px;
+      corner-shape: squircle;
+    }
 
     ul:last-child {
       border-bottom: none;

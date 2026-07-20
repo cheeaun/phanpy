@@ -551,9 +551,7 @@
           transparent
         );
 
-      @supports (
-        (animation-timeline: scroll()) and (animation-range: 0% 100%)
-      ) {
+      @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
         background-color: transparent;
         animation: show-bg 1s linear both;
         animation-timeline: view(block);

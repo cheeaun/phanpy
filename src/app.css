@@ -1012,8 +1012,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 .timeline:not(.flat) {
   > li.timeline-item-container-type-thread.timeline-item-container-middle:not(
-      .timeline-item-diff-author
-    ) {
+    .timeline-item-diff-author
+  ) {
     > :is(.status-link, .status-focus) {
       > .status > .container {
         > .meta {
@@ -1100,8 +1100,8 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   }
 }
 .status-link:active:not(
-    :has(:is(.media, .poll, .card, .status-card-link, button):active)
-  ) {
+  :has(:is(.media, .poll, .card, .status-card-link, button):active)
+) {
   filter: brightness(0.95);
 }
 
@@ -1264,15 +1264,25 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   border: 1px solid var(--outline-color);
   background-color: var(--bg-blur-color);
   border-radius: 16px;
+  @supports (corner-shape: squircle) {
+    border-radius: 32px;
+    corner-shape: squircle;
+  }
   overflow: clip;
   box-shadow: 0 1px var(--bg-color);
 
   &:has(.status-badge:not(:empty)) {
     border-start-end-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-start-end-radius: 16px;
+    }
   }
 
   .status-carousel.boosts-carousel &:not(.timeline-item-carousel-group &) {
     border-start-start-radius: 8px;
+    @supports (corner-shape: squircle) {
+      border-start-start-radius: 16px;
+    }
   }
 }
 .status-carousel-link::focus {
@@ -1840,6 +1850,10 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
   width: 100%;
   max-width: calc(var(--main-width) - 50px - 16px);
   border-radius: 16px 16px 0 0;
+  @supports (corner-shape: squircle) {
+    border-radius: 32px 32px 0 0;
+    corner-shape: squircle;
+  }
   box-shadow: 0 -1px 32px var(--drop-shadow-color);
   animation: slide-up 0.3s var(--timing-function);
   /* border: 1px solid var(--outline-color); */
@@ -1989,6 +2003,10 @@ body:has(.media-modal-container + .status-deck) .media-post-link {
 .sheet-modal {
   margin: 16px;
   border-radius: 16px;
+  @supports (corner-shape: squircle) {
+    border-radius: 32px;
+    corner-shape: squircle;
+  }
   align-self: safe center;
 }
 
@@ -2091,6 +2109,10 @@ body > .szh-menu-container {
   background-color: var(--bg-color);
   border: 1px solid var(--outline-stronger-color);
   border-radius: 8px;
+  @supports (corner-shape: squircle) {
+    border-radius: 16px;
+    corner-shape: squircle;
+  }
   box-shadow:
     0 3px 8px var(--drop-shadow-color),
     0 6px 32px -6px var(--drop-shadow-color);
@@ -2211,6 +2233,10 @@ body > .szh-menu-container {
     position: absolute;
     inset: var(--menu-item-bg-inset);
     border-radius: 4px;
+    @supports (corner-shape: squircle) {
+      border-radius: 8px;
+      corner-shape: squircle;
+    }
     z-index: -1;
     opacity: 0;
   }
@@ -2625,7 +2651,7 @@ body > .szh-menu-container {
   .header-account {
     animation: peekaboo-header 1s linear both;
     animation-timeline: scroll();
-    animation-range: 0 150px;
+    animation-range: 0 5%;
   }
 }
 
@@ -3182,10 +3208,13 @@ ul.link-list li a .icon {
   .timeline-deck > header .header-grid {
     border-bottom: 0;
     border-radius: 16px;
+    @supports (corner-shape: squircle) {
+      corner-shape: squircle;
+      border-radius: 32px;
+    }
     background-color: var(--bg-faded-blur-color);
     backdrop-filter: blur(16px);
     background-image: none;
-    border-radius: 16px;
     min-height: 4em;
   }
   .timeline-deck > header[hidden] {

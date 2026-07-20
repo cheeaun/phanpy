@@ -12,7 +12,15 @@
   "bracketSameLine": false,
   "bracketSpacing": true,
   "sortPackageJson": false,
-  "ignorePatterns": [".*/**", "*.json", "rollbar.js", "src/data/**", "**/*.md"],
+  "ignorePatterns": [
+    ".*/**",
+    "*.json",
+    "rollbar.js",
+    "src/data/**",
+    "**/*.md",
+    /* oxc_formatter_css (native since v0.57) doesn't support @keyframes entry/exit */
+    "src/components/quote-chain-modal.css"
+  ],
   "sortImports": {
     "groups": [
       "side_effect_style",

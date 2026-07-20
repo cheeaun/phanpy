@@ -12,19 +12,50 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          path: pr-build
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: "npm"
-      - run: npm ci
-      - name: Build and extract bundle sizes
-        run: npm run build:sizes --silent > bundle-sizes.md
-      - name: Debug - show file content
+          cache-dependency-path: pr-build/package-lock.json
+
+      - name: Find latest tag
+        id: latest-tag
         run: |
-          echo "File size:"
-          wc -l bundle-sizes.md
-          echo "First 20 lines:"
-          head -20 bundle-sizes.md
+          TAG=$(cd pr-build && git tag --sort=-v:refname | grep -v '^production$' | head -1)
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v6
+        continue-on-error: true
+        id: checkout-tag
+        with:
+          path: tag-build
+          ref: ${{ steps.latest-tag.outputs.tag }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - parallel:
+          - name: Build tag
+            continue-on-error: true
+            run: |
+              if [ -d "tag-build" ] && [ -f "tag-build/package.json" ]; then
+                cd tag-build && npm ci && NO_COLOR=true npm run build 2>&1 | grep '^dist/' > ../tag-sizes.txt
+              fi
+          - name: Build PR
+            working-directory: pr-build
+            run: |
+              npm ci && NO_COLOR=true npm run build 2>&1 | grep '^dist/' > ../pr-sizes.txt
+
+      - name: Generate diff report
+        env:
+          REF_TAG: ${{ steps.latest-tag.outputs.tag }}
+        run: node pr-build/scripts/bundle-sizes-diff-md.js tag-sizes.txt pr-sizes.txt > bundle-sizes.md
+
       - name: Comment on PR
         uses: marocchino/sticky-pull-request-comment@v2
         with:

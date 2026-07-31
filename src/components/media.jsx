@@ -434,8 +434,13 @@ function Media({
                   data-orientation={orientation}
                   loading="eager"
                   decoding="sync"
+                  draggable={false}
                   style={{
                     'view-transition-name': mediaVTN,
+                    // react-zoom-pan-pinch disables pointer events on imgs,
+                    // breaking the native image context menu (Copy Image, etc.);
+                    // native dragging stays off via draggable={false}
+                    pointerEvents: 'auto',
                   }}
                   onLoad={(e) => {
                     const el = e.target;

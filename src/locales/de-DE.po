@@ -8,7 +8,7 @@ msgstr ""
 "Language: de\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-27 19:04\n"
+"PO-Revision-Date: 2026-08-01 11:11\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -144,7 +144,7 @@ msgstr "Zur Kontoseite gehen"
 #: src/components/timeline.jsx:663
 #: src/components/timeline2.jsx:701
 #: src/pages/home.jsx:237
-#: src/pages/notifications.jsx:1069
+#: src/pages/notifications.jsx:1073
 #: src/pages/status.jsx:1270
 #: src/pages/status.jsx:1746
 msgid "Try again"
@@ -316,7 +316,7 @@ msgstr "Beitragsstatistiken anzeigen"
 #: src/pages/catchup.jsx:1731
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
-#: src/pages/notifications.jsx:1113
+#: src/pages/notifications.jsx:1117
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:100
 #: src/pages/status.jsx:1684
@@ -478,7 +478,7 @@ msgstr "Nicht gelistet"
 #: src/components/quote-settings-sheet.jsx:92
 #: src/components/shortcuts-settings.jsx:732
 #: src/pages/filters.jsx:572
-#: src/pages/notifications.jsx:1185
+#: src/pages/notifications.jsx:1189
 msgid "Save"
 msgstr "Speichern"
 
@@ -1056,7 +1056,7 @@ msgid "No featured profiles."
 msgstr "Keine empfohlenen Profile."
 
 #: src/components/follow-request-buttons.jsx:45
-#: src/pages/notifications.jsx:1169
+#: src/pages/notifications.jsx:1173
 msgid "Accept"
 msgstr "Akzeptieren"
 
@@ -1065,7 +1065,7 @@ msgid "Reject"
 msgstr "Ablehnen"
 
 #: src/components/follow-request-buttons.jsx:79
-#: src/pages/notifications.jsx:1455
+#: src/pages/notifications.jsx:1459
 msgid "Accepted"
 msgstr "Akzeptiert"
 
@@ -1086,7 +1086,7 @@ msgstr "Konten"
 #: src/components/timeline.jsx:628
 #: src/pages/account-collections.jsx:234
 #: src/pages/list.jsx:321
-#: src/pages/notifications.jsx:1093
+#: src/pages/notifications.jsx:1097
 #: src/pages/search.jsx:550
 #: src/pages/status.jsx:1717
 msgid "Show more…"
@@ -1553,7 +1553,7 @@ msgstr "Gefiltert: {filterTitleStr}"
 msgid "Filtered"
 msgstr "Gefiltert"
 
-#: src/components/media.jsx:547
+#: src/components/media.jsx:562
 msgid "Open file"
 msgstr "Datei öffnen"
 
@@ -1669,7 +1669,7 @@ msgstr "Gefällt mir"
 #: src/pages/collection.jsx:265
 #: src/pages/search.jsx:163
 msgid "Collections"
-msgstr ""
+msgstr "Sammlungen"
 
 #: src/components/nav-menu.jsx:274
 #: src/pages/followed-hashtags.jsx:15
@@ -1988,7 +1988,7 @@ msgstr ""
 
 #: src/components/poll.jsx:222
 msgid "Unable to vote in poll"
-msgstr ""
+msgstr "Abstimmung in der Umfrage nicht möglich"
 
 #: src/components/poll.jsx:279
 msgid "Vote"
@@ -3314,11 +3314,11 @@ msgstr ""
 
 #: src/pages/account-collections.jsx:192
 msgid "Created by you"
-msgstr ""
+msgstr "Von dir erstellt"
 
 #: src/pages/account-collections.jsx:198
 msgid "Featuring you"
-msgstr ""
+msgstr "Mit deiner Beteiligung"
 
 #. placeholder {0}: collections.length
 #: src/pages/account-collections.jsx:241
@@ -3327,15 +3327,15 @@ msgstr ""
 
 #: src/pages/account-collections.jsx:256
 msgid "Unable to load collections."
-msgstr ""
+msgstr "Sammlungen konnten nicht geladen werden."
 
 #: src/pages/account-collections.jsx:265
 msgid "No collections featuring you yet."
-msgstr ""
+msgstr "Noch keine Sammlung mit deiner Beteiligung vorhanden."
 
 #: src/pages/account-collections.jsx:266
 msgid "No collections yet."
-msgstr ""
+msgstr "Bisher keine Sammlungen vorhanden."
 
 #: src/pages/account-statuses.jsx:287
 msgid "Account posts"
@@ -3365,19 +3365,19 @@ msgstr "Filter zurücksetzen"
 
 #: src/pages/account-statuses.jsx:422
 msgid "Showing replies"
-msgstr ""
+msgstr "Antworten anzeigen"
 
 #: src/pages/account-statuses.jsx:424
 msgid "Hiding replies"
-msgstr ""
+msgstr "Antworten ausblenden"
 
 #: src/pages/account-statuses.jsx:438
 msgid "Showing boosts"
-msgstr ""
+msgstr "Boosts anzeigen"
 
 #: src/pages/account-statuses.jsx:440
 msgid "Hiding boosts"
-msgstr ""
+msgstr "Boosts ausblenden"
 
 #: src/pages/account-statuses.jsx:457
 msgid "Showing posts with media"
@@ -3396,7 +3396,7 @@ msgstr "Zeige Posts in {0}"
 #. placeholder {0}: account?.username
 #: src/pages/account-statuses.jsx:579
 msgid "Search @{0}'s posts"
-msgstr ""
+msgstr "Posts von @{0} durchsuchen"
 
 #: src/pages/account-statuses.jsx:628
 #: src/pages/search.jsx:175
@@ -3785,7 +3785,7 @@ msgstr "Konnte nicht aus der Sammlung entfernt werden"
 
 #: src/pages/collection.jsx:314
 msgid "Post collection"
-msgstr ""
+msgstr "Sammlung posten"
 
 #: src/pages/collection.jsx:454
 msgid "Report collection…"
@@ -3811,11 +3811,11 @@ msgstr "Konnte Sammlung nicht laden."
 
 #: src/pages/collection.jsx:553
 msgid "<link><icon/> Collection</link> by <name/>"
-msgstr ""
+msgstr "<link><icon/> Sammlung</link> von <name/>"
 
 #: src/pages/collection.jsx:630
 msgid "No accounts in this collection yet."
-msgstr ""
+msgstr "Bisher keine Konten in dieser Sammlung."
 
 #: src/pages/collection.jsx:693
 msgid "Marked as sensitive"
@@ -4212,7 +4212,7 @@ msgid "Bot accounts"
 msgstr ""
 
 #: src/pages/notifications.jsx:764
-#: src/pages/notifications.jsx:1117
+#: src/pages/notifications.jsx:1121
 msgid "Notifications settings"
 msgstr "Benachrichtigungseinstellungen"
 
@@ -4252,72 +4252,72 @@ msgstr "Heute"
 msgid "You're all caught up."
 msgstr "Sie sind auf dem neuesten Stand."
 
-#: src/pages/notifications.jsx:1017
+#: src/pages/notifications.jsx:1021
 msgid "Yesterday"
 msgstr "Gestern"
 
-#: src/pages/notifications.jsx:1065
+#: src/pages/notifications.jsx:1069
 msgid "Unable to load notifications"
 msgstr "Benachrichtigungen konnten nicht geladen werden"
 
-#: src/pages/notifications.jsx:1148
+#: src/pages/notifications.jsx:1152
 msgid "Notifications settings updated"
 msgstr "Benachrichtigungseinstellungen aktualisiert"
 
-#: src/pages/notifications.jsx:1156
+#: src/pages/notifications.jsx:1160
 msgid "Filter notifications from:"
 msgstr ""
 
-#: src/pages/notifications.jsx:1172
+#: src/pages/notifications.jsx:1176
 msgid "Filter"
 msgstr "Filtern"
 
-#: src/pages/notifications.jsx:1175
+#: src/pages/notifications.jsx:1179
 msgid "Ignore"
 msgstr "Ignorieren"
 
 #. placeholder {0}: niceDateTime(updatedAtDate)
-#: src/pages/notifications.jsx:1248
+#: src/pages/notifications.jsx:1252
 msgid "Updated <0>{0}</0>"
 msgstr "Aktualisiert <0>{0}</0>"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1316
+#: src/pages/notifications.jsx:1320
 msgid "View notifications from <0>@{0}</0>"
 msgstr "Benachrichtigungen von <0>@{0}</0> anzeigen"
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1337
+#: src/pages/notifications.jsx:1341
 msgid "Notifications from <0>@{0}</0>"
 msgstr "Benachrichtigungen von <0>@{0}</0>"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1406
+#: src/pages/notifications.jsx:1410
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr "Benachrichtigungen von @{0} werden von jetzt an nicht herausgefiltert."
 
-#: src/pages/notifications.jsx:1411
+#: src/pages/notifications.jsx:1415
 msgid "Unable to accept notification request"
 msgstr "Unmöglich, die Benachrichtigungsanfrage anzunehmen"
 
-#: src/pages/notifications.jsx:1416
+#: src/pages/notifications.jsx:1420
 msgid "Allow"
 msgstr "Zulassen"
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1437
+#: src/pages/notifications.jsx:1441
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "Benachrichtigungen von @{0} werden ab jetzt nicht mehr in gefilterten Benachrichtigungen angezeigt."
 
-#: src/pages/notifications.jsx:1442
+#: src/pages/notifications.jsx:1446
 msgid "Unable to dismiss notification request"
 msgstr "Benachrichtigungsanfrage konnte nicht ausgeblendet werden"
 
-#: src/pages/notifications.jsx:1447
+#: src/pages/notifications.jsx:1451
 msgid "Dismiss"
 msgstr "Verwerfen"
 
-#: src/pages/notifications.jsx:1462
+#: src/pages/notifications.jsx:1466
 msgid "Dismissed"
 msgstr "Verworfen"
 
@@ -4566,7 +4566,7 @@ msgstr "Zeitleiste mit Paginierung (Beta)"
 
 #: src/pages/settings.jsx:631
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
-msgstr "Manuelle Paginierung von Zeitleisten-Beiträgen anstelle von unendlichem Scrollen. Funktioniert nur für Home/Folgende Timeline. Auto-Aktualisieren und Boost Karussell wird nicht funktionieren, wenn dies aktiviert ist."
+msgstr "Manuelle Seitentrennung von Beiträgen auf der Zeitleiste anstelle von unendlichem Scrollen. Funktioniert nur für Home/Folgende Timeline. Auto-Aktualisieren und Boost Karussell wird nicht funktionieren, wenn dies aktiviert ist."
 
 #: src/pages/settings.jsx:651
 msgid "GIF Picker for composer"

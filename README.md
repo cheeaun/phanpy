@@ -400,6 +400,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17707804/medium/8804293de4f1835fb9b1b18d656b3e54.png" alt="" width="16" height="16" /> Kweerk1223 (Portuguese, Brazilian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14677260/medium/e9f17e62ab69ed6212a16c94d779e7f3.png" alt="" width="16" height="16" /> Kytta (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16529521/medium/ae6add93a901b0fefa2d9b1077920d73.png" alt="" width="16" height="16" /> llun (Thai)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13707903/medium/f9e08210995ba491338ba872351de791_default.png" alt="" width="16" height="16" /> lorisobi (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16291756/medium/a662122faa4f9a71b259b0e561f923b4.png" alt="" width="16" height="16" /> lucsdev24 (Occitan, Portuguese, Portuguese, Brazilian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16640089/medium/4b7d8d275d7a7bff564adde51e09b473_default.png" alt="" width="16" height="16" /> LukeHong (Chinese Traditional)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13490005/medium/e1135823285a3f2fd88b99e58664763e_default.png" alt="" width="16" height="16" /> M33 (French)

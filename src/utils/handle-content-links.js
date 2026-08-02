@@ -4,6 +4,7 @@ import states from './states';
 const supportsHover = window.matchMedia('(hover: hover)').matches;
 
 function handleContentLinks(opts) {
+  // TODO: Rename this function because it's not just for links
   const {
     mentions = [],
     instance,
@@ -19,9 +20,11 @@ function handleContentLinks(opts) {
 
     let { target } = e;
 
-    // Experiment opening custom emoji in a modal
-    // TODO: Rename this function because it's not just for links
-    if (target.closest('.shortcode-emoji')) {
+    // Experiment opening custom emoji in a modal; skip if inside a link
+    const emoji = target.closest('.shortcode-emoji');
+    const emojiLink = emoji?.closest('a');
+    const emojiInsideLink = emojiLink && e.currentTarget.contains(emojiLink);
+    if (emoji && !emojiInsideLink) {
       const { naturalWidth, naturalHeight, width, height } = target;
       const kindaLargeRatio = 2;
       const kindaLarge =

@@ -437,7 +437,7 @@ function Search({ columnMode, ...props }) {
                 type="button"
                 class="plain"
                 onClick={() => {
-                  loadResults(true);
+                  searchFormRef.current?.submit?.();
                 }}
                 disabled={uiState === 'loading'}
               >

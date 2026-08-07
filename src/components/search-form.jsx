@@ -78,6 +78,9 @@ const SearchForm = forwardRef((props, ref) => {
     blur: () => {
       searchFieldRef.current.blur();
     },
+    submit: () => {
+      formRef.current?.requestSubmit();
+    },
   }));
 
   const searchHistory = useMemo(

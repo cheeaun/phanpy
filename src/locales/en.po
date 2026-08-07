@@ -84,7 +84,7 @@ msgstr ""
 
 #: src/components/account-info-mini.jsx:57
 #: src/components/account-info.jsx:800
-#: src/components/compose.jsx:2055
+#: src/components/compose.jsx:2071
 #: src/pages/settings.jsx:308
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
@@ -275,7 +275,7 @@ msgstr "View post stats"
 #: src/components/collection-add-account.jsx:133
 #: src/components/collection-add-edit.jsx:40
 #: src/components/collection-manage-accounts.jsx:111
-#: src/components/compose.jsx:1128
+#: src/components/compose.jsx:1144
 #: src/components/custom-emojis-modal.jsx:282
 #: src/components/drafts.jsx:57
 #: src/components/edit-profile-sheet.jsx:262
@@ -397,7 +397,7 @@ msgstr "Search accounts"
 
 #: src/components/collection-add-account.jsx:197
 #: src/components/compose-poll.jsx:80
-#: src/components/compose.jsx:1763
+#: src/components/compose.jsx:1779
 #: src/components/mention-modal.jsx:221
 #: src/components/shortcuts-settings.jsx:732
 #: src/pages/list.jsx:388
@@ -454,7 +454,7 @@ msgid "Mark as sensitive"
 msgstr "Mark as sensitive"
 
 #: src/components/collection-add-edit.jsx:183
-#: src/components/compose.jsx:2043
+#: src/components/compose.jsx:2059
 #: src/pages/collection.jsx:686
 #: src/pages/settings.jsx:302
 #: src/utils/visibility-text.jsx:4
@@ -637,7 +637,7 @@ msgid "{0, plural, one {File {1} is not supported.} other {Files {2} are not sup
 msgstr "{0, plural, one {File {1} is not supported.} other {Files {2} are not supported.}}"
 
 #: src/components/compose.jsx:294
-#: src/components/compose.jsx:2189
+#: src/components/compose.jsx:2205
 #: src/components/file-picker-input.jsx:47
 msgid "{maxMediaAttachments, plural, one {You can only attach up to 1 file.} other {You can only attach up to # files.}}"
 msgstr ""
@@ -646,69 +646,69 @@ msgstr ""
 msgid "You have unsaved changes. Discard this post?"
 msgstr "You have unsaved changes. Discard this post?"
 
-#: src/components/compose.jsx:1108
+#: src/components/compose.jsx:1124
 msgid "Pop out"
 msgstr "Pop out"
 
-#: src/components/compose.jsx:1116
+#: src/components/compose.jsx:1132
 msgid "Minimize"
 msgstr "Minimize"
 
-#: src/components/compose.jsx:1152
+#: src/components/compose.jsx:1168
 msgid "Looks like you closed the parent window."
 msgstr "Looks like you closed the parent window."
 
-#: src/components/compose.jsx:1159
+#: src/components/compose.jsx:1175
 msgid "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 msgstr "Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later."
 
-#: src/components/compose.jsx:1164
+#: src/components/compose.jsx:1180
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 msgstr "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
 
-#: src/components/compose.jsx:1210
+#: src/components/compose.jsx:1226
 msgid "Pop in"
 msgstr "Pop in"
 
 #. placeholder {0}: replyToStatus.account.acct ? punycode.toUnicode(replyToStatus.account.acct) : replyToStatus.account.username
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
-#: src/components/compose.jsx:1220
+#: src/components/compose.jsx:1236
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
 msgstr ""
 
 #. placeholder {0}: replyToStatus.account.acct ? punycode.toUnicode(replyToStatus.account.acct) : replyToStatus.account.username
-#: src/components/compose.jsx:1232
+#: src/components/compose.jsx:1248
 msgid "Replying to @{0}’s post"
 msgstr ""
 
-#: src/components/compose.jsx:1247
+#: src/components/compose.jsx:1263
 msgid "Editing source post"
 msgstr ""
 
-#: src/components/compose.jsx:1316
+#: src/components/compose.jsx:1332
 msgid "Poll must have at least 2 options"
 msgstr "Poll must have at least 2 options"
 
-#: src/components/compose.jsx:1320
+#: src/components/compose.jsx:1336
 msgid "Some poll choices are empty"
 msgstr "Some poll choices are empty"
 
-#: src/components/compose.jsx:1333
+#: src/components/compose.jsx:1349
 msgid "Some media have no descriptions. Continue?"
 msgstr "Some media have no descriptions. Continue?"
 
-#: src/components/compose.jsx:1390
+#: src/components/compose.jsx:1406
 msgid "Attachment #{i} failed"
 msgstr "Attachment #{i} failed"
 
-#: src/components/compose.jsx:1519
+#: src/components/compose.jsx:1535
 #: src/components/status.jsx:2564
 #: src/components/timeline.jsx:1062
 msgid "Content warning"
 msgstr ""
 
-#: src/components/compose.jsx:1551
-#: src/components/compose.jsx:1697
+#: src/components/compose.jsx:1567
+#: src/components/compose.jsx:1713
 #: src/components/edit-profile-sheet.jsx:692
 #: src/components/import-accounts-selection.jsx:175
 #: src/components/open-link-sheet.jsx:74
@@ -717,79 +717,79 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/components/compose.jsx:1559
+#: src/components/compose.jsx:1575
 msgid "Post your reply"
 msgstr "Post your reply"
 
-#: src/components/compose.jsx:1561
+#: src/components/compose.jsx:1577
 msgid "Edit your post"
 msgstr "Edit your post"
 
-#: src/components/compose.jsx:1563
+#: src/components/compose.jsx:1579
 msgid "Ask a question"
 msgstr "Ask a question"
 
-#: src/components/compose.jsx:1564
+#: src/components/compose.jsx:1580
 msgid "What are you doing?"
 msgstr "What are you doing?"
 
-#: src/components/compose.jsx:1637
+#: src/components/compose.jsx:1653
 msgid "Mark media as sensitive"
 msgstr ""
 
-#: src/components/compose.jsx:1677
+#: src/components/compose.jsx:1693
 msgid "Posting on <0/>"
 msgstr "Posting on <0/>"
 
-#: src/components/compose.jsx:1975
+#: src/components/compose.jsx:1991
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:301
 #: src/pages/settings.jsx:350
 msgid "Anyone can quote"
 msgstr "Anyone can quote"
 
-#: src/components/compose.jsx:1978
+#: src/components/compose.jsx:1994
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:302
 #: src/pages/settings.jsx:353
 msgid "Your followers can quote"
 msgstr "Your followers can quote"
 
-#: src/components/compose.jsx:1981
+#: src/components/compose.jsx:1997
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:303
 #: src/pages/settings.jsx:356
 msgid "Only you can quote"
 msgstr "Only you can quote"
 
-#: src/components/compose.jsx:2021
+#: src/components/compose.jsx:2037
 msgid "Quotes can't be embedded in private mentions."
 msgstr "Quotes can't be embedded in private mentions."
 
-#: src/components/compose.jsx:2048
+#: src/components/compose.jsx:2064
 #: src/components/nav-menu.jsx:367
 #: src/components/shortcuts-settings.jsx:168
 #: src/utils/visibility-text.jsx:5
 msgid "Local"
 msgstr ""
 
-#: src/components/compose.jsx:2052
+#: src/components/compose.jsx:2068
 #: src/pages/settings.jsx:305
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "Quiet public"
 
-#: src/components/compose.jsx:2058
+#: src/components/compose.jsx:2074
 #: src/components/status.jsx:2443
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr ""
 
-#: src/components/compose.jsx:2114
+#: src/components/compose.jsx:2130
 msgid "Schedule"
 msgstr "Schedule"
 
-#: src/components/compose.jsx:2116
+#: src/components/compose.jsx:2132
 #: src/components/keyboard-shortcuts-help.jsx:165
 #: src/components/status.jsx:1107
 #: src/components/status.jsx:1156
@@ -800,20 +800,20 @@ msgstr "Schedule"
 msgid "Reply"
 msgstr ""
 
-#: src/components/compose.jsx:2118
+#: src/components/compose.jsx:2134
 msgid "Update"
 msgstr "Update"
 
-#: src/components/compose.jsx:2119
+#: src/components/compose.jsx:2135
 msgctxt "Submit button in composer"
 msgid "Post"
 msgstr "Post"
 
-#: src/components/compose.jsx:2201
+#: src/components/compose.jsx:2217
 msgid "Downloading GIF…"
 msgstr "Downloading GIF…"
 
-#: src/components/compose.jsx:2225
+#: src/components/compose.jsx:2241
 msgid "Failed to download GIF"
 msgstr "Failed to download GIF"
 

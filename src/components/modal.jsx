@@ -1,7 +1,7 @@
 import './modal.css';
 
 import { createPortal } from 'preact/compat';
-import { useEffect, useLayoutEffect, useRef } from 'preact/hooks';
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import store from '../utils/store';
@@ -19,6 +19,19 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
   if (!children) return null;
 
   const modalRef = useRef();
+  // Keep hotkey/CloseWatcher/ref registrations stable across renders.
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  });
+  const handleClose = useCallback(() => {
+    onCloseRef.current?.();
+  }, []);
+  const modalRefCallback = useCallback((node) => {
+    modalRef.current = node;
+    escRef.current = node?.querySelector?.('[tabindex="-1"]') || node;
+  }, []);
+
   useEffect(() => {
     let timer = setTimeout(() => {
       const focusElement = modalRef.current?.querySelector('[tabindex="-1"]');
@@ -34,11 +47,11 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
     'esc',
     () => {
       setTimeout(() => {
-        onClose?.();
+        handleClose();
       }, 0);
     },
     {
-      enabled: !supportsCloseWatcher && !!onClose,
+      enabled: !supportsCloseWatcher && !!onCloseRef.current,
       // Using keyup and setTimeout above
       // This will run "later" to prevent clash with esc handlers from other components
       keydown: false,
@@ -46,9 +59,9 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
       useKey: true,
       ignoreEventWhen: (e) => e.metaKey || e.ctrlKey || e.altKey || e.shiftKey,
     },
-    [onClose],
+    [],
   );
-  useCloseWatcher(onClose, [onClose]);
+  useCloseWatcher(handleClose, []);
 
   useEffect(() => {
     const $deckContainers = document.querySelectorAll('.deck-container');
@@ -75,7 +88,7 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
         $deckContainer.removeAttribute('inert');
       });
     };
-  }, [children, minimized]);
+  }, [minimized]);
 
   const $meta = useRef();
   const metaColor = useRef();
@@ -129,14 +142,11 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
       }
       document.documentElement.style.removeProperty('--meta-theme-color');
     };
-  }, [children, minimized]);
+  }, [minimized]);
 
   const Modal = (
     <div
-      ref={(node) => {
-        modalRef.current = node;
-        escRef.current = node?.querySelector?.('[tabindex="-1"]') || node;
-      }}
+      ref={modalRefCallback}
       className={className}
       onClick={(e) => {
         onClick?.(e);

@@ -340,7 +340,9 @@ These are self-hosted by other wonderful folks.
 
 > Note: Add yours by creating a pull request.
 
-There's also a mobile app wrapper by [@fantinel@hachyderm.io](https://hachyderm.io/@fantinel) called **iPhanpy**: https://github.com/matfantinel/iphanpy
+There are also mobile app wrappers:
+- **[iPhanpy](https://github.com/matfantinel/iphanpy)** by [@fantinel@hachyderm.io](https://hachyderm.io/@fantinel) (iOS) — [App Store](https://apps.apple.com/app/iphanpy-for-mastodon/id6755365082)
+- **[Phandroid](https://code.umrath.dev/thoralf/Phandroid)** by [@thoralf@gruene.social](https://gruene.social/@thoralf) (Android) — [Installation](https://code.umrath.dev/thoralf/Phandroid#installation)
 
 ## Costs
 

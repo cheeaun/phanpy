@@ -1,5 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import prettify from 'html-prettify';
+import punycode from 'punycode/';
 
 import emojifyText from '../utils/emojify-text';
 import showToast from '../utils/show-toast';
@@ -157,7 +158,7 @@ function generateHTMLCode(post, instance, level = 0) {
         — ${emojifyText(
           displayName,
           accountEmojis,
-        )} (@${acct}) ${!!createdAt ? `<a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>` : ''}
+        )} (@${punycode.toUnicode(acct)}) ${!!createdAt ? `<a href="${url}"><time datetime="${createdAtDate.toISOString()}">${createdAtDate.toLocaleString()}</time></a>` : ''}
       </footer>
     </blockquote>
   `;

@@ -342,6 +342,18 @@ export function saveStatus(status, instance, opts) {
     setTimeout(() => {
       unfurlStatus(status.reblog || status, instance);
     }, 100);
+    // Also unfurl quoted status content (links inside quoted posts)
+    const theQuote = status.reblog?.quote || status.quote;
+    const quotedStatus = theQuote?.state
+      ? theQuote.quotedStatus
+      : theQuote?.id
+        ? theQuote
+        : null;
+    if (quotedStatus?.content) {
+      setTimeout(() => {
+        unfurlStatus(quotedStatus, instance);
+      }, 100);
+    }
   }
 }
 

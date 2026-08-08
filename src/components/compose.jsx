@@ -5,6 +5,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { deepEqual } from 'fast-equals';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import punycode from 'punycode/';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { uid } from 'uid/single';
 import { useSnapshot } from 'valtio';
@@ -843,8 +844,24 @@ function Compose({
           }
         : null,
     };
+    // Compare drafts by metadata only, without the heavy fileData/file bytes.
+    // When fileData is present, url is a local object URL — exclude it to
+    // avoid false inequality from unique-per-call blob URLs.
+    const backgroundDraftLight = {
+      ...backgroundDraft,
+      draftStatus: {
+        ...backgroundDraft.draftStatus,
+        mediaAttachments: backgroundDraft.draftStatus.mediaAttachments?.map(
+          (attachment) => {
+            const { fileData, file, ...metadata } = attachment;
+            if (fileData) delete metadata.url;
+            return metadata;
+          },
+        ),
+      },
+    };
     if (
-      !deepEqual(backgroundDraft, prevBackgroundDraft.current) &&
+      !deepEqual(backgroundDraftLight, prevBackgroundDraft.current) &&
       !canClose()
     ) {
       console.debug('not equal', backgroundDraft, prevBackgroundDraft.current);
@@ -860,7 +877,7 @@ function Compose({
         .catch((e) => {
           console.error('DRAFT failed', key, e);
         });
-      prevBackgroundDraft.current = structuredClone(backgroundDraft);
+      prevBackgroundDraft.current = structuredClone(backgroundDraftLight);
     }
   };
   useInterval(saveUnsavedDraft, 5000); // background save every 5s
@@ -1218,7 +1235,9 @@ function Compose({
               {replyToStatusMonthsAgo > 0 ? (
                 <Trans>
                   Replying to @
-                  {replyToStatus.account.acct || replyToStatus.account.username}
+                  {replyToStatus.account.acct
+                    ? punycode.toUnicode(replyToStatus.account.acct)
+                    : replyToStatus.account.username}
                   &rsquo;s post (
                   <strong>
                     {rtf.format(-replyToStatusMonthsAgo, 'month')}
@@ -1228,7 +1247,9 @@ function Compose({
               ) : (
                 <Trans>
                   Replying to @
-                  {replyToStatus.account.acct || replyToStatus.account.username}
+                  {replyToStatus.account.acct
+                    ? punycode.toUnicode(replyToStatus.account.acct)
+                    : replyToStatus.account.username}
                   &rsquo;s post
                 </Trans>
               )}

@@ -3,6 +3,7 @@ import './account-collections.css';
 import { ph } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import punycode from 'punycode/';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
 
@@ -56,6 +57,7 @@ function AccountCollections() {
   }, [uid, masto]);
 
   const { acct } = account || {};
+  const unicodeAcct = acct ? punycode.toUnicode(acct) : '';
 
   // Redirect ?ic=1 to plain /c if not self
   const isSelf = uid === getCurrentAccountID() && instance === currentInstance;
@@ -70,7 +72,7 @@ function AccountCollections() {
     if (isInCollections) {
       title = t`Collections featuring you`;
     } else if (!isSelf) {
-      const acctDisplay = (/@/.test(account.acct) ? '' : '@') + account.acct;
+      const acctDisplay = (/@/.test(account.acct) ? '' : '@') + unicodeAcct;
       title = t`Collections by ${ph({ username: acctDisplay })}`;
     }
   }
@@ -160,7 +162,7 @@ function AccountCollections() {
                       };
                     }}
                   >
-                    <span class="bidi-isolate">@{acct}</span>
+                    <span class="bidi-isolate">@{unicodeAcct}</span>
                   </Link>
                 </div>
               </h1>

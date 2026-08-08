@@ -96,7 +96,9 @@ function RelatedActions({
   const [currentInfo, setCurrentInfo] = useState(null);
   const [isSelf, setIsSelf] = useState(false);
 
-  const acctWithInstance = acct.includes('@') ? acct : `${acct}@${instance}`;
+  const acctWithInstance = punycode.toUnicode(
+    acct.includes('@') ? acct : `${acct}@${instance}`,
+  );
 
   const supportsEndorsements = supports('@mastodon/endorsements');
   const supportsCollections = collectionsSupported();
@@ -551,7 +553,10 @@ function RelatedActions({
                 <Trans>Copy handle</Trans>
                 <br />
                 <span class="more-insignificant bidi-isolate">
-                  @{currentInfo?.acct || acctWithInstance}
+                  @
+                  {currentInfo?.acct
+                    ? punycode.toUnicode(currentInfo.acct)
+                    : acctWithInstance}
                 </span>
               </small>
             </MenuItem>
@@ -606,7 +611,7 @@ function RelatedActions({
                   text: url,
                   arena: avatarStatic,
                   backgroundMask: headerStatic,
-                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                  caption: acctWithInstance,
                   onScannerClick: handleScannerClick,
                 };
               }}
@@ -883,7 +888,7 @@ function RelatedActions({
                   text: url,
                   arena: avatarStatic,
                   backgroundMask: headerStatic,
-                  caption: acct.includes('@') ? acct : `${acct}@${instance}`,
+                  caption: acctWithInstance,
                   onScannerClick: handleScannerClick,
                 };
               }}
@@ -914,7 +919,7 @@ function RelatedActions({
                   <span>
                     {requested
                       ? t`Withdraw follow request?`
-                      : t`Unfollow @${info.acct || info.username}?`}
+                      : t`Unfollow @${info.acct ? punycode.toUnicode(info.acct) : info.username}?`}
                   </span>
                 }
                 menuItemClassName="danger"

@@ -11,6 +11,7 @@ import {
   useRef,
   useState,
 } from 'preact/hooks';
+import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -196,6 +197,7 @@ function AccountInfo({
     roles,
     hideCollections,
   } = info || {};
+  const unicodeAcct = acct ? punycode.toUnicode(acct) : '';
   let headerIsAvatar = false;
   let { header, headerStatic } = info || {};
   if (!header || /missing\.png$/.test(header)) {
@@ -609,9 +611,9 @@ function AccountInfo({
                     </div>
                     <MenuItem
                       onClick={() => {
-                        const handleWithInstance = acct.includes('@')
-                          ? `@${acct}`
-                          : `@${acct}@${instance}`;
+                        const handleWithInstance = unicodeAcct.includes('@')
+                          ? `@${unicodeAcct}`
+                          : `@${unicodeAcct}@${punycode.toUnicode(instance)}`;
                         try {
                           navigator.clipboard.writeText(handleWithInstance);
                           showToast(t`Handle copied`);
@@ -632,9 +634,9 @@ function AccountInfo({
                           text: url,
                           arena: avatarStatic,
                           backgroundMask: headerStatic,
-                          caption: acct.includes('@')
-                            ? acct
-                            : `${acct}@${instance}`,
+                          caption: unicodeAcct.includes('@')
+                            ? unicodeAcct
+                            : `${unicodeAcct}@${punycode.toUnicode(instance)}`,
                           onScannerClick: handleScannerClick,
                         };
                       }}

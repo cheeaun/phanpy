@@ -282,9 +282,11 @@ function AccountStatuses({ columnMode, ...props }) {
 
   const [featuredTags, setFeaturedTags] = useState([]);
 
+  const unicodeAcct = account?.acct ? punycode.toUnicode(account.acct) : '';
+
   let title = t`Account posts`;
   if (account?.acct) {
-    const acctDisplay = (/@/.test(account.acct) ? '' : '@') + account.acct;
+    const acctDisplay = (/^@/.test(account.acct) ? '' : '@') + unicodeAcct;
     const accountDisplay = account?.displayName
       ? `${account.displayName} (${acctDisplay})`
       : acctDisplay;
@@ -623,7 +625,7 @@ function AccountStatuses({ columnMode, ...props }) {
     <>
       <Timeline
         key={id}
-        title={`${account?.acct ? '@' + account.acct : t`Posts`}`}
+        title={`${account?.acct ? '@' + unicodeAcct : t`Posts`}`}
         titleComponent={
           <h1
             class="header-double-lines header-account"
@@ -642,7 +644,7 @@ function AccountStatuses({ columnMode, ...props }) {
               />
             </b>
             <div>
-              <span class="bidi-isolate">@{acct}</span>
+              <span class="bidi-isolate">@{unicodeAcct}</span>
             </div>
           </h1>
         }

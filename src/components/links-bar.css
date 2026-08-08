@@ -67,6 +67,10 @@
     text-decoration: none;
     color: inherit;
     border-radius: 16px;
+    @supports (corner-shape: squircle) {
+      border-radius: 32px;
+      corner-shape: squircle;
+    }
     overflow: hidden;
     background-color: var(--accent-alpha-color);
     border: 4px solid transparent;

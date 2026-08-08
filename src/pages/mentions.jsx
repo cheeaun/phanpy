@@ -53,7 +53,7 @@ function Mentions({ columnMode, ...props }) {
       mentionsIterator.current = masto.v1.notifications
         .list({
           limit: LIMIT,
-          types: ['mention'],
+          types: ['mention', 'quote'],
         })
         .values();
     }
@@ -188,7 +188,7 @@ function Mentions({ columnMode, ...props }) {
         const results = await masto.v1.notifications
           .list({
             limit: 1,
-            types: ['mention'],
+            types: ['mention', 'quote'],
             since_id: latestItem.current,
           })
           .values()

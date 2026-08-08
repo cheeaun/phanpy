@@ -62,7 +62,7 @@
   }
 }
 
-@media (max-width: calc(40em - 1px)) {
+@media (max-width: calc(40em - 1px)), (min-width: 40em) and (hover: none) {
   #app[data-shortcuts-view-mode='tab-menu-bar'] ~ #modal-container > div.min {
     border: 2px solid red;
 

@@ -100,6 +100,10 @@
 
       .device-frame {
         --device-radius: 32px;
+        @supports (corner-shape: squircle) {
+          --device-radius: 64px;
+          corner-shape: squircle;
+        }
         --device-bezel: 10px;
         padding: var(--device-bezel);
         border-radius: var(--device-radius);
@@ -161,13 +165,13 @@
         img {
           box-shadow: 0 0 0 1px #eee;
           border-radius: calc(var(--device-radius) - var(--device-bezel));
+          corner-shape: squircle;
           display: block;
           width: 100%;
           height: auto;
           overflow: clip;
           user-select: none;
           -webkit-user-drag: none;
-          image-rendering: crisp-edges;
 
           @media (prefers-color-scheme: dark) {
             box-shadow: 0 0 0 1px #222;
@@ -256,6 +260,10 @@
         image-rendering: crisp-edges;
         border: 1px solid var(--outline-stronger-color);
         border-radius: 16px;
+        @supports (corner-shape: squircle) {
+          border-radius: 32px;
+          corner-shape: squircle;
+        }
         outline: 1px solid var(--bg-blur-color);
         outline-offset: -2px;
         box-shadow:

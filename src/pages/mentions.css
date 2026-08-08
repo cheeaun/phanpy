@@ -23,4 +23,23 @@
     color: var(--text-color);
     background-color: var(--bg-color);
   }
+
+  /* Quote gradient — only on the mentions page */
+  .status-quote {
+    background: linear-gradient(
+      var(--post-gradient-angle),
+      var(--quote-faded-color),
+      transparent var(--post-gradient-height)
+    );
+  }
+
+  /* Combined reply + quote gradient */
+  .status-reply-to.status-quote {
+    background: linear-gradient(
+      var(--post-gradient-angle),
+      var(--reply-to-faded-color),
+      var(--quote-faded-color),
+      transparent var(--post-gradient-height)
+    );
+  }
 }

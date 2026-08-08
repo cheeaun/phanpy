@@ -523,18 +523,30 @@
 .account-container .account-metadata-box {
   overflow: hidden;
   border-radius: 16px;
+  @supports (corner-shape: squircle) {
+    border-radius: 32px;
+    corner-shape: squircle;
+  }
   display: block;
   text-decoration: none;
 
   & > * {
     margin-bottom: 2px;
     border-radius: 4px;
+    @supports (corner-shape: squircle) {
+      border-radius: 8px;
+      corner-shape: squircle;
+    }
     overflow: hidden;
   }
 
   &:has(+ .account-metadata-box) {
     border-end-start-radius: 4px;
     border-end-end-radius: 4px;
+    @supports (corner-shape: squircle) {
+      border-end-start-radius: 8px;
+      border-end-end-radius: 8px;
+    }
   }
 
   + .account-metadata-box {
@@ -542,6 +554,12 @@
     border-start-end-radius: 4px;
     border-end-start-radius: 16px;
     border-end-end-radius: 16px;
+    @supports (corner-shape: squircle) {
+      border-start-start-radius: 8px;
+      border-start-end-radius: 8px;
+      border-end-start-radius: 32px;
+      border-end-end-radius: 32px;
+    }
   }
 }
 

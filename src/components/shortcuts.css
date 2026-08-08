@@ -263,7 +263,7 @@ shortcuts .tab-bar[hidden] {
   vertical-align: middle;
 }
 
-@media (max-width: calc(40em - 1px)) {
+@media (max-width: calc(40em - 1px)), (min-width: 40em) and (hover: none) {
   #app[data-shortcuts-view-mode='tab-menu-bar'] .deck-container {
     padding-bottom: 52px;
   }

@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-08-17 18:35\n"
+"PO-Revision-Date: 2026-08-17 20:04\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -669,7 +669,7 @@ msgstr "Ŝajnas, ke vi jam havas redaktan fenestron malfermita en la ĉefa fenes
 
 #: src/components/compose.jsx:1180
 msgid "Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?"
-msgstr "Ŝajnas, ke vi jam havas redaktan fenestron malfermitan en la ĉefa fenestro. Enirante ĉi tiun fenestron forĵetos la ŝanĝojn kiujn vi faris. Ĉu daŭrigi?"
+msgstr "Ŝajnas, ke vi jam havas redaktan fenestron malfermitan en la ĉefa fenestro. Enirado de ĉi tiu fenestro forĵetos la ŝanĝojn, kiujn vi faris. Ĉu daŭrigi?"
 
 #: src/components/compose.jsx:1226
 msgid "Pop in"
@@ -679,16 +679,16 @@ msgstr "Montri"
 #. placeholder {1}: rtf.format(-replyToStatusMonthsAgo, 'month')
 #: src/components/compose.jsx:1236
 msgid "Replying to @{0}’s post (<0>{1}</0>)"
-msgstr "Respondante al la afiŝo de @{0} (<0>{1}</0>)"
+msgstr "Respondo al la afiŝo de @{0} (<0>{1}</0>)"
 
 #. placeholder {0}: replyToStatus.account.acct ? punycode.toUnicode(replyToStatus.account.acct) : replyToStatus.account.username
 #: src/components/compose.jsx:1248
 msgid "Replying to @{0}’s post"
-msgstr "Respondante al la afiŝo de @{0}"
+msgstr "Respondo al la afiŝo de @{0}"
 
 #: src/components/compose.jsx:1263
 msgid "Editing source post"
-msgstr "Redaktado de la originala afiŝo"
+msgstr "Redaktado de originala afiŝo"
 
 #: src/components/compose.jsx:1332
 msgid "Poll must have at least 2 options"
@@ -816,7 +816,7 @@ msgstr "Afiŝi"
 
 #: src/components/compose.jsx:2217
 msgid "Downloading GIF…"
-msgstr "Elŝutante movbildon…"
+msgstr "Elŝutado de movbildo…"
 
 #: src/components/compose.jsx:2241
 msgid "Failed to download GIF"
@@ -1480,7 +1480,7 @@ msgstr "Redakti aŭdpriskribon"
 #: src/components/media-attachment.jsx:474
 #: src/components/media-attachment.jsx:528
 msgid "Generating description. Please wait…"
-msgstr "Kreante priskribon. Bonvolu atendi…"
+msgstr "Kreado de priskribo. Bonvolu atendi…"
 
 #. placeholder {0}: e.message
 #: src/components/media-attachment.jsx:499
@@ -1521,7 +1521,7 @@ msgstr "Malfermi originalan plurmedion"
 
 #: src/components/media-modal.jsx:429
 msgid "Attempting to describe image. Please wait…"
-msgstr "Provante priskribi bildon. Bonvolu atendi…"
+msgstr "Provado priskribi bildon. Bonvolu atendi…"
 
 #: src/components/media-modal.jsx:444
 msgid "Failed to describe image"
@@ -2477,7 +2477,7 @@ msgstr "Raporti @{username}"
 
 #: src/components/report-modal.jsx:147
 msgid "Pending review"
-msgstr "Atendante revizion"
+msgstr "Atendanta por revizio"
 
 #: src/components/report-modal.jsx:189
 msgid "Post reported"
@@ -3187,7 +3187,7 @@ msgstr "Montri malgraŭ"
 
 #: src/components/status.jsx:3507
 msgid "Edit History"
-msgstr "Redaktan historion"
+msgstr "Redakto-historio"
 
 #: src/components/status.jsx:3511
 msgid "Failed to load history"
@@ -3257,7 +3257,7 @@ msgstr "Aŭtomate tradukita el {sourceLangText}"
 
 #: src/components/translation-block.jsx:265
 msgid "Translating…"
-msgstr "Tradukante…"
+msgstr "Tradukado…"
 
 #: src/components/translation-block.jsx:268
 msgid "Translate from {sourceLangText} (auto-detected)"
@@ -3278,7 +3278,7 @@ msgstr "Malsukcesis traduki"
 
 #: src/compose.jsx:38
 msgid "Editing source status"
-msgstr "Redaktante la originalan mesaĝon"
+msgstr "Redaktado de originala mesaĝo"
 
 #. placeholder {0}: replyToStatus.account?.acct || replyToStatus.account?.username
 #: src/compose.jsx:40
@@ -3569,7 +3569,7 @@ msgstr "{selectedFilterCategory, select, all {Ĉiuj afiŝoj} original {Originala
 #: src/pages/catchup.jsx:1033
 #: src/pages/catchup.jsx:1057
 msgid "Catch-up <0>beta</0>"
-msgstr "Aktualiĝi <0>beta</0>"
+msgstr "Resumo <0>beta</0>"
 
 #: src/pages/catchup.jsx:1047
 #: src/pages/catchup.jsx:1735
@@ -3582,11 +3582,11 @@ msgstr "Kio estas ĉi tio?"
 
 #: src/pages/catchup.jsx:1066
 msgid "Catch-up is a separate timeline for your followings, offering a high-level view at a glance, with a simple, email-inspired interface to effortlessly sort and filter through posts."
-msgstr "Aktualiĝi estas aparta templinio por viaj sekvantaroj, ofertante altnivelan vidon je unu ekrigardo, kun simpla, retpoŝta interfaco por senpene ordigi kaj filtri afiŝojn."
+msgstr "Resumo estas aparta tempolinio por viaj sekvatoj, ofertante altnivelan vidon je unu ekrigardo, kun simpla, retpoŝta interfaco por senpene ordigi kaj filtri afiŝojn."
 
 #: src/pages/catchup.jsx:1077
 msgid "Preview of Catch-up UI"
-msgstr "Antaŭrigardo de Aktualiĝo UI"
+msgstr "Antaŭrigardo de interfaco \"Resumo\""
 
 #: src/pages/catchup.jsx:1086
 msgid "Let's catch up"
@@ -3610,12 +3610,12 @@ msgstr "Atingi"
 
 #: src/pages/catchup.jsx:1157
 msgid "Overlaps with your last catch-up"
-msgstr "Interkovri kun via lasta aktualiĝo"
+msgstr "Interkovras kun via lasta resumo"
 
 #. placeholder {0}: dtf.format(new Date(lastCatchupEndAt))
 #: src/pages/catchup.jsx:1169
 msgid "Until the last catch-up ({0})"
-msgstr "Ĝis la lasta aktualiĝo ({0})"
+msgstr "Ĝis la lasta resumo ({0})"
 
 #: src/pages/catchup.jsx:1178
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
@@ -3632,17 +3632,17 @@ msgstr "{0, plural, one {# afiŝo} other {# afiŝoj}}"
 
 #: src/pages/catchup.jsx:1216
 msgid "Remove this catch-up?"
-msgstr "Ĉu forigi ĉi tiun aktualiĝon?"
+msgstr "Ĉu forigi ĉi tiun resumon?"
 
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1219
 msgid "Removing Catch-up {0}"
-msgstr "Forigante aktualiĝon {0}"
+msgstr "Forigado de resumo {0}"
 
 #. placeholder {0}: pc.id
 #: src/pages/catchup.jsx:1223
 msgid "Catch-up {0} removed"
-msgstr "Aktualiĝo {0} forigita"
+msgstr "Resumo {0} forigita"
 
 #: src/pages/catchup.jsx:1237
 msgid "Note: Only max 3 will be stored. The rest will be automatically removed."
@@ -3650,7 +3650,7 @@ msgstr "Noto: Nur maksimume 3 estos konservitaj. La resto estos aŭtomate forigi
 
 #: src/pages/catchup.jsx:1252
 msgid "Fetching posts…"
-msgstr "Ricevante afiŝojn…"
+msgstr "Ricevado de afiŝoj…"
 
 #: src/pages/catchup.jsx:1255
 msgid "This might take a while."
@@ -4109,7 +4109,7 @@ msgstr "<0>Nova</0> <1>Petoj de sekvado</1>"
 
 #: src/pages/http-route.jsx:71
 msgid "Resolving…"
-msgstr "Solvante…"
+msgstr "Solvado…"
 
 #: src/pages/http-route.jsx:82
 msgid "Unable to resolve URL"
@@ -4479,7 +4479,7 @@ msgstr "Teni navigaciajn bretojn videblajn dum rulumado"
 
 #: src/pages/settings.jsx:263
 msgid "Posting"
-msgstr "Afiŝante"
+msgstr "Afiŝado"
 
 #: src/pages/settings.jsx:269
 msgid "Default visibility"
@@ -4505,19 +4505,19 @@ msgstr "Sinkronigita kun la agordoj de via servilo. <0>Iru al via servilo ({inst
 
 #: src/pages/settings.jsx:383
 msgid "Wellbeing"
-msgstr ""
+msgstr "Velfarto"
 
 #: src/pages/settings.jsx:396
 msgid "Hide Trending timeline"
-msgstr ""
+msgstr "Kaŝi la tempolinion \"Populara\""
 
 #: src/pages/settings.jsx:408
 msgid "Hide Local timeline"
-msgstr ""
+msgstr "Kaŝi la lokan tempolinion"
 
 #: src/pages/settings.jsx:421
 msgid "Hide Federated timeline"
-msgstr ""
+msgstr "Kaŝi la frataran tempolinion"
 
 #: src/pages/settings.jsx:429
 msgid "Experiments"
@@ -4562,11 +4562,11 @@ msgstr "Aŭtomate montri tradukon por afiŝoj en templinio. Funkcias nur por <0>
 
 #: src/pages/settings.jsx:627
 msgid "Paginated timeline (beta)"
-msgstr ""
+msgstr "Apartigi tempoliniojn per paĝoj (beta)"
 
 #: src/pages/settings.jsx:631
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
-msgstr ""
+msgstr "Permane apartigas tempoliniojn kiel paĝoj, anstataŭ senfina rulumado. Nune funkcias nur por hejma/sekvata tempolinio. Aŭtomata ĝisdatigo kaj karuselo de diskonigoj ne funkcios, se ŝaltita."
 
 #: src/pages/settings.jsx:651
 msgid "GIF Picker for composer"
@@ -4598,7 +4598,7 @@ msgstr "⚠️⚠️⚠️ Tre eksperimenta.<0/>Konservita en la notoj de via pr
 
 #: src/pages/settings.jsx:740
 msgid "Note: This feature uses currently-logged-in server API."
-msgstr ""
+msgstr "Noto: Ĉi tiu funkcio uzas la API de la aktuale ligita servilo."
 
 #: src/pages/settings.jsx:756
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
@@ -4610,7 +4610,7 @@ msgstr "Anstataŭigi tekston kiel blokojn, utilajn kiam oni prenas ekrankopiojn,
 
 #: src/pages/settings.jsx:794
 msgid "Install {CLIENT_NAME}"
-msgstr ""
+msgstr "Instali apon {CLIENT_NAME}"
 
 #: src/pages/settings.jsx:802
 msgid "About"
@@ -4717,7 +4717,7 @@ msgstr "NOTO: Puŝaj sciigoj funkcias nur por <0>unu konto</0>."
 
 #: src/pages/status.jsx:156
 msgid "Unable to load post."
-msgstr ""
+msgstr "Ŝarĝado de afiŝo fiaskis."
 
 #. js-lingui-explicit-id
 #: src/pages/status.jsx:800
@@ -4731,11 +4731,11 @@ msgstr "Vi ne estas ensalutinta. Interagoj (respondi, diskonigi, ktp) ne eblas."
 
 #: src/pages/status.jsx:1117
 msgid "This post is from another server (<0>{instance}</0>). Interactions (reply, boost, etc) are not possible."
-msgstr ""
+msgstr "Ĉi tiu afiŝo estas de alia servilo (<0>{instance}</0>). Interagoj (respondi, diskonigi, ktp) ne eblas."
 
 #: src/pages/status.jsx:1152
 msgid "Switch to my server to enable interactions"
-msgstr ""
+msgstr "Iri al mia servilo por ebligi interagojn"
 
 #: src/pages/status.jsx:1261
 msgid "Unable to load replies."
@@ -4782,15 +4782,15 @@ msgstr "Ne eblas ŝalti"
 #. placeholder {0}: punycode.toUnicode( postInstance, )
 #: src/pages/status.jsx:1664
 msgid "Switch to post's server ({0})"
-msgstr ""
+msgstr "Iri al la servilo de la afiŝo ({0})"
 
 #: src/pages/status.jsx:1667
 msgid "Switch to post's server"
-msgstr ""
+msgstr "Iri al la servilo de la afiŝo"
 
 #: src/pages/status.jsx:1680
 msgid "View Edit History Snapshots"
-msgstr ""
+msgstr "Vidi kaptaĵojn de redakto-historio"
 
 #: src/pages/status.jsx:1737
 msgid "Unable to load post"
@@ -4860,11 +4860,11 @@ msgstr "Konekti vian ekzistantan Mastodon/Fediverson-konton.<0/>Viaj ensalutiloj
 
 #: src/pages/welcome.jsx:96
 msgid "Screenshot of Phanpy home timeline on mobile device"
-msgstr ""
+msgstr "Ekrankopio de hejma tempolinio de Phanpy sur poŝtelefono"
 
 #: src/pages/welcome.jsx:113
 msgid "Screenshot of Phanpy home timeline on tablet device"
-msgstr ""
+msgstr "Ekrankopio de hejma tempolinio de Phanpy sur tabula komputilo"
 
 #: src/pages/welcome.jsx:127
 msgid "Screenshot of Boosts Carousel"
@@ -4880,11 +4880,11 @@ msgstr "Vide apartigu originalajn afiŝojn kaj redividitajn afiŝojn (diskonigit
 
 #: src/pages/welcome.jsx:147
 msgid "Screenshot of Catch-up"
-msgstr ""
+msgstr "Ekrankopio de panelo \"Resumo\""
 
 #: src/pages/welcome.jsx:157
 msgid "A separate timeline for followings. Email-inspired interface to sort and filter posts."
-msgstr ""
+msgstr "Aparta tempolinio por sekvatoj. Interfaco, inspirita de retpoŝto, por ordigado kaj filtrado de afiŝoj."
 
 #: src/pages/welcome.jsx:167
 msgid "Screenshot of nested comments thread"

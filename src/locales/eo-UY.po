@@ -8,7 +8,7 @@ msgstr ""
 "Language: eo\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-08-17 16:16\n"
+"PO-Revision-Date: 2026-08-17 17:38\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -77,7 +77,7 @@ msgstr "Kontrolita"
 #: src/components/account-block.jsx:327
 #: src/components/account-info.jsx:917
 msgid "Joined <0>{0}</0>"
-msgstr "Aliĝis <0>{0}</0>"
+msgstr "Aliĝis je <0>{0}</0>"
 
 #: src/components/account-handle-info.jsx:18
 msgid "username"
@@ -182,17 +182,17 @@ msgstr "Malfermi la originalan profilpaĝon"
 
 #: src/components/account-info.jsx:671
 msgid "View profile image"
-msgstr "Vidi rolfiguron"
+msgstr "Vidi profilbildon"
 
 #: src/components/account-info.jsx:690
 msgid "View profile header"
-msgstr "Vidi fonbildon"
+msgstr "Vidi kapbildon"
 
 #: src/components/account-info.jsx:706
 #: src/components/edit-profile-sheet.jsx:267
 #: src/components/related-actions.jsx:910
 msgid "Edit profile"
-msgstr "Redakti la profilon"
+msgstr "Redakti profilon"
 
 #: src/components/account-info.jsx:725
 msgid "In Memoriam"
@@ -327,7 +327,7 @@ msgstr "Fermi"
 #: src/components/related-actions.jsx:484
 #: src/components/related-actions.jsx:494
 msgid "Add/Remove from Lists"
-msgstr "Aldoni/Forigi el Listoj"
+msgstr "Aldoni/forigi el listoj"
 
 #: src/components/add-remove-lists-sheet.jsx:90
 msgid "Unable to remove from list."
@@ -368,17 +368,17 @@ msgstr "Pli de <0/>"
 #: src/components/collection-account-actions.jsx:35
 #: src/pages/collection.jsx:422
 msgid "Remove me from this collection?"
-msgstr ""
+msgstr "Ĉu forigi min de tiu ĉi kolekto?"
 
 #: src/components/collection-account-actions.jsx:44
 #: src/pages/collection.jsx:431
 msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
-msgstr ""
+msgstr "La kuratoro ne povas realdoni vin al ĉi tiu kolekto dum 24 horoj. Bloku tiun por malebligi, ke tiu aldonas vin al iuj kolektoj."
 
 #: src/components/collection-account-actions.jsx:69
 #: src/pages/collection.jsx:442
 msgid "Remove me…"
-msgstr ""
+msgstr "Forigi min…"
 
 #: src/components/collection-account-actions.jsx:107
 #: src/components/related-actions.jsx:1001
@@ -389,11 +389,11 @@ msgstr "Sekvi"
 
 #: src/components/collection-add-account.jsx:92
 msgid "@{username} added to collection"
-msgstr ""
+msgstr "@{username} aldonita al kolekto"
 
 #: src/components/collection-add-account.jsx:96
 msgid "Unable to add account"
-msgstr ""
+msgstr "Ne povas aldoni konton"
 
 #: src/components/collection-add-account.jsx:148
 #: src/components/mention-modal.jsx:179
@@ -417,28 +417,28 @@ msgstr "Eraro dum ŝargo de kontoj"
 
 #: src/components/collection-add-account.jsx:231
 msgid "These accounts may have opted out of discovery or be on a server that doesn't support collections."
-msgstr ""
+msgstr "Ĉi tiuj kontoj ne permesis malkovradon, aŭ eble estas ĉe la servilo, kiu ne subtenas kolektojn."
 
 #: src/components/collection-add-account.jsx:236
 msgid "These accounts review all follow requests. Followers can add them to collections."
-msgstr ""
+msgstr "Ĉi tiuj kontoj revizias ĉiujn petojn pri abonado. Abonantoj povas aldoni ilin al kolektoj."
 
 #: src/components/collection-add-edit.jsx:45
 #: src/pages/account-collections.jsx:181
 msgid "New collection"
-msgstr ""
+msgstr "Nova kolekto"
 
 #: src/components/collection-add-edit.jsx:45
 msgid "Edit collection"
-msgstr ""
+msgstr "Redakti kolekton"
 
 #: src/components/collection-add-edit.jsx:97
 msgid "Unable to update collection."
-msgstr ""
+msgstr "Ne povas ĝisdatigi kolekton."
 
 #: src/components/collection-add-edit.jsx:98
 msgid "Unable to create collection."
-msgstr ""
+msgstr "Ne povas krei kolekton."
 
 #: src/components/collection-add-edit.jsx:106
 #: src/components/edit-profile-sheet.jsx:574
@@ -448,15 +448,15 @@ msgstr "Nomo"
 
 #: src/components/collection-add-edit.jsx:124
 msgid "Description"
-msgstr ""
+msgstr "Priskribo"
 
 #: src/components/collection-add-edit.jsx:146
 msgid "Language"
-msgstr ""
+msgstr "Lingvo"
 
 #: src/components/collection-add-edit.jsx:169
 msgid "Mark as sensitive"
-msgstr ""
+msgstr "Marki kiel sentema"
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2059
@@ -470,7 +470,7 @@ msgstr "Publika"
 #: src/components/collection-card.jsx:201
 #: src/pages/collection.jsx:680
 msgid "Unlisted"
-msgstr ""
+msgstr "Nelistigita"
 
 #: src/components/collection-add-edit.jsx:192
 #: src/components/edit-profile-sheet.jsx:695
@@ -490,11 +490,11 @@ msgstr "Krei"
 
 #: src/components/collection-add-edit.jsx:199
 msgid "Delete this collection?"
-msgstr ""
+msgstr "Ĉu forigi ĉi tiun kolekton?"
 
 #: src/components/collection-add-edit.jsx:215
 msgid "Unable to delete collection."
-msgstr ""
+msgstr "Ne povas forigi kolekton."
 
 #: src/components/collection-add-edit.jsx:225
 #: src/components/drafts.jsx:126
@@ -509,33 +509,33 @@ msgstr "Forigi…"
 
 #: src/components/collection-card.jsx:178
 msgid "Collection by <0>@{username}</0>"
-msgstr ""
+msgstr "Kolekto de <0>@{username}</0>"
 
 #: src/components/collection-card.jsx:189
 #: src/pages/collection.jsx:668
 msgid "Last updated: <relativeTime/>"
-msgstr ""
+msgstr "Laste ĝisdatigita: <relativeTime/>"
 
 #: src/components/collection-manage-accounts.jsx:89
 msgid "@{username} removed from collection"
-msgstr ""
+msgstr "@{username} forigita de kolekto"
 
 #: src/components/collection-manage-accounts.jsx:93
 msgid "Unable to remove account"
-msgstr ""
+msgstr "Ne povas forigi konton"
 
 #: src/components/collection-manage-accounts.jsx:115
 #: src/pages/collection.jsx:405
 msgid "Manage accounts"
-msgstr ""
+msgstr "Administri kontojn"
 
 #: src/components/collection-manage-accounts.jsx:134
 msgid "Pending"
-msgstr ""
+msgstr "Atendanta"
 
 #: src/components/collection-manage-accounts.jsx:141
 msgid "Remove <0>{username}</0> from this collection?"
-msgstr ""
+msgstr "Ĉu forigi <0>@{username}</0> de ĉi tiu kolekto?"
 
 #: src/components/collection-manage-accounts.jsx:161
 #: src/components/edit-profile-sheet.jsx:473
@@ -547,7 +547,7 @@ msgstr "Forigi…"
 #: src/components/collection-manage-accounts.jsx:175
 #: src/pages/collection.jsx:646
 msgid "Add account"
-msgstr ""
+msgstr "Aldoni konton"
 
 #: src/components/columns.jsx:29
 #: src/components/nav-menu.jsx:188
@@ -579,12 +579,12 @@ msgstr "Planitaj afiŝoj"
 
 #: src/components/compose-button.jsx:194
 msgid "Add to thread"
-msgstr "Aldonu al fadeno"
+msgstr "Aldoni al fadeno"
 
 #. placeholder {0}: i + 1
 #: src/components/compose-poll.jsx:43
 msgid "Choice {0}"
-msgstr "Elekti {0}"
+msgstr "Elekto {0}"
 
 #: src/components/compose-poll.jsx:64
 #: src/components/media-attachment.jsx:384
@@ -596,7 +596,7 @@ msgstr "Forigi"
 
 #: src/components/compose-poll.jsx:96
 msgid "Multiple choice"
-msgstr "Multebla elekto"
+msgstr "Multaj eblaj elektoj"
 
 #: src/components/compose-poll.jsx:99
 msgid "Duration"
@@ -688,7 +688,7 @@ msgstr "Respondante al la afiŝo de @{0}"
 
 #: src/components/compose.jsx:1263
 msgid "Editing source post"
-msgstr "Redaktante la originalan afiŝon"
+msgstr "Redaktado de la originala afiŝo"
 
 #: src/components/compose.jsx:1332
 msgid "Poll must have at least 2 options"
@@ -704,7 +704,7 @@ msgstr "Iuj plurmedioj ne havas priskribojn. Ĉu daŭrigi?"
 
 #: src/components/compose.jsx:1406
 msgid "Attachment #{i} failed"
-msgstr "Eraro aldonante #{i}"
+msgstr "Eraro dum aldonado de kunsendaĵo #{i}"
 
 #: src/components/compose.jsx:1535
 #: src/components/status.jsx:2564
@@ -769,7 +769,7 @@ msgstr "Nur vi povas citi"
 
 #: src/components/compose.jsx:2037
 msgid "Quotes can't be embedded in private mentions."
-msgstr ""
+msgstr "Citaĵoj ne povas esti enkorpigitaj en privataj mencioj."
 
 #: src/components/compose.jsx:2064
 #: src/components/nav-menu.jsx:367
@@ -857,7 +857,7 @@ msgstr "Zomi"
 
 #: src/components/custom-emojis-modal.jsx:412
 msgid "Custom emojis are not available on this server."
-msgstr ""
+msgstr "Propraj emoĝioj ne haveblas ĉe ĉi tiu servilo."
 
 #: src/components/drafts.jsx:62
 #: src/pages/settings.jsx:782
@@ -882,7 +882,7 @@ msgstr "Eraro ricevi respondan staton!"
 
 #: src/components/drafts.jsx:159
 msgid "Error fetching quoted status!"
-msgstr ""
+msgstr "Eraro dum ricevado de citata afiŝo!"
 
 #: src/components/drafts.jsx:187
 msgid "Delete all drafts?"
@@ -918,7 +918,7 @@ msgstr "Citaĵo"
 
 #: src/components/edit-history-controls.jsx:21
 msgid "Edit History Snapshots"
-msgstr ""
+msgstr "Redakti kaptaĵojn de historio"
 
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:208
@@ -986,7 +986,7 @@ msgstr "Ne eblas forigi la kapbildon."
 
 #: src/components/edit-profile-sheet.jsx:296
 msgid "Profile and header pictures have no descriptions. Continue?"
-msgstr ""
+msgstr "Profilbildo kaj kapbildo ne havas priskribojn. Ĉu daŭrigi?"
 
 #: src/components/edit-profile-sheet.jsx:303
 msgid "Profile picture has no description. Continue?"
@@ -1012,7 +1012,7 @@ msgstr "Priskribo de bildo"
 
 #: src/components/edit-profile-sheet.jsx:462
 msgid "Remove header picture?"
-msgstr ""
+msgstr "Ĉu forigi kapbildon?"
 
 #: src/components/edit-profile-sheet.jsx:481
 msgid "Profile picture"
@@ -1020,7 +1020,7 @@ msgstr "Profilbildo"
 
 #: src/components/edit-profile-sheet.jsx:554
 msgid "Remove profile picture?"
-msgstr ""
+msgstr "Ĉu forigi profilbildon?"
 
 #: src/components/edit-profile-sheet.jsx:590
 msgid "Bio"
@@ -1028,7 +1028,7 @@ msgstr "Sinprezento"
 
 #: src/components/edit-profile-sheet.jsx:607
 msgid "Custom fields"
-msgstr ""
+msgstr "Propraj kampoj"
 
 #: src/components/edit-profile-sheet.jsx:613
 msgid "Label"
@@ -1049,7 +1049,7 @@ msgstr "Malfermi en nova fenestro"
 #. placeholder {0}: info.username
 #: src/components/endorsements.jsx:72
 msgid "Profiles featured by @{0}"
-msgstr ""
+msgstr "Profiloj, promociataj de @{0}"
 
 #: src/components/endorsements.jsx:98
 msgid "No featured profiles."
@@ -1123,31 +1123,31 @@ msgstr "Eraro dum ŝargo de movbildoj"
 
 #: src/components/import-accounts-selection.jsx:86
 msgid "Select accounts to import"
-msgstr ""
+msgstr "Elekti kontojn por enportado"
 
 #: src/components/import-accounts-selection.jsx:117
 msgid "Select all"
-msgstr ""
+msgstr "Elekti ĉiujn"
 
 #: src/components/import-accounts-selection.jsx:158
 msgid "Existing"
-msgstr ""
+msgstr "Ekzistantaj"
 
 #: src/components/import-accounts-selection.jsx:183
 msgid "{selectedCount, plural, one {Import # account} other {Import # accounts}}"
-msgstr ""
+msgstr "{selectedCount, plural, one {Enporti # konton} other {Enporti # kontojn}}"
 
 #: src/components/import-export-accounts.jsx:52
 msgid "Export failed"
-msgstr ""
+msgstr "Elportado fiaskis"
 
 #: src/components/import-export-accounts.jsx:72
 msgid "Import failed"
-msgstr ""
+msgstr "Enportado fiaskis"
 
 #: src/components/import-export-accounts.jsx:113
 msgid "Import/Export <0>Accounts</0>"
-msgstr ""
+msgstr "En/elporti <0>kontojn</0>"
 
 #: src/components/import-export-accounts.jsx:128
 #: src/components/shortcuts-settings.jsx:816
@@ -1156,7 +1156,7 @@ msgstr "Importi"
 
 #: src/components/import-export-accounts.jsx:139
 msgid "Select file…"
-msgstr ""
+msgstr "Elekti dosieron…"
 
 #: src/components/import-export-accounts.jsx:151
 #: src/components/shortcuts-settings.jsx:1066
@@ -1168,15 +1168,15 @@ msgstr "Eksporti"
 #: src/components/import-export-accounts.jsx:155
 #: src/pages/collection.jsx:659
 msgid "{0, plural, one {# account} other {# accounts}}"
-msgstr ""
+msgstr "{0, plural, one {# konto} other {# kontoj}}"
 
 #: src/components/import-export-accounts.jsx:167
 msgid "No login information or account access details are stored in the exported files. You will need to log in again for each account after importing."
-msgstr ""
+msgstr "Neniu informo pri saluto aŭ detaloj de konto konservotas en la elportitaj dosieroj. Vi devos denove ensaluti por ĉiu konto post enportado."
 
 #: src/components/keyboard-shortcuts-help.jsx:16
 msgid "<0>{key1}</0> then <1>{key2}</1>"
-msgstr ""
+msgstr "<0>{key1}</0>, do <1>{key2}</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:57
 #: src/components/nav-menu.jsx:389
@@ -1204,7 +1204,7 @@ msgstr "Salti karuselon al la sekva afiŝo"
 
 #: src/components/keyboard-shortcuts-help.jsx:79
 msgid "<0>Shift</0> + <1>j</1>"
-msgstr "<0>Ŝovo</0> + <1>j</1>"
+msgstr "<0>Majuskl.</0> + <1>j</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:85
 msgid "Skip carousel to previous post"
@@ -1212,11 +1212,11 @@ msgstr "Salti karuselon al la antaŭa afiŝo"
 
 #: src/components/keyboard-shortcuts-help.jsx:87
 msgid "<0>Shift</0> + <1>k</1>"
-msgstr "<0>Ŝovo</0> + <1>k</1>"
+msgstr "<0>Majuskl.</0> + <1>k</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:93
 msgid "Load new posts"
-msgstr "Ŝargi novajn afiŝojn"
+msgstr "Ŝarĝi novajn afiŝojn"
 
 #: src/components/keyboard-shortcuts-help.jsx:97
 #: src/pages/catchup.jsx:1826
@@ -1241,7 +1241,7 @@ msgstr "<0>Esc-klavo</0> aŭ <1>Retropaŝo</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:123
 msgid "Focus column in multi-column mode"
-msgstr "Enfokusigu la kolumnon en plurkolumna reĝimo"
+msgstr "Enfokusigi la kolumnon en plurkolumna reĝimo"
 
 #: src/components/keyboard-shortcuts-help.jsx:125
 msgid "<0>1</0> to <1>9</1>"
@@ -1329,23 +1329,23 @@ msgstr "<0>Ŝovo</0> + <1>Alt-klavo</1> + <2>k</2>"
 
 #: src/components/keyboard-shortcuts-help.jsx:210
 msgid "Go to Home"
-msgstr ""
+msgstr "Iri al hejmo"
 
 #: src/components/keyboard-shortcuts-help.jsx:214
 msgid "Go to Notifications"
-msgstr ""
+msgstr "Iri al sciigoj"
 
 #: src/components/keyboard-shortcuts-help.jsx:218
 msgid "Go to Settings"
-msgstr ""
+msgstr "Iri al agordoj"
 
 #: src/components/keyboard-shortcuts-help.jsx:222
 msgid "Go to Profile"
-msgstr ""
+msgstr "Iri al profilo"
 
 #: src/components/keyboard-shortcuts-help.jsx:226
 msgid "Go to Bookmarks"
-msgstr ""
+msgstr "Iri al legosignoj"
 
 #: src/components/list-add-edit.jsx:41
 msgid "Edit list"
@@ -1426,7 +1426,7 @@ msgstr "Paroli"
 
 #: src/components/media-attachment.jsx:229
 msgid "Uploaded"
-msgstr "Ĝisdatigita"
+msgstr "Alŝutita"
 
 #: src/components/media-attachment.jsx:243
 #: src/components/media-attachment.jsx:244
@@ -1509,7 +1509,7 @@ msgstr "({0}) <0>— eksperimenta</0>"
 
 #: src/components/media-attachment.jsx:592
 msgid "Done"
-msgstr "Farite"
+msgstr "Farita"
 
 #: src/components/media-modal.jsx:409
 msgid "Open original media in new window"
@@ -1603,7 +1603,7 @@ msgstr "Sekvatoj"
 #: src/pages/catchup.jsx:1022
 #: src/pages/welcome.jsx:154
 msgid "Catch-up"
-msgstr "Aktualiĝi"
+msgstr "Resumo"
 
 #: src/components/nav-menu.jsx:211
 #: src/components/shortcuts-settings.jsx:60
@@ -1660,7 +1660,7 @@ msgstr "Pli…"
 #: src/pages/favourites.jsx:26
 #: src/pages/settings.jsx:1349
 msgid "Likes"
-msgstr "Stemuloj"
+msgstr "Stelumoj"
 
 #: src/components/nav-menu.jsx:267
 #: src/pages/account-collections.jsx:70
@@ -1718,7 +1718,7 @@ msgstr "Ensaluti"
 #: src/components/shortcuts-settings.jsx:175
 #: src/pages/trending.jsx:444
 msgid "Trending"
-msgstr "Populara"
+msgstr "Popularaj"
 
 #: src/components/nav-menu.jsx:375
 #: src/components/shortcuts-settings.jsx:168
@@ -1727,7 +1727,7 @@ msgstr "Fratara"
 
 #: src/components/nav-menu.jsx:399
 msgid "Shortcuts / Columns…"
-msgstr "Ŝparvojoj / Kolumnoj…"
+msgstr "Ŝparvojoj / kolumnoj…"
 
 #: src/components/nav-menu.jsx:409
 #: src/components/nav-menu.jsx:423
@@ -2016,11 +2016,11 @@ msgstr "Finita"
 
 #: src/components/poll.jsx:372
 msgid "Ending <0/>"
-msgstr "Finante <0/>"
+msgstr "Finanta je <0/>"
 
 #: src/components/poll.jsx:377
 msgid "Ending"
-msgstr "Finante"
+msgstr "Finanta"
 
 #: src/components/poll.jsx:389
 #: src/components/poll.jsx:393
@@ -2509,11 +2509,11 @@ msgstr "Pliaj informoj"
 
 #: src/components/report-modal.jsx:318
 msgid "Muted {username}"
-msgstr "Silentigita {username}"
+msgstr "Silentigita: {username}"
 
 #: src/components/report-modal.jsx:321
 msgid "Unable to mute {username}"
-msgstr "Ne eblas silentigi {username}"
+msgstr "Ne eblas silentigi: {username}"
 
 #: src/components/report-modal.jsx:326
 msgid "Send Report <0>+ Mute profile</0>"
@@ -2558,11 +2558,11 @@ msgstr "Vidi ĉion"
 
 #: src/components/shortcuts-settings.jsx:50
 msgid "Home / Following"
-msgstr "Hejmo / Sekvatoj"
+msgstr "Hejmo / sekvatoj"
 
 #: src/components/shortcuts-settings.jsx:53
 msgid "Public (Local / Federated)"
-msgstr "Publika (Loka / Fratara)"
+msgstr "Publika (loka / fratara)"
 
 #: src/components/shortcuts-settings.jsx:55
 msgid "Account"
@@ -2574,7 +2574,7 @@ msgstr "Kradvorto"
 
 #: src/components/shortcuts-settings.jsx:66
 msgid "List ID"
-msgstr "Listo ID"
+msgstr "ID de listo"
 
 #: src/components/shortcuts-settings.jsx:73
 msgid "Local only"
@@ -2741,7 +2741,7 @@ msgstr "Listo eble ne funkcias se ĝi venas de malsama konto."
 
 #: src/components/shortcuts-settings.jsx:975
 msgid "Invalid settings format"
-msgstr "Nevalida agorda formato"
+msgstr "Nevalida formato de agordoj"
 
 #: src/components/shortcuts-settings.jsx:983
 msgid "Append to current shortcuts?"
@@ -2818,7 +2818,7 @@ msgstr "Ne eblas kopii ŝparvojajn agordojn"
 
 #: src/components/shortcuts-settings.jsx:1199
 msgid "Share"
-msgstr "Diskonigi"
+msgstr "Konigi"
 
 #. placeholder {0}: shortcutsStr.length
 #: src/components/shortcuts-settings.jsx:1205
@@ -2862,7 +2862,7 @@ msgstr "Afiŝo ne disponebla"
 
 #: src/components/status.jsx:635
 msgid "<0/> <1>boosted</1>"
-msgstr "<0/> <1>diskonigita</1>"
+msgstr "<0/> <1>diskonigis</1>"
 
 #: src/components/status.jsx:742
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
@@ -3017,7 +3017,7 @@ msgstr "Konversacion silentigita"
 
 #: src/components/status.jsx:1557
 msgid "Unable to unmute conversation"
-msgstr "Ne eblas nesilentigi konversacion"
+msgstr "Ne eblas malsilentigi konversacion"
 
 #: src/components/status.jsx:1558
 msgid "Unable to mute conversation"
@@ -3025,7 +3025,7 @@ msgstr "Ne eblas silentigi konversacion"
 
 #: src/components/status.jsx:1567
 msgid "Unmute conversation"
-msgstr "Nesilentigi konversacion"
+msgstr "Malsilentigi konversacion"
 
 #: src/components/status.jsx:1574
 msgid "Mute conversation"
@@ -3083,11 +3083,11 @@ msgstr ""
 
 #: src/components/status.jsx:1729
 msgid "Unable to remove quote"
-msgstr ""
+msgstr "Ne povas forigi citaĵon"
 
 #: src/components/status.jsx:1735
 msgid "Remove quote…"
-msgstr ""
+msgstr "Forigi citaĵon…"
 
 #: src/components/status.jsx:1749
 msgid "Report post…"
@@ -3133,13 +3133,13 @@ msgstr "Redaktita"
 #: src/components/status.jsx:2589
 #: src/pages/collection.jsx:586
 msgid "Show content"
-msgstr "Montru envahon"
+msgstr "Montri enhavon"
 
 #: src/components/status.jsx:2527
 #: src/components/status.jsx:2589
 #: src/components/status.jsx:2696
 msgid "Show less"
-msgstr "Montru malpli"
+msgstr "Montri malpli"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
@@ -3183,7 +3183,7 @@ msgstr "Afiŝo kaŝita, ĉar vi silentigis uzanton @{name}."
 
 #: src/components/status.jsx:3362
 msgid "Show anyway"
-msgstr ""
+msgstr "Montri malgraŭ"
 
 #: src/components/status.jsx:3507
 msgid "Edit History"
@@ -3195,12 +3195,12 @@ msgstr "Malsukcesis ŝargi historion"
 
 #: src/components/status.jsx:3516
 msgid "Loading…"
-msgstr "Ŝargante…"
+msgstr "Ŝargado…"
 
 #. [Name] [Visibility icon] boosted
 #: src/components/status.jsx:3648
 msgid "<0/> <1/> boosted"
-msgstr "<0/> <1/> diskonigita"
+msgstr "<0/> <1/> diskonigis"
 
 #: src/components/thread-badge.jsx:22
 #: src/components/thread-badge.jsx:37
@@ -3306,36 +3306,36 @@ msgstr "Iru hejmen"
 
 #: src/pages/account-collections.jsx:73
 msgid "Collections featuring you"
-msgstr ""
+msgstr "Kolektoj, enhavantaj vin"
 
 #: src/pages/account-collections.jsx:76
 msgid "Collections by {username}"
-msgstr ""
+msgstr "Kolektoj de {username}"
 
 #: src/pages/account-collections.jsx:192
 msgid "Created by you"
-msgstr ""
+msgstr "Kreita de vi"
 
 #: src/pages/account-collections.jsx:198
 msgid "Featuring you"
-msgstr ""
+msgstr "Enhavanta vin"
 
 #. placeholder {0}: collections.length
 #: src/pages/account-collections.jsx:241
 msgid "{0, plural, one {# collection} other {# collections}}"
-msgstr ""
+msgstr "{0, plural, one {# kolekto} other {# kolektoj}}"
 
 #: src/pages/account-collections.jsx:256
 msgid "Unable to load collections."
-msgstr ""
+msgstr "Ne povas ŝarĝi kolektojn."
 
 #: src/pages/account-collections.jsx:265
 msgid "No collections featuring you yet."
-msgstr ""
+msgstr "Neniuj kolektoj enhavas vin jam."
 
 #: src/pages/account-collections.jsx:266
 msgid "No collections yet."
-msgstr ""
+msgstr "Neniuj kolektoj jam."
 
 #: src/pages/account-statuses.jsx:287
 msgid "Account posts"
@@ -3347,11 +3347,11 @@ msgstr "Plurmediaj afiŝoj, etikeditaj kun #{tagged}, de {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:296
 msgid "Posts tagged #{tagged} by {accountDisplay}"
-msgstr ""
+msgstr "Afiŝoj, etikeditaj kun #{tagged}, de {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:303
 msgid "Posts in {monthYear} by {accountDisplay}"
-msgstr ""
+msgstr "Afisoj je {monthYear} de {accountDisplay}"
 
 #: src/pages/account-statuses.jsx:305
 msgid "Media posts by {accountDisplay}"
@@ -3365,19 +3365,19 @@ msgstr "Restartigi filtrilojn"
 
 #: src/pages/account-statuses.jsx:422
 msgid "Showing replies"
-msgstr ""
+msgstr "Respondoj montrataj"
 
 #: src/pages/account-statuses.jsx:424
 msgid "Hiding replies"
-msgstr ""
+msgstr "Respondoj kaŝataj"
 
 #: src/pages/account-statuses.jsx:438
 msgid "Showing boosts"
-msgstr ""
+msgstr "Diskonigoj montrataj"
 
 #: src/pages/account-statuses.jsx:440
 msgid "Hiding boosts"
-msgstr ""
+msgstr "Diskonigoj kaŝataj"
 
 #: src/pages/account-statuses.jsx:457
 msgid "Showing posts with media"
@@ -3396,7 +3396,7 @@ msgstr "Montrante afiŝojn en {0}"
 #. placeholder {0}: account?.username
 #: src/pages/account-statuses.jsx:579
 msgid "Search @{0}'s posts"
-msgstr ""
+msgstr "Serĉi afiŝojn de @{0}"
 
 #: src/pages/account-statuses.jsx:628
 #: src/pages/search.jsx:175
@@ -3422,12 +3422,12 @@ msgstr "Ne eblas ricevi informojn pri konto"
 #. placeholder {0}: accountInstance ? ( <> {' '} (<b>{punycode.toUnicode(accountInstance)}</b>) </> ) : null
 #: src/pages/account-statuses.jsx:702
 msgid "Switch to account's server {0}"
-msgstr ""
+msgstr "Iri al la servilo de la konto {0}"
 
 #: src/pages/account-statuses.jsx:732
 #: src/pages/collection.jsx:500
 msgid "Switch to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Iri al mia servilo (<0>{currentInstance}</0>)"
 
 #: src/pages/account-statuses.jsx:805
 msgid "Month"
@@ -3439,7 +3439,7 @@ msgstr "Nuna"
 
 #: src/pages/accounts.jsx:139
 msgid "Logged out"
-msgstr ""
+msgstr "Ne ensalutita"
 
 #: src/pages/accounts.jsx:145
 msgid "Default"
@@ -3463,11 +3463,11 @@ msgstr "Agordi kiel defaŭltan"
 
 #: src/pages/accounts.jsx:251
 msgid "Log out <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "Ĉu elsaluti la konton <0>@{unicodeAcct}</0>?"
 
 #: src/pages/accounts.jsx:279
 msgid "Log out and remove <0>@{unicodeAcct}</0>"
-msgstr ""
+msgstr "Elsaluti kaj forigi la konton <0>@{unicodeAcct}</0>"
 
 #: src/pages/accounts.jsx:291
 msgid "Log out…"
@@ -3475,11 +3475,11 @@ msgstr "Elsaluti…"
 
 #: src/pages/accounts.jsx:301
 msgid "Remove <0>@{unicodeAcct}</0>?"
-msgstr ""
+msgstr "Ĉu forigi la konton <0>@{unicodeAcct}</0>?"
 
 #: src/pages/accounts.jsx:319
 msgid "Remove account…"
-msgstr ""
+msgstr "Forigi konton…"
 
 #. placeholder {0}: niceDateTime(account.createdAt)
 #: src/pages/accounts.jsx:327
@@ -3564,7 +3564,7 @@ msgstr "Grupoj"
 
 #: src/pages/catchup.jsx:721
 msgid "Showing {selectedFilterCategory, select, all {all posts} original {original posts} replies {replies} boosts {boosts} quotes {quotes} followedTags {followed tags} groups {groups} filtered {filtered posts}}, {sortBy, select, createdAt {{sortOrder, select, asc {oldest} desc {latest}}} reblogsCount {{sortOrder, select, asc {fewest boosts} desc {most boosts}}} favouritesCount {{sortOrder, select, asc {fewest likes} desc {most likes}}} repliesCount {{sortOrder, select, asc {fewest replies} desc {most replies}}} density {{sortOrder, select, asc {least dense} desc {most dense}}}} first{groupBy, select, account {, grouped by authors} other {}}"
-msgstr ""
+msgstr "{selectedFilterCategory, select, all {Ĉiuj afiŝoj} original {Originalaj afiŝoj} replies {Respondoj} boosts {Diskonigoj} quotes {Citaĵoj} followedTags {Sekvataj etikedoj} groups {Grupoj} filtered {Filtritaj afiŝoj}}, {sortBy, select, createdAt {{sortOrder, select, asc {plej malnovaj} desc {plej novaj}}} reblogsCount {{sortOrder, select, asc {kun malplej da diskonigoj} desc {kun plej da diskonigoj}}} favouritesCount {{sortOrder, select, asc {kun malplej da stelumoj} desc {kun plej da stelumoj}}} repliesCount {{sortOrder, select, asc {kun malplej da respondoj} desc {kun plej da respondoj}}} density {{sortOrder, select, asc {malplej densaj} desc {plej densaj}}}} unue{groupBy, select, account {, grupitaj per aŭtoroj} other {}} montrataj"
 
 #: src/pages/catchup.jsx:1033
 #: src/pages/catchup.jsx:1057
@@ -3619,7 +3619,7 @@ msgstr "Ĝis la lasta aktualiĝo ({0})"
 
 #: src/pages/catchup.jsx:1178
 msgid "Note: your server might only show a maximum of 800 posts in the Home timeline regardless of the time range. Could be less or more."
-msgstr ""
+msgstr "Noto: Via servilo povus nur montri maksimume 800 afiŝojn en la hejma templinio sendepende de la tempointervalo. Povus esti malpli aŭ pli."
 
 #: src/pages/catchup.jsx:1188
 msgid "Previously…"
@@ -3753,7 +3753,7 @@ msgstr "Rulumi supren"
 
 #: src/pages/collection.jsx:58
 msgid "Date added"
-msgstr ""
+msgstr "Dato de aldonado"
 
 #. Sort by name
 #. js-lingui-explicit-id
@@ -3763,33 +3763,33 @@ msgstr ""
 
 #: src/pages/collection.jsx:63
 msgid "Last active"
-msgstr ""
+msgstr "Laste aktiva"
 
 #: src/pages/collection.jsx:64
 msgid "Most followers"
-msgstr ""
+msgstr "Plej sekvataj"
 
 #: src/pages/collection.jsx:169
 #: src/pages/collection.jsx:170
 #: src/pages/collection.jsx:274
 msgid "Collection"
-msgstr ""
+msgstr "Kolekto"
 
 #: src/pages/collection.jsx:205
 msgid "Removed from collection"
-msgstr ""
+msgstr "Forigita de kolekto"
 
 #: src/pages/collection.jsx:208
 msgid "Unable to remove from collection"
-msgstr ""
+msgstr "Ne povas forigi de kolekto"
 
 #: src/pages/collection.jsx:314
 msgid "Post collection"
-msgstr ""
+msgstr "Afiŝi kolekton"
 
 #: src/pages/collection.jsx:454
 msgid "Report collection…"
-msgstr ""
+msgstr "Raporti kolekton…"
 
 #: src/pages/collection.jsx:464
 #: src/pages/status.jsx:1648
@@ -3803,23 +3803,23 @@ msgstr "Eraro: {e}"
 
 #: src/pages/collection.jsx:511
 msgid "Switch to collection's server ({serverDomain})"
-msgstr ""
+msgstr "Iri al la servilo de kolekto ({serverDomain})"
 
 #: src/pages/collection.jsx:535
 msgid "Unable to load collection."
-msgstr ""
+msgstr "Ne povas ŝarĝi kolekton."
 
 #: src/pages/collection.jsx:553
 msgid "<link><icon/> Collection</link> by <name/>"
-msgstr ""
+msgstr "<link><icon/> Kolekto</link> de <name/>"
 
 #: src/pages/collection.jsx:630
 msgid "No accounts in this collection yet."
-msgstr ""
+msgstr "Neniuj kontoj jam en ĉi tiu kolekto."
 
 #: src/pages/collection.jsx:693
 msgid "Marked as sensitive"
-msgstr ""
+msgstr "Markita kiel sentema"
 
 #: src/pages/favourites.jsx:28
 msgid "No likes yet. Go like something!"
@@ -4003,12 +4003,12 @@ msgstr "{hashtagTitle}"
 #: src/pages/hashtag.jsx:210
 #: src/pages/public.jsx:125
 msgid "This timeline is disabled on this server."
-msgstr ""
+msgstr "Ĉi tiu tempolinio estas malŝaltita sur ĉi tiu servilo."
 
 #: src/pages/hashtag.jsx:212
 #: src/pages/public.jsx:127
 msgid "Login required to see posts from this server."
-msgstr ""
+msgstr "Ensaluto necesas por vidi afiŝojn de ĉi tiu servilo."
 
 #: src/pages/hashtag.jsx:213
 msgid "No one has posted anything with this tag yet."
@@ -4079,25 +4079,25 @@ msgstr "Aldoni al ŝparvojoj"
 #: src/pages/public.jsx:172
 #: src/pages/trending.jsx:481
 msgid "Enter a new server e.g. \"mastodon.social\""
-msgstr ""
+msgstr "Entajpu novan servilon, ekz. \"mastodon.social\""
 
 #: src/pages/hashtag.jsx:524
 #: src/pages/public.jsx:175
 #: src/pages/trending.jsx:484
 msgid "Invalid server"
-msgstr ""
+msgstr "Nevalida servilo"
 
 #: src/pages/hashtag.jsx:538
 #: src/pages/public.jsx:189
 #: src/pages/trending.jsx:496
 msgid "Go to another server…"
-msgstr ""
+msgstr "Iri al alia servilo…"
 
 #: src/pages/hashtag.jsx:551
 #: src/pages/public.jsx:202
 #: src/pages/trending.jsx:507
 msgid "Go to my server (<0>{currentInstance}</0>)"
-msgstr ""
+msgstr "Iri al mia servilo (<0>{currentInstance}</0>)"
 
 #: src/pages/home.jsx:233
 msgid "Unable to fetch notifications."
@@ -4145,7 +4145,7 @@ msgstr "Malsukcesis registri aplikaĵon"
 
 #: src/pages/login.jsx:246
 msgid "server domain"
-msgstr ""
+msgstr "servila domajno"
 
 #: src/pages/login.jsx:271
 msgid "e.g. “mastodon.social”"
@@ -4153,7 +4153,7 @@ msgstr "ekz. “mastodon.social”"
 
 #: src/pages/login.jsx:282
 msgid "Failed to log in. Please try again or try another server."
-msgstr ""
+msgstr "Malsukcesis ensaluti. Bonvolu provi denove aŭ provi alian servilon."
 
 #: src/pages/login.jsx:294
 msgid "Continue with {selectedInstanceText}"
@@ -4173,7 +4173,7 @@ msgstr "Privataj mencioj"
 
 #: src/pages/mentions.jsx:221
 msgid "Only followings"
-msgstr ""
+msgstr "Nur sekvantoj"
 
 #: src/pages/mentions.jsx:247
 msgid "Private"

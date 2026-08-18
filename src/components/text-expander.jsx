@@ -267,6 +267,34 @@ function TextExpander({ onTrigger = null, ...props }, ref) {
             });
           }, 300);
         }
+      } else if (key === '#' || key === '＃') {
+        // Preserve user's casing, e.g. typing "GamingDeals" picking "gamingdeals" → "#GamingDeals"
+        // Related issue: https://github.com/mastodon/mastodon/issues/27013
+        const typed = textExpanderTextRef.current;
+        let hashtag = value;
+
+        if (
+          typed &&
+          value &&
+          value !== typed &&
+          value.toLowerCase().startsWith(typed.toLowerCase()) &&
+          // Skip merging if toLowerCase() changes string length (rare)
+          typed.toLowerCase().length === typed.length &&
+          value.toLowerCase().length === value.length
+        ) {
+          const typedChars = Array.from(typed);
+          hashtag = Array.from(value)
+            .map((char, i) => {
+              const userChar = typedChars[i];
+              // User's uppercase wins, else pick suggestion casing
+              return userChar && userChar !== userChar.toLowerCase()
+                ? userChar
+                : char;
+            })
+            .join('');
+        }
+
+        e.detail.value = `${key}${hashtag}`;
       } else {
         e.detail.value = `${key}${value}`;
       }

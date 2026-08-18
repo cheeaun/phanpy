@@ -318,11 +318,6 @@ function Compose({
   const handlePastedLink = async (url) => {
     // Handle QP links
     if (supportsNativeQuote()) {
-      // Quotes cannot coexist with media attachments or polls
-      if (mediaAttachments.length > 0 || poll) {
-        return;
-      }
-
       // Cannot add/remove/replace current quote when editing
       if (editStatus) {
         return;

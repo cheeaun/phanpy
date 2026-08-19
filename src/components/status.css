@@ -806,13 +806,13 @@
 }
 .status .content-container.has-spoiler:not(.show-spoiler) .spoiler-button {
   ~ *:not(
-    .content.truncated,
-    .media-container,
-    .media-first-container,
-    .card,
-    .media-figure-multiple,
-    .spoiler-media-button
-  ),
+      .content.truncated,
+      .media-container,
+      .media-first-container,
+      .card,
+      .media-figure-multiple,
+      .spoiler-media-button
+    ),
   ~ .card .meta-container {
     opacity: 0.2;
     text-decoration-thickness: 1.5em;
@@ -836,12 +836,12 @@
   }
 
   ~ *:not(
-    .media-container,
-    .media-first-container,
-    .card,
-    .media-figure-multiple,
-    .spoiler-media-button
-  ),
+      .media-container,
+      .media-first-container,
+      .card,
+      .media-figure-multiple,
+      .spoiler-media-button
+    ),
   ~ .card .meta-container {
     img,
     video {
@@ -1469,6 +1469,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   object-fit: scale-down;
   /* border-radius: calc(var(--media-radius) - var(--media-border-width)); */
   border-radius: inherit;
+  corner-shape: inherit;
 }
 .status :is(.media-video, .media-audio, .media-gif) {
   position: relative;

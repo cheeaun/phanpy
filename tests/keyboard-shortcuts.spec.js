@@ -383,6 +383,10 @@ test.describe('Keyboard Shortcuts', () => {
       await expect(
         page.locator('#keyboard-shortcuts-help-container'),
       ).toBeVisible();
+      await expect(page.locator('#search-command-container')).toHaveAttribute(
+        'hidden',
+        '',
+      );
     });
 
     test('4.2 Close help with Escape', async ({ page }) => {
@@ -610,6 +614,12 @@ test.describe('Keyboard Shortcuts', () => {
     });
 
     test('9.2 Scoping: modifier key does not close modal', async ({ page }) => {
+      // CloseWatcher closes on Escape regardless of modifier keys, so this
+      // hotkey-scoping test only applies without it.
+      // Remove once CloseWatcher is widely supported.
+      const hasCloseWatcher = await page.evaluate(() => !!window.CloseWatcher);
+      test.skip(hasCloseWatcher, 'CloseWatcher handles modal close');
+
       await page.keyboard.press('?');
       await page.waitForTimeout(500);
       await expect(

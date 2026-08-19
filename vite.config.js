@@ -221,7 +221,7 @@ export default defineConfig(({ command }) => {
       {
         // https://developers.cloudflare.com/pages/configuration/early-hints/
         name: 'generate-headers',
-        writeBundle(_, bundle) {
+        writeBundle(options, bundle) {
           const cssFiles = Object.keys(bundle).filter((file) =>
             file.endsWith('.css'),
           );
@@ -229,10 +229,7 @@ export default defineConfig(({ command }) => {
             const links = cssFiles
               .map((file) => `  Link: <${file}>; rel=preload; as=style`)
               .join('\n');
-            fs.writeFileSync(
-              resolve(__dirname, 'dist/_headers'),
-              `/\n${links}`,
-            );
+            fs.writeFileSync(resolve(options.dir, '_headers'), `/\n${links}`);
           }
         },
       },

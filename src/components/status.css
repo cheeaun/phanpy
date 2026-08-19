@@ -1469,6 +1469,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   object-fit: scale-down;
   /* border-radius: calc(var(--media-radius) - var(--media-border-width)); */
   border-radius: inherit;
+  corner-shape: inherit;
 }
 .status :is(.media-video, .media-audio, .media-gif) {
   position: relative;

@@ -316,6 +316,9 @@ function Compose({
   };
 
   const handlePastedLink = async (url) => {
+    // Clear stale quote suggestion (e.g. when the new paste fails to unfurl)
+    setQuoteSuggestion(null);
+
     // Handle QP links
     if (supportsNativeQuote()) {
       // Cannot add/remove/replace current quote when editing

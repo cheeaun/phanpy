@@ -2561,13 +2561,21 @@ a.card:is(:hover, :focus):visited {
   15% {
     transform: translate(0, 0);
   }
-  100% {
+  80% {
     transform: translate(30px, -30px);
     opacity: 0;
   }
+  84% {
+    transform: translate(-10px, 10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
 }
 .status .action > button.plain.reblog-button.checked .icon {
-  animation: reblogged 1s ease-in-out;
+  animation: reblogged 1.25s ease-in-out;
 }
 @media (hover: hover) {
   .status .action > button.plain.favourite-button:hover {

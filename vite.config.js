@@ -146,6 +146,8 @@ export default defineConfig(({ command }) => {
       }),
       removeConsole({
         includes: ['log', 'debug', 'info', 'warn', 'error'],
+        // Plugin can't parse import attributes syntax (`with { type: 'json' }`)
+        external: ['src/locales.js'],
       }),
       htmlPlugin({
         metas: [

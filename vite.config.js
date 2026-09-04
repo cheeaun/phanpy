@@ -13,7 +13,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import removeConsole from 'vite-plugin-remove-console';
 import { run } from 'vite-plugin-run';
 
-import { ALL_LOCALES } from './src/locales';
+import { ALL_LOCALES } from './src/locales.js';
 
 const allowedEnvPrefixes = ['VITE_', 'PHANPY_'];
 const { NODE_ENV } = process.env;
@@ -63,7 +63,10 @@ console.log(`commit hash: ${commitHash}`);
 console.log(`commit time: ${commitTime.toISOString()}`);
 console.log(`build time:  ${buildTime.toISOString()}`);
 
-let rollbarCode = fs.readFileSync(resolve(__dirname, './rollbar.js'), 'utf-8');
+let rollbarCode = fs.readFileSync(
+  resolve(import.meta.dirname, './rollbar.js'),
+  'utf-8',
+);
 rollbarCode = rollbarCode.replace('__PHANPY_COMMIT_HASH__', `'${commitHash}'`);
 
 // https://github.com/vitejs/vite/issues/9597#issuecomment-1209305107
@@ -143,6 +146,8 @@ export default defineConfig(({ command }) => {
       }),
       removeConsole({
         includes: ['log', 'debug', 'info', 'warn', 'error'],
+        // Plugin can't parse import attributes syntax (`with { type: 'json' }`)
+        external: ['src/locales.js'],
       }),
       htmlPlugin({
         metas: [
@@ -221,7 +226,7 @@ export default defineConfig(({ command }) => {
       {
         // https://developers.cloudflare.com/pages/configuration/early-hints/
         name: 'generate-headers',
-        writeBundle(_, bundle) {
+        writeBundle(options, bundle) {
           const cssFiles = Object.keys(bundle).filter((file) =>
             file.endsWith('.css'),
           );
@@ -229,10 +234,7 @@ export default defineConfig(({ command }) => {
             const links = cssFiles
               .map((file) => `  Link: <${file}>; rel=preload; as=style`)
               .join('\n');
-            fs.writeFileSync(
-              resolve(__dirname, 'dist/_headers'),
-              `/\n${links}`,
-            );
+            fs.writeFileSync(resolve(options.dir, '_headers'), `/\n${links}`);
           }
         },
       },
@@ -339,8 +341,8 @@ export default defineConfig(({ command }) => {
       rolldownOptions: {
         external: ['@xmldom/xmldom'], // exifreader's optional dependency, not needed
         input: {
-          main: resolve(__dirname, 'index.html'),
-          compose: resolve(__dirname, 'compose/index.html'),
+          main: resolve(import.meta.dirname, 'index.html'),
+          compose: resolve(import.meta.dirname, 'compose/index.html'),
         },
         output: {
           // NOTE: Comment this for now. This messes up async imports.

@@ -340,7 +340,9 @@ These are self-hosted by other wonderful folks.
 
 > Note: Add yours by creating a pull request.
 
-There's also a mobile app wrapper by [@fantinel@hachyderm.io](https://hachyderm.io/@fantinel) called **iPhanpy**: https://github.com/matfantinel/iphanpy
+There are also mobile app wrappers:
+- **[iPhanpy](https://github.com/matfantinel/iphanpy)** by [@fantinel@hachyderm.io](https://hachyderm.io/@fantinel) (iOS) — [App Store](https://apps.apple.com/app/iphanpy-for-mastodon/id6755365082)
+- **[Phandroid](https://code.umrath.dev/thoralf/Phandroid)** by [@thoralf@gruene.social](https://gruene.social/@thoralf) (Android) — [Installation](https://code.umrath.dev/thoralf/Phandroid#installation)
 
 ## Costs
 
@@ -378,6 +380,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556801/medium/ed5e501ca1f3cc6525d2da28db646346.jpeg" alt="" width="16" height="16" /> dannypsnl (Chinese Traditional)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/3711/medium/c97239bb54623a50eb43cc6b801bb156.jpg" alt="" width="16" height="16" /> databio (Catalan)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17440746/medium/eb48c068ec53fbb48e870fab8bc313b0.png" alt="" width="16" height="16" /> detected-rage-colette (Japanese)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16264200/medium/0f0458eff1faf13a42c49713e3341aef.png" alt="" width="16" height="16" /> dev_urandom (Esperanto)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16533843/medium/ac7af8776858a992d992cf6702d1aaae.jpg" alt="" width="16" height="16" /> Dizro (Italian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16574625/medium/f2ac3a4f32f104a3a6d4085d4bcb3924_default.png" alt="" width="16" height="16" /> Drift6944 (Czech)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12618120/medium/ccb11bd042bbf4c7189033f7af2dbd32_default.png" alt="" width="16" height="16" /> drydenwu (Chinese Traditional)
@@ -397,7 +400,6 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16646485/medium/5d76c44212a4048a815ab437fb170856_default.png" alt="" width="16" height="16" /> kaliuwu (Polish)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532403/medium/4cefb19623bcc44d7cdb9e25aebf5250.jpeg" alt="" width="16" height="16" /> karlafej (Czech)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17757435/medium/17716ec2c559b6145694dcad9fb728b6_default.png" alt="" width="16" height="16" /> kleoporte (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17707804/medium/8804293de4f1835fb9b1b18d656b3e54.png" alt="" width="16" height="16" /> Kweerk1223 (Portuguese, Brazilian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14677260/medium/e9f17e62ab69ed6212a16c94d779e7f3.png" alt="" width="16" height="16" /> Kytta (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16529521/medium/ae6add93a901b0fefa2d9b1077920d73.png" alt="" width="16" height="16" /> llun (Thai)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13707903/medium/f9e08210995ba491338ba872351de791_default.png" alt="" width="16" height="16" /> lorisobi (German)
@@ -415,6 +417,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12882812/medium/77744d8db46e9a3e09030e1a02b7a572.jpeg" alt="" width="16" height="16" /> mojosoeun (Korean)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13613969/medium/c7834ddc0ada84a79671697a944bb274.png" alt="" width="16" height="16" /> moreal (Korean)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14158861/medium/ba1ff31dc5743b067ea6685f735229a5_default.png" alt="" width="16" height="16" /> MrWillCom (Chinese Simplified)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15652533/medium/911f4f30f63563cbfdceb102be25dd97.jpg" alt="" width="16" height="16" /> Mvtbh (Persian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15652333/medium/7f36f289f9e2fe41d89ad534a1047f0e.png" alt="" width="16" height="16" /> nclm (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17450186/medium/6f5768f64963379c7ddfdccd53572c60.jpeg" alt="" width="16" height="16" /> NiklasA95 (German)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17520602/medium/884e58f3a2e7c836f594759b9dee40bf_default.png" alt="" width="16" height="16" /> Nortix08 (German)
@@ -426,6 +429,7 @@ Costs involved in running and developing this web app:
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16536247/medium/f010c8e718a36229733a8b58f6bad2a4_default.png" alt="" width="16" height="16" /> radecos (French)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16538917/medium/092ec03f56f9dd1cbce94379fa4d4d38.png" alt="" width="16" height="16" /> Razem (Czech)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14345134/medium/89a299239890c79a1d791d08ec3951dc.png" alt="" width="16" height="16" /> realpixelcode (German)
+- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17707804/medium/1414164fff03b06db5818db699f30670_default.png" alt="" width="16" height="16" /> REMOVED_USER (Portuguese, Brazilian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16527325/medium/37ebb27e7a50f7f85ae93beafc7028a2.jpg" alt="" width="16" height="16" /> rezahosseinzadeh (Persian)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13422319/medium/66632a98d73d48e36753d94ebcec9d4f.png" alt="" width="16" height="16" /> rwmpelstilzchen (Esperanto, Hebrew)
 - <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16538605/medium/bcdb6e3286b7d6237923f3a9383eed29.png" alt="" width="16" height="16" /> SadmL (Russian)

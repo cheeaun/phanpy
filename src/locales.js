@@ -1,4 +1,4 @@
-import catalogs from './data/catalogs.json';
+import catalogs from './data/catalogs.json' with { type: 'json' };
 
 export const DEFAULT_LANG = 'en';
 export const CATALOGS = catalogs;

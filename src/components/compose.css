@@ -192,6 +192,17 @@
     border-color: var(--divider-color);
   }
 
+  /* field-sizing: content, JS fallback otherwise */
+  @supports (field-sizing: content) {
+    field-sizing: content;
+    height: auto;
+
+    /* breaks vertical writing-mode */
+    &:lang(mn-Mong) {
+      field-sizing: fixed;
+    }
+  }
+
   &:lang(mn-Mong) {
     height: auto !important;
     max-height: 50vh !important;

@@ -144,6 +144,8 @@ function highlightText(text, { maxCharacters = Infinity }) {
 
 function autoResizeTextarea(textarea) {
   if (!textarea) return;
+  // field-sizing: content handles this (see compose.css)
+  if (CSS.supports('field-sizing', 'content')) return;
   // writing-mode is vertical, don't do this
   if (getComputedStyle(textarea).writingMode.includes('vertical')) return;
   const { value, offsetHeight, scrollHeight, clientHeight } = textarea;

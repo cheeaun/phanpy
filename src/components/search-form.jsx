@@ -327,7 +327,13 @@ const SearchForm = forwardRef((props, ref) => {
           }
         }}
       />
-      <div class="search-popover" hidden={!searchMenuOpen}>
+      <div
+        class="search-popover"
+        hidden={!searchMenuOpen}
+        // Keep focus on the input so the popover is not hidden by the blur
+        // handler before the pointer is released on an item
+        onMouseDown={(e) => e.preventDefault()}
+      >
         {/* Search History - show when no query */}
         {!query && searchHistory.length > 0 && (
           <div class="search-popover-recent-searches">

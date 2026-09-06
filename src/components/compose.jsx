@@ -542,7 +542,10 @@ function Compose({
               getPostQuoteApprovalPolicy(quoteApproval);
             setQuoteApprovalPolicy(postQuoteApprovalPolicy);
           }
-          setSensitive(sensitive);
+          // Keep the CW when the post has spoiler text but isn't flagged
+          // sensitive, same as replies (#1236). Otherwise the CW is dropped
+          // on submit.
+          setSensitive(sensitive || !!spoilerText);
           if (composablePoll) setPoll(composablePoll);
           setMediaAttachments(mediaAttachments);
           setUIState('default');

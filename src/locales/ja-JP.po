@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-06 04:48\n"
+"PO-Revision-Date: 2026-09-06 06:34\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -4546,11 +4546,11 @@ msgstr "システム言語 ({systemTargetLanguageText})"
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
 #: src/pages/settings.jsx:519
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
-msgstr ""
+msgstr "{0, plural, =0 {\"翻訳\" ボタンを非表示：} other {\"翻訳\" ボタンを非表示 (#)：}}"
 
 #: src/pages/settings.jsx:574
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
-msgstr ""
+msgstr "注: この機能は、<0>{TRANSLATION_API_NAME}</0> を用いて外部翻訳サービスを使用します。"
 
 #: src/pages/settings.jsx:602
 msgid "Auto inline translation"
@@ -4558,15 +4558,15 @@ msgstr "自動インライン翻訳"
 
 #: src/pages/settings.jsx:606
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr ""
+msgstr "投稿の翻訳を自動的にタイムラインに表示します。コンテンツの警告、メディア、投票を含まない<0>短い</0>投稿にのみ有効です。"
 
 #: src/pages/settings.jsx:627
 msgid "Paginated timeline (beta)"
-msgstr ""
+msgstr "ページ化したタイムライン（ベータ版）"
 
 #: src/pages/settings.jsx:631
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
-msgstr ""
+msgstr "タイムライン投稿を無限スクロールする代わりに手動でページを進めます。今のところ、ホーム/フォロー中タイムラインのみ有効です。自動更新とブーストカルーセルは機能しません。"
 
 #: src/pages/settings.jsx:651
 msgid "GIF Picker for composer"
@@ -4574,7 +4574,7 @@ msgstr "投稿用の GIF ピッカー"
 
 #: src/pages/settings.jsx:655
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
-msgstr ""
+msgstr "注意: この機能は、<0>GIPHY</0>を用いて外部 GIF 検索サービスを使用します。 Gレート（すべての年齢層に適する）で、トラッキングパラメータを除去し、リクエストはリファラー情報を省略しますが、 検索クエリとIPアドレス情報はサーバーに送られます。"
 
 #: src/pages/settings.jsx:684
 msgid "Image description generator"
@@ -4602,11 +4602,11 @@ msgstr ""
 
 #: src/pages/settings.jsx:756
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
-msgstr ""
+msgstr "クロークモード <0>(<1>テキスト</1> → <2>████</2>)</0>"
 
 #: src/pages/settings.jsx:765
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
-msgstr ""
+msgstr "テキストをブロックで覆います。プライバシー上の理由からスクリーンショットを撮るときに便利です。"
 
 #: src/pages/settings.jsx:794
 msgid "Install {CLIENT_NAME}"
@@ -4672,7 +4672,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:1276
 msgid "Push Notifications (beta)"
-msgstr ""
+msgstr "プッシュ通知（ベータ版）"
 
 #: src/pages/settings.jsx:1298
 msgid "Push notifications are blocked. Please enable them in your browser settings."
@@ -4713,7 +4713,7 @@ msgstr ""
 
 #: src/pages/settings.jsx:1406
 msgid "NOTE: Push notifications only work for <0>one account</0>."
-msgstr ""
+msgstr "注: プッシュ通知は<0>1つのアカウント</0>のみ動作します。"
 
 #: src/pages/status.jsx:156
 msgid "Unable to load post."

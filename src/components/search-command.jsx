@@ -44,16 +44,17 @@ export default memo(function SearchCommand({ onClose = () => {} }) {
         const isSearchPage = /\/search/.test(location.hash);
         const isYearInPostsPage = /\/yip/.test(location.hash);
         const hasModal = !!document.querySelector('#modal-container > *');
-        // Allow '/' even with Shift (e.g. German keyboards)
-        if (e.key === '/') return false;
+        // Match by '/' character, not by key code: the code 'Slash' also
+        // fires for '?', and '/' sits on other keys in some layouts (e.g. German Shift+7).
+        const isSlashKey = e.key === '/';
         return (
+          !isSlashKey ||
           isSearchPage ||
           isYearInPostsPage ||
           hasModal ||
           e.metaKey ||
           e.ctrlKey ||
-          e.altKey ||
-          e.shiftKey
+          e.altKey
         );
       },
     },

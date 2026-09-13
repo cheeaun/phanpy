@@ -806,13 +806,13 @@
 }
 .status .content-container.has-spoiler:not(.show-spoiler) .spoiler-button {
   ~ *:not(
-    .content.truncated,
-    .media-container,
-    .media-first-container,
-    .card,
-    .media-figure-multiple,
-    .spoiler-media-button
-  ),
+      .content.truncated,
+      .media-container,
+      .media-first-container,
+      .card,
+      .media-figure-multiple,
+      .spoiler-media-button
+    ),
   ~ .card .meta-container {
     opacity: 0.2;
     text-decoration-thickness: 1.5em;
@@ -836,12 +836,12 @@
   }
 
   ~ *:not(
-    .media-container,
-    .media-first-container,
-    .card,
-    .media-figure-multiple,
-    .spoiler-media-button
-  ),
+      .media-container,
+      .media-first-container,
+      .card,
+      .media-figure-multiple,
+      .spoiler-media-button
+    ),
   ~ .card .meta-container {
     img,
     video {
@@ -1469,6 +1469,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   object-fit: scale-down;
   /* border-radius: calc(var(--media-radius) - var(--media-border-width)); */
   border-radius: inherit;
+  corner-shape: inherit;
 }
 .status :is(.media-video, .media-audio, .media-gif) {
   position: relative;
@@ -2560,13 +2561,21 @@ a.card:is(:hover, :focus):visited {
   15% {
     transform: translate(0, 0);
   }
-  100% {
+  80% {
     transform: translate(30px, -30px);
     opacity: 0;
   }
+  84% {
+    transform: translate(-10px, 10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
 }
 .status .action > button.plain.reblog-button.checked .icon {
-  animation: reblogged 1s ease-in-out;
+  animation: reblogged 1.25s ease-in-out;
 }
 @media (hover: hover) {
   .status .action > button.plain.favourite-button:hover {

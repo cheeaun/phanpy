@@ -718,7 +718,7 @@ function Status({
       !contentTranslation ||
       !contentTranslationAutoInline ||
       readOnly ||
-      (withinContext && !isSizeLarge) ||
+      (withinContext && !isSizeLarge && !inReplyToId) ||
       previewMode ||
       spoilerText ||
       sensitive
@@ -732,6 +732,7 @@ function Status({
     readOnly,
     withinContext,
     isSizeLarge,
+    inReplyToId,
     previewMode,
     spoilerText,
     sensitive,

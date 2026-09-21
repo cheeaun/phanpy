@@ -415,49 +415,51 @@ function Trending({ columnMode, ...props }) {
                       </div>
                     </article>
                   </a>
-                  {!!trendingNewsTranslationReady[url] && (
-                    <button
-                      type="button"
-                      class={`status-translation-inline-toggle plain trending-news-translation-toggle ${
-                        trendingNewsOriginal[url] ? '' : 'is-active'
-                      }`}
-                      title={
-                        trendingNewsOriginal[url]
-                          ? t`Show translation`
-                          : t`Original`
-                      }
-                      aria-label={
-                        trendingNewsOriginal[url]
-                          ? t`Show translation`
-                          : t`Original`
-                      }
-                      aria-pressed={!trendingNewsOriginal[url]}
-                      onClick={() => {
-                        setTrendingNewsOriginal((current) => ({
-                          ...current,
-                          [url]: !current[url],
-                        }));
-                      }}
-                    >
-                      <Icon icon="translate" />
-                    </button>
-                  )}
-                  {supportsTrendingLinkPosts && (
-                    <button
-                      type="button"
-                      class="small plain4 block"
-                      onClick={() => {
-                        setCurrentLink(url);
-                      }}
-                      disabled={url === currentLink}
-                    >
-                      <Icon icon="comment2" />{' '}
-                      <span>
-                        <Trans>Mentions</Trans>
-                      </span>{' '}
-                      <Icon icon="chevron-down" />
-                    </button>
-                  )}
+                  <div class="trending-news-card-actions">
+                    {!!trendingNewsTranslationReady[url] && (
+                      <button
+                        type="button"
+                        class={`status-translation-inline-toggle plain trending-news-translation-toggle ${
+                          trendingNewsOriginal[url] ? '' : 'is-active'
+                        }`}
+                        title={
+                          trendingNewsOriginal[url]
+                            ? t`Show translation`
+                            : t`Original`
+                        }
+                        aria-label={
+                          trendingNewsOriginal[url]
+                            ? t`Show translation`
+                            : t`Original`
+                        }
+                        aria-pressed={!trendingNewsOriginal[url]}
+                        onClick={() => {
+                          setTrendingNewsOriginal((current) => ({
+                            ...current,
+                            [url]: !current[url],
+                          }));
+                        }}
+                      >
+                        <Icon icon="translate" />
+                      </button>
+                    )}
+                    {supportsTrendingLinkPosts && (
+                      <button
+                        type="button"
+                        class="small plain4 block"
+                        onClick={() => {
+                          setCurrentLink(url);
+                        }}
+                        disabled={url === currentLink}
+                      >
+                        <Icon icon="comment2" />{' '}
+                        <span>
+                          <Trans>Mentions</Trans>
+                        </span>{' '}
+                        <Icon icon="chevron-down" />
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })}

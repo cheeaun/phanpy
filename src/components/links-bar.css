@@ -296,9 +296,15 @@
     }
   }
 
-  .trending-news-translation-toggle {
+  .trending-news-card-actions {
     display: flex;
-    margin: 2px 0 0 4px;
-    align-self: flex-start;
+    align-items: center;
+    gap: 4px;
+    margin: 2px 4px 0;
+
+    .trending-news-translation-toggle {
+      display: flex;
+      margin: 0;
+    }
   }
 }

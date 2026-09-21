@@ -16,6 +16,7 @@ import Menu2 from '../components/menu2';
 import NameText from '../components/name-text';
 import RelativeTime from '../components/relative-time';
 import Timeline from '../components/timeline';
+import TranslationBlock from '../components/translation-block';
 import { api } from '../utils/api';
 import { oklab2rgb, rgb2oklab } from '../utils/color-utils';
 import { filteredItems } from '../utils/filters';
@@ -83,6 +84,9 @@ function Trending({ columnMode, ...props }) {
 
   const [hashtags, setHashtags] = useState([]);
   const [links, setLinks] = useState([]);
+  const [trendingNewsTranslationReady, setTrendingNewsTranslationReady] =
+    useState({});
+  const [trendingNewsOriginal, setTrendingNewsOriginal] = useState({});
   const trendIterator = useRef();
 
   async function fetchTrends(firstLoad) {
@@ -320,27 +324,68 @@ function Trending({ columnMode, ...props }) {
                             )}
                           </div>
                           {!!title && (
-                            <h1
-                              class="title"
-                              lang={language}
-                              dir="auto"
-                              title={title}
+                            <TranslationBlock
+                              inline
+                              forceTranslate={
+                                snapStates.settings.contentTranslationAutoInline
+                              }
+                              sourceLanguage={language}
+                              text={title}
+                              showOriginalOverride={!!trendingNewsOriginal[url]}
+                              hideInlineToggle
+                              onTranslationVisibilityChange={(visible) => {
+                                if (visible) {
+                                  setTrendingNewsTranslationReady((current) =>
+                                    current[url]
+                                      ? current
+                                      : { ...current, [url]: true },
+                                  );
+                                }
+                              }}
+                              inlineClassName="trending-news-translation"
+                              inlineContentClassName="title status-translation-inline-content"
                             >
-                              {title}
-                            </h1>
+                              <h1 lang={language} dir="auto" title={title}>
+                                {title}
+                              </h1>
+                            </TranslationBlock>
                           )}
                         </header>
                         {!!description && (
-                          <p
-                            class={`description ${
+                          <TranslationBlock
+                            inline
+                            forceTranslate={
+                              snapStates.settings.contentTranslationAutoInline
+                            }
+                            sourceLanguage={language}
+                            text={description}
+                            showOriginalOverride={!!trendingNewsOriginal[url]}
+                            hideInlineToggle
+                            onTranslationVisibilityChange={(visible) => {
+                              if (visible) {
+                                setTrendingNewsTranslationReady((current) =>
+                                  current[url]
+                                    ? current
+                                    : { ...current, [url]: true },
+                                );
+                              }
+                            }}
+                            inlineClassName="trending-news-translation"
+                            inlineContentClassName={`description status-translation-inline-content ${
                               hasAuthor && !isShortTitle ? '' : 'more-lines'
                             }`}
-                            lang={language}
-                            dir="auto"
-                            title={description}
                           >
-                            {description}
-                          </p>
+                            <p
+                              class={`description ${
+                                hasAuthor && !isShortTitle ? '' : 'more-lines'
+                              }`}
+                              lang={language}
+                              dir="auto"
+                              title={description}
+                            >
+                              {description}
+                            </p>
+                          </TranslationBlock>
                         )}
                         {hasAuthor && (
                           <>
@@ -370,6 +415,33 @@ function Trending({ columnMode, ...props }) {
                       </div>
                     </article>
                   </a>
+                  {!!trendingNewsTranslationReady[url] && (
+                    <button
+                      type="button"
+                      class={`status-translation-inline-toggle plain trending-news-translation-toggle ${
+                        trendingNewsOriginal[url] ? '' : 'is-active'
+                      }`}
+                      title={
+                        trendingNewsOriginal[url]
+                          ? t`Show translation`
+                          : t`Original`
+                      }
+                      aria-label={
+                        trendingNewsOriginal[url]
+                          ? t`Show translation`
+                          : t`Original`
+                      }
+                      aria-pressed={!trendingNewsOriginal[url]}
+                      onClick={() => {
+                        setTrendingNewsOriginal((current) => ({
+                          ...current,
+                          [url]: !current[url],
+                        }));
+                      }}
+                    >
+                      <Icon icon="translate" />
+                    </button>
+                  )}
                   {supportsTrendingLinkPosts && (
                     <button
                       type="button"
@@ -432,7 +504,15 @@ function Trending({ columnMode, ...props }) {
         )}
       </>
     );
-  }, [hashtags, links, currentLink, currentLinkMentionsLoading]);
+  }, [
+    hashtags,
+    links,
+    currentLink,
+    currentLinkMentionsLoading,
+    snapStates.settings.contentTranslationAutoInline,
+    trendingNewsOriginal,
+    trendingNewsTranslationReady,
+  ]);
 
   return (
     <Timeline

@@ -204,6 +204,8 @@ function TranslationBlock({
   autoDetected,
   onTranslationVisibilityChange,
   urlMap,
+  showOriginalOverride,
+  hideInlineToggle = false,
   inlineClassName = 'status-translation-inline',
   inlineContentClassName = 'content status-translation-inline-content',
 }) {
@@ -214,6 +216,7 @@ function TranslationBlock({
   const [translatedContent, setTranslatedContent] = useState(null);
   const [detectedLang, setDetectedLang] = useState(null);
   const [showOriginal, setShowOriginal] = useState(false);
+  const currentShowOriginal = showOriginalOverride ?? showOriginal;
   const [inlineVisible, setInlineVisible] = useState(!inline);
   const detailsRef = useRef();
   const abortControllerRef = useRef();
@@ -307,7 +310,7 @@ function TranslationBlock({
           ? t`Translate from ${sourceLangText} (auto-detected)`
           : t`Translate from ${sourceLangText}`
         : t`Translate`
-      : showOriginal
+      : currentShowOriginal
         ? t`Show translation`
         : t`Original`;
 
@@ -316,7 +319,7 @@ function TranslationBlock({
         ref={inlineRef}
         class={`${inlineClassName} ${hasTranslation ? 'is-translated' : ''}`}
       >
-        {hasTranslation && !showOriginal ? (
+        {hasTranslation && !currentShowOriginal ? (
           <div class={inlineContentClassName}>
             <output lang={targetLang} dir="auto">
               {renderTranslatedContent(translatedContent, urlMap)}
@@ -325,32 +328,34 @@ function TranslationBlock({
         ) : (
           children
         )}
-        <button
-          type="button"
-          class={`status-translation-inline-toggle ${
-            inlineButton ? 'status-translation-inline-toggle-button' : 'plain'
-          } ${hasTranslation && !showOriginal ? 'is-active' : ''}`}
-          title={toggleLabel}
-          aria-label={toggleLabel}
-          aria-pressed={hasTranslation ? !showOriginal : undefined}
-          disabled={uiState === 'loading'}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (!hasTranslation) {
-              translate();
-            } else {
-              setShowOriginal((value) => {
-                const nextValue = !value;
-                onTranslationVisibilityChange?.(!nextValue);
-                return nextValue;
-              });
-            }
-          }}
-        >
-          <Icon icon="translate" alt={toggleLabel} />
-          {inlineButton && <span>{toggleLabel}</span>}
-        </button>
+        {!hideInlineToggle && (
+          <button
+            type="button"
+            class={`status-translation-inline-toggle ${
+              inlineButton ? 'status-translation-inline-toggle-button' : 'plain'
+            } ${hasTranslation && !currentShowOriginal ? 'is-active' : ''}`}
+            title={toggleLabel}
+            aria-label={toggleLabel}
+            aria-pressed={hasTranslation ? !currentShowOriginal : undefined}
+            disabled={uiState === 'loading'}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (!hasTranslation) {
+                translate();
+              } else {
+                setShowOriginal((value) => {
+                  const nextValue = !value;
+                  onTranslationVisibilityChange?.(!nextValue);
+                  return nextValue;
+                });
+              }
+            }}
+          >
+            <Icon icon="translate" alt={toggleLabel} />
+            {inlineButton && <span>{toggleLabel}</span>}
+          </button>
+        )}
       </div>
     );
   }

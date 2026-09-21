@@ -226,8 +226,10 @@ msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts i
 msgstr "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 
 #: src/components/account-info.jsx:1127
-#: src/components/translation-block.jsx:312
+#: src/components/translation-block.jsx:315
 #: src/pages/catchup.jsx:73
+#: src/pages/trending.jsx:427
+#: src/pages/trending.jsx:432
 #: src/pages/year-in-posts.jsx:1390
 msgid "Original"
 msgstr ""
@@ -952,7 +954,7 @@ msgstr "Exit"
 #: src/pages/public.jsx:147
 #: src/pages/scheduled-posts.jsx:89
 #: src/pages/status.jsx:1585
-#: src/pages/trending.jsx:474
+#: src/pages/trending.jsx:554
 msgid "More"
 msgstr ""
 
@@ -1411,8 +1413,8 @@ msgstr ""
 #: src/components/media-alt-modal.jsx:67
 #: src/components/status.jsx:1503
 #: src/components/status.jsx:1512
-#: src/components/translation-block.jsx:309
-#: src/components/translation-block.jsx:413
+#: src/components/translation-block.jsx:312
+#: src/components/translation-block.jsx:418
 msgid "Translate"
 msgstr ""
 
@@ -1610,7 +1612,7 @@ msgstr ""
 #: src/pages/mentions.jsx:256
 #: src/pages/notifications.jsx:970
 #: src/pages/settings.jsx:1370
-#: src/pages/trending.jsx:384
+#: src/pages/trending.jsx:456
 msgid "Mentions"
 msgstr ""
 
@@ -1713,7 +1715,7 @@ msgstr ""
 #: src/components/nav-menu.jsx:359
 #: src/components/shortcuts-settings.jsx:59
 #: src/components/shortcuts-settings.jsx:175
-#: src/pages/trending.jsx:444
+#: src/pages/trending.jsx:524
 msgid "Trending"
 msgstr ""
 
@@ -3248,34 +3250,36 @@ msgstr ""
 msgid "Translated Bio"
 msgstr ""
 
-#: src/components/translation-block.jsx:307
-#: src/components/translation-block.jsx:411
+#: src/components/translation-block.jsx:310
+#: src/components/translation-block.jsx:416
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr ""
 
-#: src/components/translation-block.jsx:308
-#: src/components/translation-block.jsx:412
+#: src/components/translation-block.jsx:311
+#: src/components/translation-block.jsx:417
 msgid "Translate from {sourceLangText}"
 msgstr ""
 
-#: src/components/translation-block.jsx:311
+#: src/components/translation-block.jsx:314
+#: src/pages/trending.jsx:426
+#: src/pages/trending.jsx:431
 msgid "Show translation"
 msgstr "Show translation"
 
-#: src/components/translation-block.jsx:369
+#: src/components/translation-block.jsx:374
 msgid "Auto-translated from {sourceLangText}"
 msgstr ""
 
-#: src/components/translation-block.jsx:408
+#: src/components/translation-block.jsx:413
 msgid "Translating…"
 msgstr ""
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:440
+#: src/components/translation-block.jsx:445
 msgid "Auto ({0})"
 msgstr ""
 
-#: src/components/translation-block.jsx:453
+#: src/components/translation-block.jsx:458
 msgid "Failed to translate"
 msgstr ""
 
@@ -3413,7 +3417,7 @@ msgstr ""
 
 #: src/pages/account-statuses.jsx:654
 #: src/pages/public.jsx:130
-#: src/pages/trending.jsx:452
+#: src/pages/trending.jsx:532
 msgid "Unable to load posts"
 msgstr ""
 
@@ -4080,25 +4084,25 @@ msgstr ""
 
 #: src/pages/hashtag.jsx:521
 #: src/pages/public.jsx:172
-#: src/pages/trending.jsx:481
+#: src/pages/trending.jsx:561
 msgid "Enter a new server e.g. \"mastodon.social\""
 msgstr "Enter a new server e.g. \"mastodon.social\""
 
 #: src/pages/hashtag.jsx:524
 #: src/pages/public.jsx:175
-#: src/pages/trending.jsx:484
+#: src/pages/trending.jsx:564
 msgid "Invalid server"
 msgstr "Invalid server"
 
 #: src/pages/hashtag.jsx:538
 #: src/pages/public.jsx:189
-#: src/pages/trending.jsx:496
+#: src/pages/trending.jsx:576
 msgid "Go to another server…"
 msgstr "Go to another server…"
 
 #: src/pages/hashtag.jsx:551
 #: src/pages/public.jsx:202
-#: src/pages/trending.jsx:507
+#: src/pages/trending.jsx:587
 msgid "Go to my server (<0>{currentInstance}</0>)"
 msgstr "Go to my server (<0>{currentInstance}</0>)"
 
@@ -4822,34 +4826,34 @@ msgstr ""
 msgid "View post with its replies"
 msgstr ""
 
-#: src/pages/trending.jsx:77
+#: src/pages/trending.jsx:78
 msgid "Trending ({instance})"
 msgstr "Trending ({instance})"
 
-#: src/pages/trending.jsx:235
+#: src/pages/trending.jsx:239
 msgid "Trending News"
 msgstr ""
 
 #. By [Author]
 #. placeholder {0}: author ? ( <NameText account={author} showAvatar /> ) : authorUrl ? ( <a href={authorUrl} target="_blank" rel="noopener" > {authorName} </a> ) : ( authorName )
-#: src/pages/trending.jsx:350
+#: src/pages/trending.jsx:395
 msgid "By {0}"
 msgstr "By {0}"
 
-#: src/pages/trending.jsx:411
+#: src/pages/trending.jsx:483
 msgid "Back to showing trending posts"
 msgstr ""
 
 #. placeholder {0}: currentLink .replace(/^https?:\/\/(www\.)?/i, '') .replace(/\/$/, '')
-#: src/pages/trending.jsx:416
+#: src/pages/trending.jsx:488
 msgid "Showing posts mentioning <0>{0}</0>"
 msgstr ""
 
-#: src/pages/trending.jsx:428
+#: src/pages/trending.jsx:500
 msgid "Trending posts"
 msgstr ""
 
-#: src/pages/trending.jsx:451
+#: src/pages/trending.jsx:531
 msgid "No trending posts."
 msgstr ""
 

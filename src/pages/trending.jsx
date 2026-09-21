@@ -88,6 +88,9 @@ function Trending({ columnMode, ...props }) {
     useState({});
   const [trendingNewsOriginal, setTrendingNewsOriginal] = useState({});
   const trendIterator = useRef();
+  const autoInlineTranslationEnabled =
+    snapStates.settings.contentTranslation &&
+    snapStates.settings.contentTranslationAutoInline;
 
   async function fetchTrends(firstLoad) {
     console.log('fetchTrend', firstLoad);
@@ -325,10 +328,9 @@ function Trending({ columnMode, ...props }) {
                           </div>
                           {!!title && (
                             <TranslationBlock
+                              key={`title-${autoInlineTranslationEnabled}`}
                               inline
-                              forceTranslate={
-                                snapStates.settings.contentTranslationAutoInline
-                              }
+                              forceTranslate={autoInlineTranslationEnabled}
                               sourceLanguage={language}
                               text={title}
                               showOriginalOverride={!!trendingNewsOriginal[url]}
@@ -354,9 +356,8 @@ function Trending({ columnMode, ...props }) {
                         {!!description && (
                           <TranslationBlock
                             inline
-                            forceTranslate={
-                              snapStates.settings.contentTranslationAutoInline
-                            }
+                            key={`description-${autoInlineTranslationEnabled}`}
+                            forceTranslate={autoInlineTranslationEnabled}
                             sourceLanguage={language}
                             text={description}
                             showOriginalOverride={!!trendingNewsOriginal[url]}
@@ -416,33 +417,34 @@ function Trending({ columnMode, ...props }) {
                     </article>
                   </a>
                   <div class="trending-news-card-actions">
-                    {!!trendingNewsTranslationReady[url] && (
-                      <button
-                        type="button"
-                        class={`status-translation-inline-toggle plain trending-news-translation-toggle ${
-                          trendingNewsOriginal[url] ? '' : 'is-active'
-                        }`}
-                        title={
-                          trendingNewsOriginal[url]
-                            ? t`Show translation`
-                            : t`Original`
-                        }
-                        aria-label={
-                          trendingNewsOriginal[url]
-                            ? t`Show translation`
-                            : t`Original`
-                        }
-                        aria-pressed={!trendingNewsOriginal[url]}
-                        onClick={() => {
-                          setTrendingNewsOriginal((current) => ({
-                            ...current,
-                            [url]: !current[url],
-                          }));
-                        }}
-                      >
-                        <Icon icon="translate" />
-                      </button>
-                    )}
+                    {autoInlineTranslationEnabled &&
+                      !!trendingNewsTranslationReady[url] && (
+                        <button
+                          type="button"
+                          class={`status-translation-inline-toggle plain trending-news-translation-toggle ${
+                            trendingNewsOriginal[url] ? '' : 'is-active'
+                          }`}
+                          title={
+                            trendingNewsOriginal[url]
+                              ? t`Show translation`
+                              : t`Original`
+                          }
+                          aria-label={
+                            trendingNewsOriginal[url]
+                              ? t`Show translation`
+                              : t`Original`
+                          }
+                          aria-pressed={!trendingNewsOriginal[url]}
+                          onClick={() => {
+                            setTrendingNewsOriginal((current) => ({
+                              ...current,
+                              [url]: !current[url],
+                            }));
+                          }}
+                        >
+                          <Icon icon="translate" />
+                        </button>
+                      )}
                     {supportsTrendingLinkPosts && (
                       <button
                         type="button"
@@ -511,7 +513,7 @@ function Trending({ columnMode, ...props }) {
     links,
     currentLink,
     currentLinkMentionsLoading,
-    snapStates.settings.contentTranslationAutoInline,
+    autoInlineTranslationEnabled,
     trendingNewsOriginal,
     trendingNewsTranslationReady,
   ]);

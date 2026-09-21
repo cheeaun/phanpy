@@ -115,12 +115,18 @@ function getProfileNoteTranslation(note) {
       for (const a of dom.querySelectorAll('a')) {
         const label = a.innerText.trim();
         if (!label) continue;
+        const kind = a.classList.contains('hashtag')
+          ? 'HASHTAG'
+          : a.classList.contains('mention')
+            ? 'MENTION'
+            : 'URL';
         const index =
           urlMap.push({
             href: a.href,
             label,
+            kind: kind.toLowerCase(),
           }) - 1;
-        a.replaceWith(`__PHANPY_URL_${index}__`);
+        a.replaceWith(`__PHANPY_${kind}_${index}__`);
       }
     },
   });

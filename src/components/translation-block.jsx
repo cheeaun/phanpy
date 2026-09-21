@@ -120,7 +120,7 @@ function renderTranslatedContent(content, urlMap = []) {
   if (!content || !urlMap.length) return content;
 
   const parts = [];
-  const tokenRegex = /__PHANPY_URL_(\d+)__/g;
+  const tokenRegex = /__PHANPY_(URL|MENTION|HASHTAG)_(\d+)__/g;
   let lastIndex = 0;
   let match;
 
@@ -128,14 +128,23 @@ function renderTranslatedContent(content, urlMap = []) {
     if (match.index > lastIndex) {
       parts.push(content.slice(lastIndex, match.index));
     }
-    const link = urlMap[Number(match[1])];
+    const link = urlMap[Number(match[2])];
     if (link?.href) {
+      const kind = link.kind || match[1].toLowerCase();
+      const isExternalURL = kind === 'url';
       parts.push(
         <a
-          key={`translated-url-${match[1]}`}
+          key={`translated-${kind}-${match[2]}`}
           href={link.href}
-          target="_blank"
-          rel="nofollow noopener"
+          class={
+            kind === 'hashtag'
+              ? 'mention hashtag'
+              : kind === 'mention'
+                ? 'u-url mention'
+                : undefined
+          }
+          target={isExternalURL ? '_blank' : undefined}
+          rel={isExternalURL ? 'nofollow noopener' : undefined}
         >
           {link.label || link.href}
         </a>,

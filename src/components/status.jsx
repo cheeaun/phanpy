@@ -121,6 +121,7 @@ function getPostText(status, opts) {
     hideInlineQuote,
     hidePoll,
     preserveURLs,
+    preserveLinks,
     urlMap,
     htmlTextOpts = {},
   } = opts || {};
@@ -138,8 +139,25 @@ function getPostText(status, opts) {
     getHTMLText(content, {
       ...htmlTextOpts,
       preProcess:
-        (maskURLs || hideInlineQuote) &&
+        (maskURLs || hideInlineQuote || preserveLinks) &&
         ((dom) => {
+          if (preserveLinks && urlMap) {
+            for (const a of dom.querySelectorAll('a.mention, a.hashtag')) {
+              const label = a.innerText.trim();
+              if (!label) continue;
+              const kind = a.classList.contains('hashtag')
+                ? 'HASHTAG'
+                : 'MENTION';
+              const index =
+                urlMap.push({
+                  href: a.href,
+                  label,
+                  kind: kind.toLowerCase(),
+                }) - 1;
+              a.replaceWith(`__PHANPY_${kind}_${index}__`);
+            }
+          }
+
           // Remove links that contains text that starts with https?://
           if (maskURLs) {
             for (const a of dom.querySelectorAll('a')) {
@@ -150,6 +168,7 @@ function getPostText(status, opts) {
                     urlMap.push({
                       href: a.href,
                       label: text,
+                      kind: 'url',
                     }) - 1;
                   a.replaceWith(`__PHANPY_URL_${index}__`);
                 } else {
@@ -1054,6 +1073,7 @@ function Status({
         maskCustomEmojis: true,
         maskURLs: true,
         preserveURLs: true,
+        preserveLinks: true,
         urlMap,
       });
       return { text, urlMap };

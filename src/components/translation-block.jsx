@@ -132,6 +132,15 @@ function renderTranslatedContent(content, urlMap = []) {
     if (link?.href) {
       const kind = link.kind || match[1].toLowerCase();
       const isExternalURL = kind === 'url';
+      const linkContent =
+        kind === 'mention' || kind === 'hashtag' ? (
+          <>
+            {link.prefix || link.label?.[0] || ''}
+            <span>{link.name || link.label?.slice(1) || ''}</span>
+          </>
+        ) : (
+          link.label || link.href
+        );
       parts.push(
         <a
           key={`translated-${kind}-${match[2]}`}
@@ -146,7 +155,7 @@ function renderTranslatedContent(content, urlMap = []) {
           target={isExternalURL ? '_blank' : undefined}
           rel={isExternalURL ? 'nofollow noopener' : undefined}
         >
-          {link.label || link.href}
+          {linkContent}
         </a>,
       );
     } else {

@@ -148,11 +148,17 @@ function getPostText(status, opts) {
               const kind = a.classList.contains('hashtag')
                 ? 'HASHTAG'
                 : 'MENTION';
+              const spanText = a.querySelector('span')?.innerText.trim();
+              const prefix = spanText
+                ? label.slice(0, label.length - spanText.length)
+                : label[0];
               const index =
                 urlMap.push({
                   href: a.href,
                   label,
                   kind: kind.toLowerCase(),
+                  prefix,
+                  name: spanText || label.slice(prefix.length),
                 }) - 1;
               a.replaceWith(`__PHANPY_${kind}_${index}__`);
             }

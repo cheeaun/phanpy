@@ -4475,7 +4475,7 @@ msgstr "Вы можете помочь с переводом"
 
 #: src/pages/settings.jsx:255
 msgid "Keep navigation bars visible while scrolling"
-msgstr ""
+msgstr "Оставлять навигацию видимой во время пролистывания ленты"
 
 #: src/pages/settings.jsx:263
 msgid "Posting"
@@ -4505,19 +4505,19 @@ msgstr "Синхронизировано с настройками сервер�
 
 #: src/pages/settings.jsx:383
 msgid "Wellbeing"
-msgstr ""
+msgstr "Забота о себе"
 
 #: src/pages/settings.jsx:396
 msgid "Hide Trending timeline"
-msgstr ""
+msgstr "Скрывать ленту «В тренде»"
 
 #: src/pages/settings.jsx:408
 msgid "Hide Local timeline"
-msgstr ""
+msgstr "Скрывать локальную ленту"
 
 #: src/pages/settings.jsx:421
 msgid "Hide Federated timeline"
-msgstr ""
+msgstr "Скрывать федеративную ленту"
 
 #: src/pages/settings.jsx:429
 msgid "Experiments"
@@ -4557,8 +4557,16 @@ msgid "Auto inline translation"
 msgstr "Автоматический встроенный перевод"
 
 #: src/pages/settings.jsx:606
-msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
-msgstr "Автоматически показывать перевод постов на ленте. Работает только для <0>коротких</0> постов без предупреждения о содержимом, медиа и опросов."
+msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts by default."
+msgstr "Автоматически показывать перевод постов в ленте. По умолчанию работает только для <0>коротких</0> постов."
+
+#: src/pages/settings.jsx:628
+msgid "Auto inline translation for long posts with attachments"
+msgstr "Автоматический встроенный перевод длинных постов с вложениями"
+
+#: src/pages/settings.jsx:634
+msgid "Also translate long posts with media or link previews."
+msgstr "Также переводить длинные посты с медиафайлами или предпросмотром ссылок."
 
 #: src/pages/settings.jsx:627
 msgid "Paginated timeline (beta)"

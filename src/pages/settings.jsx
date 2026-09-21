@@ -605,8 +605,33 @@ function Settings({ onClose }) {
                       <small>
                         <Trans>
                           Automatically show translation for posts in timeline.
-                          Only works for <b>short</b> posts without content
-                          warning, media and poll.
+                          Only works for <b>short</b> posts by default.
+                        </Trans>
+                      </small>
+                    </p>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={
+                          snapStates.settings.contentTranslationAutoInlineLong
+                        }
+                        disabled={
+                          !snapStates.settings.contentTranslation ||
+                          !snapStates.settings.contentTranslationAutoInline
+                        }
+                        onChange={(e) => {
+                          states.settings.contentTranslationAutoInlineLong =
+                            e.target.checked;
+                        }}
+                      />{' '}
+                      <Trans>
+                        Auto inline translation for long posts with attachments
+                      </Trans>
+                    </label>
+                    <p class="insignificant">
+                      <small>
+                        <Trans>
+                          Also translate long posts with media or link previews.
                         </Trans>
                       </small>
                     </p>

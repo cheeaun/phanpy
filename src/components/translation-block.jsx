@@ -4,6 +4,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import PQueue from 'p-queue';
 import pRetry from 'p-retry';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useOnInView } from 'react-intersection-observer';
 
 import languages from '../data/translang-languages';
 import {
@@ -115,13 +116,98 @@ const throttledBrowserTranslate = ({ text, source, target, signal }) =>
     signal,
   });
 
+function renderTranslatedContent(content, urlMap = []) {
+  if (!content || !urlMap.length) return content;
+
+  const parts = [];
+  const tokenRegex = /__PHANPY_(URL|MENTION|HASHTAG)_(\d+)__/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = tokenRegex.exec(content))) {
+    if (match.index > lastIndex) {
+      parts.push(content.slice(lastIndex, match.index));
+    }
+    const link = urlMap[Number(match[2])];
+    if (link?.href) {
+      const kind = link.kind || match[1].toLowerCase();
+      const isExternalURL = kind === 'url';
+      const linkContent =
+        kind === 'mention' || kind === 'hashtag' ? (
+          <>
+            {link.prefix || link.label?.[0] || ''}
+            <span>{link.name || link.label?.slice(1) || ''}</span>
+          </>
+        ) : (
+          link.label || link.href
+        );
+      parts.push(
+        <a
+          key={`translated-${kind}-${match[2]}`}
+          href={link.href}
+          class={
+            kind === 'hashtag'
+              ? 'mention hashtag'
+              : kind === 'mention'
+                ? 'u-url mention'
+                : undefined
+          }
+          target={isExternalURL ? '_blank' : undefined}
+          rel={isExternalURL ? 'nofollow noopener' : undefined}
+        >
+          {linkContent}
+        </a>,
+      );
+    } else {
+      parts.push(match[0]);
+    }
+    lastIndex = tokenRegex.lastIndex;
+  }
+
+  if (!parts.length) return content;
+  if (lastIndex < content.length) parts.push(content.slice(lastIndex));
+  return parts;
+}
+
+export async function translateText({
+  text,
+  source,
+  target,
+  signal,
+  mini = false,
+}) {
+  if (supportsBrowserTranslator) {
+    const result = await throttledBrowserTranslate({
+      text,
+      source,
+      target,
+      signal,
+    });
+    if (result && !result.error) {
+      return result;
+    }
+  }
+  return mini
+    ? await throttledTranslangTranslate({ signal, text, source, target })
+    : await translangTranslate(text, source, target);
+}
+
 function TranslationBlock({
   forceTranslate,
   sourceLanguage,
   onTranslate,
   text = '',
   mini,
+  inline,
+  inlineButton,
+  children,
   autoDetected,
+  onTranslationVisibilityChange,
+  urlMap,
+  showOriginalOverride,
+  hideInlineToggle = false,
+  inlineClassName = 'status-translation-inline',
+  inlineContentClassName = 'content status-translation-inline-content',
 }) {
   const { t } = useLingui();
   const targetLang = getTranslateTargetLanguage(true);
@@ -129,8 +215,22 @@ function TranslationBlock({
   const [pronunciationContent, setPronunciationContent] = useState(null);
   const [translatedContent, setTranslatedContent] = useState(null);
   const [detectedLang, setDetectedLang] = useState(null);
+  const [showOriginal, setShowOriginal] = useState(false);
+  const currentShowOriginal = showOriginalOverride ?? showOriginal;
+  const [inlineVisible, setInlineVisible] = useState(!inline);
   const detailsRef = useRef();
   const abortControllerRef = useRef();
+
+  const inlineRef = useOnInView(
+    (inView) => {
+      if (inView) setInlineVisible(true);
+    },
+    {
+      rootMargin: '-48px 0px 0px 0px',
+      skip: !inline,
+      triggerOnce: true,
+    },
+  );
 
   const sourceLangText = sourceLanguage
     ? localeCode2Text(sourceLanguage)
@@ -139,22 +239,8 @@ function TranslationBlock({
   const apiSourceLang = useRef('auto');
 
   if (!onTranslate) {
-    onTranslate = async ({ text, source, target, signal }) => {
-      if (supportsBrowserTranslator) {
-        const result = await throttledBrowserTranslate({
-          text,
-          source,
-          target,
-          signal,
-        });
-        if (result && !result.error) {
-          return result;
-        }
-      }
-      return mini
-        ? await throttledTranslangTranslate({ signal, text, source, target })
-        : await translangTranslate(text, source, target);
-    };
+    onTranslate = ({ text, source, target, signal }) =>
+      translateText({ text, source, target, signal, mini });
   }
 
   const translate = async () => {
@@ -179,6 +265,7 @@ function TranslationBlock({
           }
         }
         setTranslatedContent(content);
+        onTranslationVisibilityChange?.(true);
         setUIState('default');
         if (!mini && content.trim() !== text.trim() && detailsRef.current) {
           detailsRef.current.open = true;
@@ -200,10 +287,10 @@ function TranslationBlock({
   };
 
   useEffect(() => {
-    if (forceTranslate) {
+    if (forceTranslate && (!inline || inlineVisible) && !translatedContent) {
       translate();
     }
-  }, [forceTranslate]);
+  }, [forceTranslate, inline, inlineVisible, translatedContent]);
 
   useEffect(() => {
     abortControllerRef.current = new AbortController();
@@ -211,6 +298,67 @@ function TranslationBlock({
       abortControllerRef.current.abort();
     };
   }, []);
+
+  if (inline) {
+    const hasTranslation =
+      !!translatedContent &&
+      translatedContent.trim() !== text.trim() &&
+      detectedLang !== targetLangText;
+    const toggleLabel = !hasTranslation
+      ? inlineButton && sourceLanguage && sourceLangText
+        ? autoDetected
+          ? t`Translate from ${sourceLangText} (auto-detected)`
+          : t`Translate from ${sourceLangText}`
+        : t`Translate`
+      : currentShowOriginal
+        ? t`Show translation`
+        : t`Original`;
+
+    return (
+      <div
+        ref={inlineRef}
+        class={`${inlineClassName} ${hasTranslation ? 'is-translated' : ''}`}
+      >
+        {hasTranslation && !currentShowOriginal ? (
+          <div class={inlineContentClassName}>
+            <output lang={targetLang} dir="auto">
+              {renderTranslatedContent(translatedContent, urlMap)}
+            </output>
+          </div>
+        ) : (
+          children
+        )}
+        {!hideInlineToggle && (
+          <button
+            type="button"
+            class={`status-translation-inline-toggle ${
+              inlineButton ? 'status-translation-inline-toggle-button' : 'plain'
+            } ${hasTranslation && !currentShowOriginal ? 'is-active' : ''}`}
+            title={toggleLabel}
+            aria-label={toggleLabel}
+            aria-pressed={hasTranslation ? !currentShowOriginal : undefined}
+            disabled={uiState === 'loading'}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (!hasTranslation) {
+                translate();
+              } else {
+                setShowOriginal((value) => {
+                  const nextValue = !value;
+                  onTranslationVisibilityChange?.(!nextValue);
+                  return nextValue;
+                });
+              }
+            }}
+          >
+            <Icon icon="translate" alt={toggleLabel} />
+            {inlineButton && <span>{toggleLabel}</span>}
+          </button>
+        )}
+      </div>
+    );
+  }
 
   if (mini) {
     if (
@@ -230,7 +378,7 @@ function TranslationBlock({
               dir="auto"
               title={pronunciationContent || ''}
             >
-              {translatedContent}
+              {renderTranslatedContent(translatedContent, urlMap)}
             </output>
           </div>
         </LazyShazam>
@@ -313,7 +461,7 @@ function TranslationBlock({
             !!translatedContent && (
               <>
                 <output class="translated-content" lang={targetLang} dir="auto">
-                  {translatedContent}
+                  {renderTranslatedContent(translatedContent, urlMap)}
                 </output>
                 {!!pronunciationContent && (
                   <output

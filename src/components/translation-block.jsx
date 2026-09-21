@@ -4,6 +4,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import PQueue from 'p-queue';
 import pRetry from 'p-retry';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useOnInView } from 'react-intersection-observer';
 
 import languages from '../data/translang-languages';
 import {
@@ -121,6 +122,8 @@ function TranslationBlock({
   onTranslate,
   text = '',
   mini,
+  inline,
+  children,
   autoDetected,
 }) {
   const { t } = useLingui();
@@ -129,8 +132,21 @@ function TranslationBlock({
   const [pronunciationContent, setPronunciationContent] = useState(null);
   const [translatedContent, setTranslatedContent] = useState(null);
   const [detectedLang, setDetectedLang] = useState(null);
+  const [showOriginal, setShowOriginal] = useState(false);
+  const [inlineVisible, setInlineVisible] = useState(!inline);
   const detailsRef = useRef();
   const abortControllerRef = useRef();
+
+  const inlineRef = useOnInView(
+    (inView) => {
+      if (inView) setInlineVisible(true);
+    },
+    {
+      rootMargin: '-48px 0px 0px 0px',
+      skip: !inline,
+      triggerOnce: true,
+    },
+  );
 
   const sourceLangText = sourceLanguage
     ? localeCode2Text(sourceLanguage)
@@ -200,10 +216,10 @@ function TranslationBlock({
   };
 
   useEffect(() => {
-    if (forceTranslate) {
+    if (forceTranslate && (!inline || inlineVisible) && !translatedContent) {
       translate();
     }
-  }, [forceTranslate]);
+  }, [forceTranslate, inline, inlineVisible, translatedContent]);
 
   useEffect(() => {
     abortControllerRef.current = new AbortController();
@@ -211,6 +227,51 @@ function TranslationBlock({
       abortControllerRef.current.abort();
     };
   }, []);
+
+  if (inline) {
+    const hasTranslation =
+      !!translatedContent &&
+      translatedContent.trim() !== text.trim() &&
+      detectedLang !== targetLangText;
+    const toggleLabel = showOriginal
+      ? t`Auto-translated from ${sourceLangText || ''}`
+      : t`Original`;
+
+    return (
+      <div
+        ref={inlineRef}
+        class={`status-translation-inline ${
+          hasTranslation ? 'is-translated' : ''
+        }`}
+      >
+        {hasTranslation && !showOriginal ? (
+          <div class="content status-translation-inline-content">
+            <output lang={targetLang} dir="auto">
+              {translatedContent}
+            </output>
+          </div>
+        ) : (
+          children
+        )}
+        {hasTranslation && (
+          <button
+            type="button"
+            class="status-translation-inline-toggle plain"
+            title={toggleLabel}
+            aria-label={toggleLabel}
+            aria-pressed={!showOriginal}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowOriginal((value) => !value);
+            }}
+          >
+            <Icon icon="translate" alt={toggleLabel} />
+          </button>
+        )}
+      </div>
+    );
+  }
 
   if (mini) {
     if (

@@ -109,6 +109,33 @@
   mask-image: none;
 }
 
+/* INLINE */
+
+.status-translation-inline {
+  position: relative;
+}
+.status-translation-inline-content {
+  margin: 0;
+}
+.status-translation-inline-content output {
+  display: block;
+  white-space: pre-wrap;
+  text-wrap: pretty;
+}
+.status-translation-inline-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  padding: 2px 4px;
+  color: var(--link-color);
+  font-size: 12px;
+  opacity: 0.75;
+}
+.status-translation-inline-toggle:is(:hover, :focus) {
+  opacity: 1;
+}
+
 /* MINI */
 
 .status-translation-block-mini {

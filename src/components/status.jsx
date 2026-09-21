@@ -1014,6 +1014,9 @@ function Status({
     return () => clearTimeout(timeout);
   }, [language, differentLanguage]);
 
+  const shouldInlineTranslate =
+    inlineTranslate && isTranslateble(content, emojis) && differentLanguage;
+
   const reblogIterator = useRef();
   const favouriteIterator = useRef();
   async function fetchBoostedLikedByAccounts(firstLoad) {
@@ -2591,21 +2594,48 @@ function Status({
                     )}
                   </>
                 )}
-                {!!content && (
-                  <div
-                    class="content"
-                    ref={contentRef}
-                    data-read-more={_(readMoreText)}
-                    inert={!!spoilerText && !showSpoiler ? true : undefined}
-                  >
-                    <PostContent
-                      key={reloadPostContentCount}
-                      post={status}
-                      instance={instance}
-                      previewMode={previewMode}
-                    />
-                  </div>
-                )}
+                {!!content &&
+                  (shouldInlineTranslate ? (
+                    <TranslationBlock
+                      inline
+                      forceTranslate
+                      sourceLanguage={language}
+                      autoDetected={languageAutoDetected}
+                      text={getPostText(status, {
+                        maskCustomEmojis: true,
+                        maskURLs: true,
+                        hideInlineQuote: true,
+                      })}
+                    >
+                      <div
+                        class="content"
+                        ref={contentRef}
+                        data-read-more={_(readMoreText)}
+                        inert={!!spoilerText && !showSpoiler ? true : undefined}
+                      >
+                        <PostContent
+                          key={reloadPostContentCount}
+                          post={status}
+                          instance={instance}
+                          previewMode={previewMode}
+                        />
+                      </div>
+                    </TranslationBlock>
+                  ) : (
+                    <div
+                      class="content"
+                      ref={contentRef}
+                      data-read-more={_(readMoreText)}
+                      inert={!!spoilerText && !showSpoiler ? true : undefined}
+                    >
+                      <PostContent
+                        key={reloadPostContentCount}
+                        post={status}
+                        instance={instance}
+                        previewMode={previewMode}
+                      />
+                    </div>
+                  ))}
                 {!!content && (
                   <MathBlock
                     content={content}
@@ -2642,24 +2672,25 @@ function Status({
                     }}
                   />
                 )}
-                {(((enableTranslate || inlineTranslate) &&
-                  isTranslateble(content, emojis) &&
-                  differentLanguage) ||
-                  forceTranslate) && (
-                  <TranslationBlock
-                    forceTranslate={forceTranslate || inlineTranslate}
-                    mini={!isSizeLarge && !withinContext}
-                    sourceLanguage={language}
-                    autoDetected={languageAutoDetected}
-                    text={getPostText(status, {
-                      maskCustomEmojis: true,
-                      maskURLs: true,
-                      // Hide regardless of native quote support
-                      // They are not useful in translation context
-                      hideInlineQuote: true,
-                    })}
-                  />
-                )}
+                {!shouldInlineTranslate &&
+                  (((enableTranslate || inlineTranslate) &&
+                    isTranslateble(content, emojis) &&
+                    differentLanguage) ||
+                    forceTranslate) && (
+                    <TranslationBlock
+                      forceTranslate={forceTranslate || inlineTranslate}
+                      mini={!isSizeLarge && !withinContext}
+                      sourceLanguage={language}
+                      autoDetected={languageAutoDetected}
+                      text={getPostText(status, {
+                        maskCustomEmojis: true,
+                        maskURLs: true,
+                        // Hide regardless of native quote support
+                        // They are not useful in translation context
+                        hideInlineQuote: true,
+                      })}
+                    />
+                  )}
                 {!previewMode &&
                   (sensitive ||
                     filterInfo?.action === 'blur' ||

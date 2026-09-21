@@ -905,6 +905,7 @@ export default memo(Media, (oldProps, newProps) => {
   return (
     oldMedia?.id === newMedia?.id &&
     oldMedia.url === newMedia.url &&
+    oldMedia.description === newMedia.description &&
     oldProps.to === newProps.to &&
     oldProps.class === newProps.class
   );

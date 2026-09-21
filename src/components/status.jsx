@@ -85,7 +85,7 @@ import StatusCompact from './status-compact';
 import StatusTags from './status-tags';
 import SubMenu2 from './submenu2';
 import ThreadBadge from './thread-badge';
-import TranslationBlock from './translation-block';
+import TranslationBlock, { translateText } from './translation-block';
 
 const SHOW_COMMENT_COUNT_LIMIT = 280;
 const INLINE_TRANSLATE_LIMIT = 140;
@@ -119,6 +119,9 @@ function getPostText(status, opts) {
     maskCustomEmojis,
     maskURLs,
     hideInlineQuote,
+    hidePoll,
+    preserveURLs,
+    urlMap,
     htmlTextOpts = {},
   } = opts || {};
   const { spoilerText, poll, emojis } = status;
@@ -142,7 +145,16 @@ function getPostText(status, opts) {
             for (const a of dom.querySelectorAll('a')) {
               const text = a.innerText.trim();
               if (/^https?:\/\//i.test(text)) {
-                a.replaceWith('«🔗»');
+                if (preserveURLs && urlMap) {
+                  const index =
+                    urlMap.push({
+                      href: a.href,
+                      label: text,
+                    }) - 1;
+                  a.replaceWith(`__PHANPY_URL_${index}__`);
+                } else {
+                  a.replaceWith('«🔗»');
+                }
               }
             }
           }
@@ -155,7 +167,7 @@ function getPostText(status, opts) {
           }
         }),
     }),
-    getPollText(poll),
+    hidePoll ? '' : getPollText(poll),
   ]
     .join('\n\n')
     .trim();
@@ -266,7 +278,8 @@ const readMoreText = msg`Read more →`;
 // All this work just to make sure this only lazy-run once
 // Because first run is slow due to intl-localematcher
 const DIFFERENT_LANG_CHECK = {};
-const diffLangCheckCacheKey = (l, hls) => `${l}:${hls.join('|')}`;
+const diffLangCheckCacheKey = (l, hls) =>
+  `${getTranslateTargetLanguage(true)}:${l}:${hls.join('|')}`;
 const checkDifferentLanguage = (
   language,
   contentTranslationHideLanguages = [],
@@ -498,6 +511,7 @@ function Status({
     return () => clearTimeout(timer);
   }, [content, _language]);
   const language = _language || languageAutoDetected;
+  const translationTargetLanguage = getTranslateTargetLanguage(true);
 
   // if (!mediaAttachments?.length) mediaFirst = false;
   const hasMediaAttachments = !!mediaAttachments?.length;
@@ -684,15 +698,22 @@ function Status({
   const isSizeLarge = size === 'l';
 
   const contentLength = useMemo(() => htmlContentLength(content), [content]);
+  const hasMediaCaptions = useMemo(
+    () => mediaAttachments.some((media) => !!media.description?.trim?.()),
+    [mediaAttachments],
+  );
 
   const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
   // const targetLanguage = getTranslateTargetLanguage(true);
   // const contentTranslationHideLanguages =
   //   snapStates.settings.contentTranslationHideLanguages || [];
-  const { contentTranslation, contentTranslationAutoInline } =
-    snapStates.settings;
+  const {
+    contentTranslation,
+    contentTranslationAutoInline,
+    contentTranslationAutoInlineLong,
+  } = snapStates.settings;
   if (!contentTranslation) enableTranslate = false;
-  const inlineTranslate = useMemo(() => {
+  const inlineTranslateEnabled = useMemo(() => {
     if (
       !contentTranslation ||
       !contentTranslationAutoInline ||
@@ -700,14 +721,11 @@ function Status({
       (withinContext && !isSizeLarge) ||
       previewMode ||
       spoilerText ||
-      sensitive ||
-      poll ||
-      card /*||
-      mediaAttachments?.length*/
+      sensitive
     ) {
       return false;
     }
-    return contentLength > 0 && contentLength <= INLINE_TRANSLATE_LIMIT;
+    return contentLength > 0 || !!poll?.options?.length || hasMediaCaptions;
   }, [
     contentTranslation,
     contentTranslationAutoInline,
@@ -718,10 +736,18 @@ function Status({
     spoilerText,
     sensitive,
     poll,
-    card,
-    mediaAttachments,
     contentLength,
+    hasMediaCaptions,
   ]);
+  const inlineTranslate =
+    inlineTranslateEnabled &&
+    (contentLength <= INLINE_TRANSLATE_LIMIT ||
+      !!poll ||
+      (contentTranslationAutoInlineLong &&
+        contentLength > INLINE_TRANSLATE_LIMIT &&
+        (!!mediaAttachments?.length || !!card)));
+  const [inlineTranslationVisible, setInlineTranslationVisible] =
+    useState(false);
 
   const [showEdited, setShowEdited] = useState(false);
   const [showEmbed, setShowEmbed] = useState(false);
@@ -1012,10 +1038,88 @@ function Status({
       if (different) setDifferentLanguage(different);
     }, 100);
     return () => clearTimeout(timeout);
-  }, [language, differentLanguage]);
+  }, [language, differentLanguage, translationTargetLanguage]);
 
   const shouldInlineTranslate =
-    inlineTranslate && isTranslateble(content, emojis) && differentLanguage;
+    inlineTranslateEnabled &&
+    isTranslateble(content, emojis) &&
+    differentLanguage;
+
+  const getTranslationText = useCallback(
+    (opts = {}) => {
+      const urlMap = [];
+      const text = getPostText(status, {
+        ...opts,
+        maskCustomEmojis: true,
+        maskURLs: true,
+        preserveURLs: true,
+        urlMap,
+      });
+      return { text, urlMap };
+    },
+    [status],
+  );
+
+  const [translatedMediaDescriptions, setTranslatedMediaDescriptions] =
+    useState({});
+  const mainContentNeedsTranslation =
+    isTranslateble(content, emojis) && differentLanguage;
+  const shouldTranslateMediaCaptions =
+    hasMediaCaptions &&
+    (inlineTranslationVisible ||
+      (inlineTranslate && !mainContentNeedsTranslation));
+
+  useEffect(() => {
+    if (!shouldTranslateMediaCaptions) {
+      setTranslatedMediaDescriptions({});
+      return;
+    }
+
+    const controller = new AbortController();
+    const captions = mediaAttachments.filter((media) =>
+      media.description?.trim?.(),
+    );
+
+    Promise.all(
+      captions.map(async (media) => {
+        try {
+          const result = await translateText({
+            text: media.description,
+            // Media descriptions can be written in a different language
+            // than the post itself, so detect each caption independently.
+            source: 'auto',
+            target: translationTargetLanguage,
+            signal: controller.signal,
+            mini: true,
+          });
+          return [media.id, result?.content || null];
+        } catch (e) {
+          if (e.name !== 'AbortError') console.error(e);
+          return [media.id, null];
+        }
+      }),
+    ).then((entries) => {
+      if (controller.signal.aborted) return;
+      setTranslatedMediaDescriptions(Object.fromEntries(entries));
+    });
+
+    return () => controller.abort();
+  }, [
+    shouldTranslateMediaCaptions,
+    mediaAttachments,
+    language,
+    translationTargetLanguage,
+  ]);
+
+  const translatedMediaAttachments = useMemo(() => {
+    if (!Object.keys(translatedMediaDescriptions).length) {
+      return mediaAttachments;
+    }
+    return mediaAttachments.map((media) => {
+      const description = translatedMediaDescriptions[media.id];
+      return description ? { ...media, description } : media;
+    });
+  }, [mediaAttachments, translatedMediaDescriptions]);
 
   const reblogIterator = useRef();
   const favouriteIterator = useRef();
@@ -1933,7 +2037,7 @@ function Status({
     },
   );
 
-  const displayedMediaAttachments = mediaAttachments.slice(
+  const displayedMediaAttachments = translatedMediaAttachments.slice(
     0,
     isSizeLarge ? undefined : 4,
   );
@@ -2532,7 +2636,7 @@ function Status({
                   </>
                 )}
                 <MediaFirstContainer
-                  mediaAttachments={mediaAttachments}
+                  mediaAttachments={translatedMediaAttachments}
                   language={language}
                   postID={id}
                   instance={instance}
@@ -2598,13 +2702,16 @@ function Status({
                   (shouldInlineTranslate ? (
                     <TranslationBlock
                       inline
-                      forceTranslate
+                      inlineButton={withinContext}
+                      forceTranslate={inlineTranslate}
+                      onTranslationVisibilityChange={
+                        setInlineTranslationVisible
+                      }
                       sourceLanguage={language}
                       autoDetected={languageAutoDetected}
-                      text={getPostText(status, {
-                        maskCustomEmojis: true,
-                        maskURLs: true,
+                      {...getTranslationText({
                         hideInlineQuote: true,
+                        hidePoll: true,
                       })}
                     >
                       <div
@@ -2670,6 +2777,9 @@ function Status({
                           states.statuses[sKey].poll = pollResponse;
                         });
                     }}
+                    translateOptions={
+                      content ? inlineTranslationVisible : inlineTranslate
+                    }
                   />
                 )}
                 {!shouldInlineTranslate &&
@@ -2679,12 +2789,13 @@ function Status({
                     forceTranslate) && (
                     <TranslationBlock
                       forceTranslate={forceTranslate || inlineTranslate}
+                      onTranslationVisibilityChange={
+                        setInlineTranslationVisible
+                      }
                       mini={!isSizeLarge && !withinContext}
                       sourceLanguage={language}
                       autoDetected={languageAutoDetected}
-                      text={getPostText(status, {
-                        maskCustomEmojis: true,
-                        maskURLs: true,
+                      {...getTranslationText({
                         // Hide regardless of native quote support
                         // They are not useful in translation context
                         hideInlineQuote: true,

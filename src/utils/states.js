@@ -82,6 +82,7 @@ const states = proxy({
     contentTranslationTargetLanguage: null,
     contentTranslationHideLanguages: [],
     contentTranslationAutoInline: false,
+    contentTranslationAutoInlineLong: false,
     shortcutSettingsCloudImportExport: false,
     mediaAltGenerator: false,
     composerGIFPicker: false,
@@ -118,6 +119,8 @@ export function initStates() {
     store.account.get('settings-contentTranslationHideLanguages') || [];
   states.settings.contentTranslationAutoInline =
     store.account.get('settings-contentTranslationAutoInline') ?? false;
+  states.settings.contentTranslationAutoInlineLong =
+    store.account.get('settings-contentTranslationAutoInlineLong') ?? false;
   states.settings.shortcutSettingsCloudImportExport =
     store.account.get('settings-shortcutSettingsCloudImportExport') ?? false;
   states.settings.mediaAltGenerator =
@@ -158,6 +161,9 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.contentTranslationAutoInline') {
       store.account.set('settings-contentTranslationAutoInline', !!value);
+    }
+    if (path.join('.') === 'settings.contentTranslationAutoInlineLong') {
+      store.account.set('settings-contentTranslationAutoInlineLong', !!value);
     }
     if (path.join('.') === 'settings.shortcutSettingsCloudImportExport') {
       store.account.set('settings-shortcutSettingsCloudImportExport', !!value);

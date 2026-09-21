@@ -12,11 +12,13 @@ import {
   useState,
 } from 'preact/hooks';
 import punycode from 'punycode/';
+import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
 import { memFetchFamiliarFollowers } from '../utils/familiar-followers';
 import getDomain from '../utils/get-domain';
+import getHTMLText from '../utils/getHTMLText';
 import handleContentLinks from '../utils/handle-content-links';
 import niceDateTime from '../utils/nice-date-time';
 import pmem from '../utils/pmem';
@@ -43,6 +45,7 @@ import Link from './link';
 import Menu2 from './menu2';
 import Modal from './modal';
 import RelatedActions from './related-actions';
+import TranslationBlock from './translation-block';
 
 const LIMIT = 80;
 
@@ -105,6 +108,25 @@ const memFetchPostingStats = pmem(fetchPostingStats, {
   expires: ACCOUNT_INFO_MAX_AGE,
 });
 
+function getProfileNoteTranslation(note) {
+  const urlMap = [];
+  const text = getHTMLText(note, {
+    preProcess: (dom) => {
+      for (const a of dom.querySelectorAll('a')) {
+        const label = a.innerText.trim();
+        if (!label) continue;
+        const index =
+          urlMap.push({
+            href: a.href,
+            label,
+          }) - 1;
+        a.replaceWith(`__PHANPY_URL_${index}__`);
+      }
+    },
+  });
+  return { text, urlMap };
+}
+
 const isValidUrl = (string) => {
   try {
     new URL(string);
@@ -135,6 +157,7 @@ function AccountInfo({
   showEndorsements = false,
 }) {
   const { i18n, t } = useLingui();
+  const snapStates = useSnapshot(states);
   const { masto, authenticated: currentAuthenticated } = api({
     instance,
   });
@@ -239,6 +262,14 @@ function AccountInfo({
   }, [isSelf, info, instance]);
 
   const accountInstance = getDomain(url);
+  const profileNoteTranslation = useMemo(
+    () => getProfileNoteTranslation(note),
+    [note],
+  );
+  const autoTranslateProfileNote =
+    snapStates.settings.contentTranslation &&
+    snapStates.settings.contentTranslationAutoInline &&
+    !!profileNoteTranslation.text;
 
   const [headerCornerColors, setHeaderCornerColors] = useState([]);
 
@@ -748,16 +779,36 @@ function AccountInfo({
                     )}
                   </span>
                 ))} */}
-                <div
-                  class="note"
-                  dir="auto"
-                  onClick={handleContentLinks({
-                    instance: currentInstance,
-                  })}
-                  dangerouslySetInnerHTML={{
-                    __html: enhanceContent(note, { emojis }),
-                  }}
-                />
+                {autoTranslateProfileNote ? (
+                  <TranslationBlock
+                    inline
+                    forceTranslate
+                    inlineClassName="note status-translation-inline"
+                    text={profileNoteTranslation.text}
+                    urlMap={profileNoteTranslation.urlMap}
+                  >
+                    <div
+                      dir="auto"
+                      onClick={handleContentLinks({
+                        instance: currentInstance,
+                      })}
+                      dangerouslySetInnerHTML={{
+                        __html: enhanceContent(note, { emojis }),
+                      }}
+                    />
+                  </TranslationBlock>
+                ) : (
+                  <div
+                    class="note"
+                    dir="auto"
+                    onClick={handleContentLinks({
+                      instance: currentInstance,
+                    })}
+                    dangerouslySetInnerHTML={{
+                      __html: enhanceContent(note, { emojis }),
+                    }}
+                  />
+                )}
                 <div class="account-metadata-box">
                   {fields?.length > 0 && (
                     <div class="profile-metadata">

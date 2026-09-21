@@ -3,6 +3,7 @@ import { plural } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
+import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import haptics from '../utils/haptics';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
@@ -11,6 +12,7 @@ import useTruncated from '../utils/useTruncated';
 import EmojiText from './emoji-text';
 import Icon from './icon';
 import RelativeTime from './relative-time';
+import { translateText } from './translation-block';
 
 const POLL_OPTIONS_BATCH_SIZE = 40;
 
@@ -20,6 +22,7 @@ export default function Poll({
   readOnly,
   refresh = () => {},
   votePoll = () => {},
+  translateOptions = false,
 }) {
   const { t } = useLingui();
   const [uiState, setUIState] = useState('default');
@@ -78,6 +81,45 @@ export default function Poll({
   const resultsView =
     (showResults && optionsHaveVoteCounts) || voted || expired;
   const [selectedOptions, setSelectedOptions] = useState(multiple ? [] : null);
+  const [translatedOptions, setTranslatedOptions] = useState(null);
+  const targetLanguage = getTranslateTargetLanguage(true);
+
+  useEffect(() => {
+    if (!translateOptions || !options.length) {
+      setTranslatedOptions(null);
+      return;
+    }
+
+    const abortController = new AbortController();
+    Promise.all(
+      options.map(async (option) => {
+        try {
+          const result = await translateText({
+            text: option.title,
+            source: lang || 'auto',
+            target: targetLanguage,
+            signal: abortController.signal,
+            mini: true,
+          });
+          return result?.content || option.title;
+        } catch (e) {
+          if (e.name !== 'AbortError') console.error(e);
+          return option.title;
+        }
+      }),
+    ).then((titles) => {
+      if (!abortController.signal.aborted) setTranslatedOptions(titles);
+    });
+
+    return () => abortController.abort();
+  }, [translateOptions, options, lang, targetLanguage]);
+
+  const displayOptions = translatedOptions
+    ? options.map((option, i) => ({
+        ...option,
+        title: translatedOptions[i] || option.title,
+      }))
+    : options;
 
   useEffect(() => {
     if (!loadMoreRef.current) return;
@@ -124,7 +166,7 @@ export default function Poll({
       {resultsView ? (
         <>
           <div class="poll-options" ref={ref}>
-            {options.slice(0, visibleOptionsCount).map((option, i) => {
+            {displayOptions.slice(0, visibleOptionsCount).map((option, i) => {
               const { title, votesCount: optionVotesCount } = option;
               const ratio = pollVotesCount
                 ? optionVotesCount / pollVotesCount
@@ -226,7 +268,7 @@ export default function Poll({
           }}
         >
           <div class="poll-options" ref={ref}>
-            {options.slice(0, visibleOptionsCount).map((option, i) => {
+            {displayOptions.slice(0, visibleOptionsCount).map((option, i) => {
               const { title } = option;
               const isSelected = multiple
                 ? selectedOptions.includes(i)

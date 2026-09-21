@@ -116,6 +116,64 @@ const throttledBrowserTranslate = ({ text, source, target, signal }) =>
     signal,
   });
 
+function renderTranslatedContent(content, urlMap = []) {
+  if (!content || !urlMap.length) return content;
+
+  const parts = [];
+  const tokenRegex = /__PHANPY_URL_(\d+)__/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = tokenRegex.exec(content))) {
+    if (match.index > lastIndex) {
+      parts.push(content.slice(lastIndex, match.index));
+    }
+    const link = urlMap[Number(match[1])];
+    if (link?.href) {
+      parts.push(
+        <a
+          key={`translated-url-${match[1]}`}
+          href={link.href}
+          target="_blank"
+          rel="nofollow noopener"
+        >
+          {link.label || link.href}
+        </a>,
+      );
+    } else {
+      parts.push(match[0]);
+    }
+    lastIndex = tokenRegex.lastIndex;
+  }
+
+  if (!parts.length) return content;
+  if (lastIndex < content.length) parts.push(content.slice(lastIndex));
+  return parts;
+}
+
+export async function translateText({
+  text,
+  source,
+  target,
+  signal,
+  mini = false,
+}) {
+  if (supportsBrowserTranslator) {
+    const result = await throttledBrowserTranslate({
+      text,
+      source,
+      target,
+      signal,
+    });
+    if (result && !result.error) {
+      return result;
+    }
+  }
+  return mini
+    ? await throttledTranslangTranslate({ signal, text, source, target })
+    : await translangTranslate(text, source, target);
+}
+
 function TranslationBlock({
   forceTranslate,
   sourceLanguage,
@@ -123,8 +181,13 @@ function TranslationBlock({
   text = '',
   mini,
   inline,
+  inlineButton,
   children,
   autoDetected,
+  onTranslationVisibilityChange,
+  urlMap,
+  inlineClassName = 'status-translation-inline',
+  inlineContentClassName = 'content status-translation-inline-content',
 }) {
   const { t } = useLingui();
   const targetLang = getTranslateTargetLanguage(true);
@@ -155,22 +218,8 @@ function TranslationBlock({
   const apiSourceLang = useRef('auto');
 
   if (!onTranslate) {
-    onTranslate = async ({ text, source, target, signal }) => {
-      if (supportsBrowserTranslator) {
-        const result = await throttledBrowserTranslate({
-          text,
-          source,
-          target,
-          signal,
-        });
-        if (result && !result.error) {
-          return result;
-        }
-      }
-      return mini
-        ? await throttledTranslangTranslate({ signal, text, source, target })
-        : await translangTranslate(text, source, target);
-    };
+    onTranslate = ({ text, source, target, signal }) =>
+      translateText({ text, source, target, signal, mini });
   }
 
   const translate = async () => {
@@ -195,6 +244,7 @@ function TranslationBlock({
           }
         }
         setTranslatedContent(content);
+        onTranslationVisibilityChange?.(true);
         setUIState('default');
         if (!mini && content.trim() !== text.trim() && detailsRef.current) {
           detailsRef.current.open = true;
@@ -233,42 +283,56 @@ function TranslationBlock({
       !!translatedContent &&
       translatedContent.trim() !== text.trim() &&
       detectedLang !== targetLangText;
-    const toggleLabel = showOriginal
-      ? t`Auto-translated from ${sourceLangText || ''}`
-      : t`Original`;
+    const toggleLabel = !hasTranslation
+      ? inlineButton && sourceLanguage && sourceLangText
+        ? autoDetected
+          ? t`Translate from ${sourceLangText} (auto-detected)`
+          : t`Translate from ${sourceLangText}`
+        : t`Translate`
+      : showOriginal
+        ? t`Show translation`
+        : t`Original`;
 
     return (
       <div
         ref={inlineRef}
-        class={`status-translation-inline ${
-          hasTranslation ? 'is-translated' : ''
-        }`}
+        class={`${inlineClassName} ${hasTranslation ? 'is-translated' : ''}`}
       >
         {hasTranslation && !showOriginal ? (
-          <div class="content status-translation-inline-content">
+          <div class={inlineContentClassName}>
             <output lang={targetLang} dir="auto">
-              {translatedContent}
+              {renderTranslatedContent(translatedContent, urlMap)}
             </output>
           </div>
         ) : (
           children
         )}
-        {hasTranslation && (
-          <button
-            type="button"
-            class="status-translation-inline-toggle plain"
-            title={toggleLabel}
-            aria-label={toggleLabel}
-            aria-pressed={!showOriginal}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setShowOriginal((value) => !value);
-            }}
-          >
-            <Icon icon="translate" alt={toggleLabel} />
-          </button>
-        )}
+        <button
+          type="button"
+          class={`status-translation-inline-toggle ${
+            inlineButton ? 'status-translation-inline-toggle-button' : 'plain'
+          } ${hasTranslation && !showOriginal ? 'is-active' : ''}`}
+          title={toggleLabel}
+          aria-label={toggleLabel}
+          aria-pressed={hasTranslation ? !showOriginal : undefined}
+          disabled={uiState === 'loading'}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!hasTranslation) {
+              translate();
+            } else {
+              setShowOriginal((value) => {
+                const nextValue = !value;
+                onTranslationVisibilityChange?.(!nextValue);
+                return nextValue;
+              });
+            }
+          }}
+        >
+          <Icon icon="translate" alt={toggleLabel} />
+          {inlineButton && <span>{toggleLabel}</span>}
+        </button>
       </div>
     );
   }
@@ -291,7 +355,7 @@ function TranslationBlock({
               dir="auto"
               title={pronunciationContent || ''}
             >
-              {translatedContent}
+              {renderTranslatedContent(translatedContent, urlMap)}
             </output>
           </div>
         </LazyShazam>
@@ -374,7 +438,7 @@ function TranslationBlock({
             !!translatedContent && (
               <>
                 <output class="translated-content" lang={targetLang} dir="auto">
-                  {translatedContent}
+                  {renderTranslatedContent(translatedContent, urlMap)}
                 </output>
                 {!!pronunciationContent && (
                   <output

@@ -140,7 +140,7 @@ export const SHORTCUTS_META = {
     title: (_, index) =>
       index === 0
         ? t`Home`
-        : t({ id: 'following.title', message: 'Following' }),
+        : t({ message: 'Following', context: 'section title' }),
     path: '/',
     icon: 'home',
   },

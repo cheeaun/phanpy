@@ -252,7 +252,7 @@ function AccountBlock(props) {
                     </span>
                   ) : excludedRelationship.following ? (
                     <span class="tag minimal">
-                      <Trans>Following</Trans>
+                      <Trans context="follow state">Following</Trans>
                     </span>
                   ) : excludedRelationship.followedBy ? (
                     <span class="tag minimal">

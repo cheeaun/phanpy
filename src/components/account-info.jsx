@@ -854,8 +854,8 @@ function AccountInfo({
                         setTimeout(() => {
                           states.showGenericAccounts = {
                             heading: t({
-                              id: 'following.stats',
                               message: 'Following',
+                              context: 'followed accounts',
                             }),
                             fetchAccounts: fetchFollowing,
                             instance,

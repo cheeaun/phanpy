@@ -8,7 +8,7 @@ msgstr ""
 "Language: gl\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-03 12:13\n"
+"PO-Revision-Date: 2026-09-25 12:14\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -36,46 +36,47 @@ msgstr "Última actividade: {date}"
 msgid "Automated"
 msgstr "Automatizada"
 
-#: src/components/account-block.jsx:236
-#: src/components/account-info.jsx:735
-#: src/components/status.jsx:611
+#: src/components/account-block.jsx:237
+#: src/components/account-info.jsx:736
+#: src/components/status.jsx:614
+msgctxt "account type"
 msgid "Group"
-msgstr "Grupo"
+msgstr ""
 
-#: src/components/account-block.jsx:246
+#: src/components/account-block.jsx:247
 msgid "Mutual"
 msgstr "Recíproco"
 
-#: src/components/account-block.jsx:250
+#: src/components/account-block.jsx:251
 #: src/components/related-actions.jsx:991
 msgid "Requested"
 msgstr "Solicitado"
 
-#: src/components/account-block.jsx:254
+#: src/components/account-block.jsx:255
 #: src/components/related-actions.jsx:982
 msgid "Following"
 msgstr "Seguindo"
 
-#: src/components/account-block.jsx:258
+#: src/components/account-block.jsx:259
 #: src/components/related-actions.jsx:211
 msgid "Follows you"
 msgstr "Séguete"
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
-#: src/components/account-block.jsx:286
+#: src/components/account-block.jsx:287
 msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> seguidora} other {<1>{1}</1> seguidoras}}"
 
-#: src/components/account-block.jsx:311
-#: src/components/account-info.jsx:778
+#: src/components/account-block.jsx:312
+#: src/components/account-info.jsx:779
 msgid "Verified"
 msgstr "Verificada"
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
-#: src/components/account-block.jsx:327
-#: src/components/account-info.jsx:917
+#: src/components/account-block.jsx:328
+#: src/components/account-info.jsx:918
 msgid "Joined <0>{0}</0>"
 msgstr "Creada <0>{0}</0>"
 
@@ -88,7 +89,7 @@ msgid "server domain name"
 msgstr "dominio do servidor"
 
 #: src/components/account-info-mini.jsx:57
-#: src/components/account-info.jsx:800
+#: src/components/account-info.jsx:801
 #: src/components/compose.jsx:2069
 #: src/pages/settings.jsx:308
 #: src/utils/visibility-text.jsx:7
@@ -97,34 +98,34 @@ msgstr "Seguidoras"
 
 #: src/components/account-info-mini.jsx:61
 #: src/components/account-info-mini.jsx:100
-#: src/components/account-info.jsx:807
-#: src/components/account-info.jsx:865
+#: src/components/account-info.jsx:808
+#: src/components/account-info.jsx:866
 msgid "This user has chosen to not make this information available."
 msgstr "A usuaria decidiu non ofrecer esta información."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info-mini.jsx:67
-#: src/components/account-info.jsx:827
+#: src/components/account-info.jsx:828
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> Seguidora} other {<1>{1}</1> Seguidoras}}"
 
 #. js-lingui-explicit-id
 #: src/components/account-info-mini.jsx:93
-#: src/components/account-info.jsx:855
+#: src/components/account-info.jsx:856
 msgid "following.stats"
 msgstr "Seguimentos"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info-mini.jsx:106
-#: src/components/account-info.jsx:871
+#: src/components/account-info.jsx:872
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, one {}other {<0>{0}</0> Seguimentos}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info-mini.jsx:119
-#: src/components/account-info.jsx:895
+#: src/components/account-info.jsx:896
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> Publicación} other {<1>{1}</1> Publicacións}}"
 
@@ -140,6 +141,13 @@ msgstr "Non se puido cargar a conta."
 msgid "Go to account page"
 msgstr "Ir á páxina da conta"
 
+#. Infinitive form
+#. Infinitive form
+#. Infinitive form
+#. Infinitive form
+#. Infinitive form
+#. Infinitive form
+#. Infinitive form
 #: src/components/account-info.jsx:409
 #: src/components/timeline.jsx:663
 #: src/components/timeline2.jsx:701
@@ -202,14 +210,14 @@ msgstr "Lembranzas"
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:952
+#: src/components/account-info.jsx:953
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} publicacións orixinais, {1} respostas, {2} citas, {3} promocións"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:969
+#: src/components/account-info.jsx:970
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} publicacións orixinais, {1} respostas, {2} promocións"
 
@@ -220,24 +228,24 @@ msgstr "{0} publicacións orixinais, {1} respostas, {2} promocións"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:986
+#: src/components/account-info.jsx:987
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {A última publicación desde onte} other {A última publicación desde fai {2} días}}} other {{3, plural, one {As úlltimas {4} publicacións desde onte} other {As últimas {5} publicacións dos últimos {6} días}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:1002
+#: src/components/account-info.jsx:1003
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Última publicación no último ano(s)} other {Últimas {1} publicacións no último ano(s)}}"
 
-#: src/components/account-info.jsx:1060
+#: src/components/account-info.jsx:1061
 #: src/pages/catchup.jsx:73
 #: src/pages/year-in-posts.jsx:1390
 msgid "Original"
 msgstr "Orixinal"
 
-#: src/components/account-info.jsx:1064
-#: src/components/status.jsx:2832
+#: src/components/account-info.jsx:1065
+#: src/components/status.jsx:2836
 #: src/pages/account-statuses.jsx:428
 #: src/pages/catchup.jsx:74
 #: src/pages/catchup.jsx:1594
@@ -248,30 +256,30 @@ msgstr "Orixinal"
 msgid "Replies"
 msgstr "Respostas"
 
-#: src/components/account-info.jsx:1069
+#: src/components/account-info.jsx:1070
 #: src/components/quotes-modal.jsx:81
-#: src/components/status.jsx:2837
+#: src/components/status.jsx:2841
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1597
 #: src/pages/year-in-posts.jsx:1400
 msgid "Quotes"
 msgstr "Citas"
 
-#: src/components/account-info.jsx:1074
+#: src/components/account-info.jsx:1075
 #: src/pages/account-statuses.jsx:444
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1596
 #: src/pages/catchup.jsx:2261
-#: src/pages/settings.jsx:1353
+#: src/pages/settings.jsx:1337
 #: src/pages/year-in-posts.jsx:1406
 msgid "Boosts"
 msgstr "Promocións"
 
-#: src/components/account-info.jsx:1080
+#: src/components/account-info.jsx:1081
 msgid "Post stats unavailable."
 msgstr "Estatísticas non dispoñibles."
 
-#: src/components/account-info.jsx:1107
+#: src/components/account-info.jsx:1108
 msgid "View post stats"
 msgstr "Ver estatísticas de publicación"
 
@@ -295,7 +303,7 @@ msgstr "Ver estatísticas de publicación"
 #: src/components/media-attachment.jsx:420
 #: src/components/media-modal.jsx:362
 #: src/components/mention-modal.jsx:162
-#: src/components/notification-service.jsx:157
+#: src/components/notification-service.jsx:152
 #: src/components/open-link-sheet.jsx:51
 #: src/components/post-embed-modal.jsx:197
 #: src/components/private-note-sheet.jsx:36
@@ -309,10 +317,10 @@ msgstr "Ver estatísticas de publicación"
 #: src/components/shortcuts-settings.jsx:247
 #: src/components/shortcuts-settings.jsx:600
 #: src/components/shortcuts-settings.jsx:801
-#: src/components/status.jsx:3502
-#: src/components/status.jsx:3714
+#: src/components/status.jsx:3506
+#: src/components/status.jsx:3718
 #: src/components/translated-bio-sheet.jsx:21
-#: src/pages/accounts.jsx:47
+#: src/pages/accounts.jsx:48
 #: src/pages/catchup.jsx:1731
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
@@ -361,7 +369,7 @@ msgid "Cloak mode enabled"
 msgstr "Capa activada"
 
 #. More from [Author]
-#: src/components/byline.jsx:17
+#: src/components/byline.jsx:16
 msgid "More from <0/>"
 msgstr "Mais de <0/>"
 
@@ -501,7 +509,7 @@ msgstr "Non se puido eliminar a colección"
 #: src/components/edit-profile-sheet.jsx:108
 #: src/components/edit-profile-sheet.jsx:120
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1686
+#: src/components/status.jsx:1690
 #: src/pages/filters.jsx:605
 #: src/pages/scheduled-posts.jsx:398
 msgid "Delete…"
@@ -707,7 +715,7 @@ msgid "Attachment #{i} failed"
 msgstr "Fallou o anexo #{i}"
 
 #: src/components/compose.jsx:1533
-#: src/components/status.jsx:2564
+#: src/components/status.jsx:2568
 #: src/components/timeline.jsx:1062
 msgid "Content warning"
 msgstr "Aviso sobre o contido"
@@ -785,7 +793,7 @@ msgid "Quiet public"
 msgstr "Pública limitada"
 
 #: src/components/compose.jsx:2072
-#: src/components/status.jsx:2443
+#: src/components/status.jsx:2447
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Mención privada"
@@ -796,12 +804,12 @@ msgstr "Programar"
 
 #: src/components/compose.jsx:2130
 #: src/components/keyboard-shortcuts-help.jsx:165
-#: src/components/status.jsx:1107
-#: src/components/status.jsx:1156
-#: src/components/status.jsx:2195
-#: src/components/status.jsx:2196
-#: src/components/status.jsx:2964
-#: src/components/status.jsx:2976
+#: src/components/status.jsx:1111
+#: src/components/status.jsx:1160
+#: src/components/status.jsx:2199
+#: src/components/status.jsx:2200
+#: src/components/status.jsx:2968
+#: src/components/status.jsx:2980
 msgid "Reply"
 msgstr "Responder"
 
@@ -912,7 +920,7 @@ msgstr "Multimedia"
 
 #: src/components/drafts.jsx:283
 #: src/components/keyboard-shortcuts-help.jsx:194
-#: src/components/status.jsx:768
+#: src/components/status.jsx:772
 msgid "Quote"
 msgstr "Cita"
 
@@ -943,13 +951,13 @@ msgstr "Saír"
 #: src/components/media-attachment.jsx:465
 #: src/components/media-modal.jsx:398
 #: src/components/related-actions.jsx:267
-#: src/components/status.jsx:2220
-#: src/components/status.jsx:2237
-#: src/components/status.jsx:2369
-#: src/components/status.jsx:3135
-#: src/components/status.jsx:3138
+#: src/components/status.jsx:2224
+#: src/components/status.jsx:2241
+#: src/components/status.jsx:2373
+#: src/components/status.jsx:3139
+#: src/components/status.jsx:3142
 #: src/pages/account-statuses.jsx:676
-#: src/pages/accounts.jsx:153
+#: src/pages/accounts.jsx:155
 #: src/pages/collection.jsx:284
 #: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
@@ -962,13 +970,13 @@ msgstr "Máis"
 
 #: src/components/edit-profile-sheet.jsx:94
 #: src/components/shortcuts-settings.jsx:368
-#: src/pages/accounts.jsx:223
+#: src/pages/accounts.jsx:225
 msgid "Move up"
 msgstr "Ir arriba"
 
 #: src/components/edit-profile-sheet.jsx:100
 #: src/components/shortcuts-settings.jsx:384
-#: src/pages/accounts.jsx:238
+#: src/pages/accounts.jsx:240
 msgid "Move down"
 msgstr "Ir abaixo"
 
@@ -1075,7 +1083,7 @@ msgstr "Rexeitado"
 
 #: src/components/generic-accounts.jsx:154
 #: src/components/notification.jsx:502
-#: src/pages/accounts.jsx:52
+#: src/pages/accounts.jsx:53
 #: src/pages/search.jsx:124
 #: src/pages/search.jsx:462
 msgid "Accounts"
@@ -1302,9 +1310,9 @@ msgid "<0>l</0> or <1>f</1>"
 msgstr "<0>l</0> ou <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:186
-#: src/components/status.jsx:1199
-#: src/components/status.jsx:3013
-#: src/components/status.jsx:3079
+#: src/components/status.jsx:1203
+#: src/components/status.jsx:3017
+#: src/components/status.jsx:3083
 msgid "Boost"
 msgstr "Promover"
 
@@ -1313,9 +1321,9 @@ msgid "<0>Shift</0> + <1>b</1>"
 msgstr "<0>Maiús</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:198
-#: src/components/status.jsx:1302
-#: src/components/status.jsx:3111
-#: src/components/status.jsx:3112
+#: src/components/status.jsx:1306
+#: src/components/status.jsx:3115
+#: src/components/status.jsx:3116
 msgid "Bookmark"
 msgstr "Marcar"
 
@@ -1413,14 +1421,14 @@ msgid "Media description"
 msgstr "Descrición do multimedia"
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1369
-#: src/components/status.jsx:1378
+#: src/components/status.jsx:1373
+#: src/components/status.jsx:1382
 #: src/components/translation-block.jsx:270
 msgid "Translate"
 msgstr "Traducir"
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1399
+#: src/components/status.jsx:1403
 msgid "Speak"
 msgstr "Falar"
 
@@ -1545,8 +1553,8 @@ msgstr "Filtrado: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:74
-#: src/components/status.jsx:3640
-#: src/components/status.jsx:3718
+#: src/components/status.jsx:3644
+#: src/components/status.jsx:3722
 #: src/components/timeline.jsx:1051
 #: src/pages/catchup.jsx:79
 #: src/pages/catchup.jsx:2052
@@ -1612,7 +1620,7 @@ msgstr "Ponte ao día"
 #: src/pages/mentions.jsx:25
 #: src/pages/mentions.jsx:256
 #: src/pages/notifications.jsx:970
-#: src/pages/settings.jsx:1345
+#: src/pages/settings.jsx:1329
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "Mencións"
@@ -1658,7 +1666,7 @@ msgstr "Máis…"
 #: src/pages/catchup.jsx:2255
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1349
+#: src/pages/settings.jsx:1333
 msgid "Likes"
 msgstr "Favorecementos"
 
@@ -1750,15 +1758,15 @@ msgstr "Listas"
 msgid "All Lists"
 msgstr "Todas as Listas"
 
-#: src/components/notification-service.jsx:161
+#: src/components/notification-service.jsx:156
 msgid "Notification"
 msgstr "Notificación"
 
-#: src/components/notification-service.jsx:167
+#: src/components/notification-service.jsx:162
 msgid "This notification is from your other account."
 msgstr "Esta notificación procede de outra conta."
 
-#: src/components/notification-service.jsx:196
+#: src/components/notification-service.jsx:191
 msgid "View all notifications"
 msgstr "Ver todas as notificacións"
 
@@ -1895,8 +1903,8 @@ msgid "[Unknown notification type: {type}]"
 msgstr "[Tipo de notificación descoñecido: {type}]"
 
 #: src/components/notification.jsx:498
-#: src/components/status.jsx:1316
-#: src/components/status.jsx:1326
+#: src/components/status.jsx:1320
+#: src/components/status.jsx:1330
 msgid "Boosted/Liked by…"
 msgstr "Promovida/Favorecida por…"
 
@@ -1929,14 +1937,14 @@ msgstr "Ler mais →"
 
 #: src/components/open-link-sheet.jsx:30
 #: src/components/related-actions.jsx:573
-#: src/components/status.jsx:1490
+#: src/components/status.jsx:1494
 #: src/pages/collection.jsx:325
 msgid "Link copied"
 msgstr "Copiouse a ligazón"
 
 #: src/components/open-link-sheet.jsx:33
 #: src/components/related-actions.jsx:576
-#: src/components/status.jsx:1493
+#: src/components/status.jsx:1497
 #: src/pages/collection.jsx:328
 msgid "Unable to copy link"
 msgstr "Non se puido copiar a ligazón"
@@ -1949,14 +1957,14 @@ msgstr "Abrir ligazón?"
 #: src/components/post-embed-modal.jsx:233
 #: src/components/related-actions.jsx:582
 #: src/components/shortcuts-settings.jsx:1175
-#: src/components/status.jsx:1499
+#: src/components/status.jsx:1503
 #: src/pages/collection.jsx:334
 msgid "Copy"
 msgstr "Copiar"
 
 #: src/components/open-link-sheet.jsx:82
 #: src/components/related-actions.jsx:603
-#: src/components/status.jsx:1521
+#: src/components/status.jsx:1525
 #: src/pages/collection.jsx:351
 msgid "Share…"
 msgstr "Compartir…"
@@ -2036,7 +2044,7 @@ msgid "Refresh"
 msgstr "Actualizar"
 
 #: src/components/post-embed-modal.jsx:202
-#: src/components/status.jsx:1534
+#: src/components/status.jsx:1538
 msgid "Embed post"
 msgstr "Incluír a publicación"
 
@@ -2301,7 +2309,7 @@ msgstr "Buscar nas miñas publicacións"
 
 #: src/components/related-actions.jsx:597
 #: src/components/shortcuts-settings.jsx:1193
-#: src/components/status.jsx:1515
+#: src/components/status.jsx:1519
 msgid "Sharing doesn't seem to work."
 msgstr "Semella que non se pode compartir."
 
@@ -2640,7 +2648,7 @@ msgid "Not available in current view mode"
 msgstr "Non dispoñible coa visualización actual"
 
 #: src/components/shortcuts-settings.jsx:396
-#: src/components/status.jsx:1648
+#: src/components/status.jsx:1652
 #: src/pages/collection.jsx:396
 #: src/pages/list.jsx:195
 msgid "Edit"
@@ -2671,7 +2679,7 @@ msgid "Max {SHORTCUTS_LIMIT} shortcuts"
 msgstr "Máx {SHORTCUTS_LIMIT} atallos"
 
 #: src/components/shortcuts-settings.jsx:475
-#: src/pages/accounts.jsx:364
+#: src/pages/accounts.jsx:367
 msgid "Import/export"
 msgstr "Importar/exportar"
 
@@ -2854,351 +2862,351 @@ msgid "You are not allowed to quote this post"
 msgstr "Non tes permiso para citar esta publicación"
 
 #: src/components/status.jsx:373
-#: src/components/status.jsx:3280
-#: src/components/status.jsx:3281
-#: src/components/status.jsx:3282
+#: src/components/status.jsx:3284
+#: src/components/status.jsx:3285
+#: src/components/status.jsx:3286
 msgid "Post unavailable"
 msgstr "Publicación non dispoñible"
 
-#: src/components/status.jsx:635
+#: src/components/status.jsx:639
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>promoveu</1>"
 
-#: src/components/status.jsx:742
+#: src/components/status.jsx:746
 msgid "Sorry, your current logged-in server can't interact with this post from another server."
 msgstr "O servidor no que tes iniciada sesión non pode interactuar con esta publicación doutro servidor."
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:932
+#: src/components/status.jsx:936
 msgid "Unliked @{0}'s post"
 msgstr "Retirado o favorecemento a @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:933
+#: src/components/status.jsx:937
 msgid "Liked @{0}'s post"
 msgstr "Favorecida a publicación de @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:973
+#: src/components/status.jsx:977
 msgid "Unbookmarked @{0}'s post"
 msgstr "Desmarcouse a publicación de @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:974
+#: src/components/status.jsx:978
 msgid "Bookmarked @{0}'s post"
 msgstr "Marcouse a publicación de @{0}"
 
-#: src/components/status.jsx:1078
+#: src/components/status.jsx:1082
 msgid "Some media have no descriptions."
 msgstr "Algún multimedia non ten descrición."
 
 #. placeholder {0}: rtf.format(-statusMonthsAgo, 'month')
-#: src/components/status.jsx:1085
+#: src/components/status.jsx:1089
 msgid "Old post (<0>{0}</0>)"
 msgstr "Publicación antiga (<0>{0}</0>)"
 
-#: src/components/status.jsx:1106
+#: src/components/status.jsx:1110
 msgid "Reply…"
 msgstr "Responder…"
 
-#: src/components/status.jsx:1120
-#: src/components/status.jsx:1134
+#: src/components/status.jsx:1124
+#: src/components/status.jsx:1138
 msgid "Reply all"
 msgstr "Responder a todas"
 
-#: src/components/status.jsx:1123
+#: src/components/status.jsx:1127
 msgid "{mentionsCount, plural, other {# mentions}}"
 msgstr "{mentionsCount, plural, other {# mencións}}"
 
 #. placeholder {0}: mentionsCount - 1
 #. placeholder {1}: username || acct
-#: src/components/status.jsx:1137
+#: src/components/status.jsx:1141
 msgid "{0, plural, other {<0>@{1}</0> first, # others below}}"
 msgstr "{0, plural, one {}other {<0>@{1}</0> a primeira, # máis embaixo}}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1159
+#: src/components/status.jsx:1163
 msgid "Only <0>@{0}</0>"
 msgstr "Só <0>@{0}</0>"
 
-#: src/components/status.jsx:1199
-#: src/components/status.jsx:1277
-#: src/components/status.jsx:3013
-#: src/components/status.jsx:3077
+#: src/components/status.jsx:1203
+#: src/components/status.jsx:1281
+#: src/components/status.jsx:3017
+#: src/components/status.jsx:3081
 msgid "Unboost"
 msgstr "Retirar promoción"
 
-#: src/components/status.jsx:1238
-#: src/components/status.jsx:3062
+#: src/components/status.jsx:1242
+#: src/components/status.jsx:3066
 msgid "Quote with link"
 msgstr "Citar con ligazón"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1256
-#: src/components/status.jsx:1849
+#: src/components/status.jsx:1260
+#: src/components/status.jsx:1853
 msgid "Unboosted @{0}'s post"
 msgstr "Retirada a promoción da publicación de @{0}"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1257
-#: src/components/status.jsx:1850
+#: src/components/status.jsx:1261
+#: src/components/status.jsx:1854
 msgid "Boosted @{0}'s post"
 msgstr "Promoviches a publicación de @{0}"
 
-#: src/components/status.jsx:1279
-#: src/components/status.jsx:3076
+#: src/components/status.jsx:1283
+#: src/components/status.jsx:3080
 msgid "Boost/Quote…"
 msgstr "Promoción/Cita…"
 
-#: src/components/status.jsx:1280
-#: src/components/status.jsx:3076
+#: src/components/status.jsx:1284
+#: src/components/status.jsx:3080
 msgid "Boost…"
 msgstr "Promover…"
 
-#: src/components/status.jsx:1292
-#: src/components/status.jsx:2210
-#: src/components/status.jsx:3096
+#: src/components/status.jsx:1296
+#: src/components/status.jsx:2214
+#: src/components/status.jsx:3100
 msgid "Unlike"
 msgstr "Xa non me gusta"
 
-#: src/components/status.jsx:1293
-#: src/components/status.jsx:2210
-#: src/components/status.jsx:2211
-#: src/components/status.jsx:3096
-#: src/components/status.jsx:3097
+#: src/components/status.jsx:1297
+#: src/components/status.jsx:2214
+#: src/components/status.jsx:2215
+#: src/components/status.jsx:3100
+#: src/components/status.jsx:3101
 msgid "Like"
 msgstr "Gústame"
 
-#: src/components/status.jsx:1302
-#: src/components/status.jsx:3111
+#: src/components/status.jsx:1306
+#: src/components/status.jsx:3115
 msgid "Unbookmark"
 msgstr "Retirar marcador"
 
-#: src/components/status.jsx:1337
+#: src/components/status.jsx:1341
 msgid "View Quotes"
 msgstr "Ver citas"
 
-#: src/components/status.jsx:1349
+#: src/components/status.jsx:1353
 msgid "Unwrap quote chain"
 msgstr "Despregar a cadea de citas"
 
-#: src/components/status.jsx:1416
+#: src/components/status.jsx:1420
 msgid "Post text copied"
 msgstr "Copiouse o texto da publicación"
 
-#: src/components/status.jsx:1419
+#: src/components/status.jsx:1423
 msgid "Unable to copy post text"
 msgstr "Non se puido copiar o texto da publicación"
 
-#: src/components/status.jsx:1425
+#: src/components/status.jsx:1429
 msgid "Copy post text"
 msgstr "Copiar texto da publicación"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1443
+#: src/components/status.jsx:1447
 msgid "View post by <0>@{0}</0>"
 msgstr "Ver publicación de <0>@{0}</0>"
 
-#: src/components/status.jsx:1464
+#: src/components/status.jsx:1468
 msgid "Show Edit History"
 msgstr "Mostrar historial de edicións"
 
-#: src/components/status.jsx:1467
+#: src/components/status.jsx:1471
 msgid "Edited: {editedDateText}"
 msgstr "Editada: {editedDateText}"
 
-#: src/components/status.jsx:1551
+#: src/components/status.jsx:1555
 msgid "Conversation unmuted"
 msgstr "Conversa reactivada"
 
-#: src/components/status.jsx:1551
+#: src/components/status.jsx:1555
 msgid "Conversation muted"
 msgstr "Conversa acalada"
 
-#: src/components/status.jsx:1557
+#: src/components/status.jsx:1561
 msgid "Unable to unmute conversation"
 msgstr "Non se puido reactivar a conversa"
 
-#: src/components/status.jsx:1558
+#: src/components/status.jsx:1562
 msgid "Unable to mute conversation"
 msgstr "Non se puido acalar a conversa"
 
-#: src/components/status.jsx:1567
+#: src/components/status.jsx:1571
 msgid "Unmute conversation"
 msgstr "Reactivar a conversa"
 
-#: src/components/status.jsx:1574
+#: src/components/status.jsx:1578
 msgid "Mute conversation"
 msgstr "Acalar conversa"
 
-#: src/components/status.jsx:1591
+#: src/components/status.jsx:1595
 msgid "Post unpinned from profile"
 msgstr "Desprendeuse do perfil a publicación"
 
-#: src/components/status.jsx:1592
+#: src/components/status.jsx:1596
 msgid "Post pinned to profile"
 msgstr "Publicación fixada ao perfil"
 
-#: src/components/status.jsx:1597
+#: src/components/status.jsx:1601
 msgid "Unable to unpin post"
 msgstr "Non se puido desprender a publicación"
 
-#: src/components/status.jsx:1597
+#: src/components/status.jsx:1601
 msgid "Unable to pin post"
 msgstr "Non se puido fixar a publicación"
 
-#: src/components/status.jsx:1606
+#: src/components/status.jsx:1610
 msgid "Unpin from profile"
 msgstr "Soltar do perfil"
 
-#: src/components/status.jsx:1613
+#: src/components/status.jsx:1617
 msgid "Pin to profile"
 msgstr "Fixar no perfil"
 
-#: src/components/status.jsx:1626
+#: src/components/status.jsx:1630
 #: src/pages/settings.jsx:315
 msgid "Quote settings"
 msgstr "Axustes para citar"
 
-#: src/components/status.jsx:1659
+#: src/components/status.jsx:1663
 msgid "Delete this post?"
 msgstr "Eliminar publicación?"
 
-#: src/components/status.jsx:1675
+#: src/components/status.jsx:1679
 msgid "Post deleted"
 msgstr "Eliminouse a publicación"
 
-#: src/components/status.jsx:1678
+#: src/components/status.jsx:1682
 msgid "Unable to delete post"
 msgstr "Non se puido eliminar a publicación"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1703
+#: src/components/status.jsx:1707
 msgid "Remove my post from <0>@{0}</0>'s post?"
 msgstr "Retirar a miña publicación da publicación de <0>@{0}</0>?"
 
-#: src/components/status.jsx:1725
+#: src/components/status.jsx:1729
 msgid "Quote removed"
 msgstr "Retirouse a cita"
 
-#: src/components/status.jsx:1729
+#: src/components/status.jsx:1733
 msgid "Unable to remove quote"
 msgstr "Non se puido retirar a cita"
 
-#: src/components/status.jsx:1735
+#: src/components/status.jsx:1739
 msgid "Remove quote…"
 msgstr "Retirar cita…"
 
-#: src/components/status.jsx:1749
+#: src/components/status.jsx:1753
 msgid "Report post…"
 msgstr "Denunciar publicación…"
 
-#: src/components/status.jsx:2211
-#: src/components/status.jsx:2247
-#: src/components/status.jsx:3097
+#: src/components/status.jsx:2215
+#: src/components/status.jsx:2251
+#: src/components/status.jsx:3101
 msgid "Liked"
 msgstr "Favorecida"
 
-#: src/components/status.jsx:2244
-#: src/components/status.jsx:3079
+#: src/components/status.jsx:2248
+#: src/components/status.jsx:3083
 msgid "Boosted"
 msgstr "Promovida"
 
-#: src/components/status.jsx:2254
-#: src/components/status.jsx:3112
+#: src/components/status.jsx:2258
+#: src/components/status.jsx:3116
 msgid "Bookmarked"
 msgstr "Marcada"
 
-#: src/components/status.jsx:2258
+#: src/components/status.jsx:2262
 msgid "Pinned"
 msgstr "Fixada"
 
-#: src/components/status.jsx:2315
-#: src/components/status.jsx:2847
+#: src/components/status.jsx:2319
+#: src/components/status.jsx:2851
 msgid "Deleted"
 msgstr "Eliminada"
 
-#: src/components/status.jsx:2353
-#: src/components/status.jsx:2420
+#: src/components/status.jsx:2357
+#: src/components/status.jsx:2424
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, one {# resposta} other {# respostas}}"
 
-#: src/components/status.jsx:2365
-#: src/components/status.jsx:2432
-#: src/components/status.jsx:2879
+#: src/components/status.jsx:2369
+#: src/components/status.jsx:2436
+#: src/components/status.jsx:2883
 msgid "Edited"
 msgstr "Editada"
 
-#: src/components/status.jsx:2527
-#: src/components/status.jsx:2589
+#: src/components/status.jsx:2531
+#: src/components/status.jsx:2593
 #: src/pages/collection.jsx:586
 msgid "Show content"
 msgstr "Mostrar contido"
 
-#: src/components/status.jsx:2527
-#: src/components/status.jsx:2589
-#: src/components/status.jsx:2696
+#: src/components/status.jsx:2531
+#: src/components/status.jsx:2593
+#: src/components/status.jsx:2700
 msgid "Show less"
 msgstr "Ver menos"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2692
+#: src/components/status.jsx:2696
 #: src/pages/catchup.jsx:2051
 msgid "Filtered: {0}"
 msgstr "Filtrado: {0}"
 
-#: src/components/status.jsx:2696
+#: src/components/status.jsx:2700
 msgid "Show media"
 msgstr "Mostrar multimedia"
 
-#: src/components/status.jsx:2965
-#: src/components/status.jsx:2977
+#: src/components/status.jsx:2969
+#: src/components/status.jsx:2981
 msgid "Comments"
 msgstr "Comentarios"
 
-#: src/components/status.jsx:3278
+#: src/components/status.jsx:3282
 msgid "Post hidden by your filters"
 msgstr "Publicación oculta por mor dos teus filtros"
 
-#: src/components/status.jsx:3279
+#: src/components/status.jsx:3283
 msgid "Post pending"
 msgstr "Publicación pendente"
 
-#: src/components/status.jsx:3283
+#: src/components/status.jsx:3287
 msgid "Post removed by author"
 msgstr "Publicación retirada pola autora"
 
-#: src/components/status.jsx:3284
+#: src/components/status.jsx:3288
 msgid "Post hidden because you've blocked @{name}."
 msgstr "Publicación oculta porque bloqueaches a @{name}."
 
-#: src/components/status.jsx:3286
+#: src/components/status.jsx:3290
 msgid "Post hidden because you've blocked {domain}."
 msgstr "Publicación oculta porque bloqueaches {domain}."
 
-#: src/components/status.jsx:3287
+#: src/components/status.jsx:3291
 msgid "Post hidden because you've muted @{name}."
 msgstr "Publicación oculta porque silenciaches a @{name}."
 
-#: src/components/status.jsx:3362
+#: src/components/status.jsx:3366
 msgid "Show anyway"
 msgstr "Mostrar igualmente"
 
-#: src/components/status.jsx:3507
+#: src/components/status.jsx:3511
 msgid "Edit History"
 msgstr "Editar Historial"
 
-#: src/components/status.jsx:3511
+#: src/components/status.jsx:3515
 msgid "Failed to load history"
 msgstr "Fallou a carga do historial"
 
-#: src/components/status.jsx:3516
+#: src/components/status.jsx:3520
 msgid "Loading…"
 msgstr "Cargando…"
 
 #. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3648
+#: src/components/status.jsx:3652
 msgid "<0/> <1/> boosted"
 msgstr "<0/> <1/> promoveu"
 
@@ -3229,7 +3237,7 @@ msgid "{index}/X"
 msgstr "{index}/X"
 
 #: src/components/timeline.jsx:562
-#: src/pages/settings.jsx:1373
+#: src/pages/settings.jsx:1357
 msgid "New posts"
 msgstr "Novas publicacións"
 
@@ -3433,64 +3441,64 @@ msgstr "Cambiar ao meu servidor (<0>{currentInstance}</0>)"
 msgid "Month"
 msgstr "Mes"
 
-#: src/pages/accounts.jsx:90
+#: src/pages/accounts.jsx:92
 msgid "Current"
 msgstr "Actual"
 
-#: src/pages/accounts.jsx:139
+#: src/pages/accounts.jsx:141
 msgid "Logged out"
 msgstr "Sesión fechada"
 
-#: src/pages/accounts.jsx:145
+#: src/pages/accounts.jsx:147
 msgid "Default"
 msgstr "Predeterminado"
 
-#: src/pages/accounts.jsx:167
+#: src/pages/accounts.jsx:169
 msgid "Switch to this account"
 msgstr "Cambiar a esta conta"
 
-#: src/pages/accounts.jsx:176
+#: src/pages/accounts.jsx:178
 msgid "Switch in new tab/window"
 msgstr "Cambiar en nova pestana/xanela"
 
-#: src/pages/accounts.jsx:190
+#: src/pages/accounts.jsx:192
 msgid "View profile…"
 msgstr "Ver perfil…"
 
-#: src/pages/accounts.jsx:208
+#: src/pages/accounts.jsx:210
 msgid "Set as default"
 msgstr "Predeterminar"
 
-#: src/pages/accounts.jsx:251
+#: src/pages/accounts.jsx:253
 msgid "Log out <0>@{unicodeAcct}</0>?"
 msgstr "Saír da sesión <0>{unicodeAcct}</0>?"
 
-#: src/pages/accounts.jsx:279
+#: src/pages/accounts.jsx:282
 msgid "Log out and remove <0>@{unicodeAcct}</0>"
 msgstr "Saír da sesión e retirar <0>{unicodeAcct}</0>"
 
-#: src/pages/accounts.jsx:291
+#: src/pages/accounts.jsx:294
 msgid "Log out…"
 msgstr "Fechar sesión…"
 
-#: src/pages/accounts.jsx:301
+#: src/pages/accounts.jsx:304
 msgid "Remove <0>@{unicodeAcct}</0>?"
 msgstr "Retirar <0>{unicodeAcct}</0>?"
 
-#: src/pages/accounts.jsx:319
+#: src/pages/accounts.jsx:322
 msgid "Remove account…"
 msgstr "Retirar a conta…"
 
 #. placeholder {0}: niceDateTime(account.createdAt)
-#: src/pages/accounts.jsx:327
+#: src/pages/accounts.jsx:330
 msgid "Connected on {0} (<0/>)"
 msgstr "Connectada o {0} (<0/>)"
 
-#: src/pages/accounts.jsx:344
+#: src/pages/accounts.jsx:347
 msgid "Add an existing account"
 msgstr "Engadir unha conta existente"
 
-#: src/pages/accounts.jsx:351
+#: src/pages/accounts.jsx:354
 msgid "Note: <0>Default</0> account will always be used for first load. Switched accounts will persist during the session."
 msgstr "Nota: A conta <0>predeterminada</0> sempre será a que se mostre ao inicio. O cambio de conta manterase durante a sesión."
 
@@ -3690,10 +3698,10 @@ msgstr "Data"
 msgid "Density"
 msgstr "Densidade"
 
-#. js-lingui-explicit-id
 #: src/pages/catchup.jsx:1621
-msgid "group.filter"
-msgstr "Agrupar"
+msgctxt "grouping"
+msgid "Group"
+msgstr ""
 
 #: src/pages/catchup.jsx:1636
 msgid "Authors"
@@ -4226,7 +4234,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Anuncio} other {Anuncios}}"
 
 #: src/pages/notifications.jsx:840
-#: src/pages/settings.jsx:1361
+#: src/pages/settings.jsx:1345
 msgid "Follow requests"
 msgstr "Solicitudes de seguimento"
 
@@ -4661,57 +4669,56 @@ msgstr "Non se copiou a cadea coa versión"
 msgid "A"
 msgstr "A"
 
-#: src/pages/settings.jsx:1258
-#: src/pages/settings.jsx:1263
+#: src/pages/settings.jsx:1248
 msgid "Failed to update subscription. Please try again."
 msgstr "Fallou a actualización da subscrición. Inténtao outra vez."
 
-#: src/pages/settings.jsx:1269
+#: src/pages/settings.jsx:1253
 msgid "Failed to remove subscription. Please try again."
 msgstr "Fallou a retirada da subscrición. Inténtao outra vez."
 
-#: src/pages/settings.jsx:1276
+#: src/pages/settings.jsx:1260
 msgid "Push Notifications (beta)"
 msgstr "Notificacións Push (beta)"
 
-#: src/pages/settings.jsx:1298
+#: src/pages/settings.jsx:1282
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "As notificacións Push están bloqueadas. Actívaas nos axustes do teu navegador."
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1307
+#: src/pages/settings.jsx:1291
 msgid "Allow from <0>{0}</0>"
 msgstr "Permitir de <0>{0}</0>"
 
-#: src/pages/settings.jsx:1316
+#: src/pages/settings.jsx:1300
 msgid "anyone"
 msgstr "calquera"
 
-#: src/pages/settings.jsx:1320
+#: src/pages/settings.jsx:1304
 msgid "people I follow"
 msgstr "persoas que sigo"
 
-#: src/pages/settings.jsx:1324
+#: src/pages/settings.jsx:1308
 msgid "followers"
 msgstr "seguidoras"
 
-#: src/pages/settings.jsx:1357
+#: src/pages/settings.jsx:1341
 msgid "Follows"
 msgstr "Segue"
 
-#: src/pages/settings.jsx:1365
+#: src/pages/settings.jsx:1349
 msgid "Polls"
 msgstr "Enquisas"
 
-#: src/pages/settings.jsx:1369
+#: src/pages/settings.jsx:1353
 msgid "Post edits"
 msgstr "Edicións de publicacións"
 
-#: src/pages/settings.jsx:1390
+#: src/pages/settings.jsx:1374
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "Non se concedeu o permiso para Push desde o último acceso. Terás que <0><1>acceder</1> outra vez para conceder o permiso</0>."
 
-#: src/pages/settings.jsx:1406
+#: src/pages/settings.jsx:1390
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "NOTA: As notificacións Push só funcionan para <0>unha conta</0>."
 

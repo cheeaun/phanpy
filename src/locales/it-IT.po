@@ -8,7 +8,7 @@ msgstr ""
 "Language: it\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-25 12:14\n"
+"PO-Revision-Date: 2026-09-25 13:55\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -54,8 +54,9 @@ msgstr "Richiesta inviata"
 
 #: src/components/account-block.jsx:255
 #: src/components/related-actions.jsx:982
+msgctxt "follow state"
 msgid "Following"
-msgstr "Segui già"
+msgstr ""
 
 #: src/components/account-block.jsx:259
 #: src/components/related-actions.jsx:211
@@ -110,11 +111,11 @@ msgstr "L'utente ha scelto di non condividere questa informazione."
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> Seguace} other {<1>{1}</1> Seguaci}}"
 
-#. js-lingui-explicit-id
 #: src/components/account-info-mini.jsx:93
 #: src/components/account-info.jsx:856
-msgid "following.stats"
-msgstr "Seguiti"
+msgctxt "followed accounts"
+msgid "Following"
+msgstr ""
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info-mini.jsx:106
@@ -374,17 +375,17 @@ msgid "More from <0/>"
 msgstr "Altro da <0/>"
 
 #: src/components/collection-account-actions.jsx:35
-#: src/pages/collection.jsx:422
+#: src/pages/collection.jsx:426
 msgid "Remove me from this collection?"
 msgstr "Vuoi rimuoverti da questa collezione?"
 
 #: src/components/collection-account-actions.jsx:44
-#: src/pages/collection.jsx:431
+#: src/pages/collection.jsx:435
 msgid "The curator won't be able to re-add you to this collection for 24 hours. Block them to prevent them from adding you to any collections."
 msgstr "Il curatore non potrà riaggiungerti a questa collezione per 24 ore. Bloccalo per impedirgli di aggiungerti a qualsiasi collezione."
 
 #: src/components/collection-account-actions.jsx:69
-#: src/pages/collection.jsx:442
+#: src/pages/collection.jsx:446
 msgid "Remove me…"
 msgstr "Rimuovimi…"
 
@@ -451,8 +452,9 @@ msgstr "Impossibile creare la collezione."
 #: src/components/collection-add-edit.jsx:106
 #: src/components/edit-profile-sheet.jsx:574
 #: src/components/list-add-edit.jsx:106
+msgctxt "label"
 msgid "Name"
-msgstr "Nome"
+msgstr ""
 
 #: src/components/collection-add-edit.jsx:124
 msgid "Description"
@@ -468,7 +470,7 @@ msgstr "Contrassegna come sensibile"
 
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2057
-#: src/pages/collection.jsx:686
+#: src/pages/collection.jsx:690
 #: src/pages/settings.jsx:302
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
@@ -476,7 +478,7 @@ msgstr "Pubblico"
 
 #: src/components/collection-add-edit.jsx:186
 #: src/components/collection-card.jsx:201
-#: src/pages/collection.jsx:680
+#: src/pages/collection.jsx:684
 msgid "Unlisted"
 msgstr "Non in lista"
 
@@ -520,7 +522,7 @@ msgid "Collection by <0>@{username}</0>"
 msgstr "Collezione di <0>@{username}</0>"
 
 #: src/components/collection-card.jsx:189
-#: src/pages/collection.jsx:668
+#: src/pages/collection.jsx:672
 msgid "Last updated: <relativeTime/>"
 msgstr "Ultimo aggiornamento: <relativeTime/>"
 
@@ -533,7 +535,7 @@ msgid "Unable to remove account"
 msgstr "Impossibile rimuovere l'account"
 
 #: src/components/collection-manage-accounts.jsx:115
-#: src/pages/collection.jsx:405
+#: src/pages/collection.jsx:409
 msgid "Manage accounts"
 msgstr "Gestisci account"
 
@@ -553,7 +555,7 @@ msgid "Remove…"
 msgstr "Rimuovi…"
 
 #: src/components/collection-manage-accounts.jsx:175
-#: src/pages/collection.jsx:646
+#: src/pages/collection.jsx:650
 msgid "Add account"
 msgstr "Aggiungi account"
 
@@ -958,7 +960,7 @@ msgstr "Esci"
 #: src/components/status.jsx:3142
 #: src/pages/account-statuses.jsx:676
 #: src/pages/accounts.jsx:155
-#: src/pages/collection.jsx:284
+#: src/pages/collection.jsx:288
 #: src/pages/hashtag.jsx:232
 #: src/pages/list.jsx:171
 #: src/pages/public.jsx:147
@@ -1174,7 +1176,7 @@ msgstr "Esporta"
 #. placeholder {0}: accounts.length
 #. placeholder {0}: sortedItems.length
 #: src/components/import-export-accounts.jsx:155
-#: src/pages/collection.jsx:659
+#: src/pages/collection.jsx:663
 msgid "{0, plural, one {# account} other {# accounts}}"
 msgstr "{0, plural, one {# account} other {# account}}"
 
@@ -1597,15 +1599,15 @@ msgstr "Ricaricare pagina ora per aggiornare?"
 msgid "New update available…"
 msgstr "Nuovo aggiornamento disponibile…"
 
-#. js-lingui-explicit-id
 #: src/components/nav-menu.jsx:197
 #: src/components/shortcuts-settings.jsx:143
 #: src/pages/following.jsx:23
 #: src/pages/following.jsx:156
 #: src/pages/following2.jsx:18
 #: src/pages/following2.jsx:133
-msgid "following.title"
-msgstr "Seguiti"
+msgctxt "section title"
+msgid "Following"
+msgstr ""
 
 #: src/components/nav-menu.jsx:204
 #: src/pages/catchup.jsx:1022
@@ -1674,7 +1676,7 @@ msgstr "Mi piace"
 #: src/pages/account-collections.jsx:70
 #: src/pages/account-collections.jsx:149
 #: src/pages/account-collections.jsx:171
-#: src/pages/collection.jsx:265
+#: src/pages/collection.jsx:269
 #: src/pages/search.jsx:163
 msgid "Collections"
 msgstr "Collezioni"
@@ -1938,14 +1940,14 @@ msgstr "Leggi di più →"
 #: src/components/open-link-sheet.jsx:30
 #: src/components/related-actions.jsx:573
 #: src/components/status.jsx:1494
-#: src/pages/collection.jsx:325
+#: src/pages/collection.jsx:329
 msgid "Link copied"
 msgstr "Link copiato"
 
 #: src/components/open-link-sheet.jsx:33
 #: src/components/related-actions.jsx:576
 #: src/components/status.jsx:1497
-#: src/pages/collection.jsx:328
+#: src/pages/collection.jsx:332
 msgid "Unable to copy link"
 msgstr "Impossibile copiare link"
 
@@ -1958,14 +1960,14 @@ msgstr "Aprire il link?"
 #: src/components/related-actions.jsx:582
 #: src/components/shortcuts-settings.jsx:1175
 #: src/components/status.jsx:1503
-#: src/pages/collection.jsx:334
+#: src/pages/collection.jsx:338
 msgid "Copy"
 msgstr "Copia"
 
 #: src/components/open-link-sheet.jsx:82
 #: src/components/related-actions.jsx:603
 #: src/components/status.jsx:1525
-#: src/pages/collection.jsx:351
+#: src/pages/collection.jsx:355
 msgid "Share…"
 msgstr "Condividi…"
 
@@ -2649,7 +2651,7 @@ msgstr "Non disponibile nell'attuale modalità di visualizzazione"
 
 #: src/components/shortcuts-settings.jsx:396
 #: src/components/status.jsx:1652
-#: src/pages/collection.jsx:396
+#: src/pages/collection.jsx:400
 #: src/pages/list.jsx:195
 msgid "Edit"
 msgstr "Modifica"
@@ -3139,7 +3141,7 @@ msgstr "Modificato"
 
 #: src/components/status.jsx:2531
 #: src/components/status.jsx:2593
-#: src/pages/collection.jsx:586
+#: src/pages/collection.jsx:590
 msgid "Show content"
 msgstr "Mostra contenuto"
 
@@ -3433,7 +3435,7 @@ msgid "Switch to account's server {0}"
 msgstr "Passa al server dell'account {0}"
 
 #: src/pages/account-statuses.jsx:732
-#: src/pages/collection.jsx:500
+#: src/pages/collection.jsx:504
 msgid "Switch to my server (<0>{currentInstance}</0>)"
 msgstr "Passa al mio server (<0>{currentInstance}</0>)"
 
@@ -3686,7 +3688,7 @@ msgid "{0, plural, one {# author} other {# authors}}"
 msgstr "{0, plural, one {# autore} other {# autori}}"
 
 #: src/pages/catchup.jsx:1563
-#: src/pages/collection.jsx:358
+#: src/pages/collection.jsx:362
 msgid "Sort"
 msgstr "Ordina"
 
@@ -3764,68 +3766,68 @@ msgid "Date added"
 msgstr "Data di aggiunta"
 
 #. Sort by name
-#. js-lingui-explicit-id
 #: src/pages/collection.jsx:61
-msgid "sort.name"
-msgstr "sort.name"
+msgctxt "sorting"
+msgid "Name"
+msgstr ""
 
-#: src/pages/collection.jsx:63
+#: src/pages/collection.jsx:67
 msgid "Last active"
 msgstr "Ultima attività"
 
-#: src/pages/collection.jsx:64
+#: src/pages/collection.jsx:68
 msgid "Most followers"
 msgstr "Con più seguaci"
 
-#: src/pages/collection.jsx:169
-#: src/pages/collection.jsx:170
-#: src/pages/collection.jsx:274
+#: src/pages/collection.jsx:173
+#: src/pages/collection.jsx:174
+#: src/pages/collection.jsx:278
 msgid "Collection"
 msgstr "Collezione"
 
-#: src/pages/collection.jsx:205
+#: src/pages/collection.jsx:209
 msgid "Removed from collection"
 msgstr "Non più nella collezione"
 
-#: src/pages/collection.jsx:208
+#: src/pages/collection.jsx:212
 msgid "Unable to remove from collection"
 msgstr "Impossibile rimuovere dalla collezione"
 
-#: src/pages/collection.jsx:314
+#: src/pages/collection.jsx:318
 msgid "Post collection"
 msgstr "Collezione di post"
 
-#: src/pages/collection.jsx:454
+#: src/pages/collection.jsx:458
 msgid "Report collection…"
 msgstr "Segnala collezione…"
 
-#: src/pages/collection.jsx:464
+#: src/pages/collection.jsx:468
 #: src/pages/status.jsx:1648
 msgid "Experimental"
 msgstr "Sperimentale"
 
-#: src/pages/collection.jsx:492
+#: src/pages/collection.jsx:496
 #: src/pages/status.jsx:1145
 msgid "Error: {e}"
 msgstr "Errore: {e}"
 
-#: src/pages/collection.jsx:511
+#: src/pages/collection.jsx:515
 msgid "Switch to collection's server ({serverDomain})"
 msgstr "Passa al server della collezione ({serverDomain})"
 
-#: src/pages/collection.jsx:535
+#: src/pages/collection.jsx:539
 msgid "Unable to load collection."
 msgstr "Impossibile caricare la collezione."
 
-#: src/pages/collection.jsx:553
+#: src/pages/collection.jsx:557
 msgid "<link><icon/> Collection</link> by <name/>"
 msgstr "<link><icon/> Collezione</link> di <name/>"
 
-#: src/pages/collection.jsx:630
+#: src/pages/collection.jsx:634
 msgid "No accounts in this collection yet."
 msgstr "Nessun account in questa collezione."
 
-#: src/pages/collection.jsx:693
+#: src/pages/collection.jsx:697
 msgid "Marked as sensitive"
 msgstr "Contrassegnato come sensibile"
 
@@ -4726,11 +4728,11 @@ msgstr "NOTA: Le notifiche push funzionano solo per <0>un account</0>."
 msgid "Unable to load post."
 msgstr "Impossibile caricare il post."
 
-#. js-lingui-explicit-id
 #: src/pages/status.jsx:800
 #: src/pages/status.jsx:1498
-msgid "post.title"
-msgstr "Post"
+msgctxt "single post"
+msgid "Post"
+msgstr ""
 
 #: src/pages/status.jsx:1097
 msgid "You're not logged in. Interactions (reply, boost, etc) are not possible."

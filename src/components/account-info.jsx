@@ -732,7 +732,8 @@ function AccountInfo({
                 )}
                 {!!group && (
                   <span class="tag">
-                    <Icon icon="group" /> <Trans>Group</Trans>
+                    <Icon icon="group" />{' '}
+                    <Trans context="account type">Group</Trans>
                   </span>
                 )}
                 {/* {roles?.map((role) => (

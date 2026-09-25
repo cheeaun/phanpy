@@ -608,7 +608,11 @@ function Status({
           onMouseEnter={debugHover}
         >
           <div class="status-pre-meta">
-            <Icon icon="group" size="l" alt={t`Group`} />{' '}
+            <Icon
+              icon="group"
+              size="l"
+              alt={t({ message: 'Group', context: 'account type' })}
+            />{' '}
             <NameText account={status.account} instance={instance} showAvatar />
           </div>
           <Status

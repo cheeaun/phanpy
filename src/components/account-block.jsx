@@ -233,7 +233,8 @@ function AccountBlock(props) {
             {!!group && (
               <>
                 <span class="tag collapsed">
-                  <Icon icon="group" /> <Trans>Group</Trans>
+                  <Icon icon="group" />{' '}
+                  <Trans context="account type">Group</Trans>
                 </span>
               </>
             )}

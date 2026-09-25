@@ -406,7 +406,7 @@ function AccountInfo({
             )}
             {isString && (
               <button type="button" onClick={reload}>
-                <Trans>Try again</Trans>
+                <Trans comment="Infinitive form">Try again</Trans>
               </button>
             )}
           </div>

@@ -1267,7 +1267,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     states.reloadStatusPage++;
                   }}
                 >
-                  <Trans>Try again</Trans>
+                  <Trans comment="Infinitive form">Try again</Trans>
                 </button>
               </div>
             )}
@@ -1743,7 +1743,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     states.reloadStatusPage++;
                   }}
                 >
-                  <Trans>Try again</Trans>
+                  <Trans comment="Infinitive form">Try again</Trans>
                 </button>
               </p>
             )}

@@ -32,16 +32,40 @@ export default memo(function BackgroundService() {
     }
   });
 
+  const checkingLatestNotificationRef = useRef(false);
   const checkLatestNotification = async (masto, instance, skipCheckMarkers) => {
-    if (states.notificationsLast) {
-      const notificationsIterator = masto.v1.notifications
-        .list({
-          limit: 1,
-          sinceId: states.notificationsLast.id,
-        })
-        .values();
-      const { value: notifications } = await notificationsIterator.next();
+    // Avoid overlapping checks (e.g. a slow request still in-flight when
+    // the next poll tick fires)
+    if (checkingLatestNotificationRef.current) return;
+    checkingLatestNotificationRef.current = true;
+    try {
+      const checkedId = states.notificationsLast?.id;
+      if (!checkedId) return;
+
+      let notifications;
+      try {
+        const notificationsIterator = masto.v1.notifications
+          .list({
+            limit: 1,
+            sinceId: checkedId,
+          })
+          .values();
+        ({ value: notifications } = await notificationsIterator.next());
+      } catch (e) {
+        // Network/server error - bail out quietly, try again on next check
+        console.error('💥 Failed to check latest notification', e);
+        return;
+      }
+
+      // Ignore stale response
+      if (states.notificationsLast?.id !== checkedId) return;
+
       if (notifications?.length) {
+        const latestId = notifications[0].id;
+
+        // Nothing new if checkedId itself is returned
+        if (latestId === checkedId) return;
+
         if (skipCheckMarkers) {
           states.notificationsShowNew = true;
         } else {
@@ -52,13 +76,35 @@ export default memo(function BackgroundService() {
             });
             lastReadId = markers?.notifications?.lastReadId;
           } catch (e) {}
+
+          // Stale check again after await
+          if (states.notificationsLast?.id !== checkedId) return;
+
           if (lastReadId) {
-            states.notificationsShowNew = notifications[0].id !== lastReadId;
+            // Also handles race where notifications were just marked as read
+            // but the marker hasn't landed on the server yet
+            states.notificationsShowNew = latestId !== lastReadId;
           } else {
             states.notificationsShowNew = true;
           }
         }
+      } else if (!skipCheckMarkers && states.notificationsShowNew) {
+        // Self-heal: clear stuck dot if server says everything's read
+        try {
+          const markers = await masto.v1.markers.fetch({
+            timeline: 'notifications',
+          });
+          const lastReadId = markers?.notifications?.lastReadId;
+          if (
+            lastReadId === checkedId &&
+            states.notificationsLast?.id === checkedId
+          ) {
+            states.notificationsShowNew = false;
+          }
+        } catch (e) {}
       }
+    } finally {
+      checkingLatestNotificationRef.current = false;
     }
   };
 
@@ -96,8 +142,9 @@ export default memo(function BackgroundService() {
                     saveStatus(entry.payload, instance, {
                       skipThreading: true,
                     });
+                    // Only actual notifications show the dot
+                    states.notificationsShowNew = true;
                   }
-                  states.notificationsShowNew = true;
                 }
                 console.log('💥 Streaming notification loop STOPPED');
               } catch (e) {

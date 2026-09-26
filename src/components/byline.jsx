@@ -3,8 +3,7 @@ import { Trans } from '@lingui/react/macro';
 import Icon from './icon';
 import NameText from './name-text';
 
-function Byline({ authors, hidden, children }) {
-  if (hidden) return children;
+function Byline({ authors, children }) {
   if (!authors?.[0]?.account?.id) return children;
   const author = authors[0].account;
 

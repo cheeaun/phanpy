@@ -97,6 +97,7 @@ function _unfurlMastodonLink(instance, url) {
 
   const urlObj = URL.parse(theURL);
   if (!urlObj) return;
+  if (!/^https?:$/.test(urlObj.protocol)) return; // Only unfurl http(s) links
   const domain = urlObj.hostname;
   const path = urlObj.pathname;
   if (!domain) return; // No domain, something is wrong

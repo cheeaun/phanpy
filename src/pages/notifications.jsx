@@ -1070,7 +1070,7 @@ function Notifications({ columnMode }) {
                 <br />
                 <br />
                 <button type="button" onClick={() => loadNotifications(true)}>
-                  <Trans>Try again</Trans>
+                  <Trans comment="Infinitive form">Try again</Trans>
                 </button>
               </p>
             )}

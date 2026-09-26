@@ -103,7 +103,7 @@ function CollectionAddEdit({ collection, onClose }) {
         >
           <div class="collection-form-row">
             <label for="collection-name">
-              <Trans>Name</Trans>{' '}
+              <Trans context="label">Name</Trans>{' '}
               <grapheme-input>
                 <input
                   ref={nameFieldRef}

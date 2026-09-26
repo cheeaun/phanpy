@@ -660,7 +660,7 @@ function Timeline({
               <br />
               <br />
               <button type="button" onClick={() => loadItems(!items.length)}>
-                <Trans>Try again</Trans>
+                <Trans comment="Infinitive form">Try again</Trans>
               </button>
             </p>
           )}

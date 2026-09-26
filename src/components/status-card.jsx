@@ -163,7 +163,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
     const isPost = isCardPost(domain);
 
     return (
-      <Byline hidden={!!selfAuthor} authors={authors}>
+      <Byline authors={authors}>
         <a
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}

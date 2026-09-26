@@ -571,7 +571,7 @@ function EditProfileSheet({ onClose = () => {} }) {
             <fieldset>
               <p>
                 <label>
-                  <Trans>Name</Trans>{' '}
+                  <Trans context="label">Name</Trans>{' '}
                   <grapheme-input>
                     <input
                       type="text"

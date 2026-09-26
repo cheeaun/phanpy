@@ -103,7 +103,7 @@ function ListAddEdit({ list, onClose }) {
         >
           <div class="list-form-row">
             <label for="list-title">
-              <Trans>Name</Trans>{' '}
+              <Trans context="label">Name</Trans>{' '}
               <input
                 ref={nameFieldRef}
                 type="text"

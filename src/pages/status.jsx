@@ -798,8 +798,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     heroDisplayName && heroContentText
       ? `${heroDisplayName}: "${heroContentText}"`
       : t({
-          id: 'post.title',
           message: 'Post',
+          context: 'single post',
         }),
     '/:instance?/s/:id',
   );
@@ -1267,7 +1267,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     states.reloadStatusPage++;
                   }}
                 >
-                  <Trans>Try again</Trans>
+                  <Trans comment="Infinitive form">Try again</Trans>
                 </button>
               </div>
             )}
@@ -1495,7 +1495,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 </>
               ) : (
                 <>
-                  <Trans id="post.title">Post</Trans>{' '}
+                  <Trans context="single post">Post</Trans>{' '}
                   <button
                     type="button"
                     class="ancestors-indicator light small"
@@ -1743,7 +1743,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     states.reloadStatusPage++;
                   }}
                 >
-                  <Trans>Try again</Trans>
+                  <Trans comment="Infinitive form">Try again</Trans>
                 </button>
               </p>
             )}

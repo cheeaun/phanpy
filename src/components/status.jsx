@@ -42,6 +42,7 @@ import {
 } from '../utils/quote-utils';
 import RTF from '../utils/relative-time-format';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
+import setRef from '../utils/set-ref';
 import shortenNumber from '../utils/shorten-number';
 import showCompose from '../utils/show-compose';
 import showToast from '../utils/show-toast';
@@ -2101,12 +2102,12 @@ function Status({
             node?.closest?.(
               '.timeline-item, .timeline-item-alt, .status-link, .status-focus',
             ) || node;
-          rRef.current = nodeRef;
-          fRef.current = nodeRef;
-          dRef.current = nodeRef;
-          bRef.current = nodeRef;
-          xRef.current = nodeRef;
-          qRef.current = nodeRef;
+          setRef(rRef, nodeRef);
+          setRef(fRef, nodeRef);
+          setRef(dRef, nodeRef);
+          setRef(bRef, nodeRef);
+          setRef(xRef, nodeRef);
+          setRef(qRef, nodeRef);
         }}
         tabindex="-1"
         class={`status ${

@@ -1032,7 +1032,7 @@ function Compose({
   useThrottledResizeObserver({
     ref: addSubToolbarRef,
     box: 'border-box',
-    onResize: ({ width }) => {
+    onResize: ({ width } = {}) => {
       // If scrollable, it's truncated
       const el = addSubToolbarRef.current;
       if (!el) return;

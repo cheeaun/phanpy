@@ -406,7 +406,7 @@ function Compose({
   const lastFocusedEmojiFieldRef = useRef(null);
   const focusLastFocusedField = () => {
     setTimeout(() => {
-      if (!lastFocusedFieldRef.current) return;
+      if (!lastFocusedFieldRef.current?.isConnected) return;
       lastFocusedFieldRef.current.focus();
     }, 0);
   };
@@ -414,17 +414,18 @@ function Compose({
   useEffect(() => {
     const handleFocus = (e) => {
       // Toggle focused if in or out if any fields are focused
-      composeContainerRef.current.classList.toggle(
-        'focused',
-        e.type === 'focusin',
-      );
+      // Prefer e.currentTarget over composeContainerRef.current because
+      // the ref may already be nulled during unmount when focusout fires.
+      // Keep the ref as fallback in case the event is ever retargeted.
+      const container = e.currentTarget ?? composeContainerRef.current;
+      container?.classList.toggle('focused', e.type === 'focusin');
 
       const target = e.target;
-      if (target.hasAttribute('data-allow-custom-emoji')) {
+      if (target?.hasAttribute?.('data-allow-custom-emoji')) {
         lastFocusedEmojiFieldRef.current = target;
       }
       const isFormElement = ['INPUT', 'BUTTON', 'SELECT', 'TEXTAREA'].includes(
-        target.tagName,
+        target?.tagName,
       );
       if (isFormElement) {
         lastFocusedFieldRef.current = target;

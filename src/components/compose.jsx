@@ -1033,11 +1033,13 @@ function Compose({
     box: 'border-box',
     onResize: ({ width }) => {
       // If scrollable, it's truncated
-      const { scrollWidth } = addSubToolbarRef.current;
+      const el = addSubToolbarRef.current;
+      if (!el) return;
+      const { scrollWidth } = el;
       const truncated = scrollWidth > width;
       const overTruncated = width < BUTTON_WIDTH * 4;
       setShowAddButton(overTruncated || truncated);
-      addSubToolbarRef.current.hidden = overTruncated;
+      el.hidden = overTruncated;
     },
   });
 

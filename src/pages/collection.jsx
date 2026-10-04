@@ -58,7 +58,11 @@ const SORTS = [
   { key: 'date_added', label: msg`Date added` },
   {
     key: 'name',
-    label: msg({ id: 'sort.name', message: 'Name', comment: 'Sort by name' }),
+    label: msg({
+      message: 'Name',
+      context: 'sorting',
+      comment: 'Sort by name',
+    }),
   },
   { key: 'last_active', label: msg`Last active` },
   { key: 'most_followers', label: msg`Most followers` },

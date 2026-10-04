@@ -13,6 +13,7 @@ import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import FilterContext from '../utils/filter-context';
+import setRef from '../utils/set-ref';
 import states, { saveStatus, statusKey } from '../utils/states';
 import store from '../utils/store';
 import {
@@ -535,9 +536,9 @@ function Timeline2({
         class="deck-container timeline-2-container"
         ref={(node) => {
           scrollableRef.current = node;
-          jRef.current = node;
-          kRef.current = node;
-          oRef.current = node;
+          setRef(jRef, node);
+          setRef(kRef, node);
+          setRef(oRef, node);
         }}
         tabIndex="-1"
         onClick={(e) => {
@@ -698,7 +699,7 @@ function Timeline2({
               <br />
               <br />
               <button type="button" onClick={() => loadItems()}>
-                <Trans>Try again</Trans>
+                <Trans comment="Infinitive form">Try again</Trans>
               </button>
             </p>
           )}

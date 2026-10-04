@@ -18,6 +18,7 @@ import { api } from '../utils/api';
 import { revokeAccessToken } from '../utils/auth';
 import haptics from '../utils/haptics';
 import niceDateTime from '../utils/nice-date-time';
+import { removeAccountPushSettings } from '../utils/push-notifications';
 import states from '../utils/states';
 import store from '../utils/store';
 import {
@@ -63,7 +64,7 @@ function Accounts({ onClose }) {
                 ? punycode.toUnicode(account.info.acct)
                 : account.info.acct;
 
-              const removeAccount = () => {
+              const removeAccount = async () => {
                 accounts.splice(i, 1);
                 saveAccounts(accounts);
                 try {
@@ -71,6 +72,7 @@ function Accounts({ onClose }) {
                     store.session.del('currentAccount');
                   }
                 } catch (e) {}
+                await removeAccountPushSettings(account);
               };
 
               const logOutAccount = async () => {
@@ -263,6 +265,7 @@ function Accounts({ onClose }) {
                             await logOutAccount();
                             delete account.accessToken;
                             saveAccounts(accounts);
+                            await removeAccountPushSettings(account);
                             reload();
                           }}
                           menuExtras={
@@ -270,7 +273,7 @@ function Accounts({ onClose }) {
                               className="danger"
                               onClick={async () => {
                                 await logOutAccount();
-                                removeAccount();
+                                await removeAccount();
                                 location.href = location.pathname || '/';
                               }}
                             >
@@ -309,8 +312,8 @@ function Accounts({ onClose }) {
                             </>
                           }
                           menuItemClassName="danger"
-                          onClick={() => {
-                            removeAccount();
+                          onClick={async () => {
+                            await removeAccount();
                             reload();
                           }}
                         >

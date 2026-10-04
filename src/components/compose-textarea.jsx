@@ -1,5 +1,5 @@
 import { forwardRef } from 'preact/compat';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useRef, useState } from 'preact/hooks';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
 
 import { langDetector } from '../utils/browser-translator';
@@ -31,6 +31,82 @@ const SCAN_RE = new RegExp(
 );
 
 const segmenter = new Intl.Segmenter();
+
+// OpaqueRange + Custom Highlight API, falls back .compose-highlight div
+// https://olliewilliams.xyz/blog/opaquerange/
+const supportsNativeTextareaHighlight =
+  typeof HTMLTextAreaElement.prototype.createValueRange === 'function' &&
+  typeof Highlight === 'function' &&
+  !!CSS.highlights;
+
+const NATIVE_HIGHLIGHT_NAMES = {
+  url: 'compose-url',
+  mention: 'compose-mention',
+  hashtag: 'compose-hashtag',
+  'emoji-shortcode': 'compose-emoji-shortcode',
+  exceeded: 'compose-exceeded',
+};
+
+const nativeHighlights = supportsNativeTextareaHighlight
+  ? Object.fromEntries(
+      Object.entries(NATIVE_HIGHLIGHT_NAMES).map(([type, name]) => {
+        const highlight = new Highlight();
+        CSS.highlights.set(name, highlight);
+        return [type, highlight];
+      }),
+    )
+  : null;
+
+// Same highlights as highlightText(), but as [start, end] index ranges in raw text
+function getNativeHighlightRanges(text, { maxCharacters = Infinity }) {
+  const ranges = {
+    url: [],
+    mention: [],
+    hashtag: [],
+    'emoji-shortcode': [],
+    exceeded: [],
+  };
+
+  // Exceeded characters limit
+  const { composerCharacterCount } = states;
+  if (composerCharacterCount > maxCharacters) {
+    const segments = segmenter.segment(text);
+    for (const { index } of segments) {
+      if (index >= maxCharacters) {
+        ranges.exceeded.push([index, text.length]);
+        break;
+      }
+    }
+    return ranges;
+  }
+
+  for (const match of text.matchAll(urlRegexObj)) {
+    const url = match[3];
+    if (!url) continue;
+    const start = match.index + match[2].length;
+    ranges.url.push([start, start + url.length]);
+  }
+  for (const match of text.matchAll(MENTION_RE)) {
+    const mention = match[2];
+    if (!mention) continue;
+    const start = match.index + match[1].length;
+    ranges.mention.push([start, start + mention.length]);
+  }
+  for (const match of text.matchAll(HASHTAG_RE)) {
+    const hashtag = match[2];
+    if (!hashtag) continue;
+    const start = match.index + match[1].length;
+    ranges.hashtag.push([start, start + hashtag.length]);
+  }
+  for (const match of text.matchAll(SCAN_RE)) {
+    const shortcode = match[2];
+    if (!shortcode) continue;
+    const start = match.index + match[1].length;
+    ranges['emoji-shortcode'].push([start, start + shortcode.length]);
+  }
+
+  return ranges;
+}
 
 function highlightText(text, { maxCharacters = Infinity }) {
   // Exceeded characters limit
@@ -68,6 +144,8 @@ function highlightText(text, { maxCharacters = Infinity }) {
 
 function autoResizeTextarea(textarea) {
   if (!textarea) return;
+  // field-sizing: content handles this (see compose.css)
+  if (CSS.supports('field-sizing', 'content')) return;
   // writing-mode is vertical, don't do this
   if (getComputedStyle(textarea).writingMode.includes('vertical')) return;
   const { value, offsetHeight, scrollHeight, clientHeight } = textarea;
@@ -117,7 +195,21 @@ const Textarea = forwardRef((props, ref) => {
 
   const slowHighlightPerf = useRef(0); // increment if slow
   const composeHighlightRef = useRef();
+
   const throttleHighlightText = useThrottledCallback((text) => {
+    if (nativeHighlights) {
+      const textarea = ref.current;
+      if (!textarea) return;
+      const ranges = getNativeHighlightRanges(text, { maxCharacters });
+      for (const [type, highlight] of Object.entries(nativeHighlights)) {
+        highlight.clear();
+        for (const [start, end] of ranges[type]) {
+          highlight.add(textarea.createValueRange(start, end));
+        }
+      }
+      // Slow highlight detection not needed assuming native highlights are faster
+      return;
+    }
     if (!composeHighlightRef.current) return;
     if (slowHighlightPerf.current > 3) {
       // After 3 times of lag, disable highlighting
@@ -142,19 +234,26 @@ const Textarea = forwardRef((props, ref) => {
     // Newline to prevent multiple line breaks at the end from being collapsed, no idea why
   }, 500);
 
-  const debouncedAutoDetectLanguage = useDebouncedCallback(() => {
-    // Make use of the highlightRef to get the DOM
-    // Clone the dom
-    const dom = composeHighlightRef.current?.cloneNode(true);
-    if (!dom) return;
-    // Remove mark
-    dom.querySelectorAll('mark').forEach((mark) => {
-      mark.remove();
-    });
-    const text = dom.innerText?.trim();
-    if (!text) return;
+  const debouncedAutoDetectLanguage = useDebouncedCallback((text) => {
+    // Strip highlighted text (URLs, mentions, etc) to avoid confusing the detector
+    let cleanText = text;
+    if (composeHighlightRef.current) {
+      const dom = composeHighlightRef.current.cloneNode(true);
+      dom.querySelectorAll('mark').forEach((mark) => {
+        mark.remove();
+      });
+      cleanText = dom.innerText || text;
+    } else if (nativeHighlights) {
+      cleanText = text
+        .replace(urlRegexObj, '')
+        .replace(MENTION_RE, '')
+        .replace(HASHTAG_RE, '')
+        .replace(SCAN_RE, '');
+    }
+    const trimmedText = cleanText.trim();
+    if (!trimmedText) return;
     (async () => {
-      const langs = await detectLangs(text);
+      const langs = await detectLangs(trimmedText);
       if (langs?.length) {
         onTrigger?.({
           name: 'auto-detect-language',
@@ -236,7 +335,7 @@ const Textarea = forwardRef((props, ref) => {
           autoResizeTextarea(target);
           props.onInput?.(e);
           throttleHighlightText(text);
-          debouncedAutoDetectLanguage();
+          debouncedAutoDetectLanguage(text);
         }}
         onScroll={(e) => {
           if (composeHighlightRef.current) {
@@ -258,11 +357,13 @@ const Textarea = forwardRef((props, ref) => {
           }
         }}
       />
-      <div
-        ref={composeHighlightRef}
-        class="compose-highlight"
-        aria-hidden="true"
-      />
+      {!nativeHighlights && (
+        <div
+          ref={composeHighlightRef}
+          class="compose-highlight"
+          aria-hidden="true"
+        />
+      )}
     </TextExpander>
   );
 });

@@ -38,6 +38,7 @@ import haptics from '../utils/haptics';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import { getRegistration } from '../utils/push-notifications';
+import setRef from '../utils/set-ref';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -717,10 +718,10 @@ function Notifications({ columnMode }) {
       class="deck-container"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef.current = node;
-        kRef.current = node;
-        oRef.current = node;
-        dotRef.current = node;
+        setRef(jRef, node);
+        setRef(kRef, node);
+        setRef(oRef, node);
+        setRef(dotRef, node);
       }}
       tabIndex="-1"
     >
@@ -1070,7 +1071,7 @@ function Notifications({ columnMode }) {
                 <br />
                 <br />
                 <button type="button" onClick={() => loadNotifications(true)}>
-                  <Trans>Try again</Trans>
+                  <Trans comment="Infinitive form">Try again</Trans>
                 </button>
               </p>
             )}

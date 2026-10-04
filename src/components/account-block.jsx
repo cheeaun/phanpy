@@ -233,7 +233,8 @@ function AccountBlock(props) {
             {!!group && (
               <>
                 <span class="tag collapsed">
-                  <Icon icon="group" /> <Trans>Group</Trans>
+                  <Icon icon="group" />{' '}
+                  <Trans context="account type">Group</Trans>
                 </span>
               </>
             )}
@@ -251,7 +252,7 @@ function AccountBlock(props) {
                     </span>
                   ) : excludedRelationship.following ? (
                     <span class="tag minimal">
-                      <Trans>Following</Trans>
+                      <Trans context="follow state">Following</Trans>
                     </span>
                   ) : excludedRelationship.followedBy ? (
                     <span class="tag minimal">

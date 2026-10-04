@@ -27,6 +27,18 @@ const scheduleTask =
     ? (fn) => requestIdleCallback(fn, { timeout: 500 })
     : (fn) => setTimeout(fn, 1);
 
+function drawAndCountAlpha(img, sampleW, sampleH) {
+  if (canvas.width !== sampleW) canvas.width = sampleW;
+  if (canvas.height !== sampleH) canvas.height = sampleH;
+  ctx.drawImage(img, 0, 0, sampleW, sampleH);
+  const { data } = ctx.getImageData(0, 0, sampleW, sampleH);
+  let alphaCount = 0;
+  for (let i = 3; i < data.length; i += 4) {
+    if (data[i] <= 128) alphaCount++;
+  }
+  return alphaCount;
+}
+
 const MISSING_IMAGE_PATH_REGEX = /missing\.png$/;
 
 function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
@@ -90,25 +102,22 @@ function Avatar({ url, staticUrl, size, alt = '', squircle, ...props }) {
                 const scale = Math.min(1, SIZES.xxxl / Math.max(nw, nh));
                 const sampleW = Math.max(1, Math.round(nw * scale));
                 const sampleH = Math.max(1, Math.round(nh * scale));
-                if (canvas.width !== sampleW) canvas.width = sampleW;
-                if (canvas.height !== sampleH) canvas.height = sampleH;
-                ctx.drawImage(img, 0, 0, sampleW, sampleH);
-                const { data } = ctx.getImageData(0, 0, sampleW, sampleH);
-                // Early-exit loop: stop once 10% of pixels have alpha <= 128
-                const totalPixels = data.length / 4;
-                const threshold = totalPixels * 0.1;
-                let alphaCount = 0;
-                for (let i = 3; i < data.length; i += 4) {
-                  if (data[i] <= 128 && ++alphaCount > threshold) break;
-                }
-                const hasAlpha = alphaCount > threshold;
+                const totalPixels = sampleW * sampleH;
+                const alphaCount = drawAndCountAlpha(img, sampleW, sampleH);
+                // 100% transparent = blank draw, not alpha; don't cache
+                if (alphaCount === totalPixels) return;
+                // At least 10% of pixels have alpha <= 128
+                const hasAlpha = alphaCount > totalPixels * 0.1;
                 if (hasAlpha) {
+                  // Draw again to confirm
+                  if (drawAndCountAlpha(img, sampleW, sampleH) !== alphaCount)
+                    return;
                   avatarRef.current?.classList.add('has-alpha');
                 }
                 alphaCache.set(url, hasAlpha);
               } catch (e) {
-                // Silent fail
-                alphaCache.set(url, false);
+                // Silent fail (tainted canvas is permanent)
+                if (e?.name === 'SecurityError') alphaCache.set(url, false);
               }
             });
           }}

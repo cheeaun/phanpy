@@ -1164,7 +1164,6 @@ function PushNotificationsSection({ onClose }) {
   const pushFormRef = useRef();
   const [allowNotifications, setAllowNotifications] = useState(false);
   const [needRelogin, setNeedRelogin] = useState(false);
-  const previousPolicyRef = useRef();
   useEffect(() => {
     (async () => {
       setUIState('loading');
@@ -1177,7 +1176,6 @@ function PushNotificationsSection({ onClose }) {
           setAllowNotifications(true);
           const { alerts, policy } = backendSubscription;
           console.log('backendSubscription', backendSubscription);
-          previousPolicyRef.current = policy;
           const { elements } = pushFormRef.current;
           const policyEl = elements.namedItem('policy');
           if (policyEl) policyEl.value = policy;
@@ -1237,8 +1235,6 @@ function PushNotificationsSection({ onClose }) {
               alertsCount++;
             }
           });
-          const policyChanged =
-            previousPolicyRef.current !== params.data.policy;
 
           console.log('PN Form', {
             values,
@@ -1247,22 +1243,10 @@ function PushNotificationsSection({ onClose }) {
           });
 
           if (allowNotifications && alertsCount > 0) {
-            if (policyChanged) {
-              console.debug('Policy changed.');
-              removeSubscription()
-                .then(() => {
-                  updateSubscription(params);
-                })
-                .catch((err) => {
-                  console.warn(err);
-                  alert(t`Failed to update subscription. Please try again.`);
-                });
-            } else {
-              updateSubscription(params).catch((err) => {
-                console.warn(err);
-                alert(t`Failed to update subscription. Please try again.`);
-              });
-            }
+            updateSubscription(params).catch((err) => {
+              console.warn(err);
+              alert(t`Failed to update subscription. Please try again.`);
+            });
           } else {
             removeSubscription().catch((err) => {
               console.warn(err);

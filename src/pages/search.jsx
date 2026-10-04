@@ -25,6 +25,7 @@ import SearchForm from '../components/search-form';
 import Status from '../components/status';
 import { api } from '../utils/api';
 import { fetchRelationships } from '../utils/relationships';
+import setRef from '../utils/set-ref';
 import shortenNumber from '../utils/shorten-number';
 import usePageVisibility from '../utils/usePageVisibility';
 import useTitle from '../utils/useTitle';
@@ -421,8 +422,8 @@ function Search({ columnMode, ...props }) {
       tabIndex="-1"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef.current = node;
-        kRef.current = node;
+        setRef(jRef, node);
+        setRef(kRef, node);
       }}
     >
       <div class="timeline-deck deck">

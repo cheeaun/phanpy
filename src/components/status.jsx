@@ -521,11 +521,19 @@ function Status({
     emojiReactions,
   } = status;
 
+  const translationTargetLanguage = getTranslateTargetLanguage(true);
+  const autoInlineTranslationEnabled =
+    snapStates.settings.contentTranslation &&
+    snapStates.settings.contentTranslationAutoInline;
+  const shouldDetectLanguage =
+    !_language ||
+    (autoInlineTranslationEnabled &&
+      localeMatch([_language], [translationTargetLanguage]));
   const [languageAutoDetected, setLanguageAutoDetected] = useState(null);
   useEffect(() => {
     if (!content) return;
-    if (_language) return;
     if (languageAutoDetected) return;
+    if (!shouldDetectLanguage) return;
     let timer;
     timer = setTimeout(async () => {
       let detected = await detectLang(
@@ -534,9 +542,8 @@ function Status({
       setLanguageAutoDetected(detected);
     }, 1000);
     return () => clearTimeout(timer);
-  }, [content, _language]);
-  const language = _language || languageAutoDetected;
-  const translationTargetLanguage = getTranslateTargetLanguage(true);
+  }, [content, emojis, languageAutoDetected, shouldDetectLanguage]);
+  const language = languageAutoDetected || _language;
 
   // if (!mediaAttachments?.length) mediaFirst = false;
   const hasMediaAttachments = !!mediaAttachments?.length;
@@ -745,8 +752,7 @@ function Status({
       readOnly ||
       (withinContext && !isSizeLarge && !inReplyToId) ||
       previewMode ||
-      spoilerText ||
-      sensitive
+      spoilerText
     ) {
       return false;
     }
@@ -760,7 +766,6 @@ function Status({
     inReplyToId,
     previewMode,
     spoilerText,
-    sensitive,
     poll,
     contentLength,
     hasMediaCaptions,
@@ -1069,7 +1074,9 @@ function Status({
   const shouldInlineTranslate =
     inlineTranslateEnabled &&
     isTranslateble(content, emojis) &&
-    differentLanguage;
+    (differentLanguage ||
+      (languageAutoDetected &&
+        !localeMatch([languageAutoDetected], [translationTargetLanguage])));
 
   const getTranslationText = useCallback(
     (opts = {}) => {

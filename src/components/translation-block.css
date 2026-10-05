@@ -142,6 +142,27 @@
   cursor: wait;
   opacity: 0.5;
 }
+.status-translation-inline-toggle.is-loading {
+  opacity: 0.75;
+}
+.status-translation-inline-toggle.is-loading .icon {
+  animation: status-translation-inline-toggle-fade 1.2s ease-in-out infinite;
+}
+@keyframes status-translation-inline-toggle-fade {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .status-translation-inline-toggle.is-loading .icon {
+    animation: none;
+    opacity: 0.7;
+  }
+}
 .status-translation-inline-toggle-button {
   border: 1px solid var(--outline-color);
   border-radius: 8px;

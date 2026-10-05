@@ -333,7 +333,9 @@ function TranslationBlock({
             type="button"
             class={`status-translation-inline-toggle ${
               inlineButton ? 'status-translation-inline-toggle-button' : 'plain'
-            } ${hasTranslation && !currentShowOriginal ? 'is-active' : ''}`}
+            } ${hasTranslation && !currentShowOriginal ? 'is-active' : ''} ${
+              uiState === 'loading' ? 'is-loading' : ''
+            }`}
             title={toggleLabel}
             aria-label={toggleLabel}
             aria-pressed={hasTranslation ? !currentShowOriginal : undefined}

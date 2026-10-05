@@ -16,6 +16,7 @@ import { useSnapshot } from 'valtio';
 import FilterContext from '../utils/filter-context';
 import { filteredItems, isFiltered } from '../utils/filters';
 import isRTL from '../utils/is-rtl';
+import setRef from '../utils/set-ref';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
@@ -498,10 +499,10 @@ function Timeline({
         }`}
         ref={(node) => {
           scrollableRef.current = node;
-          jRef.current = node;
-          kRef.current = node;
-          oRef.current = node;
-          dotRef.current = node;
+          setRef(jRef, node);
+          setRef(kRef, node);
+          setRef(oRef, node);
+          setRef(dotRef, node);
         }}
         tabIndex="-1"
         onClick={(e) => {
@@ -660,7 +661,7 @@ function Timeline({
               <br />
               <br />
               <button type="button" onClick={() => loadItems(!items.length)}>
-                <Trans>Try again</Trans>
+                <Trans comment="Infinitive form">Try again</Trans>
               </button>
             </p>
           )}

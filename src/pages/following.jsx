@@ -21,8 +21,8 @@ function Following({ title, path, id, ...props }) {
   useTitle(
     title ||
       t({
-        id: 'following.title',
         message: 'Following',
+        context: 'section title',
       }),
     path || '/following',
   );
@@ -153,7 +153,7 @@ function Following({ title, path, id, ...props }) {
 
   return (
     <Timeline
-      title={title || t({ id: 'following.title', message: 'Following' })}
+      title={title || t({ message: 'Following', context: 'section title' })}
       id={id || 'following'}
       emptyText={t`Nothing to see here.`}
       errorText={t`Unable to load posts.`}

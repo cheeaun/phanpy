@@ -40,6 +40,7 @@ import htmlContentLength from '../utils/html-content-length';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import { supportsNativeQuote } from '../utils/quote-utils';
+import setRef from '../utils/set-ref';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
@@ -992,11 +993,11 @@ function Catchup() {
     <div
       ref={(node) => {
         scrollableRef.current = node;
-        jRef.current = node;
-        kRef.current = node;
-        hlRef.current = node;
-        escRef.current = node;
-        dotRef.current = node;
+        setRef(jRef, node);
+        setRef(kRef, node);
+        setRef(hlRef, node);
+        setRef(escRef, node);
+        setRef(dotRef, node);
       }}
       id="catchup-page"
       class="deck-container"
@@ -1618,7 +1619,7 @@ function Catchup() {
                     ))}
                   </fieldset> */}
                   <span class="filter-label">
-                    <Trans id="group.filter">Group</Trans>
+                    <Trans context="grouping">Group</Trans>
                   </span>{' '}
                   <fieldset class="radio-field-group">
                     {FILTER_GROUPS.map((key) => (

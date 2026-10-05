@@ -192,6 +192,17 @@
     border-color: var(--divider-color);
   }
 
+  /* field-sizing: content, JS fallback otherwise */
+  @supports (field-sizing: content) {
+    field-sizing: content;
+    height: auto;
+
+    /* breaks vertical writing-mode */
+    &:lang(mn-Mong) {
+      field-sizing: fixed;
+    }
+  }
+
   &:lang(mn-Mong) {
     height: auto !important;
     max-height: 50vh !important;
@@ -1078,45 +1089,63 @@
     mark {
       color: inherit;
     }
+  }
 
-    .compose-highlight-url,
-    .compose-highlight-hashtag {
-      background-color: transparent;
-      text-decoration: underline;
-      text-decoration-color: var(--link-faded-color);
-      text-decoration-thickness: 2px;
-      text-underline-offset: 2px;
+  /* Highlight styles: .compose-highlight marks + native ::highlight() */
+  .compose-highlight-url,
+  .compose-highlight-hashtag,
+  .compose-field::highlight(compose-url),
+  .compose-field::highlight(compose-hashtag) {
+    text-decoration: underline;
+    text-decoration-color: var(--link-faded-color);
+    text-decoration-thickness: 2px;
+    background-color: transparent; /* override <mark> bg */
+    text-underline-offset: 2px;
+  }
+  .compose-highlight-mention,
+  .compose-field::highlight(compose-mention) {
+    background-color: var(--orange-light-bg-color);
+    /* ::highlight() can't do below */
+    border-radius: 4px;
+    @supports (corner-shape: squircle) {
+      border-radius: 8px;
+      corner-shape: squircle;
     }
-    .compose-highlight-mention,
-    .compose-highlight-emoji-shortcode,
-    .compose-highlight-exceeded {
-      mix-blend-mode: multiply;
-      border-radius: 4px;
-      @supports (corner-shape: squircle) {
-        border-radius: 8px;
-        corner-shape: squircle;
-      }
-      box-shadow: 0 0 0 1px;
+    box-shadow: 0 0 0 1px;
+    box-shadow-color: var(--orange-light-bg-color);
+  }
+  .compose-highlight-emoji-shortcode,
+  .compose-field::highlight(compose-emoji-shortcode) {
+    background-color: var(--bg-faded-color);
+    /* ::highlight() can't do below */
+    border-radius: 4px;
+    @supports (corner-shape: squircle) {
+      border-radius: 8px;
+      corner-shape: squircle;
     }
-    .compose-highlight-mention {
-      background-color: var(--orange-light-bg-color);
-      box-shadow-color: var(--orange-light-bg-color);
+    box-shadow: 0 0 0 1px;
+    box-shadow-color: var(--bg-faded-color);
+  }
+  .compose-highlight-exceeded,
+  .compose-field::highlight(compose-exceeded) {
+    background-color: var(--red-bg-color);
+    /* ::highlight() can't do below */
+    border-radius: 4px;
+    @supports (corner-shape: squircle) {
+      border-radius: 8px;
+      corner-shape: squircle;
     }
-    .compose-highlight-emoji-shortcode {
-      background-color: var(--bg-faded-color);
-      box-shadow-color: var(--bg-faded-color);
-    }
-    .compose-highlight-exceeded {
-      background-color: var(--red-bg-color);
-      box-shadow-color: var(--red-bg-color);
-    }
+    box-shadow: 0 0 0 1px;
+    box-shadow-color: var(--red-bg-color);
+  }
 
+  /* Overlay only */
+  .compose-highlight-mention,
+  .compose-highlight-emoji-shortcode,
+  .compose-highlight-exceeded {
+    mix-blend-mode: multiply;
     @media (prefers-color-scheme: dark) {
-      .compose-highlight-mention,
-      .compose-highlight-emoji-shortcode,
-      .compose-highlight-exceeded {
-        mix-blend-mode: screen;
-      }
+      mix-blend-mode: screen;
     }
   }
 }

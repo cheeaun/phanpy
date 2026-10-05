@@ -360,6 +360,34 @@ self.addEventListener('push', (event) => {
   }
 });
 
+self.addEventListener('pushsubscriptionchange', (event) => {
+  console.warn('PUSH Subscription changed', event);
+  event.waitUntil(
+    (async () => {
+      const clients = await self.clients.matchAll({
+        type: 'window',
+        includeUncontrolled: true,
+      });
+      // No clients, app will repair on next launch
+      if (!clients.length) return;
+      const bestClient =
+        clients.find(
+          (client) => client.focused || client.visibilityState === 'visible',
+        ) || clients[0];
+      let newSubscription = null;
+      if (event.newSubscription) {
+        const { endpoint, keys } = event.newSubscription.toJSON();
+        newSubscription = { endpoint, keys };
+      }
+      bestClient.postMessage({
+        type: 'pushsubscriptionchange',
+        oldEndpoint: event.oldSubscription?.endpoint,
+        newSubscription,
+      });
+    })(),
+  );
+});
+
 self.addEventListener('notificationclick', (event) => {
   const payload = event.notification;
   console.log('NOTIFICATION CLICK payload', payload);

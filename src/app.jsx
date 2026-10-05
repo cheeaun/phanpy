@@ -70,6 +70,7 @@ import {
 import { getAccessToken } from './utils/auth';
 import { AuthProvider, useAuth } from './utils/auth-context';
 import focusDeck from './utils/focus-deck';
+import { initSubscription } from './utils/push-notifications';
 import states, { hideAllModals, initStates, statusKey } from './utils/states';
 import store from './utils/store';
 import {
@@ -569,6 +570,13 @@ function App() {
   // }, [location.pathname]);
 
   useEffect(focusDeck, [location, isLoggedIn]);
+
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    initSubscription().catch((err) => {
+      console.warn('🔔 Failed to init subscription', err);
+    });
+  }, [isLoggedIn]);
 
   // Save last page for PWA restoration
   const restoredRef = useRef(false);

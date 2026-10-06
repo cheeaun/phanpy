@@ -1,7 +1,7 @@
 import { plural } from '@lingui/core/macro';
 
 function FilePickerInput({
-  hidden,
+  ref,
   supportedMimeTypes,
   maxMediaAttachments,
   mediaAttachments,
@@ -10,8 +10,17 @@ function FilePickerInput({
 }) {
   return (
     <input
+      ref={ref}
       type="file"
-      hidden={hidden}
+      tabIndex={-1}
+      aria-hidden="true"
+      style={{
+        position: 'absolute',
+        width: 1,
+        height: 1,
+        opacity: 0,
+        pointerEvents: 'none',
+      }}
       accept={supportedMimeTypes?.join(',')}
       multiple={
         maxMediaAttachments === undefined ||

@@ -319,9 +319,11 @@ function Search({ columnMode, ...props }) {
     },
     {
       useKey: true,
+      ignoreModifiers: true,
       preventDefault: true,
       ignoreEventWhen: (e) => {
-        // Allow '/' even with Shift (e.g. German keyboards)
+        // Allow '/' even with Shift (e.g. German Shift+7, French Shift+:)
+        // NOTE: ignoreModifiers:true required so lib doesn't reject Shift+/ first.
         if (e.key === '/') return false;
         return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
       },

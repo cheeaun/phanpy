@@ -3228,6 +3228,44 @@ a.card:is(:hover, :focus):visited {
   }
 }
 
+/* Single-image ALT folder tab */
+:is(.status, .media-post)
+  .media-container.media-eq1:not(
+    :is(.media-large-container, .status-card) .media-container
+  )
+  .media-image[data-has-alt] {
+  overflow: visible;
+
+  img {
+    border-radius: calc(var(--media-radius) - var(--media-border-width));
+    corner-shape: inherit;
+  }
+
+  .alt-badge {
+    inset-inline-start: 0;
+    bottom: 16px;
+    transform: rotate(-90deg);
+    transform-origin: bottom left;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    :dir(rtl) & {
+      transform: rotate(90deg);
+      transform-origin: bottom right;
+    }
+
+    &:is(:hover, :focus):not(:active) {
+      transform: rotate(-90deg) scale(1.15);
+      transform-origin: bottom left;
+
+      :dir(rtl) & {
+        transform: rotate(90deg) scale(1.15);
+        transform-origin: bottom right;
+      }
+    }
+  }
+}
+
 /* VIEW TRANSITIONS */
 @media not (prefers-reduced-motion: reduce) {
   :root {

@@ -1021,12 +1021,12 @@ function Catchup() {
             <div class="header-side">
               <NavMenu />
               {uiState === 'results' && (
-                <Link to="/catchup" class="button plain">
+                <Link to="/catchup" class="button plain4">
                   <Icon icon="history2" size="l" alt={t`Catch-up`} />
                 </Link>
               )}
               {uiState === 'start' && (
-                <Link to="/" class="button plain">
+                <Link to="/" class="button plain4">
                   <Icon icon="home" size="l" alt={t`Home`} />
                 </Link>
               )}
@@ -1042,7 +1042,7 @@ function Catchup() {
               {uiState !== 'start' && uiState !== 'loading' && (
                 <button
                   type="button"
-                  class="plain"
+                  class="plain4"
                   onClick={() => {
                     setShowHelp(true);
                   }}

@@ -7,7 +7,7 @@
     --post-gradient-angle: -160deg;
     --post-gradient-chip-angle: 20deg;
   }
-  --post-gradient-height: min(160px, 50%);
+  --post-gradient-height: min(120px, 50%);
 }
 
 .status-reblog {
@@ -626,7 +626,7 @@
 
   .more {
     margin-inline-start: 4px;
-    transition: transform 0.2s ease-out;
+    /* transition: transform 0.2s ease-out; */
   }
 }
 .status > .container > .meta a.time:is(:hover, :focus) {
@@ -668,8 +668,8 @@
   gap: 4px;
   align-items: center;
   color: var(--reply-to-text-color);
-  background: var(--bg-color);
-  border: 1px solid var(--reply-to-color);
+  background: var(--reply-to-faded-color);
+  border: 1px solid var(--reply-to-faded-color);
   border-radius: 4px;
   @supports (corner-shape: squircle) {
     border-radius: 8px;
@@ -679,14 +679,14 @@
   font-size: 10px;
   line-height: 1;
   text-transform: uppercase;
-  opacity: 0.75;
-  background-image: repeating-linear-gradient(
+  opacity: 0.85;
+  /* background-image: repeating-linear-gradient(
     -70deg,
     transparent,
     transparent 3px,
     var(--reply-to-faded-color) 3px,
     var(--reply-to-faded-color) 4px
-  );
+  ); */
   font-weight: bold;
   align-self: center;
   flex-shrink: 0;
@@ -2521,12 +2521,12 @@ a.card:is(:hover, :focus):visited {
   pointer-events: none;
   opacity: 0.5;
 }
-.status .action.has-count {
+/* .status .action.has-count {
   flex: 1;
 }
 .status .action.has-counts {
   flex: 1.5;
-}
+} */
 .status .action > button {
   min-height: 40px;
   min-width: 40px;
@@ -2537,11 +2537,15 @@ a.card:is(:hover, :focus):visited {
   color: inherit;
   border: 1.5px solid transparent;
   backdrop-filter: none;
+  transition:
+    background-color 0.6s var(--timing-function),
+    color 0.3s var(--timing-function);
 }
 @media (hover: hover) {
   .status .action > button.plain:not(:disabled):hover {
     color: var(--link-color);
     background-color: var(--button-plain-bg-hover-color);
+    transition-duration: 0.3s;
   }
   .status .action > button.plain.reblog-button:not(:disabled):hover {
     color: var(--reblog-color);

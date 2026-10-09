@@ -353,7 +353,7 @@ function ShortcutsSettings({ onClose }) {
                     <span class="shortcut-actions">
                       <button
                         type="button"
-                        class="plain small"
+                        class="plain4 small"
                         disabled={i === 0}
                         onClick={() => {
                           const shortcutsArr = Array.from(states.shortcuts);
@@ -369,7 +369,7 @@ function ShortcutsSettings({ onClose }) {
                       </button>
                       <button
                         type="button"
-                        class="plain small"
+                        class="plain4 small"
                         disabled={i === shortcuts.length - 1}
                         onClick={() => {
                           const shortcutsArr = Array.from(states.shortcuts);
@@ -385,7 +385,7 @@ function ShortcutsSettings({ onClose }) {
                       </button>
                       <button
                         type="button"
-                        class="plain small"
+                        class="plain4 small"
                         onClick={() => {
                           setShowForm({
                             shortcut,
@@ -397,7 +397,7 @@ function ShortcutsSettings({ onClose }) {
                       </button>
                       {/* <button
                       type="button"
-                      class="plain small"
+                      class="plain4 small"
                       onClick={() => {
                         states.shortcuts.splice(i, 1);
                       }}

@@ -1110,7 +1110,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   background: linear-gradient(
     to bottom var(--forward),
     var(--carousel-faded-color),
-    transparent
+    transparent 75%
   );
   position: relative;
   container-type: inline-size;
@@ -1261,7 +1261,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   animation: appear 0.2s ease-out;
-  border: 1px solid var(--outline-color);
+  border: var(--hairline-width) solid var(--outline-color);
   background-color: var(--bg-blur-color);
   border-radius: 16px;
   @supports (corner-shape: squircle) {
@@ -1269,7 +1269,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     corner-shape: squircle;
   }
   overflow: clip;
-  box-shadow: 0 1px var(--bg-color);
+  /* box-shadow: 0 1px var(--bg-color); */
 
   &:has(.status-badge:not(:empty)) {
     border-start-end-radius: 8px;
@@ -3240,12 +3240,12 @@ ul.link-list li a .icon {
       --item-radius: 32px;
       corner-shape: squircle;
     }
-    border: 1px solid var(--divider-color);
-    margin: 16px 0;
+    border: var(--hairline-width) solid var(--outline-color);
+    margin: 12px 0;
     background-color: var(--bg-color);
     border-radius: var(--item-radius);
     overflow: hidden;
-    box-shadow: 0px 1px var(--bg-blur-color);
+    /* box-shadow: 0px 1px var(--bg-blur-color); */
     transition: transform 0.4s var(--timing-function);
     --back-transition: transform 0.4s ease-out;
 

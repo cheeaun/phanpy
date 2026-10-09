@@ -3110,6 +3110,7 @@ function Status({
                     }}
                   />
                 </div>
+                <div class="spacer" />
                 {supports('@mastodon/post-bookmark') && (
                   <div class="action">
                     <StatusButton

@@ -705,7 +705,7 @@ function YearInPosts() {
               {year && month !== null ? (
                 <Link
                   to={`/yip?year=${year}`}
-                  class="button plain"
+                  class="button plain4"
                   onClick={() => {
                     setSearchQuery('');
                   }}
@@ -715,7 +715,7 @@ function YearInPosts() {
               ) : year ? (
                 <Link
                   to="/yip"
-                  class="button plain"
+                  class="button plain4"
                   onClick={() => {
                     setSearchQuery('');
                   }}
@@ -723,7 +723,7 @@ function YearInPosts() {
                   <Icon icon="month" size="l" alt="Year in Posts" />
                 </Link>
               ) : (
-                <Link to="/" class="button plain">
+                <Link to="/" class="button plain4">
                   <Icon icon="home" size="l" alt="Home" />
                 </Link>
               )}
@@ -789,7 +789,7 @@ function YearInPosts() {
                   <Menu2
                     align="end"
                     menuButton={
-                      <button type="button" class="plain">
+                      <button type="button" class="plain4">
                         <Icon icon="more" size="l" alt="More" />
                       </button>
                     }

@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: npm
       - run: npm ci
       - run: npm run formatting
       - run: npm run messages:extract:clean

@@ -22,7 +22,7 @@ import { useLongPress } from 'use-long-press';
 import { useSnapshot } from 'valtio';
 
 import { api, getPreferences } from '../utils/api';
-import { langDetector } from '../utils/browser-translator';
+import { getLangDetector } from '../utils/browser-translator';
 import { useEditHistory } from '../utils/edit-history-context';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
@@ -230,6 +230,7 @@ const detectLang = pmem(async (text) => {
     return null;
   }
 
+  const langDetector = await getLangDetector();
   if (langDetector) {
     const langs = await langDetector.detect(text);
     console.groupCollapsed(

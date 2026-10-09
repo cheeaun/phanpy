@@ -788,7 +788,7 @@
 }
 
 .status.large > .container > .content-container {
-  margin-inline-start: calc(-50px - 16px);
+  margin-inline-start: calc(-50px - 12px);
   padding-top: 10px;
   padding-bottom: 10px;
 }
@@ -2493,14 +2493,14 @@ a.card:is(:hover, :focus):visited {
 }
 .status.large .extra-meta {
   padding-top: 0;
-  margin-inline-start: calc(-50px - 16px);
+  margin-inline-start: calc(-50px - 12px);
 }
 
 /* EMOJI REACTIONS */
 
 .status.large .emoji-reactions {
   cursor: default;
-  margin-inline-start: calc(-50px - 16px);
+  margin-inline-start: calc(-50px - 12px);
 }
 
 /* ACTIONS */
@@ -2512,7 +2512,7 @@ a.card:is(:hover, :focus):visited {
 .status.large .actions {
   padding-top: 4px;
   padding-bottom: 16px;
-  margin-inline-start: calc(-50px - 16px);
+  margin-inline-start: calc(-50px - 12px);
   color: var(--text-insignificant-color);
   border-top: var(--hairline-width) solid var(--outline-color);
   margin-top: 8px;
@@ -2527,6 +2527,9 @@ a.card:is(:hover, :focus):visited {
 .status .action.has-counts {
   flex: 1.5;
 } */
+.status .action:first-child {
+  margin-inline-start: calc(-8px - 2px);
+}
 .status .action > button {
   min-height: 40px;
   min-width: 40px;

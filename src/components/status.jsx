@@ -2854,8 +2854,6 @@ function Status({
                   </span>
                 ) : (
                   <>
-                    <Icon icon={visibilityIconsMap[visibility]} alt="" />{' '}
-                    <span>{_(visibilityText[visibility])}</span> &bull;{' '}
                     <a href={url} target="_blank" rel="noopener">
                       {
                         // within a day
@@ -2894,7 +2892,12 @@ function Status({
                           {editedDateText}
                         </time>
                       </span>
-                    )}
+                    )}{' '}
+                    &bull;{' '}
+                    {visibility !== 'public' && visibility !== 'direct' && (
+                      <Icon icon={visibilityIconsMap[visibility]} alt="" />
+                    )}{' '}
+                    <span>{_(visibilityText[visibility])}</span>
                   </>
                 )}
               </div>

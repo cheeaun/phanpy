@@ -3,6 +3,10 @@
   /* Prevent immediate text size change affecting max width */
   max-width: calc(40 * var(--current-text-size) - 50px - 16px);
 
+  input[type='checkbox'] {
+    margin: 0;
+  }
+
   main h3 {
     font-size: 85%;
     text-transform: uppercase;
@@ -39,7 +43,7 @@
         align-items: center;
         flex-wrap: wrap;
         border-bottom: var(--hairline-width) solid var(--outline-color);
-        gap: 4px;
+        gap: 8px;
 
         &:last-child {
           border-bottom: none;
@@ -50,6 +54,20 @@
           align-items: flex-start;
         }
 
+        > label {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+
+          > input[type='checkbox'] {
+            flex: none;
+          }
+
+          > span {
+            min-width: 0;
+          }
+        }
+
         > div:last-child {
           text-align: end;
         }
@@ -58,6 +76,22 @@
           text-align: start !important;
           margin-top: 8px;
           margin-inline-start: 24px;
+
+          label {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+          }
+
+          .checkbox-fieldset label {
+            align-items: flex-start;
+          }
+
+          &.actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+          }
 
           p {
             margin-block: 0.5em;
@@ -79,6 +113,55 @@
 
           hr {
             margin: 8px 0;
+          }
+        }
+      }
+
+      @supports (grid-template-columns: subgrid) {
+        /* Shared checkbox column across rows */
+        &.checkbox-list {
+          display: grid;
+          grid-template-columns: auto 1fr;
+          column-gap: 8px;
+
+          > li {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: subgrid;
+            row-gap: 8px;
+            align-items: start;
+          }
+
+          > li > label {
+            display: grid;
+            grid-template-columns: subgrid;
+            grid-column: 1 / -1;
+            align-items: center;
+
+            > input[type='checkbox'] {
+              grid-column: 1;
+              justify-self: start;
+            }
+
+            > span {
+              grid-column: 2;
+              min-width: 0;
+            }
+          }
+
+          > li > .sub-section,
+          > li > .shazam-container {
+            grid-column: 2;
+            margin: 0;
+            min-width: 0;
+          }
+
+          > li > .shazam-container[hidden] {
+            display: none;
+          }
+
+          .shazam-container .sub-section {
+            margin: 0;
           }
         }
       }
@@ -149,7 +232,7 @@
   .text-size-control {
     display: flex;
     align-items: stretch;
-    gap: 4px;
+    gap: 8px;
 
     &.loading button {
       transition: opacity 0.6s ease-in-out;
@@ -159,7 +242,7 @@
     @media (width < 320px) {
       display: grid;
       gap: 0;
-      column-gap: 4px;
+      column-gap: 8px;
       grid-template-areas:
         'label1 label2'
         'input input';
@@ -209,7 +292,7 @@
     flex: 1 0 12em;
     padding: 4px;
     display: flex;
-    gap: 4px;
+    gap: 8px;
     align-items: flex-start;
   }
 

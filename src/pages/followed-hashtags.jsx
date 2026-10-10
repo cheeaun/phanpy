@@ -37,7 +37,7 @@ function FollowedHashtags() {
           <div class="header-grid">
             <div class="header-side">
               <NavMenu />
-              <Link to="/" class="button plain">
+              <Link to="/" class="button plain4">
                 <Icon icon="home" size="l" alt={t`Home`} />
               </Link>
             </div>

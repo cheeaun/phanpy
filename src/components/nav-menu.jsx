@@ -104,7 +104,7 @@ function NavMenu(props) {
       <button
         ref={buttonRef}
         type="button"
-        class={`button plain nav-menu-button ${
+        class={`button plain4 nav-menu-button ${
           showAvatarInButton ? 'with-avatar' : ''
         } ${menuState === 'open' ? 'active' : ''}`}
         style={{ position: 'relative' }}

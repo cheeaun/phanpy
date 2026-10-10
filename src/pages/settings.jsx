@@ -251,8 +251,10 @@ function Settings({ onClose }) {
                   onChange={(e) => {
                     states.settings.autoHideBars = !e.target.checked;
                   }}
-                />{' '}
-                <Trans>Keep navigation bars visible while scrolling</Trans>
+                />
+                <span>
+                  <Trans>Keep navigation bars visible while scrolling</Trans>
+                </span>
               </label>
             </li>
           </ul>
@@ -383,7 +385,7 @@ function Settings({ onClose }) {
               <Trans>Wellbeing</Trans>
             </h3>
             <section>
-              <ul>
+              <ul class="checkbox-list">
                 <li class="block">
                   <label>
                     <input
@@ -392,8 +394,10 @@ function Settings({ onClose }) {
                       onChange={(e) => {
                         states.settings.hideTrendingTimeline = e.target.checked;
                       }}
-                    />{' '}
-                    <Trans>Hide Trending timeline</Trans>
+                    />
+                    <span>
+                      <Trans>Hide Trending timeline</Trans>
+                    </span>
                   </label>
                 </li>
                 <li class="block">
@@ -404,8 +408,10 @@ function Settings({ onClose }) {
                       onChange={(e) => {
                         states.settings.hideLocalTimeline = e.target.checked;
                       }}
-                    />{' '}
-                    <Trans>Hide Local timeline</Trans>
+                    />
+                    <span>
+                      <Trans>Hide Local timeline</Trans>
+                    </span>
                   </label>
                 </li>
                 <li class="block">
@@ -417,8 +423,10 @@ function Settings({ onClose }) {
                         states.settings.hideFederatedTimeline =
                           e.target.checked;
                       }}
-                    />{' '}
-                    <Trans>Hide Federated timeline</Trans>
+                    />
+                    <span>
+                      <Trans>Hide Federated timeline</Trans>
+                    </span>
                   </label>
                 </li>
               </ul>
@@ -429,7 +437,7 @@ function Settings({ onClose }) {
           <Trans>Experiments</Trans>
         </h3>
         <section>
-          <ul>
+          <ul class="checkbox-list">
             <li class="block">
               <label>
                 <input
@@ -438,8 +446,10 @@ function Settings({ onClose }) {
                   onChange={(e) => {
                     states.settings.autoRefresh = e.target.checked;
                   }}
-                />{' '}
-                <Trans>Auto refresh timeline posts</Trans>
+                />
+                <span>
+                  <Trans>Auto refresh timeline posts</Trans>
+                </span>
               </label>
             </li>
             <li class="block">
@@ -450,8 +460,10 @@ function Settings({ onClose }) {
                   onChange={(e) => {
                     states.settings.boostsCarousel = e.target.checked;
                   }}
-                />{' '}
-                <Trans>Boosts carousel</Trans>
+                />
+                <span>
+                  <Trans>Boosts carousel</Trans>
+                </span>
               </label>
             </li>
             {!!TRANSLANG_INSTANCES && (
@@ -467,8 +479,10 @@ function Settings({ onClose }) {
                         states.settings.contentTranslationTargetLanguage = null;
                       }
                     }}
-                  />{' '}
-                  <Trans>Post translation</Trans>
+                  />
+                  <span>
+                    <Trans>Post translation</Trans>
+                  </span>
                 </label>
                 <div
                   class={`sub-section ${
@@ -479,7 +493,7 @@ function Settings({ onClose }) {
                 >
                   <div>
                     <label>
-                      <Trans>Translate to </Trans>{' '}
+                      <Trans>Translate to </Trans>
                       <select
                         value={targetLanguage || ''}
                         disabled={!snapStates.settings.contentTranslation}
@@ -555,7 +569,7 @@ function Settings({ onClose }) {
                                     );
                                 }
                               }}
-                            />{' '}
+                            />
                             {showCommon ? (
                               <span>
                                 {native}{' '}
@@ -598,7 +612,7 @@ function Settings({ onClose }) {
                           states.settings.contentTranslationAutoInline =
                             e.target.checked;
                         }}
-                      />{' '}
+                      />
                       <Trans>Auto inline translation</Trans>
                     </label>
                     <p class="insignificant">
@@ -623,8 +637,10 @@ function Settings({ onClose }) {
                     onChange={(e) => {
                       states.settings.paginatedTimeline = e.target.checked;
                     }}
-                  />{' '}
-                  <Trans>Paginated timeline (beta)</Trans>
+                  />
+                  <span>
+                    <Trans>Paginated timeline (beta)</Trans>
+                  </span>
                 </label>
                 <div class="sub-section insignificant">
                   <small>
@@ -647,8 +663,10 @@ function Settings({ onClose }) {
                     onChange={(e) => {
                       states.settings.composerGIFPicker = e.target.checked;
                     }}
-                  />{' '}
-                  <Trans>GIF Picker for composer</Trans>
+                  />
+                  <span>
+                    <Trans>GIF Picker for composer</Trans>
+                  </span>
                 </label>
                 <div class="sub-section insignificant">
                   <small>
@@ -680,9 +698,11 @@ function Settings({ onClose }) {
                     onChange={(e) => {
                       states.settings.mediaAltGenerator = e.target.checked;
                     }}
-                  />{' '}
-                  <Trans>Image description generator</Trans>{' '}
-                  <Icon icon="sparkles2" class="more-insignificant" />
+                  />
+                  <span>
+                    <Trans>Image description generator</Trans>{' '}
+                    <Icon icon="sparkles2" class="more-insignificant" />
+                  </span>
                 </label>
                 <div class="sub-section insignificant">
                   <small>
@@ -720,9 +740,11 @@ function Settings({ onClose }) {
                       states.settings.shortcutSettingsCloudImportExport =
                         e.target.checked;
                     }}
-                  />{' '}
-                  <Trans>"Cloud" import/export for shortcuts settings</Trans>{' '}
-                  <Icon icon="cloud" class="more-insignificant" />
+                  />
+                  <span>
+                    <Trans>"Cloud" import/export for shortcuts settings</Trans>{' '}
+                    <Icon icon="cloud" class="more-insignificant" />
+                  </span>
                 </label>
                 <div class="sub-section insignificant">
                   <small>
@@ -752,13 +774,15 @@ function Settings({ onClose }) {
                   onChange={(e) => {
                     states.settings.cloakMode = e.target.checked;
                   }}
-                />{' '}
-                <Trans>
-                  Cloak mode{' '}
-                  <span class="insignificant">
-                    (<samp>Text</samp> → <samp>████</samp>)
-                  </span>
-                </Trans>
+                />
+                <span>
+                  <Trans>
+                    Cloak mode{' '}
+                    <span class="insignificant">
+                      (<samp>Text</samp> → <samp>████</samp>)
+                    </span>
+                  </Trans>
+                </span>
               </label>
               <div class="sub-section insignificant">
                 <small>
@@ -769,31 +793,29 @@ function Settings({ onClose }) {
                 </small>
               </div>
             </li>
-            {authenticated && (
-              <li>
-                <button
-                  type="button"
-                  class="light"
-                  onClick={() => {
-                    states.showDrafts = true;
-                    states.showSettings = false;
-                  }}
-                >
-                  <Trans>Unsent drafts</Trans>
-                </button>
-              </li>
-            )}
             <li>
-              <Link to="/yip" onClick={onClose} class="button light">
-                Year in Posts
-              </Link>
-            </li>
-            <li>
-              <button-install>
-                <button type="button" class="light">
-                  <Trans>Install {CLIENT_NAME}</Trans>
-                </button>
-              </button-install>
+              <div class="sub-section actions">
+                {authenticated && (
+                  <button
+                    type="button"
+                    class="light"
+                    onClick={() => {
+                      states.showDrafts = true;
+                      states.showSettings = false;
+                    }}
+                  >
+                    <Trans>Unsent drafts</Trans>
+                  </button>
+                )}
+                <Link to="/yip" onClick={onClose} class="button light">
+                  Year in Posts
+                </Link>
+                <button-install>
+                  <button type="button" class="light">
+                    <Trans>Install {CLIENT_NAME}</Trans>
+                  </button>
+                </button-install>
+              </div>
             </li>
           </ul>
         </section>
@@ -1260,8 +1282,8 @@ function PushNotificationsSection({ onClose }) {
         <Trans>Push Notifications (beta)</Trans>
       </h3>
       <section>
-        <ul>
-          <li>
+        <ul class="checkbox-list">
+          <li class="block">
             <label>
               <input
                 type="checkbox"
@@ -1287,31 +1309,33 @@ function PushNotificationsSection({ onClose }) {
                     setAllowNotifications(false);
                   }
                 }}
-              />{' '}
-              <Trans>
-                Allow from{' '}
-                <select
-                  name="policy"
-                  disabled={isLoading || needRelogin || !allowNotifications}
-                >
-                  {[
-                    {
-                      value: 'all',
-                      label: t`anyone`,
-                    },
-                    {
-                      value: 'followed',
-                      label: t`people I follow`,
-                    },
-                    {
-                      value: 'follower',
-                      label: t`followers`,
-                    },
-                  ].map((type) => (
-                    <option value={type.value}>{type.label}</option>
-                  ))}
-                </select>
-              </Trans>
+              />
+              <span>
+                <Trans>
+                  Allow from{' '}
+                  <select
+                    name="policy"
+                    disabled={isLoading || needRelogin || !allowNotifications}
+                  >
+                    {[
+                      {
+                        value: 'all',
+                        label: t`anyone`,
+                      },
+                      {
+                        value: 'followed',
+                        label: t`people I follow`,
+                      },
+                      {
+                        value: 'follower',
+                        label: t`followers`,
+                      },
+                    ].map((type) => (
+                      <option value={type.value}>{type.label}</option>
+                    ))}
+                  </select>
+                </Trans>
+              </span>
             </label>
             <div
               class="shazam-container no-animation"
@@ -1359,7 +1383,7 @@ function PushNotificationsSection({ onClose }) {
                     ].map((alert) => (
                       <li>
                         <label>
-                          <input type="checkbox" name={alert.value} />{' '}
+                          <input type="checkbox" name={alert.value} />
                           {alert.label}
                         </label>
                       </li>

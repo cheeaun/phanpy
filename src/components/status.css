@@ -3238,7 +3238,7 @@ a.card:is(:hover, :focus):visited {
 }
 
 /* Single-image ALT folder tab */
-:is(.status, .media-post)
+.status.medium
   .media-container.media-eq1:not(
     :is(.media-large-container, .status-card) .media-container
   )
@@ -3253,24 +3253,19 @@ a.card:is(:hover, :focus):visited {
   .alt-badge {
     inset-inline-start: 0;
     bottom: 16px;
-    transform: rotate(-90deg);
-    transform-origin: bottom left;
+    --badge-rotate: -90deg;
+    :dir(rtl) & {
+      --badge-rotate: 90deg;
+    }
+    transform: rotate(var(--badge-rotate));
+    transform-origin: bottom var(--backward);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-
-    :dir(rtl) & {
-      transform: rotate(90deg);
-      transform-origin: bottom right;
-    }
+    border-bottom: 0;
 
     &:is(:hover, :focus):not(:active) {
-      transform: rotate(-90deg) scale(1.15);
-      transform-origin: bottom left;
-
-      :dir(rtl) & {
-        transform: rotate(90deg) scale(1.15);
-        transform-origin: bottom right;
-      }
+      transform: rotate(var(--badge-rotate)) scale(1.1);
+      transform-origin: bottom var(--backward);
     }
   }
 }

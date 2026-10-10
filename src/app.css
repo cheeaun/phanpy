@@ -398,8 +398,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 
 .timeline.contextual {
+  --comment-icon-width: 20px;
   --indent-large-start: 40px;
-  --indent-small-start: 10px;
+  --indent-small-start: calc(
+    16px + var(--comment-icon-width) / 2 - var(--line-width) / 2
+  );
   --thread-start: var(--indent-small-start);
   --line-start: var(--indent-small-start);
   --line-width: 3px;
@@ -425,11 +428,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 
   > li.descendant.thread:has(+ .descendant:not(.thread)):after {
     position: absolute;
-    inset-inline-start: 10px;
+    inset-inline-start: var(--indent-small-start);
     bottom: 0;
     content: '';
     display: block;
-    --curves-width: calc(var(--line-start) + var(--line-width) - 10px);
+    --curves-width: calc(
+      var(--line-start) + var(--line-width) - var(--indent-small-start)
+    );
     width: var(--curves-width);
     background-color: var(--bg-color);
     background-repeat: no-repeat;

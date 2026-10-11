@@ -26,6 +26,7 @@ import { getLangDetector } from '../utils/browser-translator';
 import { useEditHistory } from '../utils/edit-history-context';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
+import { SAVE_TERMINOLOGY } from '../utils/flags';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import haptics from '../utils/haptics';
@@ -976,8 +977,15 @@ function Status({
       if (!isSizeLarge && done) {
         showToast(
           bookmarked
-            ? t`Unbookmarked @${username || acct}'s post`
-            : t`Bookmarked @${username || acct}'s post`,
+            ? SAVE_TERMINOLOGY
+              ? t({
+                  message: `Removed @${username || acct}'s post from Saved`,
+                  comment: '"Saved" is Saved Posts.',
+                })
+              : t`Unbookmarked @${username || acct}'s post`
+            : SAVE_TERMINOLOGY
+              ? t`Saved @${username || acct}'s post`
+              : t`Bookmarked @${username || acct}'s post`,
         );
       }
     } catch (e) {}
@@ -1305,7 +1313,22 @@ function Status({
                 className={`menu-bookmark ${bookmarked ? 'checked' : ''}`}
               >
                 <Icon icon="bookmark" />
-                <span>{bookmarked ? t`Unbookmark` : t`Bookmark`}</span>
+                <span>
+                  {bookmarked
+                    ? SAVE_TERMINOLOGY
+                      ? t({
+                          message: 'Unsave',
+                          context: 'saved post',
+                          comment: 'Short for "Remove from Saved".',
+                        })
+                      : t`Unbookmark`
+                    : SAVE_TERMINOLOGY
+                      ? t({
+                          message: 'Save',
+                          context: 'saved post',
+                        })
+                      : t`Bookmark`}
+                </span>
               </MenuItem>
             )}
           </div>
@@ -2257,7 +2280,14 @@ function Status({
                 class="bookmark"
                 icon="bookmark"
                 size="s"
-                alt={t`Bookmarked`}
+                alt={
+                  SAVE_TERMINOLOGY
+                    ? t({
+                        message: 'Saved',
+                        comment: 'Post is saved to Saved Posts.',
+                      })
+                    : t`Bookmarked`
+                }
               />
             )}
             {_pinned && (
@@ -3118,8 +3148,34 @@ function Status({
                   <div class="action">
                     <StatusButton
                       checked={bookmarked}
-                      title={[t`Bookmark`, t`Unbookmark`]}
-                      alt={[t`Bookmark`, t`Bookmarked`]}
+                      title={
+                        SAVE_TERMINOLOGY
+                          ? [
+                              t({
+                                message: 'Save',
+                                context: 'saved post',
+                              }),
+                              t({
+                                message: 'Remove from Saved',
+                                comment: '"Saved" is Saved Posts.',
+                              }),
+                            ]
+                          : [t`Bookmark`, t`Unbookmark`]
+                      }
+                      alt={
+                        SAVE_TERMINOLOGY
+                          ? [
+                              t({
+                                message: 'Save',
+                                context: 'saved post',
+                              }),
+                              t({
+                                message: 'Saved',
+                                comment: 'Post is saved to Saved Posts.',
+                              }),
+                            ]
+                          : [t`Bookmark`, t`Bookmarked`]
+                      }
                       class="bookmark-button"
                       icon="bookmark"
                       onClick={(e) => {

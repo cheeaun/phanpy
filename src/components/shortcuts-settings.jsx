@@ -15,6 +15,7 @@ import multiColumnUrl from '../assets/multi-column.svg';
 import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
 
 import { api } from '../utils/api';
+import { SAVE_TERMINOLOGY } from '../utils/flags';
 import { fetchFollowedTags } from '../utils/followed-tags';
 import { getLists, getListTitle } from '../utils/lists';
 import pmem from '../utils/pmem';
@@ -53,7 +54,7 @@ const TYPE_TEXT = {
   public: msg`Public (Local / Federated)`,
   search: msg`Search`,
   'account-statuses': msg`Account`,
-  bookmarks: msg`Bookmarks`,
+  bookmarks: SAVE_TERMINOLOGY ? msg`Saved Posts` : msg`Bookmarks`,
   favourites: msg`Likes`,
   hashtag: msg`Hashtag`,
   trending: msg`Trending`,
@@ -209,7 +210,7 @@ export const SHORTCUTS_META = {
   },
   bookmarks: {
     id: 'bookmarks',
-    title: msg`Bookmarks`,
+    title: SAVE_TERMINOLOGY ? msg`Saved Posts` : msg`Bookmarks`,
     path: '/b',
     icon: 'bookmark',
   },

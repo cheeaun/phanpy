@@ -642,11 +642,16 @@ export default function Sandbox() {
         });
 
         // Also clean up the status objects
+        // Match both raw keys and instance-prefixed keys (statusKey format)
+        // so no stale quote statuses are left behind
         Object.keys(states.statuses).forEach((key) => {
+          const rawKey = key.startsWith(currentInstance + '/')
+            ? key.slice(currentInstance.length + 1)
+            : key;
           if (
-            key.startsWith('quote-') ||
-            key.startsWith('nested-quote-') ||
-            key.startsWith('deep-nested-')
+            rawKey.startsWith('quote-') ||
+            rawKey.startsWith('nested-quote-') ||
+            rawKey.startsWith('deep-nested-')
           ) {
             // Remove all quote-related status objects
             delete states.statuses[key];
@@ -776,8 +781,15 @@ export default function Sandbox() {
               // Add nested quotes to every other quote - use stable ID
               const nestedQuoteId = `nested-quote-${i}-12345`;
 
+              // Use the proper instance-prefixed key (statusKey) so it matches
+              // the `data-state-post-id` rendered in the DOM. The states GC
+              // prunes keys that aren't mounted, so a raw key here would get
+              // deleted and the nested quote would silently blank out.
+              const nestedStatusKey = statusKey(nestedQuoteId, currentInstance);
+              delete states.statuses[nestedStatusKey];
+
               // Add the nested quote post to states.statuses
-              states.statuses[nestedQuoteId] = {
+              states.statuses[nestedStatusKey] = {
                 id: nestedQuoteId,
                 content: `<p>This is a nested quote inside quote ${i + 1}</p>`,
                 account: {
@@ -808,7 +820,15 @@ export default function Sandbox() {
                 // Only add deepest nesting to first quote
                 const deepNestedId = `deep-nested-${i}-12345`;
 
-                states.statuses[deepNestedId] = {
+                // Same as nested quotes: prefix with instance so the key
+                // matches the DOM's data-state-post-id and survives GC
+                const deepNestedStatusKey = statusKey(
+                  deepNestedId,
+                  currentInstance,
+                );
+                delete states.statuses[deepNestedStatusKey];
+
+                states.statuses[deepNestedStatusKey] = {
                   id: deepNestedId,
                   content: `<p>This is a deeply nested quote (level 2)</p>`,
                   account: {

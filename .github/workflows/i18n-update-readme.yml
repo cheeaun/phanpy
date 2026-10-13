@@ -1,6 +1,11 @@
 name: Update README with list of i18n volunteers
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/i18n-update-readme.yml'
   schedule:
     # Every week
     - cron: '0 0 * * 0'
@@ -17,8 +22,6 @@ jobs:
       - uses: andrii-bodnar/action-crowdin-contributors@v3
         with:
           max_contributors: 100
-          min_words_contributed: 10
-          contributors_per_line: 6
           image_size: 50
           include_languages: true
           excluded_users: cheeaun

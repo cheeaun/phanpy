@@ -2288,6 +2288,33 @@ a.card:is(:hover, :focus):visited {
 
 /* POLLS */
 
+@property --poll-mask-top {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: -96px;
+}
+@property --poll-mask-bottom {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+@keyframes poll-mask-top {
+  from {
+    --poll-mask-top: -96px;
+  }
+  to {
+    --poll-mask-top: 0px;
+  }
+}
+@keyframes poll-mask-bottom {
+  from {
+    --poll-mask-bottom: 0px;
+  }
+  to {
+    --poll-mask-bottom: -96px;
+  }
+}
+
 .poll {
   display: inline-block;
   transition: opacity 0.2s ease-in-out;
@@ -2324,17 +2351,30 @@ a.card:is(:hover, :focus):visited {
     overflow-y: auto;
 
     &.truncated {
-      border-block-end: 1px solid var(--outline-color);
-      background-image: linear-gradient(
-        to top,
-        var(--bg-color),
-        transparent 32px
-      );
+      /* Edge fades: 0 = fully faded, -96px = no fade */
+      --poll-mask-top: -96px;
+      --poll-mask-bottom: 0px;
+      mask-image:
+        linear-gradient(
+          to bottom,
+          transparent var(--poll-mask-top),
+          #000 calc(var(--poll-mask-top) + 96px)
+        ),
+        linear-gradient(
+          to top,
+          transparent var(--poll-mask-bottom),
+          #000 calc(var(--poll-mask-bottom) + 96px)
+        );
+      mask-composite: intersect;
 
-      + .poll-actions {
-        box-shadow:
-          inset 0 1px var(--bg-color),
-          inset 0 8px 16px -8px var(--outline-color);
+      @supports (animation-timeline: scroll(self)) {
+        animation:
+          poll-mask-top 1s linear both,
+          poll-mask-bottom 1s linear both;
+        animation-timeline: scroll(self), scroll(self);
+        animation-range:
+          0 10%,
+          90% 100%;
       }
     }
   }

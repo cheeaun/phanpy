@@ -424,8 +424,6 @@ Costs involved in running and developing this web app:
         <sub><b>5354 words</b></sub>
         <br /><sub><b><code title="Basque">eu</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/xen4n"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556017/medium/ee1fbd7646f1ac2abc18bfa96076d55a.jpg" />
           <br />
@@ -436,6 +434,8 @@ Costs involved in running and developing this web app:
         <sub><b>4622 words</b></sub>
         <br /><sub><b><code title="Ukrainian">uk</code></b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/SadmL_AI"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539171/medium/0ce95ef6b3b0566136191fbedc1563d0.png" />
           <br />
@@ -480,8 +480,6 @@ Costs involved in running and developing this web app:
         <sub><b>3284 words</b></sub>
         <br /><sub><b><code title="Kabyle">kab</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/BoFFire"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13170041/medium/603136896af17fc005fd592ce3f48717_default.png" />
           <br />
@@ -502,6 +500,8 @@ Costs involved in running and developing this web app:
         <sub><b>2849 words</b></sub>
         <br /><sub><b><code title="Dutch">nl</code></b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/rezahosseinzadeh"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16527325/medium/37ebb27e7a50f7f85ae93beafc7028a2.jpg" />
           <br />
@@ -540,8 +540,6 @@ Costs involved in running and developing this web app:
         <sub><b>2219 words</b></sub>
         <br /><sub><b><code title="Czech">cs</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/tux93"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16527851/medium/649e5a9a8a8cc61ced670d89e9cca082.png" />
           <br />
@@ -568,6 +566,8 @@ Costs involved in running and developing this web app:
         <sub><b>1895 words</b></sub>
         <br /><sub><b><code title="French">fr</code></b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/Dizro"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16533843/medium/ac7af8776858a992d992cf6702d1aaae.jpg" />
           <br />
@@ -594,8 +594,6 @@ Costs involved in running and developing this web app:
         <sub><b>1283 words</b></sub>
         <br /><sub><b><code title="Japanese">ja</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/tkbremnes"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15752199/medium/7e9efd828c4691368d063b19d19eb894.png" />
           <br />
@@ -632,6 +630,8 @@ Costs involved in running and developing this web app:
         <sub><b>1167 words</b></sub>
         <br /><sub><b><code title="Japanese">ja</code></b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/uzaylul"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16791511/medium/13af704ac9b4ce8350cd2dc6b823d050.jpg" />
           <br />
@@ -650,8 +650,6 @@ Costs involved in running and developing this web app:
         <sub><b>837 words</b></sub>
         <br /><sub><b><code title="Spanish">es-ES</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/misk"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13044/medium/bfa55b9a0569a9e382fd694c91d3db1b_default.png" />
           <br />
@@ -698,6 +696,8 @@ Costs involved in running and developing this web app:
         <sub><b>658 words</b></sub>
         <br /><sub><b><code title="Russian">ru</code></b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/shuuji3"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12381015/medium/35e3557fd61d85f9a5b84545d9e3feb4.png" />
           <br />
@@ -708,8 +708,6 @@ Costs involved in running and developing this web app:
         <sub><b>556 words</b></sub>
         <br /><sub><b><code title="Japanese">ja</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/cairobraga"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17653638/medium/2eb675fdb326ae5464ef556b7f4fad30.png" />
           <br />
@@ -822,8 +820,6 @@ Costs involved in running and developing this web app:
         <sub><b>219 words</b></sub>
         <br /><sub><b><code title="Czech">cs</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/gflorian"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15777621/medium/9e3409aac9c20973984440aa1542b260_default.png" />
           <br />
@@ -832,6 +828,8 @@ Costs involved in running and developing this web app:
         <sub><b>217 words</b></sub>
         <br /><sub><b><code title="German">de</code></b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/elissarc"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13557465/medium/8feebf3677fa80c01e8c54c4fbe097e0_default.png" />
           <br />
@@ -878,8 +876,6 @@ Costs involved in running and developing this web app:
         <sub><b>181 words</b></sub>
         <br /><sub><b><code title="Japanese">ja</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/dannypsnl"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556801/medium/ed5e501ca1f3cc6525d2da28db646346.jpeg" />
           <br />
@@ -898,6 +894,8 @@ Costs involved in running and developing this web app:
         <sub><b>173 words</b></sub>
         <br /><sub><b><code title="Thai">th</code></b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/MrWillCom"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14158861/medium/ba1ff31dc5743b067ea6685f735229a5_default.png" />
           <br />
@@ -938,8 +936,6 @@ Costs involved in running and developing this web app:
         <sub><b>139 words</b></sub>
         <br /><sub><b><code title="French">fr</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/Usia"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16236470/medium/315b1ebbd38e0f7e41d44bee752afa33.jpg" />
           <br />
@@ -968,6 +964,8 @@ Costs involved in running and developing this web app:
         <sub><b>130 words</b></sub>
         <br /><sub><b><code title="Czech">cs</code></b></sub>
       </td>
+    </tr>
+    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/martinmodrak"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16812323/medium/72bffbdf4a331845f23400eafa0b3d48.jpeg" />
           <br />
@@ -996,8 +994,6 @@ Costs involved in running and developing this web app:
         <sub><b>124 words</b></sub>
         <br /><sub><b><code title="French">fr</code></b></sub>
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/Sky_NiniKo"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14565190/medium/79100599131b7776e9803e4b696915a3_default.png" />
           <br />
@@ -1013,206 +1009,6 @@ Costs involved in running and developing this web app:
         <br />
         <sub><b>101 words</b></sub>
         <br /><sub><b><code title="Spanish">es-ES</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/kaliuwu"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16646485/medium/5d76c44212a4048a815ab437fb170856_default.png" />
-          <br />
-          <sub><b>kaliuwu</b></sub></a>
-        <br />
-        <sub><b>82 words</b></sub>
-        <br /><sub><b><code title="Polish">pl</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/lorisobi"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13707903/medium/f9e08210995ba491338ba872351de791_default.png" />
-          <br />
-          <sub><b>lorisobi</b></sub></a>
-        <br />
-        <sub><b>78 words</b></sub>
-        <br /><sub><b><code title="German">de</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/Drift6944"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16574625/medium/f2ac3a4f32f104a3a6d4085d4bcb3924_default.png" />
-          <br />
-          <sub><b>Drift6944</b></sub></a>
-        <br />
-        <sub><b>75 words</b></sub>
-        <br /><sub><b><code title="Czech">cs</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/voyagercy"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16563757/medium/af4556c13862d1fd593b51084a159b75_default.png" />
-          <br />
-          <sub><b>voyagercy</b></sub></a>
-        <br />
-        <sub><b>70 words</b></sub>
-        <br /><sub><b><code title="Chinese Traditional">zh-TW</code></b></sub>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/mkljczkk"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13521465/medium/76cb9aa6b753ce900a70478bff7fcea0.png" />
-          <br />
-          <sub><b>nicole mikołajczyk</b></sub>
-          <br />
-          <sub><b>(mkljczkk)</b></sub></a>
-        <br />
-        <sub><b>69 words</b></sub>
-        <br /><sub><b><code title="Polish">pl</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/edazzn"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17546228/medium/eadc9392e2a3507d514b70d5b1b34a26.jpeg" />
-          <br />
-          <sub><b>Eda Uyanmaz</b></sub>
-          <br />
-          <sub><b>(edazzn)</b></sub></a>
-        <br />
-        <sub><b>67 words</b></sub>
-        <br /><sub><b><code title="Turkish">tr</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/punkrockgirl"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15106977/medium/54bf93b19af8bbfdee579ea51685bafa.jpeg" />
-          <br />
-          <sub><b>—X—</b></sub>
-          <br />
-          <sub><b>(punkrockgirl)</b></sub></a>
-        <br />
-        <sub><b>51 words</b></sub>
-        <br /><sub><b><code title="Basque">eu</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/llun"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16529521/medium/ae6add93a901b0fefa2d9b1077920d73.png" />
-          <br />
-          <sub><b>Maythee Anegboonlap</b></sub>
-          <br />
-          <sub><b>(llun)</b></sub></a>
-        <br />
-        <sub><b>49 words</b></sub>
-        <br /><sub><b><code title="Thai">th</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/Fitik"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14277386/medium/29b30d2c73a214000e3941c9978f49e4_default.png" />
-          <br />
-          <sub><b>Fitik</b></sub></a>
-        <br />
-        <sub><b>46 words</b></sub>
-        <br /><sub><b><code title="Esperanto">eo</code></b>, <b><code title="Hebrew">he</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/cbo92"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15525631/medium/51293156034d0236f1a1020c10f7d539_default.png" />
-          <br />
-          <sub><b>cbo92</b></sub></a>
-        <br />
-        <sub><b>37 words</b></sub>
-        <br /><sub><b><code title="French">fr</code></b></sub>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/Mannivu"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12822971/medium/4ecbe6d1248536084902925beb0b63e4.png" />
-          <br />
-          <sub><b>Manuel</b></sub>
-          <br />
-          <sub><b>(Mannivu)</b></sub></a>
-        <br />
-        <sub><b>36 words</b></sub>
-        <br /><sub><b><code title="Italian">it</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/alidsds11"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12571163/medium/9f3ea938f4243f5ffe2a43f814ddc9e8_default.png" />
-          <br />
-          <sub><b>‫علي السادة (‪games ...</b></sub>
-          <br />
-          <sub><b>(alidsds11)</b></sub></a>
-        <br />
-        <sub><b>26 words</b></sub>
-        <br /><sub><b><code title="Arabic">ar</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/Zet24"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14360216/medium/7e48473691456fce95e1be687045377c.jpeg" />
-          <br />
-          <sub><b>abidin toumi</b></sub>
-          <br />
-          <sub><b>(Zet24)</b></sub></a>
-        <br />
-        <sub><b>23 words</b></sub>
-        <br /><sub><b><code title="Arabic">ar</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/seizeheures"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17206524/medium/1b0a8f9eafe7326be6968c6aed14c872.png" />
-          <br />
-          <sub><b>Gabriel</b></sub>
-          <br />
-          <sub><b>(seizeheures)</b></sub></a>
-        <br />
-        <sub><b>23 words</b></sub>
-        <br /><sub><b><code title="Esperanto">eo</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/Six-Fifteenths"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17774255/medium/ab9f642314f34d68e9c1b0f13a769bfa.png" />
-          <br />
-          <sub><b>SixFifteenths</b></sub>
-          <br />
-          <sub><b>(Six-Fifteenths)</b></sub></a>
-        <br />
-        <sub><b>20 words</b></sub>
-        <br /><sub><b><code title="Chinese Simplified">zh-CN</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/Su5hicz"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532441/medium/1a47e8d80c95636e02d2260f6e233ca5.png" />
-          <br />
-          <sub><b>Alexandr Jauernik</b></sub>
-          <br />
-          <sub><b>(Su5hicz)</b></sub></a>
-        <br />
-        <sub><b>18 words</b></sub>
-        <br /><sub><b><code title="Czech">cs</code></b></sub>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/nycterent"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15000639/medium/ebbf0bb7d5027a1903d11b7f5f34f65b.jpeg" />
-          <br />
-          <sub><b>Marty</b></sub>
-          <br />
-          <sub><b>(nycterent)</b></sub></a>
-        <br />
-        <sub><b>18 words</b></sub>
-        <br /><sub><b><code title="Lithuanian">lt</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/scaglio"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15285836/medium/793574d70dfda01f351cd05b16a3ac20_default.png" />
-          <br />
-          <sub><b>scaglio</b></sub></a>
-        <br />
-        <sub><b>17 words</b></sub>
-        <br /><sub><b><code title="Italian">it</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/Steffo99"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13143526/medium/30871da23d51d7e41bb02f3c92d7f104.png" />
-          <br />
-          <sub><b>Stefano Pigozzi</b></sub>
-          <br />
-          <sub><b>(Steffo99)</b></sub></a>
-        <br />
-        <sub><b>14 words</b></sub>
-        <br /><sub><b><code title="Italian">it</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/kleoporte"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17757435/medium/17716ec2c559b6145694dcad9fb728b6_default.png" />
-          <br />
-          <sub><b>kleoporte</b></sub></a>
-        <br />
-        <sub><b>11 words</b></sub>
-        <br /><sub><b><code title="French">fr</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/filipesmedeiros"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15592209/medium/28f10212dce24e74c25e27ea6d0e9126.png" />
-          <br />
-          <sub><b>Filipe Medeiros</b></sub>
-          <br />
-          <sub><b>(filipesmedeiros)</b></sub></a>
-        <br />
-        <sub><b>10 words</b></sub>
-        <br /><sub><b><code title="Portuguese">pt-PT</code></b></sub>
       </td>
     </tr>
   </tbody>

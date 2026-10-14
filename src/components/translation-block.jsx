@@ -15,6 +15,7 @@ import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import localeCode2Text from '../utils/localeCode2Text';
 import pmem from '../utils/pmem';
 
+import CustomEmoji from './custom-emoji';
 import Icon from './icon';
 import LazyShazam from './lazy-shazam';
 import Loader from './loader';
@@ -120,7 +121,7 @@ function renderTranslatedContent(content, urlMap = []) {
   if (!content || !urlMap.length) return content;
 
   const parts = [];
-  const tokenRegex = /__PHANPY_(URL|MENTION|HASHTAG)_(\d+)__/g;
+  const tokenRegex = /__PHANPY_(URL|MENTION|HASHTAG|EMOJI)_(\d+)__/g;
   let lastIndex = 0;
   let match;
 
@@ -129,7 +130,16 @@ function renderTranslatedContent(content, urlMap = []) {
       parts.push(content.slice(lastIndex, match.index));
     }
     const link = urlMap[Number(match[2])];
-    if (link?.href) {
+    if (link?.kind === 'emoji' && link?.url) {
+      parts.push(
+        <CustomEmoji
+          key={`translated-emoji-${match[2]}`}
+          staticUrl={link.staticUrl}
+          url={link.url}
+          alt={`:${link.shortcode}:`}
+        />,
+      );
+    } else if (link?.href) {
       const kind = link.kind || match[1].toLowerCase();
       const isExternalURL = kind === 'url';
       const linkContent =

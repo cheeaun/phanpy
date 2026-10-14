@@ -108,8 +108,23 @@ const memFetchPostingStats = pmem(fetchPostingStats, {
   expires: ACCOUNT_INFO_MAX_AGE,
 });
 
-function getProfileNoteTranslation(note) {
+function getProfileNoteTranslation(note, emojis = []) {
   const urlMap = [];
+  const emojiMap = new Map(
+    emojis
+      .filter((emoji) => emoji?.shortcode && emoji?.url)
+      .map((emoji) => [emoji.shortcode, emoji]),
+  );
+  const emojiRegex = emojiMap.size
+    ? new RegExp(
+        Array.from(emojiMap.keys())
+          .sort((a, b) => b.length - a.length)
+          .map((shortcode) => shortcode.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+          .map((shortcode) => `:${shortcode}:`)
+          .join('|'),
+        'g',
+      )
+    : null;
   const text = getHTMLText(note, {
     preProcess: (dom) => {
       for (const a of dom.querySelectorAll('a')) {
@@ -137,6 +152,36 @@ function getProfileNoteTranslation(note) {
                 }),
           }) - 1;
         a.replaceWith(`__PHANPY_${kind}_${index}__`);
+      }
+
+      if (emojiRegex) {
+        const walker = document.createTreeWalker(dom, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        let node;
+        while ((node = walker.nextNode())) textNodes.push(node);
+
+        for (const textNode of textNodes) {
+          if (!emojiRegex.test(textNode.nodeValue)) {
+            emojiRegex.lastIndex = 0;
+            continue;
+          }
+          emojiRegex.lastIndex = 0;
+          const value = textNode.nodeValue.replace(emojiRegex, (match) => {
+            const shortcode = match.slice(1, -1);
+            const emoji = emojiMap.get(shortcode);
+            if (!emoji) return match;
+            const index =
+              urlMap.push({
+                kind: 'emoji',
+                shortcode,
+                url: emoji.url,
+                staticUrl: emoji.staticUrl,
+              }) - 1;
+            return `__PHANPY_EMOJI_${index}__`;
+          });
+          emojiRegex.lastIndex = 0;
+          textNode.replaceWith(value);
+        }
       }
     },
   });
@@ -279,8 +324,8 @@ function AccountInfo({
 
   const accountInstance = getDomain(url);
   const profileNoteTranslation = useMemo(
-    () => getProfileNoteTranslation(note),
-    [note],
+    () => getProfileNoteTranslation(note, emojis),
+    [note, emojis],
   );
   const autoTranslateProfileNote =
     snapStates.settings.contentTranslation &&

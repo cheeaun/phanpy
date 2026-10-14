@@ -87,7 +87,7 @@ import StatusCompact from './status-compact';
 import StatusTags from './status-tags';
 import SubMenu2 from './submenu2';
 import ThreadBadge from './thread-badge';
-import TranslationBlock from './translation-block';
+import TranslationBlock, { translateText } from './translation-block';
 
 const SHOW_COMMENT_COUNT_LIMIT = 280;
 const INLINE_TRANSLATE_LIMIT = 140;
@@ -121,6 +121,10 @@ function getPostText(status, opts) {
     maskCustomEmojis,
     maskURLs,
     hideInlineQuote,
+    hidePoll,
+    preserveURLs,
+    preserveLinks,
+    urlMap,
     htmlTextOpts = {},
   } = opts || {};
   const { spoilerText, poll, emojis } = status;
@@ -137,14 +141,47 @@ function getPostText(status, opts) {
     getHTMLText(content, {
       ...htmlTextOpts,
       preProcess:
-        (maskURLs || hideInlineQuote) &&
+        (maskURLs || hideInlineQuote || preserveLinks) &&
         ((dom) => {
+          if (preserveLinks && urlMap) {
+            for (const a of dom.querySelectorAll('a.mention, a.hashtag')) {
+              const label = a.innerText.trim();
+              if (!label) continue;
+              const kind = a.classList.contains('hashtag')
+                ? 'HASHTAG'
+                : 'MENTION';
+              const spanText = a.querySelector('span')?.innerText.trim();
+              const prefix = spanText
+                ? label.slice(0, label.length - spanText.length)
+                : label[0];
+              const index =
+                urlMap.push({
+                  href: a.href,
+                  label,
+                  kind: kind.toLowerCase(),
+                  prefix,
+                  name: spanText || label.slice(prefix.length),
+                }) - 1;
+              a.replaceWith(`__PHANPY_${kind}_${index}__`);
+            }
+          }
+
           // Remove links that contains text that starts with https?://
           if (maskURLs) {
             for (const a of dom.querySelectorAll('a')) {
               const text = a.innerText.trim();
               if (/^https?:\/\//i.test(text)) {
-                a.replaceWith('«🔗»');
+                if (preserveURLs && urlMap) {
+                  const index =
+                    urlMap.push({
+                      href: a.href,
+                      label: text,
+                      kind: 'url',
+                    }) - 1;
+                  a.replaceWith(`__PHANPY_URL_${index}__`);
+                } else {
+                  a.replaceWith('«🔗»');
+                }
               }
             }
           }
@@ -157,7 +194,7 @@ function getPostText(status, opts) {
           }
         }),
     }),
-    getPollText(poll),
+    hidePoll ? '' : getPollText(poll),
   ]
     .join('\n\n')
     .trim();
@@ -269,7 +306,8 @@ const readMoreText = msg`Read more →`;
 // All this work just to make sure this only lazy-run once
 // Because first run is slow due to intl-localematcher
 const DIFFERENT_LANG_CHECK = {};
-const diffLangCheckCacheKey = (l, hls) => `${l}:${hls.join('|')}`;
+const diffLangCheckCacheKey = (l, hls) =>
+  `${getTranslateTargetLanguage(true)}:${l}:${hls.join('|')}`;
 const checkDifferentLanguage = (
   language,
   contentTranslationHideLanguages = [],
@@ -486,11 +524,19 @@ function Status({
     emojiReactions,
   } = status;
 
+  const translationTargetLanguage = getTranslateTargetLanguage(true);
+  const autoInlineTranslationEnabled =
+    snapStates.settings.contentTranslation &&
+    snapStates.settings.contentTranslationAutoInline;
+  const shouldDetectLanguage =
+    !_language ||
+    (autoInlineTranslationEnabled &&
+      localeMatch([_language], [translationTargetLanguage]));
   const [languageAutoDetected, setLanguageAutoDetected] = useState(null);
   useEffect(() => {
     if (!content) return;
-    if (_language) return;
     if (languageAutoDetected) return;
+    if (!shouldDetectLanguage) return;
     let timer;
     timer = setTimeout(async () => {
       let detected = await detectLang(
@@ -499,8 +545,8 @@ function Status({
       setLanguageAutoDetected(detected);
     }, 1000);
     return () => clearTimeout(timer);
-  }, [content, _language]);
-  const language = _language || languageAutoDetected;
+  }, [content, emojis, languageAutoDetected, shouldDetectLanguage]);
+  const language = languageAutoDetected || _language;
 
   // if (!mediaAttachments?.length) mediaFirst = false;
   const hasMediaAttachments = !!mediaAttachments?.length;
@@ -691,44 +737,54 @@ function Status({
   const isSizeLarge = size === 'l';
 
   const contentLength = useMemo(() => htmlContentLength(content), [content]);
+  const hasMediaCaptions = useMemo(
+    () => mediaAttachments.some((media) => !!media.description?.trim?.()),
+    [mediaAttachments],
+  );
 
   const [forceTranslate, setForceTranslate] = useState(_forceTranslate);
   // const targetLanguage = getTranslateTargetLanguage(true);
   // const contentTranslationHideLanguages =
   //   snapStates.settings.contentTranslationHideLanguages || [];
-  const { contentTranslation, contentTranslationAutoInline } =
-    snapStates.settings;
+  const {
+    contentTranslation,
+    contentTranslationAutoInline,
+    contentTranslationAutoInlineLong,
+  } = snapStates.settings;
   if (!contentTranslation) enableTranslate = false;
-  const inlineTranslate = useMemo(() => {
+  const inlineTranslateEnabled = useMemo(() => {
     if (
       !contentTranslation ||
       !contentTranslationAutoInline ||
       readOnly ||
-      (withinContext && !isSizeLarge) ||
       previewMode ||
-      spoilerText ||
-      sensitive ||
-      poll ||
-      card /*||
-      mediaAttachments?.length*/
+      spoilerText
     ) {
       return false;
     }
-    return contentLength > 0 && contentLength <= INLINE_TRANSLATE_LIMIT;
+    return contentLength > 0 || !!poll?.options?.length || hasMediaCaptions;
   }, [
     contentTranslation,
     contentTranslationAutoInline,
     readOnly,
     withinContext,
     isSizeLarge,
+    inReplyToId,
     previewMode,
     spoilerText,
-    sensitive,
     poll,
-    card,
-    mediaAttachments,
     contentLength,
+    hasMediaCaptions,
   ]);
+  const inlineTranslate =
+    inlineTranslateEnabled &&
+    (contentLength <= INLINE_TRANSLATE_LIMIT ||
+      !!poll ||
+      (contentTranslationAutoInlineLong &&
+        contentLength > INLINE_TRANSLATE_LIMIT &&
+        (!!mediaAttachments?.length || !!card || withinContext)));
+  const [inlineTranslationVisible, setInlineTranslationVisible] =
+    useState(false);
 
   const [showEdited, setShowEdited] = useState(false);
   const [showEmbed, setShowEmbed] = useState(false);
@@ -1026,7 +1082,91 @@ function Status({
       if (different) setDifferentLanguage(different);
     }, 100);
     return () => clearTimeout(timeout);
-  }, [language, differentLanguage]);
+  }, [language, differentLanguage, translationTargetLanguage]);
+
+  const shouldInlineTranslate =
+    inlineTranslateEnabled &&
+    isTranslateble(content, emojis) &&
+    (differentLanguage ||
+      (languageAutoDetected &&
+        !localeMatch([languageAutoDetected], [translationTargetLanguage])));
+
+  const getTranslationText = useCallback(
+    (opts = {}) => {
+      const urlMap = [];
+      const text = getPostText(status, {
+        ...opts,
+        maskCustomEmojis: true,
+        maskURLs: true,
+        preserveURLs: true,
+        preserveLinks: true,
+        urlMap,
+      });
+      return { text, urlMap };
+    },
+    [status],
+  );
+
+  const [translatedMediaDescriptions, setTranslatedMediaDescriptions] =
+    useState({});
+  const mainContentNeedsTranslation =
+    isTranslateble(content, emojis) && differentLanguage;
+  const shouldTranslateMediaCaptions =
+    hasMediaCaptions &&
+    (inlineTranslationVisible ||
+      (inlineTranslate && !mainContentNeedsTranslation));
+
+  useEffect(() => {
+    if (!shouldTranslateMediaCaptions) {
+      setTranslatedMediaDescriptions({});
+      return;
+    }
+
+    const controller = new AbortController();
+    const captions = mediaAttachments.filter((media) =>
+      media.description?.trim?.(),
+    );
+
+    Promise.all(
+      captions.map(async (media) => {
+        try {
+          const result = await translateText({
+            text: media.description,
+            // Media descriptions can be written in a different language
+            // than the post itself, so detect each caption independently.
+            source: 'auto',
+            target: translationTargetLanguage,
+            signal: controller.signal,
+            mini: true,
+          });
+          return [media.id, result?.content || null];
+        } catch (e) {
+          if (e.name !== 'AbortError') console.error(e);
+          return [media.id, null];
+        }
+      }),
+    ).then((entries) => {
+      if (controller.signal.aborted) return;
+      setTranslatedMediaDescriptions(Object.fromEntries(entries));
+    });
+
+    return () => controller.abort();
+  }, [
+    shouldTranslateMediaCaptions,
+    mediaAttachments,
+    language,
+    translationTargetLanguage,
+  ]);
+
+  const translatedMediaAttachments = useMemo(() => {
+    if (!Object.keys(translatedMediaDescriptions).length) {
+      return mediaAttachments;
+    }
+    return mediaAttachments.map((media) => {
+      const description = translatedMediaDescriptions[media.id];
+      return description ? { ...media, description } : media;
+    });
+  }, [mediaAttachments, translatedMediaDescriptions]);
 
   const reblogIterator = useRef();
   const favouriteIterator = useRef();
@@ -1964,7 +2104,7 @@ function Status({
     },
   );
 
-  const displayedMediaAttachments = mediaAttachments.slice(
+  const displayedMediaAttachments = translatedMediaAttachments.slice(
     0,
     isSizeLarge ? undefined : 4,
   );
@@ -2570,7 +2710,7 @@ function Status({
                   </>
                 )}
                 <MediaFirstContainer
-                  mediaAttachments={mediaAttachments}
+                  mediaAttachments={translatedMediaAttachments}
                   language={language}
                   postID={id}
                   instance={instance}
@@ -2632,21 +2772,51 @@ function Status({
                     )}
                   </>
                 )}
-                {!!content && (
-                  <div
-                    class="content"
-                    ref={contentRef}
-                    data-read-more={_(readMoreText)}
-                    inert={!!spoilerText && !showSpoiler ? true : undefined}
-                  >
-                    <PostContent
-                      key={reloadPostContentCount}
-                      post={status}
-                      instance={instance}
-                      previewMode={previewMode}
-                    />
-                  </div>
-                )}
+                {!!content &&
+                  (shouldInlineTranslate ? (
+                    <TranslationBlock
+                      inline
+                      inlineButton={withinContext}
+                      forceTranslate={inlineTranslate}
+                      onTranslationVisibilityChange={
+                        setInlineTranslationVisible
+                      }
+                      sourceLanguage={language}
+                      autoDetected={languageAutoDetected}
+                      {...getTranslationText({
+                        hideInlineQuote: true,
+                        hidePoll: true,
+                      })}
+                    >
+                      <div
+                        class="content"
+                        ref={contentRef}
+                        data-read-more={_(readMoreText)}
+                        inert={!!spoilerText && !showSpoiler ? true : undefined}
+                      >
+                        <PostContent
+                          key={reloadPostContentCount}
+                          post={status}
+                          instance={instance}
+                          previewMode={previewMode}
+                        />
+                      </div>
+                    </TranslationBlock>
+                  ) : (
+                    <div
+                      class="content"
+                      ref={contentRef}
+                      data-read-more={_(readMoreText)}
+                      inert={!!spoilerText && !showSpoiler ? true : undefined}
+                    >
+                      <PostContent
+                        key={reloadPostContentCount}
+                        post={status}
+                        instance={instance}
+                        previewMode={previewMode}
+                      />
+                    </div>
+                  ))}
                 {!!content && (
                   <MathBlock
                     content={content}
@@ -2681,26 +2851,31 @@ function Status({
                           states.statuses[sKey].poll = pollResponse;
                         });
                     }}
+                    translateOptions={
+                      content ? inlineTranslationVisible : inlineTranslate
+                    }
                   />
                 )}
-                {(((enableTranslate || inlineTranslate) &&
-                  isTranslateble(content, emojis) &&
-                  differentLanguage) ||
-                  forceTranslate) && (
-                  <TranslationBlock
-                    forceTranslate={forceTranslate || inlineTranslate}
-                    mini={!isSizeLarge && !withinContext}
-                    sourceLanguage={language}
-                    autoDetected={languageAutoDetected}
-                    text={getPostText(status, {
-                      maskCustomEmojis: true,
-                      maskURLs: true,
-                      // Hide regardless of native quote support
-                      // They are not useful in translation context
-                      hideInlineQuote: true,
-                    })}
-                  />
-                )}
+                {!shouldInlineTranslate &&
+                  (((enableTranslate || inlineTranslate) &&
+                    isTranslateble(content, emojis) &&
+                    differentLanguage) ||
+                    forceTranslate) && (
+                    <TranslationBlock
+                      forceTranslate={forceTranslate || inlineTranslate}
+                      onTranslationVisibilityChange={
+                        setInlineTranslationVisible
+                      }
+                      mini={!isSizeLarge && !withinContext}
+                      sourceLanguage={language}
+                      autoDetected={languageAutoDetected}
+                      {...getTranslationText({
+                        // Hide regardless of native quote support
+                        // They are not useful in translation context
+                        hideInlineQuote: true,
+                      })}
+                    />
+                  )}
                 {!previewMode &&
                   (sensitive ||
                     filterInfo?.action === 'blur' ||

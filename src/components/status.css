@@ -484,6 +484,30 @@
   line-clamp: 2;
   font-size: 90%;
 }
+.status.compact-thread .content-compact.has-inline-translation {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+}
+.status.compact-thread .status-translation-inline-compact-content,
+.status.compact-thread .status-translation-inline-compact-source {
+  overflow: hidden;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+.status.compact-thread .status-translation-inline-compact-content output {
+  display: block;
+}
+.status.compact-thread
+  .status-translation-inline-compact
+  .status-translation-inline-toggle {
+  margin-inline-start: 4px;
+  vertical-align: middle;
+}
 
 .status.compact-reply {
   --avatar-size: 20px;

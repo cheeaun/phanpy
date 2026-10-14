@@ -750,7 +750,6 @@ function Status({
       !contentTranslation ||
       !contentTranslationAutoInline ||
       readOnly ||
-      (withinContext && !isSizeLarge && !inReplyToId) ||
       previewMode ||
       spoilerText
     ) {
@@ -776,7 +775,7 @@ function Status({
       !!poll ||
       (contentTranslationAutoInlineLong &&
         contentLength > INLINE_TRANSLATE_LIMIT &&
-        (!!mediaAttachments?.length || !!card)));
+        (!!mediaAttachments?.length || !!card || withinContext)));
   const [inlineTranslationVisible, setInlineTranslationVisible] =
     useState(false);
 

@@ -214,6 +214,8 @@ function Compose({
 
   const textareaRef = useRef();
   const spoilerTextRef = useRef();
+  const filePickerInputRef = useRef(null);
+  const cameraCaptureInputRef = useRef(null);
 
   const [visibility, setVisibility] = useState('public');
   const [quoteApprovalPolicy, setQuoteApprovalPolicy] = useState('public');
@@ -406,7 +408,7 @@ function Compose({
   const lastFocusedEmojiFieldRef = useRef(null);
   const focusLastFocusedField = () => {
     setTimeout(() => {
-      if (!lastFocusedFieldRef.current) return;
+      if (!lastFocusedFieldRef.current?.isConnected) return;
       lastFocusedFieldRef.current.focus();
     }, 0);
   };
@@ -414,17 +416,18 @@ function Compose({
   useEffect(() => {
     const handleFocus = (e) => {
       // Toggle focused if in or out if any fields are focused
-      composeContainerRef.current.classList.toggle(
-        'focused',
-        e.type === 'focusin',
-      );
+      // Prefer e.currentTarget over composeContainerRef.current because
+      // the ref may already be nulled during unmount when focusout fires.
+      // Keep the ref as fallback in case the event is ever retargeted.
+      const container = e.currentTarget ?? composeContainerRef.current;
+      container?.classList.toggle('focused', e.type === 'focusin');
 
       const target = e.target;
-      if (target.hasAttribute('data-allow-custom-emoji')) {
+      if (target?.hasAttribute?.('data-allow-custom-emoji')) {
         lastFocusedEmojiFieldRef.current = target;
       }
       const isFormElement = ['INPUT', 'BUTTON', 'SELECT', 'TEXTAREA'].includes(
-        target.tagName,
+        target?.tagName,
       );
       if (isFormElement) {
         lastFocusedFieldRef.current = target;
@@ -1031,13 +1034,15 @@ function Compose({
   useThrottledResizeObserver({
     ref: addSubToolbarRef,
     box: 'border-box',
-    onResize: ({ width }) => {
+    onResize: ({ width } = {}) => {
       // If scrollable, it's truncated
-      const { scrollWidth } = addSubToolbarRef.current;
+      const el = addSubToolbarRef.current;
+      if (!el) return;
+      const { scrollWidth } = el;
       const truncated = scrollWidth > width;
       const overTruncated = width < BUTTON_WIDTH * 4;
       setShowAddButton(overTruncated || truncated);
-      addSubToolbarRef.current.hidden = overTruncated;
+      el.hidden = overTruncated;
     },
   });
 
@@ -1756,6 +1761,22 @@ function Compose({
             onCancel={() => setQuoteSuggestion(null)}
           />
           <div class="toolbar compose-footer">
+            {supportsCameraCapture && (
+              <CameraCaptureInput
+                ref={cameraCaptureInputRef}
+                supportedMimeTypes={supportedImagesVideosTypes}
+                disabled={mediaButtonDisabled}
+                setMediaAttachments={setMediaAttachments}
+              />
+            )}
+            <FilePickerInput
+              ref={filePickerInputRef}
+              supportedMimeTypes={supportedMimeTypes}
+              maxMediaAttachments={maxMediaAttachments}
+              mediaAttachments={mediaAttachments}
+              disabled={mediaButtonDisabled}
+              setMediaAttachments={setMediaAttachments}
+            />
             <span class="add-toolbar-button-group spacer">
               {showAddButton && (
                 <Menu2
@@ -1781,33 +1802,19 @@ function Compose({
                   {supportsCameraCapture && (
                     <MenuItem
                       disabled={mediaButtonDisabled}
-                      className="compose-menu-add-media"
+                      onClick={() => {
+                        cameraCaptureInputRef.current?.click();
+                      }}
                     >
-                      <label class="compose-menu-add-media-field">
-                        <CameraCaptureInput
-                          hidden
-                          supportedMimeTypes={supportedImagesVideosTypes}
-                          disabled={mediaButtonDisabled}
-                          setMediaAttachments={setMediaAttachments}
-                        />
-                      </label>
                       <Icon icon="camera" /> <span>{_(ADD_LABELS.camera)}</span>
                     </MenuItem>
                   )}
                   <MenuItem
                     disabled={mediaButtonDisabled}
-                    className="compose-menu-add-media"
+                    onClick={() => {
+                      filePickerInputRef.current?.click();
+                    }}
                   >
-                    <label class="compose-menu-add-media-field">
-                      <FilePickerInput
-                        hidden
-                        supportedMimeTypes={supportedMimeTypes}
-                        maxMediaAttachments={maxMediaAttachments}
-                        mediaAttachments={mediaAttachments}
-                        disabled={mediaButtonDisabled}
-                        setMediaAttachments={setMediaAttachments}
-                      />
-                    </label>
                     <Icon icon="media" /> <span>{_(ADD_LABELS.media)}</span>
                   </MenuItem>
                   <MenuItem
@@ -1866,26 +1873,25 @@ function Compose({
                 hidden
               >
                 {supportsCameraCapture && (
-                  <label class="toolbar-button">
-                    <CameraCaptureInput
-                      supportedMimeTypes={supportedImagesVideosTypes}
-                      mediaAttachments={mediaAttachments}
-                      disabled={mediaButtonDisabled}
-                      setMediaAttachments={setMediaAttachments}
-                    />
-                    <Icon icon="camera" alt={_(ADD_LABELS.camera)} />
-                  </label>
-                )}
-                <label class="toolbar-button">
-                  <FilePickerInput
-                    supportedMimeTypes={supportedMimeTypes}
-                    maxMediaAttachments={maxMediaAttachments}
-                    mediaAttachments={mediaAttachments}
+                  <button
+                    type="button"
+                    class="toolbar-button"
                     disabled={mediaButtonDisabled}
-                    setMediaAttachments={setMediaAttachments}
-                  />
+                    onClick={() => cameraCaptureInputRef.current?.click()}
+                    title={_(ADD_LABELS.camera)}
+                  >
+                    <Icon icon="camera" alt={_(ADD_LABELS.camera)} />
+                  </button>
+                )}
+                <button
+                  type="button"
+                  class="toolbar-button"
+                  disabled={mediaButtonDisabled}
+                  onClick={() => filePickerInputRef.current?.click()}
+                  title={t`Add media`}
+                >
                   <Icon icon="media" alt={_(ADD_LABELS.media)} />
-                </label>
+                </button>
                 <button
                   type="button"
                   class="toolbar-button"

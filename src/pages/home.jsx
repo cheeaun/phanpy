@@ -81,7 +81,7 @@ function NotificationsLink() {
       <Link
         ref={notificationLinkRef}
         to="/notifications"
-        class={`button plain notifications-button ${
+        class={`button plain4 notifications-button ${
           snapStates.notificationsShowNew ? 'has-badge' : ''
         } ${menuState || ''}`}
         onClick={(e) => {
@@ -234,7 +234,7 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
                 </p>
                 <p>
                   <button type="button" onClick={loadNotifications}>
-                    <Trans>Try again</Trans>
+                    <Trans comment="Infinitive form">Try again</Trans>
                   </button>
                 </p>
               </div>

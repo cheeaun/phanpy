@@ -38,6 +38,7 @@ import haptics from '../utils/haptics';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import { getRegistration } from '../utils/push-notifications';
+import setRef from '../utils/set-ref';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { saveStatus } from '../utils/states';
@@ -694,8 +695,10 @@ function Notifications({ columnMode }) {
     },
     {
       useKey: true,
+      ignoreModifiers: true,
       ignoreEventWhen: (e) => {
         // Allow '.' even with Shift (some keyboard layouts require Shift for '.')
+        // NOTE: ignoreModifiers:true required so lib doesn't reject Shift+. first.
         if (e.key === '.') return false;
         return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
       },
@@ -717,10 +720,10 @@ function Notifications({ columnMode }) {
       class="deck-container"
       ref={(node) => {
         scrollableRef.current = node;
-        jRef.current = node;
-        kRef.current = node;
-        oRef.current = node;
-        dotRef.current = node;
+        setRef(jRef, node);
+        setRef(kRef, node);
+        setRef(oRef, node);
+        setRef(dotRef, node);
       }}
       tabIndex="-1"
     >
@@ -742,7 +745,7 @@ function Notifications({ columnMode }) {
           <div class="header-grid">
             <div class="header-side">
               <NavMenu />
-              <Link to="/" class="button plain">
+              <Link to="/" class="button plain4">
                 <Icon icon="home" size="l" alt={t`Home`} />
               </Link>
             </div>
@@ -1070,7 +1073,7 @@ function Notifications({ columnMode }) {
                 <br />
                 <br />
                 <button type="button" onClick={() => loadNotifications(true)}>
-                  <Trans>Try again</Trans>
+                  <Trans comment="Infinitive form">Try again</Trans>
                 </button>
               </p>
             )}

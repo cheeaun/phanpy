@@ -979,7 +979,7 @@ function RelatedActions({
                   {following ? (
                     <>
                       <span>
-                        <Trans>Following</Trans>
+                        <Trans context="follow state">Following</Trans>
                       </span>
                       <span>
                         <Trans>Unfollow…</Trans>

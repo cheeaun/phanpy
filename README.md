@@ -365,105 +365,654 @@ Costs involved in running and developing this web app:
 ### Translation volunteers
 
 <!-- i18n volunteers start -->
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16945821/medium/3da66a1dde4951ad34c33ca23241b864_default.png" alt="" width="16" height="16" /> A.Mason (Polish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12571163/medium/9f3ea938f4243f5ffe2a43f814ddc9e8_default.png" alt="" width="16" height="16" /> alidsds11 (Arabic)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16180744/medium/5b04ae975b23895635130d7a176515cb_default.png" alt="" width="16" height="16" /> alternative (Korean)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16848873/medium/d8773fdb621f4c9c1b08d2c641fa519a.jpeg" alt="" width="16" height="16" /> AmaseCocoa (Japanese)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13170041/medium/603136896af17fc005fd592ce3f48717_default.png" alt="" width="16" height="16" /> BoFFire (Arabic, French, Kabyle)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12898464/medium/d3758a76b894bade4bf271c9b32ea69b.png" alt="" width="16" height="16" /> Brawaru (Russian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17745829/medium/f6a224342160da56cc8c55f6ca9116ad_default.png" alt="" width="16" height="16" /> buenanoche (Spanish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17653638/medium/2eb675fdb326ae5464ef556b7f4fad30.png" alt="" width="16" height="16" /> cairobraga (Catalan, Portuguese, Brazilian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15460040/medium/1cfcfe5f5511b783b5d9f2b968bad819.png" alt="" width="16" height="16" /> cbasje (Dutch)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15525631/medium/51293156034d0236f1a1020c10f7d539_default.png" alt="" width="16" height="16" /> cbo92 (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15910131/medium/67fab7eeab5551853450e76e2ef19e59.jpeg" alt="" width="16" height="16" /> CDN (Chinese Simplified)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12513809/medium/b56324e44ae26da6db7793bc467a70e2.png" alt="" width="16" height="16" /> codl (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556801/medium/ed5e501ca1f3cc6525d2da28db646346.jpeg" alt="" width="16" height="16" /> dannypsnl (Chinese Traditional)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/3711/medium/c97239bb54623a50eb43cc6b801bb156.jpg" alt="" width="16" height="16" /> databio (Catalan)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17440746/medium/eb48c068ec53fbb48e870fab8bc313b0.png" alt="" width="16" height="16" /> detected-rage-colette (Japanese)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16264200/medium/0f0458eff1faf13a42c49713e3341aef.png" alt="" width="16" height="16" /> dev_urandom (Esperanto)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16533843/medium/ac7af8776858a992d992cf6702d1aaae.jpg" alt="" width="16" height="16" /> Dizro (Italian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16574625/medium/f2ac3a4f32f104a3a6d4085d4bcb3924_default.png" alt="" width="16" height="16" /> Drift6944 (Czech)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12618120/medium/ccb11bd042bbf4c7189033f7af2dbd32_default.png" alt="" width="16" height="16" /> drydenwu (Chinese Traditional)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17546228/medium/eadc9392e2a3507d514b70d5b1b34a26.jpeg" alt="" width="16" height="16" /> edazzn (Turkish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13557465/medium/8feebf3677fa80c01e8c54c4fbe097e0_default.png" alt="" width="16" height="16" /> elissarc (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16528627/medium/9036f6eced0257f4e1ea4c5bd499de2d_default.png" alt="" width="16" height="16" /> ElPamplina (Spanish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15592209/medium/28f10212dce24e74c25e27ea6d0e9126.png" alt="" width="16" height="16" /> filipesmedeiros (Portuguese)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14277386/medium/29b30d2c73a214000e3941c9978f49e4_default.png" alt="" width="16" height="16" /> Fitik (Esperanto, Hebrew)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15791971/medium/1790a2101ceb13f61816b8fe6fbe6d90.jpeg" alt="" width="16" height="16" /> fracl (Italian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14444512/medium/99d0e7a3076deccbdfe0aa0b0612308c.jpeg" alt="" width="16" height="16" /> Freeesia (Japanese)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17552004/medium/fe9bd4ca3aa6ffa44ae5e51511fe6170_default.png" alt="" width="16" height="16" /> GabrielSouzaNeves (Portuguese, Brazilian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15777621/medium/9e3409aac9c20973984440aa1542b260_default.png" alt="" width="16" height="16" /> gflorian (German)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12617257/medium/fd3cbcc369ed87f67537447a053d5974_default.png" alt="" width="16" height="16" /> ghose (Galician)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15248754/medium/0dac6334ea0f4e8d4194a605c0a5594a.jpeg" alt="" width="16" height="16" /> hongminhee (Korean)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16529833/medium/2122d0c5d61c00786ab6d5e5672d4098.png" alt="" width="16" height="16" /> Hugoglyph (Esperanto, Spanish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13454728/medium/1f78b7124b3c962bc4ae55e8d701fc91_default.png" alt="" width="16" height="16" /> isard (Catalan)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16646485/medium/5d76c44212a4048a815ab437fb170856_default.png" alt="" width="16" height="16" /> kaliuwu (Polish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532403/medium/4cefb19623bcc44d7cdb9e25aebf5250.jpeg" alt="" width="16" height="16" /> karlafej (Czech)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17757435/medium/17716ec2c559b6145694dcad9fb728b6_default.png" alt="" width="16" height="16" /> kleoporte (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14677260/medium/e9f17e62ab69ed6212a16c94d779e7f3.png" alt="" width="16" height="16" /> Kytta (German)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16529521/medium/ae6add93a901b0fefa2d9b1077920d73.png" alt="" width="16" height="16" /> llun (Thai)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13707903/medium/f9e08210995ba491338ba872351de791_default.png" alt="" width="16" height="16" /> lorisobi (German)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16291756/medium/a662122faa4f9a71b259b0e561f923b4.png" alt="" width="16" height="16" /> lucsdev24 (Occitan, Portuguese, Portuguese, Brazilian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16640089/medium/4b7d8d275d7a7bff564adde51e09b473_default.png" alt="" width="16" height="16" /> LukeHong (Chinese Traditional)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13490005/medium/e1135823285a3f2fd88b99e58664763e_default.png" alt="" width="16" height="16" /> M33 (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17345822/medium/3013b04d3a49336637e51dba33ab1a3d.jpeg" alt="" width="16" height="16" /> mahefa.randimbisoa (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12822971/medium/4ecbe6d1248536084902925beb0b63e4.png" alt="" width="16" height="16" /> Mannivu (Italian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13990351/medium/86942d51f67a5f5366c5d6385ea59b77_default.png" alt="" width="16" height="16" /> manuelviens (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16537713/medium/825f0bf1a14fc545a76891a52839d86e_default.png" alt="" width="16" height="16" /> marcin.kozinski (Polish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16812323/medium/72bffbdf4a331845f23400eafa0b3d48.jpeg" alt="" width="16" height="16" /> martinmodrak (Czech)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17641218/medium/d9c1dc538e1fd737af0f2db4173515e4.jpeg" alt="" width="16" height="16" /> micahblachman (Hebrew)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13044/medium/bfa55b9a0569a9e382fd694c91d3db1b_default.png" alt="" width="16" height="16" /> misk (Polish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13521465/medium/76cb9aa6b753ce900a70478bff7fcea0.png" alt="" width="16" height="16" /> mkljczkk (Polish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12882812/medium/77744d8db46e9a3e09030e1a02b7a572.jpeg" alt="" width="16" height="16" /> mojosoeun (Korean)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13613969/medium/c7834ddc0ada84a79671697a944bb274.png" alt="" width="16" height="16" /> moreal (Korean)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14158861/medium/ba1ff31dc5743b067ea6685f735229a5_default.png" alt="" width="16" height="16" /> MrWillCom (Chinese Simplified)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15652533/medium/911f4f30f63563cbfdceb102be25dd97.jpg" alt="" width="16" height="16" /> Mvtbh (Persian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15652333/medium/7f36f289f9e2fe41d89ad534a1047f0e.png" alt="" width="16" height="16" /> nclm (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17450186/medium/6f5768f64963379c7ddfdccd53572c60.jpeg" alt="" width="16" height="16" /> NiklasA95 (German)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17520602/medium/884e58f3a2e7c836f594759b9dee40bf_default.png" alt="" width="16" height="16" /> Nortix08 (German)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/2203/medium/a20d831862648eb22adb32e10dded50b_default.png" alt="" width="16" height="16" /> nyanchew (Japanese)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15000639/medium/ebbf0bb7d5027a1903d11b7f5f34f65b.jpeg" alt="" width="16" height="16" /> nycterent (Lithuanian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539461/medium/2f41b9f0b802c1d200a6ab62167a7229_default.png" alt="" width="16" height="16" /> pazpi (Italian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15399796/medium/d7fd8457394d2c795771b72396b75099.png" alt="" width="16" height="16" /> poesty (Chinese Simplified)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13954917/medium/56a2cba267eb1b5d122bf62ddc0dd732_default.png" alt="" width="16" height="16" /> PPNplus (Thai)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15106977/medium/54bf93b19af8bbfdee579ea51685bafa.jpeg" alt="" width="16" height="16" /> punkrockgirl (Basque)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16536247/medium/f010c8e718a36229733a8b58f6bad2a4_default.png" alt="" width="16" height="16" /> radecos (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16538917/medium/092ec03f56f9dd1cbce94379fa4d4d38.png" alt="" width="16" height="16" /> Razem (Czech)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14345134/medium/89a299239890c79a1d791d08ec3951dc.png" alt="" width="16" height="16" /> realpixelcode (German)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17707804/medium/1414164fff03b06db5818db699f30670_default.png" alt="" width="16" height="16" /> REMOVED_USER (Portuguese, Brazilian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16527325/medium/37ebb27e7a50f7f85ae93beafc7028a2.jpg" alt="" width="16" height="16" /> rezahosseinzadeh (Persian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13422319/medium/66632a98d73d48e36753d94ebcec9d4f.png" alt="" width="16" height="16" /> rwmpelstilzchen (Esperanto, Hebrew)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16538605/medium/bcdb6e3286b7d6237923f3a9383eed29.png" alt="" width="16" height="16" /> SadmL (Russian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539171/medium/0ce95ef6b3b0566136191fbedc1563d0.png" alt="" width="16" height="16" /> SadmL_AI (Russian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15285836/medium/793574d70dfda01f351cd05b16a3ac20_default.png" alt="" width="16" height="16" /> scaglio (Italian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16121928/medium/b1dd34dc3e93b64b93b94aedca0c5b7d.jpg" alt="" width="16" height="16" /> Schishka71 (Russian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17206524/medium/1b0a8f9eafe7326be6968c6aed14c872.png" alt="" width="16" height="16" /> seizeheures (Esperanto)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12381015/medium/35e3557fd61d85f9a5b84545d9e3feb4.png" alt="" width="16" height="16" /> shuuji3 (Japanese)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17774255/medium/ab9f642314f34d68e9c1b0f13a769bfa.png" alt="" width="16" height="16" /> Six-Fifteenths (Chinese Simplified)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14565190/medium/79100599131b7776e9803e4b696915a3_default.png" alt="" width="16" height="16" /> Sky_NiniKo (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17757587/medium/c0dfea339a3c1e4853dc2fa11b611789.jpeg" alt="" width="16" height="16" /> SoleneGK (French)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17237304/medium/7954dfd36547e9d1f13266a52e9aa1b5_default.png" alt="" width="16" height="16" /> StasZin4 (Ukrainian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13143526/medium/30871da23d51d7e41bb02f3c92d7f104.png" alt="" width="16" height="16" /> Steffo99 (Italian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532441/medium/1a47e8d80c95636e02d2260f6e233ca5.png" alt="" width="16" height="16" /> Su5hicz (Czech)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12579488/medium/699394d1acfe986a31532007534c7656.jpg" alt="" width="16" height="16" /> svetlemodry (Czech)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16530049/medium/683f3581620c6b4a5c753b416ed695a7.jpeg" alt="" width="16" height="16" /> tferrermo (Spanish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15752199/medium/7e9efd828c4691368d063b19d19eb894.png" alt="" width="16" height="16" /> tkbremnes (Norwegian Bokmal)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16527851/medium/649e5a9a8a8cc61ced670d89e9cca082.png" alt="" width="16" height="16" /> tux93 (German)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16236470/medium/315b1ebbd38e0f7e41d44bee752afa33.jpg" alt="" width="16" height="16" /> Usia (Ukrainian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16791511/medium/13af704ac9b4ce8350cd2dc6b823d050.jpg" alt="" width="16" height="16" /> uzaylul (Turkish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14427566/medium/ab733b5044c21867fc5a9d1b22cd2c03.png" alt="" width="16" height="16" /> Vac31. (Lithuanian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16026914/medium/35f400b0799c35e8e5f4556a7fa63544.jpg" alt="" width="16" height="16" /> valtlai (Finnish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16608515/medium/dee237c31a735318507e5a5b1b2b7c1d.png" alt="" width="16" height="16" /> Vasirion (Polish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/2439/medium/338b9110f89490c66475aed41fedfce1.png" alt="" width="16" height="16" /> vinzv (German)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16355626/medium/a10a29f0016c6beb94e8219d50e8b8d7.jpeg" alt="" width="16" height="16" /> voitech (Polish)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16563757/medium/af4556c13862d1fd593b51084a159b75_default.png" alt="" width="16" height="16" /> voyagercy (Chinese Traditional)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15982109/medium/9c03062bdc1d3c6d384dbfead97c26ba.jpeg" alt="" width="16" height="16" /> xabi_itzultzaile (Basque)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556017/medium/ee1fbd7646f1ac2abc18bfa96076d55a.jpg" alt="" width="16" height="16" /> xen4n (Ukrainian)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532657/medium/f309f319266e1ff95f3070eab0c9a9d9_default.png" alt="" width="16" height="16" /> xqueralt (Catalan)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15583431/medium/14973556de7721e642701bf74d6fb053.png" alt="" width="16" height="16" /> Yukaii (Chinese Traditional)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14360216/medium/7e48473691456fce95e1be687045377c.jpeg" alt="" width="16" height="16" /> Zet24 (Arabic)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14041603/medium/6ab77a0467b06aeb49927c6d9c409f89.jpg" alt="" width="16" height="16" /> ZiriSut (Kabyle)
-- <img src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16530601/medium/e1b6d5c24953b6405405c1ab33c0fa46.jpeg" alt="" width="16" height="16" /> zkreml (Czech)
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Hugoglyph"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16529833/medium/2122d0c5d61c00786ab6d5e5672d4098.png" />
+          <br />
+          <sub><b>Hugo</b></sub>
+          <br />
+          <sub><b>(Hugoglyph)</b></sub></a>
+        <br />
+        <sub><b>9244 words</b></sub>
+        <br /><sub><b><code title="Esperanto">eo</code></b>, <b><code title="Spanish">es-ES</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/lucsdev24"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16291756/medium/a662122faa4f9a71b259b0e561f923b4.png" />
+          <br />
+          <sub><b>Lucsdev_</b></sub>
+          <br />
+          <sub><b>(lucsdev24)</b></sub></a>
+        <br />
+        <sub><b>16801 words</b></sub>
+        <br /><sub><b><code title="Occitan">oc</code></b>, <b><code title="Portuguese">pt-PT</code></b>, <b><code title="Portuguese, Brazilian">pt-BR</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/CDN"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15910131/medium/67fab7eeab5551853450e76e2ef19e59.jpeg" />
+          <br />
+          <sub><b>CDN</b></sub></a>
+        <br />
+        <sub><b>5980 words</b></sub>
+        <br /><sub><b><code title="Chinese Simplified">zh-CN</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/valtlai"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16026914/medium/35f400b0799c35e8e5f4556a7fa63544.jpg" />
+          <br />
+          <sub><b>valtlai</b></sub></a>
+        <br />
+        <sub><b>6828 words</b></sub>
+        <br /><sub><b><code title="Finnish">fi</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/ghose"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12617257/medium/fd3cbcc369ed87f67537447a053d5974_default.png" />
+          <br />
+          <sub><b>⁂ josé m.</b></sub>
+          <br />
+          <sub><b>(ghose)</b></sub></a>
+        <br />
+        <sub><b>8398 words</b></sub>
+        <br /><sub><b><code title="Galician">gl</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/xabi_itzultzaile"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15982109/medium/9c03062bdc1d3c6d384dbfead97c26ba.jpeg" />
+          <br />
+          <sub><b>Xabi</b></sub>
+          <br />
+          <sub><b>(xabi_itzultzaile)</b></sub></a>
+        <br />
+        <sub><b>5354 words</b></sub>
+        <br /><sub><b><code title="Basque">eu</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/xen4n"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556017/medium/ee1fbd7646f1ac2abc18bfa96076d55a.jpg" />
+          <br />
+          <sub><b>Volodymyr</b></sub>
+          <br />
+          <sub><b>(xen4n)</b></sub></a>
+        <br />
+        <sub><b>4622 words</b></sub>
+        <br /><sub><b><code title="Ukrainian">uk</code></b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/SadmL_AI"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16539171/medium/0ce95ef6b3b0566136191fbedc1563d0.png" />
+          <br />
+          <sub><b>SadmL_AI</b></sub></a>
+        <br />
+        <sub><b>4370 words</b></sub>
+        <br /><sub><b><code title="Russian">ru</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/fracl"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15791971/medium/1790a2101ceb13f61816b8fe6fbe6d90.jpeg" />
+          <br />
+          <sub><b>Francesco</b></sub>
+          <br />
+          <sub><b>(fracl)</b></sub></a>
+        <br />
+        <sub><b>8903 words</b></sub>
+        <br /><sub><b><code title="Italian">it</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Vac31."><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14427566/medium/ab733b5044c21867fc5a9d1b22cd2c03.png" />
+          <br />
+          <sub><b>Vaclovas Intas</b></sub>
+          <br />
+          <sub><b>(Vac31.)</b></sub></a>
+        <br />
+        <sub><b>4024 words</b></sub>
+        <br /><sub><b><code title="Lithuanian">lt</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/databio"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/3711/medium/c97239bb54623a50eb43cc6b801bb156.jpg" />
+          <br />
+          <sub><b>databio</b></sub></a>
+        <br />
+        <sub><b>3985 words</b></sub>
+        <br /><sub><b><code title="Catalan">ca</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/ZiriSut"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14041603/medium/6ab77a0467b06aeb49927c6d9c409f89.jpg" />
+          <br />
+          <sub><b>ZiriSut</b></sub></a>
+        <br />
+        <sub><b>3284 words</b></sub>
+        <br /><sub><b><code title="Kabyle">kab</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/BoFFire"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13170041/medium/603136896af17fc005fd592ce3f48717_default.png" />
+          <br />
+          <sub><b>ButterflyOfFire ⁂</b></sub>
+          <br />
+          <sub><b>(BoFFire)</b></sub></a>
+        <br />
+        <sub><b>3189 words</b></sub>
+        <br /><sub><b><code title="Arabic">ar</code></b>, <b><code title="French">fr</code></b>, <b><code title="Kabyle">kab</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/cbasje"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15460040/medium/1cfcfe5f5511b783b5d9f2b968bad819.png" />
+          <br />
+          <sub><b>Sebastiaan Benjamins</b></sub>
+          <br />
+          <sub><b>(cbasje)</b></sub></a>
+        <br />
+        <sub><b>2849 words</b></sub>
+        <br /><sub><b><code title="Dutch">nl</code></b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/rezahosseinzadeh"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16527325/medium/37ebb27e7a50f7f85ae93beafc7028a2.jpg" />
+          <br />
+          <sub><b>rezahosseinzadeh</b></sub></a>
+        <br />
+        <sub><b>2756 words</b></sub>
+        <br /><sub><b><code title="Persian">fa</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/hongminhee"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15248754/medium/0dac6334ea0f4e8d4194a605c0a5594a.jpeg" />
+          <br />
+          <sub><b>洪 民憙 (Hong Minhee)</b></sub>
+          <br />
+          <sub><b>(hongminhee)</b></sub></a>
+        <br />
+        <sub><b>2837 words</b></sub>
+        <br /><sub><b><code title="Korean">ko</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/A.Mason"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16945821/medium/3da66a1dde4951ad34c33ca23241b864_default.png" />
+          <br />
+          <sub><b>Robert A.Mason</b></sub>
+          <br />
+          <sub><b>(A.Mason)</b></sub></a>
+        <br />
+        <sub><b>2646 words</b></sub>
+        <br /><sub><b><code title="Polish">pl</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/zkreml"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16530601/medium/e1b6d5c24953b6405405c1ab33c0fa46.jpeg" />
+          <br />
+          <sub><b>Archos</b></sub>
+          <br />
+          <sub><b>(zkreml)</b></sub></a>
+        <br />
+        <sub><b>2219 words</b></sub>
+        <br /><sub><b><code title="Czech">cs</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/tux93"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16527851/medium/649e5a9a8a8cc61ced670d89e9cca082.png" />
+          <br />
+          <sub><b>tux93</b></sub></a>
+        <br />
+        <sub><b>2129 words</b></sub>
+        <br /><sub><b><code title="German">de</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/voitech"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16355626/medium/a10a29f0016c6beb94e8219d50e8b8d7.jpeg" />
+          <br />
+          <sub><b>voitech</b></sub></a>
+        <br />
+        <sub><b>2061 words</b></sub>
+        <br /><sub><b><code title="Polish">pl</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/nclm"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15652333/medium/7f36f289f9e2fe41d89ad534a1047f0e.png" />
+          <br />
+          <sub><b>nicolas</b></sub>
+          <br />
+          <sub><b>(nclm)</b></sub></a>
+        <br />
+        <sub><b>1895 words</b></sub>
+        <br /><sub><b><code title="French">fr</code></b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Dizro"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16533843/medium/ac7af8776858a992d992cf6702d1aaae.jpg" />
+          <br />
+          <sub><b>Dizro</b></sub></a>
+        <br />
+        <sub><b>1870 words</b></sub>
+        <br /><sub><b><code title="Italian">it</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/realpixelcode"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14345134/medium/89a299239890c79a1d791d08ec3951dc.png" />
+          <br />
+          <sub><b>Pixelcode</b></sub>
+          <br />
+          <sub><b>(realpixelcode)</b></sub></a>
+        <br />
+        <sub><b>1753 words</b></sub>
+        <br /><sub><b><code title="German">de</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/detected-rage-colette"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17440746/medium/eb48c068ec53fbb48e870fab8bc313b0.png" />
+          <br />
+          <sub><b>detected-rage-colett...</b></sub></a>
+        <br />
+        <sub><b>1283 words</b></sub>
+        <br /><sub><b><code title="Japanese">ja</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/tkbremnes"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15752199/medium/7e9efd828c4691368d063b19d19eb894.png" />
+          <br />
+          <sub><b>tkbremnes</b></sub></a>
+        <br />
+        <sub><b>1236 words</b></sub>
+        <br /><sub><b><code title="Norwegian Bokmal">nb</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/dev_urandom"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16264200/medium/0f0458eff1faf13a42c49713e3341aef.png" />
+          <br />
+          <sub><b>/dev/urandom</b></sub>
+          <br />
+          <sub><b>(dev_urandom)</b></sub></a>
+        <br />
+        <sub><b>1235 words</b></sub>
+        <br /><sub><b><code title="Esperanto">eo</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/isard"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13454728/medium/1f78b7124b3c962bc4ae55e8d701fc91_default.png" />
+          <br />
+          <sub><b>isard</b></sub></a>
+        <br />
+        <sub><b>1225 words</b></sub>
+        <br /><sub><b><code title="Catalan">ca</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Freeesia"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14444512/medium/99d0e7a3076deccbdfe0aa0b0612308c.jpeg" />
+          <br />
+          <sub><b>Freesia</b></sub>
+          <br />
+          <sub><b>(Freeesia)</b></sub></a>
+        <br />
+        <sub><b>1167 words</b></sub>
+        <br /><sub><b><code title="Japanese">ja</code></b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/uzaylul"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16791511/medium/13af704ac9b4ce8350cd2dc6b823d050.jpg" />
+          <br />
+          <sub><b>Onur Çelik</b></sub>
+          <br />
+          <sub><b>(uzaylul)</b></sub></a>
+        <br />
+        <sub><b>1089 words</b></sub>
+        <br /><sub><b><code title="Turkish">tr</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/ElPamplina"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16528627/medium/9036f6eced0257f4e1ea4c5bd499de2d_default.png" />
+          <br />
+          <sub><b>ElPamplina</b></sub></a>
+        <br />
+        <sub><b>837 words</b></sub>
+        <br /><sub><b><code title="Spanish">es-ES</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/misk"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13044/medium/bfa55b9a0569a9e382fd694c91d3db1b_default.png" />
+          <br />
+          <sub><b>misk</b></sub></a>
+        <br />
+        <sub><b>796 words</b></sub>
+        <br /><sub><b><code title="Polish">pl</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/micahblachman"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17641218/medium/d9c1dc538e1fd737af0f2db4173515e4.jpeg" />
+          <br />
+          <sub><b>Micah Blachman</b></sub>
+          <br />
+          <sub><b>(micahblachman)</b></sub></a>
+        <br />
+        <sub><b>771 words</b></sub>
+        <br /><sub><b><code title="Hebrew">he</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/rwmpelstilzchen"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13422319/medium/66632a98d73d48e36753d94ebcec9d4f.png" />
+          <br />
+          <sub><b>Maja Abramski-Kronen...</b></sub>
+          <br />
+          <sub><b>(rwmpelstilzchen)</b></sub></a>
+        <br />
+        <sub><b>683 words</b></sub>
+        <br /><sub><b><code title="Esperanto">eo</code></b>, <b><code title="Hebrew">he</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/M33"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13490005/medium/e1135823285a3f2fd88b99e58664763e_default.png" />
+          <br />
+          <sub><b>M33</b></sub></a>
+        <br />
+        <sub><b>660 words</b></sub>
+        <br /><sub><b><code title="French">fr</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Brawaru"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12898464/medium/d3758a76b894bade4bf271c9b32ea69b.png" />
+          <br />
+          <sub><b>Alexander Sorokin</b></sub>
+          <br />
+          <sub><b>(Brawaru)</b></sub></a>
+        <br />
+        <sub><b>658 words</b></sub>
+        <br /><sub><b><code title="Russian">ru</code></b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/shuuji3"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12381015/medium/35e3557fd61d85f9a5b84545d9e3feb4.png" />
+          <br />
+          <sub><b>TAKAHASHI Shuuji</b></sub>
+          <br />
+          <sub><b>(shuuji3)</b></sub></a>
+        <br />
+        <sub><b>556 words</b></sub>
+        <br /><sub><b><code title="Japanese">ja</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/cairobraga"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17653638/medium/2eb675fdb326ae5464ef556b7f4fad30.png" />
+          <br />
+          <sub><b>Cairo Braga</b></sub>
+          <br />
+          <sub><b>(cairobraga)</b></sub></a>
+        <br />
+        <sub><b>536 words</b></sub>
+        <br /><sub><b><code title="Catalan">ca</code></b>, <b><code title="Portuguese, Brazilian">pt-BR</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/alternative"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16180744/medium/5b04ae975b23895635130d7a176515cb_default.png" />
+          <br />
+          <sub><b>alternative</b></sub></a>
+        <br />
+        <sub><b>530 words</b></sub>
+        <br /><sub><b><code title="Korean">ko</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/tferrermo"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16530049/medium/683f3581620c6b4a5c753b416ed695a7.jpeg" />
+          <br />
+          <sub><b>Thiago Ferrer Morini</b></sub>
+          <br />
+          <sub><b>(tferrermo)</b></sub></a>
+        <br />
+        <sub><b>434 words</b></sub>
+        <br /><sub><b><code title="Spanish">es-ES</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/manuelviens"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13990351/medium/86942d51f67a5f5366c5d6385ea59b77_default.png" />
+          <br />
+          <sub><b>Manuel Viens</b></sub>
+          <br />
+          <sub><b>(manuelviens)</b></sub></a>
+        <br />
+        <sub><b>377 words</b></sub>
+        <br /><sub><b><code title="French">fr</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/vinzv"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/2439/medium/338b9110f89490c66475aed41fedfce1.png" />
+          <br />
+          <sub><b>vinzv</b></sub></a>
+        <br />
+        <sub><b>370 words</b></sub>
+        <br /><sub><b><code title="German">de</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/LukeHong"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16640089/medium/4b7d8d275d7a7bff564adde51e09b473_default.png" />
+          <br />
+          <sub><b>LukeHong</b></sub></a>
+        <br />
+        <sub><b>363 words</b></sub>
+        <br /><sub><b><code title="Chinese Traditional">zh-TW</code></b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Yukaii"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15583431/medium/14973556de7721e642701bf74d6fb053.png" />
+          <br />
+          <sub><b>Yukai Huang</b></sub>
+          <br />
+          <sub><b>(Yukaii)</b></sub></a>
+        <br />
+        <sub><b>357 words</b></sub>
+        <br /><sub><b><code title="Chinese Traditional">zh-TW</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/xqueralt"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532657/medium/f309f319266e1ff95f3070eab0c9a9d9_default.png" />
+          <br />
+          <sub><b>xqueralt</b></sub></a>
+        <br />
+        <sub><b>350 words</b></sub>
+        <br /><sub><b><code title="Catalan">ca</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/karlafej"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16532403/medium/4cefb19623bcc44d7cdb9e25aebf5250.jpeg" />
+          <br />
+          <sub><b>Karla Fejfarová</b></sub>
+          <br />
+          <sub><b>(karlafej)</b></sub></a>
+        <br />
+        <sub><b>346 words</b></sub>
+        <br /><sub><b><code title="Czech">cs</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/NiklasA95"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17450186/medium/6f5768f64963379c7ddfdccd53572c60.jpeg" />
+          <br />
+          <sub><b>Niklas Amann</b></sub>
+          <br />
+          <sub><b>(NiklasA95)</b></sub></a>
+        <br />
+        <sub><b>278 words</b></sub>
+        <br /><sub><b><code title="German">de</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/GabrielSouzaNeves"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17552004/medium/fe9bd4ca3aa6ffa44ae5e51511fe6170_default.png" />
+          <br />
+          <sub><b>GabrielSouzaNeves</b></sub></a>
+        <br />
+        <sub><b>262 words</b></sub>
+        <br /><sub><b><code title="Portuguese, Brazilian">pt-BR</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/svetlemodry"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12579488/medium/699394d1acfe986a31532007534c7656.jpg" />
+          <br />
+          <sub><b>Jaroslav Lichtblau</b></sub>
+          <br />
+          <sub><b>(svetlemodry)</b></sub></a>
+        <br />
+        <sub><b>219 words</b></sub>
+        <br /><sub><b><code title="Czech">cs</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/gflorian"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15777621/medium/9e3409aac9c20973984440aa1542b260_default.png" />
+          <br />
+          <sub><b>gflorian</b></sub></a>
+        <br />
+        <sub><b>217 words</b></sub>
+        <br /><sub><b><code title="German">de</code></b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/elissarc"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13557465/medium/8feebf3677fa80c01e8c54c4fbe097e0_default.png" />
+          <br />
+          <sub><b>elissarc</b></sub></a>
+        <br />
+        <sub><b>202 words</b></sub>
+        <br /><sub><b><code title="French">fr</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/mojosoeun"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12882812/medium/77744d8db46e9a3e09030e1a02b7a572.jpeg" />
+          <br />
+          <sub><b>sona</b></sub>
+          <br />
+          <sub><b>(mojosoeun)</b></sub></a>
+        <br />
+        <sub><b>194 words</b></sub>
+        <br /><sub><b><code title="Korean">ko</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Mvtbh"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15652533/medium/911f4f30f63563cbfdceb102be25dd97.jpg" />
+          <br />
+          <sub><b>R</b></sub>
+          <br />
+          <sub><b>(Mvtbh)</b></sub></a>
+        <br />
+        <sub><b>191 words</b></sub>
+        <br /><sub><b><code title="Persian">fa</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Nortix08"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17520602/medium/884e58f3a2e7c836f594759b9dee40bf_default.png" />
+          <br />
+          <sub><b>Nortix08</b></sub></a>
+        <br />
+        <sub><b>186 words</b></sub>
+        <br /><sub><b><code title="German">de</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/nyanchew"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/2203/medium/a20d831862648eb22adb32e10dded50b_default.png" />
+          <br />
+          <sub><b>Nyanchew</b></sub>
+          <br />
+          <sub><b>(nyanchew)</b></sub></a>
+        <br />
+        <sub><b>181 words</b></sub>
+        <br /><sub><b><code title="Japanese">ja</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/dannypsnl"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16556801/medium/ed5e501ca1f3cc6525d2da28db646346.jpeg" />
+          <br />
+          <sub><b>Lîm Tsú-thuàn</b></sub>
+          <br />
+          <sub><b>(dannypsnl)</b></sub></a>
+        <br />
+        <sub><b>179 words</b></sub>
+        <br /><sub><b><code title="Chinese Traditional">zh-TW</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/PPNplus"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13954917/medium/56a2cba267eb1b5d122bf62ddc0dd732_default.png" />
+          <br />
+          <sub><b>PPNplus</b></sub></a>
+        <br />
+        <sub><b>173 words</b></sub>
+        <br /><sub><b><code title="Thai">th</code></b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/MrWillCom"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14158861/medium/ba1ff31dc5743b067ea6685f735229a5_default.png" />
+          <br />
+          <sub><b>Mr. Will</b></sub>
+          <br />
+          <sub><b>(MrWillCom)</b></sub></a>
+        <br />
+        <sub><b>153 words</b></sub>
+        <br /><sub><b><code title="Chinese Simplified">zh-CN</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/marcin.kozinski"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16537713/medium/825f0bf1a14fc545a76891a52839d86e_default.png" />
+          <br />
+          <sub><b>Marcin Koziński</b></sub>
+          <br />
+          <sub><b>(marcin.kozinski)</b></sub></a>
+        <br />
+        <sub><b>150 words</b></sub>
+        <br /><sub><b><code title="Polish">pl</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/moreal"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13613969/medium/c7834ddc0ada84a79671697a944bb274.png" />
+          <br />
+          <sub><b>Lee Dogeon</b></sub>
+          <br />
+          <sub><b>(moreal)</b></sub></a>
+        <br />
+        <sub><b>141 words</b></sub>
+        <br /><sub><b><code title="Korean">ko</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/SoleneGK"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17757587/medium/c0dfea339a3c1e4853dc2fa11b611789.jpeg" />
+          <br />
+          <sub><b>Solène Garda-Krebs</b></sub>
+          <br />
+          <sub><b>(SoleneGK)</b></sub></a>
+        <br />
+        <sub><b>139 words</b></sub>
+        <br /><sub><b><code title="French">fr</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Usia"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16236470/medium/315b1ebbd38e0f7e41d44bee752afa33.jpg" />
+          <br />
+          <sub><b>Usia</b></sub></a>
+        <br />
+        <sub><b>135 words</b></sub>
+        <br /><sub><b><code title="Ukrainian">uk</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/mahefa.randimbisoa"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17345822/medium/3013b04d3a49336637e51dba33ab1a3d.jpeg" />
+          <br />
+          <sub><b>mahefa randimbisoa</b></sub>
+          <br />
+          <sub><b>(mahefa.randimbisoa)</b></sub></a>
+        <br />
+        <sub><b>132 words</b></sub>
+        <br /><sub><b><code title="French">fr</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Razem"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16538917/medium/092ec03f56f9dd1cbce94379fa4d4d38.png" />
+          <br />
+          <sub><b>Radomír Žemlička</b></sub>
+          <br />
+          <sub><b>(Razem)</b></sub></a>
+        <br />
+        <sub><b>130 words</b></sub>
+        <br /><sub><b><code title="Czech">cs</code></b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/martinmodrak"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16812323/medium/72bffbdf4a331845f23400eafa0b3d48.jpeg" />
+          <br />
+          <sub><b>Martin Modrák</b></sub>
+          <br />
+          <sub><b>(martinmodrak)</b></sub></a>
+        <br />
+        <sub><b>130 words</b></sub>
+        <br /><sub><b><code title="Czech">cs</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/drydenwu"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12618120/medium/ccb11bd042bbf4c7189033f7af2dbd32_default.png" />
+          <br />
+          <sub><b>吳何封</b></sub>
+          <br />
+          <sub><b>(drydenwu)</b></sub></a>
+        <br />
+        <sub><b>129 words</b></sub>
+        <br /><sub><b><code title="Chinese Traditional">zh-TW</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/codl"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/12513809/medium/b56324e44ae26da6db7793bc467a70e2.png" />
+          <br />
+          <sub><b>codl</b></sub></a>
+        <br />
+        <sub><b>124 words</b></sub>
+        <br /><sub><b><code title="French">fr</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/Sky_NiniKo"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14565190/medium/79100599131b7776e9803e4b696915a3_default.png" />
+          <br />
+          <sub><b>Sky_NiniKo</b></sub></a>
+        <br />
+        <sub><b>121 words</b></sub>
+        <br /><sub><b><code title="French">fr</code></b></sub>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/buenanoche"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17745829/medium/f6a224342160da56cc8c55f6ca9116ad_default.png" />
+          <br />
+          <sub><b>buenanoche</b></sub></a>
+        <br />
+        <sub><b>101 words</b></sub>
+        <br /><sub><b><code title="Spanish">es-ES</code></b></sub>
+      </td>
+    </tr>
+  </tbody>
+</table><a href="https://crowdin.com/project/phanpy" target="_blank">Translate in Crowdin 🚀</a>
 <!-- i18n volunteers end -->
 
 ## Backstory

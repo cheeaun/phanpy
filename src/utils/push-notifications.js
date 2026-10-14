@@ -1,40 +1,38 @@
 // Utils for push notifications
 import { api } from './api';
-import { getVapidKey } from './store-utils';
+import store from './store';
+import {
+  getAccountNS,
+  getAccounts,
+  getCurrentAccount,
+  getCurrentAccountNS,
+  getVapidKey,
+} from './store-utils';
 
-// Subscription is an object with the following structure:
+// Browser subscription: a PushSubscription
 // {
-//   data: {
-//     alerts: {
-//       admin: {
-//         report: boolean,
-//         signUp: boolean,
-//       },
-//       favourite: boolean,
-//       follow: boolean,
-//       mention: boolean,
-//       poll: boolean,
-//       reblog: boolean,
-//       status: boolean,
-//       update: boolean,
-//     }
-//   },
-//   policy: "all" | "followed" | "follower" | "none",
-//   subscription: {
-//     endpoint: string,
-//     keys: {
-//       auth: string,
-//       p256dh: string,
-//     },
-//   },
+//   endpoint,
+//   keys: { auth, p256dh },
+//   options: { applicationServerKey, userVisibleOnly },
 // }
+//
+// Back-end subscription: a WebPushSubscription
+// {
+//   id,
+//   endpoint,
+//   serverKey,
+//   alerts: { ... },
+//   policy: "all" | "followed" | "follower" | "none",
+// }
+//
+// Create/update params: { subscription, data: { alerts, policy } }
 
 // Back-end CRUD
 // =============
 
-function createBackendPushSubscription(subscription) {
-  const { masto } = api();
-  return masto.v1.push.subscription.create(subscription);
+function createBackendPushSubscription(params, account) {
+  const { masto } = api({ account });
+  return masto.v1.push.subscription.create(params);
 }
 
 function fetchBackendPushSubscription() {
@@ -42,9 +40,9 @@ function fetchBackendPushSubscription() {
   return masto.v1.push.subscription.fetch();
 }
 
-function updateBackendPushSubscription(subscription) {
+function updateBackendPushSubscription(params) {
   const { masto } = api();
-  return masto.v1.push.subscription.update(subscription);
+  return masto.v1.push.subscription.update(params);
 }
 
 function removeBackendPushSubscription() {
@@ -88,141 +86,271 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
+function isNotFoundError(err) {
+  return err?.statusCode === 404;
+}
+
+// Returns null if unknown
+function matchesServerKey(subscription) {
+  const vapidKey = getVapidKey();
+  const { applicationServerKey } = subscription?.options || {};
+  if (!vapidKey || !applicationServerKey) return null;
+  return (
+    urlBase64ToUint8Array(vapidKey).toString() ===
+    new Uint8Array(applicationServerKey).toString()
+  );
+}
+
+// Needs user gesture on some browsers
+async function ensureBrowserSubscription(registration, subscription) {
+  if (subscription) {
+    if (matchesServerKey(subscription) !== false) return subscription;
+    const unsubscribed = await subscription.unsubscribe();
+    if (!unsubscribed) {
+      throw new Error('Failed to unsubscribe old subscription');
+    }
+  }
+  const vapidKey = getVapidKey();
+  if (!vapidKey) throw new Error('No server key found');
+  return await registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(vapidKey),
+  });
+}
+
+// Push settings
+// =============
+// Saved per account, to restore subscriptions when browser or server loses them
+// { [accountNS]: { endpoint, data: { alerts, policy } } }
+
+const PUSH_SETTINGS_KEY = 'pushSubscriptionSettings';
+
+function getAllPushSettings() {
+  return store.local.getJSON(PUSH_SETTINGS_KEY) || {};
+}
+
+function getPushSettings(account = getCurrentAccount()) {
+  return getAllPushSettings()[getAccountNS(account)] || null;
+}
+
+function savePushSettings(backendSubscription, account = getCurrentAccount()) {
+  const { endpoint, alerts, policy } = backendSubscription;
+  const allSettings = getAllPushSettings();
+  allSettings[getAccountNS(account)] = { endpoint, data: { alerts, policy } };
+  store.local.setJSON(PUSH_SETTINGS_KEY, allSettings);
+}
+
+function removePushSettings(account = getCurrentAccount()) {
+  const allSettings = getAllPushSettings();
+  delete allSettings[getAccountNS(account)];
+  store.local.setJSON(PUSH_SETTINGS_KEY, allSettings);
+}
+
+// Browser only has one subscription, shared by all accounts
+function isUsedByOtherAccount(endpoint, account = getCurrentAccount()) {
+  const excludeNS = getAccountNS(account);
+  return getAccounts().some(
+    (a) =>
+      getAccountNS(a) !== excludeNS &&
+      getPushSettings(a)?.endpoint === endpoint,
+  );
+}
+
+// Used by another account from another instance
+function isTakenByOtherAccount(subscription) {
+  return (
+    !!subscription &&
+    matchesServerKey(subscription) === false &&
+    isUsedByOtherAccount(subscription.endpoint)
+  );
+}
+
 // Front-end <-> back-end
 // ======================
 
-export async function initSubscription() {
-  if (!isPushSupported()) return;
-  const { subscription } = await getSubscription();
+let initializing = null;
+export function initSubscription() {
+  initializing ??= syncSubscription().finally(() => {
+    initializing = null;
+  });
+  return initializing;
+}
+
+async function syncSubscription() {
+  const noSubscription = { subscription: null, backendSubscription: null };
+  if (!isPushSupported()) return noSubscription;
+  const { registration, subscription } = await getSubscription();
+  // Can't tell if browser subscription is gone
+  if (!registration) return noSubscription;
+  if (!subscription && !getPushSettings()) return noSubscription;
+
   let backendSubscription = null;
   try {
     backendSubscription = await fetchBackendPushSubscription();
   } catch (err) {
-    if (/(not found|unknown)/i.test(err.message)) {
-      // No subscription found
-    } else {
-      // Other error
-      throw err;
-    }
+    if (!isNotFoundError(err)) throw err;
   }
   console.log('INIT subscription', {
     subscription,
     backendSubscription,
   });
 
-  // Check if the subscription changed
-  if (backendSubscription && subscription) {
-    const sameEndpoint = backendSubscription.endpoint === subscription.endpoint;
-    const vapidKey = getVapidKey();
-    const sameKey = backendSubscription.serverKey === vapidKey;
-    if (!sameEndpoint) {
-      throw new Error('Backend subscription endpoint changed');
-    }
-    if (sameKey) {
-      // Subscription didn't change
-    } else {
-      // Subscription changed
-      console.error('🔔 Subscription changed', {
-        sameEndpoint,
-        serverKey: backendSubscription.serverKey,
-        vapIdKey: vapidKey,
-        endpoint1: backendSubscription.endpoint,
-        endpoint2: subscription.endpoint,
-        sameKey,
-        key1: backendSubscription.serverKey,
-        key2: vapidKey,
-      });
-      throw new Error('Backend subscription key and vapid key changed');
-      // Only unsubscribe from backend, not from browser
-      // await removeBackendPushSubscription();
-      // // Now let's resubscribe
-      // // NOTE: I have no idea if this works
-      // return await updateSubscription({
-      //   data: backendSubscription.data,
-      //   policy: backendSubscription.policy,
-      // });
-    }
-  }
-
-  if (subscription && !backendSubscription) {
-    // check if account's vapidKey is same as subscription's applicationServerKey
-    const vapidKey = getVapidKey();
-    if (vapidKey) {
-      const { applicationServerKey } = subscription.options;
-      const vapidKeyStr = urlBase64ToUint8Array(vapidKey).toString();
-      const applicationServerKeyStr = new Uint8Array(
-        applicationServerKey,
-      ).toString();
-      const sameKey = vapidKeyStr === applicationServerKeyStr;
-      if (sameKey) {
-        // Subscription didn't change
-      } else {
-        // Subscription changed
-        console.error('🔔 Subscription changed', {
-          vapidKeyStr,
-          applicationServerKeyStr,
-          sameKey,
-        });
-        // Unsubscribe since backend doesn't have a subscription
-        await subscription.unsubscribe();
-        throw new Error('Subscription key and vapid key changed');
-      }
-    } else {
-      console.warn('No vapidKey found');
-    }
-  }
-
-  // Check if backend subscription returns 404
-  // if (subscription && !backendSubscription) {
-  //   // Re-subscribe to backend
-  //   backendSubscription = await createBackendPushSubscription({
-  //     subscription,
-  //     data: {},
-  //     policy: 'all',
-  //   });
-  // }
-
-  return { subscription, backendSubscription };
-}
-
-export async function updateSubscription({ data, policy }) {
-  console.log('🔔 Updating subscription', { data, policy });
-  if (!isPushSupported()) return;
-  let { registration, subscription } = await getSubscription();
-  let backendSubscription = null;
+  if (backendSubscription) savePushSettings(backendSubscription);
 
   if (subscription) {
-    try {
-      backendSubscription = await updateBackendPushSubscription({
-        data,
-        policy,
+    const sameKey = matchesServerKey(subscription) !== false;
+
+    if (backendSubscription) {
+      const sameEndpoint =
+        backendSubscription.endpoint === subscription.endpoint;
+      if (sameEndpoint && sameKey) {
+        return { subscription, backendSubscription };
+      }
+      console.warn('🔔 Subscription changed, repairing', {
+        sameEndpoint,
+        sameKey,
+        endpoint1: backendSubscription.endpoint,
+        endpoint2: subscription.endpoint,
       });
-      // TODO: save subscription in user settings
-    } catch (error) {
-      // Backend doesn't have a subscription for this user
-      // Create a new one
+      return await tryRepairSubscription({ subscription, backendSubscription });
+    }
+
+    const settings = getPushSettings();
+    if (!settings) return { subscription, backendSubscription };
+
+    if (sameKey) {
+      console.warn('🔔 Backend subscription missing, re-creating');
       backendSubscription = await createBackendPushSubscription({
         subscription,
-        data,
-        policy,
+        data: settings.data,
       });
-      // TODO: save subscription in user settings
+      savePushSettings(backendSubscription);
+      return { subscription, backendSubscription };
     }
-  } else {
-    // User is not subscribed
-    const vapidKey = getVapidKey();
-    if (!vapidKey) throw new Error('No server key found');
-    subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(vapidKey),
-    });
-    backendSubscription = await createBackendPushSubscription({
-      subscription,
-      data,
-      policy,
-    });
-    // TODO: save subscription in user settings
+
+    console.warn('🔔 Subscription key changed, repairing');
+    return await tryRepairSubscription({ subscription, backendSubscription });
   }
+
+  if (backendSubscription) {
+    console.warn('🔔 Browser subscription missing, repairing');
+    const repaired = await tryRepairSubscription(null);
+    if (repaired) return repaired;
+    const { subscription: currentSubscription } = await getSubscription();
+    if (currentSubscription) {
+      return { subscription: currentSubscription, backendSubscription };
+    }
+    // Stale, nothing can receive it
+    await removeBackendPushSubscription().catch(() => {});
+    removePushSettings();
+  }
+
+  return noSubscription;
+}
+
+let repairing = null;
+function repairSubscription() {
+  repairing ??= (async () => {
+    const settings = getPushSettings();
+    if (!settings) throw new Error('No saved push settings');
+    const { registration, subscription } = await getSubscription();
+    if (!registration) throw new Error('No service worker registration');
+    if (isTakenByOtherAccount(subscription)) {
+      throw new Error('Browser subscription is used by another account');
+    }
+    const newSubscription = await ensureBrowserSubscription(
+      registration,
+      subscription,
+    );
+    // Replaces existing back-end subscription
+    const backendSubscription = await createBackendPushSubscription({
+      subscription: newSubscription,
+      data: settings.data,
+    });
+    savePushSettings(backendSubscription);
+    return { subscription: newSubscription, backendSubscription };
+  })().finally(() => {
+    repairing = null;
+  });
+  return repairing;
+}
+
+function tryRepairSubscription(fallback) {
+  return repairSubscription().catch((err) => {
+    console.warn('🔔 Failed to repair subscription', err);
+    return fallback;
+  });
+}
+
+export async function handlePushSubscriptionChange({
+  oldEndpoint,
+  newSubscription,
+}) {
+  if (!isPushSupported()) return;
+  const currentNS = getCurrentAccountNS();
+  // Without old endpoint, only current account is known
+  const accounts = getAccounts().filter((account) => {
+    const settings = getPushSettings(account);
+    if (!settings) return false;
+    return oldEndpoint
+      ? settings.endpoint === oldEndpoint
+      : getAccountNS(account) === currentNS;
+  });
+  const currentAccount = accounts.find((a) => getAccountNS(a) === currentNS);
+
+  let subscription = newSubscription;
+  if (!subscription) {
+    // Re-subscribe with current account's key
+    if (!currentAccount) return;
+    ({ subscription } = await repairSubscription());
+  }
+
+  for (const account of accounts) {
+    if (!newSubscription) {
+      if (account === currentAccount) continue; // Already repaired
+      // Other instances have different keys
+      if (account.instanceURL !== currentAccount.instanceURL) continue;
+    }
+    try {
+      const backendSubscription = await createBackendPushSubscription(
+        { subscription, data: getPushSettings(account).data },
+        account,
+      );
+      savePushSettings(backendSubscription, account);
+    } catch (err) {
+      console.warn('🔔 Failed to restore subscription', account.info.id, err);
+    }
+  }
+}
+
+export async function updateSubscription({ data }) {
+  console.log('🔔 Updating subscription', data);
+  if (!isPushSupported()) return;
+  const { registration, subscription: currentSubscription } =
+    await getSubscription();
+  if (!registration) throw new Error('No service worker registration');
+
+  if (isTakenByOtherAccount(currentSubscription)) {
+    console.warn('🔔 Taking over browser subscription from another account');
+  }
+  const subscription = await ensureBrowserSubscription(
+    registration,
+    currentSubscription,
+  );
+
+  let backendSubscription = null;
+  if (subscription === currentSubscription) {
+    try {
+      backendSubscription = await updateBackendPushSubscription({ data });
+    } catch (err) {
+      if (!isNotFoundError(err)) throw err;
+    }
+  }
+  backendSubscription ??= await createBackendPushSubscription({
+    subscription,
+    data,
+  });
+  savePushSettings(backendSubscription);
 
   return { subscription, backendSubscription };
 }
@@ -230,8 +358,32 @@ export async function updateSubscription({ data, policy }) {
 export async function removeSubscription() {
   if (!isPushSupported()) return;
   const { subscription } = await getSubscription();
-  if (subscription) {
+  try {
     await removeBackendPushSubscription();
-    await subscription.unsubscribe();
+  } catch (err) {
+    if (!isNotFoundError(err)) throw err;
+  }
+  removePushSettings();
+  if (subscription && !isUsedByOtherAccount(subscription.endpoint)) {
+    await subscription.unsubscribe().catch((err) => {
+      console.warn('🔔 Failed to unsubscribe browser subscription', err);
+    });
+  }
+}
+
+// For removed or logged out account
+export async function removeAccountPushSettings(account) {
+  const settings = getPushSettings(account);
+  if (!settings) return;
+  removePushSettings(account);
+  if (!isPushSupported()) return;
+  const { subscription } = await getSubscription();
+  if (
+    subscription?.endpoint === settings.endpoint &&
+    !isUsedByOtherAccount(subscription.endpoint, account)
+  ) {
+    await subscription.unsubscribe().catch((err) => {
+      console.warn('🔔 Failed to unsubscribe browser subscription', err);
+    });
   }
 }

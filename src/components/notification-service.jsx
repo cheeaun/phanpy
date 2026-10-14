@@ -4,6 +4,7 @@ import { useLayoutEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
+import { handlePushSubscriptionChange } from '../utils/push-notifications';
 import states from '../utils/states';
 import {
   getAccountByAccessToken,
@@ -18,17 +19,31 @@ import Notification from './notification';
 
 {
   if ('serviceWorker' in navigator) {
-    console.log('👂👂👂 Listen to message');
-    navigator.serviceWorker.addEventListener('message', (event) => {
+    const handleMessage = (event) => {
       console.log('💥💥💥 Message event', event);
-      const { type, id, accessToken } = event?.data || {};
+      const { type, id, accessToken, oldEndpoint, newSubscription } =
+        event?.data || {};
       if (type === 'notification') {
         states.routeNotification = {
           id,
           accessToken,
         };
+      } else if (type === 'pushsubscriptionchange') {
+        if (!getCurrentAccount()) return;
+        handlePushSubscriptionChange({ oldEndpoint, newSubscription }).catch(
+          (err) => {
+            console.warn('🔔 Failed to handle push subscription change', err);
+          },
+        );
       }
-    });
+    };
+    navigator.serviceWorker.addEventListener('message', handleMessage);
+
+    if (import.meta.hot) {
+      import.meta.hot.dispose(() => {
+        navigator.serviceWorker.removeEventListener('message', handleMessage);
+      });
+    }
   }
 }
 
@@ -99,26 +114,6 @@ export default memo(function NotificationService() {
       }
     })();
   }, [id, accessToken]);
-
-  // useLayoutEffect(() => {
-  //   // Listen to message from service worker
-  //   const handleMessage = (event) => {
-  //     console.log('💥💥💥 Message event', event);
-  //     const { type, id, accessToken } = event?.data || {};
-  //     if (type === 'notification') {
-  //       states.routeNotification = {
-  //         id,
-  //         accessToken,
-  //       };
-  //     }
-  //   };
-  //   console.log('👂👂👂 Listen to message');
-  //   navigator.serviceWorker.addEventListener('message', handleMessage);
-  //   return () => {
-  //     console.log('👂👂👂 Remove listen to message');
-  //     navigator.serviceWorker.removeEventListener('message', handleMessage);
-  //   };
-  // }, []);
 
   useLayoutEffect(() => {
     if (navigator?.clearAppBadge) {

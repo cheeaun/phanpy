@@ -58,7 +58,11 @@ const SORTS = [
   { key: 'date_added', label: msg`Date added` },
   {
     key: 'name',
-    label: msg({ id: 'sort.name', message: 'Name', comment: 'Sort by name' }),
+    label: msg({
+      message: 'Name',
+      context: 'sorting',
+      comment: 'Sort by name',
+    }),
   },
   { key: 'last_active', label: msg`Last active` },
   { key: 'most_followers', label: msg`Most followers` },
@@ -261,7 +265,7 @@ function Collection() {
                         ? `/${instance}/a/${curator.id}/c`
                         : `/a/${curator.id}/c`
                     }
-                    class="button plain"
+                    class="button plain4"
                     aria-label={t`Collections`}
                   >
                     <Icon icon="collections" size="l" />
@@ -280,7 +284,7 @@ function Collection() {
                   overflow="auto"
                   position="anchor"
                   menuButton={
-                    <button type="button" class="plain">
+                    <button type="button" class="plain4">
                       <Icon icon="more" size="l" alt={t`More`} />
                     </button>
                   }

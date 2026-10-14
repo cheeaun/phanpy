@@ -121,14 +121,12 @@ export default defineConfig(({ command }) => {
       preprocessorMaxWorkers: 1,
     },
     plugins: [
-      ...preact({
-        // Force use Babel instead of ESBuild due to this change: https://github.com/preactjs/preset-vite/pull/114
-        // Else, a bug will happen with importing variables from import.meta.env
-        babel: {
-          plugins: ['@lingui/babel-plugin-lingui-macro'],
-        },
-      }).filter((plugin) => !isBuild || plugin.name !== 'preact:devtools'),
-      lingui(),
+      // Has to come before preact(), else JSX macros won't be transformed
+      // https://lingui.dev/blog/2026/10/01/native-macro-transform
+      lingui({ macroTransform: true }),
+      ...preact().filter(
+        (plugin) => !isBuild || plugin.name !== 'preact:devtools',
+      ),
       run({
         silent: false,
         input: [

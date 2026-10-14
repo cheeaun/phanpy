@@ -2,7 +2,7 @@ import { forwardRef } from 'preact/compat';
 import { useRef, useState } from 'preact/hooks';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
 
-import { langDetector } from '../utils/browser-translator';
+import { getLangDetector } from '../utils/browser-translator';
 import escapeHTML from '../utils/escape-html';
 import states from '../utils/states';
 import urlRegexObj from '../utils/url-regex';
@@ -159,6 +159,7 @@ function autoResizeTextarea(textarea) {
 }
 
 const detectLangs = async (text) => {
+  const langDetector = await getLangDetector();
   if (langDetector) {
     const langs = await langDetector.detect(text);
     if (langs?.length) {

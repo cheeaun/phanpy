@@ -672,7 +672,7 @@ function AccountStatuses({ columnMode, ...props }) {
             viewScroll="close"
             position="anchor"
             menuButton={
-              <button type="button" class="plain">
+              <button type="button" class="plain4">
                 <Icon icon="more" size="l" alt={t`More`} />
               </button>
             }

@@ -91,8 +91,8 @@ export default function AccountInfoMini({ account, instance }) {
               setTimeout(() => {
                 states.showGenericAccounts = {
                   heading: t({
-                    id: 'following.stats',
                     message: 'Following',
+                    context: 'followed accounts',
                   }),
                   fetchAccounts: fetchFollowing,
                   instance,

@@ -40,6 +40,7 @@ import htmlContentLength from '../utils/html-content-length';
 import mem from '../utils/mem';
 import niceDateTime from '../utils/nice-date-time';
 import { supportsNativeQuote } from '../utils/quote-utils';
+import setRef from '../utils/set-ref';
 import shortenNumber from '../utils/shorten-number';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
@@ -962,9 +963,11 @@ function Catchup() {
     },
     {
       useKey: true,
+      ignoreModifiers: true,
       preventDefault: true,
       ignoreEventWhen: (e) => {
         // Allow '.' even with Shift (some keyboard layouts require Shift for '.')
+        // NOTE: ignoreModifiers:true required so lib doesn't reject Shift+. first.
         if (e.key === '.') return false;
         return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
       },
@@ -992,11 +995,11 @@ function Catchup() {
     <div
       ref={(node) => {
         scrollableRef.current = node;
-        jRef.current = node;
-        kRef.current = node;
-        hlRef.current = node;
-        escRef.current = node;
-        dotRef.current = node;
+        setRef(jRef, node);
+        setRef(kRef, node);
+        setRef(hlRef, node);
+        setRef(escRef, node);
+        setRef(dotRef, node);
       }}
       id="catchup-page"
       class="deck-container"
@@ -1018,12 +1021,12 @@ function Catchup() {
             <div class="header-side">
               <NavMenu />
               {uiState === 'results' && (
-                <Link to="/catchup" class="button plain">
+                <Link to="/catchup" class="button plain4">
                   <Icon icon="history2" size="l" alt={t`Catch-up`} />
                 </Link>
               )}
               {uiState === 'start' && (
-                <Link to="/" class="button plain">
+                <Link to="/" class="button plain4">
                   <Icon icon="home" size="l" alt={t`Home`} />
                 </Link>
               )}
@@ -1039,7 +1042,7 @@ function Catchup() {
               {uiState !== 'start' && uiState !== 'loading' && (
                 <button
                   type="button"
-                  class="plain"
+                  class="plain4"
                   onClick={() => {
                     setShowHelp(true);
                   }}
@@ -1618,7 +1621,7 @@ function Catchup() {
                     ))}
                   </fieldset> */}
                   <span class="filter-label">
-                    <Trans id="group.filter">Group</Trans>
+                    <Trans context="grouping">Group</Trans>
                   </span>{' '}
                   <fieldset class="radio-field-group">
                     {FILTER_GROUPS.map((key) => (

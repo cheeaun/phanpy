@@ -156,8 +156,10 @@ function Shortcuts() {
     {
       enabled: !isMultiColumnMode,
       useKey: true,
+      ignoreModifiers: true,
       ignoreEventWhen: (e) => {
         // Allow number even with Shift (e.g. French AZERTY requires Shift for numbers)
+        // NOTE: ignoreModifiers:true required so lib doesn't reject Shift+digit first.
         const isDigit = /^[1-9]$/.test(e.key);
         return e.metaKey || e.ctrlKey || e.altKey || (e.shiftKey && !isDigit);
       },

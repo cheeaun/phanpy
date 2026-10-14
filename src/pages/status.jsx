@@ -798,8 +798,8 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     heroDisplayName && heroContentText
       ? `${heroDisplayName}: "${heroContentText}"`
       : t({
-          id: 'post.title',
           message: 'Post',
+          context: 'single post',
         }),
     '/:instance?/s/:id',
   );
@@ -1267,7 +1267,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     states.reloadStatusPage++;
                   }}
                 >
-                  <Trans>Try again</Trans>
+                  <Trans comment="Infinitive form">Try again</Trans>
                 </button>
               </div>
             )}
@@ -1441,7 +1441,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           }}
         >
           {/* <div>
-            <Link class="button plain deck-close" href={closeLink}>
+            <Link class="button plain4 deck-close" href={closeLink}>
               <Icon icon="chevron-left" size="xl" />
             </Link>
           </div> */}
@@ -1450,7 +1450,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               {prevLocationIsStatusPage && (
                 <button
                   type="button"
-                  class="plain deck-back"
+                  class="plain4 deck-back"
                   onClick={() => {
                     history.back();
                   }}
@@ -1495,7 +1495,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                 </>
               ) : (
                 <>
-                  <Trans id="post.title">Post</Trans>{' '}
+                  <Trans context="single post">Post</Trans>{' '}
                   <button
                     type="button"
                     class="ancestors-indicator light small"
@@ -1565,7 +1565,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               {showRefresh && (
                 <button
                   type="button"
-                  class="plain button-refresh"
+                  class="plain4 button-refresh"
                   onClick={() => {
                     states.reloadStatusPage++;
                     setShowRefresh(false);
@@ -1680,7 +1680,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   <span>{t`View Edit History Snapshots`}</span>
                 </MenuItem>
               </Menu2>
-              <Link class="button plain deck-close" to={closeLink}>
+              <Link class="button plain4 deck-close" to={closeLink}>
                 <Icon icon="x" size="xl" alt={t`Close`} />
               </Link>
             </div>
@@ -1743,7 +1743,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                     states.reloadStatusPage++;
                   }}
                 >
-                  <Trans>Try again</Trans>
+                  <Trans comment="Infinitive form">Try again</Trans>
                 </button>
               </p>
             )}

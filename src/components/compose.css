@@ -768,17 +768,6 @@
   }
 }
 
-.compose-menu-add-media {
-  position: relative;
-
-  .compose-menu-add-media-field {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: inherit;
-  }
-}
-
 .icon-gif {
   display: inline-block !important;
   min-width: 16px;
@@ -1098,9 +1087,8 @@
   .compose-field::highlight(compose-hashtag) {
     text-decoration: underline;
     text-decoration-color: var(--link-faded-color);
-    text-decoration-thickness: 2px;
     background-color: transparent; /* override <mark> bg */
-    text-underline-offset: 2px;
+    text-underline-offset: 4px;
   }
   .compose-highlight-mention,
   .compose-field::highlight(compose-mention) {

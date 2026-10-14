@@ -8,7 +8,7 @@ export default function useTruncated({
 } = {}) {
   const ref = useRef();
   const prevTruncatedRef = useRef();
-  const onResize = ({ height }) => {
+  const onResize = ({ height } = {}) => {
     if (ref.current) {
       const { scrollHeight } = ref.current;
       let truncated = scrollHeight > height;

@@ -18,6 +18,7 @@ import { filteredItems, isFiltered } from '../utils/filters';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import isRTL from '../utils/is-rtl';
 import localeMatch from '../utils/locale-match';
+import setRef from '../utils/set-ref';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
@@ -348,8 +349,10 @@ function Timeline({
   }, [loadItems, showNewPostsIndicator]);
   const dotRef = useHotkeys('.', handleLoadNewPosts, {
     useKey: true,
+    ignoreModifiers: true,
     ignoreEventWhen: (e) => {
       // Allow '.' even with Shift (some keyboard layouts require Shift for '.')
+      // NOTE: ignoreModifiers:true required so lib doesn't reject Shift+. first.
       if (e.key === '.') return false;
       return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
     },
@@ -501,10 +504,10 @@ function Timeline({
         }`}
         ref={(node) => {
           scrollableRef.current = node;
-          jRef.current = node;
-          kRef.current = node;
-          oRef.current = node;
-          dotRef.current = node;
+          setRef(jRef, node);
+          setRef(kRef, node);
+          setRef(oRef, node);
+          setRef(dotRef, node);
         }}
         tabIndex="-1"
         onClick={(e) => {
@@ -545,7 +548,7 @@ function Timeline({
                 {headerStart !== null && headerStart !== undefined ? (
                   headerStart
                 ) : (
-                  <Link to="/" class="button plain home-button">
+                  <Link to="/" class="button plain4 home-button">
                     <Icon icon="home" size="l" alt={t`Home`} />
                   </Link>
                 )}
@@ -663,7 +666,7 @@ function Timeline({
               <br />
               <br />
               <button type="button" onClick={() => loadItems(!items.length)}>
-                <Trans>Try again</Trans>
+                <Trans comment="Infinitive form">Try again</Trans>
               </button>
             </p>
           )}
@@ -963,7 +966,7 @@ function StatusCarousel({ title, class: className, children }) {
           <button
             ref={startButtonRef}
             type="button"
-            class="small plain2"
+            class="small light"
             // disabled={reachStart}
             onClick={() => {
               const left =
@@ -980,7 +983,7 @@ function StatusCarousel({ title, class: className, children }) {
           <button
             ref={endButtonRef}
             type="button"
-            class="small plain2"
+            class="small light"
             // disabled={reachEnd}
             onClick={() => {
               const left =

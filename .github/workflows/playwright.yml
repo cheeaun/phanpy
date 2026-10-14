@@ -17,8 +17,17 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/Library/Caches/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps webkit --only-shell
       - name: Run Playwright tests

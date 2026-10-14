@@ -1,6 +1,19 @@
 // @ts-check
 import { expect, test } from '@playwright/test';
 
+/** @typedef {import('@playwright/test').Page} Page */
+
+/**
+ * Globals the app and this spec read/write on `window`. Declared here instead
+ * of a global .d.ts so the project stays TypeScript-free.
+ * @typedef {Window & {
+ *   __STATES__?: { showCompose?: boolean, showSettings?: boolean },
+ *   __alertCalled?: boolean,
+ *   __alertCount?: number,
+ *   CloseWatcher?: unknown,
+ * }} TestWindow
+ */
+
 const MOCK_INSTANCE_RESPONSE = {
   uri: 'test.social',
   title: 'Test Social',
@@ -43,6 +56,7 @@ const MOCK_ACCOUNT_INFO = {
   fields: [],
 };
 
+/** @param {number} id @param {number} [index] */
 function createMockPost(id, index) {
   const i = index ?? 0;
   return {
@@ -88,6 +102,7 @@ function createMockPost(id, index) {
   };
 }
 
+/** @param {Page} page */
 async function setupMockHomeEnv(page) {
   await page.route('**/api/v2/instance', async (route) => {
     await route.fulfill({ json: MOCK_INSTANCE_RESPONSE });
@@ -99,6 +114,7 @@ async function setupMockHomeEnv(page) {
   await page.waitForSelector('.timeline-item', { timeout: 15000 });
 }
 
+/** @param {Page} page */
 async function setupLoggedInEnv(page) {
   await page.addInitScript(() => {
     const account = {
@@ -175,11 +191,33 @@ async function setupLoggedInEnv(page) {
   });
 }
 
+/** @param {Page} page */
 async function focusFirstStatus(page) {
   await page.locator('.status').first().focus();
   await page.waitForTimeout(300);
 }
 
+// Returns the index of the focused `.timeline-item`, or -1 if none.
+/** @param {Page} page */
+async function getFocusedItemIndex(page) {
+  return page.evaluate(() => {
+    const items = Array.from(document.querySelectorAll('.timeline-item'));
+    const activeItem = document.activeElement?.closest?.('.timeline-item');
+    return activeItem ? items.indexOf(activeItem) : -1;
+  });
+}
+
+// Returns the index of the focused `.status-focus`, or -1 if none.
+/** @param {Page} page */
+async function getFocusedContextIndex(page) {
+  return page.evaluate(() => {
+    const items = Array.from(document.querySelectorAll('.status-focus'));
+    const active = document.activeElement?.closest?.('.status-focus');
+    return active ? items.indexOf(active) : -1;
+  });
+}
+
+/** @param {Page} page */
 async function focusInput(page) {
   await page.evaluate(() => {
     const existing = document.getElementById('__test-input__');
@@ -197,35 +235,42 @@ async function focusInput(page) {
   await page.waitForTimeout(100);
 }
 
+/** @param {Page} page */
 async function cleanupInput(page) {
   await page.evaluate(() => {
     document.getElementById('__test-input__')?.remove();
   });
 }
 
+/** @param {Page} page */
 function overrideAlert(page) {
   return page.evaluate(() => {
-    window.__alertCalled = false;
-    window.__alertCount = 0;
-    window.alert = () => {
-      window.__alertCalled = true;
-      window.__alertCount++;
+    const w = /** @type {TestWindow} */ (window);
+    w.__alertCalled = false;
+    w.__alertCount = 0;
+    w.alert = () => {
+      w.__alertCalled = true;
+      w.__alertCount = (w.__alertCount ?? 0) + 1;
     };
   });
 }
 
+/** @param {Page} page */
 function wasAlertCalled(page) {
-  return page.evaluate(() => window.__alertCalled);
+  return page.evaluate(() => /** @type {TestWindow} */ (window).__alertCalled);
 }
 
+/** @param {Page} page */
 function getAlertCount(page) {
-  return page.evaluate(() => window.__alertCount);
+  return page.evaluate(() => /** @type {TestWindow} */ (window).__alertCount);
 }
 
+/** @param {Page} page */
 function resetAlertCounter(page) {
   return page.evaluate(() => {
-    window.__alertCalled = false;
-    window.__alertCount = 0;
+    const w = /** @type {TestWindow} */ (window);
+    w.__alertCalled = false;
+    w.__alertCount = 0;
   });
 }
 
@@ -322,7 +367,7 @@ test.describe('Keyboard Shortcuts', () => {
       await page.keyboard.press('c');
       await page.waitForTimeout(300);
       const showCompose = await page.evaluate(
-        () => window.__STATES__?.showCompose,
+        () => /** @type {TestWindow} */ (window).__STATES__?.showCompose,
       );
       expect(showCompose).toBeTruthy();
     });
@@ -332,7 +377,7 @@ test.describe('Keyboard Shortcuts', () => {
       await page.keyboard.press('c');
       await page.waitForTimeout(300);
       const showCompose = await page.evaluate(
-        () => window.__STATES__?.showCompose,
+        () => /** @type {TestWindow} */ (window).__STATES__?.showCompose,
       );
       expect(showCompose).toBeFalsy();
       await cleanupInput(page);
@@ -342,7 +387,7 @@ test.describe('Keyboard Shortcuts', () => {
       await page.keyboard.press('Meta+c');
       await page.waitForTimeout(300);
       const showCompose = await page.evaluate(
-        () => window.__STATES__?.showCompose,
+        () => /** @type {TestWindow} */ (window).__STATES__?.showCompose,
       );
       expect(showCompose).toBeFalsy();
     });
@@ -513,7 +558,7 @@ test.describe('Keyboard Shortcuts', () => {
       await page.keyboard.press('s');
       await page.waitForTimeout(500);
       const showSettings = await page.evaluate(
-        () => window.__STATES__?.showSettings,
+        () => /** @type {TestWindow} */ (window).__STATES__?.showSettings,
       );
       expect(showSettings).toBe(true);
     });
@@ -544,12 +589,10 @@ test.describe('Keyboard Shortcuts', () => {
 
     test('8.1 j focuses next timeline item', async ({ page }) => {
       await focusFirstStatus(page);
+      expect(await getFocusedItemIndex(page)).toBe(0);
       await page.keyboard.press('j');
       await page.waitForTimeout(300);
-      const activeItem = await page.evaluate(() =>
-        document.activeElement?.closest('.timeline-item'),
-      );
-      expect(activeItem).not.toBeNull();
+      expect(await getFocusedItemIndex(page)).toBe(1);
     });
 
     test('8.2 j then k navigates back to previous item', async ({ page }) => {
@@ -558,12 +601,10 @@ test.describe('Keyboard Shortcuts', () => {
       await focusFirstStatus(page);
       await page.keyboard.press('j');
       await page.waitForTimeout(200);
+      expect(await getFocusedItemIndex(page)).toBe(1);
       await page.keyboard.press('k');
       await page.waitForTimeout(200);
-      const activeItem = await page.evaluate(() =>
-        document.activeElement?.closest('.timeline-item'),
-      );
-      expect(activeItem).not.toBeNull();
+      expect(await getFocusedItemIndex(page)).toBe(0);
     });
 
     test('8.3 Scoping: input focus blocks j (default library behavior)', async ({
@@ -584,14 +625,7 @@ test.describe('Keyboard Shortcuts', () => {
       await focusFirstStatus(page);
       await page.keyboard.press('Meta+j');
       await page.waitForTimeout(300);
-      const onFirstItem = await page.evaluate(() => {
-        const ae = document.activeElement;
-        return (
-          ae?.closest('.timeline-item')?.classList.contains('timeline-item') ===
-          true
-        );
-      });
-      expect(onFirstItem).toBe(true);
+      expect(await getFocusedItemIndex(page)).toBe(0);
     });
   });
 
@@ -617,7 +651,9 @@ test.describe('Keyboard Shortcuts', () => {
       // CloseWatcher closes on Escape regardless of modifier keys, so this
       // hotkey-scoping test only applies without it.
       // Remove once CloseWatcher is widely supported.
-      const hasCloseWatcher = await page.evaluate(() => !!window.CloseWatcher);
+      const hasCloseWatcher = await page.evaluate(
+        () => !!(/** @type {TestWindow} */ (window).CloseWatcher),
+      );
       test.skip(hasCloseWatcher, 'CloseWatcher handles modal close');
 
       await page.keyboard.press('?');
@@ -626,6 +662,54 @@ test.describe('Keyboard Shortcuts', () => {
         page.locator('#keyboard-shortcuts-help-container'),
       ).toBeVisible();
       await page.keyboard.press('Meta+Escape');
+      await page.waitForTimeout(500);
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).toBeVisible();
+    });
+  });
+
+  // WebKit supports CloseWatcher, which takes over Escape from the escRef hotkey.
+  test.describe('Section 9b: Modal Escape without CloseWatcher (escRef hotkey path)', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.addInitScript(() => {
+        delete (/** @type {TestWindow} */ (window).CloseWatcher);
+      });
+      await setupMockHomeEnv(page);
+    });
+
+    test('9.3 Escape closes help modal via scoped hotkey', async ({ page }) => {
+      expect(
+        await page.evaluate(
+          () => !!(/** @type {TestWindow} */ (window).CloseWatcher),
+        ),
+      ).toBe(false);
+      await page.keyboard.press('?');
+      await page.waitForTimeout(500);
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).toBeVisible();
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(500);
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).not.toBeVisible();
+    });
+
+    test('9.4 Escape does not close modal when focus is outside it', async ({
+      page,
+    }) => {
+      await page.keyboard.press('?');
+      await page.waitForTimeout(500);
+      await expect(
+        page.locator('#keyboard-shortcuts-help-container'),
+      ).toBeVisible();
+      // Blur so focus leaves the node bound to escRef.
+      // activeElement is typed Element, which has no blur().
+      await page.evaluate(() =>
+        /** @type {HTMLElement?} */ (document.activeElement)?.blur(),
+      );
+      await page.keyboard.press('Escape');
       await page.waitForTimeout(500);
       await expect(
         page.locator('#keyboard-shortcuts-help-container'),
@@ -675,13 +759,10 @@ test.describe('Keyboard Shortcuts', () => {
     });
 
     test('10.2 j focuses next context status', async ({ page }) => {
+      expect(await getFocusedContextIndex(page)).toBe(-1);
       await page.keyboard.press('j');
       await page.waitForTimeout(300);
-      const activeEl = await page.evaluate(() => {
-        const el = document.activeElement;
-        return el?.closest('.status-focus, .status-link');
-      });
-      expect(activeEl).not.toBeNull();
+      expect(await getFocusedContextIndex(page)).toBe(0);
     });
   });
 });

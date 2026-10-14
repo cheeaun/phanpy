@@ -453,7 +453,7 @@ function AccountInfo({
             )}
             {isString && (
               <button type="button" onClick={reload}>
-                <Trans>Try again</Trans>
+                <Trans comment="Infinitive form">Try again</Trans>
               </button>
             )}
           </div>
@@ -779,7 +779,8 @@ function AccountInfo({
                 )}
                 {!!group && (
                   <span class="tag">
-                    <Icon icon="group" /> <Trans>Group</Trans>
+                    <Icon icon="group" />{' '}
+                    <Trans context="account type">Group</Trans>
                   </span>
                 )}
                 {/* {roles?.map((role) => (
@@ -920,8 +921,8 @@ function AccountInfo({
                         setTimeout(() => {
                           states.showGenericAccounts = {
                             heading: t({
-                              id: 'following.stats',
                               message: 'Following',
+                              context: 'followed accounts',
                             }),
                             fetchAccounts: fetchFollowing,
                             instance,

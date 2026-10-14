@@ -4,6 +4,7 @@ import { createPortal } from 'preact/compat';
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'preact/hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
 
+import setRef from '../utils/set-ref';
 import store from '../utils/store';
 import useCloseWatcher from '../utils/useCloseWatcher';
 
@@ -29,7 +30,7 @@ function Modal({ children, onClose, onClick, class: className, minimized }) {
   }, []);
   const modalRefCallback = useCallback((node) => {
     modalRef.current = node;
-    escRef.current = node?.querySelector?.('[tabindex="-1"]') || node;
+    setRef(escRef, node?.querySelector?.('[tabindex="-1"]') || node);
   }, []);
 
   useEffect(() => {

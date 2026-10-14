@@ -78,8 +78,10 @@ function Columns() {
     },
     {
       useKey: true,
+      ignoreModifiers: true,
       ignoreEventWhen: (e) => {
         // Allow number even with Shift (e.g. French AZERTY requires Shift for numbers)
+        // NOTE: ignoreModifiers:true required so lib doesn't reject Shift+digit first.
         const isDigit = /^[1-9]$/.test(e.key);
         return e.metaKey || e.ctrlKey || e.altKey || (e.shiftKey && !isDigit);
       },
@@ -116,8 +118,10 @@ function Columns() {
     },
     {
       useKey: true,
+      ignoreModifiers: true,
       ignoreEventWhen: (e) => {
         // Allow '[' or ']' even with Alt (e.g. German keyboards require Alt for these)
+        // NOTE: ignoreModifiers:true required so lib doesn't reject Alt+[] first.
         if (['[', ']'].includes(e.key)) return false;
         return e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
       },

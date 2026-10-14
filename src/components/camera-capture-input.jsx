@@ -3,7 +3,7 @@ const isMobileSafari =
   /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 function CameraCaptureInput({
-  hidden,
+  ref,
   disabled = false,
   supportedMimeTypes,
   setMediaAttachments,
@@ -17,8 +17,17 @@ function CameraCaptureInput({
 
   return (
     <input
+      ref={ref}
       type="file"
-      hidden={hidden}
+      tabIndex={-1}
+      aria-hidden="true"
+      style={{
+        position: 'absolute',
+        width: 1,
+        height: 1,
+        opacity: 0,
+        pointerEvents: 'none',
+      }}
       accept={filteredSupportedMimeTypes?.join(',')}
       capture="environment"
       disabled={disabled}

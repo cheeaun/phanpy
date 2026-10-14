@@ -27,12 +27,12 @@ msgid "Last active: {date}"
 msgstr "Last active: {date}"
 
 #: src/components/account-block.jsx:229
-#: src/components/account-info.jsx:777
+#: src/components/account-info.jsx:822
 msgid "Automated"
 msgstr ""
 
 #: src/components/account-block.jsx:237
-#: src/components/account-info.jsx:783
+#: src/components/account-info.jsx:828
 #: src/components/status.jsx:663
 msgctxt "account type"
 msgid "Group"
@@ -65,14 +65,14 @@ msgid "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> foll
 msgstr "{followersCount, plural, one {<0>{0}</0> follower} other {<1>{1}</1> followers}}"
 
 #: src/components/account-block.jsx:312
-#: src/components/account-info.jsx:846
+#: src/components/account-info.jsx:891
 msgid "Verified"
 msgstr ""
 
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #. placeholder {0}: niceDateTime(createdAt, { hideTime: true, })
 #: src/components/account-block.jsx:328
-#: src/components/account-info.jsx:985
+#: src/components/account-info.jsx:1030
 msgid "Joined <0>{0}</0>"
 msgstr ""
 
@@ -85,7 +85,7 @@ msgid "server domain name"
 msgstr ""
 
 #: src/components/account-info-mini.jsx:57
-#: src/components/account-info.jsx:868
+#: src/components/account-info.jsx:913
 #: src/components/compose.jsx:2075
 #: src/pages/settings.jsx:310
 #: src/utils/visibility-text.jsx:7
@@ -94,46 +94,46 @@ msgstr "Followers"
 
 #: src/components/account-info-mini.jsx:61
 #: src/components/account-info-mini.jsx:100
-#: src/components/account-info.jsx:875
-#: src/components/account-info.jsx:933
+#: src/components/account-info.jsx:920
+#: src/components/account-info.jsx:978
 msgid "This user has chosen to not make this information available."
 msgstr "This user has chosen to not make this information available."
 
 #. placeholder {0}: shortenNumber(followersCount)
 #. placeholder {1}: shortenNumber(followersCount)
 #: src/components/account-info-mini.jsx:67
-#: src/components/account-info.jsx:895
+#: src/components/account-info.jsx:940
 msgid "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 msgstr "{followersCount, plural, one {<0>{0}</0> Follower} other {<1>{1}</1> Followers}}"
 
 #: src/components/account-info-mini.jsx:93
-#: src/components/account-info.jsx:923
+#: src/components/account-info.jsx:968
 msgctxt "followed accounts"
 msgid "Following"
 msgstr "Following"
 
 #. placeholder {0}: shortenNumber(followingCount)
 #: src/components/account-info-mini.jsx:106
-#: src/components/account-info.jsx:939
+#: src/components/account-info.jsx:984
 msgid "{followingCount, plural, other {<0>{0}</0> Following}}"
 msgstr "{followingCount, plural, other {<0>{0}</0> Following}}"
 
 #. placeholder {0}: shortenNumber(statusesCount)
 #. placeholder {1}: shortenNumber(statusesCount)
 #: src/components/account-info-mini.jsx:119
-#: src/components/account-info.jsx:963
+#: src/components/account-info.jsx:1008
 msgid "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 msgstr "{statusesCount, plural, one {<0>{0}</0> Post} other {<1>{1}</1> Posts}}"
 
-#: src/components/account-info.jsx:157
+#: src/components/account-info.jsx:202
 msgid "View profile"
 msgstr "View profile"
 
-#: src/components/account-info.jsx:435
+#: src/components/account-info.jsx:480
 msgid "Unable to load account."
 msgstr "Unable to load account."
 
-#: src/components/account-info.jsx:450
+#: src/components/account-info.jsx:495
 msgid "Go to account page"
 msgstr "Go to account page"
 
@@ -144,7 +144,7 @@ msgstr "Go to account page"
 #. Infinitive form
 #. Infinitive form
 #. Infinitive form
-#: src/components/account-info.jsx:456
+#: src/components/account-info.jsx:501
 #: src/components/timeline.jsx:669
 #: src/components/timeline2.jsx:702
 #: src/pages/home.jsx:237
@@ -154,51 +154,51 @@ msgstr "Go to account page"
 msgid "Try again"
 msgstr ""
 
-#: src/components/account-info.jsx:510
+#: src/components/account-info.jsx:555
 msgid "<0>{displayName}</0> has indicated that their new account is now:"
 msgstr "<0>{displayName}</0> has indicated that their new account is now:"
 
-#: src/components/account-info.jsx:666
+#: src/components/account-info.jsx:711
 #: src/components/related-actions.jsx:544
 msgid "Handle copied"
 msgstr "Handle copied"
 
-#: src/components/account-info.jsx:669
+#: src/components/account-info.jsx:714
 #: src/components/related-actions.jsx:547
 msgid "Unable to copy handle"
 msgstr "Unable to copy handle"
 
-#: src/components/account-info.jsx:675
+#: src/components/account-info.jsx:720
 #: src/components/related-actions.jsx:553
 msgid "Copy handle"
 msgstr ""
 
-#: src/components/account-info.jsx:693
+#: src/components/account-info.jsx:738
 #: src/components/related-actions.jsx:621
 #: src/components/related-actions.jsx:896
 #: src/components/shortcuts-settings.jsx:1100
 msgid "QR code"
 msgstr "QR code"
 
-#: src/components/account-info.jsx:699
+#: src/components/account-info.jsx:744
 msgid "Go to original profile page"
 msgstr ""
 
-#: src/components/account-info.jsx:718
+#: src/components/account-info.jsx:763
 msgid "View profile image"
 msgstr "View profile image"
 
-#: src/components/account-info.jsx:737
+#: src/components/account-info.jsx:782
 msgid "View profile header"
 msgstr "View profile header"
 
-#: src/components/account-info.jsx:753
+#: src/components/account-info.jsx:798
 #: src/components/edit-profile-sheet.jsx:267
 #: src/components/related-actions.jsx:910
 msgid "Edit profile"
 msgstr ""
 
-#: src/components/account-info.jsx:772
+#: src/components/account-info.jsx:817
 msgid "In Memoriam"
 msgstr ""
 
@@ -206,14 +206,14 @@ msgstr ""
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.quotes / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {3}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:1020
+#: src/components/account-info.jsx:1065
 msgid "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 msgstr "{0} original posts, {1} replies, {2} quotes, {3} boosts"
 
 #. placeholder {0}: ( postingStats.originals / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {1}: ( postingStats.replies / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
 #. placeholder {2}: ( postingStats.boosts / postingStats.total ).toLocaleString(i18n.locale || undefined, { style: 'percent', })
-#: src/components/account-info.jsx:1037
+#: src/components/account-info.jsx:1082
 msgid "{0} original posts, {1} replies, {2} boosts"
 msgstr "{0} original posts, {1} replies, {2} boosts"
 
@@ -224,18 +224,18 @@ msgstr "{0} original posts, {1} replies, {2} boosts"
 #. placeholder {4}: postingStats.total
 #. placeholder {5}: postingStats.total
 #. placeholder {6}: postingStats.daysSinceLastPost
-#: src/components/account-info.jsx:1054
+#: src/components/account-info.jsx:1099
 msgid "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 msgstr "{0, plural, one {{1, plural, one {Last 1 post in the past 1 day} other {Last 1 post in the past {2} days}}} other {{3, plural, one {Last {4} posts in the past 1 day} other {Last {5} posts in the past {6} days}}}}"
 
 #. placeholder {0}: postingStats.total
 #. placeholder {1}: postingStats.total
-#: src/components/account-info.jsx:1070
+#: src/components/account-info.jsx:1115
 msgid "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 msgstr "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts in the past year(s)}}"
 
-#: src/components/account-info.jsx:1128
-#: src/components/translation-block.jsx:315
+#: src/components/account-info.jsx:1173
+#: src/components/translation-block.jsx:325
 #: src/pages/catchup.jsx:74
 #: src/pages/trending.jsx:430
 #: src/pages/trending.jsx:435
@@ -243,7 +243,7 @@ msgstr "{0, plural, one {Last 1 post in the past year(s)} other {Last {1} posts 
 msgid "Original"
 msgstr ""
 
-#: src/components/account-info.jsx:1132
+#: src/components/account-info.jsx:1177
 #: src/components/status.jsx:3048
 #: src/pages/account-statuses.jsx:428
 #: src/pages/catchup.jsx:75
@@ -255,7 +255,7 @@ msgstr ""
 msgid "Replies"
 msgstr ""
 
-#: src/components/account-info.jsx:1137
+#: src/components/account-info.jsx:1182
 #: src/components/quotes-modal.jsx:81
 #: src/components/status.jsx:3053
 #: src/pages/catchup.jsx:76
@@ -264,7 +264,7 @@ msgstr ""
 msgid "Quotes"
 msgstr "Quotes"
 
-#: src/components/account-info.jsx:1142
+#: src/components/account-info.jsx:1187
 #: src/pages/account-statuses.jsx:444
 #: src/pages/catchup.jsx:77
 #: src/pages/catchup.jsx:1599
@@ -274,11 +274,11 @@ msgstr "Quotes"
 msgid "Boosts"
 msgstr ""
 
-#: src/components/account-info.jsx:1148
+#: src/components/account-info.jsx:1193
 msgid "Post stats unavailable."
 msgstr "Post stats unavailable."
 
-#: src/components/account-info.jsx:1175
+#: src/components/account-info.jsx:1220
 msgid "View post stats"
 msgstr "View post stats"
 
@@ -1436,8 +1436,8 @@ msgstr ""
 #: src/components/media-alt-modal.jsx:67
 #: src/components/status.jsx:1543
 #: src/components/status.jsx:1552
-#: src/components/translation-block.jsx:312
-#: src/components/translation-block.jsx:420
+#: src/components/translation-block.jsx:322
+#: src/components/translation-block.jsx:430
 msgid "Translate"
 msgstr ""
 
@@ -3311,36 +3311,36 @@ msgstr ""
 msgid "Translated Bio"
 msgstr ""
 
-#: src/components/translation-block.jsx:310
-#: src/components/translation-block.jsx:418
+#: src/components/translation-block.jsx:320
+#: src/components/translation-block.jsx:428
 msgid "Translate from {sourceLangText} (auto-detected)"
 msgstr ""
 
-#: src/components/translation-block.jsx:311
-#: src/components/translation-block.jsx:419
+#: src/components/translation-block.jsx:321
+#: src/components/translation-block.jsx:429
 msgid "Translate from {sourceLangText}"
 msgstr ""
 
-#: src/components/translation-block.jsx:314
+#: src/components/translation-block.jsx:324
 #: src/pages/trending.jsx:429
 #: src/pages/trending.jsx:434
 msgid "Show translation"
 msgstr "Show translation"
 
-#: src/components/translation-block.jsx:376
+#: src/components/translation-block.jsx:386
 msgid "Auto-translated from {sourceLangText}"
 msgstr ""
 
-#: src/components/translation-block.jsx:415
+#: src/components/translation-block.jsx:425
 msgid "Translating…"
 msgstr ""
 
 #. placeholder {0}: detectedLang ?? '…'
-#: src/components/translation-block.jsx:447
+#: src/components/translation-block.jsx:457
 msgid "Auto ({0})"
 msgstr ""
 
-#: src/components/translation-block.jsx:460
+#: src/components/translation-block.jsx:470
 msgid "Failed to translate"
 msgstr ""
 

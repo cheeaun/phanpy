@@ -1362,9 +1362,14 @@ function Status({
               }}
             >
               <Icon icon="quote" />
-              <span>
+              <span class="menu-grow">
                 <Trans>View Quotes</Trans>
               </span>
+              {quotesCount > 0 && (
+                <small class="more-insignificant">
+                  {shortenNumber(quotesCount)}
+                </small>
+              )}
             </MenuItem>
           )}
           {quote?.quotedStatus?.quote && (
@@ -3079,11 +3084,6 @@ function Status({
                             ) : (
                               <span class="menu-grow">{quoteText}</span>
                             )}
-                            {quotesCount > 0 && (
-                              <small class="more-insignificant">
-                                {shortenNumber(quotesCount)}
-                              </small>
-                            )}
                           </MenuItem>
                         )}
                         {(DEV || !supportsNativeQuote()) && (
@@ -3104,6 +3104,24 @@ function Status({
                               <small class="tag collapsed">DEV</small>
                             )}
                           </MenuItem>
+                        )}
+                        {supportsNativeQuote() && quotesCount > 0 && (
+                          <>
+                            <MenuDivider />
+                            <MenuItem
+                              onClick={() => {
+                                setShowQuotes(true);
+                              }}
+                            >
+                              <Icon icon="quote" />
+                              <span class="menu-grow">
+                                <Trans>View Quotes</Trans>
+                              </span>
+                              <small class="more-insignificant">
+                                {shortenNumber(quotesCount)}
+                              </small>
+                            </MenuItem>
+                          </>
                         )}
                       </>
                     }

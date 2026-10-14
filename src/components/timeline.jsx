@@ -15,7 +15,9 @@ import { useSnapshot } from 'valtio';
 
 import FilterContext from '../utils/filter-context';
 import { filteredItems, isFiltered } from '../utils/filters';
+import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import isRTL from '../utils/is-rtl';
+import localeMatch from '../utils/locale-match';
 import showToast from '../utils/show-toast';
 import states, { statusKey } from '../utils/states';
 import statusPeek from '../utils/status-peek';
@@ -36,6 +38,7 @@ import MediaPost from './media-post';
 import NavMenu from './nav-menu';
 import Status from './status';
 import ThreadBadge from './thread-badge';
+import TranslationBlock from './translation-block';
 
 const scrollIntoViewOptions = {
   block: 'start',
@@ -1019,6 +1022,12 @@ export function TimelineStatusCompact({ status, instance, filterContext }) {
   const snapStates = useSnapshot(states);
   const { id, visibility, language } = status;
   const statusPeekText = statusPeek(status);
+  const translationTargetLanguage = getTranslateTargetLanguage(true);
+  const inlineTranslateEnabled =
+    snapStates.settings.contentTranslation &&
+    snapStates.settings.contentTranslationAutoInline &&
+    !!statusPeekText &&
+    (!language || !localeMatch([language], [translationTargetLanguage]));
   const sKey = statusKey(id, instance);
   const filterInfo = isFiltered(status.filtered, filterContext);
   return (
@@ -1032,7 +1041,9 @@ export function TimelineStatusCompact({ status, instance, filterContext }) {
         <ThreadBadge index={snapStates.statusThreadNumber[sKey]} />
       </div>
       <div
-        class="content-compact"
+        class={`content-compact ${
+          inlineTranslateEnabled ? 'has-inline-translation' : ''
+        }`}
         title={statusPeekText}
         lang={language}
         dir="auto"
@@ -1054,7 +1065,24 @@ export function TimelineStatusCompact({ status, instance, filterContext }) {
           </b>
         ) : (
           <>
-            {statusPeekText}
+            {inlineTranslateEnabled ? (
+              <TranslationBlock
+                inline
+                forceTranslate
+                inlineClassName="status-translation-inline status-translation-inline-compact"
+                inlineContentClassName="status-translation-inline-content status-translation-inline-compact-content"
+                sourceLanguage={language}
+                text={statusPeekText}
+              >
+                <span class="status-translation-inline-compact-source">
+                  {statusPeekText}
+                </span>
+              </TranslationBlock>
+            ) : (
+              <span class="status-translation-inline-compact-source">
+                {statusPeekText}
+              </span>
+            )}
             {status.sensitive && status.spoilerText && (
               <>
                 {' '}

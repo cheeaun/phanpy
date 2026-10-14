@@ -1148,7 +1148,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   text-shadow: 0 1px var(--bg-color);
 }
 .status-carousel > ul {
-  --carousel-gap: 16px;
+  --carousel-gap: 12px;
   display: flex;
   overflow-x: auto;
   overflow-y: clip;
@@ -1389,7 +1389,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   color: var(--text-color) !important;
 }
 
-:is(button, .button).plain.has-badge:after {
+:is(button, .button).has-badge:after {
   content: '';
   display: inline-block;
   position: absolute;

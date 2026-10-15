@@ -73,7 +73,6 @@
     "web-haptics": "~0.0.6"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "7.29.7",
     "@emnapi/core": "~1.11.3",
     "@emnapi/runtime": "~1.11.3",
     "@iconify/utils": "~3.1.7",
@@ -103,8 +102,7 @@
   },
   "//notes": [
     "@emnapi/core and @emnapi/runtime are temporary fixes for https://github.com/napi-rs/napi-rs/issues/3174",
-    "playwright uses @types/node",
-    "@babel/plugin-transform-runtime pins the 7.x line so npm doesn't auto-install 8.x (which requires @babel/core@^8) as an optional peer of @rolldown/plugin-babel from @lingui/vite-plugin"
+    "playwright uses @types/node"
   ],
   "postcss": {
     "plugins": {

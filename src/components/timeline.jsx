@@ -947,6 +947,11 @@ function StatusCarousel({ title, class: className, children }) {
   const carouselRef = useRef();
   const startButtonRef = useRef();
   const endButtonRef = useRef();
+  const visibleItemsRef = useRef([]);
+
+  const [activeIndexes, setActiveIndexes] = useState([0]);
+  const [columnCount, setColumnCount] = useState(0);
+  const [hasOverflow, setHasOverflow] = useState(false);
 
   const [render, setRender] = useState(false);
   useEffect(() => {
@@ -955,10 +960,85 @@ function StatusCarousel({ title, class: className, children }) {
     }, 1);
   }, []);
 
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+    let rafId;
+    const computeActiveIndexes = () => {
+      rafId = null;
+      const carouselRect = carousel.getBoundingClientRect();
+      // Count only visible columns (empty items are hidden via CSS,
+      // grouped items share one column)
+      const items = Array.from(carousel.children).filter(
+        (el) => el.tagName === 'LI' && el.getBoundingClientRect().width > 0,
+      );
+      visibleItemsRef.current = items;
+      const nextActiveIndexes = [];
+      items.forEach((el, i) => {
+        const rect = el.getBoundingClientRect();
+        const overlap =
+          Math.min(rect.right, carouselRect.right) -
+          Math.max(rect.left, carouselRect.left);
+        if (
+          overlap > 0 &&
+          overlap >= Math.min(rect.width, carouselRect.width) * 0.5
+        ) {
+          nextActiveIndexes.push(i);
+        }
+      });
+      setActiveIndexes((prev) =>
+        prev.length === nextActiveIndexes.length &&
+        prev.every((index, i) => index === nextActiveIndexes[i])
+          ? prev
+          : nextActiveIndexes,
+      );
+      setColumnCount(items.length);
+      setHasOverflow(carousel.scrollWidth > carousel.clientWidth);
+    };
+    const scheduleCompute = () => {
+      if (rafId == null) rafId = requestAnimationFrame(computeActiveIndexes);
+    };
+    computeActiveIndexes();
+    carousel.addEventListener('scroll', scheduleCompute, { passive: true });
+    const resizeObserver = new ResizeObserver(scheduleCompute);
+    resizeObserver.observe(carousel);
+    return () => {
+      carousel.removeEventListener('scroll', scheduleCompute);
+      resizeObserver.disconnect();
+      if (rafId != null) cancelAnimationFrame(rafId);
+    };
+  }, [render]);
+
+  const scrollToItem = (index) => {
+    visibleItemsRef.current[index]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    });
+  };
+
   return (
     <div class={`status-carousel ${className}`}>
       <header>
         <h3>{title}</h3>
+        {columnCount > 1 && hasOverflow && (
+          <div class="carousel-pagination">
+            {Array.from({ length: columnCount }).map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                class={`carousel-pagination-dot ${
+                  activeIndexes.includes(i) ? 'active' : ''
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  scrollToItem(i);
+                }}
+              />
+            ))}
+          </div>
+        )}
         <span>
           <button
             ref={startButtonRef}

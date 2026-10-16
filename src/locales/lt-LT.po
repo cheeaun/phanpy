@@ -8,7 +8,7 @@ msgstr ""
 "Language: lt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-12 09:32\n"
+"PO-Revision-Date: 2026-10-16 08:20\n"
 "Last-Translator: \n"
 "Language-Team: Lithuanian\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
@@ -246,7 +246,7 @@ msgid "Original"
 msgstr "Originalūs"
 
 #: src/components/account-info.jsx:1065
-#: src/components/status.jsx:2868
+#: src/components/status.jsx:2873
 #: src/pages/account-statuses.jsx:428
 #: src/pages/catchup.jsx:75
 #: src/pages/catchup.jsx:1597
@@ -259,7 +259,7 @@ msgstr "Atsakymai"
 
 #: src/components/account-info.jsx:1070
 #: src/components/quotes-modal.jsx:81
-#: src/components/status.jsx:2873
+#: src/components/status.jsx:2878
 #: src/pages/catchup.jsx:76
 #: src/pages/catchup.jsx:1600
 #: src/pages/year-in-posts.jsx:1402
@@ -318,8 +318,8 @@ msgstr "Peržiūrėti įrašų statistiką"
 #: src/components/shortcuts-settings.jsx:248
 #: src/components/shortcuts-settings.jsx:601
 #: src/components/shortcuts-settings.jsx:802
-#: src/components/status.jsx:3568
-#: src/components/status.jsx:3780
+#: src/components/status.jsx:3590
+#: src/components/status.jsx:3787
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:48
 #: src/pages/catchup.jsx:1734
@@ -511,7 +511,7 @@ msgstr ""
 #: src/components/edit-profile-sheet.jsx:108
 #: src/components/edit-profile-sheet.jsx:120
 #: src/components/list-add-edit.jsx:188
-#: src/components/status.jsx:1715
+#: src/components/status.jsx:1718
 #: src/pages/filters.jsx:605
 #: src/pages/scheduled-posts.jsx:398
 msgid "Delete…"
@@ -718,8 +718,8 @@ msgid "Attachment #{i} failed"
 msgstr "Nepavyko #{i} priedas."
 
 #: src/components/compose.jsx:1538
-#: src/components/status.jsx:2600
-#: src/components/timeline.jsx:1065
+#: src/components/status.jsx:2605
+#: src/components/timeline.jsx:1145
 msgid "Content warning"
 msgstr "Turinio įspėjimas"
 
@@ -796,7 +796,7 @@ msgid "Quiet public"
 msgstr ""
 
 #: src/components/compose.jsx:2078
-#: src/components/status.jsx:2479
+#: src/components/status.jsx:2484
 #: src/utils/visibility-text.jsx:8
 msgid "Private mention"
 msgstr "Privatus paminėjimas"
@@ -809,10 +809,10 @@ msgstr "Planuoti"
 #: src/components/keyboard-shortcuts-help.jsx:166
 #: src/components/status.jsx:1121
 #: src/components/status.jsx:1170
-#: src/components/status.jsx:2224
-#: src/components/status.jsx:2225
-#: src/components/status.jsx:3003
-#: src/components/status.jsx:3015
+#: src/components/status.jsx:2227
+#: src/components/status.jsx:2228
+#: src/components/status.jsx:3012
+#: src/components/status.jsx:3024
 msgid "Reply"
 msgstr "Atsakyti"
 
@@ -934,14 +934,14 @@ msgstr ""
 #: src/components/edit-history-controls.jsx:35
 #: src/components/gif-picker-modal.jsx:208
 #: src/components/media-modal.jsx:504
-#: src/components/timeline.jsx:978
+#: src/components/timeline.jsx:1058
 msgid "Previous"
 msgstr "Ankstesnis"
 
 #: src/components/edit-history-controls.jsx:47
 #: src/components/gif-picker-modal.jsx:226
 #: src/components/media-modal.jsx:523
-#: src/components/timeline.jsx:995
+#: src/components/timeline.jsx:1075
 msgid "Next"
 msgstr "Kitas"
 
@@ -954,11 +954,11 @@ msgstr ""
 #: src/components/media-attachment.jsx:465
 #: src/components/media-modal.jsx:398
 #: src/components/related-actions.jsx:267
-#: src/components/status.jsx:2249
-#: src/components/status.jsx:2266
-#: src/components/status.jsx:2405
-#: src/components/status.jsx:3201
-#: src/components/status.jsx:3204
+#: src/components/status.jsx:2252
+#: src/components/status.jsx:2269
+#: src/components/status.jsx:2410
+#: src/components/status.jsx:3223
+#: src/components/status.jsx:3226
 #: src/pages/account-statuses.jsx:676
 #: src/pages/accounts.jsx:155
 #: src/pages/collection.jsx:288
@@ -1314,8 +1314,8 @@ msgstr "<0>l</0> arba <1>f</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:187
 #: src/components/status.jsx:1213
-#: src/components/status.jsx:3052
-#: src/components/status.jsx:3118
+#: src/components/status.jsx:3061
+#: src/components/status.jsx:3140
 msgid "Boost"
 msgstr "Pasidalinti"
 
@@ -1325,16 +1325,16 @@ msgstr "<0>Lyg2 (Shift)</0> + <1>b</1>"
 
 #: src/components/keyboard-shortcuts-help.jsx:200
 #: src/components/status.jsx:1326
-#: src/components/status.jsx:3154
-#: src/components/status.jsx:3168
+#: src/components/status.jsx:3176
+#: src/components/status.jsx:3190
 msgctxt "saved post"
 msgid "Save"
 msgstr ""
 
 #: src/components/keyboard-shortcuts-help.jsx:204
 #: src/components/status.jsx:1330
-#: src/components/status.jsx:3163
-#: src/components/status.jsx:3177
+#: src/components/status.jsx:3185
+#: src/components/status.jsx:3199
 msgid "Bookmark"
 msgstr "Prid. į žym."
 
@@ -1436,14 +1436,14 @@ msgid "Media description"
 msgstr "Medijos aprašymas"
 
 #: src/components/media-alt-modal.jsx:67
-#: src/components/status.jsx:1398
-#: src/components/status.jsx:1407
+#: src/components/status.jsx:1403
+#: src/components/status.jsx:1412
 #: src/components/translation-block.jsx:270
 msgid "Translate"
 msgstr "Versti"
 
 #: src/components/media-alt-modal.jsx:78
-#: src/components/status.jsx:1428
+#: src/components/status.jsx:1433
 msgid "Speak"
 msgstr "Kalbėti"
 
@@ -1568,9 +1568,9 @@ msgstr "Filtruota: {filterTitleStr}"
 
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:74
-#: src/components/status.jsx:3706
-#: src/components/status.jsx:3784
-#: src/components/timeline.jsx:1054
+#: src/components/status.jsx:3728
+#: src/components/status.jsx:3791
+#: src/components/timeline.jsx:1134
 #: src/pages/catchup.jsx:80
 #: src/pages/catchup.jsx:2055
 msgid "Filtered"
@@ -1960,14 +1960,14 @@ msgstr "Skaityti daugiau →"
 
 #: src/components/open-link-sheet.jsx:30
 #: src/components/related-actions.jsx:573
-#: src/components/status.jsx:1519
+#: src/components/status.jsx:1522
 #: src/pages/collection.jsx:329
 msgid "Link copied"
 msgstr "Nukopijuota nuorada"
 
 #: src/components/open-link-sheet.jsx:33
 #: src/components/related-actions.jsx:576
-#: src/components/status.jsx:1522
+#: src/components/status.jsx:1525
 #: src/pages/collection.jsx:332
 msgid "Unable to copy link"
 msgstr "Nepavyksta atidaryti nuorodos."
@@ -1980,14 +1980,14 @@ msgstr ""
 #: src/components/post-embed-modal.jsx:233
 #: src/components/related-actions.jsx:582
 #: src/components/shortcuts-settings.jsx:1176
-#: src/components/status.jsx:1528
+#: src/components/status.jsx:1531
 #: src/pages/collection.jsx:338
 msgid "Copy"
 msgstr "Kopijuoti"
 
 #: src/components/open-link-sheet.jsx:82
 #: src/components/related-actions.jsx:603
-#: src/components/status.jsx:1550
+#: src/components/status.jsx:1553
 #: src/pages/collection.jsx:355
 msgid "Share…"
 msgstr "Bendrinti…"
@@ -2067,7 +2067,7 @@ msgid "Refresh"
 msgstr "Atnaujinti"
 
 #: src/components/post-embed-modal.jsx:202
-#: src/components/status.jsx:1563
+#: src/components/status.jsx:1566
 msgid "Embed post"
 msgstr "Įterptas įrašas"
 
@@ -2332,7 +2332,7 @@ msgstr ""
 
 #: src/components/related-actions.jsx:597
 #: src/components/shortcuts-settings.jsx:1194
-#: src/components/status.jsx:1544
+#: src/components/status.jsx:1547
 msgid "Sharing doesn't seem to work."
 msgstr "Atrodo, kad bendrinimas neveikia."
 
@@ -2671,7 +2671,7 @@ msgid "Not available in current view mode"
 msgstr "Nepasiekiama dabartiniame rodinio režime."
 
 #: src/components/shortcuts-settings.jsx:397
-#: src/components/status.jsx:1677
+#: src/components/status.jsx:1680
 #: src/pages/collection.jsx:400
 #: src/pages/list.jsx:195
 msgid "Edit"
@@ -2885,13 +2885,14 @@ msgid "You are not allowed to quote this post"
 msgstr ""
 
 #: src/components/status.jsx:376
-#: src/components/status.jsx:3346
-#: src/components/status.jsx:3347
-#: src/components/status.jsx:3348
+#: src/components/status.jsx:3368
+#: src/components/status.jsx:3369
+#: src/components/status.jsx:3370
 msgid "Post unavailable"
 msgstr ""
 
 #: src/components/status.jsx:642
+#: src/components/status.jsx:3736
 msgid "<0/> <1>boosted</1>"
 msgstr "<0/> <1>pasidalino</1>"
 
@@ -2965,49 +2966,49 @@ msgstr ""
 
 #: src/components/status.jsx:1213
 #: src/components/status.jsx:1291
-#: src/components/status.jsx:3052
-#: src/components/status.jsx:3116
+#: src/components/status.jsx:3061
+#: src/components/status.jsx:3138
 msgid "Unboost"
 msgstr "Nebepasidalinti"
 
 #: src/components/status.jsx:1252
-#: src/components/status.jsx:3101
+#: src/components/status.jsx:3105
 msgid "Quote with link"
 msgstr ""
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1270
-#: src/components/status.jsx:1878
+#: src/components/status.jsx:1881
 msgid "Unboosted @{0}'s post"
 msgstr "Panaikintas @{0} įrašo pasidalinimas"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:1271
-#: src/components/status.jsx:1879
+#: src/components/status.jsx:1882
 msgid "Boosted @{0}'s post"
 msgstr "Pasidalintas @{0} įrašas"
 
 #: src/components/status.jsx:1293
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3137
 msgid "Boost/Quote…"
 msgstr ""
 
 #: src/components/status.jsx:1294
-#: src/components/status.jsx:3115
+#: src/components/status.jsx:3137
 msgid "Boost…"
 msgstr "Pasidalinti…"
 
 #: src/components/status.jsx:1306
-#: src/components/status.jsx:2239
-#: src/components/status.jsx:3135
+#: src/components/status.jsx:2242
+#: src/components/status.jsx:3157
 msgid "Unlike"
 msgstr "Nebepatinka"
 
 #: src/components/status.jsx:1307
-#: src/components/status.jsx:2239
-#: src/components/status.jsx:2240
-#: src/components/status.jsx:3135
-#: src/components/status.jsx:3136
+#: src/components/status.jsx:2242
+#: src/components/status.jsx:2243
+#: src/components/status.jsx:3157
+#: src/components/status.jsx:3158
 msgid "Like"
 msgstr "Patinka"
 
@@ -3018,249 +3019,245 @@ msgid "Unsave"
 msgstr ""
 
 #: src/components/status.jsx:1324
-#: src/components/status.jsx:3163
+#: src/components/status.jsx:3185
 msgid "Unbookmark"
 msgstr "Pašalinti iš žymių"
 
 #: src/components/status.jsx:1366
+#: src/components/status.jsx:3122
 msgid "View Quotes"
 msgstr ""
 
-#: src/components/status.jsx:1378
+#: src/components/status.jsx:1383
 msgid "Unwrap quote chain"
 msgstr ""
 
-#: src/components/status.jsx:1445
+#: src/components/status.jsx:1450
 msgid "Post text copied"
 msgstr "Įrašo tekstas nukopijuotas"
 
-#: src/components/status.jsx:1448
+#: src/components/status.jsx:1453
 msgid "Unable to copy post text"
 msgstr "Nepavyksta nukopijuoti įrašo teksto."
 
-#: src/components/status.jsx:1454
+#: src/components/status.jsx:1459
 msgid "Copy post text"
 msgstr "Kopijuoti įrašo tekstą"
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1472
+#: src/components/status.jsx:1477
 msgid "View post by <0>@{0}</0>"
 msgstr "Peržiūrėti įrašą, kurį sukūrė <0>@{0}</0>"
 
-#: src/components/status.jsx:1493
+#: src/components/status.jsx:1496
 msgid "Show Edit History"
 msgstr "Rodyti redagavimo istoriją"
 
-#: src/components/status.jsx:1496
+#: src/components/status.jsx:1499
 msgid "Edited: {editedDateText}"
 msgstr "Redaguota: {editedDateText}"
 
-#: src/components/status.jsx:1580
+#: src/components/status.jsx:1583
 msgid "Conversation unmuted"
 msgstr "Atšauktas pokalbio nutildymas"
 
-#: src/components/status.jsx:1580
+#: src/components/status.jsx:1583
 msgid "Conversation muted"
 msgstr "Pokalbis nutildytas"
 
-#: src/components/status.jsx:1586
+#: src/components/status.jsx:1589
 msgid "Unable to unmute conversation"
 msgstr "Nepavyksta atšaukti pokalbio nutildymą."
 
-#: src/components/status.jsx:1587
+#: src/components/status.jsx:1590
 msgid "Unable to mute conversation"
 msgstr "Nepavyksta nutildyti pokalbio."
 
-#: src/components/status.jsx:1596
+#: src/components/status.jsx:1599
 msgid "Unmute conversation"
 msgstr "Atšaukti pokalbio nutildymą"
 
-#: src/components/status.jsx:1603
+#: src/components/status.jsx:1606
 msgid "Mute conversation"
 msgstr "Nutildyti pokalbį"
 
-#: src/components/status.jsx:1620
+#: src/components/status.jsx:1623
 msgid "Post unpinned from profile"
 msgstr "Įrašas atsegtas iš profilio"
 
-#: src/components/status.jsx:1621
+#: src/components/status.jsx:1624
 msgid "Post pinned to profile"
 msgstr "Įrašas prisegtas prie profilio"
 
-#: src/components/status.jsx:1626
+#: src/components/status.jsx:1629
 msgid "Unable to unpin post"
 msgstr "Nepavyksta atsegti įrašo."
 
-#: src/components/status.jsx:1626
+#: src/components/status.jsx:1629
 msgid "Unable to pin post"
 msgstr "Nepavyksta atsegti įrašo."
 
-#: src/components/status.jsx:1635
+#: src/components/status.jsx:1638
 msgid "Unpin from profile"
 msgstr "Atsegti iš profilio"
 
-#: src/components/status.jsx:1642
+#: src/components/status.jsx:1645
 msgid "Pin to profile"
 msgstr "Prisegti prie profilio"
 
-#: src/components/status.jsx:1655
+#: src/components/status.jsx:1658
 #: src/pages/settings.jsx:317
 msgid "Quote settings"
 msgstr ""
 
-#: src/components/status.jsx:1688
+#: src/components/status.jsx:1691
 msgid "Delete this post?"
 msgstr "Ištrinti šį įrašą?"
 
-#: src/components/status.jsx:1704
+#: src/components/status.jsx:1707
 msgid "Post deleted"
 msgstr "Įrašas ištrintas"
 
-#: src/components/status.jsx:1707
+#: src/components/status.jsx:1710
 msgid "Unable to delete post"
 msgstr "Nepavyksta ištrinti įrašo."
 
 #. placeholder {0}: username || acct
-#: src/components/status.jsx:1732
+#: src/components/status.jsx:1735
 msgid "Remove my post from <0>@{0}</0>'s post?"
 msgstr ""
 
-#: src/components/status.jsx:1754
+#: src/components/status.jsx:1757
 msgid "Quote removed"
 msgstr ""
 
-#: src/components/status.jsx:1758
+#: src/components/status.jsx:1761
 msgid "Unable to remove quote"
 msgstr ""
 
-#: src/components/status.jsx:1764
+#: src/components/status.jsx:1767
 msgid "Remove quote…"
 msgstr ""
 
-#: src/components/status.jsx:1778
+#: src/components/status.jsx:1781
 msgid "Report post…"
 msgstr "Pranešti apie įrašą…"
 
-#: src/components/status.jsx:2240
-#: src/components/status.jsx:2276
-#: src/components/status.jsx:3136
+#: src/components/status.jsx:2243
+#: src/components/status.jsx:2279
+#: src/components/status.jsx:3158
 msgid "Liked"
 msgstr "Patinka"
 
-#: src/components/status.jsx:2273
-#: src/components/status.jsx:3118
+#: src/components/status.jsx:2276
+#: src/components/status.jsx:3140
 msgid "Boosted"
 msgstr "Pasidalinta"
 
 #. Post is saved to Saved Posts.
 #. Post is saved to Saved Posts.
-#: src/components/status.jsx:2285
-#: src/components/status.jsx:3172
+#: src/components/status.jsx:2288
+#: src/components/status.jsx:3194
 msgid "Saved"
 msgstr ""
 
-#: src/components/status.jsx:2289
-#: src/components/status.jsx:3177
+#: src/components/status.jsx:2292
+#: src/components/status.jsx:3199
 msgid "Bookmarked"
 msgstr "Pridėta"
 
-#: src/components/status.jsx:2294
+#: src/components/status.jsx:2297
 msgid "Pinned"
 msgstr "Prisegta"
 
-#: src/components/status.jsx:2351
-#: src/components/status.jsx:2883
+#: src/components/status.jsx:2362
+#: src/components/status.jsx:2888
 msgid "Deleted"
 msgstr "Ištrinta"
 
-#: src/components/status.jsx:2389
-#: src/components/status.jsx:2456
+#: src/components/status.jsx:2400
+#: src/components/status.jsx:2461
 msgid "{repliesCount, plural, one {# reply} other {# replies}}"
 msgstr "{repliesCount, plural, one {# atsakymas} few {# atsakymai} many {# atsakymo} other {# atsakymų}}"
 
-#: src/components/status.jsx:2401
-#: src/components/status.jsx:2468
-#: src/components/status.jsx:2913
+#: src/components/status.jsx:2406
+#: src/components/status.jsx:2473
+#: src/components/status.jsx:2918
 msgid "Edited"
 msgstr "Redaguota"
 
-#: src/components/status.jsx:2563
-#: src/components/status.jsx:2625
+#: src/components/status.jsx:2568
+#: src/components/status.jsx:2630
 #: src/pages/collection.jsx:590
 msgid "Show content"
 msgstr "Rodyti turinį"
 
-#: src/components/status.jsx:2563
-#: src/components/status.jsx:2625
-#: src/components/status.jsx:2732
+#: src/components/status.jsx:2568
+#: src/components/status.jsx:2630
+#: src/components/status.jsx:2737
 msgid "Show less"
 msgstr "Rodyti mažiau"
 
 #. placeholder {0}: filterInfo.titlesStr
 #. placeholder {0}: filterInfo?.titlesStr
-#: src/components/status.jsx:2728
+#: src/components/status.jsx:2733
 #: src/pages/catchup.jsx:2054
 msgid "Filtered: {0}"
 msgstr "Filtruota: {0}"
 
-#: src/components/status.jsx:2732
+#: src/components/status.jsx:2737
 msgid "Show media"
 msgstr "Rodyti mediją"
 
-#: src/components/status.jsx:3004
-#: src/components/status.jsx:3016
+#: src/components/status.jsx:3013
+#: src/components/status.jsx:3025
 msgid "Comments"
 msgstr "Komentarai"
 
 #. "Saved" is Saved Posts.
-#: src/components/status.jsx:3158
+#: src/components/status.jsx:3180
 msgid "Remove from Saved"
 msgstr ""
 
-#: src/components/status.jsx:3344
+#: src/components/status.jsx:3366
 msgid "Post hidden by your filters"
 msgstr "Įrašas paslėptas pagal jūsų filtrus"
 
-#: src/components/status.jsx:3345
+#: src/components/status.jsx:3367
 msgid "Post pending"
 msgstr ""
 
-#: src/components/status.jsx:3349
+#: src/components/status.jsx:3371
 msgid "Post removed by author"
 msgstr ""
 
-#: src/components/status.jsx:3350
+#: src/components/status.jsx:3372
 msgid "Post hidden because you've blocked @{name}."
 msgstr ""
 
-#: src/components/status.jsx:3352
+#: src/components/status.jsx:3374
 msgid "Post hidden because you've blocked {domain}."
 msgstr ""
 
-#: src/components/status.jsx:3353
+#: src/components/status.jsx:3375
 msgid "Post hidden because you've muted @{name}."
 msgstr ""
 
-#: src/components/status.jsx:3428
+#: src/components/status.jsx:3450
 msgid "Show anyway"
 msgstr ""
 
-#: src/components/status.jsx:3573
+#: src/components/status.jsx:3595
 msgid "Edit History"
 msgstr "Redagavimo istoriją"
 
-#: src/components/status.jsx:3577
+#: src/components/status.jsx:3599
 msgid "Failed to load history"
 msgstr "Nepavyko įkelti istorijos."
 
-#: src/components/status.jsx:3582
+#: src/components/status.jsx:3604
 msgid "Loading…"
 msgstr "Įkeliama…"
-
-#. [Name] [Visibility icon] boosted
-#: src/components/status.jsx:3714
-msgid "<0/> <1/> boosted"
-msgstr "<0/> <1/> pasidalino"
 
 #: src/components/thread-badge.jsx:22
 #: src/components/thread-badge.jsx:37
@@ -3303,7 +3300,7 @@ msgid "Pinned posts"
 msgstr "Prisegti įrašai"
 
 #. placeholder {0}: filterInfo.titlesStr
-#: src/components/timeline.jsx:1049
+#: src/components/timeline.jsx:1129
 msgid "<0>Filtered</0>: <1>{0}</1>"
 msgstr "<0>Filtruota</0>: <1>{0}</1>"
 

@@ -3733,9 +3733,9 @@ function FilteredStatus({
         <span class="status-filtered-info">
           <span class="status-filtered-info-1">
             {isReblog ? (
-              <Trans comment="[Name] [Visibility icon] boosted">
+              <Trans>
                 <NameText account={status.account} instance={instance} />{' '}
-                boosted
+                <span>boosted</span>
               </Trans>
             ) : isFollowedTags ? (
               <>

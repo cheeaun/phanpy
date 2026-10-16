@@ -614,12 +614,28 @@
   /* text-overflow: ellipsis; */
 }
 .status > .container > .meta .meta-name {
-  mask-image: linear-gradient(var(--to-backward), transparent, black 16px);
+  display: flex;
+  gap: 0;
   flex-grow: 1;
 
-  .name-text b {
-    opacity: 0.75;
+  .meta-name-inner {
+    min-width: 0;
+    overflow: hidden;
+    flex: 0 1 auto;
+    padding-inline-end: 8px;
+    mask-image: linear-gradient(var(--to-backward), transparent, black 8px);
+
+    .name-text b {
+      opacity: 0.75;
+    }
   }
+}
+.status > .container > .meta .meta-name-extras {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.5;
 }
 .status.large > .container > .meta {
   min-height: 50px;

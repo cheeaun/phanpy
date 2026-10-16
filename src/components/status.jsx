@@ -1479,9 +1479,7 @@ function Status({
                 <span class="bidi-isolate">@{username || acct}</span>
               </Trans>
               <br />
-              <span class="more-insignificant">
-                {_(visibilityText[visibility])} • {createdDateText}
-              </span>
+              <span class="more-insignificant">{createdDateText}</span>
             </small>
           </MenuLink>
         </>
@@ -2327,12 +2325,20 @@ function Status({
           {!!(status.account || createdAt) && (
             <div class="meta">
               <span class="meta-name">
-                <NameText
-                  account={status.account}
-                  instance={instance}
-                  showAvatar={size === 's'}
-                  showAcct={isSizeLarge}
-                />
+                <span class="meta-name-inner">
+                  <NameText
+                    account={status.account}
+                    instance={instance}
+                    showAvatar={size === 's'}
+                    showAcct={isSizeLarge}
+                  />
+                </span>
+                {visibility === 'private' && (
+                  <span class="meta-name-extras">
+                    <Icon icon="chevron-right" />{' '}
+                    {_(visibilityText[visibility])}
+                  </span>
+                )}
               </span>
               {withinContext && isThread && (
                 <ThreadBadge
@@ -2395,12 +2401,6 @@ function Status({
                           one: '# reply',
                           other: '# replies',
                         })}
-                      />
-                    ) : visibility !== 'public' && visibility !== 'direct' ? (
-                      <Icon
-                        icon={visibilityIconsMap[visibility]}
-                        alt={_(visibilityText[visibility])}
-                        size="s"
                       />
                     ) : editedAt && size === 's' ? (
                       <Icon icon="pencil" size="s" alt={t`Edited`} />
@@ -2928,11 +2928,15 @@ function Status({
                         </time>
                       </span>
                     )}{' '}
-                    &bull;{' '}
-                    {visibility !== 'public' && visibility !== 'direct' && (
-                      <Icon icon={visibilityIconsMap[visibility]} alt="" />
-                    )}{' '}
-                    <span>{_(visibilityText[visibility])}</span>
+                    {visibility !== 'private' && (
+                      <>
+                        &bull;{' '}
+                        {visibility !== 'public' && visibility !== 'direct' && (
+                          <Icon icon={visibilityIconsMap[visibility]} alt="" />
+                        )}{' '}
+                        <span>{_(visibilityText[visibility])}</span>
+                      </>
+                    )}
                   </>
                 )}
               </div>
@@ -3731,21 +3735,11 @@ function FilteredStatus({
             {isReblog ? (
               <Trans comment="[Name] [Visibility icon] boosted">
                 <NameText account={status.account} instance={instance} />{' '}
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={_(visibilityText[visibility])}
-                  size="s"
-                />{' '}
                 boosted
               </Trans>
             ) : isFollowedTags ? (
               <>
                 <NameText account={status.account} instance={instance} />{' '}
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={_(visibilityText[visibility])}
-                  size="s"
-                />{' '}
                 <span>
                   {snapStates.statusFollowedTags[sKey]
                     .slice(0, 3)
@@ -3759,11 +3753,6 @@ function FilteredStatus({
             ) : (
               <>
                 <NameText account={status.account} instance={instance} />{' '}
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={_(visibilityText[visibility])}
-                  size="s"
-                />{' '}
                 <RelativeTime datetime={createdAtDate} format="micro" />
               </>
             )}

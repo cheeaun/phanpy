@@ -429,6 +429,20 @@ function Settings({ onClose }) {
                     </span>
                   </label>
                 </li>
+                <li class="block">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={snapStates.settings.hidePostMetrics}
+                      onChange={(e) => {
+                        states.settings.hidePostMetrics = e.target.checked;
+                      }}
+                    />
+                    <span>
+                      <Trans>Hide post metrics</Trans>
+                    </span>
+                  </label>
+                </li>
               </ul>
             </section>
           </>

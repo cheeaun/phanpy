@@ -696,7 +696,7 @@ function Status({
   // const targetLanguage = getTranslateTargetLanguage(true);
   // const contentTranslationHideLanguages =
   //   snapStates.settings.contentTranslationHideLanguages || [];
-  const { contentTranslation, contentTranslationAutoInline } =
+  const { contentTranslation, contentTranslationAutoInline, hidePostMetrics } =
     snapStates.settings;
   if (!contentTranslation) enableTranslate = false;
   const inlineTranslate = useMemo(() => {
@@ -1114,7 +1114,7 @@ function Status({
     <>
       <Icon icon="comment" />
       <span>
-        {repliesCount > 0
+        {!hidePostMetrics && repliesCount > 0
           ? shortenNumber(repliesCount)
           : tooManyMentions
             ? t`Reply…`
@@ -1283,7 +1283,7 @@ function Status({
                 <Icon icon="rocket" />
               )}
               <span>
-                {reblogsCount > 0 || quotesCount > 0
+                {!hidePostMetrics && (reblogsCount > 0 || quotesCount > 0)
                   ? `${reblogsCount > 0 ? shortenNumber(reblogsCount) : ''}${
                       reblogsCount > 0 && quotesCount > 0 ? '+' : ''
                     }${quotesCount > 0 ? shortenNumber(quotesCount) : ''}`
@@ -1300,7 +1300,7 @@ function Status({
             >
               <Icon icon="heart" />
               <span>
-                {favouritesCount > 0
+                {!hidePostMetrics && favouritesCount > 0
                   ? shortenNumber(favouritesCount)
                   : favourited
                     ? t`Unlike`
@@ -1365,7 +1365,7 @@ function Status({
               <span class="menu-grow">
                 <Trans>View Quotes</Trans>
               </span>
-              {quotesCount > 0 && (
+              {!hidePostMetrics && quotesCount > 0 && (
                 <small class="more-insignificant">
                   {shortenNumber(quotesCount)}
                 </small>
@@ -2866,20 +2866,22 @@ function Status({
               </>
             )}
           </div>
-          {!isSizeLarge && (showCommentCount || showQuoteCount) && (
-            <div class="content-comment-hint insignificant">
-              {showCommentCount && (
-                <>
-                  <Icon icon="comment2" alt={t`Replies`} /> {repliesCount}
-                </>
-              )}{' '}
-              {showQuoteCount && (
-                <>
-                  <Icon icon="quote" alt={t`Quotes`} /> {quotesCount}
-                </>
-              )}
-            </div>
-          )}
+          {!isSizeLarge &&
+            !hidePostMetrics &&
+            (showCommentCount || showQuoteCount) && (
+              <div class="content-comment-hint insignificant">
+                {showCommentCount && (
+                  <>
+                    <Icon icon="comment2" alt={t`Replies`} /> {repliesCount}
+                  </>
+                )}{' '}
+                {showQuoteCount && (
+                  <>
+                    <Icon icon="quote" alt={t`Quotes`} /> {quotesCount}
+                  </>
+                )}
+              </div>
+            )}
           {isSizeLarge && (
             <>
               <div class="extra-meta">
@@ -3060,7 +3062,7 @@ function Status({
                         <span class="menu-grow">
                           {reblogged ? t`Unboost` : t`Boost`}
                         </span>
-                        {reblogsCount > 0 && (
+                        {!hidePostMetrics && reblogsCount > 0 && (
                           <small class="more-insignificant">
                             {shortenNumber(reblogsCount)}
                           </small>
@@ -3121,9 +3123,11 @@ function Status({
                               <span class="menu-grow">
                                 <Trans>View Quotes</Trans>
                               </span>
-                              <small class="more-insignificant">
-                                {shortenNumber(quotesCount)}
-                              </small>
+                              {!hidePostMetrics && (
+                                <small class="more-insignificant">
+                                  {shortenNumber(quotesCount)}
+                                </small>
+                              )}
                             </MenuItem>
                           </>
                         )}

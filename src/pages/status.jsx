@@ -1211,14 +1211,16 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   showActionsBar={!!descendant}
                 />
               )}
-              {ancestor && repliesCount > 1 && (
-                <div class="replies-link">
-                  <Icon icon="comment2" alt={t`Replies`} />{' '}
-                  <span title={repliesCount}>
-                    {shortenNumber(repliesCount)}
-                  </span>
-                </div>
-              )}{' '}
+              {!snapStates.settings.hidePostMetrics &&
+                ancestor &&
+                repliesCount > 1 && (
+                  <div class="replies-link">
+                    <Icon icon="comment2" alt={t`Replies`} />{' '}
+                    <span title={repliesCount}>
+                      {shortenNumber(repliesCount)}
+                    </span>
+                  </div>
+                )}{' '}
               {/* {replies?.length > LIMIT && (
                         <div class="replies-link">
                           <Icon icon="comment" />{' '}
@@ -1766,6 +1768,7 @@ function SubComments({
   lazyRenderReplies,
 }) {
   const { t } = useLingui();
+  const snapStates = useSnapshot(states);
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Total comments count, including sub-replies
@@ -1941,14 +1944,16 @@ function SubComments({
                   onMediaClick={handleMediaClick}
                   showActionsBar
                 />
-                {!r.replies?.length && r.repliesCount > 0 && (
-                  <div class="replies-link">
-                    <Icon icon="comment2" alt={t`Replies`} />{' '}
-                    <span title={r.repliesCount}>
-                      {shortenNumber(r.repliesCount)}
-                    </span>
-                  </div>
-                )}
+                {!snapStates.settings.hidePostMetrics &&
+                  !r.replies?.length &&
+                  r.repliesCount > 0 && (
+                    <div class="replies-link">
+                      <Icon icon="comment2" alt={t`Replies`} />{' '}
+                      <span title={r.repliesCount}>
+                        {shortenNumber(r.repliesCount)}
+                      </span>
+                    </div>
+                  )}
               </div>
               {/* </Link> */}
               {r.replies?.length && (

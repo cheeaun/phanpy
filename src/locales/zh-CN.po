@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-17 03:54\n"
+"PO-Revision-Date: 2026-10-17 05:04\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -92,7 +92,7 @@ msgstr "站点域名"
 #: src/components/account-info-mini.jsx:57
 #: src/components/account-info.jsx:801
 #: src/components/compose.jsx:2075
-#: src/pages/settings.jsx:333
+#: src/pages/settings.jsx:330
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
 msgstr "粉丝"
@@ -271,7 +271,7 @@ msgstr "引用"
 #: src/pages/catchup.jsx:77
 #: src/pages/catchup.jsx:1599
 #: src/pages/catchup.jsx:2264
-#: src/pages/settings.jsx:1398
+#: src/pages/settings.jsx:1395
 #: src/pages/year-in-posts.jsx:1408
 msgid "Boosts"
 msgstr "转嘟"
@@ -471,7 +471,7 @@ msgstr "标记为敏感内容"
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2063
 #: src/pages/collection.jsx:690
-#: src/pages/settings.jsx:327
+#: src/pages/settings.jsx:324
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "公开"
@@ -760,21 +760,21 @@ msgstr "发布于 <0/>"
 #: src/components/compose.jsx:1995
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:304
-#: src/pages/settings.jsx:375
+#: src/pages/settings.jsx:372
 msgid "Anyone can quote"
 msgstr "任何人都能引用"
 
 #: src/components/compose.jsx:1998
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:305
-#: src/pages/settings.jsx:378
+#: src/pages/settings.jsx:375
 msgid "Your followers can quote"
 msgstr "你的粉丝才能引用"
 
 #: src/components/compose.jsx:2001
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:306
-#: src/pages/settings.jsx:381
+#: src/pages/settings.jsx:378
 msgid "Only you can quote"
 msgstr "只有你才能引用"
 
@@ -790,7 +790,7 @@ msgid "Local"
 msgstr "本站"
 
 #: src/components/compose.jsx:2072
-#: src/pages/settings.jsx:330
+#: src/pages/settings.jsx:327
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "悄悄公开"
@@ -871,7 +871,7 @@ msgid "Custom emojis are not available on this server."
 msgstr "此实例无法使用自定义表情。"
 
 #: src/components/drafts.jsx:62
-#: src/pages/settings.jsx:844
+#: src/pages/settings.jsx:841
 msgid "Unsent drafts"
 msgstr "未发送的草稿"
 
@@ -1635,7 +1635,7 @@ msgstr "补看"
 #: src/pages/mentions.jsx:25
 #: src/pages/mentions.jsx:256
 #: src/pages/notifications.jsx:973
-#: src/pages/settings.jsx:1390
+#: src/pages/settings.jsx:1387
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "提及"
@@ -1689,7 +1689,7 @@ msgstr "更多…"
 #: src/pages/catchup.jsx:2258
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1394
+#: src/pages/settings.jsx:1391
 msgid "Likes"
 msgstr "点赞列表"
 
@@ -2167,12 +2167,12 @@ msgid "Continue unwrapping…"
 msgstr "继续展开…"
 
 #: src/components/quote-settings-sheet.jsx:37
-#: src/pages/settings.jsx:366
+#: src/pages/settings.jsx:363
 msgid "Quote settings updated"
 msgstr "已更新引用设置"
 
 #: src/components/quote-settings-sheet.jsx:47
-#: src/pages/settings.jsx:368
+#: src/pages/settings.jsx:365
 msgid "Failed to update quote settings"
 msgstr "引用设置保存失败"
 
@@ -3106,7 +3106,7 @@ msgid "Pin to profile"
 msgstr "置顶"
 
 #: src/components/status.jsx:1663
-#: src/pages/settings.jsx:340
+#: src/pages/settings.jsx:337
 msgid "Quote settings"
 msgstr "引用设置"
 
@@ -3286,7 +3286,7 @@ msgid "{index}/X"
 msgstr "{index}/X"
 
 #: src/components/timeline.jsx:565
-#: src/pages/settings.jsx:1418
+#: src/pages/settings.jsx:1415
 msgid "New posts"
 msgstr "新嘟文"
 
@@ -4291,7 +4291,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, other {公告}}"
 
 #: src/pages/notifications.jsx:843
-#: src/pages/settings.jsx:1406
+#: src/pages/settings.jsx:1403
 msgid "Follow requests"
 msgstr "关注请求"
 
@@ -4543,251 +4543,247 @@ msgid "Keep navigation bars visible while scrolling"
 msgstr "滚动时保持导航栏可见"
 
 #: src/pages/settings.jsx:274
-msgid "Show username instead of display name on posts"
+msgid "Show username instead of display name on timeline posts"
 msgstr ""
 
-#: src/pages/settings.jsx:279
-msgid "Only on timeline posts"
-msgstr ""
-
-#: src/pages/settings.jsx:288
+#: src/pages/settings.jsx:285
 msgid "Posting"
 msgstr "发嘟"
 
-#: src/pages/settings.jsx:294
+#: src/pages/settings.jsx:291
 msgid "Default visibility"
 msgstr "默认可见性"
 
-#: src/pages/settings.jsx:295
-#: src/pages/settings.jsx:341
-#: src/pages/settings.jsx:389
+#: src/pages/settings.jsx:292
+#: src/pages/settings.jsx:338
+#: src/pages/settings.jsx:386
 msgid "Synced"
 msgstr "已同步"
 
-#: src/pages/settings.jsx:318
+#: src/pages/settings.jsx:315
 msgid "Default visibility updated"
 msgstr "默认可见性已修改"
 
-#: src/pages/settings.jsx:320
+#: src/pages/settings.jsx:317
 msgid "Failed to update default visibility"
 msgstr "默认可见性修改失败"
 
-#: src/pages/settings.jsx:391
+#: src/pages/settings.jsx:388
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
 msgstr "已同步到你账号所在实例的设置。<0>前往你所在的实例 ({instance}) 查看更多设置。</0>"
 
-#: src/pages/settings.jsx:408
+#: src/pages/settings.jsx:405
 msgid "Wellbeing"
 msgstr "健康"
 
-#: src/pages/settings.jsx:422
+#: src/pages/settings.jsx:419
 msgid "Hide Trending timeline"
 msgstr "隐藏热门时间线"
 
-#: src/pages/settings.jsx:436
+#: src/pages/settings.jsx:433
 msgid "Hide Local timeline"
 msgstr "隐藏本站时间线"
 
-#: src/pages/settings.jsx:451
+#: src/pages/settings.jsx:448
 msgid "Hide Federated timeline"
 msgstr "隐藏跨站时间线"
 
-#: src/pages/settings.jsx:465
+#: src/pages/settings.jsx:462
 msgid "Hide post metrics"
 msgstr ""
 
-#: src/pages/settings.jsx:474
+#: src/pages/settings.jsx:471
 msgid "Experiments"
 msgstr "实验性功能"
 
-#: src/pages/settings.jsx:488
+#: src/pages/settings.jsx:485
 msgid "Auto refresh timeline posts"
 msgstr "实时刷新时间线嘟文"
 
-#: src/pages/settings.jsx:502
+#: src/pages/settings.jsx:499
 msgid "Boosts carousel"
 msgstr "转嘟轮播"
 
-#: src/pages/settings.jsx:521
+#: src/pages/settings.jsx:518
 msgid "Post translation"
 msgstr "嘟文翻译"
 
-#: src/pages/settings.jsx:533
+#: src/pages/settings.jsx:530
 msgid "Translate to "
 msgstr "翻译为 "
 
-#: src/pages/settings.jsx:544
+#: src/pages/settings.jsx:541
 msgid "System language ({systemTargetLanguageText})"
 msgstr "系统语言 ({systemTargetLanguageText})"
 
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
-#: src/pages/settings.jsx:570
+#: src/pages/settings.jsx:567
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr "{0, plural, =0 {对下列语言隐藏“翻译”按钮: } other {对下列语言隐藏“翻译”按钮 (#):}}"
 
-#: src/pages/settings.jsx:625
+#: src/pages/settings.jsx:622
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
 msgstr "注意: 此功能使用外部翻译服务，翻译服务由 <0>{TRANSLATION_API_NAME}</0> 驱动。"
 
-#: src/pages/settings.jsx:653
+#: src/pages/settings.jsx:650
 msgid "Auto inline translation"
 msgstr "自动翻译"
 
-#: src/pages/settings.jsx:657
+#: src/pages/settings.jsx:654
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr "自动显示时间线中的嘟文的翻译。仅适用于不含内容警告、媒体或投票的<0>短</0>嘟文。"
 
-#: src/pages/settings.jsx:679
+#: src/pages/settings.jsx:676
 msgid "Paginated timeline (beta)"
 msgstr "时间线分页 (beta)"
 
-#: src/pages/settings.jsx:684
+#: src/pages/settings.jsx:681
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
 msgstr "手动分页时间线嘟文，而非无限滚动。目前仅适用于“首页/关注”时间线。启用此功能后，自动刷新和转嘟轮播将无法使用。"
 
-#: src/pages/settings.jsx:705
+#: src/pages/settings.jsx:702
 msgid "GIF Picker for composer"
 msgstr "为嘟文撰写框集成 GIF 选择器"
 
-#: src/pages/settings.jsx:710
+#: src/pages/settings.jsx:707
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr "注意: 此功能使用外部 GIF 搜索服务，由 <0>GIPHY</0> 驱动。该服务为 G 级(适合所有年龄浏览)，请求已去除跟踪参数，并省略了 referrer 信息，但搜索关键词和 IP 地址信息仍会到达 GIPHY 的服务器。"
 
-#: src/pages/settings.jsx:740
+#: src/pages/settings.jsx:737
 msgid "Image description generator"
 msgstr "图片描述文本生成器"
 
-#: src/pages/settings.jsx:746
+#: src/pages/settings.jsx:743
 msgid "Only for new images while composing new posts."
 msgstr "仅适用于发布新嘟文时新插入的图片。"
 
-#: src/pages/settings.jsx:753
+#: src/pages/settings.jsx:750
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr "注意: 此功能使用外部人工智能服务，由 <0>img-alt-api</0> 驱动。可能效果不佳。仅适用于图像，描述文本内容为英文。"
 
-#: src/pages/settings.jsx:782
+#: src/pages/settings.jsx:779
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr "“云”导入/导出快捷方式配置。"
 
-#: src/pages/settings.jsx:788
+#: src/pages/settings.jsx:785
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr "⚠️⚠️⚠️ 非常不稳定。<0/>配置存储于你对自己账户的备注中。账户的(私人)备注主要用于其他账户，对自己的账户是隐藏的。"
 
-#: src/pages/settings.jsx:799
+#: src/pages/settings.jsx:796
 msgid "Note: This feature uses currently-logged-in server API."
 msgstr "注意: 此功能使用了当前登录的站点的服务端 API。"
 
-#: src/pages/settings.jsx:816
+#: src/pages/settings.jsx:813
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "文字打码模式 <0>(<1>文本</1> → <2>████</2>)</0>"
 
-#: src/pages/settings.jsx:826
+#: src/pages/settings.jsx:823
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr "将文字替换为块，在截图时保护隐私。"
 
-#: src/pages/settings.jsx:852
+#: src/pages/settings.jsx:849
 msgid "Install {CLIENT_NAME}"
 msgstr "安装 {CLIENT_NAME}"
 
-#: src/pages/settings.jsx:861
+#: src/pages/settings.jsx:858
 msgid "About"
 msgstr "关于"
 
-#: src/pages/settings.jsx:900
+#: src/pages/settings.jsx:897
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr "由 <1>@cheeaun</1> <0>开发</0>"
 
-#: src/pages/settings.jsx:929
+#: src/pages/settings.jsx:926
 msgid "Sponsor"
 msgstr "赞助者"
 
-#: src/pages/settings.jsx:937
+#: src/pages/settings.jsx:934
 msgid "Donate"
 msgstr "赞助"
 
-#: src/pages/settings.jsx:953
+#: src/pages/settings.jsx:950
 msgid "What's new"
 msgstr "新增功能"
 
-#: src/pages/settings.jsx:957
+#: src/pages/settings.jsx:954
 msgid "Privacy Policy"
 msgstr "隐私政策"
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:964
+#: src/pages/settings.jsx:961
 msgid "<0>Site:</0> {0}"
 msgstr "<0>站点: </0> {0}"
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:971
+#: src/pages/settings.jsx:968
 msgid "<0>Version:</0> <1/> {0}"
 msgstr "<0> 版本: </0> <1/> {0}"
 
-#: src/pages/settings.jsx:986
+#: src/pages/settings.jsx:983
 msgid "Version string copied"
 msgstr "已复制版本号"
 
-#: src/pages/settings.jsx:989
+#: src/pages/settings.jsx:986
 msgid "Unable to copy version string"
 msgstr "无法复制版本号"
 
 #. Preview of one character, in largest size
 #. Preview of one character, in smallest size
-#: src/pages/settings.jsx:1133
-#: src/pages/settings.jsx:1157
+#: src/pages/settings.jsx:1130
+#: src/pages/settings.jsx:1154
 msgid "A"
 msgstr "字"
 
-#: src/pages/settings.jsx:1307
+#: src/pages/settings.jsx:1304
 msgid "Failed to update subscription. Please try again."
 msgstr "订阅更新失败。请重试。"
 
-#: src/pages/settings.jsx:1312
+#: src/pages/settings.jsx:1309
 msgid "Failed to remove subscription. Please try again."
 msgstr "订阅删除失败。请重试。"
 
-#: src/pages/settings.jsx:1319
+#: src/pages/settings.jsx:1316
 msgid "Push Notifications (beta)"
 msgstr "通知推送 (beta)"
 
-#: src/pages/settings.jsx:1341
+#: src/pages/settings.jsx:1338
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "通知推送已被阻止。请在你的浏览器设置中授予相关权限。"
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1351
+#: src/pages/settings.jsx:1348
 msgid "Allow from <0>{0}</0>"
 msgstr "推送范围 <0>{0}</0>"
 
-#: src/pages/settings.jsx:1360
+#: src/pages/settings.jsx:1357
 msgid "anyone"
 msgstr "任何人"
 
-#: src/pages/settings.jsx:1364
+#: src/pages/settings.jsx:1361
 msgid "people I follow"
 msgstr "我关注的人"
 
-#: src/pages/settings.jsx:1368
+#: src/pages/settings.jsx:1365
 msgid "followers"
 msgstr "粉丝"
 
-#: src/pages/settings.jsx:1402
+#: src/pages/settings.jsx:1399
 msgid "Follows"
 msgstr "关注"
 
-#: src/pages/settings.jsx:1410
+#: src/pages/settings.jsx:1407
 msgid "Polls"
 msgstr "投票"
 
-#: src/pages/settings.jsx:1414
+#: src/pages/settings.jsx:1411
 msgid "Post edits"
 msgstr "嘟文被编辑"
 
-#: src/pages/settings.jsx:1435
+#: src/pages/settings.jsx:1432
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "本次登录未授予通知推送权限。你需要<0>再次<1>登录</1>以授予推送权限</0>。"
 
-#: src/pages/settings.jsx:1451
+#: src/pages/settings.jsx:1448
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "注意: 只能推送 <0>一个账户</0> 的通知。"
 

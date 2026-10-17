@@ -3755,7 +3755,11 @@ function FilteredStatus({
               </Trans>
             ) : isFollowedTags ? (
               <>
-                <NameText account={status.account} instance={instance} />{' '}
+                <NameText
+                  account={status.account}
+                  instance={instance}
+                  subtle={snapStates.settings.postUsernameOnly}
+                />{' '}
                 <span>
                   {snapStates.statusFollowedTags[sKey]
                     .slice(0, 3)
@@ -3768,7 +3772,11 @@ function FilteredStatus({
               </>
             ) : (
               <>
-                <NameText account={status.account} instance={instance} />{' '}
+                <NameText
+                  account={status.account}
+                  instance={instance}
+                  subtle={snapStates.settings.postUsernameOnly}
+                />{' '}
                 <RelativeTime datetime={createdAtDate} format="micro" />
               </>
             )}

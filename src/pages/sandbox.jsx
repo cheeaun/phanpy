@@ -2,6 +2,7 @@ import './sandbox.css';
 
 import { useEffect, useState } from 'preact/hooks';
 import { uid } from 'uid/single';
+import { useSnapshot } from 'valtio';
 
 import testGIFURL from '../assets/sandbox/big-buck-bunny-muted.webm';
 import testPreviewURL from '../assets/sandbox/big-buck-bunny-preview.png';
@@ -84,7 +85,8 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     account: {
       id: 'sandbox-account',
       username: 'test',
-      name: 'Test',
+      name: 'Test Display Name',
+      displayName: 'Test Display Name',
       // avatar: 'https://picsum.photos/seed/avatar/200',
       avatar: '/logo-192.png',
       acct: 'test@localhost',
@@ -336,6 +338,7 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
             id: '1',
             username: 'test 2',
             name: 'Test 2',
+            displayName: 'Test 2 Display Name',
             avatar: '/logo-192.png',
             acct: 'test2@localhost',
             url: 'https://test2.localhost',
@@ -419,6 +422,8 @@ const INITIAL_STATE = {
   showCollectionCard: false, // Toggle to show collection card
   collectionCardsCount: '1', // Number of collection cards (max 6)
   collectionAccountsCount: '3', // Number of accounts in each collection
+  hidePostMetrics: false, // Hide post metrics (replies/boosts/favourites counts)
+  postUsernameOnly: false, // Show username instead of display name on posts
 };
 
 export default function Sandbox() {
@@ -428,8 +433,17 @@ export default function Sandbox() {
   // This makes sameInstance=true and authenticated=true if logged in
   const { instance: currentInstance } = api();
 
+  // Snapshot the settings so toggling them re-renders the preview
+  const snapStates = useSnapshot(states.settings);
+
   // Consolidated state for all toggles
-  const [toggleState, setToggleState] = useState(INITIAL_STATE);
+  // Seed the settings-backed toggles from the current global settings
+  const [initialState] = useState(() => ({
+    ...INITIAL_STATE,
+    hidePostMetrics: !!states.settings.hidePostMetrics,
+    postUsernameOnly: !!states.settings.postUsernameOnly,
+  }));
+  const [toggleState, setToggleState] = useState(initialState);
 
   // Update function with view transitions
   const updateToggles = (updates) => {
@@ -483,6 +497,32 @@ export default function Sandbox() {
       getPreferences.cache.clear();
     };
   }, [toggleState.mediaPreference, toggleState.expandWarnings]);
+
+  // These toggles drive global settings that Status reads directly, so we do
+  // have to change states.settings while the sandbox is open. Keep it strictly
+  // sandboxed: block persistence for these keys and restore the originals on exit.
+  useEffect(() => {
+    const originalSet = store.account.set;
+    store.account.set = (key, value) => {
+      if (
+        key === 'settings-hidePostMetrics' ||
+        key === 'settings-postUsernameOnly'
+      ) {
+        return;
+      }
+      return originalSet.call(store.account, key, value);
+    };
+    return () => {
+      states.settings.hidePostMetrics = initialState.hidePostMetrics;
+      states.settings.postUsernameOnly = initialState.postUsernameOnly;
+      store.account.set = originalSet;
+    };
+  }, []);
+
+  useEffect(() => {
+    states.settings.hidePostMetrics = toggleState.hidePostMetrics;
+    states.settings.postUsernameOnly = toggleState.postUsernameOnly;
+  }, [toggleState.hidePostMetrics, toggleState.postUsernameOnly]);
 
   // Mock the api to simulate authentication for the sandbox's instance
   // This makes sameInstance=true and authenticated=true for poll voting
@@ -902,12 +942,12 @@ export default function Sandbox() {
 
   // Function to check if the current state is different from the initial state
   const hasChanges = () => {
-    return Object.keys(INITIAL_STATE).some((key) => {
-      if (Array.isArray(INITIAL_STATE[key])) {
-        if (INITIAL_STATE[key].length !== toggleState[key].length) return true;
-        return INITIAL_STATE[key].some((val, i) => val !== toggleState[key][i]);
+    return Object.keys(initialState).some((key) => {
+      if (Array.isArray(initialState[key])) {
+        if (initialState[key].length !== toggleState[key].length) return true;
+        return initialState[key].some((val, i) => val !== toggleState[key][i]);
       }
-      return INITIAL_STATE[key] !== toggleState[key];
+      return initialState[key] !== toggleState[key];
     });
   };
 
@@ -915,10 +955,10 @@ export default function Sandbox() {
   const resetToInitialState = () => {
     if (document.startViewTransition) {
       document.startViewTransition(() => {
-        setToggleState({ ...INITIAL_STATE });
+        setToggleState({ ...initialState });
       });
     } else {
-      setToggleState({ ...INITIAL_STATE });
+      setToggleState({ ...initialState });
     }
   };
 
@@ -950,7 +990,7 @@ export default function Sandbox() {
         id: 'sandbox-account',
         username: 'test',
         acct: `test@${currentInstance}`,
-        displayName: 'Test',
+        displayName: 'Test Display Name',
         avatarStatic: '/logo-192.png',
         avatar: '/logo-192.png',
         bot: false,
@@ -1017,7 +1057,7 @@ export default function Sandbox() {
               instance={currentInstance}
               allowFilters={true}
               showFollowedTags
-              key={`status-${toggleState.mediaPreference}-${toggleState.expandWarnings}-${Date.now()}`}
+              key={`status-${toggleState.mediaPreference}-${toggleState.expandWarnings}-${snapStates.hidePostMetrics}-${snapStates.postUsernameOnly}-${Date.now()}`}
               // Prevent opening as URL
               onMediaClick={(e, i, media, status) => {
                 e.preventDefault();
@@ -1080,6 +1120,34 @@ export default function Sandbox() {
                     }
                   />
                   <span>Deleted</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.hidePostMetrics}
+                    onChange={() =>
+                      updateToggles({
+                        hidePostMetrics: !toggleState.hidePostMetrics,
+                      })
+                    }
+                  />
+                  <span>Hide post metrics</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.postUsernameOnly}
+                    onChange={() =>
+                      updateToggles({
+                        postUsernameOnly: !toggleState.postUsernameOnly,
+                      })
+                    }
+                  />
+                  <span>Show username instead of display name</span>
                 </label>
               </li>
             </ul>

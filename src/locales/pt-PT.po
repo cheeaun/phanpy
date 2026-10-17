@@ -8,7 +8,7 @@ msgstr ""
 "Language: pt\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-17 05:04\n"
+"PO-Revision-Date: 2026-10-17 15:23\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -319,7 +319,7 @@ msgstr "Ver estatísticas"
 #: src/components/shortcuts-settings.jsx:601
 #: src/components/shortcuts-settings.jsx:802
 #: src/components/status.jsx:3602
-#: src/components/status.jsx:3803
+#: src/components/status.jsx:3811
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:48
 #: src/pages/catchup.jsx:1734
@@ -953,6 +953,9 @@ msgstr ""
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-attachment.jsx:465
 #: src/components/media-modal.jsx:398
+#: src/components/notification.jsx:867
+#: src/components/notification.jsx:885
+#: src/components/notification.jsx:936
 #: src/components/related-actions.jsx:267
 #: src/components/status.jsx:2257
 #: src/components/status.jsx:2274
@@ -1085,7 +1088,7 @@ msgid "Rejected"
 msgstr "Rejeitado"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:502
+#: src/components/notification.jsx:620
 #: src/pages/accounts.jsx:53
 #: src/pages/search.jsx:125
 #: src/pages/search.jsx:465
@@ -1569,7 +1572,7 @@ msgstr "Filtrado: {filterTitleStr}"
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:74
 #: src/components/status.jsx:3740
-#: src/components/status.jsx:3807
+#: src/components/status.jsx:3815
 #: src/components/timeline.jsx:1134
 #: src/pages/catchup.jsx:80
 #: src/pages/catchup.jsx:2055
@@ -1793,167 +1796,179 @@ msgstr "Esta notificação é da sua outra conta."
 msgid "View all notifications"
 msgstr "Ver todas as notificações"
 
-#: src/components/notification.jsx:80
+#: src/components/notification.jsx:81
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr "{account} reagiu a sua publicação com {emojiObject}"
 
-#: src/components/notification.jsx:87
+#: src/components/notification.jsx:88
 msgid "{account} published a post."
 msgstr "{account} fez uma publicação."
 
+#: src/components/notification.jsx:99
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted your posts.}}} other {{postType, select, reply {{account} & others boosted your reply.} other {{account} & others boosted your post.}}}}"
+msgstr ""
+
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:95
+#: src/components/notification.jsx:125
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou a sua resposta.} other {{account} impulsionou a sua postagem.}}} other {{account} impulsionou {postsCount} das suas postagens.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou a sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou a sua postagem.}}}}"
 
 #. placeholder {0}: shortenNumber(count)
-#: src/components/notification.jsx:138
+#: src/components/notification.jsx:169
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr "{count, plural, =1 {{account} seguiu você.} other {<0><1>{0}</1> pessoa(s)</0> seguiu você.}}"
 
-#: src/components/notification.jsx:152
+#: src/components/notification.jsx:183
 msgid "{account} requested to follow you."
 msgstr "{account} pediu para seguir-te."
 
+#: src/components/notification.jsx:195
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked your posts.}}} other {{postType, select, reply {{account} & others liked your reply.} other {{account} & others liked your post.}}}}"
+msgstr ""
+
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:161
+#: src/components/notification.jsx:221
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} gostou da sua resposta.} other {{account} gostou da sua postagem.}}} other {{account} gostou de {postsCount} das suas postagens.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> gostou da sua postagens.}}}}"
 
-#: src/components/notification.jsx:203
+#: src/components/notification.jsx:264
 msgid "A poll you have voted in or created has ended."
 msgstr "A enquete que votaste ou criaste já acabou."
 
-#: src/components/notification.jsx:204
+#: src/components/notification.jsx:265
 msgid "A poll you have created has ended."
 msgstr "Uma enquete que criaste já acabou."
 
-#: src/components/notification.jsx:205
+#: src/components/notification.jsx:266
 msgid "A poll you have voted in has ended."
 msgstr "Uma enquete que votaste já acabou."
 
-#: src/components/notification.jsx:208
+#: src/components/notification.jsx:269
 msgid "{account} edited a post."
 msgstr ""
 
-#: src/components/notification.jsx:210
+#: src/components/notification.jsx:271
 msgid "A post you interacted with has been edited."
 msgstr "Uma publicação que interagiste foi editada."
 
+#: src/components/notification.jsx:283
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked your posts.}}} other {{postType, select, reply {{account} & others boosted & liked your reply.} other {{account} & others boosted & liked your post.}}}}"
+msgstr ""
+
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:219
+#: src/components/notification.jsx:313
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} impulsionou e gostou da sua resposta.} other {{account} impulsionou e gostou da sua postagem.}}} other {{account} impulsionou e gostou de {postsCount} das suas postagens.}}} other {{postType, select, reply {<0><1>{0}</1> pessoa(s)</0> impulsionou e gostou da sua resposta.} other {<2><3>{1}</3> pessoa(s)</2> impulsionou e gostou da sua postagem.}}}}"
 
-#: src/components/notification.jsx:262
+#: src/components/notification.jsx:357
 msgid "{account} edited a post you have quoted."
 msgstr ""
 
 #. placeholder {0}: shortenNumber(count)
-#: src/components/notification.jsx:265
+#: src/components/notification.jsx:360
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
 msgstr ""
 
-#: src/components/notification.jsx:279
+#: src/components/notification.jsx:374
 msgid "{account} reported {targetAccount}"
 msgstr "{account} reportou {targetAccount}"
 
-#: src/components/notification.jsx:284
+#: src/components/notification.jsx:379
 msgid "Lost connections with <0>{name}</0>."
 msgstr "Perdeu conexões com <0>{name}</0>."
 
-#: src/components/notification.jsx:290
+#: src/components/notification.jsx:385
 msgid "Moderation warning"
 msgstr "Aviso da moderação"
 
-#: src/components/notification.jsx:296
+#: src/components/notification.jsx:391
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "O seu #Wrapstodon {year} chegou!"
 
-#: src/components/notification.jsx:298
+#: src/components/notification.jsx:393
 msgid "{account} added you to a collection."
 msgstr ""
 
-#: src/components/notification.jsx:301
+#: src/components/notification.jsx:396
 msgid "{account} edited a collection you're in."
 msgstr ""
 
-#: src/components/notification.jsx:308
+#: src/components/notification.jsx:403
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "Um administrador de <0>{from}</0> suspendeu <1>{targetName}</1>, significando que não receberá mais atualizações deles ou interagir com eles."
 
-#: src/components/notification.jsx:314
+#: src/components/notification.jsx:409
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "Um administrador de <0>{from}</0> bloqueou <1>{targetName}</1>. Seguidores afetados: {followersCount}, a seguir: {followingCount}."
 
-#: src/components/notification.jsx:320
+#: src/components/notification.jsx:415
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "Bloqueaste <0>{targetName}</0>.\n"
 "Seguidores removidos: {followersCount}, a seguir: {followingCount}."
 
-#: src/components/notification.jsx:328
+#: src/components/notification.jsx:423
 msgid "Your account has received a moderation warning."
 msgstr "A sua conta recebeu um aviso da moderação."
 
-#: src/components/notification.jsx:329
+#: src/components/notification.jsx:424
 msgid "Your account has been disabled."
 msgstr "A sua conta foi desativada."
 
-#: src/components/notification.jsx:330
+#: src/components/notification.jsx:425
 msgid "Some of your posts have been marked as sensitive."
 msgstr "Algumas das suas postagens foram marcados como sensíveis."
 
-#: src/components/notification.jsx:331
+#: src/components/notification.jsx:426
 msgid "Some of your posts have been deleted."
 msgstr "Algumas das suas postagens foram eliminadas."
 
-#: src/components/notification.jsx:332
+#: src/components/notification.jsx:427
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "Agora as suas postagens serão marcadas como sensíveis."
 
-#: src/components/notification.jsx:333
+#: src/components/notification.jsx:428
 msgid "Your account has been limited."
 msgstr "A sua conta foi limitada."
 
-#: src/components/notification.jsx:334
+#: src/components/notification.jsx:429
 msgid "Your account has been suspended."
 msgstr "A sua conta foi suspensa."
 
-#: src/components/notification.jsx:420
+#: src/components/notification.jsx:523
 msgid "[Unknown notification type: {type}]"
 msgstr "[Tipo de notificação desconhecida: {type}]"
 
-#: src/components/notification.jsx:498
+#: src/components/notification.jsx:616
 #: src/components/status.jsx:1350
 #: src/components/status.jsx:1360
 msgid "Boosted/Liked by…"
 msgstr "Impulsionado/Gostado por…"
 
-#: src/components/notification.jsx:499
+#: src/components/notification.jsx:617
 msgid "Liked by…"
 msgstr "Gostado por…"
 
-#: src/components/notification.jsx:500
+#: src/components/notification.jsx:618
 msgid "Boosted by…"
 msgstr "Impulsionado por…"
 
-#: src/components/notification.jsx:501
+#: src/components/notification.jsx:619
 msgid "Followed by…"
 msgstr "Seguido por…"
 
-#: src/components/notification.jsx:645
-#: src/components/notification.jsx:661
+#: src/components/notification.jsx:763
+#: src/components/notification.jsx:779
 msgid "Learn more <0/>"
 msgstr "Saiba mais <0/>"
 
-#: src/components/notification.jsx:670
+#: src/components/notification.jsx:788
 msgid "View #Wrapstodon"
 msgstr "Ver #Wrapstodon"
 
-#: src/components/notification.jsx:894
+#: src/components/notification.jsx:1021
 #: src/components/quote-chain-modal.jsx:18
 #: src/components/status.jsx:267
 msgid "Read more →"

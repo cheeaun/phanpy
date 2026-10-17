@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-17 05:04\n"
+"PO-Revision-Date: 2026-10-17 15:23\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -319,7 +319,7 @@ msgstr "查看嘟文统计"
 #: src/components/shortcuts-settings.jsx:601
 #: src/components/shortcuts-settings.jsx:802
 #: src/components/status.jsx:3602
-#: src/components/status.jsx:3803
+#: src/components/status.jsx:3811
 #: src/components/translated-bio-sheet.jsx:21
 #: src/pages/accounts.jsx:48
 #: src/pages/catchup.jsx:1734
@@ -953,6 +953,9 @@ msgstr "关闭"
 #: src/components/media-alt-modal.jsx:55
 #: src/components/media-attachment.jsx:465
 #: src/components/media-modal.jsx:398
+#: src/components/notification.jsx:867
+#: src/components/notification.jsx:885
+#: src/components/notification.jsx:936
 #: src/components/related-actions.jsx:267
 #: src/components/status.jsx:2257
 #: src/components/status.jsx:2274
@@ -1085,7 +1088,7 @@ msgid "Rejected"
 msgstr "已拒绝"
 
 #: src/components/generic-accounts.jsx:154
-#: src/components/notification.jsx:502
+#: src/components/notification.jsx:620
 #: src/pages/accounts.jsx:53
 #: src/pages/search.jsx:125
 #: src/pages/search.jsx:465
@@ -1329,7 +1332,7 @@ msgstr "<0>Shift</0> + <1>b</1>"
 #: src/components/status.jsx:3202
 msgctxt "saved post"
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: src/components/keyboard-shortcuts-help.jsx:204
 #: src/components/status.jsx:1335
@@ -1364,7 +1367,7 @@ msgstr "转到个人资料"
 
 #: src/components/keyboard-shortcuts-help.jsx:233
 msgid "Go to Saved Posts"
-msgstr ""
+msgstr "转到已保存嘟文"
 
 #: src/components/keyboard-shortcuts-help.jsx:234
 msgid "Go to Bookmarks"
@@ -1569,7 +1572,7 @@ msgstr "已过滤: {filterTitleStr}"
 #: src/components/media-post.jsx:133
 #: src/components/status-compact.jsx:74
 #: src/components/status.jsx:3740
-#: src/components/status.jsx:3807
+#: src/components/status.jsx:3815
 #: src/components/timeline.jsx:1134
 #: src/pages/catchup.jsx:80
 #: src/pages/catchup.jsx:2055
@@ -1667,7 +1670,7 @@ msgstr "个人资料"
 #: src/pages/bookmarks.jsx:13
 #: src/pages/bookmarks.jsx:27
 msgid "Saved Posts"
-msgstr ""
+msgstr "已保存嘟文"
 
 #: src/components/nav-menu.jsx:244
 #: src/components/shortcuts-settings.jsx:57
@@ -1793,166 +1796,178 @@ msgstr "此通知来自你的其他账号。"
 msgid "View all notifications"
 msgstr "查看所有通知"
 
-#: src/components/notification.jsx:80
+#: src/components/notification.jsx:81
 msgid "{account} reacted to your post with {emojiObject}"
 msgstr "{account} 对你的嘟文进行了 {emojiObject} 的回应"
 
-#: src/components/notification.jsx:87
+#: src/components/notification.jsx:88
 msgid "{account} published a post."
 msgstr "{account} 发布了一条嘟文。"
 
+#: src/components/notification.jsx:99
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted your posts.}}} other {{postType, select, reply {{account} & others boosted your reply.} other {{account} & others boosted your post.}}}}"
+msgstr ""
+
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:95
+#: src/components/notification.jsx:125
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted your reply.} other {<2><3>{1}</3> people</2> boosted your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account}转嘟了你的回复。} other {{account} 转嘟了你的嘟文。}}} other {{account} 转嘟了你的 {postsCount} 条嘟文}}} other {{postType, select, reply {<0><1>{0}</1> 人</0> 转嘟了你的回复。} other {<2><3>{1}</3> 人</2> 转嘟了你的嘟文。}}}}"
 
 #. placeholder {0}: shortenNumber(count)
-#: src/components/notification.jsx:138
+#: src/components/notification.jsx:169
 msgid "{count, plural, =1 {{account} followed you.} other {<0><1>{0}</1> people</0> followed you.}}"
 msgstr "{count, plural, =1 {{account} 关注了你。} other {<0><1>{0}</1> 人</0> 关注了你。}}"
 
-#: src/components/notification.jsx:152
+#: src/components/notification.jsx:183
 msgid "{account} requested to follow you."
 msgstr "{account} 请求关注你。"
 
+#: src/components/notification.jsx:195
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked your posts.}}} other {{postType, select, reply {{account} & others liked your reply.} other {{account} & others liked your post.}}}}"
+msgstr ""
+
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:161
+#: src/components/notification.jsx:221
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> liked your reply.} other {<2><3>{1}</3> people</2> liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} 点赞了你的回复。} other {{account} 点赞了你的嘟文。}}} other {{account} 点赞了你的 {postsCount} 条嘟文}}} other {{postType, select, reply {<0><1>{0}</1> 人</0> 点赞了你的回复。} other {<2><3>{1}</3> 人</2> 点赞了你的嘟文。}}}}"
 
-#: src/components/notification.jsx:203
+#: src/components/notification.jsx:264
 msgid "A poll you have voted in or created has ended."
 msgstr "你参与或创建的投票已结束。"
 
-#: src/components/notification.jsx:204
+#: src/components/notification.jsx:265
 msgid "A poll you have created has ended."
 msgstr "你创建的投票已结束。"
 
-#: src/components/notification.jsx:205
+#: src/components/notification.jsx:266
 msgid "A poll you have voted in has ended."
 msgstr "你参与的投票已结束。"
 
-#: src/components/notification.jsx:208
+#: src/components/notification.jsx:269
 msgid "{account} edited a post."
 msgstr "{account} 编辑了一条嘟文。"
 
-#: src/components/notification.jsx:210
+#: src/components/notification.jsx:271
 msgid "A post you interacted with has been edited."
 msgstr "你互动过的嘟文已被编辑。"
 
+#: src/components/notification.jsx:283
+msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked your posts.}}} other {{postType, select, reply {{account} & others boosted & liked your reply.} other {{account} & others boosted & liked your post.}}}}"
+msgstr ""
+
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
-#: src/components/notification.jsx:219
+#: src/components/notification.jsx:313
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked {postsCount} of your posts.}}} other {{postType, select, reply {<0><1>{0}</1> people</0> boosted & liked your reply.} other {<2><3>{1}</3> people</2> boosted & liked your post.}}}}"
 msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} 转嘟和点赞了你的回复。} other {{account} 转嘟和点赞了你的嘟文。}}} other {{account} 转嘟和点赞了你的 {postsCount} 条嘟文。}}} other {{postType, select, reply {<0><1>{0}</1> 人</0> 转嘟和点赞了你的回复。} other {<2><3>{1}</3> 人</2> 转嘟和点赞了你的嘟文。}}}}"
 
-#: src/components/notification.jsx:262
+#: src/components/notification.jsx:357
 msgid "{account} edited a post you have quoted."
 msgstr "{account} 编辑了一条你引用过的嘟文。"
 
 #. placeholder {0}: shortenNumber(count)
-#: src/components/notification.jsx:265
+#: src/components/notification.jsx:360
 msgid "{count, plural, =1 {{account} signed up.} other {<0><1>{0}</1> people</0> signed up.}}"
 msgstr "{count, plural,=1 {{account} 已注册。} other {有 <0><1>{0}</1> 人</0> 已注册。}}"
 
-#: src/components/notification.jsx:279
+#: src/components/notification.jsx:374
 msgid "{account} reported {targetAccount}"
 msgstr "{account} 举报了 {targetAccount}"
 
-#: src/components/notification.jsx:284
+#: src/components/notification.jsx:379
 msgid "Lost connections with <0>{name}</0>."
 msgstr "失去了与 <0>{name}</0> 的联系。"
 
-#: src/components/notification.jsx:290
+#: src/components/notification.jsx:385
 msgid "Moderation warning"
 msgstr "管理警告"
 
-#: src/components/notification.jsx:296
+#: src/components/notification.jsx:391
 msgid "Your {year} #Wrapstodon is here!"
 msgstr "你的 {year} #Wrapstodon 年度回顾在此！"
 
-#: src/components/notification.jsx:298
+#: src/components/notification.jsx:393
 msgid "{account} added you to a collection."
 msgstr "{account} 把你添加到了一个合集中。"
 
-#: src/components/notification.jsx:301
+#: src/components/notification.jsx:396
 msgid "{account} edited a collection you're in."
 msgstr "{account} 编辑了你所在的一个合集。"
 
-#: src/components/notification.jsx:308
+#: src/components/notification.jsx:403
 msgid "An admin from <0>{from}</0> has suspended <1>{targetName}</1>, which means you can no longer receive updates from them or interact with them."
 msgstr "<0>{from}</0> 的一位管理员封禁了 <1>{targetName}</1> 的账户，你不再能接收其更新或与之互动。"
 
-#: src/components/notification.jsx:314
+#: src/components/notification.jsx:409
 msgid "An admin from <0>{from}</0> has blocked <1>{targetName}</1>. Affected followers: {followersCount}, followings: {followingCount}."
 msgstr "一名来自<0>{from}</0>的管理员已屏蔽<1>{targetName}</1>。受影响的粉丝数:{followersCount}，关注数:{followingCount}。"
 
-#: src/components/notification.jsx:320
+#: src/components/notification.jsx:415
 msgid "You have blocked <0>{targetName}</0>. Removed followers: {followersCount}, followings: {followingCount}."
 msgstr "你已屏蔽<0>{targetName}</0>。被移除的粉丝数:{followersCount}，关注数:{followingCount}。"
 
-#: src/components/notification.jsx:328
+#: src/components/notification.jsx:423
 msgid "Your account has received a moderation warning."
 msgstr "你的账号收到了一次管理警告。"
 
-#: src/components/notification.jsx:329
+#: src/components/notification.jsx:424
 msgid "Your account has been disabled."
 msgstr "你的账号已被禁用。"
 
-#: src/components/notification.jsx:330
+#: src/components/notification.jsx:425
 msgid "Some of your posts have been marked as sensitive."
 msgstr "你的某些嘟文已被标记为敏感内容。"
 
-#: src/components/notification.jsx:331
+#: src/components/notification.jsx:426
 msgid "Some of your posts have been deleted."
 msgstr "你的某些嘟文已被删除。"
 
-#: src/components/notification.jsx:332
+#: src/components/notification.jsx:427
 msgid "Your posts will be marked as sensitive from now on."
 msgstr "今后你的嘟文将被标记为敏感内容。"
 
-#: src/components/notification.jsx:333
+#: src/components/notification.jsx:428
 msgid "Your account has been limited."
 msgstr "你的账户已被限制。"
 
-#: src/components/notification.jsx:334
+#: src/components/notification.jsx:429
 msgid "Your account has been suspended."
 msgstr "你的账户已被封禁。"
 
-#: src/components/notification.jsx:420
+#: src/components/notification.jsx:523
 msgid "[Unknown notification type: {type}]"
 msgstr "[未知通知类型:{type}]"
 
-#: src/components/notification.jsx:498
+#: src/components/notification.jsx:616
 #: src/components/status.jsx:1350
 #: src/components/status.jsx:1360
 msgid "Boosted/Liked by…"
 msgstr "查看转嘟/点赞…"
 
-#: src/components/notification.jsx:499
+#: src/components/notification.jsx:617
 msgid "Liked by…"
 msgstr "查看点赞…"
 
-#: src/components/notification.jsx:500
+#: src/components/notification.jsx:618
 msgid "Boosted by…"
 msgstr "查看转嘟…"
 
-#: src/components/notification.jsx:501
+#: src/components/notification.jsx:619
 msgid "Followed by…"
 msgstr "被关注…"
 
-#: src/components/notification.jsx:645
-#: src/components/notification.jsx:661
+#: src/components/notification.jsx:763
+#: src/components/notification.jsx:779
 msgid "Learn more <0/>"
 msgstr "了解更多 <0/>"
 
-#: src/components/notification.jsx:670
+#: src/components/notification.jsx:788
 msgid "View #Wrapstodon"
 msgstr "查看 #Wrapstodon 年度回顾"
 
-#: src/components/notification.jsx:894
+#: src/components/notification.jsx:1021
 #: src/components/quote-chain-modal.jsx:18
 #: src/components/status.jsx:267
 msgid "Read more →"
@@ -2914,7 +2929,7 @@ msgstr "已点赞 @{0} 的嘟文"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:986
 msgid "Removed @{0}'s post from Saved"
-msgstr ""
+msgstr "已将 @{0} 的嘟文从已保存嘟文中移除"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:990
@@ -2924,7 +2939,7 @@ msgstr "已取消收藏 @{0} 的嘟文"
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:992
 msgid "Saved @{0}'s post"
-msgstr ""
+msgstr "已保存 @{0} 的嘟文"
 
 #. placeholder {0}: username || acct
 #: src/components/status.jsx:993
@@ -3016,7 +3031,7 @@ msgstr "赞"
 #: src/components/status.jsx:1324
 msgctxt "saved post"
 msgid "Unsave"
-msgstr ""
+msgstr "取消保存"
 
 #: src/components/status.jsx:1329
 #: src/components/status.jsx:3197
@@ -3159,7 +3174,7 @@ msgstr "已转嘟"
 #: src/components/status.jsx:2293
 #: src/components/status.jsx:3206
 msgid "Saved"
-msgstr ""
+msgstr "已保存"
 
 #: src/components/status.jsx:2297
 #: src/components/status.jsx:3211
@@ -3217,7 +3232,7 @@ msgstr "评论"
 #. "Saved" is Saved Posts.
 #: src/components/status.jsx:3192
 msgid "Remove from Saved"
-msgstr ""
+msgstr "从已保存嘟文中移除"
 
 #: src/components/status.jsx:3378
 msgid "Post hidden by your filters"
@@ -3553,7 +3568,7 @@ msgstr "注意: 首次加载时始终使用<0>默认</0>帐户。当前帐户被
 
 #: src/pages/bookmarks.jsx:31
 msgid "No saved posts yet. Go save something!"
-msgstr ""
+msgstr "还没有已保存的嘟文。去保存一些嘟文吧！"
 
 #: src/pages/bookmarks.jsx:32
 msgid "No bookmarks yet. Go bookmark something!"
@@ -3561,7 +3576,7 @@ msgstr "尚无收藏。去收藏一些嘟文吧！"
 
 #: src/pages/bookmarks.jsx:36
 msgid "Unable to load saved posts."
-msgstr ""
+msgstr "无法加载已保存嘟文。"
 
 #: src/pages/bookmarks.jsx:37
 msgid "Unable to load bookmarks."
@@ -4544,7 +4559,7 @@ msgstr "滚动时保持导航栏可见"
 
 #: src/pages/settings.jsx:274
 msgid "Show username instead of display name on timeline posts"
-msgstr ""
+msgstr "在时间线中改为显示用户名，而不是昵称"
 
 #: src/pages/settings.jsx:285
 msgid "Posting"
@@ -4590,7 +4605,7 @@ msgstr "隐藏跨站时间线"
 
 #: src/pages/settings.jsx:462
 msgid "Hide post metrics"
-msgstr ""
+msgstr "隐藏嘟文数据"
 
 #: src/pages/settings.jsx:471
 msgid "Experiments"

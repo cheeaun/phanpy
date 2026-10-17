@@ -440,6 +440,7 @@ function Notification({
   const { _ } = useLingui();
   const snapStates = useSnapshot(states);
   const hidePostMetrics = snapStates.settings.hidePostMetrics;
+  const postUsernameOnly = snapStates.settings.postUsernameOnly;
   const { masto } = api();
   const {
     id,
@@ -546,8 +547,16 @@ function Notification({
       const targetAccount = report?.targetAccount;
       if (targetAccount) {
         text = text({
-          account: <NameText account={account} showAvatar />,
-          targetAccount: <NameText account={targetAccount} showAvatar />,
+          account: (
+            <NameText account={account} showAvatar subtle={postUsernameOnly} />
+          ),
+          targetAccount: (
+            <NameText
+              account={targetAccount}
+              showAvatar
+              subtle={postUsernameOnly}
+            />
+          ),
         });
       }
     } else if (type === 'severed_relationships') {
@@ -567,7 +576,9 @@ function Notification({
             notification.emoji.replace(/^:/, '').replace(/:$/, ''),
         ); // Emoji object instead of string
       text = text({
-        account: <NameText account={account} showAvatar />,
+        account: (
+          <NameText account={account} showAvatar subtle={postUsernameOnly} />
+        ),
         emoji: notification.emoji,
         emojiURL,
       });
@@ -578,10 +589,14 @@ function Notification({
     } else {
       text = text({
         account: account ? (
-          <NameText account={account} showAvatar />
+          <NameText account={account} showAvatar subtle={postUsernameOnly} />
         ) : (
           sampleAccounts?.[0] && (
-            <NameText account={sampleAccounts[0]} showAvatar />
+            <NameText
+              account={sampleAccounts[0]}
+              showAvatar
+              subtle={postUsernameOnly}
+            />
           )
         ),
         count,

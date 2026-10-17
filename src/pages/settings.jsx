@@ -243,6 +243,10 @@ function Settings({ onClose }) {
               </span>
               <LangSelector />
             </li>
+          </ul>
+        </section>
+        <section>
+          <ul class="checkbox-list">
             <li class="block">
               <label>
                 <input
@@ -256,6 +260,25 @@ function Settings({ onClose }) {
                   <Trans>Keep navigation bars visible while scrolling</Trans>
                 </span>
               </label>
+            </li>
+            <li class="block">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={snapStates.settings.postUsernameOnly}
+                  onChange={(e) => {
+                    states.settings.postUsernameOnly = e.target.checked;
+                  }}
+                />
+                <span>
+                  <Trans>Show username instead of display name on posts</Trans>
+                </span>
+              </label>
+              <div class="sub-section insignificant">
+                <small>
+                  <Trans>Only on timeline posts</Trans>
+                </small>
+              </div>
             </li>
           </ul>
         </section>

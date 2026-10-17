@@ -92,6 +92,7 @@ const states = proxy({
     hidePostMetrics: false,
     paginatedTimeline: false,
     autoHideBars: true,
+    postUsernameOnly: false,
   },
 });
 
@@ -138,6 +139,8 @@ export function initStates() {
     store.account.get('settings-paginatedTimeline') ?? false;
   states.settings.autoHideBars =
     store.account.get('settings-autoHideBars') ?? true;
+  states.settings.postUsernameOnly =
+    store.account.get('settings-postUsernameOnly') ?? false;
 }
 
 subscribeKey(states, 'notificationsLast', (v) => {
@@ -204,6 +207,9 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.autoHideBars') {
       store.account.set('settings-autoHideBars', !!value);
+    }
+    if (path.join('.') === 'settings.postUsernameOnly') {
+      store.account.set('settings-postUsernameOnly', !!value);
     }
   }
 });

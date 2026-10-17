@@ -34,6 +34,7 @@ function NameText({
   showAcct,
   short,
   external,
+  subtle,
   onClick,
 }) {
   const { i18n } = useLingui();
@@ -78,7 +79,9 @@ function NameText({
 
   return (
     <a
-      class={`name-text ${showAcct ? 'show-acct' : ''} ${short ? 'short' : ''}`}
+      class={`name-text ${showAcct ? 'show-acct' : ''} ${short ? 'short' : ''} ${
+        subtle ? 'subtle' : ''
+      }`}
       href={url}
       target={external ? '_blank' : null}
       title={
@@ -108,7 +111,7 @@ function NameText({
           <Avatar url={avatarStatic || avatar} squircle={bot} />{' '}
         </>
       )}
-      {displayName && !short ? (
+      {displayName && !short && !subtle ? (
         <>
           <b dir="auto">
             <EmojiText

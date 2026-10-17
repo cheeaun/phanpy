@@ -640,7 +640,12 @@ function Status({
         <div class="status-pre-meta">
           <Icon icon="rocket" size="l" />{' '}
           <Trans>
-            <NameText account={status.account} instance={instance} showAvatar />{' '}
+            <NameText
+              account={status.account}
+              instance={instance}
+              showAvatar
+              subtle={snapStates.settings.postUsernameOnly}
+            />{' '}
             <span>boosted</span>
           </Trans>
         </div>
@@ -2331,6 +2336,9 @@ function Status({
                     instance={instance}
                     showAvatar={size === 's'}
                     showAcct={isSizeLarge}
+                    subtle={
+                      snapStates.settings.postUsernameOnly && !isSizeLarge
+                    }
                   />
                 </span>
                 {visibility === 'private' && (
@@ -3738,7 +3746,11 @@ function FilteredStatus({
           <span class="status-filtered-info-1">
             {isReblog ? (
               <Trans>
-                <NameText account={status.account} instance={instance} />{' '}
+                <NameText
+                  account={status.account}
+                  instance={instance}
+                  subtle={snapStates.settings.postUsernameOnly}
+                />{' '}
                 <span>boosted</span>
               </Trans>
             ) : isFollowedTags ? (

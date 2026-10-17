@@ -271,14 +271,11 @@ function Settings({ onClose }) {
                   }}
                 />
                 <span>
-                  <Trans>Show username instead of display name on posts</Trans>
+                  <Trans>
+                    Show username instead of display name on timeline posts
+                  </Trans>
                 </span>
               </label>
-              <div class="sub-section insignificant">
-                <small>
-                  <Trans>Only on timeline posts</Trans>
-                </small>
-              </div>
             </li>
           </ul>
         </section>

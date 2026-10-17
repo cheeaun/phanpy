@@ -8,7 +8,7 @@ msgstr ""
 "Language: zh\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-17 15:23\n"
+"PO-Revision-Date: 2026-10-17 21:04\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -1806,7 +1806,7 @@ msgstr "{account} 发布了一条嘟文。"
 
 #: src/components/notification.jsx:99
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted your posts.}}} other {{postType, select, reply {{account} & others boosted your reply.} other {{account} & others boosted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} 转嘟了你的回复。} other {{account} 转嘟了你的嘟文。}}} other {{account} 转嘟了你的嘟文。}}} other {{postType, select, reply {{account} 等人转嘟了你的回复。} other {{account} 等人转嘟了你的嘟文。}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
@@ -1825,7 +1825,7 @@ msgstr "{account} 请求关注你。"
 
 #: src/components/notification.jsx:195
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked your posts.}}} other {{postType, select, reply {{account} & others liked your reply.} other {{account} & others liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} 点赞了你的回复。} other {{account} 点赞了你的嘟文。}}} other {{account} 点赞了你的嘟文。}}} other {{postType, select, reply {{account} 等人点赞了你的回复。} other {{account} 等人点赞了你的嘟文。}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
@@ -1855,7 +1855,7 @@ msgstr "你互动过的嘟文已被编辑。"
 
 #: src/components/notification.jsx:283
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked your posts.}}} other {{postType, select, reply {{account} & others boosted & liked your reply.} other {{account} & others boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} 转嘟并点赞了你的回复。} other {{account} 转嘟并点赞了你的嘟文。}}} other {{account} 转嘟并点赞了你的嘟文。}}} other {{postType, select, reply {{account} 等人转嘟并点赞了你的回复。} other {{account} 等人转嘟并点赞了你的嘟文。}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)

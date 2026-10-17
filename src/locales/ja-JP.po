@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-17 03:54\n"
+"PO-Revision-Date: 2026-10-17 05:04\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -92,7 +92,7 @@ msgstr "サーバーのドメイン名"
 #: src/components/account-info-mini.jsx:57
 #: src/components/account-info.jsx:801
 #: src/components/compose.jsx:2075
-#: src/pages/settings.jsx:333
+#: src/pages/settings.jsx:330
 #: src/utils/visibility-text.jsx:7
 msgid "Followers"
 msgstr "フォロワー"
@@ -271,7 +271,7 @@ msgstr "引用"
 #: src/pages/catchup.jsx:77
 #: src/pages/catchup.jsx:1599
 #: src/pages/catchup.jsx:2264
-#: src/pages/settings.jsx:1398
+#: src/pages/settings.jsx:1395
 #: src/pages/year-in-posts.jsx:1408
 msgid "Boosts"
 msgstr "ブースト"
@@ -471,7 +471,7 @@ msgstr ""
 #: src/components/collection-add-edit.jsx:183
 #: src/components/compose.jsx:2063
 #: src/pages/collection.jsx:690
-#: src/pages/settings.jsx:327
+#: src/pages/settings.jsx:324
 #: src/utils/visibility-text.jsx:4
 msgid "Public"
 msgstr "公開"
@@ -760,21 +760,21 @@ msgstr "投稿日時"
 #: src/components/compose.jsx:1995
 #: src/components/quote-settings-sheet.jsx:82
 #: src/components/status.jsx:304
-#: src/pages/settings.jsx:375
+#: src/pages/settings.jsx:372
 msgid "Anyone can quote"
 msgstr "誰でも引用可能"
 
 #: src/components/compose.jsx:1998
 #: src/components/quote-settings-sheet.jsx:85
 #: src/components/status.jsx:305
-#: src/pages/settings.jsx:378
+#: src/pages/settings.jsx:375
 msgid "Your followers can quote"
 msgstr "あなたのフォロワーが引用可能"
 
 #: src/components/compose.jsx:2001
 #: src/components/quote-settings-sheet.jsx:88
 #: src/components/status.jsx:306
-#: src/pages/settings.jsx:381
+#: src/pages/settings.jsx:378
 msgid "Only you can quote"
 msgstr "あなただけが引用可能"
 
@@ -790,7 +790,7 @@ msgid "Local"
 msgstr "ローカル"
 
 #: src/components/compose.jsx:2072
-#: src/pages/settings.jsx:330
+#: src/pages/settings.jsx:327
 #: src/utils/visibility-text.jsx:6
 msgid "Quiet public"
 msgstr "ひかえめな公開"
@@ -871,7 +871,7 @@ msgid "Custom emojis are not available on this server."
 msgstr ""
 
 #: src/components/drafts.jsx:62
-#: src/pages/settings.jsx:844
+#: src/pages/settings.jsx:841
 msgid "Unsent drafts"
 msgstr "未送信の下書き"
 
@@ -1635,7 +1635,7 @@ msgstr "キャッチアップ"
 #: src/pages/mentions.jsx:25
 #: src/pages/mentions.jsx:256
 #: src/pages/notifications.jsx:973
-#: src/pages/settings.jsx:1390
+#: src/pages/settings.jsx:1387
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "メンション"
@@ -1689,7 +1689,7 @@ msgstr "その他…"
 #: src/pages/catchup.jsx:2258
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1394
+#: src/pages/settings.jsx:1391
 msgid "Likes"
 msgstr "いいね！"
 
@@ -2167,12 +2167,12 @@ msgid "Continue unwrapping…"
 msgstr "さらに展開…"
 
 #: src/components/quote-settings-sheet.jsx:37
-#: src/pages/settings.jsx:366
+#: src/pages/settings.jsx:363
 msgid "Quote settings updated"
 msgstr "引用設定が更新されました"
 
 #: src/components/quote-settings-sheet.jsx:47
-#: src/pages/settings.jsx:368
+#: src/pages/settings.jsx:365
 msgid "Failed to update quote settings"
 msgstr "引用設定の更新に失敗しました"
 
@@ -3106,7 +3106,7 @@ msgid "Pin to profile"
 msgstr "プロフィールに固定します"
 
 #: src/components/status.jsx:1663
-#: src/pages/settings.jsx:340
+#: src/pages/settings.jsx:337
 msgid "Quote settings"
 msgstr "引用の設定"
 
@@ -3286,7 +3286,7 @@ msgid "{index}/X"
 msgstr ""
 
 #: src/components/timeline.jsx:565
-#: src/pages/settings.jsx:1418
+#: src/pages/settings.jsx:1415
 msgid "New posts"
 msgstr "新しい投稿"
 
@@ -4291,7 +4291,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
 #: src/pages/notifications.jsx:843
-#: src/pages/settings.jsx:1406
+#: src/pages/settings.jsx:1403
 msgid "Follow requests"
 msgstr "フォローリクエスト"
 
@@ -4543,251 +4543,247 @@ msgid "Keep navigation bars visible while scrolling"
 msgstr "スクロール中にナビゲーションバーを表示"
 
 #: src/pages/settings.jsx:274
-msgid "Show username instead of display name on posts"
+msgid "Show username instead of display name on timeline posts"
 msgstr ""
 
-#: src/pages/settings.jsx:279
-msgid "Only on timeline posts"
-msgstr ""
-
-#: src/pages/settings.jsx:288
+#: src/pages/settings.jsx:285
 msgid "Posting"
 msgstr "投稿"
 
-#: src/pages/settings.jsx:294
+#: src/pages/settings.jsx:291
 msgid "Default visibility"
 msgstr "デフォルトの公開範囲"
 
-#: src/pages/settings.jsx:295
-#: src/pages/settings.jsx:341
-#: src/pages/settings.jsx:389
+#: src/pages/settings.jsx:292
+#: src/pages/settings.jsx:338
+#: src/pages/settings.jsx:386
 msgid "Synced"
 msgstr "同期済み"
 
-#: src/pages/settings.jsx:318
+#: src/pages/settings.jsx:315
 msgid "Default visibility updated"
 msgstr ""
 
-#: src/pages/settings.jsx:320
+#: src/pages/settings.jsx:317
 msgid "Failed to update default visibility"
 msgstr ""
 
-#: src/pages/settings.jsx:391
+#: src/pages/settings.jsx:388
 msgid "Synced to your server's settings. <0>Go to your server ({instance}) for more settings.</0>"
 msgstr "サーバーの設定と同期 <0>サーバー ({instance}) に移動して設定</0>"
 
-#: src/pages/settings.jsx:408
+#: src/pages/settings.jsx:405
 msgid "Wellbeing"
 msgstr ""
 
-#: src/pages/settings.jsx:422
+#: src/pages/settings.jsx:419
 msgid "Hide Trending timeline"
 msgstr "トレンドを非表示"
 
-#: src/pages/settings.jsx:436
+#: src/pages/settings.jsx:433
 msgid "Hide Local timeline"
 msgstr "ローカルを非表示"
 
-#: src/pages/settings.jsx:451
+#: src/pages/settings.jsx:448
 msgid "Hide Federated timeline"
 msgstr "連合を非表示"
 
-#: src/pages/settings.jsx:465
+#: src/pages/settings.jsx:462
 msgid "Hide post metrics"
 msgstr ""
 
-#: src/pages/settings.jsx:474
+#: src/pages/settings.jsx:471
 msgid "Experiments"
 msgstr "実験的機能"
 
-#: src/pages/settings.jsx:488
+#: src/pages/settings.jsx:485
 msgid "Auto refresh timeline posts"
 msgstr "タイムライン投稿を自動更新する"
 
-#: src/pages/settings.jsx:502
+#: src/pages/settings.jsx:499
 msgid "Boosts carousel"
 msgstr "ブーストのカルーセル表示"
 
-#: src/pages/settings.jsx:521
+#: src/pages/settings.jsx:518
 msgid "Post translation"
 msgstr "翻訳を投稿"
 
-#: src/pages/settings.jsx:533
+#: src/pages/settings.jsx:530
 msgid "Translate to "
 msgstr ""
 
-#: src/pages/settings.jsx:544
+#: src/pages/settings.jsx:541
 msgid "System language ({systemTargetLanguageText})"
 msgstr "システム言語 ({systemTargetLanguageText})"
 
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
-#: src/pages/settings.jsx:570
+#: src/pages/settings.jsx:567
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr "{0, plural, =0 {\"翻訳\" ボタンを非表示：} other {\"翻訳\" ボタンを非表示 (#)：}}"
 
-#: src/pages/settings.jsx:625
+#: src/pages/settings.jsx:622
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
 msgstr "注: この機能は、<0>{TRANSLATION_API_NAME}</0> を用いて外部翻訳サービスを使用します。"
 
-#: src/pages/settings.jsx:653
+#: src/pages/settings.jsx:650
 msgid "Auto inline translation"
 msgstr "自動インライン翻訳"
 
-#: src/pages/settings.jsx:657
+#: src/pages/settings.jsx:654
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr "投稿の翻訳を自動的にタイムラインに表示します。コンテンツの警告、メディア、投票を含まない<0>短い</0>投稿にのみ有効です。"
 
-#: src/pages/settings.jsx:679
+#: src/pages/settings.jsx:676
 msgid "Paginated timeline (beta)"
 msgstr "ページ化したタイムライン（ベータ版）"
 
-#: src/pages/settings.jsx:684
+#: src/pages/settings.jsx:681
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
 msgstr "タイムライン投稿を無限スクロールする代わりに手動でページを進めます。今のところ、ホーム/フォロー中タイムラインのみ有効です。自動更新とブーストカルーセルは機能しません。"
 
-#: src/pages/settings.jsx:705
+#: src/pages/settings.jsx:702
 msgid "GIF Picker for composer"
 msgstr "投稿用の GIF ピッカー"
 
-#: src/pages/settings.jsx:710
+#: src/pages/settings.jsx:707
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr "注意: この機能は、<0>GIPHY</0>を用いて外部 GIF 検索サービスを使用します。 Gレート（すべての年齢層に適する）で、トラッキングパラメータを除去し、リクエストはリファラー情報を省略しますが、 検索クエリとIPアドレス情報はサーバーに送られます。"
 
-#: src/pages/settings.jsx:740
+#: src/pages/settings.jsx:737
 msgid "Image description generator"
 msgstr "画像説明の生成"
 
-#: src/pages/settings.jsx:746
+#: src/pages/settings.jsx:743
 msgid "Only for new images while composing new posts."
 msgstr ""
 
-#: src/pages/settings.jsx:753
+#: src/pages/settings.jsx:750
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr ""
 
-#: src/pages/settings.jsx:782
+#: src/pages/settings.jsx:779
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr ""
 
-#: src/pages/settings.jsx:788
+#: src/pages/settings.jsx:785
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr ""
 
-#: src/pages/settings.jsx:799
+#: src/pages/settings.jsx:796
 msgid "Note: This feature uses currently-logged-in server API."
 msgstr ""
 
-#: src/pages/settings.jsx:816
+#: src/pages/settings.jsx:813
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "クロークモード <0>(<1>テキスト</1> → <2>████</2>)</0>"
 
-#: src/pages/settings.jsx:826
+#: src/pages/settings.jsx:823
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr "テキストをブロックで覆います。プライバシー上の理由からスクリーンショットを撮るときに便利です。"
 
-#: src/pages/settings.jsx:852
+#: src/pages/settings.jsx:849
 msgid "Install {CLIENT_NAME}"
 msgstr ""
 
-#: src/pages/settings.jsx:861
+#: src/pages/settings.jsx:858
 msgid "About"
 msgstr ""
 
-#: src/pages/settings.jsx:900
+#: src/pages/settings.jsx:897
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr ""
 
-#: src/pages/settings.jsx:929
+#: src/pages/settings.jsx:926
 msgid "Sponsor"
 msgstr ""
 
-#: src/pages/settings.jsx:937
+#: src/pages/settings.jsx:934
 msgid "Donate"
 msgstr ""
 
-#: src/pages/settings.jsx:953
+#: src/pages/settings.jsx:950
 msgid "What's new"
 msgstr ""
 
-#: src/pages/settings.jsx:957
+#: src/pages/settings.jsx:954
 msgid "Privacy Policy"
 msgstr "プライバシーポリシー"
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:964
+#: src/pages/settings.jsx:961
 msgid "<0>Site:</0> {0}"
 msgstr ""
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:971
+#: src/pages/settings.jsx:968
 msgid "<0>Version:</0> <1/> {0}"
 msgstr ""
 
-#: src/pages/settings.jsx:986
+#: src/pages/settings.jsx:983
 msgid "Version string copied"
 msgstr ""
 
-#: src/pages/settings.jsx:989
+#: src/pages/settings.jsx:986
 msgid "Unable to copy version string"
 msgstr ""
 
 #. Preview of one character, in largest size
 #. Preview of one character, in smallest size
-#: src/pages/settings.jsx:1133
-#: src/pages/settings.jsx:1157
+#: src/pages/settings.jsx:1130
+#: src/pages/settings.jsx:1154
 msgid "A"
 msgstr ""
 
-#: src/pages/settings.jsx:1307
+#: src/pages/settings.jsx:1304
 msgid "Failed to update subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1312
+#: src/pages/settings.jsx:1309
 msgid "Failed to remove subscription. Please try again."
 msgstr ""
 
-#: src/pages/settings.jsx:1319
+#: src/pages/settings.jsx:1316
 msgid "Push Notifications (beta)"
 msgstr "プッシュ通知（ベータ版）"
 
-#: src/pages/settings.jsx:1341
+#: src/pages/settings.jsx:1338
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr ""
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1351
+#: src/pages/settings.jsx:1348
 msgid "Allow from <0>{0}</0>"
 msgstr ""
 
-#: src/pages/settings.jsx:1360
+#: src/pages/settings.jsx:1357
 msgid "anyone"
 msgstr "誰でも"
 
-#: src/pages/settings.jsx:1364
+#: src/pages/settings.jsx:1361
 msgid "people I follow"
 msgstr "フォローしている人"
 
-#: src/pages/settings.jsx:1368
+#: src/pages/settings.jsx:1365
 msgid "followers"
 msgstr "フォロワー"
 
-#: src/pages/settings.jsx:1402
+#: src/pages/settings.jsx:1399
 msgid "Follows"
 msgstr "フォロー"
 
-#: src/pages/settings.jsx:1410
+#: src/pages/settings.jsx:1407
 msgid "Polls"
 msgstr "投票"
 
-#: src/pages/settings.jsx:1414
+#: src/pages/settings.jsx:1411
 msgid "Post edits"
 msgstr "投稿の編集"
 
-#: src/pages/settings.jsx:1435
+#: src/pages/settings.jsx:1432
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr ""
 
-#: src/pages/settings.jsx:1451
+#: src/pages/settings.jsx:1448
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "注: プッシュ通知は<0>1つのアカウント</0>のみ動作します。"
 

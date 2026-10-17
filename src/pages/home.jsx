@@ -81,7 +81,7 @@ function NotificationsLink() {
       <Link
         ref={notificationLinkRef}
         to="/notifications"
-        class={`button plain notifications-button ${
+        class={`button plain4 notifications-button ${
           snapStates.notificationsShowNew ? 'has-badge' : ''
         } ${menuState || ''}`}
         onClick={(e) => {

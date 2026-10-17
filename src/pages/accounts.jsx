@@ -151,7 +151,7 @@ function Accounts({ onClose }) {
                     <Menu2
                       align="end"
                       menuButton={
-                        <button type="button" class="plain more-button">
+                        <button type="button" class="plain4 more-button">
                           <Icon icon="more" size="l" alt={t`More`} />
                         </button>
                       }

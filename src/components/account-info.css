@@ -355,16 +355,6 @@
     filter: drop-shadow(-2px 0 4px var(--header-color-3, --bg-color))
       drop-shadow(2px 0 4px var(--header-color-4, --bg-color));
   }
-
-  .avatar {
-    /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
-    8px 0 24px var(--header-color-4, --bg-color); */
-    /* overflow: initial; */
-
-    &:not(.has-alpha) img {
-      border-radius: inherit;
-    }
-  }
 }
 
 .account-container main > *:first-child {

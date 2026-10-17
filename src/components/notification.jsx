@@ -2,6 +2,7 @@ import { msg, t } from '@lingui/core/macro';
 import { Plural, Select, Trans, useLingui } from '@lingui/react/macro';
 import { Fragment } from 'preact';
 import { memo } from 'preact/compat';
+import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import enhanceContent from '../utils/enhance-content';
@@ -90,50 +91,80 @@ const contentText = {
     account,
     postsCount,
     postType,
+    hidePostMetrics,
     components: { Subject },
-  }) => (
-    <Plural
-      value={count}
-      _1={
+  }) => {
+    if (hidePostMetrics) {
+      return (
         <Plural
-          value={postsCount}
+          value={count}
           _1={
-            <Select
-              value={postType}
-              _reply={<Trans>{account} boosted your reply.</Trans>}
-              other={<Trans>{account} boosted your post.</Trans>}
+            <Plural
+              value={postsCount}
+              _1={
+                <Select
+                  value={postType}
+                  _reply={<Trans>{account} boosted your reply.</Trans>}
+                  other={<Trans>{account} boosted your post.</Trans>}
+                />
+              }
+              other={<Trans>{account} boosted your posts.</Trans>}
             />
           }
           other={
-            <Trans>
-              {account} boosted {postsCount} of your posts.
-            </Trans>
+            <Select
+              value={postType}
+              _reply={<Trans>{account} & others boosted your reply.</Trans>}
+              other={<Trans>{account} & others boosted your post.</Trans>}
+            />
           }
         />
-      }
-      other={
-        <Select
-          value={postType}
-          _reply={
-            <Trans>
-              <Subject clickable={count > 1}>
-                <span title={count}>{shortenNumber(count)}</span> people
-              </Subject>{' '}
-              boosted your reply.
-            </Trans>
-          }
-          other={
-            <Trans>
-              <Subject clickable={count > 1}>
-                <span title={count}>{shortenNumber(count)}</span> people
-              </Subject>{' '}
-              boosted your post.
-            </Trans>
-          }
-        />
-      }
-    />
-  ),
+      );
+    }
+    return (
+      <Plural
+        value={count}
+        _1={
+          <Plural
+            value={postsCount}
+            _1={
+              <Select
+                value={postType}
+                _reply={<Trans>{account} boosted your reply.</Trans>}
+                other={<Trans>{account} boosted your post.</Trans>}
+              />
+            }
+            other={
+              <Trans>
+                {account} boosted {postsCount} of your posts.
+              </Trans>
+            }
+          />
+        }
+        other={
+          <Select
+            value={postType}
+            _reply={
+              <Trans>
+                <Subject clickable={count > 1}>
+                  <span title={count}>{shortenNumber(count)}</span> people
+                </Subject>{' '}
+                boosted your reply.
+              </Trans>
+            }
+            other={
+              <Trans>
+                <Subject clickable={count > 1}>
+                  <span title={count}>{shortenNumber(count)}</span> people
+                </Subject>{' '}
+                boosted your post.
+              </Trans>
+            }
+          />
+        }
+      />
+    );
+  },
   follow: ({ account, count, components: { Subject } }) => (
     <Plural
       value={count}
@@ -156,50 +187,80 @@ const contentText = {
     count,
     postsCount,
     postType,
+    hidePostMetrics,
     components: { Subject },
-  }) => (
-    <Plural
-      value={count}
-      _1={
+  }) => {
+    if (hidePostMetrics) {
+      return (
         <Plural
-          value={postsCount}
+          value={count}
           _1={
-            <Select
-              value={postType}
-              _reply={<Trans>{account} liked your reply.</Trans>}
-              other={<Trans>{account} liked your post.</Trans>}
+            <Plural
+              value={postsCount}
+              _1={
+                <Select
+                  value={postType}
+                  _reply={<Trans>{account} liked your reply.</Trans>}
+                  other={<Trans>{account} liked your post.</Trans>}
+                />
+              }
+              other={<Trans>{account} liked your posts.</Trans>}
             />
           }
           other={
-            <Trans>
-              {account} liked {postsCount} of your posts.
-            </Trans>
+            <Select
+              value={postType}
+              _reply={<Trans>{account} & others liked your reply.</Trans>}
+              other={<Trans>{account} & others liked your post.</Trans>}
+            />
           }
         />
-      }
-      other={
-        <Select
-          value={postType}
-          _reply={
-            <Trans>
-              <Subject clickable={count > 1}>
-                <span title={count}>{shortenNumber(count)}</span> people
-              </Subject>{' '}
-              liked your reply.
-            </Trans>
-          }
-          other={
-            <Trans>
-              <Subject clickable={count > 1}>
-                <span title={count}>{shortenNumber(count)}</span> people
-              </Subject>{' '}
-              liked your post.
-            </Trans>
-          }
-        />
-      }
-    />
-  ),
+      );
+    }
+    return (
+      <Plural
+        value={count}
+        _1={
+          <Plural
+            value={postsCount}
+            _1={
+              <Select
+                value={postType}
+                _reply={<Trans>{account} liked your reply.</Trans>}
+                other={<Trans>{account} liked your post.</Trans>}
+              />
+            }
+            other={
+              <Trans>
+                {account} liked {postsCount} of your posts.
+              </Trans>
+            }
+          />
+        }
+        other={
+          <Select
+            value={postType}
+            _reply={
+              <Trans>
+                <Subject clickable={count > 1}>
+                  <span title={count}>{shortenNumber(count)}</span> people
+                </Subject>{' '}
+                liked your reply.
+              </Trans>
+            }
+            other={
+              <Trans>
+                <Subject clickable={count > 1}>
+                  <span title={count}>{shortenNumber(count)}</span> people
+                </Subject>{' '}
+                liked your post.
+              </Trans>
+            }
+          />
+        }
+      />
+    );
+  },
   poll: () => t`A poll you have voted in or created has ended.`,
   'poll-self': () => t`A poll you have created has ended.`,
   'poll-voted': () => t`A poll you have voted in has ended.`,
@@ -214,50 +275,84 @@ const contentText = {
     account,
     postsCount,
     postType,
+    hidePostMetrics,
     components: { Subject },
-  }) => (
-    <Plural
-      value={count}
-      _1={
+  }) => {
+    if (hidePostMetrics) {
+      return (
         <Plural
-          value={postsCount}
+          value={count}
           _1={
-            <Select
-              value={postType}
-              _reply={<Trans>{account} boosted & liked your reply.</Trans>}
-              other={<Trans>{account} boosted & liked your post.</Trans>}
+            <Plural
+              value={postsCount}
+              _1={
+                <Select
+                  value={postType}
+                  _reply={<Trans>{account} boosted & liked your reply.</Trans>}
+                  other={<Trans>{account} boosted & liked your post.</Trans>}
+                />
+              }
+              other={<Trans>{account} boosted & liked your posts.</Trans>}
             />
           }
           other={
-            <Trans>
-              {account} boosted & liked {postsCount} of your posts.
-            </Trans>
+            <Select
+              value={postType}
+              _reply={
+                <Trans>{account} & others boosted & liked your reply.</Trans>
+              }
+              other={
+                <Trans>{account} & others boosted & liked your post.</Trans>
+              }
+            />
           }
         />
-      }
-      other={
-        <Select
-          value={postType}
-          _reply={
-            <Trans>
-              <Subject clickable={count > 1}>
-                <span title={count}>{shortenNumber(count)}</span> people
-              </Subject>{' '}
-              boosted & liked your reply.
-            </Trans>
-          }
-          other={
-            <Trans>
-              <Subject clickable={count > 1}>
-                <span title={count}>{shortenNumber(count)}</span> people
-              </Subject>{' '}
-              boosted & liked your post.
-            </Trans>
-          }
-        />
-      }
-    />
-  ),
+      );
+    }
+    return (
+      <Plural
+        value={count}
+        _1={
+          <Plural
+            value={postsCount}
+            _1={
+              <Select
+                value={postType}
+                _reply={<Trans>{account} boosted & liked your reply.</Trans>}
+                other={<Trans>{account} boosted & liked your post.</Trans>}
+              />
+            }
+            other={
+              <Trans>
+                {account} boosted & liked {postsCount} of your posts.
+              </Trans>
+            }
+          />
+        }
+        other={
+          <Select
+            value={postType}
+            _reply={
+              <Trans>
+                <Subject clickable={count > 1}>
+                  <span title={count}>{shortenNumber(count)}</span> people
+                </Subject>{' '}
+                boosted & liked your reply.
+              </Trans>
+            }
+            other={
+              <Trans>
+                <Subject clickable={count > 1}>
+                  <span title={count}>{shortenNumber(count)}</span> people
+                </Subject>{' '}
+                boosted & liked your post.
+              </Trans>
+            }
+          />
+        }
+      />
+    );
+  },
   quoted_update: ({ account }) => (
     <Trans>{account} edited a post you have quoted.</Trans>
   ),
@@ -343,6 +438,8 @@ function Notification({
   disableContextMenu,
 }) {
   const { _ } = useLingui();
+  const snapStates = useSnapshot(states);
+  const hidePostMetrics = snapStates.settings.hidePostMetrics;
   const { masto } = api();
   const {
     id,
@@ -400,6 +497,11 @@ function Notification({
     if (!reblogsCount && favsCount) type = 'favourite';
     if (!favsCount && reblogsCount) type = 'reblog';
   }
+
+  // Likes/boosts notifications
+  const hideNotificationMetrics =
+    hidePostMetrics &&
+    (type === 'favourite' || type === 'reblog' || type === 'favourite+reblog');
 
   let text;
   if (type === 'poll') {
@@ -485,6 +587,7 @@ function Notification({
         count,
         postsCount,
         postType: isReplyToOthers ? 'reply' : 'post',
+        hidePostMetrics,
         components: { Subject },
       });
     }
@@ -746,12 +849,17 @@ function Notification({
                 class="small plain"
                 data-group-keys={_groupKeys?.join(' ')}
                 onClick={handleOpenGenericAccounts}
+                title={hideNotificationMetrics ? t`More` : undefined}
               >
-                +
-                {(type === 'favourite' ||
-                  type === 'reblog' ||
-                  type === 'admin.sign_up') &&
-                  notificationsCount - _accounts.length}
+                {!hideNotificationMetrics && (
+                  <>
+                    +
+                    {(type === 'favourite' ||
+                      type === 'reblog' ||
+                      type === 'admin.sign_up') &&
+                      notificationsCount - _accounts.length}
+                  </>
+                )}
                 <Icon icon="chevron-down" />
               </button>
             ) : (
@@ -759,8 +867,10 @@ function Notification({
                 type="button"
                 class="small plain"
                 onClick={handleOpenGenericAccounts}
+                title={hideNotificationMetrics ? t`More` : undefined}
               >
-                {_accounts.length > AVATARS_LIMIT &&
+                {!hideNotificationMetrics &&
+                  _accounts.length > AVATARS_LIMIT &&
                   `+${_accounts.length - AVATARS_LIMIT}`}
                 <Icon icon="chevron-down" />
               </button>
@@ -808,8 +918,10 @@ function Notification({
                   instance ? `/${instance}/s/${status.id}` : `/s/${status.id}`
                 }
                 class="button small plain centered"
+                title={hideNotificationMetrics ? t`More` : undefined}
               >
-                +{notificationsCount - sampleAccounts.length}
+                {!hideNotificationMetrics &&
+                  `+${notificationsCount - sampleAccounts.length}`}
                 <Icon icon="chevron-right" />
               </Link>
             )}

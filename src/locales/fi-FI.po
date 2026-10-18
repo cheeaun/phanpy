@@ -8,7 +8,7 @@ msgstr ""
 "Language: fi\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-17 15:23\n"
+"PO-Revision-Date: 2026-10-18 09:33\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1806,7 +1806,7 @@ msgstr "{account} julkaisi."
 
 #: src/components/notification.jsx:99
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted your reply.} other {{account} boosted your post.}}} other {{account} boosted your posts.}}} other {{postType, select, reply {{account} & others boosted your reply.} other {{account} & others boosted your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} tehosti vastaustasi.} other {{account} tehosti julkaisuasi.}}} other {{account} tehosti julkaisujasi.}}} other {{postType, select, reply {{account} ja muut tehostivat vastaustasi.} other {{account} ja muut tehostivat julkaisuasi.}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
@@ -1825,7 +1825,7 @@ msgstr "{account} pyysi saada seurata sinua."
 
 #: src/components/notification.jsx:195
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} liked your reply.} other {{account} liked your post.}}} other {{account} liked your posts.}}} other {{postType, select, reply {{account} & others liked your reply.} other {{account} & others liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} tykkäsi vastauksestasi.} other {{account} tykkäsi julkaisustasi.}}} other {{account} tykkäsi julkaisuistasi.}}} other {{postType, select, reply {{account} ja muut tykkäsivät vastauksestasi.} other {{account} ja muut tykkäsivät julkaisustasi.}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)
@@ -1855,7 +1855,7 @@ msgstr "Julkaisua, jonka kanssa olet ollut vuorovaikutuksessa, on päivitetty."
 
 #: src/components/notification.jsx:283
 msgid "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} boosted & liked your reply.} other {{account} boosted & liked your post.}}} other {{account} boosted & liked your posts.}}} other {{postType, select, reply {{account} & others boosted & liked your reply.} other {{account} & others boosted & liked your post.}}}}"
-msgstr ""
+msgstr "{count, plural, =1 {{postsCount, plural, =1 {{postType, select, reply {{account} tykkäsi ja tehosti vastaustasi.} other {{account} tykkäsi ja tehosti julkaisuasi.}}} other {{account} tykkäsi ja tehosti julkaisujasi.}}} other {{postType, select, reply {{account} ja muut tykkäsivät ja tehostivat vastaustasi.} other {{account} ja muut tykkäsivät ja tehostivat julkaisuasi.}}}}"
 
 #. placeholder {0}: shortenNumber(count)
 #. placeholder {1}: shortenNumber(count)

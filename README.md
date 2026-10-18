@@ -393,7 +393,7 @@ Costs involved in running and developing this web app:
           <br />
           <sub><b>CDN</b></sub></a>
         <br />
-        <sub><b>5980 words</b></sub>
+        <sub><b>6145 words</b></sub>
         <br /><sub><b><code title="Chinese Simplified">zh-CN</code></b></sub>
       </td>
       <td align="center" valign="top">
@@ -401,7 +401,7 @@ Costs involved in running and developing this web app:
           <br />
           <sub><b>valtlai</b></sub></a>
         <br />
-        <sub><b>6828 words</b></sub>
+        <sub><b>6840 words</b></sub>
         <br /><sub><b><code title="Finnish">fi</code></b></sub>
       </td>
       <td align="center" valign="top">
@@ -487,7 +487,7 @@ Costs involved in running and developing this web app:
           <br />
           <sub><b>(BoFFire)</b></sub></a>
         <br />
-        <sub><b>3189 words</b></sub>
+        <sub><b>3194 words</b></sub>
         <br /><sub><b><code title="Arabic">ar</code></b>, <b><code title="French">fr</code></b>, <b><code title="Kabyle">kab</code></b></sub>
       </td>
       <td align="center" valign="top">

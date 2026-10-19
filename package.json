@@ -33,8 +33,8 @@
     "@github/text-expander-element": "~2.9.4",
     "@iconify-json/mingcute": "~1.2.8",
     "@justinribeiro/lite-youtube": "~1.9.0",
-    "@lingui/detect-locale": "~6.9.1",
-    "@lingui/react": "~6.9.1",
+    "@lingui/detect-locale": "~6.10.0",
+    "@lingui/react": "~6.10.0",
     "@szhsin/react-menu": "~4.5.2",
     "chroma-js": "~3.2.0",
     "compare-versions": "~6.1.1",
@@ -76,13 +76,13 @@
     "@emnapi/core": "~1.11.3",
     "@emnapi/runtime": "~1.11.3",
     "@iconify/utils": "~3.1.7",
-    "@lingui/cli": "~6.9.1",
-    "@lingui/vite-plugin": "~6.9.1",
+    "@lingui/cli": "~6.10.0",
+    "@lingui/vite-plugin": "~6.10.0",
     "@playwright/test": "~1.64.1",
     "@preact/preset-vite": "~2.10.6",
     "@types/node": "~26.6.5",
     "oxfmt": "~0.73.0",
-    "postcss": "~8.5.30",
+    "postcss": "~8.5.31",
     "postcss-dark-theme-class": "~2.0.0",
     "postcss-preset-env": "~11.6.1",
     "sonda": "~0.14.0",
@@ -138,6 +138,9 @@
       "thumbnail": true,
       "icc": true
     }
+  },
+  "overrides": {
+    "@babel/plugin-transform-runtime": "~7.29.7"
   },
   "allowScripts": {
     "core-js@2.6.12": true,

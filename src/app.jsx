@@ -359,6 +359,11 @@ subscribe(states, (changes) => {
       const $body = document.body;
       $body.classList.toggle('cloak', value);
     }
+
+    // Add/Remove lowercase class to body
+    if (path.join('.') === 'settings.lowercasePostText') {
+      document.body.classList.toggle('lowercase-post-text', value);
+    }
   }
 });
 

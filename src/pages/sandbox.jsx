@@ -84,12 +84,12 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     id: hashID(toggles),
     account: {
       id: 'sandbox-account',
-      username: 'test',
+      username: 'TestUsername',
       name: 'Test Display Name',
       displayName: 'Test Display Name',
       // avatar: 'https://picsum.photos/seed/avatar/200',
       avatar: '/logo-192.png',
-      acct: 'test@localhost',
+      acct: 'TestUsername@localhost',
       url: 'https://test.localhost',
     },
     content:
@@ -423,6 +423,7 @@ const INITIAL_STATE = {
   collectionCardsCount: '1', // Number of collection cards (max 6)
   collectionAccountsCount: '3', // Number of accounts in each collection
   hidePostMetrics: false, // Hide post metrics (replies/boosts/favourites counts)
+  lowercasePostText: false, // Lowercase post text
   postUsernameOnly: false, // Show username instead of display name on posts
   boosted: false, // Fake boosted state for the main post (no API calls)
   liked: false, // Fake liked state for the main post (no API calls)
@@ -444,6 +445,7 @@ export default function Sandbox() {
   const [initialState] = useState(() => ({
     ...INITIAL_STATE,
     hidePostMetrics: !!states.settings.hidePostMetrics,
+    lowercasePostText: !!states.settings.lowercasePostText,
     postUsernameOnly: !!states.settings.postUsernameOnly,
   }));
   const [toggleState, setToggleState] = useState(initialState);
@@ -509,6 +511,7 @@ export default function Sandbox() {
     store.account.set = (key, value) => {
       if (
         key === 'settings-hidePostMetrics' ||
+        key === 'settings-lowercasePostText' ||
         key === 'settings-postUsernameOnly'
       ) {
         return;
@@ -517,6 +520,7 @@ export default function Sandbox() {
     };
     return () => {
       states.settings.hidePostMetrics = initialState.hidePostMetrics;
+      states.settings.lowercasePostText = initialState.lowercasePostText;
       states.settings.postUsernameOnly = initialState.postUsernameOnly;
       store.account.set = originalSet;
     };
@@ -524,8 +528,13 @@ export default function Sandbox() {
 
   useEffect(() => {
     states.settings.hidePostMetrics = toggleState.hidePostMetrics;
+    states.settings.lowercasePostText = toggleState.lowercasePostText;
     states.settings.postUsernameOnly = toggleState.postUsernameOnly;
-  }, [toggleState.hidePostMetrics, toggleState.postUsernameOnly]);
+  }, [
+    toggleState.hidePostMetrics,
+    toggleState.lowercasePostText,
+    toggleState.postUsernameOnly,
+  ]);
 
   // Mock the api to simulate authentication for the sandbox's instance
   // This makes sameInstance=true and authenticated=true for poll voting
@@ -1014,8 +1023,8 @@ export default function Sandbox() {
     if (!states.accounts['sandbox-account']) {
       states.accounts['sandbox-account'] = {
         id: 'sandbox-account',
-        username: 'test',
-        acct: `test@${currentInstance}`,
+        username: 'TestUsername',
+        acct: `TestUsername@${currentInstance}`,
         displayName: 'Test Display Name',
         avatarStatic: '/logo-192.png',
         avatar: '/logo-192.png',
@@ -1152,6 +1161,25 @@ export default function Sandbox() {
                 <label>
                   <input
                     type="checkbox"
+                    checked={toggleState.postUsernameOnly}
+                    onChange={() =>
+                      updateToggles({
+                        postUsernameOnly: !toggleState.postUsernameOnly,
+                      })
+                    }
+                  />
+                  <span>Show username instead of display name</span>
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <b>Wellbeing</b>
+            <ul>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
                     checked={toggleState.hidePostMetrics}
                     onChange={() =>
                       updateToggles({
@@ -1166,14 +1194,14 @@ export default function Sandbox() {
                 <label>
                   <input
                     type="checkbox"
-                    checked={toggleState.postUsernameOnly}
+                    checked={toggleState.lowercasePostText}
                     onChange={() =>
                       updateToggles({
-                        postUsernameOnly: !toggleState.postUsernameOnly,
+                        lowercasePostText: !toggleState.lowercasePostText,
                       })
                     }
                   />
-                  <span>Show username instead of display name</span>
+                  <span>Lowercase timeline post text</span>
                 </label>
               </li>
             </ul>

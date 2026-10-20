@@ -3414,6 +3414,30 @@ ul.link-list li a .icon {
   }
 }
 
+/* LOWERCASE POST TEXT */
+body.lowercase-post-text {
+  .status:not(.large, .status.large .status) .container {
+    text-transform: lowercase;
+
+    .pre-content-container *,
+    button,
+    input,
+    select,
+    textarea {
+      text-transform: inherit;
+    }
+
+    /* .hashtag, */
+    code,
+    pre,
+    samp,
+    kbd,
+    var {
+      text-transform: none;
+    }
+  }
+}
+
 /* DEBUG */
 
 .debug-info {

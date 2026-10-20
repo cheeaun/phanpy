@@ -463,6 +463,27 @@ function Settings({ onClose }) {
                     </span>
                   </label>
                 </li>
+                <li class="block">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={snapStates.settings.lowercasePostText}
+                      onChange={(e) => {
+                        states.settings.lowercasePostText = e.target.checked;
+                      }}
+                    />
+                    <span>
+                      <Trans>Lowercase timeline post text</Trans>
+                    </span>
+                  </label>
+                  <div class="sub-section insignificant">
+                    <small>
+                      <Trans>
+                        Only affects languages with letter case, like English.
+                      </Trans>
+                    </small>
+                  </div>
+                </li>
               </ul>
             </section>
           </>

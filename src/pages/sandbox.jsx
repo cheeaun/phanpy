@@ -1735,6 +1735,7 @@ export default function Sandbox() {
                     }}
                     disabled={!toggleState.showQuotes}
                   />
+                  <sup>2</sup>
                 </label>
                 {toggleState.showQuotes && (
                   <ul>
@@ -2223,6 +2224,10 @@ export default function Sandbox() {
             <li>
               Link preview card conditionally renders based on presence of other
               elements like media, etc.
+            </li>
+            <li>
+              Only the first quote post is rendered at small/medium size. Set
+              size to Large to show all of them.
             </li>
             {/* <li>"Always hide media" is not supported yet.</li> */}
           </ul>

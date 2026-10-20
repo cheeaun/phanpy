@@ -424,6 +424,9 @@ const INITIAL_STATE = {
   collectionAccountsCount: '3', // Number of accounts in each collection
   hidePostMetrics: false, // Hide post metrics (replies/boosts/favourites counts)
   postUsernameOnly: false, // Show username instead of display name on posts
+  boosted: false, // Fake boosted state for the main post (no API calls)
+  liked: false, // Fake liked state for the main post (no API calls)
+  bookmarked: false, // Fake bookmarked state for the main post (no API calls)
 };
 
 export default function Sandbox() {
@@ -591,6 +594,15 @@ export default function Sandbox() {
       collectionAccountsCount: toggleState.collectionAccountsCount,
     },
   });
+
+  // Fake boost/like/bookmark state for the main post only.
+  // Intentionally not passed into MOCK_STATUS toggles so the status ID stays
+  // stable — an ID change would tear down and recreate quote posts.
+  // Quote posts are separate status objects in states.statuses, so they're
+  // unaffected by these flags.
+  mockStatus.reblogged = toggleState.boosted;
+  mockStatus.favourited = toggleState.liked;
+  mockStatus.bookmarked = toggleState.bookmarked;
 
   if (toggleState.contextType === 'reblog') {
     const rebloggedStatus = { ...mockStatus };
@@ -933,6 +945,20 @@ export default function Sandbox() {
     updateToggles({ filters: newFilters });
   };
 
+  // Fake boost/like/bookmark triggers for the main post, for playing the
+  // post's action button animations without real API calls.
+  // Deliberately bypass updateToggles' view transitions so the animations
+  // play in full instead of being masked by the transition.
+  const toggleBoosted = () => {
+    setToggleState((prev) => ({ ...prev, boosted: !prev.boosted }));
+  };
+  const toggleLiked = () => {
+    setToggleState((prev) => ({ ...prev, liked: !prev.liked }));
+  };
+  const toggleBookmarked = () => {
+    setToggleState((prev) => ({ ...prev, bookmarked: !prev.bookmarked }));
+  };
+
   // Handler for quote filter checkboxes
   const handleQuoteFilterChange = (index) => {
     const newQuoteFilters = [...toggleState.quoteFilters];
@@ -1149,6 +1175,38 @@ export default function Sandbox() {
                   />
                   <span>Show username instead of display name</span>
                 </label>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <b>Actions</b>
+            <ul>
+              <li>
+                <button
+                  type="button"
+                  class="small plain6 action-button boost"
+                  onClick={toggleBoosted}
+                >
+                  {toggleState.boosted ? 'Unboost' : 'Boost'}
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="small plain6 action-button like"
+                  onClick={toggleLiked}
+                >
+                  {toggleState.liked ? 'Unlike' : 'Like'}
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="small plain6 action-button bookmark"
+                  onClick={toggleBookmarked}
+                >
+                  {toggleState.bookmarked ? 'Unbookmark' : 'Bookmark'}
+                </button>
               </li>
             </ul>
           </li>

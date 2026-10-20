@@ -8,7 +8,7 @@ msgstr ""
 "Language: es\n"
 "Project-Id-Version: phanpy\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-17 15:23\n"
+"PO-Revision-Date: 2026-10-20 10:42\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -271,7 +271,7 @@ msgstr "Citas"
 #: src/pages/catchup.jsx:77
 #: src/pages/catchup.jsx:1599
 #: src/pages/catchup.jsx:2264
-#: src/pages/settings.jsx:1395
+#: src/pages/settings.jsx:1416
 #: src/pages/year-in-posts.jsx:1408
 msgid "Boosts"
 msgstr "Impulsos"
@@ -370,7 +370,7 @@ msgid "Cloak mode enabled"
 msgstr "El modo oculto ha sido activado"
 
 #. More from [Author]
-#: src/components/byline.jsx:16
+#: src/components/byline.jsx:20
 msgid "More from <0/>"
 msgstr "Más de <0/>"
 
@@ -871,7 +871,7 @@ msgid "Custom emojis are not available on this server."
 msgstr "Los emojis personalizados no están disponibles en este servidor."
 
 #: src/components/drafts.jsx:62
-#: src/pages/settings.jsx:841
+#: src/pages/settings.jsx:862
 msgid "Unsent drafts"
 msgstr "Borradores no enviados"
 
@@ -1638,7 +1638,7 @@ msgstr "Ponerse al día"
 #: src/pages/mentions.jsx:25
 #: src/pages/mentions.jsx:256
 #: src/pages/notifications.jsx:973
-#: src/pages/settings.jsx:1387
+#: src/pages/settings.jsx:1408
 #: src/pages/trending.jsx:384
 msgid "Mentions"
 msgstr "Menciones"
@@ -1692,7 +1692,7 @@ msgstr "Más…"
 #: src/pages/catchup.jsx:2258
 #: src/pages/favourites.jsx:12
 #: src/pages/favourites.jsx:26
-#: src/pages/settings.jsx:1391
+#: src/pages/settings.jsx:1412
 msgid "Likes"
 msgstr "Me gustan"
 
@@ -3301,7 +3301,7 @@ msgid "{index}/X"
 msgstr "{index}/X"
 
 #: src/components/timeline.jsx:565
-#: src/pages/settings.jsx:1415
+#: src/pages/settings.jsx:1436
 msgid "New posts"
 msgstr "Nuevas publicaciones"
 
@@ -4306,7 +4306,7 @@ msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr "{0, plural, one {Anuncio} other {Anuncios}}"
 
 #: src/pages/notifications.jsx:843
-#: src/pages/settings.jsx:1403
+#: src/pages/settings.jsx:1424
 msgid "Follow requests"
 msgstr "Solicitudes de seguimiento"
 
@@ -4607,198 +4607,206 @@ msgstr "Ocultar la cronología federada"
 msgid "Hide post metrics"
 msgstr ""
 
-#: src/pages/settings.jsx:471
+#: src/pages/settings.jsx:476
+msgid "Lowercase timeline post text"
+msgstr ""
+
+#: src/pages/settings.jsx:481
+msgid "Only affects languages with letter case, like English."
+msgstr ""
+
+#: src/pages/settings.jsx:492
 msgid "Experiments"
 msgstr "Experimentos"
 
-#: src/pages/settings.jsx:485
+#: src/pages/settings.jsx:506
 msgid "Auto refresh timeline posts"
 msgstr "Actualizar automáticamente las publicaciones de tu línea de tiempo"
 
-#: src/pages/settings.jsx:499
+#: src/pages/settings.jsx:520
 msgid "Boosts carousel"
 msgstr "Carrusel de publicaciones impulsadas"
 
-#: src/pages/settings.jsx:518
+#: src/pages/settings.jsx:539
 msgid "Post translation"
 msgstr "Traducción de publicaciones"
 
-#: src/pages/settings.jsx:530
+#: src/pages/settings.jsx:551
 msgid "Translate to "
 msgstr "Traducir a "
 
-#: src/pages/settings.jsx:541
+#: src/pages/settings.jsx:562
 msgid "System language ({systemTargetLanguageText})"
 msgstr "Idioma del sistema ({systemTargetLanguageText})"
 
 #. placeholder {0}: snapStates.settings.contentTranslationHideLanguages .length
-#: src/pages/settings.jsx:567
+#: src/pages/settings.jsx:588
 msgid "{0, plural, =0 {Hide \"Translate\" button for:} other {Hide \"Translate\" button for (#):}}"
 msgstr "{0, plural,=0 {Esconder el botón de \"Traducir\" para:} other {Esconder el botón de traducir para (#):}}"
 
-#: src/pages/settings.jsx:622
+#: src/pages/settings.jsx:643
 msgid "Note: This feature uses external translation services, powered by <0>{TRANSLATION_API_NAME}</0>."
 msgstr "Nota: Esta función usa servicios de traducción externos, con la tecnología <0>{TRANSLATION_API_NAME}</0>."
 
-#: src/pages/settings.jsx:650
+#: src/pages/settings.jsx:671
 msgid "Auto inline translation"
 msgstr "Traducción automática"
 
-#: src/pages/settings.jsx:654
+#: src/pages/settings.jsx:675
 msgid "Automatically show translation for posts in timeline. Only works for <0>short</0> posts without content warning, media and poll."
 msgstr "Mostrar automáticamente la traducción de las publicaciones en la línea de tiempo. Funciona únicamente en publicaciones <0>cortas</0> sin advertencias de contenido, archivos multimedia o encuestas."
 
-#: src/pages/settings.jsx:676
+#: src/pages/settings.jsx:697
 msgid "Paginated timeline (beta)"
 msgstr "Cronología paginada (beta)"
 
-#: src/pages/settings.jsx:681
+#: src/pages/settings.jsx:702
 msgid "Manual pagination of timeline posts instead of infinite scrolling. Only works for Home/Following timeline for now. Auto refresh and boosts carousel will not work when this is enabled."
 msgstr "Paginación manual de las publicaciones de la cronología en lugar de desplazamiento infinito. Por ahora, solo funciona en la cronología de la página de inicio y en el de «Seguidos». La actualización automática y el carrusel de publicaciones destacadas no funcionarán cuando esta opción esté activada."
 
-#: src/pages/settings.jsx:702
+#: src/pages/settings.jsx:723
 msgid "GIF Picker for composer"
 msgstr "Selector de GIF durante la redacción"
 
-#: src/pages/settings.jsx:707
+#: src/pages/settings.jsx:728
 msgid "Note: This feature uses external GIF search service, powered by <0>GIPHY</0>. G-rated (suitable for viewing by all ages), tracking parameters are stripped, referrer information is omitted from requests, but search queries and IP address information will still reach their servers."
 msgstr "Nota: Esta característica emplea un servicio de búsqueda GIF externo, desarrollado por <0>GIPHY</0>. Estos son adecuados para ser vistos por todas las edades, los parámetros de seguimiento son despojados, la información de referencia se omite de las solicitudes, pero las consultas de búsqueda y la información de direcciones IP seguirán llegando a sus servidores."
 
-#: src/pages/settings.jsx:737
+#: src/pages/settings.jsx:758
 msgid "Image description generator"
 msgstr "Generador de descripción de imagen"
 
-#: src/pages/settings.jsx:743
+#: src/pages/settings.jsx:764
 msgid "Only for new images while composing new posts."
 msgstr "Solo para imágenes nuevas mientras se redactan nuevas publicaciones."
 
-#: src/pages/settings.jsx:750
+#: src/pages/settings.jsx:771
 msgid "Note: This feature uses external AI service, powered by <0>img-alt-api</0>. May not work well. Only for images and in English."
 msgstr "Nota: Esta característica usa un servicio de IA externo, desarrollado por <0>img-alt-api</0>. Puede no funcionar bien. Solamente para imágenes y en inglés."
 
-#: src/pages/settings.jsx:779
+#: src/pages/settings.jsx:800
 msgid "\"Cloud\" import/export for shortcuts settings"
 msgstr "Importación/exportación \"en la nube\" para la configuración de atajos"
 
-#: src/pages/settings.jsx:785
+#: src/pages/settings.jsx:806
 msgid "⚠️⚠️⚠️ Very experimental.<0/>Stored in your own profile’s notes. Profile (private) notes are mainly used for other profiles, and hidden for own profile."
 msgstr "⚠️⚠️⚠️ Muy experimental.<0/>Guardado en las notas de tu propio perfil. Las notas del perfil (privadas) se utilizan principalmente para otros perfiles, y se ocultan para el perfil propio."
 
-#: src/pages/settings.jsx:796
+#: src/pages/settings.jsx:817
 msgid "Note: This feature uses currently-logged-in server API."
 msgstr "Nota: Esta función utiliza la API del servidor en el que se ha iniciado sesión actualmente."
 
-#: src/pages/settings.jsx:813
+#: src/pages/settings.jsx:834
 msgid "Cloak mode <0>(<1>Text</1> → <2>████</2>)</0>"
 msgstr "Modo oculto <0>(<1>Texto</1> → <2>████</2>)</0>"
 
-#: src/pages/settings.jsx:823
+#: src/pages/settings.jsx:844
 msgid "Replace text as blocks, useful when taking screenshots, for privacy reasons."
 msgstr "Reemplazar el texto por bloques, útil al tomar capturas de pantalla, por motivos de privacidad."
 
-#: src/pages/settings.jsx:849
+#: src/pages/settings.jsx:870
 msgid "Install {CLIENT_NAME}"
 msgstr "Instalar {CLIENT_NAME}"
 
-#: src/pages/settings.jsx:858
+#: src/pages/settings.jsx:879
 msgid "About"
 msgstr "Acerca de"
 
-#: src/pages/settings.jsx:897
+#: src/pages/settings.jsx:918
 msgid "<0>Built</0> by <1>@cheeaun</1>"
 msgstr "<0>Creado</0> por <1>@cheeaun</1>"
 
-#: src/pages/settings.jsx:926
+#: src/pages/settings.jsx:947
 msgid "Sponsor"
 msgstr "Patrocina"
 
-#: src/pages/settings.jsx:934
+#: src/pages/settings.jsx:955
 msgid "Donate"
 msgstr "Dona"
 
-#: src/pages/settings.jsx:950
+#: src/pages/settings.jsx:971
 msgid "What's new"
 msgstr "Qué hay de nuevo"
 
-#: src/pages/settings.jsx:954
+#: src/pages/settings.jsx:975
 msgid "Privacy Policy"
 msgstr "Política de privacidad"
 
 #. placeholder {0}: WEBSITE.replace(/https?:\/\//g, '').replace(/\/$/, '')
-#: src/pages/settings.jsx:961
+#: src/pages/settings.jsx:982
 msgid "<0>Site:</0> {0}"
 msgstr "<0>Sitio:</0> {0}"
 
 #. placeholder {0}: !__FAKE_COMMIT_HASH__ && ( <span class="ib insignificant"> ( <a href={`https://github.com/cheeaun/phanpy/commit/${__COMMIT_HASH__}`} target="_blank" rel="noopener" > <RelativeTime datetime={new Date(__BUILD_TIME__)} /> </a> ) </span> )
-#: src/pages/settings.jsx:968
+#: src/pages/settings.jsx:989
 msgid "<0>Version:</0> <1/> {0}"
 msgstr "<0>Versión:</0> <1/> {0}"
 
-#: src/pages/settings.jsx:983
+#: src/pages/settings.jsx:1004
 msgid "Version string copied"
 msgstr "Versión copiada"
 
-#: src/pages/settings.jsx:986
+#: src/pages/settings.jsx:1007
 msgid "Unable to copy version string"
 msgstr "No se ha podido copiar la versión"
 
 #. Preview of one character, in largest size
 #. Preview of one character, in smallest size
-#: src/pages/settings.jsx:1130
-#: src/pages/settings.jsx:1154
+#: src/pages/settings.jsx:1151
+#: src/pages/settings.jsx:1175
 msgid "A"
 msgstr "A"
 
-#: src/pages/settings.jsx:1304
+#: src/pages/settings.jsx:1325
 msgid "Failed to update subscription. Please try again."
 msgstr "No se ha podido actualizar la suscripción. Inténtalo de nuevo."
 
-#: src/pages/settings.jsx:1309
+#: src/pages/settings.jsx:1330
 msgid "Failed to remove subscription. Please try again."
 msgstr "No se ha podido cancelar la suscripción. Por favor, inténtalo de nuevo."
 
-#: src/pages/settings.jsx:1316
+#: src/pages/settings.jsx:1337
 msgid "Push Notifications (beta)"
 msgstr "Notificaciones push (beta)"
 
-#: src/pages/settings.jsx:1338
+#: src/pages/settings.jsx:1359
 msgid "Push notifications are blocked. Please enable them in your browser settings."
 msgstr "Las notificaciones push están bloqueadas. Actívalas en los ajustes de tu navegador."
 
 #. placeholder {0}: [ { value: 'all', label: t`anyone`, }, { value: 'followed', label: t`people I follow`, }, { value: 'follower', label: t`followers`, }, ].map((type) => ( <option value={type.value}>{type.label}</option> ))
-#: src/pages/settings.jsx:1348
+#: src/pages/settings.jsx:1369
 msgid "Allow from <0>{0}</0>"
 msgstr "Permitir desde <0>{0}</0>"
 
-#: src/pages/settings.jsx:1357
+#: src/pages/settings.jsx:1378
 msgid "anyone"
 msgstr "cualquiera"
 
-#: src/pages/settings.jsx:1361
+#: src/pages/settings.jsx:1382
 msgid "people I follow"
 msgstr "personas a las que sigo"
 
-#: src/pages/settings.jsx:1365
+#: src/pages/settings.jsx:1386
 msgid "followers"
 msgstr "seguidores"
 
-#: src/pages/settings.jsx:1399
+#: src/pages/settings.jsx:1420
 msgid "Follows"
 msgstr "Seguidos"
 
-#: src/pages/settings.jsx:1407
+#: src/pages/settings.jsx:1428
 msgid "Polls"
 msgstr "Encuestas"
 
-#: src/pages/settings.jsx:1411
+#: src/pages/settings.jsx:1432
 msgid "Post edits"
 msgstr "Ediciones de publicaciones"
 
-#: src/pages/settings.jsx:1432
+#: src/pages/settings.jsx:1453
 msgid "Push permission was not granted since your last login. You'll need to <0><1>log in</1> again to grant push permission</0>."
 msgstr "No se han permitido notificaciones desde la última vez que te conectaste. Necesitarás <0><1>conectarte de nuevo</1> para permitir las notificaciones. </0>."
 
-#: src/pages/settings.jsx:1448
+#: src/pages/settings.jsx:1469
 msgid "NOTE: Push notifications only work for <0>one account</0>."
 msgstr "NOTA: Las notificaciones push solo se permiten para <0>una cuenta</0>."
 

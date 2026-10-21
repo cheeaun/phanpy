@@ -3416,9 +3416,18 @@ ul.link-list li a .icon {
 
 /* LOWERCASE POST TEXT */
 body.lowercase-post-text {
-  .status:not(.large, .status.large .status) .container {
+  .status:not(.large, .status.large .status) .container,
+  .status.filtered,
+  .status-carousel h3,
+  .status-filtered-badge {
     text-transform: lowercase;
+  }
 
+  .status-filtered-badge * {
+    text-transform: inherit !important;
+  }
+
+  .status:not(.large, .status.large .status) .container {
     .pre-content-container *,
     button,
     input,

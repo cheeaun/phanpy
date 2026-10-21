@@ -206,6 +206,9 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
         <h2>
           <Trans>Notifications</Trans>
         </h2>
+        {!!snapStates.notifications.length && (
+          <Loader hidden={uiState !== 'loading'} />
+        )}
       </header>
       <FilterContext.Provider value="notifications">
         <main>

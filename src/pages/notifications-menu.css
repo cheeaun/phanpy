@@ -32,6 +32,15 @@
   padding: 16px;
   margin: 0;
   border-bottom: var(--hairline-width) solid var(--outline-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+
+  .loader-container {
+    margin: 0;
+    opacity: 0.4;
+  }
 }
 .notifications-menu header h2 {
   margin: 0;

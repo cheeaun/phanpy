@@ -737,6 +737,24 @@
     padding-bottom: 16px;
   }
 
+  .view-profile-button {
+    font-weight: 600;
+    font-size: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    color: var(--link-color);
+    background-color: var(--link-bg-color);
+    text-align: center;
+
+    &:is(:hover, :focus) {
+      color: var(--link-text-color);
+      background-color: var(--link-faded-color);
+    }
+  }
+
   footer {
     min-height: calc(40px + 16px);
     animation: slide-up 0.3s ease-out 0.3s both;

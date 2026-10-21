@@ -1115,6 +1115,17 @@ function AccountInfo({
                     </div>
                   </div>
                 )}
+                {!standalone && (
+                  <Link
+                    to={accountLink}
+                    class="button block view-profile-button"
+                  >
+                    <span>
+                      <Trans>View profile</Trans>
+                    </span>{' '}
+                    <Icon icon="arrow-right" />
+                  </Link>
+                )}
               </main>
               <footer>
                 <RelatedActions

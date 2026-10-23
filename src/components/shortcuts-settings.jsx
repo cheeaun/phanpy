@@ -43,6 +43,7 @@ const TYPES = [
   'hashtag',
   'bookmarks',
   'favourites',
+  'catchup',
   'profile', // Own profile
   // NOTE: Hide for now
   // 'account-statuses', // Need @acct search first
@@ -59,6 +60,7 @@ const TYPE_TEXT = {
   hashtag: msg`Hashtag`,
   trending: msg`Trending`,
   mentions: msg`Mentions`,
+  catchup: msg`Catch-up`,
   profile: msg`Profile`,
 };
 const TYPE_PARAMS = {
@@ -219,6 +221,13 @@ export const SHORTCUTS_META = {
     title: msg`Likes`,
     path: '/f',
     icon: 'heart',
+  },
+  catchup: {
+    id: 'catchup',
+    title: msg`Catch-up`,
+    path: '/catchup',
+    icon: 'history2',
+    excludeViewMode: ['multi-column'],
   },
   hashtag: {
     id: 'hashtag',

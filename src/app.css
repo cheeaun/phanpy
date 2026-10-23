@@ -29,8 +29,6 @@ a.mention {
 a.mention span {
   text-decoration-line: underline;
   text-decoration-color: inherit;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
 }
 a.mention:not(.hashtag) {
   font-variant-numeric: slashed-zero;
@@ -398,8 +396,11 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 
 .timeline.contextual {
+  --comment-icon-width: 20px;
   --indent-large-start: 40px;
-  --indent-small-start: 10px;
+  --indent-small-start: calc(
+    16px + var(--comment-icon-width) / 2 - var(--line-width) / 2
+  );
   --thread-start: var(--indent-small-start);
   --line-start: var(--indent-small-start);
   --line-width: 3px;
@@ -425,11 +426,13 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 
   > li.descendant.thread:has(+ .descendant:not(.thread)):after {
     position: absolute;
-    inset-inline-start: 10px;
+    inset-inline-start: var(--indent-small-start);
     bottom: 0;
     content: '';
     display: block;
-    --curves-width: calc(var(--line-start) + var(--line-width) - 10px);
+    --curves-width: calc(
+      var(--line-start) + var(--line-width) - var(--indent-small-start)
+    );
     width: var(--curves-width);
     background-color: var(--bg-color);
     background-repeat: no-repeat;
@@ -1106,11 +1109,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 }
 
 .status-carousel {
+  --carousel-color: var(--text-color);
   --carousel-faded-color: var(--bg-faded-color);
   background: linear-gradient(
     to bottom var(--forward),
     var(--carousel-faded-color),
-    transparent
+    transparent 75%
   );
   position: relative;
   container-type: inline-size;
@@ -1135,6 +1139,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 .status-carousel h3 {
   margin: 0;
@@ -1143,9 +1148,101 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   text-transform: uppercase;
   color: var(--carousel-color);
   text-shadow: 0 1px var(--bg-color);
+  white-space: nowrap;
+}
+.status-carousel header > span {
+  flex-shrink: 0;
+}
+.carousel-pagination {
+  --carousel-pagination-dot-height: 4px;
+  --carousel-pagination-gap: 4px;
+  align-self: stretch;
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  justify-content: safe center;
+  align-items: stretch;
+  gap: var(--carousel-pagination-gap);
+  padding-inline: 2px;
+  overflow-x: auto;
+  overflow-y: clip;
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+    animation: carousel-pagination-fade 1s linear both;
+    animation-timeline: scroll(self inline);
+  }
+}
+.carousel-pagination-dot {
+  position: relative;
+  flex: 0 1 auto;
+  width: 12px;
+  min-width: 4px;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  opacity: 0.75;
+  transition: opacity 0.2s ease-out;
+
+  /* The visible bar */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin-block: auto;
+    height: var(--carousel-pagination-dot-height);
+    border: 1px solid var(--carousel-color);
+    border-radius: 999px;
+    background-color: transparent;
+    transition: background-color 0.2s ease-out;
+  }
+
+  /* Full-height tap target, covering the gap to the next dot */
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc(var(--carousel-pagination-gap) / -2);
+  }
+}
+.carousel-pagination .carousel-pagination-dot:hover {
+  opacity: 1;
+  &:not(.active)::before {
+    background-color: var(--carousel-color);
+  }
+}
+.carousel-pagination-dot.active {
+  width: 16px;
+}
+.carousel-pagination-dot.active::before {
+  background-color: var(--carousel-color);
+}
+@keyframes carousel-pagination-fade {
+  0% {
+    mask-image: linear-gradient(
+      var(--to-forward),
+      black 0,
+      black calc(100% - 8px),
+      transparent 100%
+    );
+  }
+  100% {
+    mask-image: linear-gradient(
+      var(--to-forward),
+      transparent 0,
+      black 8px,
+      black 100%
+    );
+  }
 }
 .status-carousel > ul {
-  --carousel-gap: 16px;
+  --carousel-gap: 12px;
   display: flex;
   overflow-x: auto;
   overflow-y: clip;
@@ -1155,7 +1252,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   padding: 8px 16px;
   gap: var(--carousel-gap);
   align-items: flex-start;
-  counter-reset: index;
   min-height: 160px;
   max-height: 65vh;
   max-height: 65dvh;
@@ -1225,14 +1321,6 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
 .status-carousel.boosts-carousel .status-reblog {
   background-image: none;
 }
-.status-carousel.boosts-carousel > ul > li:before {
-  content: counter(index);
-  position: absolute;
-  inset-inline-start: 0;
-  font-size: 10px;
-  color: var(--text-insignificant-color);
-  padding: 6px;
-}
 
 .status-carousel.boosts-carousel .timeline-item-carousel-group {
   flex-direction: column;
@@ -1261,7 +1349,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   animation: appear 0.2s ease-out;
-  border: 1px solid var(--outline-color);
+  border: var(--hairline-width) solid var(--outline-color);
   background-color: var(--bg-blur-color);
   border-radius: 16px;
   @supports (corner-shape: squircle) {
@@ -1269,19 +1357,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
     corner-shape: squircle;
   }
   overflow: clip;
-  box-shadow: 0 1px var(--bg-color);
+  /* box-shadow: 0 1px var(--bg-color); */
 
   &:has(.status-badge:not(:empty)) {
     border-start-end-radius: 8px;
     @supports (corner-shape: squircle) {
       border-start-end-radius: 16px;
-    }
-  }
-
-  .status-carousel.boosts-carousel &:not(.timeline-item-carousel-group &) {
-    border-start-start-radius: 8px;
-    @supports (corner-shape: squircle) {
-      border-start-start-radius: 16px;
     }
   }
 }
@@ -1386,7 +1467,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   color: var(--text-color) !important;
 }
 
-:is(button, .button).plain.has-badge:after {
+:is(button, .button).has-badge:after {
   content: '';
   display: inline-block;
   position: absolute;
@@ -1394,7 +1475,7 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: var(--link-color);
+  background-color: var(--text-color);
   opacity: 0.5;
 }
 
@@ -3240,12 +3321,12 @@ ul.link-list li a .icon {
       --item-radius: 32px;
       corner-shape: squircle;
     }
-    border: 1px solid var(--divider-color);
-    margin: 16px 0;
+    border: var(--hairline-width) solid var(--outline-color);
+    margin: 12px 0;
     background-color: var(--bg-color);
     border-radius: var(--item-radius);
     overflow: hidden;
-    box-shadow: 0px 1px var(--bg-blur-color);
+    /* box-shadow: 0px 1px var(--bg-blur-color); */
     transition: transform 0.4s var(--timing-function);
     --back-transition: transform 0.4s ease-out;
 
@@ -3330,6 +3411,40 @@ ul.link-list li a .icon {
 
   select {
     width: 10em;
+  }
+}
+
+/* LOWERCASE POST TEXT */
+body.lowercase-post-text {
+  .status:not(.large, .status.large .status) .container,
+  .status.filtered,
+  .status.compact-reply,
+  .status-carousel h3,
+  .status-filtered-badge {
+    text-transform: lowercase;
+  }
+
+  .status-filtered-badge * {
+    text-transform: inherit !important;
+  }
+
+  .status:not(.large, .status.large .status) .container {
+    .pre-content-container *,
+    button,
+    input,
+    select,
+    textarea {
+      text-transform: inherit;
+    }
+
+    /* .hashtag, */
+    code,
+    pre,
+    samp,
+    kbd,
+    var {
+      text-transform: none;
+    }
   }
 }
 

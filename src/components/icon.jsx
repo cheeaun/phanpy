@@ -1,8 +1,8 @@
 import { memo } from 'preact/compat';
-import { useEffect } from 'preact/hooks';
+import { useLayoutEffect } from 'preact/hooks';
 
 import { ICON_NAMESPACE, useIconSprite } from './icon-sprite-manager';
-import { ICONS } from './ICONS';
+import * as ICONS from './ICONS';
 
 const SIZES = {
   xs: 8,
@@ -24,7 +24,7 @@ function Icon({
   style = {},
 }) {
   title = title || alt;
-  const { loadIcon, isIconLoaded } = useIconSprite();
+  const { registerIcon, isIconRegistered } = useIconSprite();
 
   if (!icon) return null;
 
@@ -35,26 +35,23 @@ function Icon({
     return null;
   }
 
-  let rotate,
-    flip,
-    rtl = false;
-  if (Array.isArray(iconBlock)) {
-    [iconBlock, rotate, flip] = iconBlock;
-  } else if (typeof iconBlock === 'object') {
-    ({ rotate, flip, rtl } = iconBlock);
+  let rotate, flip;
+  if (iconBlock.module) {
+    ({ rotate, flip } = iconBlock);
     iconBlock = iconBlock.module;
   }
+  const rtl = ICONS.RTL_ICONS.has(icon);
 
   const sanitizedTitle = title?.replace(INVALID_ID_CHARS_REGEX, '-');
   const titleID = `${ICON_NAMESPACE}-title-${icon}-${sanitizedTitle}`;
 
-  useEffect(() => {
-    if (!isIconLoaded(icon)) {
-      loadIcon(icon);
+  useLayoutEffect(() => {
+    if (!isIconRegistered(icon)) {
+      registerIcon(icon, iconBlock);
     }
-  }, [icon]);
+  }, [icon, iconBlock]);
 
-  const loaded = isIconLoaded(icon);
+  const registered = isIconRegistered(icon);
 
   return (
     <span
@@ -65,9 +62,9 @@ function Icon({
         ...style,
       }}
       data-icon={icon}
-      title={loaded ? undefined : title || undefined}
+      title={registered ? undefined : title || undefined}
     >
-      {loaded && (
+      {registered && (
         <svg
           width={iconSize}
           height={iconSize}

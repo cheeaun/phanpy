@@ -23,18 +23,17 @@
     "formatting": "oxfmt --check || oxfmt",
     "formatting-check": "oxfmt --check",
     "git:po-filter": "git config --local diff.po-filter.textconv \"sed 's/:[0-9]*$//'\"",
-    "postinstall": "node scripts/generate-icons.js && npx exifreader build",
-    "generate-icons": "node scripts/generate-icons.js"
+    "postinstall": "npx exifreader build"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "~0.9.0",
     "@formatjs/intl-segmenter": "~12.2.15",
     "@formkit/auto-animate": "~0.10.0",
     "@github/text-expander-element": "~2.9.4",
-    "@iconify-json/mingcute": "~1.2.8",
     "@justinribeiro/lite-youtube": "~1.9.0",
     "@lingui/detect-locale": "~6.10.0",
     "@lingui/react": "~6.10.0",
+    "@mingcute/icons": "~3.0.2",
     "@szhsin/react-menu": "~4.5.2",
     "chroma-js": "~3.2.0",
     "compare-versions": "~6.1.1",
@@ -75,7 +74,6 @@
   "devDependencies": {
     "@emnapi/core": "~1.11.3",
     "@emnapi/runtime": "~1.11.3",
-    "@iconify/utils": "~3.1.7",
     "@lingui/cli": "~6.10.0",
     "@lingui/vite-plugin": "~6.10.0",
     "@playwright/test": "~1.64.1",

@@ -6,55 +6,38 @@ const IconSpriteContext = createContext();
 
 export const ICON_NAMESPACE = 'sprite-icon';
 
+const escapeAttr = (value) =>
+  String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+
+// Simple solid-color icons only, no gradients/masks/patterns
+function renderIconBody({ elements }) {
+  return elements
+    .map(({ tag, attributes }) => {
+      const attrs = Object.entries(attributes)
+        .map(([name, value]) => ` ${name}="${escapeAttr(value)}"`)
+        .join('');
+      return `<${tag}${attrs}/>`;
+    })
+    .join('');
+}
+
 export function IconSpriteProvider({ children }) {
-  const [loadedIcons, setLoadedIcons] = useState(new Set());
   const [iconData, setIconData] = useState({});
 
-  const loadIcon = useCallback(
-    async (iconName) => {
-      if (loadedIcons.has(iconName)) {
-        return;
-      }
+  const registerIcon = useCallback((iconName, data) => {
+    setIconData((prev) =>
+      prev[iconName] ? prev : { ...prev, [iconName]: data },
+    );
+  }, []);
 
-      try {
-        const { ICONS } = await import('./ICONS');
-        const iconBlock = ICONS[iconName];
-
-        if (!iconBlock) {
-          console.warn(`Icon ${iconName} not found`);
-          return;
-        }
-
-        let iconModule;
-        if (Array.isArray(iconBlock)) {
-          iconModule = iconBlock[0];
-        } else if (typeof iconBlock === 'object') {
-          iconModule = iconBlock.module;
-        } else {
-          iconModule = iconBlock;
-        }
-
-        const iconResult = await iconModule();
-        const iconDataResult = iconResult.default;
-
-        setIconData((prev) => ({ ...prev, [iconName]: iconDataResult }));
-        setLoadedIcons((prev) => new Set([...prev, iconName]));
-      } catch (error) {
-        console.warn(`Failed to load icon ${iconName}:`, error);
-      }
-    },
-    [loadedIcons],
-  );
-
-  const isIconLoaded = useCallback(
-    (iconName) => loadedIcons.has(iconName),
-    [loadedIcons],
+  const isIconRegistered = useCallback(
+    (iconName) => !!iconData[iconName],
+    [iconData],
   );
 
   const contextValue = {
-    loadIcon,
-    isIconLoaded,
-    loadedIcons,
+    registerIcon,
+    isIconRegistered,
     iconData,
   };
 
@@ -67,20 +50,23 @@ export function IconSpriteProvider({ children }) {
 }
 
 function IconSprite() {
-  const { loadedIcons, iconData } = useIconSprite();
+  const { iconData } = useIconSprite();
 
-  if (loadedIcons.size === 0) {
+  const iconNames = Object.keys(iconData);
+  if (iconNames.length === 0) {
     return null;
   }
 
   return (
     <svg style={{ display: 'none' }} aria-hidden="true">
       <defs>
-        {Array.from(loadedIcons).map((iconName) => {
-          const data = iconData[iconName];
-          if (!data) return null;
-          return <Symbol key={iconName} iconName={iconName} data={data} />;
-        })}
+        {iconNames.map((iconName) => (
+          <Symbol
+            key={iconName}
+            iconName={iconName}
+            data={iconData[iconName]}
+          />
+        ))}
       </defs>
     </svg>
   );
@@ -91,8 +77,8 @@ const Symbol = memo(
     return (
       <symbol
         id={`${ICON_NAMESPACE}-${iconName}`}
-        viewBox={`0 0 ${data.width} ${data.height}`}
-        dangerouslySetInnerHTML={{ __html: data.body }}
+        viewBox={data.viewBox}
+        dangerouslySetInnerHTML={{ __html: renderIconBody(data) }}
       />
     );
   },

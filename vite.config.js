@@ -109,7 +109,6 @@ export default defineConfig(({ command }) => {
         },
         // Ignore specific folders to prevent auto-refresh
         ignored: [
-          '**/src/iconify-icons/**',
           // Add folder paths here (glob patterns)
           // Example: '**/node_modules/**',
           // Example: '**/dist/**',
@@ -363,11 +362,18 @@ export default defineConfig(({ command }) => {
           //     return 'vendor';
           //   }
           // },
+          // Icons in own chunk for caching
+          codeSplitting: {
+            groups: [
+              {
+                name: 'icons',
+                test: /@mingcute[\\/]icons[\\/]dist[\\/]styles[\\/]/,
+                priority: 10,
+              },
+            ],
+          },
           chunkFileNames: (chunkInfo) => {
             const { facadeModuleId } = chunkInfo;
-            if (facadeModuleId && facadeModuleId.includes('icon')) {
-              return 'assets/icons/[name]-[hash].js';
-            }
             if (facadeModuleId && facadeModuleId.includes('locales')) {
               return 'assets/locales/[name]-[hash].js';
             }
@@ -400,7 +406,8 @@ export default defineConfig(({ command }) => {
               // Remove .js.map files and sourcemap references for specific chunks
               Object.keys(bundle).forEach((fileName) => {
                 const shouldRemoveSourcemap =
-                  fileName.includes('locales/') || fileName.includes('icons/');
+                  fileName.includes('locales/') ||
+                  fileName.includes('assets/icons-');
 
                 if (fileName.endsWith('.js.map') && shouldRemoveSourcemap) {
                   delete bundle[fileName];

@@ -1,209 +1,164 @@
-export const ICONS = {
-  x: () => import('../iconify-icons/mingcute/close-line.js'),
-  heart: () => import('../iconify-icons/mingcute/heart-line.js'),
-  bookmark: () => import('../iconify-icons/mingcute/bookmark-line.js'),
-  'check-circle': () =>
-    import('../iconify-icons/mingcute/check-circle-line.js'),
-  'x-circle': () => import('../iconify-icons/mingcute/close-circle-line.js'),
-  transfer: () => import('../iconify-icons/mingcute/transfer-4-line.js'),
-  rocket: () => import('../iconify-icons/mingcute/rocket-line.js'),
-  'arrow-left': {
-    module: () => import('../iconify-icons/mingcute/arrow-left-line.js'),
-    rtl: true,
-  },
-  'arrow-right': {
-    module: () => import('../iconify-icons/mingcute/arrow-right-line.js'),
-    rtl: true,
-  },
-  'arrow-up': () => import('../iconify-icons/mingcute/arrow-up-line.js'),
-  'arrow-down': () => import('../iconify-icons/mingcute/arrow-down-line.js'),
-  earth: () => import('../iconify-icons/mingcute/world-2-line.js'),
-  lock: () => import('../iconify-icons/mingcute/lock-line.js'),
-  unlock: () => import('../iconify-icons/mingcute/unlock-line.js'),
-  'eye-close': () => import('../iconify-icons/mingcute/eye-close-line.js'),
-  'eye-open': () => import('../iconify-icons/mingcute/eye-2-line.js'),
-  message: () => import('../iconify-icons/mingcute/mail-line.js'),
-  comment: {
-    module: () => import('../iconify-icons/mingcute/chat-3-line.js'),
-    rtl: true,
-  },
-  comment2: {
-    module: () => import('../iconify-icons/mingcute/comment-2-line.js'),
-    rtl: true,
-  },
-  home: () => import('../iconify-icons/mingcute/home-3-line.js'),
-  notification: () => import('../iconify-icons/mingcute/notification-line.js'),
-  follow: () => import('../iconify-icons/mingcute/user-follow-line.js'),
-  'follow-add': () => import('../iconify-icons/mingcute/user-add-line.js'),
-  poll: [() => import('../iconify-icons/mingcute/chart-bar-line.js'), '90deg'],
-  pencil: () => import('../iconify-icons/mingcute/pencil-line.js'),
-  quill: () => import('../iconify-icons/mingcute/quill-pen-line.js'),
-  at: () => import('../iconify-icons/mingcute/at-line.js'),
-  attachment: () => import('../iconify-icons/mingcute/attachment-line.js'),
-  upload: () => import('../iconify-icons/mingcute/upload-3-line.js'),
-  gear: () => import('../iconify-icons/mingcute/settings-3-line.js'),
-  more: () => import('../iconify-icons/mingcute/more-3-line.js'),
-  more2: () => import('../iconify-icons/mingcute/more-1-fill.js'),
-  external: {
-    module: () => import('../iconify-icons/mingcute/external-link-line.js'),
-    rtl: true,
-  },
-  popout: {
-    module: () => import('../iconify-icons/mingcute/external-link-line.js'),
-    rtl: true,
-  },
-  popin: {
-    module: () => import('../iconify-icons/mingcute/external-link-line.js'),
-    rotate: '180deg',
-    rtl: true,
-  },
-  plus: () => import('../iconify-icons/mingcute/add-circle-line.js'),
-  'chevron-left': {
-    module: () => import('../iconify-icons/mingcute/left-line.js'),
-    rtl: true,
-  },
-  'chevron-right': {
-    module: () => import('../iconify-icons/mingcute/right-line.js'),
-    rtl: true,
-  },
-  'chevron-down': () => import('../iconify-icons/mingcute/down-line.js'),
-  reply: {
-    module: () => import('../iconify-icons/mingcute/share-forward-line.js'),
-    rotate: '180deg',
-    flip: 'horizontal',
-    rtl: true,
-  },
-  thread: () => import('../iconify-icons/mingcute/route-line.js'),
-  group: {
-    module: () => import('../iconify-icons/mingcute/group-line.js'),
-    rtl: true,
-  },
-  bot: () => import('../iconify-icons/mingcute/android-2-line.js'),
-  menu: () => import('../iconify-icons/mingcute/rows-4-line.js'),
-  list: {
-    module: () => import('../iconify-icons/mingcute/list-check-line.js'),
-    rtl: true,
-  },
-  search: () => import('../iconify-icons/mingcute/search-2-line.js'),
-  hashtag: () => import('../iconify-icons/mingcute/hashtag-line.js'),
-  info: () => import('../iconify-icons/mingcute/information-line.js'),
-  shortcut: () => import('../iconify-icons/mingcute/lightning-line.js'),
-  user: () => import('../iconify-icons/mingcute/user-4-line.js'),
-  following: () => import('../iconify-icons/mingcute/walk-line.js'),
-  pin: () => import('../iconify-icons/mingcute/pin-line.js'),
-  unpin: [() => import('../iconify-icons/mingcute/pin-line.js'), '180deg'],
-  bus: () => import('../iconify-icons/mingcute/bus-2-line.js'),
-  link: () => import('../iconify-icons/mingcute/link-2-line.js'),
-  history: () => import('../iconify-icons/mingcute/history-line.js'),
-  share: () => import('../iconify-icons/mingcute/share-2-line.js'),
-  sparkles: () => import('../iconify-icons/mingcute/sparkles-line.js'),
-  sparkles2: () => import('../iconify-icons/mingcute/sparkles-2-line.js'),
-  exit: {
-    module: () => import('../iconify-icons/mingcute/exit-line.js'),
-    rtl: true,
-  },
-  translate: () => import('../iconify-icons/mingcute/translate-line.js'),
-  play: () => import('../iconify-icons/mingcute/play-fill.js'),
-  trash: () => import('../iconify-icons/mingcute/delete-2-line.js'),
-  mute: {
-    module: () => import('../iconify-icons/mingcute/volume-mute-line.js'),
-    rtl: true,
-  },
-  unmute: {
-    module: () => import('../iconify-icons/mingcute/volume-line.js'),
-    rtl: true,
-  },
-  block: () => import('../iconify-icons/mingcute/forbid-circle-line.js'),
-  unblock: [
-    () => import('../iconify-icons/mingcute/forbid-circle-line.js'),
-    '180deg',
-  ],
-  flag: () => import('../iconify-icons/mingcute/flag-1-line.js'),
-  time: () => import('../iconify-icons/mingcute/time-line.js'),
-  refresh: () => import('../iconify-icons/mingcute/refresh-2-line.js'),
-  emoji2: () => import('../iconify-icons/mingcute/emoji-2-line.js'),
-  filter: () => import('../iconify-icons/mingcute/filter-2-line.js'),
-  filters: () => import('../iconify-icons/mingcute/filter-line.js'),
-  chart: () => import('../iconify-icons/mingcute/chart-line-line.js'),
-  react: () => import('../iconify-icons/mingcute/react-line.js'),
-  layout4: {
-    module: () => import('../iconify-icons/mingcute/layout-4-line.js'),
-    rtl: true,
-  },
-  layout5: () => import('../iconify-icons/mingcute/layout-5-line.js'),
-  announce: {
-    module: () => import('../iconify-icons/mingcute/announcement-line.js'),
-    rtl: true,
-  },
-  alert: () => import('../iconify-icons/mingcute/alert-line.js'),
-  round: () => import('../iconify-icons/mingcute/round-fill.js'),
-  'round-line': () => import('../iconify-icons/mingcute/round-line.js'),
-  'arrow-up-circle': () =>
-    import('../iconify-icons/mingcute/arrow-up-circle-line.js'),
-  'arrow-down-circle': () =>
-    import('../iconify-icons/mingcute/arrow-down-circle-line.js'),
-  clipboard: {
-    module: () => import('../iconify-icons/mingcute/clipboard-line.js'),
-    rtl: true,
-  },
-  'account-edit': () => import('../iconify-icons/mingcute/user-edit-line.js'),
-  'account-warning': () =>
-    import('../iconify-icons/mingcute/user-warning-line.js'),
-  'account-add': () => import('../iconify-icons/mingcute/user-add-2-line.js'),
-  keyboard: () => import('../iconify-icons/mingcute/keyboard-line.js'),
-  cloud: () => import('../iconify-icons/mingcute/cloud-line.js'),
-  month: {
-    module: () => import('../iconify-icons/mingcute/calendar-month-line.js'),
-    rtl: true,
-  },
-  media: () => import('../iconify-icons/mingcute/photo-album-line.js'),
-  speak: () => import('../iconify-icons/mingcute/radar-line.js'),
-  building: () => import('../iconify-icons/mingcute/building-5-line.js'),
-  history2: {
-    module: () => import('../iconify-icons/mingcute/history-2-line.js'),
-    rtl: true,
-  },
-  document: () => import('../iconify-icons/mingcute/document-line.js'),
-  'arrows-right': {
-    module: () => import('../iconify-icons/mingcute/arrows-right-line.js'),
-    rtl: true,
-  },
-  code: () => import('../iconify-icons/mingcute/code-line.js'),
-  copy: () => import('../iconify-icons/mingcute/copy-2-line.js'),
-  quote: {
-    module: () => import('../iconify-icons/mingcute/quote-left-fill.js'),
-    rtl: true,
-  },
-  quote2: {
-    module: () => import('../iconify-icons/mingcute/blockquote-line.js'),
-    rtl: true,
-  },
-  settings: () => import('../iconify-icons/mingcute/settings-6-line.js'),
-  'heart-break': () => import('../iconify-icons/mingcute/heart-crack-line.js'),
-  'user-x': () => import('../iconify-icons/mingcute/user-x-line.js'),
-  minimize: () => import('../iconify-icons/mingcute/down-line.js'),
-  celebrate: () => import('../iconify-icons/mingcute/celebrate-line.js'),
-  schedule: () => import('../iconify-icons/mingcute/calendar-time-add-line.js'),
-  day: () => import('../iconify-icons/mingcute/calendar-day-line.js'),
-  camera: () => import('../iconify-icons/mingcute/camera-line.js'),
-  endorsement: {
-    module: () => import('../iconify-icons/mingcute/user-star-line.js'),
-    rtl: true,
-  },
-  formula: () => import('../iconify-icons/mingcute/formula-line.js'),
-  edit: () => import('../iconify-icons/mingcute/edit-4-line.js'),
-  'zoom-in': () => import('../iconify-icons/mingcute/zoom-in-line.js'),
-  'zoom-out': () => import('../iconify-icons/mingcute/zoom-out-line.js'),
-  'cursor-hand': () =>
-    import('../iconify-icons/mingcute/hand-finger-2-line.js'),
-  qrcode: () => import('../iconify-icons/mingcute/qrcode-2-line.js'),
-  scan: () => import('../iconify-icons/mingcute/scan-line.js'),
-  note: () => import('../iconify-icons/mingcute/document-3-line.js'),
-  grid: () => import('../iconify-icons/mingcute/grid-line.js'),
-  moon: {
-    module: () => import('../iconify-icons/mingcute/moon-line.js'),
-    flip: 'horizontal',
-  },
-  'arrow-up-top': () => import('../iconify-icons/mingcute/arrow-to-up-line.js'),
-  collections: () => import('../iconify-icons/mingcute/board-line.js'),
+// These icons need further customizations (below the exports)
+import pollIcon from '@mingcute/icons/core-regular/chart-bar';
+import popinIcon from '@mingcute/icons/core-regular/external-link';
+import unblockIcon from '@mingcute/icons/core-regular/forbid-circle';
+import moonIcon from '@mingcute/icons/core-regular/moon';
+import unpinIcon from '@mingcute/icons/core-regular/pin';
+import replyIcon from '@mingcute/icons/core-regular/share-forward';
+
+// These icons don't need further customizations, use as-is
+export { default as x } from '@mingcute/icons/core-regular/close';
+export { default as heart } from '@mingcute/icons/core-regular/heart';
+export { default as bookmark } from '@mingcute/icons/core-regular/bookmark';
+export { default as 'check-circle' } from '@mingcute/icons/core-regular/check-circle';
+export { default as 'x-circle' } from '@mingcute/icons/core-regular/close-circle';
+export { default as transfer } from '@mingcute/icons/core-regular/transfer-4';
+export { default as rocket } from '@mingcute/icons/core-regular/rocket';
+export { default as 'arrow-left' } from '@mingcute/icons/core-regular/arrow-left';
+export { default as 'arrow-right' } from '@mingcute/icons/core-regular/arrow-right';
+export { default as 'arrow-up' } from '@mingcute/icons/core-regular/arrow-up';
+export { default as 'arrow-down' } from '@mingcute/icons/core-regular/arrow-down';
+export { default as earth } from '@mingcute/icons/core-regular/world-2';
+export { default as lock } from '@mingcute/icons/core-regular/lock';
+export { default as unlock } from '@mingcute/icons/core-regular/unlock';
+export { default as 'eye-close' } from '@mingcute/icons/core-regular/eye-close';
+export { default as 'eye-open' } from '@mingcute/icons/core-regular/eye-2';
+export { default as message } from '@mingcute/icons/core-regular/mail';
+export { default as comment } from '@mingcute/icons/core-regular/chat-3';
+export { default as comment2 } from '@mingcute/icons/core-regular/comment-2';
+export { default as home } from '@mingcute/icons/core-regular/home-3';
+export { default as notification } from '@mingcute/icons/core-regular/notification';
+export { default as follow } from '@mingcute/icons/core-regular/user-follow';
+export { default as 'follow-add' } from '@mingcute/icons/core-regular/user-add';
+export { default as pencil } from '@mingcute/icons/core-regular/pencil';
+export { default as quill } from '@mingcute/icons/core-regular/quill-pen';
+export { default as at } from '@mingcute/icons/core-regular/at';
+export { default as attachment } from '@mingcute/icons/core-regular/attachment';
+export { default as upload } from '@mingcute/icons/core-regular/upload-3';
+export { default as gear } from '@mingcute/icons/core-regular/settings-3';
+export { default as more } from '@mingcute/icons/core-regular/more-3';
+export { default as more2 } from '@mingcute/icons/core-filled/more-1';
+export { default as external } from '@mingcute/icons/core-regular/external-link';
+export { default as popout } from '@mingcute/icons/core-regular/external-link';
+export { default as plus } from '@mingcute/icons/core-regular/add-circle';
+export { default as 'chevron-left' } from '@mingcute/icons/core-regular/left';
+export { default as 'chevron-right' } from '@mingcute/icons/core-regular/right';
+export { default as 'chevron-down' } from '@mingcute/icons/core-regular/down';
+export { default as thread } from '@mingcute/icons/core-regular/route';
+export { default as group } from '@mingcute/icons/core-regular/group';
+export { default as bot } from '@mingcute/icons/core-regular/android-2';
+export { default as menu } from '@mingcute/icons/core-regular/rows-4';
+export { default as list } from '@mingcute/icons/core-regular/list-check';
+export { default as search } from '@mingcute/icons/core-regular/search-2';
+export { default as hashtag } from '@mingcute/icons/core-regular/hashtag';
+export { default as info } from '@mingcute/icons/core-regular/information';
+export { default as shortcut } from '@mingcute/icons/core-regular/lightning';
+export { default as user } from '@mingcute/icons/core-regular/user-4';
+export { default as following } from '@mingcute/icons/core-regular/walk';
+export { default as pin } from '@mingcute/icons/core-regular/pin';
+export { default as bus } from '@mingcute/icons/core-regular/bus-2';
+export { default as link } from '@mingcute/icons/core-regular/link-2';
+export { default as history } from '@mingcute/icons/core-regular/history';
+export { default as share } from '@mingcute/icons/core-regular/share-2';
+export { default as sparkles } from '@mingcute/icons/core-regular/sparkles';
+export { default as sparkles2 } from '@mingcute/icons/core-regular/sparkles-2';
+export { default as exit } from '@mingcute/icons/core-regular/exit';
+export { default as translate } from '@mingcute/icons/core-regular/translate';
+export { default as play } from '@mingcute/icons/core-filled/play';
+export { default as trash } from '@mingcute/icons/core-regular/delete-2';
+export { default as mute } from '@mingcute/icons/core-regular/volume-mute';
+export { default as unmute } from '@mingcute/icons/core-regular/volume';
+export { default as block } from '@mingcute/icons/core-regular/forbid-circle';
+export { default as flag } from '@mingcute/icons/core-regular/flag-1';
+export { default as time } from '@mingcute/icons/core-regular/time';
+export { default as refresh } from '@mingcute/icons/core-regular/refresh-2';
+export { default as emoji2 } from '@mingcute/icons/core-regular/emoji-2';
+export { default as filter } from '@mingcute/icons/core-regular/filter-2';
+export { default as filters } from '@mingcute/icons/core-regular/filter';
+export { default as chart } from '@mingcute/icons/core-regular/chart-line';
+export { default as react } from '@mingcute/icons/core-regular/react';
+export { default as layout4 } from '@mingcute/icons/core-regular/layout-4';
+export { default as layout5 } from '@mingcute/icons/core-regular/layout-5';
+export { default as announce } from '@mingcute/icons/core-regular/announcement';
+export { default as alert } from '@mingcute/icons/core-regular/alert';
+export { default as round } from '@mingcute/icons/core-filled/round';
+export { default as 'round-line' } from '@mingcute/icons/core-regular/round';
+export { default as 'arrow-up-circle' } from '@mingcute/icons/core-regular/arrow-up-circle';
+export { default as 'arrow-down-circle' } from '@mingcute/icons/core-regular/arrow-down-circle';
+export { default as clipboard } from '@mingcute/icons/core-regular/clipboard';
+export { default as 'account-edit' } from '@mingcute/icons/core-regular/user-edit';
+export { default as 'account-warning' } from '@mingcute/icons/core-regular/user-warning';
+export { default as 'account-add' } from '@mingcute/icons/core-regular/user-add-2';
+export { default as keyboard } from '@mingcute/icons/core-regular/keyboard';
+export { default as cloud } from '@mingcute/icons/core-regular/cloud';
+export { default as month } from '@mingcute/icons/core-regular/calendar-month';
+export { default as media } from '@mingcute/icons/core-regular/photo-album';
+export { default as speak } from '@mingcute/icons/core-regular/radar-2';
+export { default as building } from '@mingcute/icons/core-regular/building-5';
+export { default as history2 } from '@mingcute/icons/core-regular/history-2';
+export { default as document } from '@mingcute/icons/core-regular/document-2';
+export { default as 'arrows-right' } from '@mingcute/icons/core-regular/arrows-right';
+export { default as code } from '@mingcute/icons/core-regular/code';
+export { default as copy } from '@mingcute/icons/core-regular/copy-2';
+export { default as quote } from '@mingcute/icons/core-filled/quote-left';
+export { default as quote2 } from '@mingcute/icons/core-regular/blockquote';
+export { default as settings } from '@mingcute/icons/core-regular/settings-6';
+export { default as 'heart-break' } from '@mingcute/icons/core-regular/heart-crack';
+export { default as 'user-x' } from '@mingcute/icons/core-regular/user-x';
+export { default as minimize } from '@mingcute/icons/core-regular/down';
+export { default as celebrate } from '@mingcute/icons/core-regular/celebrate';
+export { default as schedule } from '@mingcute/icons/core-regular/calendar-time-add';
+export { default as day } from '@mingcute/icons/core-regular/calendar-day';
+export { default as camera } from '@mingcute/icons/core-regular/camera';
+export { default as endorsement } from '@mingcute/icons/core-regular/user-star';
+export { default as formula } from '@mingcute/icons/core-regular/formula';
+export { default as edit } from '@mingcute/icons/core-regular/edit-4';
+export { default as 'zoom-in' } from '@mingcute/icons/core-regular/zoom-in';
+export { default as 'zoom-out' } from '@mingcute/icons/core-regular/zoom-out';
+export { default as 'cursor-hand' } from '@mingcute/icons/core-regular/hand-finger-2';
+export { default as qrcode } from '@mingcute/icons/core-regular/qrcode-2';
+export { default as scan } from '@mingcute/icons/core-regular/scan';
+export { default as note } from '@mingcute/icons/core-regular/document-3';
+export { default as grid } from '@mingcute/icons/core-regular/grid';
+export { default as 'arrow-up-top' } from '@mingcute/icons/core-regular/arrow-to-up';
+export { default as collections } from '@mingcute/icons/core-regular/board';
+
+// Here's the customizations
+export const poll = { module: pollIcon, rotate: '90deg' };
+export const popin = { module: popinIcon, rotate: '180deg' };
+export const reply = {
+  module: replyIcon,
+  rotate: '180deg',
+  flip: 'horizontal',
 };
+export const unpin = { module: unpinIcon, rotate: '180deg' };
+export const unblock = { module: unblockIcon, rotate: '180deg' };
+export const moon = { module: moonIcon, flip: 'horizontal' };
+
+// Auto-flip in RTL layouts
+export const RTL_ICONS = new Set([
+  'announce',
+  'arrow-left',
+  'arrow-right',
+  'arrows-right',
+  'chevron-left',
+  'chevron-right',
+  'clipboard',
+  'comment',
+  'comment2',
+  'endorsement',
+  'exit',
+  'external',
+  'group',
+  'history2',
+  'layout4',
+  'list',
+  'month',
+  'mute',
+  'popin',
+  'popout',
+  'quote',
+  'quote2',
+  'reply',
+  'unmute',
+]);

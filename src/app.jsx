@@ -24,7 +24,6 @@ import './utils/toast-alert';
 
 import BackgroundService from './components/background-service';
 import ComposeButton from './components/compose-button';
-import { ICONS } from './components/ICONS';
 import KeyboardShortcutsHelp from './components/keyboard-shortcuts-help';
 import Loader from './components/loader';
 import Modals from './components/modals';
@@ -183,23 +182,6 @@ setInterval(
   },
   15 * 60 * 1000,
 );
-
-// Preload icons
-// There's probably a better way to do this
-// Related: https://github.com/vitejs/vite/issues/10600
-setTimeout(() => {
-  for (const icon in ICONS) {
-    setTimeout(() => {
-      if (Array.isArray(ICONS[icon])) {
-        ICONS[icon][0]?.();
-      } else if (typeof ICONS[icon] === 'object') {
-        ICONS[icon].module?.();
-      } else {
-        ICONS[icon]?.();
-      }
-    }, 1);
-  }
-}, 5000);
 
 (() => {
   window.__IDLE__ = true;

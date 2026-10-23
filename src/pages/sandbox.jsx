@@ -423,6 +423,7 @@ const INITIAL_STATE = {
   collectionCardsCount: '1', // Number of collection cards (max 6)
   collectionAccountsCount: '3', // Number of accounts in each collection
   hidePostMetrics: false, // Hide post metrics (replies/boosts/favourites counts)
+  hideProfileMetrics: false, // Hide profile metrics (followers/following/posts counts)
   lowercasePostText: false, // Lowercase post text
   postUsernameOnly: false, // Show username instead of display name on posts
   boosted: false, // Fake boosted state for the main post (no API calls)
@@ -445,6 +446,7 @@ export default function Sandbox() {
   const [initialState] = useState(() => ({
     ...INITIAL_STATE,
     hidePostMetrics: !!states.settings.hidePostMetrics,
+    hideProfileMetrics: !!states.settings.hideProfileMetrics,
     lowercasePostText: !!states.settings.lowercasePostText,
     postUsernameOnly: !!states.settings.postUsernameOnly,
   }));
@@ -511,6 +513,7 @@ export default function Sandbox() {
     store.account.set = (key, value) => {
       if (
         key === 'settings-hidePostMetrics' ||
+        key === 'settings-hideProfileMetrics' ||
         key === 'settings-lowercasePostText' ||
         key === 'settings-postUsernameOnly'
       ) {
@@ -520,6 +523,7 @@ export default function Sandbox() {
     };
     return () => {
       states.settings.hidePostMetrics = initialState.hidePostMetrics;
+      states.settings.hideProfileMetrics = initialState.hideProfileMetrics;
       states.settings.lowercasePostText = initialState.lowercasePostText;
       states.settings.postUsernameOnly = initialState.postUsernameOnly;
       store.account.set = originalSet;
@@ -528,10 +532,12 @@ export default function Sandbox() {
 
   useEffect(() => {
     states.settings.hidePostMetrics = toggleState.hidePostMetrics;
+    states.settings.hideProfileMetrics = toggleState.hideProfileMetrics;
     states.settings.lowercasePostText = toggleState.lowercasePostText;
     states.settings.postUsernameOnly = toggleState.postUsernameOnly;
   }, [
     toggleState.hidePostMetrics,
+    toggleState.hideProfileMetrics,
     toggleState.lowercasePostText,
     toggleState.postUsernameOnly,
   ]);
@@ -1188,6 +1194,20 @@ export default function Sandbox() {
                     }
                   />
                   <span>Hide post metrics</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.hideProfileMetrics}
+                    onChange={() =>
+                      updateToggles({
+                        hideProfileMetrics: !toggleState.hideProfileMetrics,
+                      })
+                    }
+                  />
+                  <span>Hide profile metrics</span>
                 </label>
               </li>
               <li>

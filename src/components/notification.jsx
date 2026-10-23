@@ -165,20 +165,31 @@ const contentText = {
       />
     );
   },
-  follow: ({ account, count, components: { Subject } }) => (
-    <Plural
-      value={count}
-      _1={<Trans>{account} followed you.</Trans>}
-      other={
-        <Trans>
-          <Subject clickable={count > 1}>
-            <span title={count}>{shortenNumber(count)}</span> people
-          </Subject>{' '}
-          followed you.
-        </Trans>
-      }
-    />
-  ),
+  follow: ({ account, count, hideProfileMetrics, components: { Subject } }) => {
+    if (hideProfileMetrics) {
+      return (
+        <Plural
+          value={count}
+          _1={<Trans>{account} followed you.</Trans>}
+          other={<Trans>{account} & others followed you.</Trans>}
+        />
+      );
+    }
+    return (
+      <Plural
+        value={count}
+        _1={<Trans>{account} followed you.</Trans>}
+        other={
+          <Trans>
+            <Subject clickable={count > 1}>
+              <span title={count}>{shortenNumber(count)}</span> people
+            </Subject>{' '}
+            followed you.
+          </Trans>
+        }
+      />
+    );
+  },
   follow_request: ({ account }) => (
     <Trans>{account} requested to follow you.</Trans>
   ),
@@ -440,6 +451,7 @@ function Notification({
   const { _ } = useLingui();
   const snapStates = useSnapshot(states);
   const hidePostMetrics = snapStates.settings.hidePostMetrics;
+  const hideProfileMetrics = snapStates.settings.hideProfileMetrics;
   const postUsernameOnly = snapStates.settings.postUsernameOnly;
   const { masto } = api();
   const {
@@ -499,10 +511,13 @@ function Notification({
     if (!favsCount && reblogsCount) type = 'reblog';
   }
 
-  // Likes/boosts notifications
+  // Likes/boosts/follow notifications
   const hideNotificationMetrics =
-    hidePostMetrics &&
-    (type === 'favourite' || type === 'reblog' || type === 'favourite+reblog');
+    (hidePostMetrics &&
+      (type === 'favourite' ||
+        type === 'reblog' ||
+        type === 'favourite+reblog')) ||
+    (hideProfileMetrics && type === 'follow');
 
   let text;
   if (type === 'poll') {
@@ -536,7 +551,10 @@ function Notification({
 
   if (typeof text === 'function') {
     const count =
-      (type === 'favourite' || type === 'reblog' || type === 'admin.sign_up') &&
+      (type === 'favourite' ||
+        type === 'reblog' ||
+        type === 'follow' ||
+        type === 'admin.sign_up') &&
       notificationsCount
         ? diffCount
           ? notificationsCount
@@ -603,6 +621,7 @@ function Notification({
         postsCount,
         postType: isReplyToOthers ? 'reply' : 'post',
         hidePostMetrics,
+        hideProfileMetrics,
         components: { Subject },
       });
     }

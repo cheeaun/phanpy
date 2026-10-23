@@ -467,6 +467,20 @@ function Settings({ onClose }) {
                   <label>
                     <input
                       type="checkbox"
+                      checked={snapStates.settings.hideProfileMetrics}
+                      onChange={(e) => {
+                        states.settings.hideProfileMetrics = e.target.checked;
+                      }}
+                    />
+                    <span>
+                      <Trans>Hide profile metrics</Trans>
+                    </span>
+                  </label>
+                </li>
+                <li class="block">
+                  <label>
+                    <input
+                      type="checkbox"
                       checked={snapStates.settings.lowercasePostText}
                       onChange={(e) => {
                         states.settings.lowercasePostText = e.target.checked;

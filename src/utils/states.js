@@ -90,6 +90,7 @@ const states = proxy({
     hideLocalTimeline: false,
     hideFederatedTimeline: false,
     hidePostMetrics: false,
+    hideProfileMetrics: false,
     lowercasePostText: false,
     paginatedTimeline: false,
     autoHideBars: true,
@@ -136,6 +137,8 @@ export function initStates() {
     store.account.get('settings-hideFederatedTimeline') ?? false;
   states.settings.hidePostMetrics =
     store.account.get('settings-hidePostMetrics') ?? false;
+  states.settings.hideProfileMetrics =
+    store.account.get('settings-hideProfileMetrics') ?? false;
   states.settings.lowercasePostText =
     store.account.get('settings-lowercasePostText') ?? false;
   states.settings.paginatedTimeline =
@@ -204,6 +207,9 @@ subscribe(states, (changes) => {
     }
     if (path.join('.') === 'settings.hidePostMetrics') {
       store.account.set('settings-hidePostMetrics', !!value);
+    }
+    if (path.join('.') === 'settings.hideProfileMetrics') {
+      store.account.set('settings-hideProfileMetrics', !!value);
     }
     if (path.join('.') === 'settings.lowercasePostText') {
       store.account.set('settings-lowercasePostText', !!value);

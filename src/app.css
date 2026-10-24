@@ -3420,7 +3420,9 @@ body.lowercase-post-text {
   .status.filtered,
   .status.compact-reply,
   .status-carousel h3,
-  .status-filtered-badge {
+  .status-filtered-badge,
+  .status-followed-tags .status-pre-meta a,
+  .status-followed-tags .status-followed-tag-item {
     text-transform: lowercase;
   }
 

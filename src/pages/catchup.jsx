@@ -2087,7 +2087,7 @@ function PostPeek({ post, filterInfo }) {
                 {!!poll?.options?.length &&
                   poll.options.map((o) => (
                     <div>
-                      {poll.multiple ? '▪️' : '•'} {o.title}
+                      {poll.multiple ? '■' : '●'} {o.title}
                     </div>
                   ))}
                 {!content &&

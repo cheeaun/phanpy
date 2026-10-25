@@ -3,6 +3,7 @@ import { useEffect, useState } from 'preact/hooks';
 
 import { getGifFirstFrame } from '../utils/get-gif-first-frame';
 import mem from '../utils/mem';
+import { SHORTCODES_REGEX } from '../utils/shortcodes';
 
 import CustomEmoji from './custom-emoji';
 
@@ -14,8 +15,6 @@ const fetchQueue = new PQueue({
 
 const throttledFetch = (signal, ...args) =>
   fetchQueue.add(() => fetch(...args), { signal });
-
-const SHORTCODES_REGEX = /(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g;
 
 const shortcodesRegexp = mem((shortcodes) => {
   return new RegExp(`:(${shortcodes.join('|')}):`, 'g');

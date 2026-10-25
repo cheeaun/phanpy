@@ -37,6 +37,7 @@ import {
   useEditHistory,
 } from '../utils/edit-history-context';
 import htmlContentLength from '../utils/html-content-length';
+import { stripShortCodes } from '../utils/shortcodes';
 import shortenNumber from '../utils/shorten-number';
 import states, {
   getStatus,
@@ -774,9 +775,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     // Remove shortcodes from display name
     if (!heroStatus) return '';
     const { account } = heroStatus;
-    const div = document.createElement('div');
-    div.innerHTML = account.displayName;
-    return div.innerText.trim();
+    return stripShortCodes(account.displayName, account.emojis);
   }, [heroStatus]);
   const heroContentText = useMemo(() => {
     if (!heroStatus) return '';

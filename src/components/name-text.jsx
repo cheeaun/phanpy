@@ -5,6 +5,7 @@ import punycode from 'punycode/';
 
 import { api } from '../utils/api';
 import mem from '../utils/mem';
+import { SHORTCODES_REGEX } from '../utils/shortcodes';
 import states from '../utils/states';
 
 import Avatar from './avatar';
@@ -23,7 +24,6 @@ const nameCollator = mem((locale) => {
 });
 
 const ACCT_REGEX = /([^@]+)(@.+)/i;
-const SHORTCODES_REGEX = /(\:(\w|\+|\-)+\:)(?=|[\!\.\?]|$)/g;
 const SPACES_REGEX = /\s+/g;
 const NON_ALPHA_NUMERIC_REGEX = /[^a-z0-9@\.]/gi;
 
@@ -59,7 +59,7 @@ function NameText({
   const trimmedUsername = username.toLowerCase().trim();
   const trimmedDisplayName = (displayName || '').toLowerCase().trim();
   const shortenedDisplayName = trimmedDisplayName
-    .replace(SHORTCODES_REGEX, '') // Remove shortcodes, regex from https://regex101.com/r/iE9uV0/1
+    .replace(SHORTCODES_REGEX, '')
     .replace(SPACES_REGEX, ''); // E.g. "My name" === "myname"
   const shortenedAlphaNumericDisplayName = shortenedDisplayName.replace(
     NON_ALPHA_NUMERIC_REGEX,

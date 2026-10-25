@@ -638,7 +638,7 @@ function Status({
         onMouseEnter={debugHover}
       >
         <div class="status-pre-meta">
-          <Icon icon="rocket" size="l" />{' '}
+          <Icon icon="rocket" />{' '}
           <Trans>
             <NameText
               account={status.account}

@@ -2045,6 +2045,13 @@ function Status({
     snapStates.statusThreadNumber[sKey],
   ]);
 
+  // 1st post of thread or quoted post: meta, otherwise pre-content
+  const threadBadge =
+    isThread &&
+    (withinContext || snapStates.statusThreadNumber[sKey] === 1 || !!quoted
+      ? 'meta'
+      : 'pre-content');
+
   const showCommentHint = useMemo(() => {
     return (
       enableCommentHint &&
@@ -2348,7 +2355,7 @@ function Status({
                   </span>
                 )}
               </span>
-              {withinContext && isThread && (
+              {threadBadge === 'meta' && (
                 <ThreadBadge
                   showIcon={isSizeLarge}
                   index={snapStates.statusThreadNumber[sKey]}
@@ -2494,29 +2501,29 @@ function Status({
               </>
             )}
             {!withinContext &&
-              (isThread ? (
-                <ThreadBadge
-                  showIcon
-                  showText
-                  index={snapStates.statusThreadNumber[sKey]}
-                />
-              ) : (
-                !!inReplyToId &&
-                !!inReplyToAccount &&
-                (!!spoilerText ||
-                  !mentions.find((mention) => {
-                    return mention.id === inReplyToAccountId;
-                  })) && (
-                  <div class="status-reply-badge">
-                    <Icon icon="reply" />{' '}
-                    <NameText
-                      account={inReplyToAccount}
-                      instance={instance}
-                      short
+              (isThread
+                ? threadBadge === 'pre-content' && (
+                    <ThreadBadge
+                      showIcon
+                      showText
+                      index={snapStates.statusThreadNumber[sKey]}
                     />
-                  </div>
-                )
-              ))}
+                  )
+                : !!inReplyToId &&
+                  !!inReplyToAccount &&
+                  (!!spoilerText ||
+                    !mentions.find((mention) => {
+                      return mention.id === inReplyToAccountId;
+                    })) && (
+                    <div class="status-reply-badge">
+                      <Icon icon="reply" />{' '}
+                      <NameText
+                        account={inReplyToAccount}
+                        instance={instance}
+                        short
+                      />
+                    </div>
+                  ))}
           </LazyRender>
           <div
             class={`content-container ${

@@ -69,6 +69,8 @@ const states = proxy({
   showQrCodeModal: false,
   showQrScannerModal: false,
   showImportExportAccounts: false,
+  // false, or { inSettings: true } when opened from Settings
+  showBoostsCarouselInfo: false,
   showSearchCommand: false,
   // Shortcuts
   shortcuts: [],
@@ -241,6 +243,7 @@ export function hideAllModals() {
   states.showReportModal = false;
   states.showQrCodeModal = false;
   states.showQrScannerModal = false;
+  states.showBoostsCarouselInfo = false;
   states.showImportExportAccounts = false;
 }
 

@@ -1149,6 +1149,12 @@ a[href^='http'][rel*='nofollow']:visited:not(:has(div)) {
   color: var(--carousel-color);
   text-shadow: 0 1px var(--bg-color);
   white-space: nowrap;
+
+  :is(button, .button).status-carousel-info-button {
+    vertical-align: middle;
+    color: inherit;
+    padding: 0;
+  }
 }
 .status-carousel header > span {
   flex-shrink: 0;

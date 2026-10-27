@@ -747,7 +747,23 @@ export const TimelineItem = memo(
 
         return (
           <li key={`timeline-${statusID}`} class="timeline-item-carousel">
-            <StatusCarousel title={title} class={`${type}-carousel`}>
+            <StatusCarousel
+              title={title}
+              class={`${type}-carousel`}
+              infoButton={
+                type === 'boosts' && (
+                  <button
+                    type="button"
+                    class="small plain status-carousel-info-button more-insignificant"
+                    onClick={() => {
+                      states.showBoostsCarouselInfo = true;
+                    }}
+                  >
+                    <Icon icon="question" alt={t`About boosts carousel`} />
+                  </button>
+                )
+              }
+            >
               {fItems.map((item) => {
                 const { id: statusID, reblog, _pinned, _grouped } = item;
                 if (_grouped) {
@@ -942,7 +958,7 @@ export const TimelineItem = memo(
   },
 );
 
-function StatusCarousel({ title, class: className, children }) {
+function StatusCarousel({ title, class: className, infoButton, children }) {
   const { t } = useLingui();
   const carouselRef = useRef();
   const startButtonRef = useRef();
@@ -1020,7 +1036,9 @@ function StatusCarousel({ title, class: className, children }) {
   return (
     <div class={`status-carousel ${className}`}>
       <header>
-        <h3>{title}</h3>
+        <h3>
+          {title} {infoButton}
+        </h3>
         {columnCount > 1 && hasOverflow && (
           <div class="carousel-pagination">
             {Array.from({ length: columnCount }).map((_, i) => (
@@ -1039,7 +1057,7 @@ function StatusCarousel({ title, class: className, children }) {
             ))}
           </div>
         )}
-        <span>
+        <span class="status-carousel-actions">
           <button
             ref={startButtonRef}
             type="button"

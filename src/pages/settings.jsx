@@ -531,7 +531,17 @@ function Settings({ onClose }) {
                   }}
                 />
                 <span>
-                  <Trans>Boosts carousel</Trans>
+                  <Trans>Boosts carousel</Trans>{' '}
+                  <button
+                    type="button"
+                    class="plain textual"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      states.showBoostsCarouselInfo = { inSettings: true };
+                    }}
+                  >
+                    <Icon icon="question" alt={t`About boosts carousel`} />
+                  </button>
                 </span>
               </label>
             </li>

@@ -52,6 +52,7 @@ export { default as list } from '@mingcute/icons/core-regular/list-check';
 export { default as search } from '@mingcute/icons/core-regular/search-2';
 export { default as hashtag } from '@mingcute/icons/core-regular/hashtag';
 export { default as info } from '@mingcute/icons/core-regular/information';
+export { default as question } from '@mingcute/icons/core-regular/question';
 export { default as shortcut } from '@mingcute/icons/core-regular/lightning';
 export { default as user } from '@mingcute/icons/core-regular/user-4';
 export { default as following } from '@mingcute/icons/core-regular/walk';

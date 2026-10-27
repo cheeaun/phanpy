@@ -1,0 +1,44 @@
+#boosts-carousel-info-container {
+  text-align: center;
+
+  main p {
+    margin-top: 0;
+  }
+
+  .diagram {
+    background-color: var(--bg-faded-color);
+    padding: 16px;
+    margin-top: 16px;
+    border-radius: 12px;
+    @supprts (corner-shape: squircle) {
+      border-radius: 24px;
+      corner-shape: squircle;
+    }
+    /* border: 1px solid var(--outline-color); */
+
+    transition: 0.6s var(--timing-function) 0.15s;
+    transition-property: opacity, transform;
+    transform-origin: top center;
+    @starting-style {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      max-width: 400px;
+
+      @media (prefers-color-scheme: dark) {
+        filter: invert(0.9) hue-rotate(180deg);
+      }
+    }
+  }
+
+  footer {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+  }
+}

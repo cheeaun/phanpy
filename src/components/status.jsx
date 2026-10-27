@@ -1686,44 +1686,42 @@ function Status({
                     </span>
                   </MenuItem>
                 )}
-                {isSizeLarge && (
-                  <MenuConfirm
-                    subMenu
-                    confirmLabel={
-                      <>
-                        <Icon icon="trash" />
-                        <span>
-                          <Trans>Delete this post?</Trans>
-                        </span>
-                      </>
-                    }
-                    itemProps={{
-                      className: 'danger',
-                    }}
-                    menuItemClassName="danger"
-                    onClick={() => {
-                      // const yes = confirm('Delete this post?');
-                      // if (yes) {
-                      (async () => {
-                        try {
-                          await masto.v1.statuses.$select(id).remove();
-                          const cachedStatus = getStatus(id, instance);
-                          cachedStatus._deleted = true;
-                          showToast(t`Post deleted`);
-                        } catch (e) {
-                          console.error(e);
-                          showToast(t`Unable to delete post`);
-                        }
-                      })();
-                      // }
-                    }}
-                  >
-                    <Icon icon="trash" />
-                    <span>
-                      <Trans>Delete…</Trans>
-                    </span>
-                  </MenuConfirm>
-                )}
+                <MenuConfirm
+                  subMenu
+                  confirmLabel={
+                    <>
+                      <Icon icon="trash" />
+                      <span>
+                        <Trans>Delete this post?</Trans>
+                      </span>
+                    </>
+                  }
+                  itemProps={{
+                    className: 'danger',
+                  }}
+                  menuItemClassName="danger"
+                  onClick={() => {
+                    // const yes = confirm('Delete this post?');
+                    // if (yes) {
+                    (async () => {
+                      try {
+                        await masto.v1.statuses.$select(id).remove();
+                        const cachedStatus = getStatus(id, instance);
+                        cachedStatus._deleted = true;
+                        showToast(t`Post deleted`);
+                      } catch (e) {
+                        console.error(e);
+                        showToast(t`Unable to delete post`);
+                      }
+                    })();
+                    // }
+                  }}
+                >
+                  <Icon icon="trash" />
+                  <span>
+                    <Trans>Delete…</Trans>
+                  </span>
+                </MenuConfirm>
               </div>
             </>
           )}

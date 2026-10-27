@@ -592,6 +592,9 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     }
 
     (async () => {
+      const hasStatus = !!snapStates.statuses[sKey];
+      let heroStatus = snapStates.statuses[sKey];
+
       const heroFetch = () =>
         pRetry(() => masto.v1.statuses.$select(id).fetch(), {
           retries: 4,
@@ -599,12 +602,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       const contextFetch = pRetry(
         () => masto.v1.statuses.$select(id).context.fetch(),
         {
-          retries: 8,
+          retries: heroStatus?._deleted ? 1 : 8,
         },
       );
 
-      const hasStatus = !!snapStates.statuses[sKey];
-      let heroStatus = snapStates.statuses[sKey];
       if (hasStatus && !reloadHero) {
         console.debug('Hero status is cached');
       } else {

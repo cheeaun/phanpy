@@ -37,6 +37,11 @@
     border-radius: 9999px;
     border: 2px solid var(--bg-faded-color);
 
+    button {
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
     button:is(:hover, :focus) {
       background-color: var(--bg-blur-color);
     }

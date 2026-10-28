@@ -161,6 +161,7 @@ function Notifications({ columnMode }) {
     });
   const hiddenUI =
     snapStates.settings.autoHideBars &&
+    !snapStates.composerState.minimized &&
     scrollDirection === 'end' &&
     !nearReachStart;
   const [followRequests, setFollowRequests] = useState([]);

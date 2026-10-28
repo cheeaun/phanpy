@@ -106,7 +106,7 @@ export { default as quote2 } from '@mingcute/icons/core-regular/blockquote';
 export { default as settings } from '@mingcute/icons/core-regular/settings-6';
 export { default as 'heart-break' } from '@mingcute/icons/core-regular/heart-crack';
 export { default as 'user-x' } from '@mingcute/icons/core-regular/user-x';
-export { default as minimize } from '@mingcute/icons/core-regular/down';
+export { default as minimize } from '@mingcute/icons/core-regular/minimize';
 export { default as celebrate } from '@mingcute/icons/core-regular/celebrate';
 export { default as schedule } from '@mingcute/icons/core-regular/calendar-time-add';
 export { default as day } from '@mingcute/icons/core-regular/calendar-day';

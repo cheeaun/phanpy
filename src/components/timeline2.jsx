@@ -443,12 +443,15 @@ function Timeline2({
           nearReachStart,
         });
         headerRef.current.hidden =
-          autoHideBars && scrollDirection === 'end' && !nearReachStart;
+          autoHideBars &&
+          !snapStates.composerState.minimized &&
+          scrollDirection === 'end' &&
+          !nearReachStart;
       }
       // Cache scroll position on scroll
       cacheScrollAnchor();
     },
-    [cacheScrollAnchor, autoHideBars],
+    [cacheScrollAnchor, autoHideBars, snapStates.composerState.minimized],
   );
   const { resetScrollDirection } = useScrollFn(
     {
@@ -458,6 +461,12 @@ function Timeline2({
     },
     scrollFnCallback,
   );
+  // Reveal the header when a draft is minimized so the compose button stays reachable
+  useEffect(() => {
+    if (snapStates.composerState.minimized && headerRef.current) {
+      headerRef.current.hidden = false;
+    }
+  }, [snapStates.composerState.minimized]);
 
   // Restore from cache or load fresh items on mount
   useEffect(() => {

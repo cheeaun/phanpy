@@ -373,7 +373,10 @@ function Timeline({
     ({ scrollDirection, nearReachStart, reachStart }) => {
       if (headerRef.current) {
         const hiddenUI =
-          autoHideBars && scrollDirection === 'end' && !nearReachStart;
+          autoHideBars &&
+          !snapStates.composerState.minimized &&
+          scrollDirection === 'end' &&
+          !nearReachStart;
         headerRef.current.hidden = hiddenUI;
       }
       setNearReachStart(nearReachStart);
@@ -381,8 +384,19 @@ function Timeline({
         loadItems(true);
       }
     },
-    [setNearReachStart, loadItems, autoHideBars],
+    [
+      setNearReachStart,
+      loadItems,
+      autoHideBars,
+      snapStates.composerState.minimized,
+    ],
   );
+  // Reveal the header when a draft is minimized so the compose button stays reachable
+  useEffect(() => {
+    if (snapStates.composerState.minimized && headerRef.current) {
+      headerRef.current.hidden = false;
+    }
+  }, [snapStates.composerState.minimized]);
   const { resetScrollDirection } = useScrollFn(
     {
       scrollableRef,

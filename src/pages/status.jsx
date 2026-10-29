@@ -37,6 +37,7 @@ import {
   useEditHistory,
 } from '../utils/edit-history-context';
 import htmlContentLength from '../utils/html-content-length';
+import { stripShortCodes } from '../utils/shortcodes';
 import shortenNumber from '../utils/shorten-number';
 import states, {
   getStatus,
@@ -591,6 +592,9 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     }
 
     (async () => {
+      const hasStatus = !!snapStates.statuses[sKey];
+      let heroStatus = snapStates.statuses[sKey];
+
       const heroFetch = () =>
         pRetry(() => masto.v1.statuses.$select(id).fetch(), {
           retries: 4,
@@ -598,12 +602,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       const contextFetch = pRetry(
         () => masto.v1.statuses.$select(id).context.fetch(),
         {
-          retries: 8,
+          retries: heroStatus?._deleted ? 1 : 8,
         },
       );
 
-      const hasStatus = !!snapStates.statuses[sKey];
-      let heroStatus = snapStates.statuses[sKey];
       if (hasStatus && !reloadHero) {
         console.debug('Hero status is cached');
       } else {
@@ -774,9 +776,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     // Remove shortcodes from display name
     if (!heroStatus) return '';
     const { account } = heroStatus;
-    const div = document.createElement('div');
-    div.innerHTML = account.displayName;
-    return div.innerText.trim();
+    return stripShortCodes(account.displayName, account.emojis);
   }, [heroStatus]);
   const heroContentText = useMemo(() => {
     if (!heroStatus) return '';
@@ -1211,14 +1211,16 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   showActionsBar={!!descendant}
                 />
               )}
-              {ancestor && repliesCount > 1 && (
-                <div class="replies-link">
-                  <Icon icon="comment2" alt={t`Replies`} />{' '}
-                  <span title={repliesCount}>
-                    {shortenNumber(repliesCount)}
-                  </span>
-                </div>
-              )}{' '}
+              {!snapStates.settings.hidePostMetrics &&
+                ancestor &&
+                repliesCount > 1 && (
+                  <div class="replies-link">
+                    <Icon icon="comment2" alt={t`Replies`} />{' '}
+                    <span title={repliesCount}>
+                      {shortenNumber(repliesCount)}
+                    </span>
+                  </div>
+                )}{' '}
               {/* {replies?.length > LIMIT && (
                         <div class="replies-link">
                           <Icon icon="comment" />{' '}
@@ -1441,7 +1443,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           }}
         >
           {/* <div>
-            <Link class="button plain deck-close" href={closeLink}>
+            <Link class="button plain4 deck-close" href={closeLink}>
               <Icon icon="chevron-left" size="xl" />
             </Link>
           </div> */}
@@ -1450,7 +1452,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               {prevLocationIsStatusPage && (
                 <button
                   type="button"
-                  class="plain deck-back"
+                  class="plain4 deck-back"
                   onClick={() => {
                     history.back();
                   }}
@@ -1565,7 +1567,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               {showRefresh && (
                 <button
                   type="button"
-                  class="plain button-refresh"
+                  class="plain4 button-refresh"
                   onClick={() => {
                     states.reloadStatusPage++;
                     setShowRefresh(false);
@@ -1680,7 +1682,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   <span>{t`View Edit History Snapshots`}</span>
                 </MenuItem>
               </Menu2>
-              <Link class="button plain deck-close" to={closeLink}>
+              <Link class="button plain4 deck-close" to={closeLink}>
                 <Icon icon="x" size="xl" alt={t`Close`} />
               </Link>
             </div>
@@ -1766,6 +1768,7 @@ function SubComments({
   lazyRenderReplies,
 }) {
   const { t } = useLingui();
+  const snapStates = useSnapshot(states);
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Total comments count, including sub-replies
@@ -1941,14 +1944,16 @@ function SubComments({
                   onMediaClick={handleMediaClick}
                   showActionsBar
                 />
-                {!r.replies?.length && r.repliesCount > 0 && (
-                  <div class="replies-link">
-                    <Icon icon="comment2" alt={t`Replies`} />{' '}
-                    <span title={r.repliesCount}>
-                      {shortenNumber(r.repliesCount)}
-                    </span>
-                  </div>
-                )}
+                {!snapStates.settings.hidePostMetrics &&
+                  !r.replies?.length &&
+                  r.repliesCount > 0 && (
+                    <div class="replies-link">
+                      <Icon icon="comment2" alt={t`Replies`} />{' '}
+                      <span title={r.repliesCount}>
+                        {shortenNumber(r.repliesCount)}
+                      </span>
+                    </div>
+                  )}
               </div>
               {/* </Link> */}
               {r.replies?.length && (

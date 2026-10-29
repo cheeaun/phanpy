@@ -15,6 +15,7 @@ import multiColumnUrl from '../assets/multi-column.svg';
 import tabMenuBarUrl from '../assets/tab-menu-bar.svg';
 
 import { api } from '../utils/api';
+import { SAVE_TERMINOLOGY } from '../utils/flags';
 import { fetchFollowedTags } from '../utils/followed-tags';
 import { getLists, getListTitle } from '../utils/lists';
 import pmem from '../utils/pmem';
@@ -42,6 +43,7 @@ const TYPES = [
   'hashtag',
   'bookmarks',
   'favourites',
+  'catchup',
   'profile', // Own profile
   // NOTE: Hide for now
   // 'account-statuses', // Need @acct search first
@@ -53,11 +55,12 @@ const TYPE_TEXT = {
   public: msg`Public (Local / Federated)`,
   search: msg`Search`,
   'account-statuses': msg`Account`,
-  bookmarks: msg`Bookmarks`,
+  bookmarks: SAVE_TERMINOLOGY ? msg`Saved Posts` : msg`Bookmarks`,
   favourites: msg`Likes`,
   hashtag: msg`Hashtag`,
   trending: msg`Trending`,
   mentions: msg`Mentions`,
+  catchup: msg`Catch-up`,
   profile: msg`Profile`,
 };
 const TYPE_PARAMS = {
@@ -209,7 +212,7 @@ export const SHORTCUTS_META = {
   },
   bookmarks: {
     id: 'bookmarks',
-    title: msg`Bookmarks`,
+    title: SAVE_TERMINOLOGY ? msg`Saved Posts` : msg`Bookmarks`,
     path: '/b',
     icon: 'bookmark',
   },
@@ -218,6 +221,13 @@ export const SHORTCUTS_META = {
     title: msg`Likes`,
     path: '/f',
     icon: 'heart',
+  },
+  catchup: {
+    id: 'catchup',
+    title: msg`Catch-up`,
+    path: '/catchup',
+    icon: 'history2',
+    excludeViewMode: ['multi-column'],
   },
   hashtag: {
     id: 'hashtag',
@@ -353,7 +363,7 @@ function ShortcutsSettings({ onClose }) {
                     <span class="shortcut-actions">
                       <button
                         type="button"
-                        class="plain small"
+                        class="plain4 small"
                         disabled={i === 0}
                         onClick={() => {
                           const shortcutsArr = Array.from(states.shortcuts);
@@ -369,7 +379,7 @@ function ShortcutsSettings({ onClose }) {
                       </button>
                       <button
                         type="button"
-                        class="plain small"
+                        class="plain4 small"
                         disabled={i === shortcuts.length - 1}
                         onClick={() => {
                           const shortcutsArr = Array.from(states.shortcuts);
@@ -385,7 +395,7 @@ function ShortcutsSettings({ onClose }) {
                       </button>
                       <button
                         type="button"
-                        class="plain small"
+                        class="plain4 small"
                         onClick={() => {
                           setShowForm({
                             shortcut,
@@ -397,7 +407,7 @@ function ShortcutsSettings({ onClose }) {
                       </button>
                       {/* <button
                       type="button"
-                      class="plain small"
+                      class="plain4 small"
                       onClick={() => {
                         states.shortcuts.splice(i, 1);
                       }}

@@ -81,7 +81,7 @@ function NotificationsLink() {
       <Link
         ref={notificationLinkRef}
         to="/notifications"
-        class={`button plain notifications-button ${
+        class={`button plain4 notifications-button ${
           snapStates.notificationsShowNew ? 'has-badge' : ''
         } ${menuState || ''}`}
         onClick={(e) => {
@@ -206,6 +206,9 @@ function NotificationsMenu({ anchorRef, state, onClose }) {
         <h2>
           <Trans>Notifications</Trans>
         </h2>
+        {!!snapStates.notifications.length && (
+          <Loader hidden={uiState !== 'loading'} />
+        )}
       </header>
       <FilterContext.Provider value="notifications">
         <main>

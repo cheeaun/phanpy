@@ -2,6 +2,7 @@ import './sandbox.css';
 
 import { useEffect, useState } from 'preact/hooks';
 import { uid } from 'uid/single';
+import { useSnapshot } from 'valtio';
 
 import testGIFURL from '../assets/sandbox/big-buck-bunny-muted.webm';
 import testPreviewURL from '../assets/sandbox/big-buck-bunny-preview.png';
@@ -83,11 +84,12 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     id: hashID(toggles),
     account: {
       id: 'sandbox-account',
-      username: 'test',
-      name: 'Test',
+      username: 'TestUsername',
+      name: 'Test Display Name',
+      displayName: 'Test Display Name',
       // avatar: 'https://picsum.photos/seed/avatar/200',
       avatar: '/logo-192.png',
-      acct: 'test@localhost',
+      acct: 'TestUsername@localhost',
       url: 'https://test.localhost',
     },
     content:
@@ -336,6 +338,7 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
             id: '1',
             username: 'test 2',
             name: 'Test 2',
+            displayName: 'Test 2 Display Name',
             avatar: '/logo-192.png',
             acct: 'test2@localhost',
             url: 'https://test2.localhost',
@@ -419,6 +422,13 @@ const INITIAL_STATE = {
   showCollectionCard: false, // Toggle to show collection card
   collectionCardsCount: '1', // Number of collection cards (max 6)
   collectionAccountsCount: '3', // Number of accounts in each collection
+  hidePostMetrics: false, // Hide post metrics (replies/boosts/favourites counts)
+  hideProfileMetrics: false, // Hide profile metrics (followers/following/posts counts)
+  lowercasePostText: false, // Lowercase post text
+  postUsernameOnly: false, // Show username instead of display name on posts
+  boosted: false, // Fake boosted state for the main post (no API calls)
+  liked: false, // Fake liked state for the main post (no API calls)
+  bookmarked: false, // Fake bookmarked state for the main post (no API calls)
 };
 
 export default function Sandbox() {
@@ -428,8 +438,19 @@ export default function Sandbox() {
   // This makes sameInstance=true and authenticated=true if logged in
   const { instance: currentInstance } = api();
 
+  // Snapshot the settings so toggling them re-renders the preview
+  const snapStates = useSnapshot(states.settings);
+
   // Consolidated state for all toggles
-  const [toggleState, setToggleState] = useState(INITIAL_STATE);
+  // Seed the settings-backed toggles from the current global settings
+  const [initialState] = useState(() => ({
+    ...INITIAL_STATE,
+    hidePostMetrics: !!states.settings.hidePostMetrics,
+    hideProfileMetrics: !!states.settings.hideProfileMetrics,
+    lowercasePostText: !!states.settings.lowercasePostText,
+    postUsernameOnly: !!states.settings.postUsernameOnly,
+  }));
+  const [toggleState, setToggleState] = useState(initialState);
 
   // Update function with view transitions
   const updateToggles = (updates) => {
@@ -483,6 +504,43 @@ export default function Sandbox() {
       getPreferences.cache.clear();
     };
   }, [toggleState.mediaPreference, toggleState.expandWarnings]);
+
+  // These toggles drive global settings that Status reads directly, so we do
+  // have to change states.settings while the sandbox is open. Keep it strictly
+  // sandboxed: block persistence for these keys and restore the originals on exit.
+  useEffect(() => {
+    const originalSet = store.account.set;
+    store.account.set = (key, value) => {
+      if (
+        key === 'settings-hidePostMetrics' ||
+        key === 'settings-hideProfileMetrics' ||
+        key === 'settings-lowercasePostText' ||
+        key === 'settings-postUsernameOnly'
+      ) {
+        return;
+      }
+      return originalSet.call(store.account, key, value);
+    };
+    return () => {
+      states.settings.hidePostMetrics = initialState.hidePostMetrics;
+      states.settings.hideProfileMetrics = initialState.hideProfileMetrics;
+      states.settings.lowercasePostText = initialState.lowercasePostText;
+      states.settings.postUsernameOnly = initialState.postUsernameOnly;
+      store.account.set = originalSet;
+    };
+  }, []);
+
+  useEffect(() => {
+    states.settings.hidePostMetrics = toggleState.hidePostMetrics;
+    states.settings.hideProfileMetrics = toggleState.hideProfileMetrics;
+    states.settings.lowercasePostText = toggleState.lowercasePostText;
+    states.settings.postUsernameOnly = toggleState.postUsernameOnly;
+  }, [
+    toggleState.hidePostMetrics,
+    toggleState.hideProfileMetrics,
+    toggleState.lowercasePostText,
+    toggleState.postUsernameOnly,
+  ]);
 
   // Mock the api to simulate authentication for the sandbox's instance
   // This makes sameInstance=true and authenticated=true for poll voting
@@ -551,6 +609,15 @@ export default function Sandbox() {
       collectionAccountsCount: toggleState.collectionAccountsCount,
     },
   });
+
+  // Fake boost/like/bookmark state for the main post only.
+  // Intentionally not passed into MOCK_STATUS toggles so the status ID stays
+  // stable — an ID change would tear down and recreate quote posts.
+  // Quote posts are separate status objects in states.statuses, so they're
+  // unaffected by these flags.
+  mockStatus.reblogged = toggleState.boosted;
+  mockStatus.favourited = toggleState.liked;
+  mockStatus.bookmarked = toggleState.bookmarked;
 
   if (toggleState.contextType === 'reblog') {
     const rebloggedStatus = { ...mockStatus };
@@ -642,11 +709,16 @@ export default function Sandbox() {
         });
 
         // Also clean up the status objects
+        // Match both raw keys and instance-prefixed keys (statusKey format)
+        // so no stale quote statuses are left behind
         Object.keys(states.statuses).forEach((key) => {
+          const rawKey = key.startsWith(currentInstance + '/')
+            ? key.slice(currentInstance.length + 1)
+            : key;
           if (
-            key.startsWith('quote-') ||
-            key.startsWith('nested-quote-') ||
-            key.startsWith('deep-nested-')
+            rawKey.startsWith('quote-') ||
+            rawKey.startsWith('nested-quote-') ||
+            rawKey.startsWith('deep-nested-')
           ) {
             // Remove all quote-related status objects
             delete states.statuses[key];
@@ -776,8 +848,15 @@ export default function Sandbox() {
               // Add nested quotes to every other quote - use stable ID
               const nestedQuoteId = `nested-quote-${i}-12345`;
 
+              // Use the proper instance-prefixed key (statusKey) so it matches
+              // the `data-state-post-id` rendered in the DOM. The states GC
+              // prunes keys that aren't mounted, so a raw key here would get
+              // deleted and the nested quote would silently blank out.
+              const nestedStatusKey = statusKey(nestedQuoteId, currentInstance);
+              delete states.statuses[nestedStatusKey];
+
               // Add the nested quote post to states.statuses
-              states.statuses[nestedQuoteId] = {
+              states.statuses[nestedStatusKey] = {
                 id: nestedQuoteId,
                 content: `<p>This is a nested quote inside quote ${i + 1}</p>`,
                 account: {
@@ -808,7 +887,15 @@ export default function Sandbox() {
                 // Only add deepest nesting to first quote
                 const deepNestedId = `deep-nested-${i}-12345`;
 
-                states.statuses[deepNestedId] = {
+                // Same as nested quotes: prefix with instance so the key
+                // matches the DOM's data-state-post-id and survives GC
+                const deepNestedStatusKey = statusKey(
+                  deepNestedId,
+                  currentInstance,
+                );
+                delete states.statuses[deepNestedStatusKey];
+
+                states.statuses[deepNestedStatusKey] = {
                   id: deepNestedId,
                   content: `<p>This is a deeply nested quote (level 2)</p>`,
                   account: {
@@ -873,6 +960,20 @@ export default function Sandbox() {
     updateToggles({ filters: newFilters });
   };
 
+  // Fake boost/like/bookmark triggers for the main post, for playing the
+  // post's action button animations without real API calls.
+  // Deliberately bypass updateToggles' view transitions so the animations
+  // play in full instead of being masked by the transition.
+  const toggleBoosted = () => {
+    setToggleState((prev) => ({ ...prev, boosted: !prev.boosted }));
+  };
+  const toggleLiked = () => {
+    setToggleState((prev) => ({ ...prev, liked: !prev.liked }));
+  };
+  const toggleBookmarked = () => {
+    setToggleState((prev) => ({ ...prev, bookmarked: !prev.bookmarked }));
+  };
+
   // Handler for quote filter checkboxes
   const handleQuoteFilterChange = (index) => {
     const newQuoteFilters = [...toggleState.quoteFilters];
@@ -882,12 +983,12 @@ export default function Sandbox() {
 
   // Function to check if the current state is different from the initial state
   const hasChanges = () => {
-    return Object.keys(INITIAL_STATE).some((key) => {
-      if (Array.isArray(INITIAL_STATE[key])) {
-        if (INITIAL_STATE[key].length !== toggleState[key].length) return true;
-        return INITIAL_STATE[key].some((val, i) => val !== toggleState[key][i]);
+    return Object.keys(initialState).some((key) => {
+      if (Array.isArray(initialState[key])) {
+        if (initialState[key].length !== toggleState[key].length) return true;
+        return initialState[key].some((val, i) => val !== toggleState[key][i]);
       }
-      return INITIAL_STATE[key] !== toggleState[key];
+      return initialState[key] !== toggleState[key];
     });
   };
 
@@ -895,10 +996,10 @@ export default function Sandbox() {
   const resetToInitialState = () => {
     if (document.startViewTransition) {
       document.startViewTransition(() => {
-        setToggleState({ ...INITIAL_STATE });
+        setToggleState({ ...initialState });
       });
     } else {
-      setToggleState({ ...INITIAL_STATE });
+      setToggleState({ ...initialState });
     }
   };
 
@@ -928,9 +1029,9 @@ export default function Sandbox() {
     if (!states.accounts['sandbox-account']) {
       states.accounts['sandbox-account'] = {
         id: 'sandbox-account',
-        username: 'test',
-        acct: `test@${currentInstance}`,
-        displayName: 'Test',
+        username: 'TestUsername',
+        acct: `TestUsername@${currentInstance}`,
+        displayName: 'Test Display Name',
         avatarStatic: '/logo-192.png',
         avatar: '/logo-192.png',
         bot: false,
@@ -997,7 +1098,7 @@ export default function Sandbox() {
               instance={currentInstance}
               allowFilters={true}
               showFollowedTags
-              key={`status-${toggleState.mediaPreference}-${toggleState.expandWarnings}-${Date.now()}`}
+              key={`status-${toggleState.mediaPreference}-${toggleState.expandWarnings}-${snapStates.hidePostMetrics}-${snapStates.postUsernameOnly}-${Date.now()}`}
               // Prevent opening as URL
               onMediaClick={(e, i, media, status) => {
                 e.preventDefault();
@@ -1061,6 +1162,99 @@ export default function Sandbox() {
                   />
                   <span>Deleted</span>
                 </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.postUsernameOnly}
+                    onChange={() =>
+                      updateToggles({
+                        postUsernameOnly: !toggleState.postUsernameOnly,
+                      })
+                    }
+                  />
+                  <span>Show username instead of display name</span>
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <b>Wellbeing</b>
+            <ul>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.hidePostMetrics}
+                    onChange={() =>
+                      updateToggles({
+                        hidePostMetrics: !toggleState.hidePostMetrics,
+                      })
+                    }
+                  />
+                  <span>Hide post metrics</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.hideProfileMetrics}
+                    onChange={() =>
+                      updateToggles({
+                        hideProfileMetrics: !toggleState.hideProfileMetrics,
+                      })
+                    }
+                  />
+                  <span>Hide profile metrics</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggleState.lowercasePostText}
+                    onChange={() =>
+                      updateToggles({
+                        lowercasePostText: !toggleState.lowercasePostText,
+                      })
+                    }
+                  />
+                  <span>Lowercase timeline post text</span>
+                </label>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <b>Actions</b>
+            <ul>
+              <li>
+                <button
+                  type="button"
+                  class="small plain6 action-button boost"
+                  onClick={toggleBoosted}
+                >
+                  {toggleState.boosted ? 'Unboost' : 'Boost'}
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="small plain6 action-button like"
+                  onClick={toggleLiked}
+                >
+                  {toggleState.liked ? 'Unlike' : 'Like'}
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  class="small plain6 action-button bookmark"
+                  onClick={toggleBookmarked}
+                >
+                  {toggleState.bookmarked ? 'Unbookmark' : 'Bookmark'}
+                </button>
               </li>
             </ul>
           </li>
@@ -1561,6 +1755,7 @@ export default function Sandbox() {
                     }}
                     disabled={!toggleState.showQuotes}
                   />
+                  <sup>2</sup>
                 </label>
                 {toggleState.showQuotes && (
                   <ul>
@@ -2049,6 +2244,10 @@ export default function Sandbox() {
             <li>
               Link preview card conditionally renders based on presence of other
               elements like media, etc.
+            </li>
+            <li>
+              Only the first quote post is rendered at small/medium size. Set
+              size to Large to show all of them.
             </li>
             {/* <li>"Always hide media" is not supported yet.</li> */}
           </ul>

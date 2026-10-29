@@ -9,6 +9,7 @@ import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import { isSupported as collectionsSupported } from '../utils/collections';
+import { SAVE_TERMINOLOGY } from '../utils/flags';
 import { getLists } from '../utils/lists';
 import safeBoundingBoxPadding from '../utils/safe-bounding-box-padding';
 import states from '../utils/states';
@@ -104,7 +105,7 @@ function NavMenu(props) {
       <button
         ref={buttonRef}
         type="button"
-        class={`button plain nav-menu-button ${
+        class={`button plain4 nav-menu-button ${
           showAvatarInButton ? 'with-avatar' : ''
         } ${menuState === 'open' ? 'active' : ''}`}
         style={{ position: 'relative' }}
@@ -237,7 +238,11 @@ function NavMenu(props) {
               <MenuLink to="/b">
                 <Icon icon="bookmark" size="l" />{' '}
                 <span>
-                  <Trans>Bookmarks</Trans>
+                  {SAVE_TERMINOLOGY ? (
+                    <Trans>Saved Posts</Trans>
+                  ) : (
+                    <Trans>Bookmarks</Trans>
+                  )}
                 </span>
               </MenuLink>
               <SubMenu2

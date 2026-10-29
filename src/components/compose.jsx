@@ -1124,7 +1124,10 @@ function Compose({
                     onClose();
                   }}
                 >
-                  <Icon icon="popout" alt={t`Pop out`} />
+                  <Icon icon="popout" />{' '}
+                  <span>
+                    <Trans>Pop out</Trans>
+                  </span>
                 </button>
               )}
               <button
@@ -1132,7 +1135,10 @@ function Compose({
                 class="plain4 min-button"
                 onClick={onMinimize}
               >
-                <Icon icon="minimize" alt={t`Minimize`} />
+                <Icon icon="minimize" />{' '}
+                <span>
+                  <Trans>Minimize</Trans>
+                </span>
               </button>{' '}
               <button
                 type="button"
@@ -1149,85 +1155,90 @@ function Compose({
             </span>
           ) : (
             hasOpener && (
-              <button
-                type="button"
-                class="light pop-button"
-                disabled={uiState === 'loading'}
-                onClick={() => {
-                  // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
-                  // const containNonIDMediaAttachments =
-                  //   mediaAttachments.length > 0 &&
-                  //   mediaAttachments.some((media) => !media.id);
-                  // if (containNonIDMediaAttachments) {
-                  //   const yes = confirm(
-                  //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
-                  //   );
-                  //   if (!yes) {
-                  //     return;
-                  //   }
-                  // }
+              <span class="compose-controls">
+                <button
+                  type="button"
+                  class="light pop-button"
+                  disabled={uiState === 'loading'}
+                  onClick={() => {
+                    // If there are non-ID media attachments (not yet uploaded), show confirmation dialog because they are not going to be passed to the new window
+                    // const containNonIDMediaAttachments =
+                    //   mediaAttachments.length > 0 &&
+                    //   mediaAttachments.some((media) => !media.id);
+                    // if (containNonIDMediaAttachments) {
+                    //   const yes = confirm(
+                    //     'You have media attachments that are not yet uploaded. Opening a new window will discard them and you will need to re-attach them. Are you sure you want to continue?',
+                    //   );
+                    //   if (!yes) {
+                    //     return;
+                    //   }
+                    // }
 
-                  if (!window.opener) {
-                    alert(t`Looks like you closed the parent window.`);
-                    return;
-                  }
-
-                  if (window.opener.__STATES__.showCompose) {
-                    if (window.opener.__STATES__.composerState?.publishing) {
-                      alert(
-                        t`Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later.`,
-                      );
+                    if (!window.opener) {
+                      alert(t`Looks like you closed the parent window.`);
                       return;
                     }
 
-                    let confirmText = t`Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?`;
-                    const yes = confirm(confirmText);
-                    if (!yes) return;
-                  }
+                    if (window.opener.__STATES__.showCompose) {
+                      if (window.opener.__STATES__.composerState?.publishing) {
+                        alert(
+                          t`Looks like you already have a compose field open in the parent window and currently publishing. Please wait for it to be done and try again later.`,
+                        );
+                        return;
+                      }
 
-                  // const mediaAttachmentsWithIDs = mediaAttachments.filter(
-                  //   (media) => media.id,
-                  // );
+                      let confirmText = t`Looks like you already have a compose field open in the parent window. Popping in this window will discard the changes you made in the parent window. Continue?`;
+                      const yes = confirm(confirmText);
+                      if (!yes) return;
+                    }
 
-                  onClose({
-                    fn: () => {
-                      const passData = {
-                        editStatus,
-                        replyToStatus,
-                        replyMode,
-                        draftStatus: {
-                          uid: UID.current,
-                          status: textareaRef.current.value,
-                          spoilerText: spoilerTextRef.current.value,
-                          visibility,
-                          language,
-                          sensitive,
-                          sensitiveMedia,
-                          poll,
-                          mediaAttachments,
-                          scheduledAt,
-                        },
-                        quoteStatus: currentQuoteStatus,
-                      };
-                      window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
-                      if (window.opener.__STATES__.showCompose) {
-                        window.opener.__STATES__.showCompose = false;
-                        setTimeout(() => {
+                    // const mediaAttachmentsWithIDs = mediaAttachments.filter(
+                    //   (media) => media.id,
+                    // );
+
+                    onClose({
+                      fn: () => {
+                        const passData = {
+                          editStatus,
+                          replyToStatus,
+                          replyMode,
+                          draftStatus: {
+                            uid: UID.current,
+                            status: textareaRef.current.value,
+                            spoilerText: spoilerTextRef.current.value,
+                            visibility,
+                            language,
+                            sensitive,
+                            sensitiveMedia,
+                            poll,
+                            mediaAttachments,
+                            scheduledAt,
+                          },
+                          quoteStatus: currentQuoteStatus,
+                        };
+                        window.opener.__COMPOSE__ = passData; // Pass it here instead of `showCompose` due to some weird proxy issue again
+                        if (window.opener.__STATES__.showCompose) {
+                          window.opener.__STATES__.showCompose = false;
+                          setTimeout(() => {
+                            window.opener.__STATES__.showCompose = true;
+                          }, 10);
+                        } else {
                           window.opener.__STATES__.showCompose = true;
-                        }, 10);
-                      } else {
-                        window.opener.__STATES__.showCompose = true;
-                      }
-                      if (window.opener.__STATES__.composerState.minimized) {
-                        // Maximize it
-                        window.opener.__STATES__.composerState.minimized = false;
-                      }
-                    },
-                  });
-                }}
-              >
-                <Icon icon="popin" alt={t`Pop in`} />
-              </button>
+                        }
+                        if (window.opener.__STATES__.composerState.minimized) {
+                          // Maximize it
+                          window.opener.__STATES__.composerState.minimized = false;
+                        }
+                      },
+                    });
+                  }}
+                >
+                  <Icon icon="popin" />{' '}
+                  <span>
+                    <Trans>Pop in</Trans>
+                  </span>
+                </button>
+              </span>
             )
           )}
         </div>

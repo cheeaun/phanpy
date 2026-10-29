@@ -9,7 +9,7 @@ import {
   useState,
 } from 'preact/hooks';
 import { useDebouncedCallback, useThrottledCallback } from 'use-debounce';
-import { useSnapshot } from 'valtio';
+import { subscribe, useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import FilterContext from '../utils/filter-context';
@@ -269,6 +269,36 @@ function Timeline2({
   const minID = useRef(cachedData.current?.minID || null);
   const maxID = useRef(cachedData.current?.maxID || null);
 
+  // Prune deleted statuses from cache
+  useEffect(() => {
+    const unsubscribe = subscribe(states, (changes) => {
+      const deletedStatusKeys = [];
+      for (const [, path, value] of changes) {
+        if (
+          path.length === 3 &&
+          path[0] === 'statuses' &&
+          path[2] === '_deleted' &&
+          value
+        ) {
+          deletedStatusKeys.push(path[1]);
+        }
+      }
+      if (deletedStatusKeys.length) {
+        const cached = store.account.get(cacheKey);
+        const cacheItems = cached?.items?.filter(
+          (item) => !deletedStatusKeys.includes(statusKey(item.id, instance)),
+        );
+        if (cacheItems?.length < cached.items.length) {
+          store.account.set(cacheKey, {
+            ...(cacheItems.length > 0 ? cached : {}),
+            items: cacheItems,
+          });
+        }
+      }
+    });
+    return unsubscribe;
+  }, [cacheKey, instance]);
+
   const loadItems = useDebouncedCallback(
     (params = {}) => {
       console.log('🔍 loadItems', { params });
@@ -413,12 +443,15 @@ function Timeline2({
           nearReachStart,
         });
         headerRef.current.hidden =
-          autoHideBars && scrollDirection === 'end' && !nearReachStart;
+          autoHideBars &&
+          !snapStates.composerState.minimized &&
+          scrollDirection === 'end' &&
+          !nearReachStart;
       }
       // Cache scroll position on scroll
       cacheScrollAnchor();
     },
-    [cacheScrollAnchor, autoHideBars],
+    [cacheScrollAnchor, autoHideBars, snapStates.composerState.minimized],
   );
   const { resetScrollDirection } = useScrollFn(
     {
@@ -428,6 +461,12 @@ function Timeline2({
     },
     scrollFnCallback,
   );
+  // Reveal the header when a draft is minimized so the compose button stays reachable
+  useEffect(() => {
+    if (snapStates.composerState.minimized && headerRef.current) {
+      headerRef.current.hidden = false;
+    }
+  }, [snapStates.composerState.minimized]);
 
   // Restore from cache or load fresh items on mount
   useEffect(() => {
@@ -577,7 +616,7 @@ function Timeline2({
                 {headerStart !== null && headerStart !== undefined ? (
                   headerStart
                 ) : (
-                  <Link to="/" class="button plain home-button">
+                  <Link to="/" class="button plain4 home-button">
                     <Icon icon="home" size="l" alt={t`Home`} />
                   </Link>
                 )}

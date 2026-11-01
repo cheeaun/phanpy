@@ -37,6 +37,9 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
+    /* Keep mount animations (e.g. `slide-in`) short so geometry settles fast */
+    reducedMotion: 'reduce',
   },
 
   /* Configure projects for major browsers */

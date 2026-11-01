@@ -22,6 +22,7 @@ import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
 import EditHistoryControls from '../components/edit-history-controls';
+import FloatingBar from '../components/floating-bar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
@@ -47,6 +48,7 @@ import states, {
 } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { getCurrentAccount } from '../utils/store-utils';
+import useRevealAll from '../utils/use-reveal-all';
 import useTitle from '../utils/useTitle';
 
 import getInstanceStatusURL from './../utils/get-instance-status-url';
@@ -345,6 +347,44 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const totalDescendants = useRef(0);
 
   const scrollableRef = useRef();
+  const { visible: showRevealAll, revealAll } = useRevealAll(scrollableRef);
+
+  // Mirror the deck's inline insets onto the fixed bar so it lines up in the
+  // side pane and next to a sidebar. Retried until mounted, then only on resize.
+  const [barInset, setBarInset] = useState();
+  useLayoutEffect(() => {
+    const deck = scrollableRef.current;
+    if (!deck) return;
+    let attempts = 0;
+    const update = () => {
+      const { left, right } = deck.getBoundingClientRect();
+      // Mount timing varies, and the deck may not have a size while it slides in
+      if ((!deck.offsetWidth || left > 1) && attempts++ < 30) {
+        setTimeout(update, 100);
+        return;
+      }
+      attempts = 0;
+      const insetInlineStart = Math.round(left);
+      const insetInlineEnd = Math.round(
+        document.documentElement.clientWidth - right,
+      );
+      setBarInset((prev) =>
+        prev?.insetInlineStart === insetInlineStart &&
+        prev?.insetInlineEnd === insetInlineEnd
+          ? prev
+          : { insetInlineStart, insetInlineEnd },
+      );
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(deck);
+    window.addEventListener('resize', update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
   useEffect(() => {
     scrollableRef.current?.focus();
   }, []);
@@ -1627,22 +1667,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                       : t`Switch to Full view`}
                   </span>
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    // Click all buttons with class .spoiler but not .spoiling
-                    const buttons = Array.from(
-                      scrollableRef.current.querySelectorAll(
-                        '.spoiler-button:not(.spoiling), .spoiler-media-button:not(.spoiling)',
-                      ),
-                    );
-                    buttons.forEach((button) => {
-                      button.click();
-                    });
-                  }}
-                >
+                <MenuItem onClick={() => revealAll()}>
                   <Icon icon="eye-open" />{' '}
                   <span>
-                    <Trans>Show all sensitive content</Trans>
+                    <Trans>Show all content warnings</Trans>
                   </span>
                 </MenuItem>
                 <MenuDivider />
@@ -1751,6 +1779,16 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             )}
           </>
         )}
+        <FloatingBar style={barInset}>
+          {showRevealAll && (
+            <button type="button" class="light" onClick={() => revealAll()}>
+              <Icon icon="eye-open" />{' '}
+              <span>
+                <Trans>Show all content warnings</Trans>
+              </span>
+            </button>
+          )}
+        </FloatingBar>
         <div data-state-post-ids={allStatusesKeys.join(' ')} hidden />
       </div>
     </ThreadCountContext.Provider>

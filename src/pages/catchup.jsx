@@ -48,6 +48,7 @@ import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import { getCurrentAccountID, getCurrentAccountNS } from '../utils/store-utils';
 import supports from '../utils/supports';
+import getHourCycle from '../utils/time-format';
 import { assignFollowedTags } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
@@ -93,13 +94,14 @@ const FILTER_SORTS = [
 const FILTER_GROUPS = [null, 'account'];
 
 const DTF = mem(
-  (locale) =>
+  (locale, hourCycle) =>
     new Intl.DateTimeFormat(locale || undefined, {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
+      hourCycle: hourCycle || undefined,
     }),
 );
 
@@ -109,7 +111,7 @@ function hasQuote(quote) {
 
 function Catchup() {
   const { i18n, _, t } = useLingui();
-  const dtf = DTF(i18n.locale);
+  const dtf = DTF(i18n.locale, getHourCycle());
 
   useTitle(`Catch-up`, '/catchup');
   const { masto, instance } = api();

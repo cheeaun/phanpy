@@ -60,6 +60,7 @@ function Settings({ onClose }) {
   const systemTargetLanguage = getTranslateTargetLanguage();
   const systemTargetLanguageText = localeCode2Text(systemTargetLanguage);
   const currentTextSize = store.local.get('textSize') || DEFAULT_TEXT_SIZE;
+  const currentTimeFormat = store.local.get('timeFormat') || 'auto';
 
   const [prefs, setPrefs] = useState(getPreferences());
   const { masto, authenticated, instance } = api();
@@ -183,6 +184,19 @@ function Settings({ onClose }) {
                       <input
                         type="radio"
                         name="theme"
+                        value="auto"
+                        defaultChecked={
+                          currentTheme !== 'light' && currentTheme !== 'dark'
+                        }
+                      />
+                      <span>
+                        <Trans>Auto</Trans>
+                      </span>
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="theme"
                         value="light"
                         defaultChecked={currentTheme === 'light'}
                       />
@@ -199,19 +213,6 @@ function Settings({ onClose }) {
                       />
                       <span>
                         <Trans>Dark</Trans>
-                      </span>
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="theme"
-                        value="auto"
-                        defaultChecked={
-                          currentTheme !== 'light' && currentTheme !== 'dark'
-                        }
-                      />
-                      <span>
-                        <Trans>Auto</Trans>
                       </span>
                     </label>
                   </div>
@@ -242,6 +243,64 @@ function Settings({ onClose }) {
                 </small>
               </span>
               <LangSelector />
+            </li>
+            <li>
+              <div>
+                <label>
+                  <Trans>Time format</Trans>
+                </label>
+              </div>
+              <div>
+                <form
+                  onInput={(e) => {
+                    e.preventDefault();
+                    const timeFormat = new FormData(e.currentTarget).get(
+                      'timeFormat',
+                    );
+                    if (timeFormat === 'auto') {
+                      store.local.del('timeFormat');
+                    } else {
+                      store.local.set('timeFormat', timeFormat);
+                    }
+                  }}
+                >
+                  <div class="radio-group">
+                    <label>
+                      <input
+                        type="radio"
+                        name="timeFormat"
+                        value="auto"
+                        defaultChecked={currentTimeFormat === 'auto'}
+                      />
+                      <span>
+                        <Trans>Auto</Trans>
+                      </span>
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="timeFormat"
+                        value="h12"
+                        defaultChecked={currentTimeFormat === 'h12'}
+                      />
+                      <span>
+                        <Trans>12-hour</Trans>
+                      </span>
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="timeFormat"
+                        value="h23"
+                        defaultChecked={currentTimeFormat === 'h23'}
+                      />
+                      <span>
+                        <Trans>24-hour</Trans>
+                      </span>
+                    </label>
+                  </div>
+                </form>
+              </div>
             </li>
           </ul>
         </section>

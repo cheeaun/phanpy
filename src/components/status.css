@@ -1856,7 +1856,8 @@ body:has(#modal-container .carousel) .status .media img:hover {
   .media-carousel-dots {
     pointer-events: none;
     display: flex;
-    gap: 5px;
+    align-items: center;
+    gap: 4px;
     justify-content: center;
     margin-top: 8px;
     padding: 8px;
@@ -1867,19 +1868,22 @@ body:has(#modal-container .carousel) .status .media img:hover {
     }
 
     .carousel-dot {
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background-color: var(--text-color);
-      transition: all 0.3s ease-in-out;
-      opacity: 0.3;
-      flex-shrink: 0;
+      flex: 0 1 auto;
+      width: 8px;
+      min-width: 4px;
+      height: 4px;
+      border: 1px solid var(--text-color);
+      border-radius: 999px;
+      background-color: transparent;
+      opacity: 0.75;
+      transition: 0.2s ease-out;
+      transition-property: opacity, width, background-color;
+      will-change: width;
 
       &.active {
+        width: 16px;
         opacity: 1;
         background-color: var(--text-color);
-        transform: scale(1.5);
       }
     }
   }

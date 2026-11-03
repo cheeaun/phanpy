@@ -1381,6 +1381,9 @@ function PushNotificationsSection({ onClose }) {
                 poll: !!values.poll,
                 update: !!values.update,
                 status: !!values.status,
+                ...(supportsNativeQuote() && {
+                  quote: !!values.quote,
+                }),
               },
             },
           };
@@ -1498,6 +1501,14 @@ function PushNotificationsSection({ onClose }) {
                         value: 'reblog',
                         label: t`Boosts`,
                       },
+                      ...(supportsNativeQuote()
+                        ? [
+                            {
+                              value: 'quote',
+                              label: t`Quotes`,
+                            },
+                          ]
+                        : []),
                       {
                         value: 'follow',
                         label: t`Follows`,

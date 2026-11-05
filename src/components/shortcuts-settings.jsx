@@ -412,7 +412,7 @@ function ShortcutsSettings({ onClose }) {
                         states.shortcuts.splice(i, 1);
                       }}
                     >
-                      <Icon icon="x" alt="Remove" />
+                      <Icon icon="x" alt={t`Remove`} />
                     </button> */}
                     </span>
                   </li>

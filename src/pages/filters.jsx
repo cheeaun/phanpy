@@ -140,7 +140,7 @@ function Filters() {
                           });
                         }}
                       >
-                        <Icon icon="pencil" size="l" alt="Edit filter" />
+                        <Icon icon="pencil" size="l" alt={t`Edit filter`} />
                       </button>
                     </li>
                   );

@@ -123,6 +123,7 @@ export { default as note } from '@mingcute/icons/core-regular/document-3';
 export { default as grid } from '@mingcute/icons/core-regular/grid';
 export { default as 'arrow-up-top' } from '@mingcute/icons/core-regular/arrow-to-up';
 export { default as collections } from '@mingcute/icons/core-regular/board';
+export { default as web } from '@mingcute/icons/core-regular/earth-2';
 
 // Here's the customizations
 export const poll = { module: pollIcon, rotate: '90deg' };

@@ -1,7 +1,7 @@
 import '@justinribeiro/lite-youtube';
 
 import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
-import { useCallback, useEffect, useState } from 'preact/hooks';
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import getDomain from '../utils/get-domain';
@@ -59,8 +59,18 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   */
 
   const hasText = title || providerName || authorName;
-  const isLandscape = width / height >= 1.2;
+  // Some cards have same title and description, don't need to repeat
+  const descriptionTrimmed = description?.trim();
+  const showDescription =
+    !!descriptionTrimmed && descriptionTrimmed !== title?.trim();
+  const isLandscape = height > 0 && width / height >= 1.2;
   const size = isLandscape ? 'large' : '';
+  const metaFallback = providerName || authorName || null;
+  const timestampPosition = !publishedAt
+    ? null
+    : showDescription || metaFallback || size === 'large'
+      ? 'top'
+      : 'bottom';
 
   const [cardStatusURL, setCardStatusURL] = useState(null);
   // const [cardStatusID, setCardStatusID] = useState(null);
@@ -96,15 +106,24 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   //   );
   // }
 
-  if (
-    snapStates.unfurledLinks[url]?.url &&
-    !snapStates.unfurledLinks[url].collections
-  )
-    // Hide card after unfurling a regular status;
-    // keep it for account collections pages so it's clickable
-    return null;
-
-  const hasIframeHTML = /<iframe/i.test(html);
+  // CSS flex-wrap can't tell if it's wrapped, so need JS here
+  const [isWrapped, setIsWrapped] = useState(false);
+  const cardObserver = useRef();
+  const cardRef = useCallback((node) => {
+    cardObserver.current?.disconnect();
+    if (!node) return;
+    const measure = () => {
+      const image = node.querySelector('.card-image');
+      const meta = node.querySelector('.card-content');
+      if (!image || !meta) return;
+      // Image wrapped below the text part
+      setIsWrapped(image.offsetTop >= meta.offsetTop + meta.offsetHeight);
+    };
+    cardObserver.current = new ResizeObserver(measure);
+    cardObserver.current.observe(node);
+    measure();
+  }, []);
+  const hasIframeHTML = /<iframe/i.test(html || '');
   const handleClick = useCallback(
     (e) => {
       const unfurled = states.unfurledLinks[url];
@@ -128,6 +147,15 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   );
 
   const [blurhashImage, setBlurhashImage] = useState(null);
+
+  if (
+    snapStates.unfurledLinks[url]?.url &&
+    !snapStates.unfurledLinks[url].collections
+  )
+    // Hide card after unfurling a regular status;
+    // keep it for account collections pages so it's clickable
+    return null;
+
   if (hasText && (image || (type === 'photo' && blurhash))) {
     const domain = getDomain(url);
     const rgbAverageColor =
@@ -165,12 +193,15 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
     return (
       <Byline authors={authors}>
         <a
+          ref={cardRef}
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
           rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} ${
             blurhashImage ? '' : size
-          } ${hasIframeHTML ? 'can-show-embed' : ''}`}
+          } ${hasIframeHTML ? 'can-show-embed' : ''} ${
+            isWrapped ? 'is-wrapped' : ''
+          }`}
           style={{
             '--average-color':
               rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
@@ -180,6 +211,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           <div class="card-image">
             <img
               src={image || blurhashImage}
+              class={blurhashImage ? 'blurhash' : ''}
               width={width}
               height={height}
               loading="lazy"
@@ -202,12 +234,15 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
               }}
             />
           </div>
-          <div class="meta-container" lang={language}>
+          <div class="card-content" lang={language}>
             <p class="meta domain">
-              <span class="domain">{domain}</span>{' '}
-              {!!publishedAt && <>&middot; </>}
-              {!!publishedAt && (
+              <span class="domain">
+                <Icon icon="web" size="s" /> <span>{domain}</span>
+              </span>
+              {timestampPosition === 'top' && (
                 <>
+                  {' '}
+                  &middot;{' '}
                   <RelativeTime datetime={publishedAt} format="micro" />
                 </>
               )}
@@ -215,12 +250,17 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
             <p class="title" dir="auto" title={title}>
               {title}
             </p>
-            <p class="meta" dir="auto" title={description}>
-              {description ||
-                (!!publishedAt && (
-                  <RelativeTime datetime={publishedAt} format="micro" />
-                ))}
-            </p>
+            {(showDescription ||
+              metaFallback ||
+              timestampPosition === 'bottom') && (
+              <p class="meta" dir="auto" title={description}>
+                {showDescription
+                  ? description
+                  : metaFallback || (
+                      <RelativeTime datetime={publishedAt} format="micro" />
+                    )}
+              </p>
+            )}
           </div>
         </a>
       </Byline>
@@ -283,14 +323,15 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           dir="auto"
           onClick={handleClick}
         >
-          <div class="meta-container">
+          <div class="card-content">
             <p class="meta domain">
               <span class="domain">
-                <Icon icon="link" size="s" /> <span>{domain}</span>
-              </span>{' '}
-              {!!publishedAt && <>&middot; </>}
-              {!!publishedAt && (
+                <Icon icon="web" size="s" /> <span>{domain}</span>
+              </span>
+              {timestampPosition === 'top' && (
                 <>
+                  {' '}
+                  &middot;{' '}
                   <RelativeTime datetime={publishedAt} format="micro" />
                 </>
               )}
@@ -298,9 +339,20 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
             <p class="title" title={title}>
               {title}
             </p>
-            <p class="meta" title={description || providerName || authorName}>
-              {description || providerName || authorName}
-            </p>
+            {(showDescription ||
+              providerName ||
+              authorName ||
+              timestampPosition === 'bottom') && (
+              <p class="meta" title={description || providerName || authorName}>
+                {showDescription
+                  ? description
+                  : providerName ||
+                    authorName ||
+                    (timestampPosition === 'bottom' && (
+                      <RelativeTime datetime={publishedAt} format="micro" />
+                    ))}
+              </p>
+            )}
           </div>
         </a>
       );

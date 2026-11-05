@@ -45,6 +45,10 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
     pollExpired,
     pollVoted,
     showCard,
+    cardType,
+    cardImage,
+    cardAuthors,
+    cardDescription,
     size,
     filters,
     quoteFilters,
@@ -317,34 +321,64 @@ const MOCK_STATUS = ({ toggles = {} } = {}) => {
 
   // Add link preview card if enabled
   if (showCard) {
+    const isVideoCard = cardType === 'video';
+    const isPostCard = cardType === 'post';
+    const cardPortrait = cardImage === 'portrait';
+    const cardBlurhash = cardImage === 'blurhash';
+    const cardNoImage = cardImage === 'none';
+    const [cardWidth, cardHeight] = cardPortrait ? [400, 900] : [600, 400];
+    // Blurhash-only cards render through the blurred-image branch
+    const resolvedCardType = cardBlurhash
+      ? 'photo'
+      : isPostCard
+        ? 'link'
+        : cardType;
     base.card = {
-      url: 'https://example.com/article',
+      url: isVideoCard
+        ? 'https://www.youtube.com/watch?v=aqz-KE-bpKQ'
+        : isPostCard
+          ? 'https://x.com/example/status/123456789'
+          : 'https://example.com/article',
       title: 'Example Article Title',
       description:
-        'This is a sample description for the link preview card that appears under content.',
-      type: 'link',
-      image: 'https://picsum.photos/seed/card/600/400',
-      width: 600,
-      height: 400,
-      providerName: 'Example Website',
+        cardDescription === 'none'
+          ? ''
+          : cardDescription === 'same-as-title'
+            ? 'Example Article Title'
+            : 'This is a sample description for the link preview card that appears under content.',
+      type: resolvedCardType,
+      image:
+        resolvedCardType !== 'link' || cardNoImage || cardBlurhash
+          ? undefined
+          : `https://picsum.photos/seed/card${cardPortrait ? '-portrait' : ''}/${cardWidth}/${cardHeight}`,
+      embedUrl:
+        resolvedCardType === 'photo'
+          ? `https://picsum.photos/seed/card-photo/${cardWidth}/${cardHeight}`
+          : undefined,
+      blurhash: cardBlurhash ? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj' : undefined,
+      width: cardWidth,
+      height: cardHeight,
+      providerName: isVideoCard ? 'YouTube' : 'Example Website',
       providerUrl: 'https://example.com',
       authorName: 'John Doe',
       authorUrl: 'https://example.com/author',
       language: 'en',
       publishedAt: new Date().toISOString(),
-      authors: [
-        {
-          account: {
-            id: '1',
-            username: 'test 2',
-            name: 'Test 2',
-            displayName: 'Test 2 Display Name',
-            avatar: '/logo-192.png',
-            acct: 'test2@localhost',
-            url: 'https://test2.localhost',
-          },
-        },
-      ],
+      authors: cardAuthors
+        ? [
+            {
+              account: {
+                id: '1',
+                username: 'test 2',
+                name: 'Test 2',
+                displayName: 'Test 2 Display Name',
+                avatar: '/logo-192.png',
+                acct: 'test2@localhost',
+                url: 'https://test2.localhost',
+              },
+            },
+          ]
+        : undefined,
     };
   }
 
@@ -405,6 +439,10 @@ const INITIAL_STATE = {
   pollExpired: false,
   pollVoted: false,
   showCard: false,
+  cardType: 'link', // Card type: link, post, photo, video
+  cardImage: 'landscape', // Image variant: landscape, portrait, blurhash, none
+  cardDescription: 'default', // Description variant: default, none, same-as-title
+  cardAuthors: true, // Show the "More from [author]" byline
   showQuotes: false,
   quotesCount: '1',
   quoteNestingLevel: '0',
@@ -594,6 +632,10 @@ export default function Sandbox() {
       pollExpired: toggleState.pollExpired,
       pollVoted: toggleState.pollVoted,
       showCard: toggleState.showCard,
+      cardType: toggleState.cardType,
+      cardImage: toggleState.cardImage,
+      cardDescription: toggleState.cardDescription,
+      cardAuthors: toggleState.cardAuthors,
       showQuotes: toggleState.showQuotes,
       quotesCount: toggleState.quotesCount,
       quoteNestingLevel: toggleState.quoteNestingLevel,
@@ -1693,6 +1735,195 @@ export default function Sandbox() {
                   <span>Link preview card</span>
                   <sup>1</sup>
                 </label>
+                {toggleState.showCard && (
+                  <ul>
+                    <li>
+                      <b>Type</b>
+                      <ul>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="cardType"
+                              checked={toggleState.cardType === 'link'}
+                              onChange={() =>
+                                updateToggles({ cardType: 'link' })
+                              }
+                            />
+                            <span>Link</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="cardType"
+                              checked={toggleState.cardType === 'post'}
+                              onChange={() =>
+                                updateToggles({ cardType: 'post' })
+                              }
+                            />
+                            <span>Post</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="cardType"
+                              checked={toggleState.cardType === 'photo'}
+                              onChange={() =>
+                                updateToggles({ cardType: 'photo' })
+                              }
+                            />
+                            <span>Photo</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input
+                              type="radio"
+                              name="cardType"
+                              checked={toggleState.cardType === 'video'}
+                              onChange={() =>
+                                updateToggles({ cardType: 'video' })
+                              }
+                            />
+                            <span>Video (YouTube)</span>
+                          </label>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={toggleState.cardImage !== 'none'}
+                          onChange={(e) =>
+                            updateToggles({
+                              cardImage: e.target.checked
+                                ? 'landscape'
+                                : 'none',
+                            })
+                          }
+                          disabled={
+                            toggleState.cardType !== 'link' &&
+                            toggleState.cardType !== 'post'
+                          }
+                        />
+                        <span>Image</span>
+                      </label>
+                      {toggleState.cardImage !== 'none' && (
+                        <ul>
+                          <li>
+                            <label>
+                              <input
+                                type="radio"
+                                name="cardImage"
+                                checked={toggleState.cardImage === 'landscape'}
+                                onChange={() =>
+                                  updateToggles({ cardImage: 'landscape' })
+                                }
+                                disabled={
+                                  toggleState.cardType !== 'link' &&
+                                  toggleState.cardType !== 'post'
+                                }
+                              />
+                              <span>Landscape</span>
+                            </label>
+                          </li>
+                          <li>
+                            <label>
+                              <input
+                                type="radio"
+                                name="cardImage"
+                                checked={toggleState.cardImage === 'portrait'}
+                                onChange={() =>
+                                  updateToggles({ cardImage: 'portrait' })
+                                }
+                                disabled={
+                                  toggleState.cardType !== 'link' &&
+                                  toggleState.cardType !== 'post'
+                                }
+                              />
+                              <span>Portrait</span>
+                            </label>
+                          </li>
+                          <li>
+                            <label>
+                              <input
+                                type="radio"
+                                name="cardImage"
+                                checked={toggleState.cardImage === 'blurhash'}
+                                onChange={() =>
+                                  updateToggles({ cardImage: 'blurhash' })
+                                }
+                                disabled={
+                                  toggleState.cardType !== 'link' &&
+                                  toggleState.cardType !== 'post'
+                                }
+                              />
+                              <span>Blurhash only</span>
+                            </label>
+                          </li>
+                        </ul>
+                      )}
+                    </li>
+                    <li>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={toggleState.cardDescription !== 'none'}
+                          onChange={(e) =>
+                            updateToggles({
+                              cardDescription: e.target.checked
+                                ? 'default'
+                                : 'none',
+                            })
+                          }
+                        />
+                        <span>Description</span>
+                      </label>
+                      {toggleState.cardDescription !== 'none' && (
+                        <ul>
+                          <li>
+                            <label>
+                              <input
+                                type="checkbox"
+                                checked={
+                                  toggleState.cardDescription ===
+                                  'same-as-title'
+                                }
+                                onChange={(e) =>
+                                  updateToggles({
+                                    cardDescription: e.target.checked
+                                      ? 'same-as-title'
+                                      : 'default',
+                                  })
+                                }
+                              />
+                              <span>Same as title</span>
+                            </label>
+                          </li>
+                        </ul>
+                      )}
+                    </li>
+                    <li>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={toggleState.cardAuthors}
+                          onChange={() =>
+                            updateToggles({
+                              cardAuthors: !toggleState.cardAuthors,
+                            })
+                          }
+                        />
+                        <span>Byline author</span>
+                      </label>
+                    </li>
+                  </ul>
+                )}
               </li>
               <li>
                 <label>

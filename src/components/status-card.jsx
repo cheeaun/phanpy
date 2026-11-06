@@ -64,7 +64,8 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   const showDescription =
     !!descriptionTrimmed && descriptionTrimmed !== title?.trim();
   const isLandscape = height > 0 && width / height >= 1.2;
-  const size = isLandscape ? 'large' : '';
+  const [blurhashImage, setBlurhashImage] = useState(null);
+  const size = isLandscape && !blurhashImage ? 'large' : '';
   const metaFallback = providerName || authorName || null;
   const timestampPosition = !publishedAt
     ? null
@@ -109,20 +110,26 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   // CSS flex-wrap can't tell if it's wrapped, so need JS here
   const [isWrapped, setIsWrapped] = useState(false);
   const cardObserver = useRef();
-  const cardRef = useCallback((node) => {
-    cardObserver.current?.disconnect();
-    if (!node) return;
-    const measure = () => {
-      const image = node.querySelector('.card-image');
-      const meta = node.querySelector('.card-content');
-      if (!image || !meta) return;
-      // Image wrapped below the text part
-      setIsWrapped(image.offsetTop >= meta.offsetTop + meta.offsetHeight);
-    };
-    cardObserver.current = new ResizeObserver(measure);
-    cardObserver.current.observe(node);
-    measure();
-  }, []);
+  const cardRef = useCallback(
+    (node) => {
+      cardObserver.current?.disconnect();
+      if (!node) return;
+      const measure = () => {
+        const image = node.querySelector('.card-image');
+        const meta = node.querySelector('.card-content');
+        if (!image || !meta) return;
+        // Image wrapped below the text part
+        setIsWrapped(
+          size !== 'large' &&
+            image.offsetTop >= meta.offsetTop + meta.offsetHeight,
+        );
+      };
+      cardObserver.current = new ResizeObserver(measure);
+      cardObserver.current.observe(node);
+      measure();
+    },
+    [size],
+  );
   const hasIframeHTML = /<iframe/i.test(html || '');
   const handleClick = useCallback(
     (e) => {
@@ -145,8 +152,6 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
     },
     [hasIframeHTML, url],
   );
-
-  const [blurhashImage, setBlurhashImage] = useState(null);
 
   if (
     snapStates.unfurledLinks[url]?.url &&
@@ -198,7 +203,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           target={cardStatusURL ? null : '_blank'}
           rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} ${
-            blurhashImage ? '' : size
+            size
           } ${hasIframeHTML ? 'can-show-embed' : ''} ${
             isWrapped ? 'is-wrapped' : ''
           }`}

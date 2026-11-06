@@ -2646,6 +2646,8 @@ body > .szh-menu-container {
 
 :is(.shiny-pill, :root .toastify.shiny-pill) {
   pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
   color: var(--link-text-color);
   font-weight: 500;
   text-shadow: 0 1px var(--bg-color);
@@ -2655,14 +2657,16 @@ body > .szh-menu-container {
     0 3px 16px var(--drop-shadow-color),
     0 6px 16px -3px var(--drop-shadow-color);
 }
-:is(.shiny-pill, :root .toastify.shiny-pill):hover:not(:active) {
-  color: var(--text-color);
-  border-color: var(--link-color);
-  filter: none !important;
-  box-shadow:
-    0 3px 16px var(--drop-shadow-color),
-    0 6px 16px -3px var(--drop-shadow-color),
-    0 6px 16px var(--drop-shadow-color);
+@media (hover: hover) and (pointer: fine) {
+  :is(.shiny-pill, :root .toastify.shiny-pill):hover:not(:active) {
+    color: var(--text-color);
+    border-color: var(--link-color);
+    filter: none !important;
+    box-shadow:
+      0 3px 16px var(--drop-shadow-color),
+      0 6px 16px -3px var(--drop-shadow-color),
+      0 6px 16px var(--drop-shadow-color);
+  }
 }
 
 /* TOAST */
@@ -2701,8 +2705,13 @@ body > .szh-menu-container {
   text-align: center;
   line-height: 1.25;
 }
-:root .toastify.alert:is(:hover, :active) {
+:root .toastify.alert:is(:active) {
   background-color: var(--bg-faded-color);
+}
+@media (hover: hover) and (pointer: fine) {
+  :root .toastify.alert:hover {
+    background-color: var(--bg-faded-color);
+  }
 }
 
 /* AVATARS STACK */

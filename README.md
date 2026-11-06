@@ -356,6 +356,29 @@ Costs involved in running and developing this web app:
 
 [Phanpy](https://bulbapedia.bulbagarden.net/wiki/Phanpy_(Pok%C3%A9mon)) is a Ground-type Pokémon.
 
+## Design
+
+All design files are in the [`design`](design/) folder.
+
+### Logo
+
+<img src="design/logo-4.svg" width="128" height="128" alt="Phanpy logo"> <img src="design/logo-bg-4.svg" width="128" height="128" alt="Phanpy logo with background">
+
+- No background: [`logo-4.svg`](design/logo-4.svg), [`logo-4.png`](design/logo-4.png)
+- With background: [`logo-bg-4.svg`](design/logo-bg-4.svg), [`logo-bg-4.png`](design/logo-bg-4.png)
+
+### Web badges
+
+<img src="design/phanpy-88x31.png" width="88" height="31" alt="I'm a fan of Phanpy"> <img src="design/phanpy-80x15.png" width="80" height="15" alt="I ♥ Phanpy">
+
+- `phanpy-88x31`: [GIF](design/phanpy-88x31.gif) (560 B), [PNG](design/phanpy-88x31.png) (436 B), [WebP](design/phanpy-88x31.webp) (414 B)
+- `phanpy-80x15`: [GIF](design/phanpy-80x15.gif) (263 B), [PNG](design/phanpy-80x15.png) (213 B), [WebP](design/phanpy-80x15.webp) (172 B)
+
+### Source files
+
+- Affinity Designer: [`logo.af`](design/logo.af), [`logo.afdesign`](design/logo.afdesign)
+- Aseprite: [`phanpy.aseprite`](design/phanpy.aseprite), [`phanpy-80x15.aseprite`](design/phanpy-80x15.aseprite), [`phanpy-colors.aseprite`](design/phanpy-colors.aseprite)
+
 ## Maintainers + contributors
 
 - [Chee Aun](https://github.com/cheeaun) ([Mastodon](https://mastodon.social/@cheeaun)) ([Twitter](https://twitter.com/cheeaun))

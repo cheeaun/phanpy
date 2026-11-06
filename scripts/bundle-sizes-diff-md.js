@@ -123,8 +123,6 @@ allKeys.sort((a, b) => {
 });
 
 const changedRows = [];
-let addedGzipBytes = 0;
-let removedGzipBytes = 0;
 let totalGzipDelta = 0;
 
 for (const key of allKeys) {
@@ -164,7 +162,6 @@ for (const key of allKeys) {
     gzipDelta = cg !== null ? formatBytes(cg, estimated) : '—';
     hasChange = true;
     if (cg !== null) {
-      addedGzipBytes += cg;
       totalGzipDelta += cg;
       if (estimated) curGzip = `~${(cg / 1024).toFixed(2)} kB`;
     }
@@ -179,7 +176,6 @@ for (const key of allKeys) {
     gzipDelta = rg !== null ? formatBytes(-rg, estimated) : '—';
     hasChange = true;
     if (rg !== null) {
-      removedGzipBytes += rg;
       totalGzipDelta -= rg;
       if (estimated) curGzip = `~${(rg / 1024).toFixed(2)} kB`;
     }
@@ -202,16 +198,7 @@ if (refRows.length > 0) {
 if (changedRows.length > 0) {
   const netKb = totalGzipDelta / 1024;
   const netSign = totalGzipDelta > 0 ? '+' : totalGzipDelta < 0 ? '-' : '±';
-  const summaryParts = [
-    `**${netSign}${Math.abs(netKb).toFixed(1)} kB (gzip)** total`,
-  ];
-  if (addedGzipBytes > 0) {
-    summaryParts.push(`+${(addedGzipBytes / 1024).toFixed(1)} kB added`);
-  }
-  if (removedGzipBytes > 0) {
-    summaryParts.push(`-${(removedGzipBytes / 1024).toFixed(1)} kB removed`);
-  }
-  console.log(summaryParts.join(' | '));
+  console.log(`**${netSign}${Math.abs(netKb).toFixed(1)} kB** net (gzip)`);
   console.log();
 
   console.log('| File | Size | Gzip | ± Gzip |');

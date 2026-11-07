@@ -2094,54 +2094,31 @@ body:has(#modal-container .carousel) .status .media img:hover {
   overflow: hidden;
   color: inherit;
   background-color: var(--bg-color);
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
   min-width: min(320px, 100%);
   max-width: 480px;
   min-height: 3lh;
+  row-gap: 4px;
+  column-gap: 8px;
 
-  .status.large &.large,
-  .status-carousel .content-container[data-content-text-weight='1'] &.large,
-  &.card-post.large {
-    border-radius: 16px;
-    flex-direction: column-reverse;
-    flex-wrap: nowrap;
-    max-height: none;
-
-    .card-content {
-      align-self: flex-start;
-      min-width: 0;
-      flex-basis: auto;
-    }
-
-    .card-image {
-      align-self: flex-start;
-      max-width: 100%;
-    }
-
-    .title,
-    .meta {
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-    }
+  &.link {
+    padding: 8px;
   }
 
   .card-image {
-    /* flex: 0 1 auto; */
-    max-width: 45%;
-    padding: 4px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    min-width: 0;
+    flex: 1 1 120px;
+    max-width: fit-content;
 
     img {
       outline: var(--hairline-width) solid var(--outline-color);
       display: block;
+      max-width: 100%;
       width: auto;
       height: auto;
-      max-width: 100%;
+      min-width: var(--min-dimension);
       max-height: min(160px, 40vh);
       border-radius: 4px;
+      object-fit: cover;
       @supports (corner-shape: squircle) {
         corner-shape: squircle;
         border-radius: 8px;
@@ -2150,69 +2127,21 @@ body:has(#modal-container .carousel) .status .media img:hover {
       background-clip: padding-box;
 
       .status.small & {
-        max-height: 80px;
-      }
-
-      &.blurhash {
-        width: 100%;
-        height: min(160px, 40vh);
-        object-fit: cover;
-
-        .status.small & {
-          height: 80px;
-        }
+        max-height: min(80px, 30vh);
       }
     }
   }
 
-  &.is-wrapped {
-    .card-image {
-      max-width: 100%;
-      padding-top: 0;
-    }
-    &:not(.no-image, .card-post) {
-      .title {
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-      }
-      .meta {
-        -webkit-line-clamp: 1;
-        line-clamp: 1;
-      }
-    }
-  }
-
-  &.photo img {
-    width: 100%;
-  }
-
-  .status.large &.large:not(.card-post) .card-image,
+  .status.large & .card-image,
   .status-carousel
     .content-container[data-content-text-weight='1']
-    &.large:not(.card-post)
+    &
     .card-image {
-    width: 100%;
-    max-width: 100%;
-    align-items: flex-end;
-    justify-content: flex-start;
-  }
+    flex-basis: 100%;
 
-  .status.large &.large .card-image img,
-  .status-carousel
-    .content-container[data-content-text-weight='1']
-    &.large
-    .card-image
     img {
-    max-height: min(240px, 40vh);
-  }
-
-  .status.large &.large .card-image img.blurhash,
-  .status-carousel
-    .content-container[data-content-text-weight='1']
-    &.large
-    .card-image
-    img.blurhash {
-    height: min(240px, 40vh);
+      max-height: min(240px, 40vh);
+    }
   }
 
   &:is(:hover, :focus) img,
@@ -2228,21 +2157,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
   }
 
   .card-content {
-    padding: 8px;
-    flex: 1 1 10em;
-    max-width: max-content;
-    /* wrap-reverse flips the cross axis, so flex-end is the top */
-    align-self: flex-end;
-  }
-
-  .status.large &.large .card-content,
-  .status-carousel
-    .content-container[data-content-text-weight='1']
-    &.large
-    .card-content {
-    flex-basis: auto;
-    flex-grow: 0;
-    max-width: 100%;
+    flex: 1 0 55%;
   }
 
   .title {
@@ -2285,6 +2200,17 @@ body:has(#modal-container .carousel) .status .media img:hover {
     }
   }
 
+  &.card-post {
+    .title {
+      -webkit-line-clamp: 5;
+      line-clamp: 5;
+    }
+    .meta {
+      -webkit-line-clamp: 7;
+      line-clamp: 7;
+    }
+  }
+
   .meta.domain {
     opacity: 1;
     color: var(--text-insignificant-color);
@@ -2304,26 +2230,39 @@ body:has(#modal-container .carousel) .status .media img:hover {
 
   a& {
     text-decoration: none;
-    transition: opacity 0.2s ease-in-out;
-    border-color: var(--link-faded-color);
 
-    &.can-show-embed {
-      .meta .domain {
-        color: var(--link-text-color);
-      }
+    &:not(.can-show-embed) {
+      border-color: var(--link-faded-color);
     }
 
     &:is(:hover, :focus) {
       border: 1px solid var(--link-color);
       box-shadow: 0 0 0 2px var(--link-faded-color);
-    }
 
-    &:is(:hover, :focus):visited {
-      border-color: var(--link-visited-color);
+      &:visited {
+        border-color: var(--link-visited-color);
+      }
+    }
+  }
+
+  &.photo {
+    display: inline-block;
+    max-width: 100%;
+    min-width: 0;
+
+    img {
+      vertical-align: top;
+      object-fit: cover;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: min(320px, 40vh);
+      min-width: var(--min-dimension);
     }
   }
 
   &.video {
+    display: inline-block;
     max-width: 320px;
     max-height: 320px;
     cursor: pointer;
@@ -2335,30 +2274,6 @@ body:has(#modal-container .carousel) .status .media img:hover {
     iframe {
       width: 100%;
       height: 100%;
-    }
-  }
-
-  &.card-post {
-    flex-direction: row-reverse;
-    &.is-wrapped {
-      flex-direction: row;
-    }
-
-    &.large {
-      .title {
-        font-weight: 500;
-        display: block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .meta {
-        white-space: pre-line;
-        -webkit-line-clamp: 10;
-        line-clamp: 10;
-        opacity: 1;
-      }
     }
   }
 }

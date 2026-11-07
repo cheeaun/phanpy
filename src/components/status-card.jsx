@@ -1,7 +1,7 @@
 import '@justinribeiro/lite-youtube';
 
 import { decodeBlurHash, getBlurHashAverageColor } from 'fast-blurhash';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { useCallback, useEffect, useState } from 'preact/hooks';
 import { useSnapshot } from 'valtio';
 
 import getDomain from '../utils/get-domain';
@@ -63,16 +63,15 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   const descriptionTrimmed = description?.trim();
   const showDescription =
     !!descriptionTrimmed && descriptionTrimmed !== title?.trim();
-  const isLandscape = height > 0 && width / height >= 1.2;
-  const [blurhashImage, setBlurhashImage] = useState(null);
-  const size = isLandscape && !blurhashImage ? 'large' : '';
   const metaFallback = providerName || authorName || null;
   const timestampPosition = !publishedAt
     ? null
-    : showDescription || metaFallback || size === 'large'
+    : showDescription || metaFallback
       ? 'top'
       : 'bottom';
 
+  const blurhashOnly = !image && type === 'photo' && !!blurhash;
+  const [blurhashImage, setBlurhashImage] = useState(null);
   const [cardStatusURL, setCardStatusURL] = useState(null);
   // const [cardStatusID, setCardStatusID] = useState(null);
   useEffect(() => {
@@ -101,35 +100,42 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
     };
   }, [hasText, image, selfReferential]);
 
+  useEffect(() => {
+    if (!blurhashOnly) return;
+
+    const w = 44;
+    const h = 44;
+    const blurhashPixels = decodeBlurHash(blurhash, w, h);
+    const canvas = window.OffscreenCanvas
+      ? new OffscreenCanvas(1, 1)
+      : document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    const imageData = ctx.createImageData(w, h);
+    imageData.data.set(blurhashPixels);
+    ctx.putImageData(imageData, 0, 0);
+    try {
+      if (window.OffscreenCanvas) {
+        canvas.convertToBlob().then((blob) => {
+          setBlurhashImage(URL.createObjectURL(blob));
+        });
+      } else {
+        setBlurhashImage(canvas.toDataURL());
+      }
+    } catch (e) {
+      // Silently fail
+      console.error(e);
+    }
+  }, [blurhashOnly, blurhash]);
+
   // if (cardStatusID) {
   //   return (
   //     <Status statusID={cardStatusID} instance={instance} size="s" readOnly />
   //   );
   // }
 
-  // CSS flex-wrap can't tell if it's wrapped, so need JS here
-  const [isWrapped, setIsWrapped] = useState(false);
-  const cardObserver = useRef();
-  const cardRef = useCallback(
-    (node) => {
-      cardObserver.current?.disconnect();
-      if (!node) return;
-      const measure = () => {
-        const image = node.querySelector('.card-image');
-        const meta = node.querySelector('.card-content');
-        if (!image || !meta) return;
-        // Image wrapped below the text part
-        setIsWrapped(
-          size !== 'large' &&
-            image.offsetTop >= meta.offsetTop + meta.offsetHeight,
-        );
-      };
-      cardObserver.current = new ResizeObserver(measure);
-      cardObserver.current.observe(node);
-      measure();
-    },
-    [size],
-  );
   const hasIframeHTML = /<iframe/i.test(html || '');
   const handleClick = useCallback(
     (e) => {
@@ -161,84 +167,38 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
     // keep it for account collections pages so it's clickable
     return null;
 
-  if (hasText && (image || (type === 'photo' && blurhash))) {
+  // YouTube videos without an image keep their dedicated player instead of a link card
+  const isYoutubeVideo =
+    type === 'video' &&
+    /youtube/i.test(providerName) &&
+    /watch\?v=([^&]+)/.test(url);
+
+  if (
+    hasText &&
+    (image || blurhashOnly || (type !== 'photo' && !isYoutubeVideo))
+  ) {
     const domain = getDomain(url);
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
-    if (!image) {
-      const w = 44;
-      const h = 44;
-      const blurhashPixels = decodeBlurHash(blurhash, w, h);
-      const canvas = window.OffscreenCanvas
-        ? new OffscreenCanvas(1, 1)
-        : document.createElement('canvas');
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.imageSmoothingEnabled = false;
-      const imageData = ctx.createImageData(w, h);
-      imageData.data.set(blurhashPixels);
-      ctx.putImageData(imageData, 0, 0);
-      try {
-        if (window.OffscreenCanvas) {
-          canvas.convertToBlob().then((blob) => {
-            setBlurhashImage(URL.createObjectURL(blob));
-          });
-        } else {
-          setBlurhashImage(canvas.toDataURL());
-        }
-      } catch (e) {
-        // Silently fail
-        console.error(e);
-      }
-    }
+    const hasImage = !!image || blurhashOnly;
 
     const isPost = isCardPost(domain);
 
     return (
       <Byline authors={authors}>
         <a
-          ref={cardRef}
           href={cardStatusURL || url}
           target={cardStatusURL ? null : '_blank'}
           rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} ${
-            size
-          } ${hasIframeHTML ? 'can-show-embed' : ''} ${
-            isWrapped ? 'is-wrapped' : ''
-          }`}
+            hasImage ? '' : 'no-image'
+          } ${hasIframeHTML ? 'can-show-embed' : ''}`}
           style={{
             '--average-color':
               rgbAverageColor && `rgb(${rgbAverageColor.join(',')})`,
           }}
           onClick={handleClick}
         >
-          <div class="card-image">
-            <img
-              src={image || blurhashImage}
-              class={blurhashImage ? 'blurhash' : ''}
-              width={width}
-              height={height}
-              loading="lazy"
-              decoding="async"
-              fetchPriority="low"
-              alt={imageDescription || ''}
-              onError={(e) => {
-                try {
-                  e.target.style.display = 'none';
-                } catch (e) {}
-              }}
-              style={{
-                '--anim-duration':
-                  width &&
-                  height &&
-                  `${Math.min(
-                    Math.max(Math.max(width, height) / 100, 5),
-                    120,
-                  )}s`,
-              }}
-            />
-          </div>
           <div class="card-content" lang={language}>
             <p class="meta domain">
               <span class="domain">
@@ -258,7 +218,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
             {(showDescription ||
               metaFallback ||
               timestampPosition === 'bottom') && (
-              <p class="meta" dir="auto" title={description}>
+              <p class="meta" dir="auto" title={description || metaFallback}>
                 {showDescription
                   ? description
                   : metaFallback || (
@@ -267,6 +227,34 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
               </p>
             )}
           </div>
+          {hasImage && (
+            <div class="card-image">
+              <img
+                src={image || blurhashImage}
+                class={blurhashImage ? 'blurhash' : ''}
+                width={width}
+                height={height}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+                alt={imageDescription || ''}
+                onError={(e) => {
+                  try {
+                    e.target.style.display = 'none';
+                  } catch (e) {}
+                }}
+                style={{
+                  '--anim-duration':
+                    width &&
+                    height &&
+                    `${Math.min(
+                      Math.max(Math.max(width, height) / 100, 5),
+                      120,
+                    )}s`,
+                }}
+              />
+            </div>
+          )}
         </a>
       </Byline>
     );
@@ -314,53 +302,6 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
       //     dangerouslySetInnerHTML={{ __html: html }}
       //   />
       // );
-    }
-    if (hasText && !image) {
-      const domain = getDomain(url);
-      const isPost = isCardPost(domain);
-      return (
-        <a
-          href={cardStatusURL || url}
-          target={cardStatusURL ? null : '_blank'}
-          rel="nofollow noopener"
-          class={`card link ${isPost ? 'card-post' : ''} no-image`}
-          lang={language}
-          dir="auto"
-          onClick={handleClick}
-        >
-          <div class="card-content">
-            <p class="meta domain">
-              <span class="domain">
-                <Icon icon="web" size="s" /> <span>{domain}</span>
-              </span>
-              {timestampPosition === 'top' && (
-                <>
-                  {' '}
-                  &middot;{' '}
-                  <RelativeTime datetime={publishedAt} format="micro" />
-                </>
-              )}
-            </p>
-            <p class="title" title={title}>
-              {title}
-            </p>
-            {(showDescription ||
-              providerName ||
-              authorName ||
-              timestampPosition === 'bottom') && (
-              <p class="meta" title={description || providerName || authorName}>
-                {showDescription
-                  ? description
-                  : providerName ||
-                    authorName ||
-                    (timestampPosition === 'bottom' && (
-                      <RelativeTime datetime={publishedAt} format="micro" />
-                    ))}
-              </p>
-            )}
-          </div>
-        </a>
-      );
     }
   }
 }

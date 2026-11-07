@@ -1,6 +1,11 @@
 name: Update README with list of i18n volunteers
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/i18n-update-readme.yml'
   schedule:
     # Every week
     - cron: '0 0 * * 0'
@@ -14,14 +19,19 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: andrii-bodnar/action-crowdin-contributors@v3
         with:
-          node-version: 24
-      - run: npm ci
+          max_contributors: 100
+          image_size: 50
+          include_languages: true
+          excluded_users: cheeaun
+          crowdin_project_link: 'https://crowdin.com/project/phanpy'
+          placeholder_start: '<!-- i18n volunteers start -->'
+          placeholder_end: '<!-- i18n volunteers end -->'
+        env:
+          CROWDIN_PROJECT_ID: '703337'
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_ACCESS_TOKEN }}
       - run: |
-          npm run fetch-i18n-volunteers
-          npm run readme:i18n-volunteers
-
           # Commit & push if there are changes
           if git diff --quiet README.md; then
             echo "No changes to README.md"
@@ -33,5 +43,3 @@ jobs:
             git commit -m "Update README.md"
             git push
           fi
-        env:
-          CROWDIN_ACCESS_TOKEN: ${{ secrets.CROWDIN_ACCESS_TOKEN }}

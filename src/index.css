@@ -79,6 +79,7 @@
   --button-text-color: white;
   --button-plain-bg-hover-color: rgba(128, 128, 128, 0.1);
   --reblog-color: var(--purple-color);
+  --reblog-text-color: var(--purple-fg-color);
   --reblog-faded-color: #892be220;
   --quote-color: var(--violet-red-color);
   --quote-faded-color: #c7158520;
@@ -342,8 +343,8 @@ body {
 a {
   color: var(--link-color);
   text-decoration-color: var(--link-faded-color);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
   overflow-wrap: anywhere;
 }
 a:is(:hover, :focus) {

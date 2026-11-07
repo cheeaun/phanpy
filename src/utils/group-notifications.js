@@ -46,7 +46,7 @@ export function fixNotifications2(notifications) {
 }
 
 export function fixNotifications(notifications) {
-  return notifications.filter((notification) => {
+  return notifications.filter((notification, index) => {
     const { type, id, createdAt } = notification;
     if (!type) {
       console.warn('Notification missing type', notification);
@@ -58,7 +58,15 @@ export function fixNotifications(notifications) {
     }
     const keys = notificationTypeKeys[type];
     if (keys?.length) {
-      return keys.every((key) => !!notification[key]);
+      if (!keys.every((key) => !!notification[key])) return false;
+    }
+    // Same Deduplicate quote notifications logic as fixNotifications2
+    if (type === 'quote' && notification.status?.id) {
+      return (
+        notifications.findIndex(
+          (n) => n.type === 'quote' && n.status?.id === notification.status.id,
+        ) === index
+      );
     }
     return true; // skip other types
   });

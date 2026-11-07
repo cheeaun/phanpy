@@ -48,6 +48,7 @@ import statusPeek from '../utils/status-peek';
 import store from '../utils/store';
 import { getCurrentAccountID, getCurrentAccountNS } from '../utils/store-utils';
 import supports from '../utils/supports';
+import getHourCycle from '../utils/time-format';
 import { assignFollowedTags } from '../utils/timeline-utils';
 import useTitle from '../utils/useTitle';
 
@@ -93,13 +94,14 @@ const FILTER_SORTS = [
 const FILTER_GROUPS = [null, 'account'];
 
 const DTF = mem(
-  (locale) =>
+  (locale, hourCycle) =>
     new Intl.DateTimeFormat(locale || undefined, {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
+      hourCycle: hourCycle || undefined,
     }),
 );
 
@@ -109,7 +111,7 @@ function hasQuote(quote) {
 
 function Catchup() {
   const { i18n, _, t } = useLingui();
-  const dtf = DTF(i18n.locale);
+  const dtf = DTF(i18n.locale, getHourCycle());
 
   useTitle(`Catch-up`, '/catchup');
   const { masto, instance } = api();
@@ -1021,12 +1023,12 @@ function Catchup() {
             <div class="header-side">
               <NavMenu />
               {uiState === 'results' && (
-                <Link to="/catchup" class="button plain">
+                <Link to="/catchup" class="button plain4">
                   <Icon icon="history2" size="l" alt={t`Catch-up`} />
                 </Link>
               )}
               {uiState === 'start' && (
-                <Link to="/" class="button plain">
+                <Link to="/" class="button plain4">
                   <Icon icon="home" size="l" alt={t`Home`} />
                 </Link>
               )}
@@ -1042,7 +1044,7 @@ function Catchup() {
               {uiState !== 'start' && uiState !== 'loading' && (
                 <button
                   type="button"
-                  class="plain"
+                  class="plain4"
                   onClick={() => {
                     setShowHelp(true);
                   }}
@@ -2087,7 +2089,7 @@ function PostPeek({ post, filterInfo }) {
                 {!!poll?.options?.length &&
                   poll.options.map((o) => (
                     <div>
-                      {poll.multiple ? '▪️' : '•'} {o.title}
+                      {poll.multiple ? '■' : '●'} {o.title}
                     </div>
                   ))}
                 {!content &&

@@ -265,7 +265,7 @@ function Collection() {
                         ? `/${instance}/a/${curator.id}/c`
                         : `/a/${curator.id}/c`
                     }
-                    class="button plain"
+                    class="button plain4"
                     aria-label={t`Collections`}
                   >
                     <Icon icon="collections" size="l" />
@@ -284,7 +284,7 @@ function Collection() {
                   overflow="auto"
                   position="anchor"
                   menuButton={
-                    <button type="button" class="plain">
+                    <button type="button" class="plain4">
                       <Icon icon="more" size="l" alt={t`More`} />
                     </button>
                   }

@@ -373,7 +373,10 @@ function Timeline({
     ({ scrollDirection, nearReachStart, reachStart }) => {
       if (headerRef.current) {
         const hiddenUI =
-          autoHideBars && scrollDirection === 'end' && !nearReachStart;
+          autoHideBars &&
+          !snapStates.composerState.minimized &&
+          scrollDirection === 'end' &&
+          !nearReachStart;
         headerRef.current.hidden = hiddenUI;
       }
       setNearReachStart(nearReachStart);
@@ -381,8 +384,19 @@ function Timeline({
         loadItems(true);
       }
     },
-    [setNearReachStart, loadItems, autoHideBars],
+    [
+      setNearReachStart,
+      loadItems,
+      autoHideBars,
+      snapStates.composerState.minimized,
+    ],
   );
+  // Reveal the header when a draft is minimized so the compose button stays reachable
+  useEffect(() => {
+    if (snapStates.composerState.minimized && headerRef.current) {
+      headerRef.current.hidden = false;
+    }
+  }, [snapStates.composerState.minimized]);
   const { resetScrollDirection } = useScrollFn(
     {
       scrollableRef,
@@ -545,7 +559,7 @@ function Timeline({
                 {headerStart !== null && headerStart !== undefined ? (
                   headerStart
                 ) : (
-                  <Link to="/" class="button plain home-button">
+                  <Link to="/" class="button plain4 home-button">
                     <Icon icon="home" size="l" alt={t`Home`} />
                   </Link>
                 )}
@@ -747,7 +761,23 @@ export const TimelineItem = memo(
 
         return (
           <li key={`timeline-${statusID}`} class="timeline-item-carousel">
-            <StatusCarousel title={title} class={`${type}-carousel`}>
+            <StatusCarousel
+              title={title}
+              class={`${type}-carousel`}
+              infoButton={
+                type === 'boosts' && (
+                  <button
+                    type="button"
+                    class="small plain status-carousel-info-button more-insignificant"
+                    onClick={() => {
+                      states.showBoostsCarouselInfo = true;
+                    }}
+                  >
+                    <Icon icon="question" alt={t`About boosts carousel`} />
+                  </button>
+                )
+              }
+            >
               {fItems.map((item) => {
                 const { id: statusID, reblog, _pinned, _grouped } = item;
                 if (_grouped) {
@@ -942,11 +972,16 @@ export const TimelineItem = memo(
   },
 );
 
-function StatusCarousel({ title, class: className, children }) {
+function StatusCarousel({ title, class: className, infoButton, children }) {
   const { t } = useLingui();
   const carouselRef = useRef();
   const startButtonRef = useRef();
   const endButtonRef = useRef();
+  const visibleItemsRef = useRef([]);
+
+  const [activeIndexes, setActiveIndexes] = useState([0]);
+  const [columnCount, setColumnCount] = useState(0);
+  const [hasOverflow, setHasOverflow] = useState(false);
 
   const [render, setRender] = useState(false);
   useEffect(() => {
@@ -955,15 +990,92 @@ function StatusCarousel({ title, class: className, children }) {
     }, 1);
   }, []);
 
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+    let rafId;
+    const computeActiveIndexes = () => {
+      rafId = null;
+      const carouselRect = carousel.getBoundingClientRect();
+      // Count only visible columns (empty items are hidden via CSS,
+      // grouped items share one column)
+      const items = Array.from(carousel.children).filter(
+        (el) => el.tagName === 'LI' && el.getBoundingClientRect().width > 0,
+      );
+      visibleItemsRef.current = items;
+      const nextActiveIndexes = [];
+      items.forEach((el, i) => {
+        const rect = el.getBoundingClientRect();
+        const overlap =
+          Math.min(rect.right, carouselRect.right) -
+          Math.max(rect.left, carouselRect.left);
+        if (
+          overlap > 0 &&
+          overlap >= Math.min(rect.width, carouselRect.width) * 0.5
+        ) {
+          nextActiveIndexes.push(i);
+        }
+      });
+      setActiveIndexes((prev) =>
+        prev.length === nextActiveIndexes.length &&
+        prev.every((index, i) => index === nextActiveIndexes[i])
+          ? prev
+          : nextActiveIndexes,
+      );
+      setColumnCount(items.length);
+      setHasOverflow(carousel.scrollWidth > carousel.clientWidth);
+    };
+    const scheduleCompute = () => {
+      if (rafId == null) rafId = requestAnimationFrame(computeActiveIndexes);
+    };
+    computeActiveIndexes();
+    carousel.addEventListener('scroll', scheduleCompute, { passive: true });
+    const resizeObserver = new ResizeObserver(scheduleCompute);
+    resizeObserver.observe(carousel);
+    return () => {
+      carousel.removeEventListener('scroll', scheduleCompute);
+      resizeObserver.disconnect();
+      if (rafId != null) cancelAnimationFrame(rafId);
+    };
+  }, [render]);
+
+  const scrollToItem = (index) => {
+    visibleItemsRef.current[index]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    });
+  };
+
   return (
     <div class={`status-carousel ${className}`}>
       <header>
-        <h3>{title}</h3>
-        <span>
+        <h3>
+          {title} {infoButton}
+        </h3>
+        {columnCount > 1 && hasOverflow && (
+          <div class="carousel-pagination">
+            {Array.from({ length: columnCount }).map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                class={`carousel-pagination-dot ${
+                  activeIndexes.includes(i) ? 'active' : ''
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  scrollToItem(i);
+                }}
+              />
+            ))}
+          </div>
+        )}
+        <span class="status-carousel-actions">
           <button
             ref={startButtonRef}
             type="button"
-            class="small plain2"
+            class="small light"
             // disabled={reachStart}
             onClick={() => {
               const left =
@@ -980,7 +1092,7 @@ function StatusCarousel({ title, class: className, children }) {
           <button
             ref={endButtonRef}
             type="button"
-            class="small plain2"
+            class="small light"
             // disabled={reachEnd}
             onClick={() => {
               const left =

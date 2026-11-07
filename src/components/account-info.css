@@ -355,16 +355,6 @@
     filter: drop-shadow(-2px 0 4px var(--header-color-3, --bg-color))
       drop-shadow(2px 0 4px var(--header-color-4, --bg-color));
   }
-
-  .avatar {
-    /* box-shadow: -8px 0 24px var(--header-color-3, --bg-color),
-    8px 0 24px var(--header-color-4, --bg-color); */
-    /* overflow: initial; */
-
-    &:not(.has-alpha) img {
-      border-radius: inherit;
-    }
-  }
 }
 
 .account-container main > *:first-child {
@@ -745,6 +735,24 @@
     /* margin-top: -8px; */
     padding-top: 1px;
     padding-bottom: 16px;
+  }
+
+  .view-profile-button {
+    font-weight: 600;
+    font-size: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    color: var(--link-color);
+    background-color: var(--link-bg-color);
+    text-align: center;
+
+    &:is(:hover, :focus) {
+      color: var(--link-text-color);
+      background-color: var(--link-faded-color);
+    }
   }
 
   footer {

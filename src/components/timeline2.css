@@ -14,12 +14,12 @@
 
     @media (min-width: 40em) {
       border-bottom: 0;
-      column-gap: 16px;
+      column-gap: 12px;
     }
 
     &.timeline-pagination-top {
       @media (min-width: 40em) {
-        margin-block: 16px;
+        margin-block: 12px;
       }
 
       &.transitioning {
@@ -36,7 +36,7 @@
     }
 
     &.timeline-pagination-bottom {
-      margin-block-end: 16px;
+      margin-block-end: 12px;
       /* button {
         height: 160px;
       } */
@@ -50,7 +50,7 @@
       transition: width 0.3s var(--timing-function);
 
       @media (min-width: 40em) {
-        border: 1px solid var(--divider-color);
+        border: var(--hairline-width) solid var(--divider-color);
         border-radius: 16px;
       }
 

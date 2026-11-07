@@ -5,6 +5,7 @@ import { memo } from 'preact/compat';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnapshot } from 'valtio';
 
+import { SAVE_TERMINOLOGY } from '../utils/flags';
 import states from '../utils/states';
 
 import Icon from './icon';
@@ -195,7 +196,12 @@ export default memo(function KeyboardShortcutsHelp() {
                     keys: <kbd>q</kbd>,
                   },
                   {
-                    action: t`Bookmark`,
+                    action: SAVE_TERMINOLOGY
+                      ? t({
+                          message: 'Save',
+                          context: 'saved post',
+                        })
+                      : t`Bookmark`,
                     keys: <kbd>d</kbd>,
                   },
                   {
@@ -223,7 +229,9 @@ export default memo(function KeyboardShortcutsHelp() {
                     keys: <SequentialKeys key1="g" key2="p" />,
                   },
                   {
-                    action: t`Go to Bookmarks`,
+                    action: SAVE_TERMINOLOGY
+                      ? t`Go to Saved Posts`
+                      : t`Go to Bookmarks`,
                     keys: <SequentialKeys key1="g" key2="b" />,
                   },
                 ].map(({ action, className, keys }) => (

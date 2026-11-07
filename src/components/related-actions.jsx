@@ -353,8 +353,8 @@ function RelatedActions({
                             setRelationshipUIState('default');
                             showToast(
                               rel.notifying
-                                ? t`Notifications enabled for @${username}'s posts.`
-                                : t` Notifications disabled for @${username}'s posts.`,
+                                ? t`Notifications turned on for @${username}'s posts.`
+                                : t`Notifications turned off for @${username}'s posts.`,
                             );
                           } catch (e) {
                             alert(e);
@@ -366,8 +366,8 @@ function RelatedActions({
                       <Icon icon="notification" />
                       <span>
                         {notifying
-                          ? t`Disable notifications`
-                          : t`Enable notifications`}
+                          ? t`Stop notifying me about new posts`
+                          : t`Notify me about new posts`}
                       </span>
                     </MenuItem>
                     <MenuItem
@@ -384,8 +384,8 @@ function RelatedActions({
                             setRelationshipUIState('default');
                             showToast(
                               rel.showingReblogs
-                                ? t`Boosts from @${username} enabled.`
-                                : t`Boosts from @${username} disabled.`,
+                                ? t`Boosts from @${username} will be shown.`
+                                : t`Boosts from @${username} will be hidden.`,
                             );
                           } catch (e) {
                             alert(e);
@@ -396,7 +396,9 @@ function RelatedActions({
                     >
                       <Icon icon="rocket" />
                       <span>
-                        {showingReblogs ? t`Disable boosts` : t`Enable boosts`}
+                        {showingReblogs
+                          ? t`Hide boosts in timeline`
+                          : t`Show boosts in timeline`}
                       </span>
                     </MenuItem>
                   </>

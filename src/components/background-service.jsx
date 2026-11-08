@@ -40,7 +40,39 @@ export default memo(function BackgroundService() {
     checkingLatestNotificationRef.current = true;
     try {
       const checkedId = states.notificationsLast?.id;
-      if (!checkedId) return;
+      if (!checkedId) {
+        try {
+          const markers = await masto.v1.markers.fetch({
+            timeline: 'notifications',
+          });
+          const lastReadId = markers?.notifications?.lastReadId;
+          if (lastReadId) {
+            states.notificationsLast = { id: lastReadId };
+            const notificationsIterator = masto.v1.notifications
+              .list({
+                limit: 1,
+                sinceId: lastReadId,
+              })
+              .values();
+            const { value: notifications } = await notificationsIterator.next();
+            if (notifications?.length) {
+              const latestId = notifications[0].id;
+              states.notificationsShowNew = latestId !== lastReadId;
+            }
+          } else {
+            const notificationsIterator = masto.v1.notifications
+              .list({
+                limit: 1,
+              })
+              .values();
+            const { value: notifications } = await notificationsIterator.next();
+            if (notifications?.length) {
+              states.notificationsLast = notifications[0];
+            }
+          }
+        } catch (e) {}
+        return;
+      }
 
       let notifications;
       try {

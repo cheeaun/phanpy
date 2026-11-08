@@ -4,6 +4,7 @@ import { useRef } from 'preact/hooks';
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
 import { SAVE_TERMINOLOGY } from '../utils/flags';
+import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -19,7 +20,11 @@ function Bookmarks() {
         .list({ limit: LIMIT })
         .values();
     }
-    return await bookmarksIterator.current.next();
+    const results = await bookmarksIterator.current.next();
+    results.value?.forEach((item) => {
+      saveStatus(item, instance);
+    });
+    return results;
   }
 
   return (
@@ -38,6 +43,7 @@ function Bookmarks() {
       }
       instance={instance}
       fetchItems={fetchBookmarks}
+      useItemID
     />
   );
 }

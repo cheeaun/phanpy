@@ -482,7 +482,7 @@ All design files are in the [`design`](design/) folder.
           <br />
           <sub><b>databio</b></sub></a>
         <br />
-        <sub><b>4099 words</b></sub>
+        <sub><b>4169 words</b></sub>
         <br /><sub><b><code title="Catalan">ca</code></b>, <b><code title="Esperanto">eo</code></b></sub>
       </td>
       <td align="center" valign="top">
@@ -610,6 +610,16 @@ All design files are in the [`design`](design/) folder.
         <br /><sub><b><code title="German">de</code></b></sub>
       </td>
       <td align="center" valign="top">
+        <a href="https://crowdin.com/profile/dev_urandom"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16264200/medium/0f0458eff1faf13a42c49713e3341aef.png" />
+          <br />
+          <sub><b>/dev/urandom</b></sub>
+          <br />
+          <sub><b>(dev_urandom)</b></sub></a>
+        <br />
+        <sub><b>1555 words</b></sub>
+        <br /><sub><b><code title="Esperanto">eo</code></b>, <b><code title="Russian">ru</code></b></sub>
+      </td>
+      <td align="center" valign="top">
         <a href="https://crowdin.com/profile/detected-rage-colette"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17440746/medium/eb48c068ec53fbb48e870fab8bc313b0.png" />
           <br />
           <sub><b>detected-rage-colett...</b></sub></a>
@@ -624,16 +634,6 @@ All design files are in the [`design`](design/) folder.
         <br />
         <sub><b>1236 words</b></sub>
         <br /><sub><b><code title="Norwegian Bokmal">nb</code></b></sub>
-      </td>
-      <td align="center" valign="top">
-        <a href="https://crowdin.com/profile/dev_urandom"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16264200/medium/0f0458eff1faf13a42c49713e3341aef.png" />
-          <br />
-          <sub><b>/dev/urandom</b></sub>
-          <br />
-          <sub><b>(dev_urandom)</b></sub></a>
-        <br />
-        <sub><b>1235 words</b></sub>
-        <br /><sub><b><code title="Esperanto">eo</code></b></sub>
       </td>
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/isard"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13454728/medium/1f78b7124b3c962bc4ae55e8d701fc91_default.png" />
@@ -882,9 +882,7 @@ All design files are in the [`design`](design/) folder.
       <td align="center" valign="top">
         <a href="https://crowdin.com/profile/Mvtbh"><img alt="logo" style="width: 50px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/15652533/medium/911f4f30f63563cbfdceb102be25dd97.jpg" />
           <br />
-          <sub><b>R</b></sub>
-          <br />
-          <sub><b>(Mvtbh)</b></sub></a>
+          <sub><b>Mvtbh</b></sub></a>
         <br />
         <sub><b>191 words</b></sub>
         <br /><sub><b><code title="Persian">fa</code></b></sub>

@@ -2110,13 +2110,19 @@ body:has(#modal-container .carousel) .status .media img:hover {
     max-width: fit-content;
 
     img {
+      --card-img-max-height: min(160px, 40vh);
       outline: var(--hairline-width) solid var(--outline-color);
       display: block;
       max-width: 100%;
-      width: auto;
+      /* Reserve image space to avoid layout shift on load */
+      aspect-ratio: var(--card-img-ratio);
+      width: min(
+        calc(var(--card-img-ratio) * var(--card-img-max-height)),
+        var(--card-img-width)
+      );
       height: auto;
       min-width: var(--min-dimension);
-      max-height: min(160px, 40vh);
+      max-height: var(--card-img-max-height);
       border-radius: 4px;
       object-fit: cover;
       @supports (corner-shape: squircle) {
@@ -2127,7 +2133,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
       background-clip: padding-box;
 
       .status.small & {
-        max-height: min(80px, 30vh);
+        --card-img-max-height: min(80px, 30vh);
       }
     }
   }
@@ -2140,7 +2146,7 @@ body:has(#modal-container .carousel) .status .media img:hover {
     flex-basis: 100%;
 
     img {
-      max-height: min(240px, 40vh);
+      --card-img-max-height: min(240px, 40vh);
     }
   }
 

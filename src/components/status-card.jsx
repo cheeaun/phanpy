@@ -243,15 +243,18 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
                     e.target.style.display = 'none';
                   } catch (e) {}
                 }}
-                style={{
-                  '--anim-duration':
-                    width &&
-                    height &&
-                    `${Math.min(
+                style={
+                  width &&
+                  height && {
+                    '--anim-duration': `${Math.min(
                       Math.max(Math.max(width, height) / 100, 5),
                       120,
                     )}s`,
-                }}
+                    // Reserve image space to avoid layout shift on load
+                    '--card-img-ratio': width / height,
+                    '--card-img-width': `${width}px`,
+                  }
+                }
               />
             </div>
           )}

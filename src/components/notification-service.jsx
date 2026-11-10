@@ -24,7 +24,7 @@ import Notification from './notification';
       const { type, id, accessToken, oldEndpoint, newSubscription } =
         event?.data || {};
       if (type === 'notification') {
-        if (!id || !accessToken) return;
+        if (!id) return;
         states.routeNotification = {
           id,
           accessToken,
@@ -61,12 +61,14 @@ export default memo(function NotificationService() {
   const [showNotificationSheet, setShowNotificationSheet] = useState(false);
 
   useLayoutEffect(() => {
-    if (!id || !accessToken) return;
+    if (!id) return;
 
     // Stale token makes api() throw, so bail early
-    const account = getAccountByAccessToken(accessToken);
+    const account = accessToken
+      ? getAccountByAccessToken(accessToken)
+      : getCurrentAccount();
     if (!account) {
-      console.warn('🛎️ Notification access token not found', id);
+      console.warn('🛎️ Notification account not found', id);
       states.routeNotification = null;
       return;
     }
@@ -76,7 +78,8 @@ export default memo(function NotificationService() {
     let instance;
     try {
       ({ instance: currentInstance } = api());
-      ({ masto, instance } = api({ accessToken }));
+      // No token, use current account
+      ({ masto, instance } = accessToken ? api({ accessToken }) : api());
     } catch (err) {
       console.warn('🛎️ Failed to init notification client', err);
       states.routeNotification = null;

@@ -388,9 +388,12 @@ self.addEventListener('pushsubscriptionchange', (event) => {
 self.addEventListener('notificationclick', (event) => {
   const payload = event.notification;
   console.log('NOTIFICATION CLICK payload', payload);
-  const { badge, body, data, dir, icon, lang, tag, timestamp, title } = payload;
-  const { access_token, notification_type } = data;
-  const url = `/#/notifications?id=${tag}&access_token=${btoa(access_token)}`;
+  const { data, tag } = payload;
+  const accessToken = data?.access_token;
+  // No token, falls back to current account
+  const url = `/#/notifications?id=${tag}${
+    accessToken ? `&access_token=${btoa(accessToken)}` : ''
+  }`;
 
   event.waitUntil(
     (async () => {
@@ -398,27 +401,19 @@ self.addEventListener('notificationclick', (event) => {
         type: 'window',
         includeUncontrolled: true,
       });
-      console.log('NOTIFICATION CLICK clients 1', clients);
-      if (clients.length && 'navigate' in clients[0]) {
-        console.log('NOTIFICATION CLICK clients 2', clients);
-        const bestClient =
-          clients.find(
-            (client) => client.focused || client.visibilityState === 'visible',
-          ) || clients[0];
-        console.log('NOTIFICATION CLICK navigate', url);
-        if (bestClient) {
-          console.log('NOTIFICATION CLICK postMessage', bestClient);
-          bestClient.focus();
-          bestClient.postMessage?.({
-            type: 'notification',
-            id: tag,
-            accessToken: access_token,
-          });
-        } else {
-          console.log('NOTIFICATION CLICK openWindow', url);
-          await self.clients.openWindow(url);
-        }
-        // }
+      console.log('NOTIFICATION CLICK clients', clients);
+      const client =
+        clients.find((c) => c.focused || c.visibilityState === 'visible') ||
+        clients[0];
+      // focus() resolves null if the window is frozen
+      const focused = client ? await client.focus().catch(() => null) : null;
+      if (focused) {
+        console.log('NOTIFICATION CLICK postMessage', client);
+        client.postMessage?.({
+          type: 'notification',
+          id: tag,
+          accessToken,
+        });
       } else {
         console.log('NOTIFICATION CLICK openWindow', url);
         await self.clients.openWindow(url);

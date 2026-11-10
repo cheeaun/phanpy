@@ -17,7 +17,7 @@ import { clearSupportsCache } from './supports';
 // Default *fallback* instance
 const DEFAULT_INSTANCE = 'mastodon.social';
 
-// NodeInfo is best-effort, don't let it hang instance init
+// NodeInfo is best-effort, don't hang init on it
 const WELL_KNOWN_TIMEOUT = 3_000;
 
 // Per-instance masto instance
@@ -219,7 +219,7 @@ export function setPreferences(preferences) {
 }
 
 export function hasPreferences() {
-  // Read the raw value; getPreferences() defaults to {} which is always truthy
+  // getPreferences() defaults to {}, always truthy
   return !!store.account.get('preferences');
 }
 

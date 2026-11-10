@@ -400,11 +400,15 @@ const isPWA =
   window.navigator.standalone === true;
 const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
 
-function stripAccessToken(path) {
-  return path.replace(
-    /([?&])access_token=[^&]*(&)?/,
-    (_, separator, trailingAmpersand) => (trailingAmpersand ? separator : ''),
-  );
+// One-shot params, don't restore them
+function stripNotificationParams(path) {
+  const i = path.indexOf('?');
+  if (i === -1) return path;
+  const params = new URLSearchParams(path.slice(i + 1));
+  params.delete('id');
+  params.delete('access_token');
+  const query = params.toString();
+  return query ? `${path.slice(0, i)}?${query}` : path.slice(0, i);
 }
 
 function App() {
@@ -582,10 +586,9 @@ function App() {
       if (isRootPath(location.pathname)) {
         store.local.del(lastPathKey);
       } else {
-        // Strip token so restoring won't retrigger with a stale token
         const path =
           location.pathname === '/notifications'
-            ? stripAccessToken(location.pathname + location.search)
+            ? stripNotificationParams(location.pathname + location.search)
             : location.pathname + location.search;
         store.local.setJSON(lastPathKey, {
           path,
@@ -608,9 +611,8 @@ function App() {
             const timeSinceLastAccess =
               Date.now() - (lastPath.lastAccessed || 0);
             if (timeSinceLastAccess < PATH_RESTORE_TIME_LIMIT) {
-              // pwaLastPath may still have a token saved before this fix
               const path = lastPath.path.startsWith('/notifications')
-                ? stripAccessToken(lastPath.path)
+                ? stripNotificationParams(lastPath.path)
                 : lastPath.path;
               window.location.hash = path;
             }

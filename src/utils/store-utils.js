@@ -149,7 +149,7 @@ export function getCurrentInstance() {
     const instances = store.local.getJSON('instances') || {};
     const instance = account.instanceURL.toLowerCase();
     const info = instances[instance];
-    // Don't cache a miss, initInstance may fill it in later
+    // Don't cache misses, initInstance may fill them in
     if (info) currentInstance = info;
     return info || {};
   } catch (e) {
@@ -170,7 +170,7 @@ export function getCurrentNodeInfo() {
     const nodeInfos = store.local.getJSON('nodeInfos') || {};
     const instanceURL = account.instanceURL.toLowerCase();
     const info = nodeInfos[instanceURL];
-    // Don't cache a miss, initInstance may fill it in later
+    // Don't cache misses, initInstance may fill them in
     if (info) currentNodeInfo = info;
     return info || {};
   } catch (e) {

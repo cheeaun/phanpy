@@ -30,7 +30,7 @@ const platformFeatures = {
 
 let supportsCache = {};
 
-// Instance data can arrive after supports() has already run
+// Instance data can arrive late
 export function clearSupportsCache() {
   supportsCache = {};
 }

@@ -369,10 +369,13 @@ All design files are in the [`design`](design/) folder.
 
 ### Web badges
 
-<img src="design/phanpy-88x31.png" width="88" height="31" alt="I'm a fan of Phanpy"> <img src="design/phanpy-80x15.png" width="80" height="15" alt="I ♥ Phanpy">
+<img src="design/phanpy-88x31@2x.png" width="88" height="31" alt="I'm a fan of Phanpy (2x)"> <img src="design/phanpy-80x15@2x.png" width="80" height="15" alt="I ♥ Phanpy (2x)">
 
 - `phanpy-88x31`: [GIF](design/phanpy-88x31.gif) (560 B), [PNG](design/phanpy-88x31.png) (436 B), [WebP](design/phanpy-88x31.webp) (414 B)
 - `phanpy-80x15`: [GIF](design/phanpy-80x15.gif) (263 B), [PNG](design/phanpy-80x15.png) (213 B), [WebP](design/phanpy-80x15.webp) (172 B)
+- `phanpy-88x31@2x`: [GIF](design/phanpy-88x31@2x.gif) (1329 B), [PNG](design/phanpy-88x31@2x.png) (474 B), [WebP](design/phanpy-88x31@2x.webp) (450 B)
+- `phanpy-80x15@2x`: [GIF](design/phanpy-80x15@2x.gif) (501 B), [PNG](design/phanpy-80x15@2x.png) (217 B), [WebP](design/phanpy-80x15@2x.webp) (176 B)
+
 
 ### Source files
 

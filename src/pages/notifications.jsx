@@ -507,12 +507,18 @@ function Notifications({ columnMode }) {
   const announcementsListRef = useRef();
 
   useEffect(() => {
-    if (notificationID) {
-      states.routeNotification = {
-        id: notificationID,
-        accessToken: atob(notificationAccessToken),
-      };
+    if (!notificationID || !notificationAccessToken) return;
+    let accessToken;
+    try {
+      accessToken = atob(notificationAccessToken);
+    } catch (err) {
+      console.warn('🔔 Invalid notification access token', err);
+      return;
     }
+    states.routeNotification = {
+      id: notificationID,
+      accessToken,
+    };
   }, [notificationID, notificationAccessToken]);
 
   // useEffect(() => {

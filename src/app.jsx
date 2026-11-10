@@ -400,6 +400,13 @@ const isPWA =
   window.navigator.standalone === true;
 const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
 
+function stripAccessToken(path) {
+  return path.replace(
+    /([?&])access_token=[^&]*(&)?/,
+    (_, separator, trailingAmpersand) => (trailingAmpersand ? separator : ''),
+  );
+}
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     const account = getCurrentAccount();
@@ -575,8 +582,13 @@ function App() {
       if (isRootPath(location.pathname)) {
         store.local.del(lastPathKey);
       } else {
+        // Strip token so restoring won't retrigger with a stale token
+        const path =
+          location.pathname === '/notifications'
+            ? stripAccessToken(location.pathname + location.search)
+            : location.pathname + location.search;
         store.local.setJSON(lastPathKey, {
-          path: location.pathname + location.search,
+          path,
           lastAccessed: Date.now(),
         });
       }
@@ -596,7 +608,11 @@ function App() {
             const timeSinceLastAccess =
               Date.now() - (lastPath.lastAccessed || 0);
             if (timeSinceLastAccess < PATH_RESTORE_TIME_LIMIT) {
-              window.location.hash = lastPath.path;
+              // pwaLastPath may still have a token saved before this fix
+              const path = lastPath.path.startsWith('/notifications')
+                ? stripAccessToken(lastPath.path)
+                : lastPath.path;
+              window.location.hash = path;
             }
           }
           store.local.del(lastPathKey);

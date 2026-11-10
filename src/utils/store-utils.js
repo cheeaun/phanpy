@@ -146,9 +146,12 @@ export function getCurrentInstance() {
   if (currentInstance) return currentInstance;
   try {
     const account = getCurrentAccount();
-    const instances = store.local.getJSON('instances');
+    const instances = store.local.getJSON('instances') || {};
     const instance = account.instanceURL.toLowerCase();
-    return (currentInstance = instances[instance]);
+    const info = instances[instance];
+    // Don't cache a miss, initInstance may fill it in later
+    if (info) currentInstance = info;
+    return info || {};
   } catch (e) {
     console.error(e);
     // alert(`Failed to load instance configuration. Please try again.\n\n${e}`);
@@ -166,7 +169,10 @@ export function getCurrentNodeInfo() {
     const account = getCurrentAccount();
     const nodeInfos = store.local.getJSON('nodeInfos') || {};
     const instanceURL = account.instanceURL.toLowerCase();
-    return (currentNodeInfo = nodeInfos[instanceURL] || {});
+    const info = nodeInfos[instanceURL];
+    // Don't cache a miss, initInstance may fill it in later
+    if (info) currentNodeInfo = info;
+    return info || {};
   } catch (e) {
     console.error(e);
     return {};

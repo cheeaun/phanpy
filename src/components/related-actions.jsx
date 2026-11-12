@@ -5,7 +5,11 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import punycode from 'punycode/';
 
 import { api } from '../utils/api';
-import { isSupported as collectionsSupported } from '../utils/collections';
+import {
+  canAccountBeAdded,
+  canAccountBeAddedByFollowers,
+  isSupported as collectionsSupported,
+} from '../utils/collections';
 import i18nDuration from '../utils/i18n-duration';
 import isSearchEnabled from '../utils/is-search-enabled';
 import niceDateTime from '../utils/nice-date-time';
@@ -16,6 +20,7 @@ import { getCurrentAccountID, updateAccount } from '../utils/store-utils';
 import supports from '../utils/supports';
 
 import { handleScannerClick } from './account-info';
+import AddRemoveCollectionsSheet from './add-remove-collections-sheet';
 import AddRemoveListsSheet from './add-remove-lists-sheet';
 import Icon from './icon';
 import Link from './link';
@@ -102,6 +107,12 @@ function RelatedActions({
 
   const supportsEndorsements = supports('@mastodon/endorsements');
   const supportsCollections = collectionsSupported();
+  const targetInfo = currentInfo || info;
+  const showAddToCollections =
+    supportsCollections &&
+    (sameInstance || !!currentInfo) &&
+    (canAccountBeAdded(targetInfo) ||
+      (canAccountBeAddedByFollowers(targetInfo) && following));
 
   useEffect(() => {
     if (info) {
@@ -183,6 +194,8 @@ function RelatedActions({
 
   const [showTranslatedBio, setShowTranslatedBio] = useState(false);
   const [showAddRemoveLists, setShowAddRemoveLists] = useState(false);
+  const [showAddRemoveCollections, setShowAddRemoveCollections] =
+    useState(false);
   const [showPrivateNoteModal, setShowPrivateNoteModal] = useState(false);
   const [lists, setLists] = useState([]);
   const [searchEnabled, setSearchEnabled] = useState(false);
@@ -471,6 +484,18 @@ function RelatedActions({
                     <Icon icon="collections" />
                     <Trans>Show collections</Trans>
                   </MenuLink>
+                )}
+                {showAddToCollections && (
+                  <MenuItem
+                    onClick={() => {
+                      setShowAddRemoveCollections(true);
+                    }}
+                  >
+                    <Icon icon="collections" />
+                    <span>
+                      <Trans>Add/Remove from Collections</Trans>
+                    </span>
+                  </MenuItem>
                 )}
                 {/* Add/remove from lists is only possible if following the account */}
                 {following && (
@@ -1034,6 +1059,18 @@ function RelatedActions({
           <AddRemoveListsSheet
             accountID={accountID.current}
             onClose={() => setShowAddRemoveLists(false)}
+          />
+        </Modal>
+      )}
+      {!!showAddRemoveCollections && (
+        <Modal
+          onClose={() => {
+            setShowAddRemoveCollections(false);
+          }}
+        >
+          <AddRemoveCollectionsSheet
+            accountID={accountID.current}
+            onClose={() => setShowAddRemoveCollections(false)}
           />
         </Modal>
       )}

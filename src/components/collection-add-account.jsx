@@ -6,6 +6,10 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { api } from '../utils/api';
+import {
+  canAccountBeAdded,
+  canAccountBeAddedByFollowers,
+} from '../utils/collections';
 import { fetchRelationships } from '../utils/relationships';
 import showToast from '../utils/show-toast';
 
@@ -14,12 +18,9 @@ import Icon from './icon';
 import Loader from './loader';
 
 function getAccountGroup(account, relationship) {
-  const fa = account.featureApproval;
-  const canBeAdded = ['automatic', 'manual'].includes(fa?.currentUser);
-  if (canBeAdded) return 'available';
-  const canBeAddedByFollowers =
-    fa?.automatic?.includes('followers') || fa?.manual?.includes('followers');
-  if (canBeAddedByFollowers && !relationship?.following) return 'mustFollow';
+  if (canAccountBeAdded(account)) return 'available';
+  if (canAccountBeAddedByFollowers(account) && !relationship?.following)
+    return 'mustFollow';
   return 'disabled';
 }
 

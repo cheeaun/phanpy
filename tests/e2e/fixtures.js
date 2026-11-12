@@ -37,6 +37,7 @@ export const MOCK_INSTANCE_RESPONSE = {
   title: 'Test Social',
   domain: MOCK_INSTANCE,
   version: '4.0.0',
+  apiVersions: { mastodon: 10 },
   configuration: {
     statuses: { maxCharacters: 500, maxMediaAttachments: 4 },
     polls: {
@@ -133,7 +134,10 @@ export async function mockApi(page, routes) {
 
 /** @param {Page} page */
 
-export async function seedLoggedInSession(page) {
+export async function seedLoggedInSession(
+  page,
+  instanceResponse = MOCK_INSTANCE_RESPONSE,
+) {
   await page.addInitScript(
     ({ account, instance, instanceResponse }) => {
       localStorage.setItem(
@@ -203,7 +207,7 @@ export async function seedLoggedInSession(page) {
     {
       account: MOCK_ACCOUNT,
       instance: MOCK_INSTANCE,
-      instanceResponse: MOCK_INSTANCE_RESPONSE,
+      instanceResponse,
     },
   );
 }

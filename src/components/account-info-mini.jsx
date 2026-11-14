@@ -1,5 +1,6 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useRef } from 'preact/hooks';
+import { useSnapshot } from 'valtio';
 
 import { api } from '../utils/api';
 import shortenNumber from '../utils/shorten-number';
@@ -11,6 +12,7 @@ const LIMIT = 80;
 
 export default function AccountInfoMini({ account, instance }) {
   const { t } = useLingui();
+  const { hideProfileMetrics } = useSnapshot(states.settings);
 
   if (!account) return null;
 
@@ -64,25 +66,29 @@ export default function AccountInfoMini({ account, instance }) {
               }, 0);
             }}
           >
-            <Plural
-              value={followersCount}
-              one={
-                <Trans>
-                  <span title={followersCount}>
-                    {shortenNumber(followersCount)}
-                  </span>{' '}
-                  Follower
-                </Trans>
-              }
-              other={
-                <Trans>
-                  <span title={followersCount}>
-                    {shortenNumber(followersCount)}
-                  </span>{' '}
-                  Followers
-                </Trans>
-              }
-            />
+            {hideProfileMetrics ? (
+              <Trans>Followers</Trans>
+            ) : (
+              <Plural
+                value={followersCount}
+                one={
+                  <Trans>
+                    <span title={followersCount}>
+                      {shortenNumber(followersCount)}
+                    </span>{' '}
+                    Follower
+                  </Trans>
+                }
+                other={
+                  <Trans>
+                    <span title={followersCount}>
+                      {shortenNumber(followersCount)}
+                    </span>{' '}
+                    Followers
+                  </Trans>
+                }
+              />
+            )}
           </div>
           <div
             class="insignificant"
@@ -103,17 +109,21 @@ export default function AccountInfoMini({ account, instance }) {
               }, 0);
             }}
           >
-            <Plural
-              value={followingCount}
-              other={
-                <Trans>
-                  <span title={followingCount}>
-                    {shortenNumber(followingCount)}
-                  </span>{' '}
-                  Following
-                </Trans>
-              }
-            />
+            {hideProfileMetrics ? (
+              <Trans context="followed accounts">Following</Trans>
+            ) : (
+              <Plural
+                value={followingCount}
+                other={
+                  <Trans>
+                    <span title={followingCount}>
+                      {shortenNumber(followingCount)}
+                    </span>{' '}
+                    Following
+                  </Trans>
+                }
+              />
+            )}
           </div>
           <Link class="insignificant" to={accountLink}>
             <Plural

@@ -1,6 +1,5 @@
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
-import * as navigationPreload from 'workbox-navigation-preload';
 import { pageCache } from 'workbox-recipes';
 import { RegExpRoute, registerRoute, Route } from 'workbox-routing';
 import {
@@ -8,8 +7,6 @@ import {
   NetworkFirst,
   StaleWhileRevalidate,
 } from 'workbox-strategies';
-
-navigationPreload.enable();
 
 self.__WB_DISABLE_DEV_LOGS = true;
 
@@ -391,9 +388,17 @@ self.addEventListener('pushsubscriptionchange', (event) => {
 self.addEventListener('notificationclick', (event) => {
   const payload = event.notification;
   console.log('NOTIFICATION CLICK payload', payload);
-  const { badge, body, data, dir, icon, lang, tag, timestamp, title } = payload;
-  const { access_token, notification_type } = data;
-  const url = `/#/notifications?id=${tag}&access_token=${btoa(access_token)}`;
+  const { data, tag } = payload;
+  const accessToken = data?.access_token;
+  // No token, falls back to current account
+  // Relative, so subpath deployments stay in scope
+  const url = `./#/notifications?id=${tag}${
+    accessToken ? `&access_token=${btoa(accessToken)}` : ''
+  }`;
+  // iOS notificationclick is unreliable, go through the URL instead
+  // https://bugs.webkit.org/show_bug.cgi?id=268797
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  event.notification.close();
 
   event.waitUntil(
     (async () => {
@@ -401,32 +406,33 @@ self.addEventListener('notificationclick', (event) => {
         type: 'window',
         includeUncontrolled: true,
       });
-      console.log('NOTIFICATION CLICK clients 1', clients);
-      if (clients.length && 'navigate' in clients[0]) {
-        console.log('NOTIFICATION CLICK clients 2', clients);
-        const bestClient =
-          clients.find(
-            (client) => client.focused || client.visibilityState === 'visible',
-          ) || clients[0];
-        console.log('NOTIFICATION CLICK navigate', url);
-        if (bestClient) {
-          console.log('NOTIFICATION CLICK postMessage', bestClient);
-          bestClient.focus();
-          bestClient.postMessage?.({
-            type: 'notification',
-            id: tag,
-            accessToken: access_token,
-          });
-        } else {
-          console.log('NOTIFICATION CLICK openWindow', url);
-          await self.clients.openWindow(url);
+      // Real pages only, about:blank can't be navigated
+      const appClients = clients.filter((c) => /^https?:/.test(c.url));
+      const client =
+        appClients.find((c) => c.focused || c.visibilityState === 'visible') ||
+        appClients[0];
+      if (client) {
+        if (!isIOS) {
+          // focus() rejects if the window cannot be brought forward
+          const focused = await client.focus().catch(() => null);
+          if (focused) {
+            client.postMessage({ type: 'notification', id: tag, accessToken });
+            return;
+          }
         }
-        // }
-      } else {
-        console.log('NOTIFICATION CLICK openWindow', url);
-        await self.clients.openWindow(url);
+        try {
+          await client.navigate(url);
+          // Best-effort, the URL is applied regardless
+          await client.focus().catch(() => {});
+          return;
+        } catch (e) {
+          console.warn('NOTIFICATION CLICK navigate failed', e);
+        }
       }
-      await event.notification.close();
+      console.log('NOTIFICATION CLICK openWindow', url);
+      await self.clients.openWindow(url).catch((e) => {
+        console.warn('NOTIFICATION CLICK openWindow failed', e);
+      });
     })(),
   );
 });

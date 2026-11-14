@@ -438,7 +438,7 @@ function Search({ columnMode, ...props }) {
             <div class="header-side">
               <button
                 type="button"
-                class="plain"
+                class="plain4"
                 onClick={() => {
                   searchFormRef.current?.submit?.();
                 }}

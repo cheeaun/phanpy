@@ -1,0 +1,29 @@
+.floating-bar {
+  position: sticky;
+  bottom: max(0px, var(--sai-bottom));
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  pointer-events: none;
+  transition:
+    transform var(--spring-timing-duration) var(--spring-timing-function) 1s,
+    opacity 0.3s ease-in-out 1s;
+
+  @starting-style {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  > * {
+    pointer-events: auto;
+  }
+
+  button,
+  .button {
+    --button-shadow-color: var(--drop-shadow-color);
+    box-shadow: 0 4px 16px -4px var(--button-shadow-color);
+  }
+}

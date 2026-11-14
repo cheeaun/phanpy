@@ -391,9 +391,14 @@ self.addEventListener('notificationclick', (event) => {
   const { data, tag } = payload;
   const accessToken = data?.access_token;
   // No token, falls back to current account
-  const url = `/#/notifications?id=${tag}${
+  // Relative, so subpath deployments stay in scope
+  const url = `./#/notifications?id=${tag}${
     accessToken ? `&access_token=${btoa(accessToken)}` : ''
   }`;
+  // iOS notificationclick is unreliable, go through the URL instead
+  // https://bugs.webkit.org/show_bug.cgi?id=268797
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  event.notification.close();
 
   event.waitUntil(
     (async () => {
@@ -401,24 +406,33 @@ self.addEventListener('notificationclick', (event) => {
         type: 'window',
         includeUncontrolled: true,
       });
-      console.log('NOTIFICATION CLICK clients', clients);
+      // Real pages only, about:blank can't be navigated
+      const appClients = clients.filter((c) => /^https?:/.test(c.url));
       const client =
-        clients.find((c) => c.focused || c.visibilityState === 'visible') ||
-        clients[0];
-      // focus() resolves null if the window is frozen
-      const focused = client ? await client.focus().catch(() => null) : null;
-      if (focused) {
-        console.log('NOTIFICATION CLICK postMessage', client);
-        client.postMessage?.({
-          type: 'notification',
-          id: tag,
-          accessToken,
-        });
-      } else {
-        console.log('NOTIFICATION CLICK openWindow', url);
-        await self.clients.openWindow(url);
+        appClients.find((c) => c.focused || c.visibilityState === 'visible') ||
+        appClients[0];
+      if (client) {
+        if (!isIOS) {
+          // focus() rejects if the window cannot be brought forward
+          const focused = await client.focus().catch(() => null);
+          if (focused) {
+            client.postMessage({ type: 'notification', id: tag, accessToken });
+            return;
+          }
+        }
+        try {
+          await client.navigate(url);
+          // Best-effort, the URL is applied regardless
+          await client.focus().catch(() => {});
+          return;
+        } catch (e) {
+          console.warn('NOTIFICATION CLICK navigate failed', e);
+        }
       }
-      await event.notification.close();
+      console.log('NOTIFICATION CLICK openWindow', url);
+      await self.clients.openWindow(url).catch((e) => {
+        console.warn('NOTIFICATION CLICK openWindow failed', e);
+      });
     })(),
   );
 });

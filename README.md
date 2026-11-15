@@ -495,7 +495,7 @@ All design files are in the [`design`](design/) folder.
           <br />
           <sub><b>(Vac31.)</b></sub></a>
         <br />
-        <sub><b>4024 words</b></sub>
+        <sub><b>4032 words</b></sub>
         <br /><sub><b><code title="Lithuanian">lt</code></b></sub>
       </td>
       <td align="center" valign="top">

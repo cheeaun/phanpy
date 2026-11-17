@@ -179,7 +179,7 @@ const assetsRoute = new Route(
   ({ request, sameOrigin }) => {
     const isAsset =
       request.destination === 'style' || request.destination === 'script';
-    const hasHash = /-[0-9a-z-]{4,}\./i.test(request.url);
+    const hasHash = /-[0-9a-z_-]{4,}\./i.test(request.url);
     return sameOrigin && isAsset && hasHash;
   },
   new StaleWhileRevalidate({

@@ -1123,6 +1123,7 @@ function Compose({
 
                     onClose();
                   }}
+                  title={t`Pop out`}
                 >
                   <Icon icon="popout" size="s" />{' '}
                   <span>
@@ -1134,6 +1135,7 @@ function Compose({
                 type="button"
                 class="plain4 min-button"
                 onClick={onMinimize}
+                title={t`Minimize`}
               >
                 <Icon icon="minimize" size="s" />{' '}
                 <span>
@@ -1149,6 +1151,7 @@ function Compose({
                     onClose();
                   }
                 }}
+                title={t`Close`}
               >
                 <Icon icon="x" alt={t`Close`} />
               </button>
@@ -1232,6 +1235,7 @@ function Compose({
                       },
                     });
                   }}
+                  title={t`Pop in`}
                 >
                   <Icon icon="popin" size="s" />{' '}
                   <span>
@@ -1805,6 +1809,7 @@ function Compose({
                       class={`toolbar-button add-button ${
                         open ? 'active' : ''
                       }`}
+                      title={t`Add`}
                     >
                       <Icon icon="plus" title={t`Add`} />
                     </button>
@@ -1908,6 +1913,7 @@ function Compose({
                   class="toolbar-button"
                   disabled={cwButtonDisabled}
                   onClick={onCWButtonClick}
+                  title={_(ADD_LABELS.sensitive)}
                 >
                   <Icon icon="alert" alt={_(ADD_LABELS.sensitive)} />
                 </button>
@@ -1917,6 +1923,7 @@ function Compose({
                     class="toolbar-button"
                     disabled={pollButtonDisabled}
                     onClick={onPollButtonClick}
+                    title={_(ADD_LABELS.poll)}
                   >
                     <Icon icon="poll" alt={_(ADD_LABELS.poll)} />
                   </button>
@@ -1941,6 +1948,7 @@ function Compose({
                       targetElement: lastFocusedEmojiFieldRef,
                     });
                   }}
+                  title={_(ADD_LABELS.customEmoji)}
                 >
                   <Icon icon="emoji2" alt={_(ADD_LABELS.customEmoji)} />
                 </button>
@@ -1952,6 +1960,7 @@ function Compose({
                     onClick={() => {
                       setShowGIFPicker(true);
                     }}
+                    title={_(ADD_LABELS.gif)}
                   >
                     <span
                       class="icon icon-gif"
@@ -1967,6 +1976,7 @@ function Compose({
                       class={`toolbar-button ${scheduledAt ? 'highlight' : ''}`}
                       disabled={scheduledAtButtonDisabled}
                       onClick={onScheduledAtClick}
+                      title={_(ADD_LABELS.scheduledPost)}
                     >
                       <Icon icon="schedule" alt={_(ADD_LABELS.scheduledPost)} />
                     </button>
@@ -1985,6 +1995,7 @@ function Compose({
             {supportsNativeQuote() && (
               <label
                 class={`toolbar-button ${highlightQuoteApprovalPolicyField ? 'highlight' : ''}`}
+                title="Quote settings"
               >
                 <Icon icon="quote2" alt={t`Quote settings`} />
                 {quoteApprovalPolicy === 'followers' && (

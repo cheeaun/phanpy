@@ -600,29 +600,32 @@ function App() {
 
   // Restore last page on PWA reopen
   useEffect(() => {
-    if (restoredRef.current) return;
-    const isRootPath = !location.pathname || location.pathname === '/';
-    if (!isRootPath) return;
-    if (isPWA && isLoggedIn && uiState === 'default') {
-      const lastPath = store.local.getJSON(lastPathKey);
-      if (lastPath) {
-        setTimeout(() => {
-          if (lastPath?.path) {
-            const timeSinceLastAccess =
-              Date.now() - (lastPath.lastAccessed || 0);
-            if (timeSinceLastAccess < PATH_RESTORE_TIME_LIMIT) {
-              const path = lastPath.path.startsWith('/notifications')
-                ? stripNotificationParams(lastPath.path)
-                : lastPath.path;
-              window.location.hash = path;
-            }
-          }
-          store.local.del(lastPathKey);
-        }, 300);
+    if (restoredRef.current || !isPWA || !isLoggedIn || uiState !== 'default')
+      return;
+    restoredRef.current = true;
+    if (location.pathname !== '/' || location.search || location.hash) return;
+
+    const lastPath = store.local.getJSON(lastPathKey);
+    if (!lastPath) return;
+
+    const timer = setTimeout(() => {
+      // The hash can change before the router sees the new route.
+      const { hash } = window.location;
+      if (hash && hash !== '#/') return;
+
+      if (
+        lastPath.path &&
+        Date.now() - (lastPath.lastAccessed || 0) < PATH_RESTORE_TIME_LIMIT
+      ) {
+        const path = lastPath.path.startsWith('/notifications')
+          ? stripNotificationParams(lastPath.path)
+          : lastPath.path;
+        window.location.hash = path;
       }
-      restoredRef.current = true;
-    }
-  }, [uiState, isLoggedIn]);
+      store.local.del(lastPathKey);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [location, uiState, isLoggedIn]);
 
   // Signal to service worker that this client is ready to receive share data
   useEffect(() => {

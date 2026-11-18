@@ -392,8 +392,9 @@ self.addEventListener('notificationclick', (event) => {
   const accessToken = data?.access_token;
   // No token, falls back to current account
   // Relative, so subpath deployments stay in scope
+  // btoa output can contain '+', which URLSearchParams decodes as a space
   const url = `./#/notifications?id=${tag}${
-    accessToken ? `&access_token=${btoa(accessToken)}` : ''
+    accessToken ? `&access_token=${encodeURIComponent(btoa(accessToken))}` : ''
   }`;
   // iOS notificationclick is unreliable, go through the URL instead
   // https://bugs.webkit.org/show_bug.cgi?id=268797

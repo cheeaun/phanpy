@@ -147,7 +147,9 @@ function Notifications({ columnMode }) {
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
-  const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
+  const [searchParams, setSearchParams] = columnMode
+    ? [emptySearchParams]
+    : useSearchParams();
   const notificationID = searchParams.get('id');
   const notificationAccessToken = searchParams.get('access_token');
   const [showMore, setShowMore] = useState(false);
@@ -521,7 +523,11 @@ function Notifications({ columnMode }) {
       id: notificationID,
       accessToken,
     };
-  }, [notificationID, notificationAccessToken]);
+    const params = new URLSearchParams(searchParams);
+    params.delete('id');
+    params.delete('access_token');
+    setSearchParams(params, { replace: true });
+  }, [notificationID, notificationAccessToken, searchParams, setSearchParams]);
 
   // useEffect(() => {
   //   if (uiState === 'default') {

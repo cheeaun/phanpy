@@ -168,11 +168,6 @@ export default memo(function NotificationService() {
   const onClose = () => {
     setShowNotificationSheet(false);
     states.routeNotification = null;
-
-    // If url is #/notifications?id=123, go to #/notifications
-    if (/\/notifications\?id=/i.test(location.hash)) {
-      location.hash = '/notifications';
-    }
   };
 
   if (showNotificationSheet) {

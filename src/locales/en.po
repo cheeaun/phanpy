@@ -153,7 +153,7 @@ msgstr "Go to account page"
 #: src/components/timeline.jsx:680
 #: src/components/timeline2.jsx:741
 #: src/pages/home.jsx:240
-#: src/pages/notifications.jsx:1085
+#: src/pages/notifications.jsx:1091
 #: src/pages/status.jsx:1312
 #: src/pages/status.jsx:1776
 msgid "Try again"
@@ -307,7 +307,7 @@ msgstr "View post stats"
 #: src/components/media-attachment.jsx:420
 #: src/components/media-modal.jsx:362
 #: src/components/mention-modal.jsx:162
-#: src/components/notification-service.jsx:190
+#: src/components/notification-service.jsx:185
 #: src/components/open-link-sheet.jsx:51
 #: src/components/post-embed-modal.jsx:197
 #: src/components/private-note-sheet.jsx:36
@@ -328,7 +328,7 @@ msgstr "View post stats"
 #: src/pages/catchup.jsx:1736
 #: src/pages/filters.jsx:225
 #: src/pages/list.jsx:302
-#: src/pages/notifications.jsx:1129
+#: src/pages/notifications.jsx:1135
 #: src/pages/scheduled-posts.jsx:288
 #: src/pages/settings.jsx:101
 #: src/pages/status.jsx:1714
@@ -532,7 +532,7 @@ msgstr "Unlisted"
 #: src/components/quote-settings-sheet.jsx:92
 #: src/components/shortcuts-settings.jsx:742
 #: src/pages/filters.jsx:572
-#: src/pages/notifications.jsx:1201
+#: src/pages/notifications.jsx:1207
 msgid "Save"
 msgstr ""
 
@@ -614,7 +614,7 @@ msgstr "Add account"
 #: src/pages/followed-hashtags.jsx:41
 #: src/pages/home.jsx:55
 #: src/pages/home.jsx:63
-#: src/pages/notifications.jsx:758
+#: src/pages/notifications.jsx:764
 #: src/pages/scheduled-posts.jsx:74
 msgid "Home"
 msgstr ""
@@ -1120,7 +1120,7 @@ msgid "No featured profiles."
 msgstr "No featured profiles."
 
 #: src/components/follow-request-buttons.jsx:45
-#: src/pages/notifications.jsx:1185
+#: src/pages/notifications.jsx:1191
 msgid "Accept"
 msgstr ""
 
@@ -1129,7 +1129,7 @@ msgid "Reject"
 msgstr ""
 
 #: src/components/follow-request-buttons.jsx:79
-#: src/pages/notifications.jsx:1471
+#: src/pages/notifications.jsx:1477
 msgid "Accepted"
 msgstr ""
 
@@ -1150,7 +1150,7 @@ msgstr ""
 #: src/components/timeline.jsx:645
 #: src/pages/account-collections.jsx:234
 #: src/pages/list.jsx:321
-#: src/pages/notifications.jsx:1109
+#: src/pages/notifications.jsx:1115
 #: src/pages/search.jsx:553
 #: src/pages/status.jsx:1747
 msgid "Show more…"
@@ -1689,7 +1689,7 @@ msgstr ""
 #: src/pages/home.jsx:252
 #: src/pages/mentions.jsx:25
 #: src/pages/mentions.jsx:256
-#: src/pages/notifications.jsx:982
+#: src/pages/notifications.jsx:988
 #: src/pages/settings.jsx:1494
 #: src/pages/trending.jsx:384
 msgid "Mentions"
@@ -1702,7 +1702,7 @@ msgstr ""
 #: src/pages/home.jsx:95
 #: src/pages/home.jsx:207
 #: src/pages/notifications.jsx:146
-#: src/pages/notifications.jsx:762
+#: src/pages/notifications.jsx:768
 msgid "Notifications"
 msgstr ""
 
@@ -1836,15 +1836,15 @@ msgstr ""
 msgid "All Lists"
 msgstr ""
 
-#: src/components/notification-service.jsx:194
+#: src/components/notification-service.jsx:189
 msgid "Notification"
 msgstr ""
 
-#: src/components/notification-service.jsx:200
+#: src/components/notification-service.jsx:195
 msgid "This notification is from your other account."
 msgstr ""
 
-#: src/components/notification-service.jsx:229
+#: src/components/notification-service.jsx:224
 msgid "View all notifications"
 msgstr ""
 
@@ -4344,113 +4344,113 @@ msgstr "Moderated accounts"
 msgid "Bot accounts"
 msgstr "Bot accounts"
 
-#: src/pages/notifications.jsx:776
-#: src/pages/notifications.jsx:1133
+#: src/pages/notifications.jsx:782
+#: src/pages/notifications.jsx:1139
 msgid "Notifications settings"
 msgstr ""
 
-#: src/pages/notifications.jsx:794
+#: src/pages/notifications.jsx:800
 msgid "New notifications"
 msgstr ""
 
 #. placeholder {0}: announcements.length
-#: src/pages/notifications.jsx:805
+#: src/pages/notifications.jsx:811
 msgid "{0, plural, one {Announcement} other {Announcements}}"
 msgstr ""
 
-#: src/pages/notifications.jsx:852
+#: src/pages/notifications.jsx:858
 #: src/pages/settings.jsx:1518
 msgid "Follow requests"
 msgstr ""
 
 #. placeholder {0}: followRequests.length
-#: src/pages/notifications.jsx:857
+#: src/pages/notifications.jsx:863
 msgid "{0, plural, one {# follow request} other {# follow requests}}"
 msgstr ""
 
 #. placeholder {0}: notificationsPolicy.summary.pendingRequestsCount
-#: src/pages/notifications.jsx:912
+#: src/pages/notifications.jsx:918
 msgid "{0, plural, one {Filtered notifications from # person} other {Filtered notifications from # people}}"
 msgstr ""
 
-#: src/pages/notifications.jsx:995
+#: src/pages/notifications.jsx:1001
 msgid "Only mentions"
 msgstr ""
 
-#: src/pages/notifications.jsx:1001
+#: src/pages/notifications.jsx:1007
 msgid "Today"
 msgstr ""
 
-#: src/pages/notifications.jsx:1006
+#: src/pages/notifications.jsx:1012
 msgid "You're all caught up."
 msgstr ""
 
-#: src/pages/notifications.jsx:1033
+#: src/pages/notifications.jsx:1039
 msgid "Yesterday"
 msgstr ""
 
-#: src/pages/notifications.jsx:1081
+#: src/pages/notifications.jsx:1087
 msgid "Unable to load notifications"
 msgstr ""
 
-#: src/pages/notifications.jsx:1164
+#: src/pages/notifications.jsx:1170
 msgid "Notifications settings updated"
 msgstr ""
 
-#: src/pages/notifications.jsx:1172
+#: src/pages/notifications.jsx:1178
 msgid "Filter notifications from:"
 msgstr "Filter notifications from:"
 
-#: src/pages/notifications.jsx:1188
+#: src/pages/notifications.jsx:1194
 msgid "Filter"
 msgstr ""
 
-#: src/pages/notifications.jsx:1191
+#: src/pages/notifications.jsx:1197
 msgid "Ignore"
 msgstr ""
 
 #. placeholder {0}: niceDateTime(updatedAtDate)
-#: src/pages/notifications.jsx:1264
+#: src/pages/notifications.jsx:1270
 msgid "Updated <0>{0}</0>"
 msgstr ""
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1332
+#: src/pages/notifications.jsx:1338
 msgid "View notifications from <0>@{0}</0>"
 msgstr ""
 
 #. placeholder {0}: account.username
-#: src/pages/notifications.jsx:1353
+#: src/pages/notifications.jsx:1359
 msgid "Notifications from <0>@{0}</0>"
 msgstr ""
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1422
+#: src/pages/notifications.jsx:1428
 msgid "Notifications from @{0} will not be filtered from now on."
 msgstr ""
 
-#: src/pages/notifications.jsx:1427
+#: src/pages/notifications.jsx:1433
 msgid "Unable to accept notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1432
+#: src/pages/notifications.jsx:1438
 msgid "Allow"
 msgstr ""
 
 #. placeholder {0}: request.account.username
-#: src/pages/notifications.jsx:1453
+#: src/pages/notifications.jsx:1459
 msgid "Notifications from @{0} will not show up in Filtered notifications from now on."
 msgstr "Notifications from @{0} will not show up in Filtered notifications from now on."
 
-#: src/pages/notifications.jsx:1458
+#: src/pages/notifications.jsx:1464
 msgid "Unable to dismiss notification request"
 msgstr ""
 
-#: src/pages/notifications.jsx:1463
+#: src/pages/notifications.jsx:1469
 msgid "Dismiss"
 msgstr ""
 
-#: src/pages/notifications.jsx:1478
+#: src/pages/notifications.jsx:1484
 msgid "Dismissed"
 msgstr ""
 

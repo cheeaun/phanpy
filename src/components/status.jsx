@@ -26,6 +26,7 @@ import { getLangDetector } from '../utils/browser-translator';
 import { useEditHistory } from '../utils/edit-history-context';
 import FilterContext from '../utils/filter-context';
 import { isFiltered } from '../utils/filters';
+import { SAVE_TERMINOLOGY } from '../utils/flags';
 import getTranslateTargetLanguage from '../utils/get-translate-target-language';
 import getHTMLText from '../utils/getHTMLText';
 import haptics from '../utils/haptics';
@@ -637,9 +638,14 @@ function Status({
         onMouseEnter={debugHover}
       >
         <div class="status-pre-meta">
-          <Icon icon="rocket" size="l" />{' '}
+          <Icon icon="rocket" />{' '}
           <Trans>
-            <NameText account={status.account} instance={instance} showAvatar />{' '}
+            <NameText
+              account={status.account}
+              instance={instance}
+              showAvatar
+              subtle={snapStates.settings.postUsernameOnly}
+            />{' '}
             <span>boosted</span>
           </Trans>
         </div>
@@ -695,7 +701,7 @@ function Status({
   // const targetLanguage = getTranslateTargetLanguage(true);
   // const contentTranslationHideLanguages =
   //   snapStates.settings.contentTranslationHideLanguages || [];
-  const { contentTranslation, contentTranslationAutoInline } =
+  const { contentTranslation, contentTranslationAutoInline, hidePostMetrics } =
     snapStates.settings;
   if (!contentTranslation) enableTranslate = false;
   const inlineTranslate = useMemo(() => {
@@ -976,8 +982,15 @@ function Status({
       if (!isSizeLarge && done) {
         showToast(
           bookmarked
-            ? t`Unbookmarked @${username || acct}'s post`
-            : t`Bookmarked @${username || acct}'s post`,
+            ? SAVE_TERMINOLOGY
+              ? t({
+                  message: `Removed @${username || acct}'s post from Saved`,
+                  comment: '"Saved" is Saved Posts.',
+                })
+              : t`Unbookmarked @${username || acct}'s post`
+            : SAVE_TERMINOLOGY
+              ? t`Saved @${username || acct}'s post`
+              : t`Bookmarked @${username || acct}'s post`,
         );
       }
     } catch (e) {}
@@ -1106,7 +1119,7 @@ function Status({
     <>
       <Icon icon="comment" />
       <span>
-        {repliesCount > 0
+        {!hidePostMetrics && repliesCount > 0
           ? shortenNumber(repliesCount)
           : tooManyMentions
             ? t`Reply…`
@@ -1275,7 +1288,7 @@ function Status({
                 <Icon icon="rocket" />
               )}
               <span>
-                {reblogsCount > 0 || quotesCount > 0
+                {!hidePostMetrics && (reblogsCount > 0 || quotesCount > 0)
                   ? `${reblogsCount > 0 ? shortenNumber(reblogsCount) : ''}${
                       reblogsCount > 0 && quotesCount > 0 ? '+' : ''
                     }${quotesCount > 0 ? shortenNumber(quotesCount) : ''}`
@@ -1292,7 +1305,7 @@ function Status({
             >
               <Icon icon="heart" />
               <span>
-                {favouritesCount > 0
+                {!hidePostMetrics && favouritesCount > 0
                   ? shortenNumber(favouritesCount)
                   : favourited
                     ? t`Unlike`
@@ -1305,7 +1318,22 @@ function Status({
                 className={`menu-bookmark ${bookmarked ? 'checked' : ''}`}
               >
                 <Icon icon="bookmark" />
-                <span>{bookmarked ? t`Unbookmark` : t`Bookmark`}</span>
+                <span>
+                  {bookmarked
+                    ? SAVE_TERMINOLOGY
+                      ? t({
+                          message: 'Unsave',
+                          context: 'saved post',
+                          comment: 'Short for "Remove from Saved".',
+                        })
+                      : t`Unbookmark`
+                    : SAVE_TERMINOLOGY
+                      ? t({
+                          message: 'Save',
+                          context: 'saved post',
+                        })
+                      : t`Bookmark`}
+                </span>
               </MenuItem>
             )}
           </div>
@@ -1339,9 +1367,14 @@ function Status({
               }}
             >
               <Icon icon="quote" />
-              <span>
+              <span class="menu-grow">
                 <Trans>View Quotes</Trans>
               </span>
+              {!hidePostMetrics && quotesCount > 0 && (
+                <small class="more-insignificant">
+                  {shortenNumber(quotesCount)}
+                </small>
+              )}
             </MenuItem>
           )}
           {quote?.quotedStatus?.quote && (
@@ -1451,9 +1484,7 @@ function Status({
                 <span class="bidi-isolate">@{username || acct}</span>
               </Trans>
               <br />
-              <span class="more-insignificant">
-                {_(visibilityText[visibility])} • {createdDateText}
-              </span>
+              <span class="more-insignificant">{createdDateText}</span>
             </small>
           </MenuLink>
         </>
@@ -1655,44 +1686,42 @@ function Status({
                     </span>
                   </MenuItem>
                 )}
-                {isSizeLarge && (
-                  <MenuConfirm
-                    subMenu
-                    confirmLabel={
-                      <>
-                        <Icon icon="trash" />
-                        <span>
-                          <Trans>Delete this post?</Trans>
-                        </span>
-                      </>
-                    }
-                    itemProps={{
-                      className: 'danger',
-                    }}
-                    menuItemClassName="danger"
-                    onClick={() => {
-                      // const yes = confirm('Delete this post?');
-                      // if (yes) {
-                      (async () => {
-                        try {
-                          await masto.v1.statuses.$select(id).remove();
-                          const cachedStatus = getStatus(id, instance);
-                          cachedStatus._deleted = true;
-                          showToast(t`Post deleted`);
-                        } catch (e) {
-                          console.error(e);
-                          showToast(t`Unable to delete post`);
-                        }
-                      })();
-                      // }
-                    }}
-                  >
-                    <Icon icon="trash" />
-                    <span>
-                      <Trans>Delete…</Trans>
-                    </span>
-                  </MenuConfirm>
-                )}
+                <MenuConfirm
+                  subMenu
+                  confirmLabel={
+                    <>
+                      <Icon icon="trash" />
+                      <span>
+                        <Trans>Delete this post?</Trans>
+                      </span>
+                    </>
+                  }
+                  itemProps={{
+                    className: 'danger',
+                  }}
+                  menuItemClassName="danger"
+                  onClick={() => {
+                    // const yes = confirm('Delete this post?');
+                    // if (yes) {
+                    (async () => {
+                      try {
+                        await masto.v1.statuses.$select(id).remove();
+                        const cachedStatus = getStatus(id, instance);
+                        cachedStatus._deleted = true;
+                        showToast(t`Post deleted`);
+                      } catch (e) {
+                        console.error(e);
+                        showToast(t`Unable to delete post`);
+                      }
+                    })();
+                    // }
+                  }}
+                >
+                  <Icon icon="trash" />
+                  <span>
+                    <Trans>Delete…</Trans>
+                  </span>
+                </MenuConfirm>
               </div>
             </>
           )}
@@ -2014,6 +2043,13 @@ function Status({
     snapStates.statusThreadNumber[sKey],
   ]);
 
+  // 1st post of thread or quoted post: meta, otherwise pre-content
+  const threadBadge =
+    isThread &&
+    (withinContext || snapStates.statusThreadNumber[sKey] === 1 || !!quoted
+      ? 'meta'
+      : 'pre-content');
+
   const showCommentHint = useMemo(() => {
     return (
       enableCommentHint &&
@@ -2257,7 +2293,14 @@ function Status({
                 class="bookmark"
                 icon="bookmark"
                 size="s"
-                alt={t`Bookmarked`}
+                alt={
+                  SAVE_TERMINOLOGY
+                    ? t({
+                        message: 'Saved',
+                        comment: 'Post is saved to Saved Posts.',
+                      })
+                    : t`Bookmarked`
+                }
               />
             )}
             {_pinned && (
@@ -2292,14 +2335,25 @@ function Status({
           {!!(status.account || createdAt) && (
             <div class="meta">
               <span class="meta-name">
-                <NameText
-                  account={status.account}
-                  instance={instance}
-                  showAvatar={size === 's'}
-                  showAcct={isSizeLarge}
-                />
+                <span class="meta-name-inner">
+                  <NameText
+                    account={status.account}
+                    instance={instance}
+                    showAvatar={size === 's'}
+                    showAcct={isSizeLarge}
+                    subtle={
+                      snapStates.settings.postUsernameOnly && !isSizeLarge
+                    }
+                  />
+                </span>
+                {visibility === 'private' && (
+                  <span class="meta-name-extras">
+                    <Icon icon="chevron-right" />{' '}
+                    {_(visibilityText[visibility])}
+                  </span>
+                )}
               </span>
-              {withinContext && isThread && (
+              {threadBadge === 'meta' && (
                 <ThreadBadge
                   showIcon={isSizeLarge}
                   index={snapStates.statusThreadNumber[sKey]}
@@ -2360,12 +2414,6 @@ function Status({
                           one: '# reply',
                           other: '# replies',
                         })}
-                      />
-                    ) : visibility !== 'public' && visibility !== 'direct' ? (
-                      <Icon
-                        icon={visibilityIconsMap[visibility]}
-                        alt={_(visibilityText[visibility])}
-                        size="s"
                       />
                     ) : editedAt && size === 's' ? (
                       <Icon icon="pencil" size="s" alt={t`Edited`} />
@@ -2451,29 +2499,29 @@ function Status({
               </>
             )}
             {!withinContext &&
-              (isThread ? (
-                <ThreadBadge
-                  showIcon
-                  showText
-                  index={snapStates.statusThreadNumber[sKey]}
-                />
-              ) : (
-                !!inReplyToId &&
-                !!inReplyToAccount &&
-                (!!spoilerText ||
-                  !mentions.find((mention) => {
-                    return mention.id === inReplyToAccountId;
-                  })) && (
-                  <div class="status-reply-badge">
-                    <Icon icon="reply" />{' '}
-                    <NameText
-                      account={inReplyToAccount}
-                      instance={instance}
-                      short
+              (isThread
+                ? threadBadge === 'pre-content' && (
+                    <ThreadBadge
+                      showIcon
+                      showText
+                      index={snapStates.statusThreadNumber[sKey]}
                     />
-                  </div>
-                )
-              ))}
+                  )
+                : !!inReplyToId &&
+                  !!inReplyToAccount &&
+                  (!!spoilerText ||
+                    !mentions.find((mention) => {
+                      return mention.id === inReplyToAccountId;
+                    })) && (
+                    <div class="status-reply-badge">
+                      <Icon icon="reply" />{' '}
+                      <NameText
+                        account={inReplyToAccount}
+                        instance={instance}
+                        short
+                      />
+                    </div>
+                  ))}
           </LazyRender>
           <div
             class={`content-container ${
@@ -2831,20 +2879,22 @@ function Status({
               </>
             )}
           </div>
-          {!isSizeLarge && (showCommentCount || showQuoteCount) && (
-            <div class="content-comment-hint insignificant">
-              {showCommentCount && (
-                <>
-                  <Icon icon="comment2" alt={t`Replies`} /> {repliesCount}
-                </>
-              )}{' '}
-              {showQuoteCount && (
-                <>
-                  <Icon icon="quote" alt={t`Quotes`} /> {quotesCount}
-                </>
-              )}
-            </div>
-          )}
+          {!isSizeLarge &&
+            !hidePostMetrics &&
+            (showCommentCount || showQuoteCount) && (
+              <div class="content-comment-hint insignificant">
+                {showCommentCount && (
+                  <>
+                    <Icon icon="comment2" alt={t`Replies`} /> {repliesCount}
+                  </>
+                )}{' '}
+                {showQuoteCount && (
+                  <>
+                    <Icon icon="quote" alt={t`Quotes`} /> {quotesCount}
+                  </>
+                )}
+              </div>
+            )}
           {isSizeLarge && (
             <>
               <div class="extra-meta">
@@ -2854,8 +2904,6 @@ function Status({
                   </span>
                 ) : (
                   <>
-                    <Icon icon={visibilityIconsMap[visibility]} alt="" />{' '}
-                    <span>{_(visibilityText[visibility])}</span> &bull;{' '}
                     <a href={url} target="_blank" rel="noopener">
                       {
                         // within a day
@@ -2894,6 +2942,15 @@ function Status({
                           {editedDateText}
                         </time>
                       </span>
+                    )}{' '}
+                    {visibility !== 'private' && (
+                      <>
+                        &bull;{' '}
+                        {visibility !== 'public' && visibility !== 'direct' && (
+                          <Icon icon={visibilityIconsMap[visibility]} alt="" />
+                        )}{' '}
+                        <span>{_(visibilityText[visibility])}</span>
+                      </>
                     )}
                   </>
                 )}
@@ -3018,7 +3075,7 @@ function Status({
                         <span class="menu-grow">
                           {reblogged ? t`Unboost` : t`Boost`}
                         </span>
-                        {reblogsCount > 0 && (
+                        {!hidePostMetrics && reblogsCount > 0 && (
                           <small class="more-insignificant">
                             {shortenNumber(reblogsCount)}
                           </small>
@@ -3046,11 +3103,6 @@ function Status({
                             ) : (
                               <span class="menu-grow">{quoteText}</span>
                             )}
-                            {quotesCount > 0 && (
-                              <small class="more-insignificant">
-                                {shortenNumber(quotesCount)}
-                              </small>
-                            )}
                           </MenuItem>
                         )}
                         {(DEV || !supportsNativeQuote()) && (
@@ -3071,6 +3123,26 @@ function Status({
                               <small class="tag collapsed">DEV</small>
                             )}
                           </MenuItem>
+                        )}
+                        {supportsNativeQuote() && quotesCount > 0 && (
+                          <>
+                            <MenuDivider />
+                            <MenuItem
+                              onClick={() => {
+                                setShowQuotes(true);
+                              }}
+                            >
+                              <Icon icon="quote" />
+                              <span class="menu-grow">
+                                <Trans>View Quotes</Trans>
+                              </span>
+                              {!hidePostMetrics && (
+                                <small class="more-insignificant">
+                                  {shortenNumber(quotesCount)}
+                                </small>
+                              )}
+                            </MenuItem>
+                          </>
                         )}
                       </>
                     }
@@ -3110,12 +3182,39 @@ function Status({
                     }}
                   />
                 </div>
+                <div class="spacer" />
                 {supports('@mastodon/post-bookmark') && (
                   <div class="action">
                     <StatusButton
                       checked={bookmarked}
-                      title={[t`Bookmark`, t`Unbookmark`]}
-                      alt={[t`Bookmark`, t`Bookmarked`]}
+                      title={
+                        SAVE_TERMINOLOGY
+                          ? [
+                              t({
+                                message: 'Save',
+                                context: 'saved post',
+                              }),
+                              t({
+                                message: 'Remove from Saved',
+                                comment: '"Saved" is Saved Posts.',
+                              }),
+                            ]
+                          : [t`Bookmark`, t`Unbookmark`]
+                      }
+                      alt={
+                        SAVE_TERMINOLOGY
+                          ? [
+                              t({
+                                message: 'Save',
+                                context: 'saved post',
+                              }),
+                              t({
+                                message: 'Saved',
+                                comment: 'Post is saved to Saved Posts.',
+                              }),
+                            ]
+                          : [t`Bookmark`, t`Bookmarked`]
+                      }
                       class="bookmark-button"
                       icon="bookmark"
                       onClick={(e) => {
@@ -3651,22 +3750,20 @@ function FilteredStatus({
         <span class="status-filtered-info">
           <span class="status-filtered-info-1">
             {isReblog ? (
-              <Trans comment="[Name] [Visibility icon] boosted">
-                <NameText account={status.account} instance={instance} />{' '}
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={_(visibilityText[visibility])}
-                  size="s"
+              <Trans>
+                <NameText
+                  account={status.account}
+                  instance={instance}
+                  subtle={snapStates.settings.postUsernameOnly}
                 />{' '}
-                boosted
+                <span>boosted</span>
               </Trans>
             ) : isFollowedTags ? (
               <>
-                <NameText account={status.account} instance={instance} />{' '}
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={_(visibilityText[visibility])}
-                  size="s"
+                <NameText
+                  account={status.account}
+                  instance={instance}
+                  subtle={snapStates.settings.postUsernameOnly}
                 />{' '}
                 <span>
                   {snapStates.statusFollowedTags[sKey]
@@ -3680,11 +3777,10 @@ function FilteredStatus({
               </>
             ) : (
               <>
-                <NameText account={status.account} instance={instance} />{' '}
-                <Icon
-                  icon={visibilityIconsMap[visibility]}
-                  alt={_(visibilityText[visibility])}
-                  size="s"
+                <NameText
+                  account={status.account}
+                  instance={instance}
+                  subtle={snapStates.settings.postUsernameOnly}
                 />{' '}
                 <RelativeTime datetime={createdAtDate} format="micro" />
               </>

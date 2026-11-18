@@ -59,9 +59,19 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
   */
 
   const hasText = title || providerName || authorName;
-  const isLandscape = width / height >= 1.2;
-  const size = isLandscape ? 'large' : '';
+  // Some cards have same title and description, don't need to repeat
+  const descriptionTrimmed = description?.trim();
+  const showDescription =
+    !!descriptionTrimmed && descriptionTrimmed !== title?.trim();
+  const metaFallback = providerName || authorName || null;
+  const timestampPosition = !publishedAt
+    ? null
+    : showDescription || metaFallback
+      ? 'top'
+      : 'bottom';
 
+  const blurhashOnly = !image && type === 'photo' && !!blurhash;
+  const [blurhashImage, setBlurhashImage] = useState(null);
   const [cardStatusURL, setCardStatusURL] = useState(null);
   // const [cardStatusID, setCardStatusID] = useState(null);
   useEffect(() => {
@@ -90,21 +100,43 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
     };
   }, [hasText, image, selfReferential]);
 
+  useEffect(() => {
+    if (!blurhashOnly) return;
+
+    const w = 44;
+    const h = 44;
+    const blurhashPixels = decodeBlurHash(blurhash, w, h);
+    const canvas = window.OffscreenCanvas
+      ? new OffscreenCanvas(1, 1)
+      : document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    const imageData = ctx.createImageData(w, h);
+    imageData.data.set(blurhashPixels);
+    ctx.putImageData(imageData, 0, 0);
+    try {
+      if (window.OffscreenCanvas) {
+        canvas.convertToBlob().then((blob) => {
+          setBlurhashImage(URL.createObjectURL(blob));
+        });
+      } else {
+        setBlurhashImage(canvas.toDataURL());
+      }
+    } catch (e) {
+      // Silently fail
+      console.error(e);
+    }
+  }, [blurhashOnly, blurhash]);
+
   // if (cardStatusID) {
   //   return (
   //     <Status statusID={cardStatusID} instance={instance} size="s" readOnly />
   //   );
   // }
 
-  if (
-    snapStates.unfurledLinks[url]?.url &&
-    !snapStates.unfurledLinks[url].collections
-  )
-    // Hide card after unfurling a regular status;
-    // keep it for account collections pages so it's clickable
-    return null;
-
-  const hasIframeHTML = /<iframe/i.test(html);
+  const hasIframeHTML = /<iframe/i.test(html || '');
   const handleClick = useCallback(
     (e) => {
       const unfurled = states.unfurledLinks[url];
@@ -127,38 +159,28 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
     [hasIframeHTML, url],
   );
 
-  const [blurhashImage, setBlurhashImage] = useState(null);
-  if (hasText && (image || (type === 'photo' && blurhash))) {
+  if (
+    snapStates.unfurledLinks[url]?.url &&
+    !snapStates.unfurledLinks[url].collections
+  )
+    // Hide card after unfurling a regular status;
+    // keep it for account collections pages so it's clickable
+    return null;
+
+  // YouTube videos without an image keep their dedicated player instead of a link card
+  const isYoutubeVideo =
+    type === 'video' &&
+    /youtube/i.test(providerName) &&
+    /watch\?v=([^&]+)/.test(url);
+
+  if (
+    hasText &&
+    (image || blurhashOnly || (type !== 'photo' && !isYoutubeVideo))
+  ) {
     const domain = getDomain(url);
     const rgbAverageColor =
       image && blurhash ? getBlurHashAverageColor(blurhash) : null;
-    if (!image) {
-      const w = 44;
-      const h = 44;
-      const blurhashPixels = decodeBlurHash(blurhash, w, h);
-      const canvas = window.OffscreenCanvas
-        ? new OffscreenCanvas(1, 1)
-        : document.createElement('canvas');
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.imageSmoothingEnabled = false;
-      const imageData = ctx.createImageData(w, h);
-      imageData.data.set(blurhashPixels);
-      ctx.putImageData(imageData, 0, 0);
-      try {
-        if (window.OffscreenCanvas) {
-          canvas.convertToBlob().then((blob) => {
-            setBlurhashImage(URL.createObjectURL(blob));
-          });
-        } else {
-          setBlurhashImage(canvas.toDataURL());
-        }
-      } catch (e) {
-        // Silently fail
-        console.error(e);
-      }
-    }
+    const hasImage = !!image || blurhashOnly;
 
     const isPost = isCardPost(domain);
 
@@ -169,7 +191,7 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           target={cardStatusURL ? null : '_blank'}
           rel="nofollow noopener"
           class={`card link ${isPost ? 'card-post' : ''} ${
-            blurhashImage ? '' : size
+            hasImage ? '' : 'no-image'
           } ${hasIframeHTML ? 'can-show-embed' : ''}`}
           style={{
             '--average-color':
@@ -177,37 +199,15 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
           }}
           onClick={handleClick}
         >
-          <div class="card-image">
-            <img
-              src={image || blurhashImage}
-              width={width}
-              height={height}
-              loading="lazy"
-              decoding="async"
-              fetchPriority="low"
-              alt={imageDescription || ''}
-              onError={(e) => {
-                try {
-                  e.target.style.display = 'none';
-                } catch (e) {}
-              }}
-              style={{
-                '--anim-duration':
-                  width &&
-                  height &&
-                  `${Math.min(
-                    Math.max(Math.max(width, height) / 100, 5),
-                    120,
-                  )}s`,
-              }}
-            />
-          </div>
-          <div class="meta-container" lang={language}>
+          <div class="card-content" lang={language}>
             <p class="meta domain">
-              <span class="domain">{domain}</span>{' '}
-              {!!publishedAt && <>&middot; </>}
-              {!!publishedAt && (
+              <span class="domain">
+                <Icon icon="web" size="s" /> <span>{domain}</span>
+              </span>
+              {timestampPosition === 'top' && (
                 <>
+                  {' '}
+                  &middot;{' '}
                   <RelativeTime datetime={publishedAt} format="micro" />
                 </>
               )}
@@ -215,13 +215,49 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
             <p class="title" dir="auto" title={title}>
               {title}
             </p>
-            <p class="meta" dir="auto" title={description}>
-              {description ||
-                (!!publishedAt && (
-                  <RelativeTime datetime={publishedAt} format="micro" />
-                ))}
-            </p>
+            {(showDescription ||
+              metaFallback ||
+              timestampPosition === 'bottom') && (
+              <p class="meta" dir="auto" title={description || metaFallback}>
+                {showDescription
+                  ? description
+                  : metaFallback || (
+                      <RelativeTime datetime={publishedAt} format="micro" />
+                    )}
+              </p>
+            )}
           </div>
+          {hasImage && (
+            <div class="card-image">
+              <img
+                src={image || blurhashImage}
+                class={blurhashImage ? 'blurhash' : ''}
+                width={width}
+                height={height}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+                alt={imageDescription || ''}
+                onError={(e) => {
+                  try {
+                    e.target.style.display = 'none';
+                  } catch (e) {}
+                }}
+                style={
+                  width &&
+                  height && {
+                    '--anim-duration': `${Math.min(
+                      Math.max(Math.max(width, height) / 100, 5),
+                      120,
+                    )}s`,
+                    // Reserve image space to avoid layout shift on load
+                    '--card-img-ratio': width / height,
+                    '--card-img-width': `${width}px`,
+                  }
+                }
+              />
+            </div>
+          )}
         </a>
       </Byline>
     );
@@ -269,41 +305,6 @@ function StatusCard({ card, selfReferential, selfAuthor, instance }) {
       //     dangerouslySetInnerHTML={{ __html: html }}
       //   />
       // );
-    }
-    if (hasText && !image) {
-      const domain = getDomain(url);
-      const isPost = isCardPost(domain);
-      return (
-        <a
-          href={cardStatusURL || url}
-          target={cardStatusURL ? null : '_blank'}
-          rel="nofollow noopener"
-          class={`card link ${isPost ? 'card-post' : ''} no-image`}
-          lang={language}
-          dir="auto"
-          onClick={handleClick}
-        >
-          <div class="meta-container">
-            <p class="meta domain">
-              <span class="domain">
-                <Icon icon="link" size="s" /> <span>{domain}</span>
-              </span>{' '}
-              {!!publishedAt && <>&middot; </>}
-              {!!publishedAt && (
-                <>
-                  <RelativeTime datetime={publishedAt} format="micro" />
-                </>
-              )}
-            </p>
-            <p class="title" title={title}>
-              {title}
-            </p>
-            <p class="meta" title={description || providerName || authorName}>
-              {description || providerName || authorName}
-            </p>
-          </div>
-        </a>
-      );
     }
   }
 }

@@ -28,7 +28,12 @@ const platformFeatures = {
   '@akkoma/local-visibility-post': containAkkoma,
 };
 
-const supportsCache = {};
+let supportsCache = {};
+
+// Instance data can arrive late
+export function clearSupportsCache() {
+  supportsCache = {};
+}
 
 const semverExtract = /^\d+\.\d+(\.\d+)?/;
 const atSoftwareSlashMatch = /^@([a-z]+)\//i;

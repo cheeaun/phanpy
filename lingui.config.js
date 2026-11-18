@@ -3,7 +3,9 @@ import { ALL_LOCALES } from './src/locales';
 const config = {
   locales: ALL_LOCALES,
   sourceLocale: 'en',
-  pseudoLocale: 'pseudo-LOCALE',
+  pseudoLocale: {
+    locale: 'pseudo-LOCALE',
+  },
   fallbackLocales: {
     default: 'en',
   },

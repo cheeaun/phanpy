@@ -11,6 +11,7 @@ import showToast from '../utils/show-toast';
 import states from '../utils/states';
 
 import AccountSheet from './account-sheet';
+import BoostsCarouselInfoSheet from './boosts-carousel-info-sheet';
 import ComposeSuspense, { preload } from './compose-suspense';
 import Drafts from './drafts';
 import EmbedModal from './embed-modal';
@@ -174,6 +175,20 @@ export default function Modals() {
             linkText={snapStates.showOpenLink.linkText}
             onClose={() => {
               states.showOpenLink = false;
+            }}
+          />
+        </Modal>
+      )}
+      {!!snapStates.showBoostsCarouselInfo && (
+        <Modal
+          onClose={() => {
+            states.showBoostsCarouselInfo = false;
+          }}
+        >
+          <BoostsCarouselInfoSheet
+            inSettings={!!snapStates.showBoostsCarouselInfo.inSettings}
+            onClose={() => {
+              states.showBoostsCarouselInfo = false;
             }}
           />
         </Modal>

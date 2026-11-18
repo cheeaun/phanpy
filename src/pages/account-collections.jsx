@@ -138,7 +138,7 @@ function AccountCollections() {
             <div class="header-side">
               <NavMenu />
               {isSelf && (
-                <Link to="/" class="button plain">
+                <Link to="/" class="button plain4">
                   <Icon icon="home" size="l" alt={t`Home`} />
                 </Link>
               )}
@@ -175,7 +175,7 @@ function AccountCollections() {
               {isSelf && !isInCollections && (
                 <button
                   type="button"
-                  class="plain"
+                  class="plain4"
                   onClick={() => setShowNewCollectionModal(true)}
                 >
                   <Icon icon="plus" size="l" alt={t`New collection`} />

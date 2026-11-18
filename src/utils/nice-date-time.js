@@ -1,6 +1,7 @@
 import { i18n } from '@lingui/core';
 
 import DateTimeFormat from './date-time-format';
+import getHourCycle from './time-format';
 
 function niceDateTime(date, dtfOpts) {
   if (!(date instanceof Date)) {
@@ -9,7 +10,7 @@ function niceDateTime(date, dtfOpts) {
 
   const { hideTime, formatOpts, forceOpts } = dtfOpts || {};
   const currentYear = new Date().getFullYear();
-  const options = forceOpts || {
+  let options = forceOpts || {
     // Show year if not current year
     year: date.getFullYear() === currentYear ? undefined : 'numeric',
     month: 'short',
@@ -19,6 +20,13 @@ function niceDateTime(date, dtfOpts) {
     minute: hideTime ? undefined : 'numeric',
     ...formatOpts,
   };
+
+  const hourCycle = getHourCycle();
+  const hasTime =
+    !hideTime && !!(options.hour || options.minute || options.timeStyle);
+  if (hourCycle && hasTime && !options.hour12 && !options.hourCycle) {
+    options = { ...options, hourCycle };
+  }
 
   const DTF = DateTimeFormat(i18n.locale, options);
   const dateText = DTF.format(date);

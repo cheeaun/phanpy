@@ -1,7 +1,9 @@
 import { forwardRef } from 'preact/compat';
 import { useEffect, useState } from 'preact/hooks';
+import { useSnapshot } from 'valtio';
 
 import shortenNumber from '../utils/shorten-number';
+import states from '../utils/states';
 
 import Icon from './icon';
 
@@ -25,6 +27,9 @@ const StatusButton = forwardRef((props, ref) => {
   if (typeof alt === 'string') {
     alt = [alt, alt];
   }
+
+  const snapStates = useSnapshot(states);
+  const hidePostMetrics = snapStates.settings.hidePostMetrics;
 
   const [buttonTitle, setButtonTitle] = useState(title[0] || '');
   const [iconAlt, setIconAlt] = useState(alt[0] || '');
@@ -56,7 +61,7 @@ const StatusButton = forwardRef((props, ref) => {
       {...otherProps}
     >
       <Icon icon={icon} size={iconSize} alt={iconAlt} />
-      {(!!count || !!extraCount) && (
+      {!hidePostMetrics && (!!count || !!extraCount) && (
         <>
           {' '}
           {!!count && <small title={count}>{shortenNumber(count)}</small>}

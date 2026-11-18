@@ -82,7 +82,7 @@ function MockHome() {
               </div>
               <h1>Home</h1>
               <div class="header-side">
-                <Link to="/notifications" class="button plain">
+                <Link to="/notifications" class="button plain4">
                   <Icon icon="notification" size="l" alt="Notifications" />
                 </Link>
               </div>

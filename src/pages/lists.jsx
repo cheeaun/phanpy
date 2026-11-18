@@ -46,7 +46,7 @@ function Lists() {
           <div class="header-grid">
             <div class="header-side">
               <NavMenu />
-              <Link to="/" class="button plain">
+              <Link to="/" class="button plain4">
                 <Icon icon="home" size="l" />
               </Link>
             </div>
@@ -56,7 +56,7 @@ function Lists() {
             <div class="header-side">
               <button
                 type="button"
-                class="plain"
+                class="plain4"
                 onClick={() => setShowListAddEditModal(true)}
               >
                 <Icon icon="plus" size="l" alt={t`New list`} />

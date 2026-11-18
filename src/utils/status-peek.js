@@ -22,7 +22,7 @@ function statusPeek(status) {
   text = text.trim();
   if (poll?.options?.length) {
     text += `\n\n📊:\n${poll.options
-      .map((o) => `${poll.multiple ? '▪️' : '•'} ${o.title}`)
+      .map((o) => `${poll.multiple ? '■' : '●'} ${o.title}`)
       .join('\n')}`;
   }
   if (mediaAttachments?.length) {

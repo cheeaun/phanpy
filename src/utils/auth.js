@@ -28,8 +28,11 @@ export async function registerApplication({ instanceURL }) {
     client_name: CLIENT_NAME,
     redirect_uris: REDIRECT_URI,
     scopes: SCOPES,
-    website: WEBSITE || REDIRECT_URI,
   });
+  const website = WEBSITE || REDIRECT_URI;
+  if (website.startsWith('https://')) {
+    registrationParams.append('website', website);
+  }
   const registrationResponse = await fetch(
     `https://${instanceURL}/api/v1/apps`,
     {

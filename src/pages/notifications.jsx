@@ -161,6 +161,7 @@ function Notifications({ columnMode }) {
     });
   const hiddenUI =
     snapStates.settings.autoHideBars &&
+    !snapStates.composerState.minimized &&
     scrollDirection === 'end' &&
     !nearReachStart;
   const [followRequests, setFollowRequests] = useState([]);
@@ -506,12 +507,20 @@ function Notifications({ columnMode }) {
   const announcementsListRef = useRef();
 
   useEffect(() => {
-    if (notificationID) {
-      states.routeNotification = {
-        id: notificationID,
-        accessToken: atob(notificationAccessToken),
-      };
+    if (!notificationID) return;
+    let accessToken;
+    if (notificationAccessToken) {
+      try {
+        accessToken = atob(notificationAccessToken);
+      } catch (err) {
+        // Corrupt token, fall back
+        console.warn('🔔 Invalid notification access token', err);
+      }
     }
+    states.routeNotification = {
+      id: notificationID,
+      accessToken,
+    };
   }, [notificationID, notificationAccessToken]);
 
   // useEffect(() => {
@@ -745,7 +754,7 @@ function Notifications({ columnMode }) {
           <div class="header-grid">
             <div class="header-side">
               <NavMenu />
-              <Link to="/" class="button plain">
+              <Link to="/" class="button plain4">
                 <Icon icon="home" size="l" alt={t`Home`} />
               </Link>
             </div>

@@ -380,7 +380,7 @@ export default function Poll({
         {!voted && !expired && !readOnly && optionsHaveVoteCounts && (
           <button
             type="button"
-            class="plain small poll-results-button"
+            class="plain4 small poll-results-button"
             disabled={uiState === 'loading'}
             onClick={(e) => {
               e.preventDefault();
@@ -397,7 +397,7 @@ export default function Poll({
         {!expired && !readOnly && (
           <button
             type="button"
-            class="plain small"
+            class="plain4 small"
             disabled={uiState === 'loading'}
             onClick={(e) => {
               e.preventDefault();

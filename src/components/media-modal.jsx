@@ -379,7 +379,7 @@ function MediaModal({
                   carouselRef.current.scrollTo({ left, behavior: 'smooth' });
                 }}
               >
-                <Icon icon="round" size="s" alt="⸱" />
+                <span class="carousel-dot-indicator" />
               </button>
             ))}
           </span>

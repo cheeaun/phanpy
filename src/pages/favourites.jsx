@@ -3,6 +3,7 @@ import { useRef } from 'preact/hooks';
 
 import Timeline from '../components/timeline';
 import { api } from '../utils/api';
+import { saveStatus } from '../utils/states';
 import useTitle from '../utils/useTitle';
 
 const LIMIT = 20;
@@ -18,7 +19,11 @@ function Favourites() {
         .list({ limit: LIMIT })
         .values();
     }
-    return await favouritesIterator.current.next();
+    const results = await favouritesIterator.current.next();
+    results.value?.forEach((item) => {
+      saveStatus(item, instance);
+    });
+    return results;
   }
 
   return (
@@ -29,6 +34,7 @@ function Favourites() {
       errorText={t`Unable to load likes.`}
       instance={instance}
       fetchItems={fetchFavourites}
+      useItemID
     />
   );
 }

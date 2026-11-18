@@ -5,6 +5,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { MenuDivider, MenuItem } from '@szhsin/react-menu';
 import { useReducer } from 'preact/hooks';
 import punycode from 'punycode/';
+import { matchPath } from 'react-router-dom';
 
 import Avatar from '../components/avatar';
 import Icon from '../components/icon';
@@ -30,6 +31,19 @@ import {
 
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
 
+// Pages that may not work with the switched account
+const SWITCH_BREAKING_PATHS = [
+  '/l/:id', // List ID is scoped to account
+  // Below are legacy non-instance prefix URLs
+  '/s/:id', // Post
+  '/a/:id', // Account
+  '/a/:id/c', // Account collections
+  '/c/:id', // Collection
+];
+function pathBreaksSwitch(pathname) {
+  return SWITCH_BREAKING_PATHS.some((path) => matchPath(path, pathname));
+}
+
 function Accounts({ onClose }) {
   const { t } = useLingui();
   const { masto } = api();
@@ -40,6 +54,18 @@ function Accounts({ onClose }) {
 
   const [_, reload] = useReducer((x) => x + 1, 0);
   const [accountsListParent] = useAutoAnimate();
+
+  const switchAccount = (account) => {
+    setCurrentAccountID(account.info.id);
+    const pathname = location.hash.replace(/^#/, '').split('?')[0] || '/';
+    if (pathBreaksSwitch(pathname)) {
+      // Page won't work with the switched account, reload at Home instead
+      store.local.del('pwaLastPath');
+      location.replace(location.pathname);
+    } else {
+      location.reload();
+    }
+  };
 
   return (
     <div id="accounts-container" class="sheet" tabIndex="-1">
@@ -129,8 +155,7 @@ function Accounts({ onClose }) {
                         } else if (isCurrent) {
                           states.showAccount = `${account.info.username}@${account.instanceURL}`;
                         } else {
-                          setCurrentAccountID(account.info.id);
-                          location.reload();
+                          switchAccount(account);
                         }
                       }}
                     />
@@ -160,10 +185,7 @@ function Accounts({ onClose }) {
                         <>
                           <MenuItem
                             disabled={isCurrent || isLoggedOut}
-                            onClick={() => {
-                              setCurrentAccountID(account.info.id);
-                              location.reload();
-                            }}
+                            onClick={() => switchAccount(account)}
                           >
                             <Icon icon="transfer" />{' '}
                             <Trans>Switch to this account</Trans>

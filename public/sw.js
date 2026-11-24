@@ -318,6 +318,18 @@ registerRoute(apiRoute);
 // PUSH NOTIFICATIONS
 // ==================
 
+function getNotificationURL({ data, tag }) {
+  const accessToken = data?.access_token;
+  return new URL(
+    `#/notifications?id=${encodeURIComponent(tag ?? '')}${
+      accessToken
+        ? `&access_token=${encodeURIComponent(btoa(accessToken))}`
+        : ''
+    }`,
+    self.registration.scope,
+  ).href;
+}
+
 self.addEventListener('push', (event) => {
   const { data } = event;
   if (data) {
@@ -352,6 +364,11 @@ self.addEventListener('push', (event) => {
           access_token,
           notification_type,
         },
+        // Let iOS own the tap so it doesn't race the worker at launch
+        navigate: getNotificationURL({
+          data: { access_token },
+          tag: notification_id,
+        }),
       }),
     );
   }
@@ -391,12 +408,9 @@ self.addEventListener('notificationclick', (event) => {
   const { data, tag } = payload;
   const accessToken = data?.access_token;
   // No token, falls back to current account
-  // Relative, so subpath deployments stay in scope
-  // btoa output can contain '+', which URLSearchParams decodes as a space
-  const url = `./#/notifications?id=${tag}${
-    accessToken ? `&access_token=${encodeURIComponent(btoa(accessToken))}` : ''
-  }`;
-  // iOS notificationclick is unreliable, go through the URL instead
+  const url = getNotificationURL(payload);
+  // iOS can deliver notificationclick while the app is still launching, so
+  // the worker must not navigate there
   // https://bugs.webkit.org/show_bug.cgi?id=268797
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   event.notification.close();
@@ -412,14 +426,25 @@ self.addEventListener('notificationclick', (event) => {
       const client =
         appClients.find((c) => c.focused || c.visibilityState === 'visible') ||
         appClients[0];
-      if (client) {
-        if (!isIOS) {
-          // focus() rejects if the window cannot be brought forward
+
+      if (isIOS) {
+        // The system already opens or foregrounds the app on tap. Navigating
+        // or opening a window here races the launch and can leave it blank.
+        if (client) {
           const focused = await client.focus().catch(() => null);
           if (focused) {
             client.postMessage({ type: 'notification', id: tag, accessToken });
-            return;
           }
+        }
+        return;
+      }
+
+      if (client) {
+        // focus() rejects if the window cannot be brought forward
+        const focused = await client.focus().catch(() => null);
+        if (focused) {
+          client.postMessage({ type: 'notification', id: tag, accessToken });
+          return;
         }
         try {
           await client.navigate(url);

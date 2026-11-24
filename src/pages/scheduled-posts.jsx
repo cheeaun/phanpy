@@ -70,7 +70,7 @@ export default function ScheduledPosts() {
           <div class="header-grid">
             <div class="header-side">
               <NavMenu />
-              <Link to="/" class="button plain">
+              <Link to="/" class="button plain4">
                 <Icon icon="home" size="l" alt={t`Home`} />
               </Link>
             </div>
@@ -85,7 +85,7 @@ export default function ScheduledPosts() {
                 viewScroll="close"
                 position="anchor"
                 menuButton={
-                  <button type="button" class="plain">
+                  <button type="button" class="plain4">
                     <Icon icon="more" size="l" alt={t`More`} />
                   </button>
                 }

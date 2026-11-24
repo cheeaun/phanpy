@@ -109,7 +109,6 @@ export default defineConfig(({ command }) => {
         },
         // Ignore specific folders to prevent auto-refresh
         ignored: [
-          '**/src/iconify-icons/**',
           // Add folder paths here (glob patterns)
           // Example: '**/node_modules/**',
           // Example: '**/dist/**',
@@ -121,14 +120,12 @@ export default defineConfig(({ command }) => {
       preprocessorMaxWorkers: 1,
     },
     plugins: [
-      ...preact({
-        // Force use Babel instead of ESBuild due to this change: https://github.com/preactjs/preset-vite/pull/114
-        // Else, a bug will happen with importing variables from import.meta.env
-        babel: {
-          plugins: ['@lingui/babel-plugin-lingui-macro'],
-        },
-      }).filter((plugin) => !isBuild || plugin.name !== 'preact:devtools'),
-      lingui(),
+      // Has to come before preact(), else JSX macros won't be transformed
+      // https://lingui.dev/blog/2026/10/01/native-macro-transform
+      lingui({ macroTransform: true }),
+      ...preact().filter(
+        (plugin) => !isBuild || plugin.name !== 'preact:devtools',
+      ),
       run({
         silent: false,
         input: [
@@ -365,11 +362,18 @@ export default defineConfig(({ command }) => {
           //     return 'vendor';
           //   }
           // },
+          // Icons in own chunk for caching
+          codeSplitting: {
+            groups: [
+              {
+                name: 'icons',
+                test: /@mingcute[\\/]icons[\\/]dist[\\/]styles[\\/]/,
+                priority: 10,
+              },
+            ],
+          },
           chunkFileNames: (chunkInfo) => {
             const { facadeModuleId } = chunkInfo;
-            if (facadeModuleId && facadeModuleId.includes('icon')) {
-              return 'assets/icons/[name]-[hash].js';
-            }
             if (facadeModuleId && facadeModuleId.includes('locales')) {
               return 'assets/locales/[name]-[hash].js';
             }
@@ -402,7 +406,8 @@ export default defineConfig(({ command }) => {
               // Remove .js.map files and sourcemap references for specific chunks
               Object.keys(bundle).forEach((fileName) => {
                 const shouldRemoveSourcemap =
-                  fileName.includes('locales/') || fileName.includes('icons/');
+                  fileName.includes('locales/') ||
+                  fileName.includes('assets/icons-');
 
                 if (fileName.endsWith('.js.map') && shouldRemoveSourcemap) {
                   delete bundle[fileName];

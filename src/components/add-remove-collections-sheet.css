@@ -1,0 +1,33 @@
+#collection-add-remove-container {
+  .collection-add-remove {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+
+    button {
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      text-align: start;
+
+      .icon {
+        opacity: 0.15;
+      }
+
+      &.checked {
+        border-color: var(--green-color);
+        font-weight: bold;
+
+        .icon {
+          opacity: 1;
+          color: var(--green-color);
+        }
+      }
+    }
+  }
+}

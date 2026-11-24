@@ -147,7 +147,9 @@ function Notifications({ columnMode }) {
   const { masto, instance } = api();
   const snapStates = useSnapshot(states);
   const [uiState, setUIState] = useState('default');
-  const [searchParams] = columnMode ? [emptySearchParams] : useSearchParams();
+  const [searchParams, setSearchParams] = columnMode
+    ? [emptySearchParams]
+    : useSearchParams();
   const notificationID = searchParams.get('id');
   const notificationAccessToken = searchParams.get('access_token');
   const [showMore, setShowMore] = useState(false);
@@ -161,6 +163,7 @@ function Notifications({ columnMode }) {
     });
   const hiddenUI =
     snapStates.settings.autoHideBars &&
+    !snapStates.composerState.minimized &&
     scrollDirection === 'end' &&
     !nearReachStart;
   const [followRequests, setFollowRequests] = useState([]);
@@ -506,13 +509,25 @@ function Notifications({ columnMode }) {
   const announcementsListRef = useRef();
 
   useEffect(() => {
-    if (notificationID) {
-      states.routeNotification = {
-        id: notificationID,
-        accessToken: atob(notificationAccessToken),
-      };
+    if (!notificationID) return;
+    let accessToken;
+    if (notificationAccessToken) {
+      try {
+        accessToken = atob(notificationAccessToken);
+      } catch (err) {
+        // Corrupt token, fall back
+        console.warn('🔔 Invalid notification access token', err);
+      }
     }
-  }, [notificationID, notificationAccessToken]);
+    states.routeNotification = {
+      id: notificationID,
+      accessToken,
+    };
+    const params = new URLSearchParams(searchParams);
+    params.delete('id');
+    params.delete('access_token');
+    setSearchParams(params, { replace: true });
+  }, [notificationID, notificationAccessToken, searchParams, setSearchParams]);
 
   // useEffect(() => {
   //   if (uiState === 'default') {
@@ -745,7 +760,7 @@ function Notifications({ columnMode }) {
           <div class="header-grid">
             <div class="header-side">
               <NavMenu />
-              <Link to="/" class="button plain">
+              <Link to="/" class="button plain4">
                 <Icon icon="home" size="l" alt={t`Home`} />
               </Link>
             </div>

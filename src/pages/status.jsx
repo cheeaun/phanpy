@@ -22,6 +22,7 @@ import { useSnapshot } from 'valtio';
 
 import Avatar from '../components/avatar';
 import EditHistoryControls from '../components/edit-history-controls';
+import FloatingBar from '../components/floating-bar';
 import Icon from '../components/icon';
 import Link from '../components/link';
 import Loader from '../components/loader';
@@ -37,6 +38,7 @@ import {
   useEditHistory,
 } from '../utils/edit-history-context';
 import htmlContentLength from '../utils/html-content-length';
+import { stripShortCodes } from '../utils/shortcodes';
 import shortenNumber from '../utils/shorten-number';
 import states, {
   getStatus,
@@ -46,6 +48,7 @@ import states, {
 } from '../utils/states';
 import statusPeek from '../utils/status-peek';
 import { getCurrentAccount } from '../utils/store-utils';
+import useRevealAll from '../utils/use-reveal-all';
 import useTitle from '../utils/useTitle';
 
 import getInstanceStatusURL from './../utils/get-instance-status-url';
@@ -344,6 +347,44 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
   const totalDescendants = useRef(0);
 
   const scrollableRef = useRef();
+  const { visible: showRevealAll, revealAll } = useRevealAll(scrollableRef);
+
+  // Mirror the deck's inline insets onto the fixed bar so it lines up in the
+  // side pane and next to a sidebar. Retried until mounted, then only on resize.
+  const [barInset, setBarInset] = useState();
+  useLayoutEffect(() => {
+    const deck = scrollableRef.current;
+    if (!deck) return;
+    let attempts = 0;
+    const update = () => {
+      const { left, right } = deck.getBoundingClientRect();
+      // Mount timing varies, and the deck may not have a size while it slides in
+      if ((!deck.offsetWidth || left > 1) && attempts++ < 30) {
+        setTimeout(update, 100);
+        return;
+      }
+      attempts = 0;
+      const insetInlineStart = Math.round(left);
+      const insetInlineEnd = Math.round(
+        document.documentElement.clientWidth - right,
+      );
+      setBarInset((prev) =>
+        prev?.insetInlineStart === insetInlineStart &&
+        prev?.insetInlineEnd === insetInlineEnd
+          ? prev
+          : { insetInlineStart, insetInlineEnd },
+      );
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(deck);
+    window.addEventListener('resize', update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
   useEffect(() => {
     scrollableRef.current?.focus();
   }, []);
@@ -591,6 +632,9 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     }
 
     (async () => {
+      const hasStatus = !!snapStates.statuses[sKey];
+      let heroStatus = snapStates.statuses[sKey];
+
       const heroFetch = () =>
         pRetry(() => masto.v1.statuses.$select(id).fetch(), {
           retries: 4,
@@ -598,12 +642,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
       const contextFetch = pRetry(
         () => masto.v1.statuses.$select(id).context.fetch(),
         {
-          retries: 8,
+          retries: heroStatus?._deleted ? 1 : 8,
         },
       );
 
-      const hasStatus = !!snapStates.statuses[sKey];
-      let heroStatus = snapStates.statuses[sKey];
       if (hasStatus && !reloadHero) {
         console.debug('Hero status is cached');
       } else {
@@ -774,9 +816,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
     // Remove shortcodes from display name
     if (!heroStatus) return '';
     const { account } = heroStatus;
-    const div = document.createElement('div');
-    div.innerHTML = account.displayName;
-    return div.innerText.trim();
+    return stripShortCodes(account.displayName, account.emojis);
   }, [heroStatus]);
   const heroContentText = useMemo(() => {
     if (!heroStatus) return '';
@@ -1211,14 +1251,16 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   showActionsBar={!!descendant}
                 />
               )}
-              {ancestor && repliesCount > 1 && (
-                <div class="replies-link">
-                  <Icon icon="comment2" alt={t`Replies`} />{' '}
-                  <span title={repliesCount}>
-                    {shortenNumber(repliesCount)}
-                  </span>
-                </div>
-              )}{' '}
+              {!snapStates.settings.hidePostMetrics &&
+                ancestor &&
+                repliesCount > 1 && (
+                  <div class="replies-link">
+                    <Icon icon="comment2" alt={t`Replies`} />{' '}
+                    <span title={repliesCount}>
+                      {shortenNumber(repliesCount)}
+                    </span>
+                  </div>
+                )}{' '}
               {/* {replies?.length > LIMIT && (
                         <div class="replies-link">
                           <Icon icon="comment" />{' '}
@@ -1441,7 +1483,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
           }}
         >
           {/* <div>
-            <Link class="button plain deck-close" href={closeLink}>
+            <Link class="button plain4 deck-close" href={closeLink}>
               <Icon icon="chevron-left" size="xl" />
             </Link>
           </div> */}
@@ -1450,7 +1492,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               {prevLocationIsStatusPage && (
                 <button
                   type="button"
-                  class="plain deck-back"
+                  class="plain4 deck-back"
                   onClick={() => {
                     history.back();
                   }}
@@ -1565,7 +1607,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
               {showRefresh && (
                 <button
                   type="button"
-                  class="plain button-refresh"
+                  class="plain4 button-refresh"
                   onClick={() => {
                     states.reloadStatusPage++;
                     setShowRefresh(false);
@@ -1625,22 +1667,10 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                       : t`Switch to Full view`}
                   </span>
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    // Click all buttons with class .spoiler but not .spoiling
-                    const buttons = Array.from(
-                      scrollableRef.current.querySelectorAll(
-                        '.spoiler-button:not(.spoiling), .spoiler-media-button:not(.spoiling)',
-                      ),
-                    );
-                    buttons.forEach((button) => {
-                      button.click();
-                    });
-                  }}
-                >
+                <MenuItem onClick={() => revealAll()}>
                   <Icon icon="eye-open" />{' '}
                   <span>
-                    <Trans>Show all sensitive content</Trans>
+                    <Trans>Show all content warnings</Trans>
                   </span>
                 </MenuItem>
                 <MenuDivider />
@@ -1680,7 +1710,7 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
                   <span>{t`View Edit History Snapshots`}</span>
                 </MenuItem>
               </Menu2>
-              <Link class="button plain deck-close" to={closeLink}>
+              <Link class="button plain4 deck-close" to={closeLink}>
                 <Icon icon="x" size="xl" alt={t`Close`} />
               </Link>
             </div>
@@ -1749,6 +1779,16 @@ function StatusThread({ id, closeLink = '/', instance: propInstance }) {
             )}
           </>
         )}
+        <FloatingBar style={barInset}>
+          {showRevealAll && (
+            <button type="button" class="light" onClick={() => revealAll()}>
+              <Icon icon="eye-open" />{' '}
+              <span>
+                <Trans>Show all content warnings</Trans>
+              </span>
+            </button>
+          )}
+        </FloatingBar>
         <div data-state-post-ids={allStatusesKeys.join(' ')} hidden />
       </div>
     </ThreadCountContext.Provider>
@@ -1766,6 +1806,7 @@ function SubComments({
   lazyRenderReplies,
 }) {
   const { t } = useLingui();
+  const snapStates = useSnapshot(states);
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Total comments count, including sub-replies
@@ -1941,14 +1982,16 @@ function SubComments({
                   onMediaClick={handleMediaClick}
                   showActionsBar
                 />
-                {!r.replies?.length && r.repliesCount > 0 && (
-                  <div class="replies-link">
-                    <Icon icon="comment2" alt={t`Replies`} />{' '}
-                    <span title={r.repliesCount}>
-                      {shortenNumber(r.repliesCount)}
-                    </span>
-                  </div>
-                )}
+                {!snapStates.settings.hidePostMetrics &&
+                  !r.replies?.length &&
+                  r.repliesCount > 0 && (
+                    <div class="replies-link">
+                      <Icon icon="comment2" alt={t`Replies`} />{' '}
+                      <span title={r.repliesCount}>
+                        {shortenNumber(r.repliesCount)}
+                      </span>
+                    </div>
+                  )}
               </div>
               {/* </Link> */}
               {r.replies?.length && (

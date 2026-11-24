@@ -228,6 +228,15 @@
       margin: 0;
     }
 
+    label:has(> input:is([type='radio'], [type='checkbox']):disabled) {
+      cursor: default;
+      opacity: 0.4;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
     /* Media types styling */
     .media-types {
       padding-inline-start: 12px;

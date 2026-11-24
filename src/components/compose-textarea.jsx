@@ -236,22 +236,13 @@ const Textarea = forwardRef((props, ref) => {
   }, 500);
 
   const debouncedAutoDetectLanguage = useDebouncedCallback((text) => {
-    // Strip highlighted text (URLs, mentions, etc) to avoid confusing the detector
-    let cleanText = text;
-    if (composeHighlightRef.current) {
-      const dom = composeHighlightRef.current.cloneNode(true);
-      dom.querySelectorAll('mark').forEach((mark) => {
-        mark.remove();
-      });
-      cleanText = dom.innerText || text;
-    } else if (nativeHighlights) {
-      cleanText = text
-        .replace(urlRegexObj, '')
-        .replace(MENTION_RE, '')
-        .replace(HASHTAG_RE, '')
-        .replace(SCAN_RE, '');
-    }
-    const trimmedText = cleanText.trim();
+    // Strip URLs, mentions, etc to avoid confusing the detector
+    const trimmedText = text
+      .replace(urlRegexObj, '')
+      .replace(MENTION_RE, '')
+      .replace(HASHTAG_RE, '')
+      .replace(SCAN_RE, '')
+      .trim();
     if (!trimmedText) return;
     (async () => {
       const langs = await detectLangs(trimmedText);

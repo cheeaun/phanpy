@@ -24,7 +24,6 @@ import './utils/toast-alert';
 
 import BackgroundService from './components/background-service';
 import ComposeButton from './components/compose-button';
-import { ICONS } from './components/ICONS';
 import KeyboardShortcutsHelp from './components/keyboard-shortcuts-help';
 import Loader from './components/loader';
 import Modals from './components/modals';
@@ -184,23 +183,6 @@ setInterval(
   15 * 60 * 1000,
 );
 
-// Preload icons
-// There's probably a better way to do this
-// Related: https://github.com/vitejs/vite/issues/10600
-setTimeout(() => {
-  for (const icon in ICONS) {
-    setTimeout(() => {
-      if (Array.isArray(ICONS[icon])) {
-        ICONS[icon][0]?.();
-      } else if (typeof ICONS[icon] === 'object') {
-        ICONS[icon].module?.();
-      } else {
-        ICONS[icon]?.();
-      }
-    }, 1);
-  }
-}, 5000);
-
 (() => {
   window.__IDLE__ = true;
   const nonIdleEvents = [
@@ -359,6 +341,11 @@ subscribe(states, (changes) => {
       const $body = document.body;
       $body.classList.toggle('cloak', value);
     }
+
+    // Add/Remove lowercase class to body
+    if (path.join('.') === 'settings.lowercasePostText') {
+      document.body.classList.toggle('lowercase-post-text', value);
+    }
   }
 });
 
@@ -412,6 +399,17 @@ const isPWA =
   window.matchMedia('(display-mode: standalone)').matches ||
   window.navigator.standalone === true;
 const PATH_RESTORE_TIME_LIMIT = 1 * 60 * 60 * 1000; // 1 hour, should be good enough
+
+// One-shot params, don't restore them
+function stripNotificationParams(path) {
+  const i = path.indexOf('?');
+  if (i === -1) return path;
+  const params = new URLSearchParams(path.slice(i + 1));
+  params.delete('id');
+  params.delete('access_token');
+  const query = params.toString();
+  return query ? `${path.slice(0, i)}?${query}` : path.slice(0, i);
+}
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -588,8 +586,12 @@ function App() {
       if (isRootPath(location.pathname)) {
         store.local.del(lastPathKey);
       } else {
+        const path =
+          location.pathname === '/notifications'
+            ? stripNotificationParams(location.pathname + location.search)
+            : location.pathname + location.search;
         store.local.setJSON(lastPathKey, {
-          path: location.pathname + location.search,
+          path,
           lastAccessed: Date.now(),
         });
       }
@@ -598,26 +600,32 @@ function App() {
 
   // Restore last page on PWA reopen
   useEffect(() => {
-    if (restoredRef.current) return;
-    const isRootPath = !location.pathname || location.pathname === '/';
-    if (!isRootPath) return;
-    if (isPWA && isLoggedIn && uiState === 'default') {
-      const lastPath = store.local.getJSON(lastPathKey);
-      if (lastPath) {
-        setTimeout(() => {
-          if (lastPath?.path) {
-            const timeSinceLastAccess =
-              Date.now() - (lastPath.lastAccessed || 0);
-            if (timeSinceLastAccess < PATH_RESTORE_TIME_LIMIT) {
-              window.location.hash = lastPath.path;
-            }
-          }
-          store.local.del(lastPathKey);
-        }, 300);
+    if (restoredRef.current || !isPWA || !isLoggedIn || uiState !== 'default')
+      return;
+    restoredRef.current = true;
+    if (location.pathname !== '/' || location.search || location.hash) return;
+
+    const lastPath = store.local.getJSON(lastPathKey);
+    if (!lastPath) return;
+
+    const timer = setTimeout(() => {
+      // The hash can change before the router sees the new route.
+      const { hash } = window.location;
+      if (hash && hash !== '#/') return;
+
+      if (
+        lastPath.path &&
+        Date.now() - (lastPath.lastAccessed || 0) < PATH_RESTORE_TIME_LIMIT
+      ) {
+        const path = lastPath.path.startsWith('/notifications')
+          ? stripNotificationParams(lastPath.path)
+          : lastPath.path;
+        window.location.hash = path;
       }
-      restoredRef.current = true;
-    }
-  }, [uiState, isLoggedIn]);
+      store.local.del(lastPathKey);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [location, uiState, isLoggedIn]);
 
   // Signal to service worker that this client is ready to receive share data
   useEffect(() => {

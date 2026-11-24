@@ -88,8 +88,15 @@ export default function ComposeButton() {
   useHotkeys('c, shift+c', handleButton, {
     useKey: true,
     ignoreEventWhen: (e) => {
-      const hasModal = !!document.querySelector('#modal-container > *');
-      return hasModal || e.metaKey || e.ctrlKey || e.altKey;
+      if (e.metaKey || e.ctrlKey || e.altKey) return true;
+      const modals = document.querySelectorAll('#modal-container > *');
+      const hasModal = modals.length > 0;
+      // Allow restoring a minimized composer even though its modal still exists
+      const isOnlyMinimizedComposer =
+        !!states.composerState.minimized &&
+        modals.length === 1 &&
+        !!modals[0].querySelector('#compose-container');
+      return hasModal && !isOnlyMinimizedComposer;
     },
   });
 
